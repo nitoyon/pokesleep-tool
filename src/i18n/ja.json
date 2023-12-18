@@ -1,0 +1,21 @@
+{
+    "translation": {
+        "notice": "使い方はかんたん！\nフィールドと総エナジーを入力するだけです。\n睡眠スコアごとの出現ポケモン数が分かります。",
+        "area": [
+            "ワカクサ本島",
+            "シアンの砂浜",
+            "トープ洞窟",
+            "ウノハナ雪原",
+            "ラピスラズリ湖畔"
+        ],
+        "sleep twice": "分割睡眠する",
+        "total n pokemon prefix": "合計",
+        "total n pokemon suffix": "体",
+        "num": "{{n, number}}",
+        "range separator": "～",
+        "hhmm": "{{h}}時間{{m}}分",
+        "strength too low prefix": "エナジーが ",
+        "strength too low suffix": " 必要です。",
+        "strength too much": "エナジーが多すぎます。"
+    }
+}

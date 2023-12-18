@@ -1,0 +1,112 @@
+html {
+    background: #f9f9f9;
+}
+
+.rank_ball_basic { color: #ff0000; }
+.rank_ball_great { color: #0000ff; }
+.rank_ball_ultra { color: #000000; }
+.rank_ball_master { color: #cc00cc; }
+
+div.App div.notice {
+    margin-bottom: .5rem;
+    white-space: pre-wrap;
+}
+div.App div.notice p {
+    margin: 0;
+    font-size: .8rem;
+}
+
+div.score_box {
+    width: 4rem;
+}
+
+div.preview {
+    margin-top: 1rem;
+}
+
+div.preview_count {
+    padding: 1rem 0 .7rem 0rem;
+    border-bottom: 3px dotted #ddd;
+}
+
+.sum-tooltip {
+    display: inline-block;
+    position: relative;
+    border: 3px solid #ffffff;
+    background-color: #f7ac33;
+    color: white;
+    font-size: .9rem;
+    border-radius: .5rem;
+    padding: .1rem .5rem;
+    box-shadow: 0 0 .1rem #999;
+}
+
+.sum-tooltip::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0px;
+    left: 50%;
+    bottom: 0;
+    border: 10px solid transparent;
+    border-bottom: 0;
+    border-top: 10px solid #f7ac33;
+    transform: translate(-50%, calc(100% - .1rem));
+}
+
+.sum-tooltip strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+div.preview_count div.sum {
+    padding: 0 0 0 0;
+    color: #ff6347;
+}
+div.preview_sleep {
+    display: flex;
+    align-items: center;
+}
+
+div.preview_sleep div.count_box {
+    width: 5rem;
+}
+
+div.count span.ball{
+    color: #ff6347;
+    font-size: 1.2rem;
+}
+div.count span.multiply {
+    color: #666;
+    font-size: 1.2rem;
+}
+div.count span.value {
+    color: #e6a83a;
+    font-size: 1.6rem;
+}
+
+div.preview_sleep div.power {
+    color: #aaaaaa;
+    font-weight: 500;
+    font-size: .8rem;
+    margin-top: -.2rem;
+}
+
+div.preview_sleep div.score_range {
+    padding-left: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+div.score_range div.score_separator {
+    padding: 0rem .3rem;
+}
+
+div.preview_sleep div.warning {
+    padding-left: 2.2rem;
+    text-indent: -1.2rem;
+    color: #666;
+}
+div.preview_sleep div.warning::before {
+    content: '\26a0\fe0f';
+}
