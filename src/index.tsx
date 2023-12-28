@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import App, {loadConfig} from './App';
 import i18n from './i18n';
 
 (function() {
-    i18n.changeLanguage('ja');
-    
+    // set default language using browser language
+    let language = "en";
+    if (window.navigator.language.match(/ja/) !== null) {
+        language = "ja";
+    }
+    const config = loadConfig(language);
+    i18n.changeLanguage(config.language);
+
     const elm = document.getElementById('root');
     if (elm === null) {
         alert('root element not found');
@@ -15,7 +20,13 @@ import i18n from './i18n';
     const root = ReactDOM.createRoot(elm);
     root.render(
         <React.StrictMode>
-            <App />
+            <App config={config}/>
         </React.StrictMode>
     );
+
+    window.addEventListener('load', () => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js');
+        }
+    });
 })();

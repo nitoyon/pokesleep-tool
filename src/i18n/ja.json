@@ -1,6 +1,15 @@
 {
     "translation": {
-        "notice": "使い方はかんたん！\nフィールドと総エナジーを入力するだけです。\n睡眠スコアごとの出現ポケモン数が分かります。",
+        "name": "日本語 (Japanese)",
+        "title": "リサーチ数計算機 for ポケモンスリープ",
+        "how to use": "つかいかた",
+        "about": "このツールについて",
+        "sleep score table": "睡眠スコア表",
+        "change language": "言語切り替え",
+        "close": "閉じる",
+        "research area": "フィールド",
+        "strength": "総エナジー",
+        "bonus": "ねむけボーナス",
         "area": [
             "ワカクサ本島",
             "シアンの砂浜",
@@ -8,6 +17,7 @@
             "ウノハナ雪原",
             "ラピスラズリ湖畔"
         ],
+        "none": "なし",
         "sleep twice": "分割睡眠する",
         "total n pokemon prefix": "合計",
         "total n pokemon suffix": "体",
@@ -16,6 +26,13 @@
         "hhmm": "{{h}}時間{{m}}分",
         "strength too low prefix": "エナジーが ",
         "strength too low suffix": " 必要です。",
-        "strength too much": "エナジーが多すぎます。"
+        "strength too much": "エナジーが多すぎます。",
+        "notice": "使い方はかんたん！ フィールドと総エナジーを入力するだけです。睡眠スコアごとの出現ポケモン数が分かります。",
+        "notice detail1": "グッドスリープデーの間は、[$t(bonus)] の倍率を変更するのを忘れずに。",
+        "notice detail2": "[$t(sleep twice)] をチェックすると、分割睡眠したときに出会えるトータルのポケモン数を確認できます。",
+
+        "about1": "このツールは非公式のツールであり、nitoyon が個人で開発しています。",
+        "about2": "改善要望・不具合報告などは、X (twitter) の @nitoyon または Github (https://github.com/nitoyon/pokesleep-tool/) までお願いします。",
+        "about3": "利用しているデータは「ポケモンスリープ攻略・検証Wiki」 (https://wikiwiki.jp/poke_sleep/) を参照させていただいています。"
     }
 }

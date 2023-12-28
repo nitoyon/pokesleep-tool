@@ -1,12 +1,12 @@
 import React from 'react';
-import { InputAreaData } from './InputArea'
+import { InputAreaData, fields } from './InputArea'
 import { Rank } from './Rank';
-import SleepTime from './SleepTime'
+import SleepScore from './SleepScore'
 import { t } from 'i18next'
 
 type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
-type PreviewScoreProps = {
+interface PreviewScoreProps {
     /** pokemon count */
     count: PokemonCount;
 
@@ -57,199 +57,230 @@ interface ScoreRange {
     maxPower: number;
 }
 
-class PreviewScore extends React.Component<PreviewScoreProps> {
-    /**
-     * Get minimum sleep time to get the score
-     * @param score score
-     * @returns sleep time
-     */
-    getMinTimeForScore(score: number): string {
-        const minutes = Math.max(0, Math.ceil((score - 0.5) / 100 * 8.5 * 60));
-        const h = Math.floor(minutes / 60);
-        const m = minutes % 60;
-        return t('hhmm', {h, m});
-    }
-
-    /**
-     * Get maximum sleep time to get the score
-     * @param score score
-     * @returns sleep time
-     */
-    getMaxTimeForScore(score: number): string {
-        const minutes = Math.min(510, Math.ceil((score + 1 - 0.5) / 100 * 8.5 * 60) - 1);
-        const h = Math.floor(minutes / 60);
-        const m = minutes % 60;
-        return t('hhmm', {h, m});
-    }
-
-    /**
-     * Get ScoreRange for this props
-     * @returns ScoreRange
-     */
-    getScoreRange(): MultipleScoreRange {
-        const range:ScoreRange = this.getScoreRangeForCount(this.props.count, 100);
-
-        let ret = {
-            firstSleep: range,
-            secondSleep: null,
-        };
-
-        if (!this.props.data.secondSleep || !range.canGet || range.tooMuch || range.minScore === 100) {
-            return ret;
-        }
-
-        // find second count
-        const powerLeft = (100 - range.minScore) * this.props.data.strength;
-        let secondCount = 3;
-        for (let i = 0; i < this.props.data.powers.length; i++) {
-            if (powerLeft < this.props.data.powers[i]) {
-                break;
-            }
-            secondCount = 3 + i;
-        }
-        if (secondCount !== 3 && secondCount !== 4 && secondCount !== 5 &&
-            secondCount !== 6 && secondCount !== 7 && secondCount !== 8) {
-            return ret;
-        }
-
-        // get second sleep
-        const _secondCount:PokemonCount = secondCount;
-        const secondRange:ScoreRange = this.getScoreRangeForCount(_secondCount, 100 - range.minScore);
-
-        // fix first sleep range
-        ret.firstSleep.maxScore = Math.min(range.maxScore, 100 - secondRange.minScore);
-        ret.firstSleep.maxTime = this.getMaxTimeForScore(ret.firstSleep.maxScore);
-        ret.firstSleep.maxPower = ret.firstSleep.maxScore * this.props.data.strength;
-
-        return {
-            firstSleep: range,
-            secondSleep: secondRange,
-        };
-    }
-
-    getScoreRangeForCount(count: PokemonCount, availableScore: number): ScoreRange {
-        const strength = this.props.data.strength;
-        const powers = this.props.data.powers;
-        const power = powers[count - 3];
-        const requiredStrength = Math.ceil(power / availableScore);
-
-        // calc minScore
-        const minScore = Math.max(1, Math.ceil(power / strength));
-        const canGet = minScore <= availableScore;
-
-        // calc maxScore
-        let maxScore = availableScore;
-        const isLast = (count === 8);
-        if (!isLast) {
-            const nextPower = powers[count - 2];
-            maxScore = Math.max(0, Math.ceil(nextPower / strength) - 1);
-            maxScore = Math.min(availableScore, maxScore);
-        }
-        const tooMuch =  maxScore === 0;
-
-        return {
-            count,
-            power,
-            canGet,
-            tooMuch,
-            requiredStrength,
-            minScore,
-            minTime: this.getMinTimeForScore(minScore),
-            minPower: minScore * strength,
-            maxScore: maxScore,
-            maxTime: this.getMaxTimeForScore(maxScore),
-            maxPower: maxScore * strength,
-        };
-    }
-
-    render() {
-        const ranges:MultipleScoreRange = this.getScoreRange();
-        const range = ranges.firstSleep;
-        const firstElement = this.renderRange(range);
-        if (ranges.secondSleep == null) {
-            return (
-                <div className="preview_count">
+export default function PreviewScore(props:PreviewScoreProps) {
+    const ranges:MultipleScoreRange = getScoreRange(props);
+    const range = ranges.firstSleep;
+    const firstElement = renderRange(range, props.data);
+    if (!range.canGet || range.tooMuch) {
+        return (
+            <div className="preview_count">
+                <div className="preview_warning">
                     {firstElement}
                 </div>
-            )
-        } else {
-            const secondElement = this.renderRange(ranges.secondSleep);
-            const sum = range.count + ranges.secondSleep.count;
-            return (
-                <div className="preview_count">
-                    <div className="sum-tooltip-container">
-                        <div className="sum-tooltip">
-                            {t('total n pokemon prefix')}
-                            <strong>{sum}</strong>
-                            {t('total n pokemon suffix')}
-                        </div>
-                    </div>
+            </div>
+        )
+    }
+    if (ranges.secondSleep == null) {
+        return (
+            <div className="preview_count">
+                <div className="preview_grid">
+                    {firstElement}
+                </div>
+            </div>
+        )
+    } else {
+        const secondElement = renderRange(ranges.secondSleep, props.data);
+        const sum = range.count + ranges.secondSleep.count;
+        return (
+            <div className="preview_count">
+                <div className="sum-tooltip">
+                    {t('total n pokemon prefix')}
+                    <strong>{sum}</strong>
+                    {t('total n pokemon suffix')}
+                </div>
+                <div className="preview_grid">
                     {firstElement}
                     {secondElement}
                 </div>
-            )
-        }
-    }
-
-    renderRange(range:ScoreRange) {
-        const countElement = (
-            <div className="count_box">
-                <div className="count">
-                    <span className="ball">◓</span>
-                    <span className="multiply">×</span>
-                    <span className="value">{range.count}</span>
-                </div>
-                {range.power > 0 && <div className="power">
-                    <span>
-                        {t('num', {n: range.power})}
-                        {t('range separator')}
-                    </span>
-                </div>}
             </div>
-        );
-        if (!range.canGet || range.tooMuch) {
-            let warningElement;
-            if (range.canGet) {
-                warningElement = <span>{t('strength too much')}</span>;
-            } else {
-                const rank = new Rank(range.requiredStrength,
-                    this.props.data.ranks);
-                const percent = Math.floor((range.requiredStrength - rank.thisStrength) /
-                    (rank.nextStrength - rank.thisStrength) * 1000) / 10;
-                warningElement = <span>
-                    {t('strength too low prefix')}
-                    <strong>{t('num', {n: range.requiredStrength})} </strong>
-                     (<span className={"rank_ball_" + rank.type}>◓</span>
-                    <span className="rank_number">{rank.rankNumber}</span>
-                    <span> + {t('num', {n: range.requiredStrength - rank.thisStrength})}</span>
-                    )
-                    {t('strength too low suffix')}
-                </span>;
-            }
-
-            return (
-                <div className="preview_sleep">
-                    {countElement}
-                    <div className="warning">
-                        {warningElement}
-                    </div>
-                </div>
-            );
-        }
-        return (
-            <div className="preview_sleep">
-                {countElement}
-                <div className="score_range">
-                    <div className="start">
-                        <SleepTime score={range.minScore} time={range.minTime} power={range.minPower}/>
-                    </div>
-                    <div className="score_separator">{t('range separator')}</div>
-                    <div className="end">
-                        <SleepTime score={range.maxScore} time={range.maxTime} power={range.maxPower}/>
-                    </div>
-                </div>
-            </div>
-        );
+        )
     }
 }
-export default PreviewScore;
+
+function renderRange(range:ScoreRange, data:InputAreaData) {
+    const countElement = (
+        <div className="count_box">
+            <div className="count">
+                <span className="ball">◓</span>
+                <span className="multiply">×</span>
+                <span className="value">{range.count}</span>
+            </div>
+            {range.power > 0 && <div className="power">
+                <span>
+                    {t('num', {n: range.power})}
+                    {t('range separator')}
+                </span>
+            </div>}
+        </div>
+    );
+    if (!range.canGet || range.tooMuch) {
+        let warningElement;
+        if (range.canGet) {
+            warningElement = <span>{t('strength too much')}</span>;
+        } else {
+            const ranks = fields[data.fieldIndex].ranks;
+            const rank = new Rank(range.requiredStrength, ranks);
+            const percent = Math.floor((range.requiredStrength - rank.thisStrength) /
+                (rank.nextStrength - rank.thisStrength) * 100 + 0.5);
+            warningElement = <span>
+                {t('strength too low prefix')}
+                <strong>{t('num', {n: range.requiredStrength})} </strong>
+                 (<span className={"rank_ball_" + rank.type}>◓</span>
+                <span className="rank_number">{rank.rankNumber}</span>
+                <span> + {percent}%</span>
+                )
+                {t('strength too low suffix')}
+            </span>;
+        }
+
+        return (
+            <>
+                {countElement}
+                <div className="warning">
+                    {warningElement}
+                </div>
+            </>
+        );
+    }
+    return (
+        <>
+            {countElement}
+            <div className="start">
+                <div className="sleep_time">
+                    <SleepScore score={range.minScore}/>
+                    <div className="time">
+                        {range.minTime}
+                        <div className="time_power">{t("num", {n: range.minPower})}</div>
+                    </div>
+                </div>
+            </div>
+            <div className="score_separator">{t('range separator')}</div>
+            <div className="end">
+                <div className="sleep_time">
+                    <SleepScore score={range.maxScore}/>
+                    <div className="time">
+                        {range.maxTime}
+                        <div className="time_power">{t("num", {n: range.maxPower})}</div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+/**
+ * Get minimum sleep time to get the score
+ * @param score score
+ * @returns sleep time
+ */
+export function getMinTimeForScore(score: number): string {
+    const minutes = Math.max(0, Math.ceil((score - 0.5) / 100 * 8.5 * 60));
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return t('hhmm', {h, m});
+}
+
+/**
+ * Get maximum sleep time to get the score
+ * @param score score
+ * @returns sleep time
+ */
+export function getMaxTimeForScore(score: number): string {
+    const minutes = Math.min(510, Math.ceil((score + 1 - 0.5) / 100 * 8.5 * 60) - 1);
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return t('hhmm', {h, m});
+}
+
+/**
+ * Get ScoreRange for the props
+ * @param param0 props
+ * @returns ScoreRange
+ */
+function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
+    const range:ScoreRange = getScoreRangeForCount(count, data, 100);
+    const powers = fields[data.fieldIndex].powers;
+
+    let ret = {
+        firstSleep: range,
+        secondSleep: null,
+    };
+
+    if (!data.secondSleep || !range.canGet || range.tooMuch || range.minScore === 100) {
+        return ret;
+    }
+
+    // find second count
+    const powerLeft = (100 - range.minScore) * data.strength;
+    let secondCount = 3;
+    for (let i = 0; i < powers.length; i++) {
+        if (powerLeft < powers[i]) {
+            break;
+        }
+        secondCount = 3 + i;
+    }
+    if (secondCount !== 3 && secondCount !== 4 && secondCount !== 5 &&
+        secondCount !== 6 && secondCount !== 7 && secondCount !== 8) {
+        return ret;
+    }
+
+    // get second sleep
+    const _secondCount:PokemonCount = secondCount;
+    const secondRange:ScoreRange = getScoreRangeForCount(_secondCount, data,
+        100 - range.minScore);
+
+    // fix first sleep range
+    ret.firstSleep.maxScore = Math.min(range.maxScore, 100 - secondRange.minScore);
+    ret.firstSleep.maxTime = getMaxTimeForScore(ret.firstSleep.maxScore);
+    ret.firstSleep.maxPower = ret.firstSleep.maxScore * data.strength;
+
+    return {
+        firstSleep: range,
+        secondSleep: secondRange,
+    };
+}
+
+/**
+ * Get score range for the pokemon count
+ *
+ * @param count Pokemon count
+ * @param data Input data
+ * @param availableScore available score (0 - 100)
+ * @returns Score range
+ */
+function getScoreRangeForCount(count: PokemonCount, data: InputAreaData,
+    availableScore: number): ScoreRange {
+    const strength = data.strength * data.bonus;
+    const powers = fields[data.fieldIndex].powers;
+    const power = powers[count - 3];
+    const requiredStrength = Math.ceil(power / data.bonus / availableScore);
+
+    // calc minScore
+    const minScore = Math.max(1, Math.ceil(power / strength));
+    const canGet = minScore <= availableScore;
+
+    // calc maxScore
+    let maxScore = availableScore;
+    const isLast = (count === 8);
+    if (!isLast) {
+        const nextPower = powers[count - 2];
+        maxScore = Math.max(0, Math.ceil(nextPower / strength) - 1);
+        maxScore = Math.min(availableScore, maxScore);
+    }
+    const tooMuch =  maxScore === 0;
+
+    return {
+        count,
+        power,
+        canGet,
+        tooMuch,
+        requiredStrength,
+        minScore,
+        minTime: getMinTimeForScore(minScore),
+        minPower: minScore * strength,
+        maxScore: maxScore,
+        maxTime: getMaxTimeForScore(maxScore),
+        maxPower: maxScore * strength,
+    };
+}
+

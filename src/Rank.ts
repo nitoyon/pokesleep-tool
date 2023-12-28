@@ -35,8 +35,7 @@ class Rank {
 
         this.index = rankIndex;
         this.thisStrength = ranks[rankIndex];
-        this.nextStrength = rankIndex + 1 < ranks.length ?
-            ranks[rankIndex + 1] : NaN;
+        this.nextStrength = ranks[rankIndex + 1];
         this.type = Rank.rankIndexToType(rankIndex);
         this.rankNumber = Rank.rankIndexToRankNumber(rankIndex);
     }
@@ -50,6 +49,5 @@ class Rank {
         return rankIndex < 15 ? rankIndex % 5 + 1 : rankIndex - 14;
     }
 }
-
 
 export { Rank } ;

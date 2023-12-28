@@ -1,20 +1,38 @@
-html {
+html, body {
     background: #f9f9f9;
+    margin:0 ;
+    padding: 0;
+}
+
+body {
+    font-family: 'M PLUS 1p', 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+div.appbar {
+    background: #665500;
+    color: white;
+    padding: .2rem .5rem;
+    margin-bottom: .8rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+div.appbar div.title {
+    flex-grow: 1;
+}
+
+div.content {
+    margin: 0 .5rem;
 }
 
 .rank_ball_basic { color: #ff0000; }
 .rank_ball_great { color: #0000ff; }
 .rank_ball_ultra { color: #000000; }
 .rank_ball_master { color: #cc00cc; }
-
-div.App div.notice {
-    margin-bottom: .5rem;
-    white-space: pre-wrap;
-}
-div.App div.notice p {
-    margin: 0;
-    font-size: .8rem;
-}
 
 div.score_box {
     width: 4rem;
@@ -25,8 +43,21 @@ div.preview {
 }
 
 div.preview_count {
-    padding: 1rem 0 .7rem 0rem;
+    padding: .7rem 0;
     border-bottom: 3px dotted #ddd;
+}
+
+div.preview_grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 4.5rem max-content 1.5rem max-content;
+    row-gap: .5rem;
+}
+
+div.preview_warning {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 4.5rem 1fr;
 }
 
 .sum-tooltip {
@@ -39,6 +70,7 @@ div.preview_count {
     border-radius: .5rem;
     padding: .1rem .5rem;
     box-shadow: 0 0 .1rem #999;
+    margin-bottom: .2rem;
 }
 
 .sum-tooltip::before {
@@ -59,16 +91,12 @@ div.preview_count {
     font-weight: 700;
 }
 
-div.preview_count div.sum {
-    padding: 0 0 0 0;
+div.preview_grid div.sum {
+    padding: 0;
     color: #ff6347;
 }
-div.preview_sleep {
-    display: flex;
-    align-items: center;
-}
 
-div.preview_sleep div.count_box {
+div.count_box {
     width: 5rem;
 }
 
@@ -82,31 +110,49 @@ div.count span.multiply {
 }
 div.count span.value {
     color: #e6a83a;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
 }
 
-div.preview_sleep div.power {
+div.power {
     color: #aaaaaa;
-    font-weight: 500;
-    font-size: .8rem;
+    font-size: .7rem;
     margin-top: -.2rem;
+    white-space: nowrap;
 }
 
-div.preview_sleep div.score_range {
-    padding-left: 10px;
+div.start, div.end {
+    padding-top: .3rem;
+}
+
+div.score_separator {
+    padding: .3rem .2rem;
+    text-align: center;
+}
+
+div.sleep_time {
     display: flex;
     align-items: flex-start;
 }
 
-div.score_range div.score_separator {
-    padding: 0rem .3rem;
+div.time {
+    font-size: .9rem;
+    font-weight: 700;
+    margin-left: .3rem;
+    margin-top: 0rem;
 }
 
-div.preview_sleep div.warning {
+div.time div.time_power {
+    color: #aaaaaa;
+    font-size: .8rem;
+    font-weight: 500;
+    margin-top: -.2rem;
+}
+
+div.warning {
     padding-left: 2.2rem;
     text-indent: -1.2rem;
     color: #666;
 }
-div.preview_sleep div.warning::before {
+div.warning::before {
     content: '\26a0\fe0f';
 }
