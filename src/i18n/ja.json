@@ -1,6 +1,16 @@
 {
     "translation": {
+        "name": "日本語 (Japanese)",
+        "title": "リサーチ数計算機 for ポケモンスリープ",
+        "how to use": "つかいかた",
+        "change language": "言語切り替え",
+        "close": "閉じる",
         "notice": "使い方はかんたん！\nフィールドと総エナジーを入力するだけです。\n睡眠スコアごとの出現ポケモン数が分かります。",
+        "notice detail1": "グッドスリープデーの間は、[$t(bonus)] の倍率を変更するのを忘れずに。",
+        "notice detail2": "[$t(sleep twice)] をチェックすると、分割睡眠したときに出会えるトータルのポケモン数を確認できます。",
+        "research area": "フィールド",
+        "strength": "総エナジー",
+        "bonus": "ねむけボーナス",
         "area": [
             "ワカクサ本島",
             "シアンの砂浜",
@@ -8,6 +18,7 @@
             "ウノハナ雪原",
             "ラピスラズリ湖畔"
         ],
+        "none": "なし",
         "sleep twice": "分割睡眠する",
         "total n pokemon prefix": "合計",
         "total n pokemon suffix": "体",

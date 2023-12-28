@@ -5,7 +5,10 @@ import App from './App';
 import i18n from './i18n';
 
 (function() {
-    i18n.changeLanguage('ja');
+    // set default language using browser language
+    if (window.navigator.language.match(/ja/) !== null) {
+        i18n.changeLanguage('ja');
+    }
     
     const elm = document.getElementById('root');
     if (elm === null) {

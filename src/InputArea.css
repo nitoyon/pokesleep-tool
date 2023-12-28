@@ -1,107 +1,39 @@
-div.strength_container {
-    position: relative;
+form.main {
+    display: grid;
+    gap: 0.8rem 1.2rem;
+    grid-template-columns: fit-content(200px) 1fr;
 }
 
-div.rank_container {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
+form.main div[role="combobox"] {
+    padding-bottom: 2px;
 }
 
-button.rank {
-    text-align: center;
-    border-radius: 50%;
+form.main div.rank {
     width: 4rem;
-    height: 4rem;
-    min-width: 4rem;
-    padding: 0;
-    border: .2rem solid #f5ca3b;
-    box-shadow: 0 0 0 .1rem #e3b142, inset 0 0 0 .1rem #e3b142, 0 0 8px 2px #ccc;
-    background: white;
+    margin-right: 1rem;
 }
 
-button.rank .rank_ball {
-    position: absolute;
-    font-size: 2.5rem;
-}
-button.rank .rank_badge {
-    position: absolute;
-    font-size: .7rem;
-    color: black;
-    background: white;
-    border: .1rem solid #666666;
-    font-weight: 800;
-    width: 1.1rem;
-    height: 1.1rem;
-    top: 1.9rem;
-    left: 1.7rem;
-    border-radius: 50%;
-}
-button.rank svg {
-    position: absolute;
-    left: 2.4rem;
-    width: 1.6rem;
-    height: 1.7rem;
-    opacity: 60%;
-}
-
-.MuiMenuItem-root span.rank_number {
+form.main div.rank span.rank_number {
     padding-left: .2rem;
-    font-weight: 600;
-}
-.MuiMenuItem-root span.strength {
-    padding-left: .5rem;
-    color: #999;
-    font-size: .8rem;
-    font-weight: normal;
 }
 
-div.strength_main {
-    margin-left: 2rem;
-    border: 2px solid #ccc;
-    border-radius: .6rem;
-    overflow: hidden;
-    box-shadow: 0 0 8px 2px #ccc;
+form.main div.rank span.strength {
+    display: none;
 }
 
-div.strength_first_line {
-    display: flex;
-    align-items: flex-end;
-    border-bottom: 0;
-    padding: 0rem 0.2rem 0.3rem 2.5rem;
-    height: 2rem;
-    background: #fff;
+form.main div.strength {
+    width: calc(100% - 5rem);
+}
+form.main div.strength input {
+    font-weight: 800;
+    font-size: 1rem;
+    padding-bottom: 2px;
 }
 
-div.strength_first_line > div {
-    width: 48%;
-    padding-right: 2%;
-}
-
-div.strength_first_line div[role="combobox"] {
-    font-size: 0.9rem;
-}
-div.strength_first_line input {
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 0;
-}
-/* fix margin after 🔥 icon */
-div.strength_first_line .MuiInputBase-inputSizeSmall {
-    padding: 0;
-}
-div.strength_first_line .MuiInput-underline::after {
-    border-bottom: 2px solid #ffa71d;
-}
-
-
-div.strength_second_line {
-    background: #0cc160;
-    padding: .2rem .4rem;
-    padding-left: 2.4rem;
+form.main div.strength_second_line {
     display: flex;
     align-items: center;
-    height: 1rem;
+    margin-top: .2rem;
 }
 
 button.rank_move {
@@ -109,35 +41,102 @@ button.rank_move {
     height: 1rem;
     background: white;
     font-size: .8rem;
-    color: #0cc160;
+    border: 1px solid #999;
 }
-button.rank_move:hover,
-button.rank_move.Mui-focusVisible {
-    background: white;
+button.rank_move::before {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    border-radius: 100%;
+    overflow: hidden;
+    background: #999999;
+    opacity: 0;
+}
+button.rank_move:active::before {
+    animation: rippleOn 200ms forwards ease-out;
 }
 
-.strength_progress {
+@keyframes rippleOn {
+    0% {
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(4,4);
+    }
+}
+
+    /*button.rank_move:hover,
+button.rank_move.Mui-focusVisible {
+    background: white;
+}*/
+
+form.main span.strength_progress {
+    width: calc(100% - 4rem);
     margin: 0 1rem;
 }
 
 .strength_progress .MuiSlider-track {
-    color: #ebdb66;
+    color: #f7ac33;
     height: .5rem;
 }
 .strength_progress .MuiSlider-rail {
-    color: #1e8a4f;
+    color: #999999;
     height: .5rem;
 }
 .strength_progress .MuiSlider-thumb {
-    color: #ebdb66;
+    color: #f7ac33;
     width: .9rem;
     height: .9rem;
 }
 .strength_progress .MuiSlider-thumb::after {
-    width: .9rem;
-    height: .9rem;
+    width: 1rem;
+    height: 1rem;
 }
 .strength_progress .MuiSlider-thumb.Mui-active,
-.strength_progress .MuiSlider-thumb:hover {
-    box-shadow: 0px 0px 0px 5px rgba(235,219,102,0.3);
+.strength_progress .MuiSlider-thumb:hover,
+.strength_progress .MuiSlider-thumb.Mui-focusVisible {
+    box-shadow: 0px 0px 0px 6px rgba(235,219,102,0.4);
 }
+
+.strength_progress.scrollup .MuiSlider-track {
+    animation: 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s alternate scrollup-track;
+}
+.strength_progress.scrollup .MuiSlider-thumb {
+    animation: 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s alternate scrollup-thumb;
+}
+.strength_progress.scrolldown .MuiSlider-track {
+    animation: 200ms ease-in-out 0s normal scrollup-track;
+}
+.strength_progress.scrolldown .MuiSlider-thumb {
+    animation: 200ms ease-in-out 0s normal scrollup-thumb;
+}
+@keyframes scrollup-track {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+@keyframes scrollup-thumb {
+    from { left: 0%; }
+    to { left: 100%; }
+}
+
+.MuiMenuItem-root span.rank_ball {
+    font-size: 1rem;
+}
+
+.MuiMenuItem-root span.rank_number {
+    font-size: 1rem;
+    padding-left: .2rem;
+    font-weight: 600;
+}
+.MuiMenuItem-root span.strength {
+    padding-left: 1.2rem;
+    color: #999;
+    font-size: .9rem;
+    font-weight: normal;
+}
+
+
+

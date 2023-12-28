@@ -1,6 +1,17 @@
 {
     "translation": {
+        "name": "English",
+        "title": "Research Calc for Pokémon Sleep",
+        "how to use": "How to Use",
+        "change language": "Change Language",
+        "ok": "OK",
+        "close": "Close",
         "notice": "Using this tool is easy!\nSimply enter your Research Area and Snorlax strength.\nYou can know how many Pokémon will appear for each sleep score.",
+        "notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
+        "notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon.",
+        "research area": "Research area",
+        "strength": "Snorlax strength",
+        "bonus": "Event bonus",
         "area": [
             "Greengrass Isle",
             "Cyan Beach",
@@ -8,6 +19,7 @@
             "Snowdrop Tundra",
             "Lapis Lakeside"
         ],
+        "none": "None",
         "sleep twice": "Sleep twice a day",
         "total n pokemon prefix": "Total ",
         "total n pokemon suffix": "",

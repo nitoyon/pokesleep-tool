@@ -1,5 +1,26 @@
-html {
+html, body {
     background: #f9f9f9;
+    margin:0 ;
+    padding: 0;
+}
+
+div.App {
+    margin: .5rem;
+}
+
+div.appbar {
+    width: 100%;
+    background: #665500;
+    color: white;
+    margin: -.5rem;
+    padding: .2rem .5rem;
+    margin-bottom: .8rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+div.appbar div.title {
+    flex-grow: 1;
 }
 
 .rank_ball_basic { color: #ff0000; }
@@ -10,6 +31,13 @@ html {
 div.App div.notice {
     margin-bottom: .5rem;
     white-space: pre-wrap;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    border: 3px solid #ddd;
+
 }
 div.App div.notice p {
     margin: 0;
@@ -21,7 +49,7 @@ div.score_box {
 }
 
 div.preview {
-    margin-top: 1rem;
+    margin-top: .1rem;
 }
 
 div.preview_count {
@@ -90,6 +118,7 @@ div.preview_sleep div.power {
     font-weight: 500;
     font-size: .8rem;
     margin-top: -.2rem;
+    white-space: nowrap;
 }
 
 div.preview_sleep div.score_range {

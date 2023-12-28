@@ -6,7 +6,7 @@ import { t } from 'i18next'
 
 type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
-type PreviewScoreProps = {
+interface PreviewScoreProps {
     /** pokemon count */
     count: PokemonCount;
 
@@ -128,10 +128,10 @@ class PreviewScore extends React.Component<PreviewScoreProps> {
     }
 
     getScoreRangeForCount(count: PokemonCount, availableScore: number): ScoreRange {
-        const strength = this.props.data.strength;
+        const strength = this.props.data.strength * this.props.data.bonus;
         const powers = this.props.data.powers;
         const power = powers[count - 3];
-        const requiredStrength = Math.ceil(power / availableScore);
+        const requiredStrength = Math.ceil(power / this.props.data.bonus / availableScore);
 
         // calc minScore
         const minScore = Math.max(1, Math.ceil(power / strength));
@@ -214,8 +214,6 @@ class PreviewScore extends React.Component<PreviewScoreProps> {
             } else {
                 const rank = new Rank(range.requiredStrength,
                     this.props.data.ranks);
-                const percent = Math.floor((range.requiredStrength - rank.thisStrength) /
-                    (rank.nextStrength - rank.thisStrength) * 1000) / 10;
                 warningElement = <span>
                     {t('strength too low prefix')}
                     <strong>{t('num', {n: range.requiredStrength})} </strong>
