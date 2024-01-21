@@ -1,0 +1,19 @@
+{
+  "short_name": "Research Calc",
+  "name": "リサーチ数計算機 for ポケモンスリープ",
+  "description": "使い方はかんたん！ フィールドと総エナジーを入力するだけです。睡眠スコアごとの出現ポケモン数が分かります。",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "24x24"
+    },
+    {
+      "src": "logo192.png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#faffe9",
+  "background_color": "#ffffff"
+}
