@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
-    Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import SleepScore from '../SleepScore';
 import {getMinTimeForScore, getMaxTimeForScore} from '../PreviewScore';
 import { useTranslation } from 'react-i18next';

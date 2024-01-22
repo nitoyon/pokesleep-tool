@@ -1,6 +1,5 @@
 import './SleepScore.css';
 import React from 'react';
-import { t } from 'i18next'
 
 interface SleepScoreProps {
     score: number;
