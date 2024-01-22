@@ -19,20 +19,20 @@ export default function AboutDialog({open, onClose}: AboutDialogProps) {
             <Typography paragraph>
                     <Trans i18nKey="about1"
                         components={{
-                            profile: <a href={t('profile')}/>,
+                            profile: <a href={t('profile')}>profile</a>,
                         }}/>
                 </Typography>
                 <Typography paragraph>
                     <Trans i18nKey="about2"
                         components={{
-                            x: <a href="https://twitter.com/nitoyon"/>,
-                            github: <a href="https://github.com/nitoyon/pokesleep-tool"/>,
+                            x: <a href="https://twitter.com/nitoyon">@nitoyon</a>,
+                            github: <a href="https://github.com/nitoyon/pokesleep-tool">GitHub</a>,
                         }}/>
                 </Typography>
                 <Typography paragraph>
                     <Trans i18nKey="about3"
                         components={{
-                            wiki: <a href="https://wikiwiki.jp/poke_sleep/"/>,
+                            wiki: <a href="https://wikiwiki.jp/poke_sleep/">wiki</a>,
                         }}/>
                 </Typography>
             </DialogContent>
