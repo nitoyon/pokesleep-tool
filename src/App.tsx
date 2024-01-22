@@ -73,6 +73,16 @@ export default function App({config}: {config:AppConfig}) {
         if (description !== null) {
             description.content = t('notice');
         }
+
+        // update URL
+        let url = document.location.href.replace(/index.*\.html/, '');
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        if (i18n.language !== "en") {
+            url += "index." + i18n.language + ".html";
+        }
+        window.history.replaceState(null, '', url);
     }
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
