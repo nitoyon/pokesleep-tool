@@ -56,7 +56,10 @@ module.exports = {
   appPath: resolveApp('.'),
   appBuild: resolveApp(buildPath),
   appPublic: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
+  appHtmls: fs
+    .readdirSync(resolveApp('public'))
+    .filter(f => f.endsWith('.html'))
+    .map(f => path.join(resolveApp('public'), f)),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
