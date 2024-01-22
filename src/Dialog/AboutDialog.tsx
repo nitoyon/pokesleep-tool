@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 interface AboutDialogProps {
     /** Whether dialog is open or not */
@@ -16,9 +16,25 @@ export default function AboutDialog({open, onClose}: AboutDialogProps) {
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>{t('about')}</DialogTitle>
             <DialogContent dividers>
-                <Typography paragraph>{t('about1')}</Typography>
-                <Typography paragraph>{t('about2')}</Typography>
-                <Typography paragraph>{t('about3')}</Typography>
+            <Typography paragraph>
+                    <Trans i18nKey="about1"
+                        components={{
+                            profile: <a href={t('profile')}/>,
+                        }}/>
+                </Typography>
+                <Typography paragraph>
+                    <Trans i18nKey="about2"
+                        components={{
+                            x: <a href="https://twitter.com/nitoyon"/>,
+                            github: <a href="https://github.com/nitoyon/pokesleep-tool"/>,
+                        }}/>
+                </Typography>
+                <Typography paragraph>
+                    <Trans i18nKey="about3"
+                        components={{
+                            wiki: <a href="https://wikiwiki.jp/poke_sleep/"/>,
+                        }}/>
+                </Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>{t('close')}</Button>
