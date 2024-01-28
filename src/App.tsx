@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InputArea, InputAreaData, fields } from './InputArea';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
@@ -36,8 +36,8 @@ export default function App({config}: {config:AppConfig}) {
     const [strength, setStrength] = useState(config.strength);
     const [bonus, setBonus] = useState(config.bonus);
     const [secondSleep, setSecondSleep] = useState(config.secondSleep);
-    const [, setLanguage] = useState(config.language);
-    updateHtml();
+    const [language, setLanguage] = useState(config.language);
+    useEffect(updateHtml, [language]);
 
     const data:InputAreaData = {
         fieldIndex, strength, bonus, secondSleep,
@@ -56,6 +56,7 @@ export default function App({config}: {config:AppConfig}) {
     }
 
     function onLanguageChange(value: string) {
+        console.log("language change")
         setLanguage(value);
         i18n.changeLanguage(value);
         saveConfig({...config, language: value});
