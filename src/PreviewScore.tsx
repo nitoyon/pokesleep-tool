@@ -211,7 +211,7 @@ function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
     }
 
     // find second count
-    const powerLeft = (100 - range.minScore) * data.strength;
+    const powerLeft = (100 - range.minScore) * data.strength * data.bonus;
     let secondCount = 3;
     for (let i = 0; i < powers.length; i++) {
         if (powerLeft < powers[i]) {
