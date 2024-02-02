@@ -8,6 +8,10 @@ form.main div[role="combobox"] {
     padding-bottom: 2px;
 }
 
+span.field_icon {
+    padding-right: .2rem;
+}
+
 form.main div.rank {
     width: 4rem;
     margin-right: 1rem;

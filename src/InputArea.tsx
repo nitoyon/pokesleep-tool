@@ -115,7 +115,8 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     for (const field of fields) {
         fieldMenuItems.push(
             <MenuItem key={field.index} value={field.index}>
-                {field.emoji}{t(`area.${field.index}`)}
+                <span className="field_icon">{field.emoji}</span>
+                {t(`area.${field.index}`)}
             </MenuItem>
         );
     }
@@ -139,6 +140,10 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         <div>{t("research area")}:</div>
         <div>
             <TextField variant="standard" size="small" select value={data.fieldIndex}
+                SelectProps={{ MenuProps: {
+                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                    transformOrigin: { vertical: "top", horizontal: "left" },
+                }}}
                 onChange={onFieldChange}>
                 {fieldMenuItems}
             </TextField>
