@@ -2,7 +2,7 @@ import React from 'react';
 import { InputAreaData, fields } from './InputArea'
 import { Rank } from './Rank';
 import SleepScore from './SleepScore'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 
 type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
@@ -104,9 +104,10 @@ export default function PreviewScore(props:PreviewScoreProps) {
         return (
             <div className="preview_count">
                 <div className="sum-tooltip">
-                    {t('total n pokemon prefix')}
-                    <strong>{sum}</strong>
-                    {t('total n pokemon suffix')}
+                    <Trans i18nKey="total n pokemon"
+                        components={{
+                            n: <strong>{sum}</strong>,
+                        }}/>
                 </div>
                 <div className="preview_grid">
                     {firstElement}
@@ -143,13 +144,16 @@ function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
             const percent = Math.floor((range.requiredStrength - rank.thisStrength) /
                 (rank.nextStrength - rank.thisStrength) * 100 + 0.5);
             warningElement = <span>
-                {t('strength too low prefix')}
-                <strong>{t('num', {n: range.requiredStrength})} </strong>
-                 (<span className={"rank_ball_" + rank.type}>◓</span>
-                <span className="rank_number">{rank.rankNumber}</span>
-                <span> + {percent}%</span>
-                )
-                {t('strength too low suffix')}
+                <Trans i18nKey="strength too low"
+                    components={{strength:
+                        <>
+                            <strong>{t('num', {n: range.requiredStrength})} </strong>
+                            (<span className={"rank_ball_" + rank.type}>◓</span>
+                            <span className="rank_number">{rank.rankNumber}</span>
+                            <span> + {percent}%</span>
+                            )
+                        </>
+                    }}/>
             </span>;
         }
 
