@@ -2,7 +2,7 @@ import React from 'react';
 import { InputAreaData, fields } from './InputArea'
 import { Rank } from './Rank';
 import SleepScore from './SleepScore'
-import { t } from 'i18next'
+import i18next, { t } from 'i18next'
 
 type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -20,6 +20,23 @@ interface MultipleScoreRange {
 
     /** second sleep range */
     secondSleep: ScoreRange | null;
+}
+
+class TimeLength {
+    /** Hour */
+    h: number;
+
+    /** Minute */
+    m: number;
+
+    constructor(h:number, m:number) {
+        this.h = h;
+        this.m = m;
+    }
+
+    toString(t:typeof i18next.t):string {
+        return t('hhmm', {h: this.h, m: this.m});
+    }
 }
 
 interface ScoreRange {
@@ -42,7 +59,7 @@ interface ScoreRange {
     minScore: number;
 
     /** sleep time to get minScore */
-    minTime: string;
+    minTime: TimeLength;
 
     /** power when we get minScore */
     minPower: number;
@@ -51,7 +68,7 @@ interface ScoreRange {
     maxScore: number;
 
     /** sleep time to get maxScore */
-    maxTime: string;
+    maxTime: TimeLength;
 
     /** poewr when we get maxScore */
     maxPower: number;
@@ -149,7 +166,7 @@ function renderRange(range:ScoreRange, data:InputAreaData) {
                 <div className="sleep_time">
                     <SleepScore score={range.minScore}/>
                     <div className="time">
-                        {range.minTime}
+                        {range.minTime.toString(t)}
                         <div className="time_power">{t("num", {n: range.minPower})}</div>
                     </div>
                 </div>
@@ -159,7 +176,7 @@ function renderRange(range:ScoreRange, data:InputAreaData) {
                 <div className="sleep_time">
                     <SleepScore score={range.maxScore}/>
                     <div className="time">
-                        {range.maxTime}
+                        {range.maxTime.toString(t)}
                         <div className="time_power">{t("num", {n: range.maxPower})}</div>
                     </div>
                 </div>
@@ -171,13 +188,13 @@ function renderRange(range:ScoreRange, data:InputAreaData) {
 /**
  * Get minimum sleep time to get the score
  * @param score score
- * @returns sleep time
+ * @returns sleep time length
  */
-export function getMinTimeForScore(score: number): string {
+export function getMinTimeForScore(score: number): TimeLength {
     const minutes = Math.max(0, Math.ceil((score - 0.5) / 100 * 8.5 * 60));
     const h = Math.floor(minutes / 60);
     const m = minutes % 60;
-    return t('hhmm', {h, m});
+    return new TimeLength(h, m);
 }
 
 /**
@@ -185,11 +202,11 @@ export function getMinTimeForScore(score: number): string {
  * @param score score
  * @returns sleep time
  */
-export function getMaxTimeForScore(score: number): string {
+export function getMaxTimeForScore(score: number): TimeLength {
     const minutes = Math.min(510, Math.ceil((score + 1 - 0.5) / 100 * 8.5 * 60) - 1);
     const h = Math.floor(minutes / 60);
     const m = minutes % 60;
-    return t('hhmm', {h, m});
+    return new TimeLength(h, m);
 }
 
 /**

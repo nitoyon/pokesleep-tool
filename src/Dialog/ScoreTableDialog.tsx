@@ -19,9 +19,9 @@ export default function ScoreTableDialog({open, onClose}: ScoreTableDialogProps)
     for (let i = 0; i <= 100; i++) {
         scores.push(<React.Fragment key={i}>
             <SleepScore score={i}/>
-            <span>{getMinTimeForScore(i)}</span>
+            <span>{getMinTimeForScore(i).toString(t)}</span>
             <span>{t('range separator')}</span>
-            <span>{getMaxTimeForScore(i)}</span>
+            <span>{getMaxTimeForScore(i).toString(t)}</span>
         </React.Fragment>);
     }
 
