@@ -2,7 +2,8 @@ import React from 'react';
 import { InputAreaData, fields } from './InputArea'
 import { Rank } from './Rank';
 import SleepScore from './SleepScore'
-import i18next, { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 
 type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -75,9 +76,11 @@ interface ScoreRange {
 }
 
 export default function PreviewScore(props:PreviewScoreProps) {
+    const { t }  = useTranslation();
+
     const ranges:MultipleScoreRange = getScoreRange(props);
     const range = ranges.firstSleep;
-    const firstElement = renderRange(range, props.data);
+    const firstElement = renderRange(range, props.data, t);
     if (!range.canGet || range.tooMuch) {
         return (
             <div className="preview_count">
@@ -96,7 +99,7 @@ export default function PreviewScore(props:PreviewScoreProps) {
             </div>
         )
     } else {
-        const secondElement = renderRange(ranges.secondSleep, props.data);
+        const secondElement = renderRange(ranges.secondSleep, props.data, t);
         const sum = range.count + ranges.secondSleep.count;
         return (
             <div className="preview_count">
@@ -114,7 +117,7 @@ export default function PreviewScore(props:PreviewScoreProps) {
     }
 }
 
-function renderRange(range:ScoreRange, data:InputAreaData) {
+function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
     const countElement = (
         <div className="count_box">
             <div className="count">
