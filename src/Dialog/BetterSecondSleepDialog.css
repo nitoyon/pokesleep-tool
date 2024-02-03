@@ -1,0 +1,34 @@
+div.better_dialog h3 {
+    margin-bottom: .2rem;
+    font-size: 1.1rem;
+}
+
+div.better_preview {
+    padding: 0 .5rem;
+    display: grid;
+    grid-template-columns: 2.5rem auto;
+    gap: .5rem .3rem;
+    align-items: center;
+}
+
+div.better_preview div.ball{
+    color: #ff6347;
+    text-align: center;
+    align-items: center;
+    font-size: 1.3rem;
+}
+div.better_preview span.ball_value {
+    font-size: 1.3rem;
+}
+
+div.better_preview span.strength {
+    color: #ff944b;
+    text-align: center;
+}
+div.better_preview span.strength svg {
+    transform: scale(1.2);
+}
+
+div.better_preview span.strength_value {
+    font-size: 1.2rem;
+}

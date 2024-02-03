@@ -1,7 +1,10 @@
 import React from 'react';
+import { Button } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { InputAreaData, fields } from './InputArea'
 import { Rank } from './Rank';
 import SleepScore from './SleepScore'
+import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 
@@ -13,6 +16,9 @@ interface PreviewScoreProps {
 
     /** form data */
     data: InputAreaData;
+
+    /** second sleep detail is clicked */
+    onSecondSleepDetailClick: (data:BetterSecondSleepData)=>void;
 }
 
 interface MultipleScoreRange {
@@ -21,6 +27,9 @@ interface MultipleScoreRange {
 
     /** second sleep range */
     secondSleep: ScoreRange | null;
+
+    /** required strength to get 1 more pokemon on the second research */
+    nextStrength: number | null;
 }
 
 class TimeLength {
@@ -98,24 +107,57 @@ export default function PreviewScore(props:PreviewScoreProps) {
                 </div>
             </div>
         )
-    } else {
-        const secondElement = renderRange(ranges.secondSleep, props.data, t);
-        const sum = range.count + ranges.secondSleep.count;
-        return (
-            <div className="preview_count">
-                <div className="sum-tooltip">
-                    <Trans i18nKey="total n pokemon"
-                        components={{
-                            n: <strong>{sum}</strong>,
-                        }}/>
-                </div>
-                <div className="preview_grid">
-                    {firstElement}
-                    {secondElement}
-                </div>
-            </div>
-        )
     }
+    const secondElement = renderRange(ranges.secondSleep, props.data, t);
+    const sum = range.count + ranges.secondSleep.count;
+    let nextElement = null;
+    if (ranges.nextStrength !== null) {
+        const count = ranges.secondSleep.count + 1;
+        const secondRequiredStrength = ranges.nextStrength - props.data.strength;
+
+        const onDetailClick = function(event:React.MouseEvent<HTMLElement>) {
+            const data:BetterSecondSleepData = {
+                first: {
+                    count: ranges.firstSleep.count,
+                    score: ranges.firstSleep.minScore,
+                    strength: props.data.strength,
+                },
+                second: {
+                    count,
+                    score: 100 - ranges.firstSleep.minScore,
+                    strength: props.data.strength + secondRequiredStrength,
+                },
+            };
+            props.onSecondSleepDetailClick(data);
+        }
+        
+        nextElement = <div className="meet1more">
+            <InfoOutlinedIcon/>
+                <div>
+                    <Trans i18nKey="next strength to get 1 more pokemon"
+                        components={{
+                            count: <strong>{count}</strong>,
+                            strength: <strong>{t("num", {n: secondRequiredStrength})}</strong>,
+                        }}/>
+                    <Button onClick={onDetailClick}>[{t("details")}]</Button>
+                </div>
+            </div>;
+    }
+    return (
+        <div className="preview_count">
+            <div className="sum-tooltip">
+                <Trans i18nKey="total n pokemon"
+                    components={{
+                        n: <strong>{sum}</strong>,
+                    }}/>
+            </div>
+            <div className="preview_grid">
+                {firstElement}
+                {secondElement}
+            </div>
+            {nextElement}
+        </div>
+    )
 }
 
 function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
@@ -225,9 +267,10 @@ function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
     const range:ScoreRange = getScoreRangeForCount(count, data, 100);
     const powers = fields[data.fieldIndex].powers;
 
-    let ret = {
+    let ret: MultipleScoreRange = {
         firstSleep: range,
         secondSleep: null,
+        nextStrength: null,
     };
 
     if (!data.secondSleep || !range.canGet || range.tooMuch || range.minScore === 100) {
@@ -258,9 +301,19 @@ function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
     ret.firstSleep.maxTime = getMaxTimeForScore(ret.firstSleep.maxScore);
     ret.firstSleep.maxPower = ret.firstSleep.maxScore * data.strength;
 
+    // calc next strength
+    let nextStrength = null;
+    if (secondRange.count < 8) {
+        const nextCount = secondRange.count + 1 as PokemonCount;
+        const oneMoreRange:ScoreRange = getScoreRangeForCount(nextCount, data,
+            100 - range.minScore);
+        nextStrength = oneMoreRange.requiredStrength;
+    }
+
     return {
         firstSleep: range,
         secondSleep: secondRange,
+        nextStrength,
     };
 }
 

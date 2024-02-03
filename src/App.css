@@ -148,6 +148,25 @@ div.time div.time_power {
     margin-top: -.2rem;
 }
 
+div.meet1more {
+    color: #888;
+    font-size: .95rem;
+    margin-top: .8rem;
+    display: flex;
+    gap: .5rem;
+}
+div.meet1more svg {
+    color: #bbb;
+    padding-top: .2rem;
+}
+div.meet1more strong {
+    font-size: 1rem;
+}
+div.meet1more button {
+    padding: 0;
+    min-width: 2rem;
+}
+
 div.warning {
     padding-left: 2.2rem;
     text-indent: -1.2rem;

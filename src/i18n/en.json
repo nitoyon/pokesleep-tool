@@ -8,6 +8,7 @@
         "change language": "Change Language",
         "ok": "OK",
         "close": "Close",
+        "details": "Details",
         "research area": "Research area",
         "strength": "Snorlax strength",
         "bonus": "Event bonus",
@@ -30,10 +31,14 @@
         "minute_other": "{{count}}mins",
         "strength too low": "Snorlax strength should be at least <strength/>.",
         "strength too much": "Too much snorlax strength.",
+        "next strength to get 1 more pokemon": "If you get <strength/> strength by the second sleep, you will encounter <count/> Pokémon during the second sleep session.",
 
         "notice": "Using this tool is easy!\nSimply enter your Research Area and Snorlax strength.\nYou can know how many Pokémon will appear for each sleep score.",
         "notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
         "notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon.",
+
+        "first sleep": "First sleep",
+        "second sleep": "Second sleep",
 
         "about1": "This tool is an unofficial tool developed by <profile>nitoyon</profile>.",
         "profile": "http://tech.nitoyon.com/en/about/",
