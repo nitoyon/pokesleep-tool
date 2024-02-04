@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import SleepScore from '../SleepScore';
 import {getMinTimeForScore, getMaxTimeForScore} from '../PreviewScore';
@@ -45,13 +45,13 @@ export default function BetterSecondSleepDialog({open, onClose, data}: BetterSec
             <span className="strength"><LocalFireDepartmentIcon/></span>
             <span className="strength_value">
                 {t("num", {n: entry.strength})}
-                {i == 1 && " " + t('range separator')}
+                {i === 1 && " " + t('range separator')}
             </span>
             <SleepScore score={entry.score}/>
             <span className="time_value">
                 <span>{minTime}</span>
                 <span> {t('range separator')} </span>
-                {i == 0 && <span>{maxTime}</span>}
+                {i === 0 && <span>{maxTime}</span>}
             </span>
         </div>);
     }

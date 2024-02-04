@@ -38,7 +38,7 @@ export default function App({config}: {config:AppConfig}) {
     const [bonus, setBonus] = useState(config.bonus);
     const [secondSleep, setSecondSleep] = useState(config.secondSleep);
     const [language, setLanguage] = useState(config.language);
-    useEffect(updateHtml, [language]);
+    useEffect(updateHtml, [language, i18n, t]);
 
     const data:InputAreaData = {
         fieldIndex, strength, bonus, secondSleep,
@@ -57,7 +57,6 @@ export default function App({config}: {config:AppConfig}) {
     }
 
     function onLanguageChange(value: string) {
-        console.log("language change")
         setLanguage(value);
         i18n.changeLanguage(value);
         saveConfig({...config, language: value});
@@ -69,7 +68,7 @@ export default function App({config}: {config:AppConfig}) {
         const manifest = document.querySelector<HTMLLinkElement>("link[rel='manifest']");
         if (manifest !== null) {
             const current = manifest.href;
-            manifest.href = current.replace(/manifest.*/, "manifest." + i18n.language + ".json");
+            manifest.href = current.replace(/manifest.*/, "manifest." + language + ".json");
         }
         const description = document.querySelector<HTMLMetaElement>("meta[name='description']");
         if (description !== null) {
@@ -81,8 +80,8 @@ export default function App({config}: {config:AppConfig}) {
         if (!url.endsWith("/")) {
             url += "/";
         }
-        if (i18n.language !== "en") {
-            url += "index." + i18n.language + ".html";
+        if (language !== "en") {
+            url += "index." + language + ".html";
         }
         window.history.replaceState(null, '', url);
     }
