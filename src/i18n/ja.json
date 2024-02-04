@@ -26,7 +26,7 @@
         "hhmm": "{{h}}時間{{m}}分",
         "strength too low": "エナジーが <strength/> 必要です。",
         "strength too much": "エナジーが多すぎます。",
-        "next strength to get 1 more pokemon": "2回目睡眠までに <strength/> エナジーを稼ぐと、2回目のリサーチで <count/> 体に出会えます。",
+        "next strength to get 1 more pokemon": "2回目睡眠までに <strength2/> エナジーを稼ぐと、2回目のリサーチで <count2/> 体に出会えます (※1回目の睡眠スコアが <score1/> のとき)。",
 
         "notice": "使い方はかんたん！ フィールドと総エナジーを入力するだけです。睡眠スコアごとの出現ポケモン数が分かります。",
         "notice detail1": "グッドスリープデーの間は、[$t(bonus)] の倍率を変更するのを忘れずに。",

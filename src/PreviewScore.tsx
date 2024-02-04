@@ -136,8 +136,9 @@ export default function PreviewScore(props:PreviewScoreProps) {
                 <div>
                     <Trans i18nKey="next strength to get 1 more pokemon"
                         components={{
-                            count: <strong>{count}</strong>,
-                            strength: <strong>{t("num", {n: secondRequiredStrength})}</strong>,
+                            score1: <strong>{ranges.firstSleep.minScore}</strong>,
+                            count2: <strong>{count}</strong>,
+                            strength2: <strong>{t("num", {n: secondRequiredStrength})}</strong>,
                         }}/>
                     <Button onClick={onDetailClick}>[{t("details")}]</Button>
                 </div>

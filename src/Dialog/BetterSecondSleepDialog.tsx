@@ -61,8 +61,9 @@ export default function BetterSecondSleepDialog({open, onClose, data}: BetterSec
             <DialogContent dividers className="better_dialog">
                 <Trans i18nKey="next strength to get 1 more pokemon"
                     components={{
-                        count: <strong>{data.second.count}</strong>,
-                        strength: <strong>{t("num", {n: data.second.strength - data.first.strength})}</strong>,
+                        count2: <strong>{data.second.count}</strong>,
+                        score1: <strong>{data.first.score}</strong>,
+                        strength2: <strong>{t("num", {n: data.second.strength - data.first.strength})}</strong>,
                     }}/>
                 <h3>{t("first sleep")}</h3>
                 <div>{details[0]}</div>
