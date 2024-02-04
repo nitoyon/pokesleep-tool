@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/pokesleep-tool/static/css/main.c3dda1f5.css",
-    "main.js": "/pokesleep-tool/static/js/main.3358e1ba.js",
+    "main.css": "/pokesleep-tool/static/css/main.434f0b19.css",
+    "main.js": "/pokesleep-tool/static/js/main.fbc99594.js",
     "index.ja.html": "/pokesleep-tool/index.ja.html",
     "index.html": "/pokesleep-tool/index.html",
-    "main.c3dda1f5.css.map": "/pokesleep-tool/static/css/main.c3dda1f5.css.map",
-    "main.3358e1ba.js.map": "/pokesleep-tool/static/js/main.3358e1ba.js.map"
+    "main.434f0b19.css.map": "/pokesleep-tool/static/css/main.434f0b19.css.map",
+    "main.fbc99594.js.map": "/pokesleep-tool/static/js/main.fbc99594.js.map"
   },
   "entrypoints": [
-    "static/css/main.c3dda1f5.css",
-    "static/js/main.3358e1ba.js"
+    "static/css/main.434f0b19.css",
+    "static/js/main.fbc99594.js"
   ]
 }
