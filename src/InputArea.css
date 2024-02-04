@@ -38,6 +38,7 @@ form.main div.strength_second_line {
     display: flex;
     align-items: center;
     margin-top: .2rem;
+    user-select: none;
 }
 
 button.rank_move {
