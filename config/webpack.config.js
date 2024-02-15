@@ -95,6 +95,8 @@ module.exports = function (webpackEnv) {
   const isEnvProductionProfile =
     isEnvProduction && process.argv.includes('--profile');
 
+  const noMinimize = process.argv.includes('--no-minimize');
+
   // We will provide `paths.publicUrlOrPath` to our app
   // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
@@ -208,7 +210,7 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
+        ? (noMinimize ? 'static/js/[name].js' : 'static/js/[name].[contenthash:8].js')
         : isEnvDevelopment && 'static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
@@ -245,7 +247,7 @@ module.exports = function (webpackEnv) {
       level: 'none',
     },
     optimization: {
-      minimize: isEnvProduction,
+      minimize: isEnvProduction && !noMinimize,
       minimizer: [
         // This is only used in production mode
         new TerserPlugin({
