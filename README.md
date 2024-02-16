@@ -34,6 +34,10 @@ Your app is ready to be deployed!
 
 Run `npm run build -- --no-minimize` to read the unminified JavaScript source code.
 
+### `npm run sync`
+
+Syncs area data from wiki.
+
 ## License
 
 MIT
