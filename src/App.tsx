@@ -76,14 +76,16 @@ export default function App({config}: {config:AppConfig}) {
         }
 
         // update URL
-        let url = document.location.href.replace(/index.*\.html/, '');
+        let url = document.location.origin +
+            document.location.pathname.replace(/index.*\.html/, '');
+        const query = document.location.search;
         if (!url.endsWith("/")) {
             url += "/";
         }
         if (language !== "en") {
             url += "index." + language + ".html";
         }
-        window.history.replaceState(null, '', url);
+        window.history.replaceState(null, '', url + query);
     }
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
