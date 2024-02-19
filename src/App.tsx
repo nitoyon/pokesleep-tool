@@ -1,24 +1,14 @@
 import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { InputArea, InputAreaData, fields } from './InputArea';
-import ToolBar from './ToolBar';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import PreviewScore from './PreviewScore';
-import { ThemeProvider, createTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next'
 
 interface AppConfig extends InputAreaData {
     /** current language */
     language: string;
 }
-
-const theme = createTheme({
-    typography: {
-        allVariants: {
-            fontFamily: `"M PLUS 1p"`,
-        }
-    }
-});
 
 export default function App({config}: {config:AppConfig}) {
     const { t, i18n } = useTranslation();
@@ -97,21 +87,18 @@ export default function App({config}: {config:AppConfig}) {
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <ToolBar/>
-            <div className="content">
-                <InputArea data={data} onChange={onChange}/>
-                <div className="preview">
-                    <PreviewScore count={4} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                    <PreviewScore count={5} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                    <PreviewScore count={6} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                    <PreviewScore count={7} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                    <PreviewScore count={8} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                </div>
+        <div className="content">
+            <InputArea data={data} onChange={onChange}/>
+            <div className="preview">
+                <PreviewScore count={4} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={5} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={6} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={7} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={8} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
             </div>
             <BetterSecondSleepDialog data={betterSecondSleepData}
                 open={isBetterSecondSleepDialogOpen} onClose={onBetterSecondSleepDialogClose}/>
-        </ThemeProvider>
+        </div>
     );
 }
 
