@@ -8,15 +8,13 @@ interface LanguageDialogProps {
     open: boolean;
     /** callback function when dialog is closed */
     onClose: () => void;
-    /** callback function when data is changed */
-    onChange: (lang: string) => void;
 }
 
-export default function LanguageDialog({open, onClose, onChange}: LanguageDialogProps) {
+export default function LanguageDialog({open, onClose}: LanguageDialogProps) {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
     const onLanguageChange = (event: React.MouseEvent<HTMLElement>, value: string) => {
-        onChange(value);
+        i18n.changeLanguage(value);
     }
 
     const buttons = [];

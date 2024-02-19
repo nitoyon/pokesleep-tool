@@ -1,15 +1,10 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { InputArea, InputAreaData, fields } from './InputArea';
-import AboutDialog from './Dialog/AboutDialog';
+import ToolBar from './ToolBar';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
-import HowToDialog from './Dialog/HowToDialog';
-import LanguageDialog from './Dialog/LanguageDialog';
-import ScoreTableDialog from './Dialog/ScoreTableDialog';
 import PreviewScore from './PreviewScore';
-import { IconButton, Menu, MenuItem } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next'
 
 interface AppConfig extends InputAreaData {
@@ -32,7 +27,6 @@ export default function App({config}: {config:AppConfig}) {
     const [bonus, setBonus] = useState(config.bonus);
     const [secondSleep, setSecondSleep] = useState(config.secondSleep);
     const [language, setLanguage] = useState(config.language);
-    useEffect(updateHtml, [language, i18n, t]);
 
     const data:InputAreaData = {
         fieldIndex, strength, bonus, secondSleep,
@@ -50,14 +44,19 @@ export default function App({config}: {config:AppConfig}) {
         updateState(value);
     }
 
-    function onLanguageChange(value: string) {
+    const onLanguageChanged = useCallback((value:string) => {
         setLanguage(value);
-        i18n.changeLanguage(value);
         saveConfig({...config, language: value});
-        updateHtml();
-    }
+    }, [config, setLanguage]);
 
-    function updateHtml() {
+    useEffect(() => {
+        i18n.on("languageChanged", onLanguageChanged);
+        return () => {
+            i18n.off("languageChanged", onLanguageChanged);
+        };
+    }, [i18n, onLanguageChanged]);
+
+    const updateHtml = useCallback(() => {
         document.title = t("title");
         const manifest = document.querySelector<HTMLLinkElement>("link[rel='manifest']");
         if (manifest !== null) {
@@ -80,51 +79,12 @@ export default function App({config}: {config:AppConfig}) {
             url += "index." + language + ".html";
         }
         window.history.replaceState(null, '', url + query);
-    }
+    }, [language, t]);
+    useEffect(updateHtml, [updateHtml, language, i18n, t]);
 
-    const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
-    const isMoreMenuOpen = Boolean(moreMenuAnchor);
-    const moreButtonClick = (event: React.MouseEvent<HTMLElement>) => {
-        setMoreMenuAnchor(event.currentTarget);
-    };
-    const onMoreMenuClose = () => {
-        setMoreMenuAnchor(null);
-    };
-    const [isHowToDialogOpen, setIsHowToDialogOpen] = useState(false);
-    const howToMenuClick = () => {
-        setIsHowToDialogOpen(true);
-        setMoreMenuAnchor(null);
-    };
-    const onHowToDialogClose = () => {
-        setIsHowToDialogOpen(false);
-    };
-    const [isScoreTableDialogOpen, setIsScoreTableDialogOpen] = useState(false);
-    const scoreTableMenuClick = () => {
-        setIsScoreTableDialogOpen(true);
-        setMoreMenuAnchor(null);
-    };
-    const onScoreTableDialogClose = () => {
-        setIsScoreTableDialogOpen(false);
-    };
-    const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false);
-    const aboutMenuClick = () => {
-        setIsAboutDialogOpen(true);
-        setMoreMenuAnchor(null);
-    };
-    const onAboutDialogClose = () => {
-        setIsAboutDialogOpen(false);
-    };
     const [isBetterSecondSleepDialogOpen, setBetterSecondSleepOpen] = useState(false);
     const onBetterSecondSleepDialogClose = () => {
         setBetterSecondSleepOpen(false);
-    };
-    const [isLanguageDialogOpen, setIsLanguageDialogOpen] = useState(false);
-    const languageMenuClick = () => {
-        setIsLanguageDialogOpen(true);
-        setMoreMenuAnchor(null);
-    };
-    const onLanguageDialogClose = () => {
-        setIsLanguageDialogOpen(false);
     };
 
     const [betterSecondSleepData, setBetterSecondSleepData] = useState<BetterSecondSleepData>({
@@ -138,19 +98,7 @@ export default function App({config}: {config:AppConfig}) {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className="appbar">
-                <div className="title">{t('title')}</div>
-                <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
-                    <MoreIcon />
-                </IconButton>
-                <Menu anchorEl={moreMenuAnchor} open={isMoreMenuOpen}
-                    onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-                    <MenuItem onClick={howToMenuClick}>{t('how to use')}</MenuItem>
-                    <MenuItem onClick={scoreTableMenuClick}>{t('sleep score table')}</MenuItem>
-                    <MenuItem onClick={aboutMenuClick}>{t('about')}</MenuItem>
-                    <MenuItem onClick={languageMenuClick}>{t('change language')}</MenuItem>
-                </Menu>
-            </div>
+            <ToolBar/>
             <div className="content">
                 <InputArea data={data} onChange={onChange}/>
                 <div className="preview">
@@ -161,13 +109,8 @@ export default function App({config}: {config:AppConfig}) {
                     <PreviewScore count={8} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
                 </div>
             </div>
-            <AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose}/>
             <BetterSecondSleepDialog data={betterSecondSleepData}
                 open={isBetterSecondSleepDialogOpen} onClose={onBetterSecondSleepDialogClose}/>
-            <HowToDialog open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
-            <ScoreTableDialog open={isScoreTableDialogOpen} onClose={onScoreTableDialogClose}/>
-            <LanguageDialog open={isLanguageDialogOpen}
-                onClose={onLanguageDialogClose} onChange={onLanguageChange}/>
         </ThemeProvider>
     );
 }
