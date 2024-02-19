@@ -15,12 +15,6 @@ import { useTranslation } from 'react-i18next'
 interface AppConfig extends InputAreaData {
     /** current language */
     language: string;
-    /** Whether more menu is open */
-    moreMenuAnchor: HTMLElement | null;
-    /** Whether about dialog is open */
-    isHowToDialogOpen: boolean;
-    /** Whether language dialog is open */
-    isLanguageDialogOpen: boolean;
 }
 
 const theme = createTheme({
@@ -185,9 +179,6 @@ export function loadConfig(language:string): AppConfig {
         bonus: 1,
         secondSleep: false,
         language,
-        moreMenuAnchor: null,
-        isHowToDialogOpen: false,
-        isLanguageDialogOpen: false,
     };
 
     const data = localStorage.getItem("ResearchCalcPokeSleep");
