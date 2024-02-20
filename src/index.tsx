@@ -1,7 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App, {loadConfig} from './App';
+import ToolBar from './ToolBar';
+import { ThemeProvider, createTheme } from '@mui/material';
 import i18n from './i18n';
+
+const theme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"M PLUS 1p"`,
+        }
+    }
+});
 
 (function() {
     // set default language using browser language
@@ -20,7 +30,10 @@ import i18n from './i18n';
     const root = ReactDOM.createRoot(elm);
     root.render(
         <React.StrictMode>
-            <App config={config}/>
+            <ThemeProvider theme={theme}>
+                <ToolBar/>
+                <App config={config}/>
+            </ThemeProvider>
         </React.StrictMode>
     );
 

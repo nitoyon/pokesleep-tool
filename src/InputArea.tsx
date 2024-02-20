@@ -1,7 +1,7 @@
 import './InputArea.css';
 import { Rank } from './Rank';
 import fields_ from './field.json';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ArrowButton from './ArrowButton';
@@ -13,7 +13,7 @@ interface InputAreaProps {
     data: InputAreaData;
 
     /** callback function when strength is changed */
-    onChange: (value: InputAreaData) => void;
+    onChange: (value: Partial<InputAreaData>) => void;
 }
 
 interface FieldData {
@@ -56,43 +56,40 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const strength = data.strength;
     const rank = new Rank(strength, field.ranks);
 
-    function setRank(rankIndex: number) {
+    const setRank = useCallback((rankIndex: number) => {
         if (rankIndex < 0 || rankIndex >= field.ranks.length) { return; }
         const strength = field.ranks[rankIndex];
-        onchange?.({...data, strength: strength});
-    }
+        onchange?.({strength});
+    }, [field.ranks, onchange]);
 
-    function moveRank(diff: number) {
+    const moveRank = useCallback((diff: number) => {
         if (diff === -1) {
             setRank(rank.index - 1);
         } else {
             setRank(rank.index + 1);
         }
-    }
+    }, [setRank, rank.index]);
+    const onRankChange = useCallback((e:any) => {
+        const rankIndex = e.target.value as number;
+        setRank(rankIndex);
+    }, [setRank]);
+    const onRankDownClick = useCallback(() => { moveRank(-1); }, [moveRank]);
+    const onRankUpClick = useCallback(() => { moveRank(1); }, [moveRank]);
 
-    function onFieldChange(e: any) {
+    const onFieldChange = useCallback((e: any) => {
         const fieldIndex = e.target.value as number;
-        onchange?.({...data, fieldIndex});
-    }
+        onchange?.({fieldIndex});
+    }, [onchange]);
 
-    function onStrengthChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const onStrengthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         let strength = Number(e.target.value.replace(/,/g, ""));
         if (isNaN(strength)) {
             return;
         }
         strength = Math.max(0, strength);
         strength = Math.min(strength, MAX_STRENGTH);
-        onchange?.({...data, strength});
-    }
-    const [strengthFocused, setStrengthFocused] = useState(false);
-    function onStrengthFocus(e: React.FocusEvent<HTMLInputElement>) {
-        setStrengthFocused(true);
-    }
-    function onStrengthBlur(e: React.FocusEvent<HTMLInputElement>) {
-        setStrengthFocused(false);
-    }
-    const strengthValue = strengthFocused ?
-        data.strength.toString() : t("num", {n: strength});
+        onchange?.({strength});
+    }, [onchange]);
 
     function onSliderChange(e: Event, value: number | Array<any>) {
         if (typeof(value) !== "number") { return; }
@@ -100,15 +97,58 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({...data, strength});
     }
 
-    function onBonusChange(e: any) {
+    const onBonusChange = React.useCallback((e: any) => {
         const bonus = e.target.value as number;
-        onchange?.({...data, bonus});
-    }
+        onchange?.({bonus});
+    }, [onchange]);
 
-    function onSecondSleepChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const onSecondSleepChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const secondSleep = e.target.checked;
-        onchange?.({...data, secondSleep});
-    }
+        onchange?.({secondSleep});
+    }, [onchange]);
+
+    return <form className="main">
+        <div>{t("research area")}:</div>
+        <div>
+            <ResearchAreaTextField fields={fields}
+                value={data.fieldIndex} onChange={onFieldChange}/>
+        </div>
+        <div>{t("strength")}:</div>
+        <div>
+            <div className="strength_first_line">
+                <RankTextField field={field}
+                    value={rank.index} onChange={onRankChange}/>
+                <StrengthTextField
+                    value={strength} onChange={onStrengthChange}/>
+            </div>
+            <div className="strength_second_line">
+                <ArrowButton disabled={rank.index === 0} label="◀"
+                    onClick={onRankDownClick}/>
+                <Slider className="strength_progress" size="small" onChange={onSliderChange}
+                    min={rank.thisStrength}
+                    max={rank.nextStrength} value={strength} />
+                <ArrowButton disabled={rank.rankNumber === 20} label="▶"
+                    onClick={onRankUpClick}/>
+            </div>
+        </div>
+        <div>{t("bonus")}:</div>
+        <div>
+            <div>
+                <EventBonusTextField value={data.bonus} onChange={onBonusChange}/>
+            </div>
+            <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
+        </div>
+    </form>
+}
+
+interface ResearchAreaProps {
+    fields: FieldData[];
+    value: number;
+    onChange: (e: any) => void;
+}
+
+const ResearchAreaTextField = React.memo(({value, onChange, fields}:ResearchAreaProps) => {
+    const { t } = useTranslation();
 
     // prepare field menus
     const fieldMenuItems = [];
@@ -121,80 +161,120 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         );
     }
 
+    return (
+        <TextField variant="standard" size="small" select value={value}
+            SelectProps={{ MenuProps: {
+                anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                transformOrigin: { vertical: "top", horizontal: "left" },
+            }}}
+            onChange={onChange}>
+            {fieldMenuItems}
+        </TextField>
+    );
+});
+
+interface RankTextFieldProps {
+    field: FieldData;
+    value: number;
+    onChange: (e: any) => void;
+}
+
+const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) => {
+    const { t } = useTranslation();
+
     // prepare rank menus
     const rankMenuItems = [];
     for (let i = 0; i < 35; i++) {
-        const selected = (rank.index === i);
+        const selected = (value === i);
         const rankType = Rank.rankIndexToType(i);
         const rankNumber = Rank.rankIndexToRankNumber(i);
         const strength = field.ranks[i];
         rankMenuItems.push(
-            <MenuItem key={i} value={i} dense selected={selected} onClick={() => setRank(i)}>
+            <MenuItem key={i} value={i} dense selected={selected}>
                 <span className={"rank_ball rank_ball_" + rankType}>◓</span>
                 <span className="rank_number">{rankNumber}</span>
                 <span className="strength">{t("num", {n: strength})}{t("range separator")}</span>
             </MenuItem>);
     }
 
-    return <form className="main">
-        <div>{t("research area")}:</div>
-        <div>
-            <TextField variant="standard" size="small" select value={data.fieldIndex}
-                SelectProps={{ MenuProps: {
-                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                    transformOrigin: { vertical: "top", horizontal: "left" },
-                }}}
-                onChange={onFieldChange}>
-                {fieldMenuItems}
-            </TextField>
-        </div>
-        <div>{t("strength")}:</div>
-        <div>
-            <div className="strength_first_line">
-                <TextField className="rank" variant="standard" size="small" select
-                    value={rank.index}
-                    SelectProps={{ MenuProps: {
-                         sx: { height: "400px" },
-                         anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                         transformOrigin: { vertical: "top", horizontal: "left" },
-                    }}}>
-                    {rankMenuItems}
-                </TextField>
-                <TextField className="strength" variant="standard" size="small" type="tel"
-                    value={strengthValue}
-                    onChange={onStrengthChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
-                    InputProps={{
-                        inputProps: {step: 1000, inputMode: "numeric"},
-                        startAdornment: <InputAdornment position="start" sx={{color: "#ff944b"}}><LocalFireDepartmentIcon/></InputAdornment>,
-                    }}/>
-            </div>
-            <div className="strength_second_line">
-                <ArrowButton disabled={rank.index === 0} label="◀"
-                    onClick={() => { moveRank(-1) }}/>
-                <Slider className="strength_progress" size="small" onChange={onSliderChange}
-                    min={rank.thisStrength}
-                    max={rank.nextStrength} value={strength} />
-                <ArrowButton disabled={rank.rankNumber === 20} label="▶"
-                    onClick={() => { moveRank(1) }}/>
-            </div>
-        </div>
-        <div>{t("bonus")}:</div>
-        <div>
-            <div>
-                <TextField variant="standard" size="small" select
-                    value={data.bonus} onChange={onBonusChange}>
-                    <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
-                    <MenuItem key="1.5" value={1.5} dense>×1.5</MenuItem>
-                    <MenuItem key="2" value={2} dense>×2</MenuItem>
-                    <MenuItem key="2.5" value={2.5} dense>×2.5</MenuItem>
-                    <MenuItem key="3" value={3} dense>×3</MenuItem>
-                    <MenuItem key="4" value={4} dense>×4</MenuItem>
-                </TextField>
-            </div>
-            <FormControlLabel control={<Checkbox checked={data.secondSleep} onChange={onSecondSleepChange}/>} label={t('sleep twice')} />
-        </div>
-    </form>
+    return (
+        <TextField className="rank" variant="standard" size="small" select
+            value={value}
+            SelectProps={{ MenuProps: {
+                sx: { height: "400px" },
+                anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                transformOrigin: { vertical: "top", horizontal: "left" },
+            }}}
+            onChange={onChange}>
+            {rankMenuItems}
+        </TextField>
+    );
+});
+
+interface StrengthTextFieldProps {
+    value: number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+const StrengthAdornment = <InputAdornment position="start" sx={{color: "#ff944b"}}><LocalFireDepartmentIcon/></InputAdornment>;
+
+const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) => {
+    const { t } = useTranslation();
+
+    const [strengthFocused, setStrengthFocused] = useState(false);
+    const onStrengthFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        setStrengthFocused(true);
+    }, []);
+    const onStrengthBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        setStrengthFocused(false);
+    }, []);
+
+    const strengthValue = strengthFocused ?
+        value.toString() : t("num", {n: value});
+
+    return (
+        <TextField className="strength" variant="standard" size="small" type="tel"
+            value={strengthValue}
+            onChange={onChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
+            InputProps={{
+                inputProps: {step: 1000, inputMode: "numeric"},
+                startAdornment: StrengthAdornment,
+            }}/>
+    );
+});
+
+interface EventBonusProps {
+    value: number;
+    onChange: (e: any) => void;
+}
+
+const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
+    const { t } = useTranslation();
+    return (
+        <TextField variant="standard" size="small" select
+                value={value} onChange={onChange}>
+                <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
+                <MenuItem key="1.5" value={1.5} dense>×1.5</MenuItem>
+                <MenuItem key="2" value={2} dense>×2</MenuItem>
+                <MenuItem key="2.5" value={2.5} dense>×2.5</MenuItem>
+                <MenuItem key="3" value={3} dense>×3</MenuItem>
+                <MenuItem key="4" value={4} dense>×4</MenuItem>
+        </TextField>
+    );
+});
+
+interface SecondSleepCheckboxProps {
+    value: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SecondSleepCheckbox = React.memo(({value, onChange}:SecondSleepCheckboxProps) => {
+    const { t } = useTranslation();
+    return (
+        <FormControlLabel control={<Checkbox checked={value}
+            onChange={onChange}/>} label={t('sleep twice')} />
+    );
+});
 
 export { InputArea };
 export { fields };
