@@ -69,6 +69,10 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             setRank(rank.index + 1);
         }
     }, [setRank, rank.index]);
+    const onRankChange = useCallback((e:any) => {
+        const rankIndex = e.target.value as number;
+        setRank(rankIndex);
+    }, [setRank]);
     const onRankDownClick = useCallback(() => { moveRank(-1); }, [moveRank]);
     const onRankUpClick = useCallback(() => { moveRank(1); }, [moveRank]);
 
@@ -112,21 +116,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({secondSleep});
     }, [onchange]);
 
-    // prepare rank menus
-    const rankMenuItems = [];
-    for (let i = 0; i < 35; i++) {
-        const selected = (rank.index === i);
-        const rankType = Rank.rankIndexToType(i);
-        const rankNumber = Rank.rankIndexToRankNumber(i);
-        const strength = field.ranks[i];
-        rankMenuItems.push(
-            <MenuItem key={i} value={i} dense selected={selected} onClick={() => setRank(i)}>
-                <span className={"rank_ball rank_ball_" + rankType}>◓</span>
-                <span className="rank_number">{rankNumber}</span>
-                <span className="strength">{t("num", {n: strength})}{t("range separator")}</span>
-            </MenuItem>);
-    }
-
     return <form className="main">
         <div>{t("research area")}:</div>
         <div>
@@ -136,15 +125,8 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         <div>{t("strength")}:</div>
         <div>
             <div className="strength_first_line">
-                <TextField className="rank" variant="standard" size="small" select
-                    value={rank.index}
-                    SelectProps={{ MenuProps: {
-                         sx: { height: "400px" },
-                         anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                         transformOrigin: { vertical: "top", horizontal: "left" },
-                    }}}>
-                    {rankMenuItems}
-                </TextField>
+                <RankTextField field={field}
+                    value={rank.index} onChange={onRankChange}/>
                 <TextField className="strength" variant="standard" size="small" type="tel"
                     value={strengthValue}
                     onChange={onStrengthChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
@@ -201,6 +183,44 @@ const ResearchAreaTextField = React.memo(({value, onChange, fields}:ResearchArea
             }}}
             onChange={onChange}>
             {fieldMenuItems}
+        </TextField>
+    );
+});
+
+interface RankTextFieldProps {
+    field: FieldData;
+    value: number;
+    onChange: (e: any) => void;
+}
+
+const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) => {
+    const { t } = useTranslation();
+
+    // prepare rank menus
+    const rankMenuItems = [];
+    for (let i = 0; i < 35; i++) {
+        const selected = (value === i);
+        const rankType = Rank.rankIndexToType(i);
+        const rankNumber = Rank.rankIndexToRankNumber(i);
+        const strength = field.ranks[i];
+        rankMenuItems.push(
+            <MenuItem key={i} value={i} dense selected={selected}>
+                <span className={"rank_ball rank_ball_" + rankType}>◓</span>
+                <span className="rank_number">{rankNumber}</span>
+                <span className="strength">{t("num", {n: strength})}{t("range separator")}</span>
+            </MenuItem>);
+    }
+
+    return (
+        <TextField className="rank" variant="standard" size="small" select
+            value={value}
+            SelectProps={{ MenuProps: {
+                sx: { height: "400px" },
+                anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                transformOrigin: { vertical: "top", horizontal: "left" },
+            }}}
+            onChange={onChange}>
+            {rankMenuItems}
         </TextField>
     );
 });
