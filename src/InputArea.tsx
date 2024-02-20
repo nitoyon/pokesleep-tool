@@ -102,10 +102,10 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({...data, strength});
     }
 
-    function onBonusChange(e: any) {
+    const onBonusChange = React.useCallback((e: any) => {
         const bonus = e.target.value as number;
-        onchange?.({...data, bonus});
-    }
+        onchange?.({bonus});
+    }, [onchange]);
 
     const onSecondSleepChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const secondSleep = e.target.checked;
@@ -183,20 +183,32 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         <div>{t("bonus")}:</div>
         <div>
             <div>
-                <TextField variant="standard" size="small" select
-                    value={data.bonus} onChange={onBonusChange}>
-                    <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
-                    <MenuItem key="1.5" value={1.5} dense>×1.5</MenuItem>
-                    <MenuItem key="2" value={2} dense>×2</MenuItem>
-                    <MenuItem key="2.5" value={2.5} dense>×2.5</MenuItem>
-                    <MenuItem key="3" value={3} dense>×3</MenuItem>
-                    <MenuItem key="4" value={4} dense>×4</MenuItem>
-                </TextField>
+                <EventBonusTextField value={data.bonus} onChange={onBonusChange}/>
             </div>
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </form>
 }
+
+interface EventBonusProps {
+    value: number;
+    onChange: (e: any) => void;
+}
+
+const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
+    const { t } = useTranslation();
+    return (
+        <TextField variant="standard" size="small" select
+                value={value} onChange={onChange}>
+                <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
+                <MenuItem key="1.5" value={1.5} dense>×1.5</MenuItem>
+                <MenuItem key="2" value={2} dense>×2</MenuItem>
+                <MenuItem key="2.5" value={2.5} dense>×2.5</MenuItem>
+                <MenuItem key="3" value={3} dense>×3</MenuItem>
+                <MenuItem key="4" value={4} dense>×4</MenuItem>
+        </TextField>
+    );
+});
 
 interface SecondSleepCheckboxProps {
     value: boolean;
