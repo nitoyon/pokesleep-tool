@@ -72,10 +72,10 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const onRankDownClick = useCallback(() => { moveRank(-1); }, [moveRank]);
     const onRankUpClick = useCallback(() => { moveRank(1); }, [moveRank]);
 
-    function onFieldChange(e: any) {
+    const onFieldChange = useCallback((e: any) => {
         const fieldIndex = e.target.value as number;
-        onchange?.({...data, fieldIndex});
-    }
+        onchange?.({fieldIndex});
+    }, [onchange]);
 
     function onStrengthChange(e: React.ChangeEvent<HTMLInputElement>) {
         let strength = Number(e.target.value.replace(/,/g, ""));
@@ -112,17 +112,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({secondSleep});
     }, [onchange]);
 
-    // prepare field menus
-    const fieldMenuItems = [];
-    for (const field of fields) {
-        fieldMenuItems.push(
-            <MenuItem key={field.index} value={field.index}>
-                <span className="field_icon">{field.emoji}</span>
-                {t(`area.${field.index}`)}
-            </MenuItem>
-        );
-    }
-
     // prepare rank menus
     const rankMenuItems = [];
     for (let i = 0; i < 35; i++) {
@@ -141,14 +130,8 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     return <form className="main">
         <div>{t("research area")}:</div>
         <div>
-            <TextField variant="standard" size="small" select value={data.fieldIndex}
-                SelectProps={{ MenuProps: {
-                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                    transformOrigin: { vertical: "top", horizontal: "left" },
-                }}}
-                onChange={onFieldChange}>
-                {fieldMenuItems}
-            </TextField>
+            <ResearchAreaTextField fields={fields}
+                value={data.fieldIndex} onChange={onFieldChange}/>
         </div>
         <div>{t("strength")}:</div>
         <div>
@@ -189,6 +172,38 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         </div>
     </form>
 }
+
+interface ResearchAreaProps {
+    fields: FieldData[];
+    value: number;
+    onChange: (e: any) => void;
+}
+
+const ResearchAreaTextField = React.memo(({value, onChange, fields}:ResearchAreaProps) => {
+    const { t } = useTranslation();
+
+    // prepare field menus
+    const fieldMenuItems = [];
+    for (const field of fields) {
+        fieldMenuItems.push(
+            <MenuItem key={field.index} value={field.index}>
+                <span className="field_icon">{field.emoji}</span>
+                {t(`area.${field.index}`)}
+            </MenuItem>
+        );
+    }
+
+    return (
+        <TextField variant="standard" size="small" select value={value}
+            SelectProps={{ MenuProps: {
+                anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                transformOrigin: { vertical: "top", horizontal: "left" },
+            }}}
+            onChange={onChange}>
+            {fieldMenuItems}
+        </TextField>
+    );
+});
 
 interface EventBonusProps {
     value: number;
