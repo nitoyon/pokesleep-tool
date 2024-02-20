@@ -81,24 +81,15 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({fieldIndex});
     }, [onchange]);
 
-    function onStrengthChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const onStrengthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         let strength = Number(e.target.value.replace(/,/g, ""));
         if (isNaN(strength)) {
             return;
         }
         strength = Math.max(0, strength);
         strength = Math.min(strength, MAX_STRENGTH);
-        onchange?.({...data, strength});
-    }
-    const [strengthFocused, setStrengthFocused] = useState(false);
-    function onStrengthFocus(e: React.FocusEvent<HTMLInputElement>) {
-        setStrengthFocused(true);
-    }
-    function onStrengthBlur(e: React.FocusEvent<HTMLInputElement>) {
-        setStrengthFocused(false);
-    }
-    const strengthValue = strengthFocused ?
-        data.strength.toString() : t("num", {n: strength});
+        onchange?.({strength});
+    }, [onchange]);
 
     function onSliderChange(e: Event, value: number | Array<any>) {
         if (typeof(value) !== "number") { return; }
@@ -127,13 +118,8 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <div className="strength_first_line">
                 <RankTextField field={field}
                     value={rank.index} onChange={onRankChange}/>
-                <TextField className="strength" variant="standard" size="small" type="tel"
-                    value={strengthValue}
-                    onChange={onStrengthChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
-                    InputProps={{
-                        inputProps: {step: 1000, inputMode: "numeric"},
-                        startAdornment: <InputAdornment position="start" sx={{color: "#ff944b"}}><LocalFireDepartmentIcon/></InputAdornment>,
-                    }}/>
+                <StrengthTextField
+                    value={strength} onChange={onStrengthChange}/>
             </div>
             <div className="strength_second_line">
                 <ArrowButton disabled={rank.index === 0} label="◀"
@@ -222,6 +208,38 @@ const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) =
             onChange={onChange}>
             {rankMenuItems}
         </TextField>
+    );
+});
+
+interface StrengthTextFieldProps {
+    value: number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const StrengthAdornment = <InputAdornment position="start" sx={{color: "#ff944b"}}><LocalFireDepartmentIcon/></InputAdornment>;
+
+const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) => {
+    const { t } = useTranslation();
+
+    const [strengthFocused, setStrengthFocused] = useState(false);
+    const onStrengthFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        setStrengthFocused(true);
+    }, []);
+    const onStrengthBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        setStrengthFocused(false);
+    }, []);
+
+    const strengthValue = strengthFocused ?
+        value.toString() : t("num", {n: value});
+
+    return (
+        <TextField className="strength" variant="standard" size="small" type="tel"
+            value={strengthValue}
+            onChange={onChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
+            InputProps={{
+                inputProps: {step: 1000, inputMode: "numeric"},
+                startAdornment: StrengthAdornment,
+            }}/>
     );
 });
 
