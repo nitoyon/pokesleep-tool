@@ -107,10 +107,10 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({...data, bonus});
     }
 
-    function onSecondSleepChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const onSecondSleepChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const secondSleep = e.target.checked;
-        onchange?.({...data, secondSleep});
-    }
+        onchange?.({secondSleep});
+    }, [onchange]);
 
     // prepare field menus
     const fieldMenuItems = [];
@@ -193,10 +193,23 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
                     <MenuItem key="4" value={4} dense>×4</MenuItem>
                 </TextField>
             </div>
-            <FormControlLabel control={<Checkbox checked={data.secondSleep} onChange={onSecondSleepChange}/>} label={t('sleep twice')} />
+            <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </form>
 }
+
+interface SecondSleepCheckboxProps {
+    value: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SecondSleepCheckbox = React.memo(({value, onChange}:SecondSleepCheckboxProps) => {
+    const { t } = useTranslation();
+    return (
+        <FormControlLabel control={<Checkbox checked={value}
+            onChange={onChange}/>} label={t('sleep twice')} />
+    );
+});
 
 export { InputArea };
 export { fields };
