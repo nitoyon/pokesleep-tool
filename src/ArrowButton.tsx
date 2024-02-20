@@ -9,7 +9,7 @@ interface ArrowButtonProps {
     onClick: () => void;
 }
 
-export default function ArrowButton({disabled, label, onClick}:ArrowButtonProps) {
+const ArrowButton = React.memo(({disabled, label, onClick}:ArrowButtonProps) => {
     const onClickHandler = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         event.preventDefault();
@@ -29,5 +29,6 @@ export default function ArrowButton({disabled, label, onClick}:ArrowButtonProps)
 
     return <button className="rank_move" disabled={disabled}
         onClick={onClickHandler}>{label}</button>;
-};
+});
 
+export default ArrowButton;

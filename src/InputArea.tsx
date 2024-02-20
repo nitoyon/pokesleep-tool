@@ -1,7 +1,7 @@
 import './InputArea.css';
 import { Rank } from './Rank';
 import fields_ from './field.json';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ArrowButton from './ArrowButton';
@@ -13,7 +13,7 @@ interface InputAreaProps {
     data: InputAreaData;
 
     /** callback function when strength is changed */
-    onChange: (value: InputAreaData) => void;
+    onChange: (value: Partial<InputAreaData>) => void;
 }
 
 interface FieldData {
@@ -56,19 +56,21 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const strength = data.strength;
     const rank = new Rank(strength, field.ranks);
 
-    function setRank(rankIndex: number) {
+    const setRank = useCallback((rankIndex: number) => {
         if (rankIndex < 0 || rankIndex >= field.ranks.length) { return; }
         const strength = field.ranks[rankIndex];
-        onchange?.({...data, strength: strength});
-    }
+        onchange?.({strength});
+    }, [field.ranks, onchange]);
 
-    function moveRank(diff: number) {
+    const moveRank = useCallback((diff: number) => {
         if (diff === -1) {
             setRank(rank.index - 1);
         } else {
             setRank(rank.index + 1);
         }
-    }
+    }, [setRank, rank.index]);
+    const onRankDownClick = useCallback(() => { moveRank(-1); }, [moveRank]);
+    const onRankUpClick = useCallback(() => { moveRank(1); }, [moveRank]);
 
     function onFieldChange(e: any) {
         const fieldIndex = e.target.value as number;
@@ -170,12 +172,12 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             </div>
             <div className="strength_second_line">
                 <ArrowButton disabled={rank.index === 0} label="◀"
-                    onClick={() => { moveRank(-1) }}/>
+                    onClick={onRankDownClick}/>
                 <Slider className="strength_progress" size="small" onChange={onSliderChange}
                     min={rank.thisStrength}
                     max={rank.nextStrength} value={strength} />
                 <ArrowButton disabled={rank.rankNumber === 20} label="▶"
-                    onClick={() => { moveRank(1) }}/>
+                    onClick={onRankUpClick}/>
             </div>
         </div>
         <div>{t("bonus")}:</div>

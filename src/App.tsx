@@ -22,17 +22,25 @@ export default function App({config}: {config:AppConfig}) {
         fieldIndex, strength, bonus, secondSleep,
     };
 
-    function updateState(value:InputAreaData) {
-        setFieldIndex(value.fieldIndex);
-        setStrength(value.strength);
-        setBonus(value.bonus);
-        setSecondSleep(value.secondSleep);
+    const updateState = useCallback((value: Partial<InputAreaData>) => {
+        if (value.fieldIndex !== undefined) {
+            setFieldIndex(value.fieldIndex);
+        }
+        if (value.strength !== undefined) {
+            setStrength(value.strength);
+        }
+        if (value.bonus !== undefined) {
+            setBonus(value.bonus);
+        }
+        if (value.secondSleep !== undefined) {
+            setSecondSleep(value.secondSleep);
+        }
         saveConfig({...config, ...value});
-    }
+    }, [config]);
 
-    function onChange(value: InputAreaData) {
+    const onChange = useCallback((value: Partial<InputAreaData>) => {
         updateState(value);
-    }
+    }, [updateState]);
 
     const onLanguageChanged = useCallback((value:string) => {
         setLanguage(value);
