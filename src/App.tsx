@@ -3,11 +3,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { InputArea, InputAreaData, fields } from './InputArea';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import PreviewScore from './PreviewScore';
+import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
 
 interface AppConfig extends InputAreaData {
     /** current language */
     language: string;
+    /** PWA notify check counter */
+    pwacnt: number,
 }
 
 export default function App({config}: {config:AppConfig}) {
@@ -94,6 +97,11 @@ export default function App({config}: {config:AppConfig}) {
         setBetterSecondSleepOpen(true);
     }
 
+    const onPwaBannerClose = useCallback(() => {
+        config.pwacnt = 0;
+        saveConfig(config);
+    }, [config]);
+
     return (
         <div className="content">
             <InputArea data={data} onChange={onChange}/>
@@ -104,6 +112,7 @@ export default function App({config}: {config:AppConfig}) {
                 <PreviewScore count={7} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
                 <PreviewScore count={8} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
             </div>
+            <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
             <BetterSecondSleepDialog data={betterSecondSleepData}
                 open={isBetterSecondSleepDialogOpen} onClose={onBetterSecondSleepDialogClose}/>
         </div>
@@ -117,6 +126,7 @@ export function loadConfig(language:string): AppConfig {
         bonus: 1,
         secondSleep: false,
         language,
+        pwacnt: -1,
     };
 
     const data = localStorage.getItem("ResearchCalcPokeSleep");
@@ -144,9 +154,12 @@ export function loadConfig(language:string): AppConfig {
     if (typeof(json.language) === "string") {
         config.language = json.language;
     }
+    if (typeof(json.pwacnt) == "number") {
+        config.pwacnt = json.pwacnt;
+    }
     return config;
 }
 
-function saveConfig(state:AppConfig) {
+export function saveConfig(state:AppConfig) {
     localStorage.setItem("ResearchCalcPokeSleep", JSON.stringify(state));
 }

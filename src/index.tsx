@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App, {loadConfig} from './App';
+import App, {loadConfig, saveConfig} from './App';
 import ToolBar from './ToolBar';
 import { ThemeProvider, createTheme } from '@mui/material';
 import i18n from './i18n';
@@ -20,6 +20,8 @@ const theme = createTheme({
         language = "ja";
     }
     const config = loadConfig(language);
+    config.pwacnt++;
+    saveConfig(config);
     i18n.changeLanguage(config.language);
 
     const elm = document.getElementById('root');

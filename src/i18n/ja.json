@@ -35,6 +35,16 @@
         "first sleep": "1回目睡眠",
         "second sleep": "2回目睡眠",
 
+        "pwa notice": "リサーチ数計算機をホーム画面に追加して、アプリとして開けるようにしてみませんか？",
+        "add to home screen": "ホーム画面に追加",
+        "later": "またあとで",
+        "how to add to home screen": "ホーム画面に追加する手順",
+        "open in safari": "このページを <safari/> Safari で開く。",
+        "copy url": "URL をコピーする",
+        "push share icon": "Safari の下側にある <share/> を押す。",
+        "select add to home screen": "[ホーム画面に追加 <add/>] をメニューから選ぶ。",
+        "copied": "クリップボードにコピーしました。",
+
         "about1": "このツールは非公式のツールであり、<profile>nitoyon</profile> が個人で開発しています。",
         "profile": "http://tech.nitoyon.com/ja/about/",
         "about2": "改善要望・不具合報告は、X (twitter) の <x>@nitoyon</x> または <github>GitHub</github> までお願いします。",

@@ -40,6 +40,16 @@
         "first sleep": "First sleep",
         "second sleep": "Second sleep",
 
+        "pwa notice": "Add 'Research Calc' to your home screen for fast access.",
+        "add to home screen": "Add to Home Screen",
+        "later": "Later",
+        "how to add to home screen": "How to Add to Home Screen",
+        "open in safari": "Open this page in <safari/> Safari.",
+        "copy url": "Copy URL",
+        "push share icon": "Press <share/> located at the bottom of the Safari.",
+        "select add to home screen": "Select [Add to Home Screen <add/>] from the menu.",
+        "copied": "Copied to the clipboard",
+
         "about1": "This tool is an unofficial tool developed by <profile>nitoyon</profile>.",
         "profile": "http://tech.nitoyon.com/en/about/",
         "about2": "If you have bug reports or improvement suggestions, please contact X (twitter) <x>@nitoyon</x> or <github>GitHub repository</github>.",
