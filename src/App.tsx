@@ -124,7 +124,7 @@ export function loadConfig(language:string): AppConfig {
         return config;
     }
     const json = JSON.parse(data);
-    if (typeof(json) !== "object") {
+    if (typeof(json) !== "object" || json == null) {
         return config;
     }
     if (typeof(json.fieldIndex) === "number" &&
