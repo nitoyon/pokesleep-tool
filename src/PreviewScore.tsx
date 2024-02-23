@@ -300,7 +300,7 @@ function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
     // fix first sleep range
     ret.firstSleep.maxScore = Math.min(range.maxScore, 100 - secondRange.minScore);
     ret.firstSleep.maxTime = getMaxTimeForScore(ret.firstSleep.maxScore);
-    ret.firstSleep.maxPower = ret.firstSleep.maxScore * data.strength;
+    ret.firstSleep.maxPower = ret.firstSleep.maxScore * data.strength * data.bonus;
 
     // calc next strength
     let nextStrength = null;
