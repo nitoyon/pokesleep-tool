@@ -128,7 +128,7 @@ const IPhoneMessageDialog = React.memo(({open, onClose}:IPhoneMessageDialogProps
         if (success) {
             setCopyCompleted(true);
         }
-    }, [setCopyCompleted]);
+    }, [setCopyCompleted, i18n.language]);
     const onCopyCompletedClose = useCallback(() => {
         setCopyCompleted(false);
     }, [setCopyCompleted]);

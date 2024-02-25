@@ -9,7 +9,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next'
 
 export default function ToolBar() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
     const isMoreMenuOpen = Boolean(moreMenuAnchor);
