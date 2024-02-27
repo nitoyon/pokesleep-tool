@@ -27,7 +27,29 @@ interface FieldData {
     ranks: number[];
     /** required power to meet (n + 3) pokemons  */
     powers: number[];
+    /** Confirmed pokemon encounter  */
+    encounter: FieldEncounterData[] | undefined;
 }
+
+interface FieldEncounterData {
+    /** Name of pokemon */
+    pokemon: string;
+    /** Sleep type */
+    type: "dozing" | "snoozing" | "slumbering";
+    /** Drowsy power range */
+    range: DrowsyPowerRange[];
+}
+
+/**
+ * Represents a range for a drowsy power.
+ */
+interface DrowsyPowerRange {
+    /** The starting value of the power range (inclusive) */
+    start: number;
+    /** The ending value of the power range (exclusive) */
+    end: number;
+}
+
 const fields = fields_ as FieldData[];
 
 // add sentinel
