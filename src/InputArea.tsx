@@ -16,7 +16,7 @@ interface InputAreaProps {
     onChange: (value: Partial<InputAreaData>) => void;
 }
 
-interface FieldData {
+export interface FieldData {
     /** field index */
     index: number;
     /** field name */
@@ -31,7 +31,7 @@ interface FieldData {
     encounter: FieldEncounterData[] | undefined;
 }
 
-interface FieldEncounterData {
+export interface FieldEncounterData {
     /** Name of pokemon */
     pokemon: string;
     /** Sleep type */

@@ -5,6 +5,7 @@ import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterS
 import PreviewScore, {getScoreRange} from './PreviewScore';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
+import PreviewEncounter from './PreviewEncounter';
 
 interface AppConfig extends InputAreaData {
     /** current language */
@@ -106,6 +107,7 @@ export default function App({config}: {config:AppConfig}) {
         <div className="content">
             <InputArea data={data} onChange={onChange}/>
             <div className="preview">
+                <PreviewEncounter data={data}/>
                 <PreviewScore count={4} data={data} ranges={getScoreRange(4, data)}
                     onSecondSleepDetailClick={onSecondSleepDetailClick}/>
                 <PreviewScore count={5} data={data} ranges={getScoreRange(5, data)}

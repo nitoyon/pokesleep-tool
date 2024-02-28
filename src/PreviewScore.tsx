@@ -8,7 +8,7 @@ import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 
-type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
+export type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
 interface PreviewScoreProps {
     /** pokemon count */
@@ -52,7 +52,7 @@ class TimeLength {
     }
 }
 
-interface ScoreRange {
+export interface ScoreRange {
     /** pokemon count */
     count: PokemonCount;
 
@@ -172,12 +172,12 @@ function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
                 <span className="multiply">×</span>
                 <span className="value">{range.count}</span>
             </div>
-            {range.power > 0 && <div className="power">
+            <div className="power">
                 <span>
                     {t('num', {n: range.power})}
                     {t('range separator')}
                 </span>
-            </div>}
+            </div>
         </div>
     );
     if (!range.canGet || range.tooMuch) {

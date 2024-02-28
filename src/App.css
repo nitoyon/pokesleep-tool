@@ -39,6 +39,17 @@ div.content {
 .rank_ball_ultra { color: #000000; }
 .rank_ball_master { color: #cc00cc; }
 
+.dozing { background: #fdec6e; }
+.snoozing { background: #85fbff; }
+.slumbering { background: #5592fc; }
+.sleep_type {
+    font-size: .8rem;
+    padding: 0 .7rem;
+    margin: 0 .2rem;
+    color: #333;
+    border-radius: .5rem;
+}
+
 div.score_box {
     width: 4rem;
 }
@@ -180,6 +191,32 @@ div.warning {
 }
 div.warning::before {
     content: '\26a0\fe0f';
+}
+
+div.encounter {
+    border: 1px solid #ccc;
+    border-radius: 0.8rem;
+    box-shadow: 0 .1rem .2rem #ddd;
+    margin-bottom: .3rem;
+}
+div.encounter div.preview_count {
+    border: 0;
+    transform: scale(0.9);
+    padding: 0;
+}
+
+div.guaranteed_dlg ul {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+    list-style: none;
+}
+
+div.guaranteed_dlg .sleep_type {
+    margin: 0;
+}
+
+div.guaranteed_dlg .MuiAlert-standardWarning {
+    margin-top: .6rem;
 }
 
 div.pwa_banner {
