@@ -17,6 +17,9 @@ interface PreviewScoreProps {
     /** form data */
     data: InputAreaData;
 
+    /** score range */
+    ranges:MultipleScoreRange;
+
     /** second sleep detail is clicked */
     onSecondSleepDetailClick: (data:BetterSecondSleepData)=>void;
 }
@@ -87,7 +90,7 @@ interface ScoreRange {
 export default function PreviewScore(props:PreviewScoreProps) {
     const { t }  = useTranslation();
 
-    const ranges:MultipleScoreRange = getScoreRange(props);
+    const ranges = props.ranges;
     const range = ranges.firstSleep;
     const firstElement = renderRange(range, props.data, t);
     if (!range.canGet || range.tooMuch) {
@@ -261,10 +264,11 @@ export function getMaxTimeForScore(score: number): TimeLength {
 
 /**
  * Get ScoreRange for the props
- * @param param0 props
+ * @param count Pokemon count
+ * @param data  Input form data
  * @returns ScoreRange
  */
-function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
+export function getScoreRange(count:PokemonCount, data:InputAreaData): MultipleScoreRange {
     const range:ScoreRange = getScoreRangeForCount(count, data, 100);
     const powers = fields[data.fieldIndex].powers;
 
