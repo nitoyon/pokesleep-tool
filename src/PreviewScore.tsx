@@ -8,7 +8,7 @@ import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 
-type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
+export type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
 interface PreviewScoreProps {
     /** pokemon count */
@@ -16,6 +16,9 @@ interface PreviewScoreProps {
 
     /** form data */
     data: InputAreaData;
+
+    /** score range */
+    ranges:MultipleScoreRange;
 
     /** second sleep detail is clicked */
     onSecondSleepDetailClick: (data:BetterSecondSleepData)=>void;
@@ -49,7 +52,7 @@ class TimeLength {
     }
 }
 
-interface ScoreRange {
+export interface ScoreRange {
     /** pokemon count */
     count: PokemonCount;
 
@@ -87,7 +90,7 @@ interface ScoreRange {
 export default function PreviewScore(props:PreviewScoreProps) {
     const { t }  = useTranslation();
 
-    const ranges:MultipleScoreRange = getScoreRange(props);
+    const ranges = props.ranges;
     const range = ranges.firstSleep;
     const firstElement = renderRange(range, props.data, t);
     if (!range.canGet || range.tooMuch) {
@@ -169,12 +172,12 @@ function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
                 <span className="multiply">×</span>
                 <span className="value">{range.count}</span>
             </div>
-            {range.power > 0 && <div className="power">
+            <div className="power">
                 <span>
                     {t('num', {n: range.power})}
                     {t('range separator')}
                 </span>
-            </div>}
+            </div>
         </div>
     );
     if (!range.canGet || range.tooMuch) {
@@ -261,10 +264,11 @@ export function getMaxTimeForScore(score: number): TimeLength {
 
 /**
  * Get ScoreRange for the props
- * @param param0 props
+ * @param count Pokemon count
+ * @param data  Input form data
  * @returns ScoreRange
  */
-function getScoreRange({count, data}:PreviewScoreProps): MultipleScoreRange {
+export function getScoreRange(count:PokemonCount, data:InputAreaData): MultipleScoreRange {
     const range:ScoreRange = getScoreRangeForCount(count, data, 100);
     const powers = fields[data.fieldIndex].powers;
 

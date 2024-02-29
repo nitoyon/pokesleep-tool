@@ -2,9 +2,10 @@ import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { InputArea, InputAreaData, fields } from './InputArea';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
-import PreviewScore from './PreviewScore';
+import PreviewScore, {getScoreRange} from './PreviewScore';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
+import PreviewEncounter from './PreviewEncounter';
 
 interface AppConfig extends InputAreaData {
     /** current language */
@@ -106,11 +107,17 @@ export default function App({config}: {config:AppConfig}) {
         <div className="content">
             <InputArea data={data} onChange={onChange}/>
             <div className="preview">
-                <PreviewScore count={4} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                <PreviewScore count={5} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                <PreviewScore count={6} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                <PreviewScore count={7} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
-                <PreviewScore count={8} data={data} onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewEncounter data={data}/>
+                <PreviewScore count={4} data={data} ranges={getScoreRange(4, data)}
+                    onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={5} data={data} ranges={getScoreRange(5, data)}
+                    onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={6} data={data} ranges={getScoreRange(6, data)}
+                    onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={7} data={data} ranges={getScoreRange(7, data)}
+                    onSecondSleepDetailClick={onSecondSleepDetailClick}/>
+                <PreviewScore count={8} data={data} ranges={getScoreRange(8, data)}
+                    onSecondSleepDetailClick={onSecondSleepDetailClick}/>
             </div>
             <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
             <BetterSecondSleepDialog data={betterSecondSleepData}
