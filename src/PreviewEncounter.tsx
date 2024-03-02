@@ -3,7 +3,8 @@ import { Alert, Button, Dialog, DialogContent, DialogTitle,
     DialogActions, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { InputAreaData, fields, FieldData, FieldEncounterData } from './InputArea'
+import fields, { FieldData, FieldEncounterData } from './data/fields';
+import { InputAreaData } from './InputArea'
 import PreviewScore, {PokemonCount, ScoreRange, getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
 import { useTranslation, Trans } from 'react-i18next'
 

@@ -1,6 +1,6 @@
 import './InputArea.css';
 import { Rank } from './Rank';
-import fields_ from './field.json';
+import fields, { FieldData, MAX_STRENGTH } from './data/fields';
 import React, { useCallback, useState } from 'react';
 import { Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
@@ -14,48 +14,6 @@ interface InputAreaProps {
 
     /** callback function when strength is changed */
     onChange: (value: Partial<InputAreaData>) => void;
-}
-
-export interface FieldData {
-    /** field index */
-    index: number;
-    /** field name */
-    name: string;
-    /** field emoji */
-    emoji: string;
-    /** required power to reach the rank */
-    ranks: number[];
-    /** required power to meet (n + 3) pokemons  */
-    powers: number[];
-    /** Confirmed pokemon encounter  */
-    encounter: FieldEncounterData[] | undefined;
-}
-
-export interface FieldEncounterData {
-    /** Name of pokemon */
-    pokemon: string;
-    /** Sleep type */
-    type: "dozing" | "snoozing" | "slumbering";
-    /** Drowsy power range */
-    range: DrowsyPowerRange[];
-}
-
-/**
- * Represents a range for a drowsy power.
- */
-interface DrowsyPowerRange {
-    /** The starting value of the power range (inclusive) */
-    start: number;
-    /** The ending value of the power range (exclusive) */
-    end: number;
-}
-
-const fields = fields_ as FieldData[];
-
-// add sentinel
-const MAX_STRENGTH = 9999999;
-for (const field of fields) {
-    field.ranks.push(MAX_STRENGTH + 1);
 }
 
 interface InputAreaData {
@@ -132,7 +90,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     return <form className="main">
         <div>{t("research area")}:</div>
         <div>
-            <ResearchAreaTextField fields={fields}
+            <ResearchAreaTextField
                 value={data.fieldIndex} onChange={onFieldChange}/>
         </div>
         <div>{t("strength")}:</div>
@@ -164,12 +122,11 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
 }
 
 interface ResearchAreaProps {
-    fields: FieldData[];
     value: number;
     onChange: (e: any) => void;
 }
 
-const ResearchAreaTextField = React.memo(({value, onChange, fields}:ResearchAreaProps) => {
+const ResearchAreaTextField = React.memo(({value, onChange}:ResearchAreaProps) => {
     const { t } = useTranslation();
 
     // prepare field menus
@@ -299,5 +256,4 @@ const SecondSleepCheckbox = React.memo(({value, onChange}:SecondSleepCheckboxPro
 });
 
 export { InputArea };
-export { fields };
 export type { InputAreaData };

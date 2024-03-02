@@ -8,7 +8,7 @@ const {JSDOM} = require('jsdom');
 async function main() {
     // read field.json
     const { INIT_CWD } = process.env;
-    const fieldJsonPath = path.join(INIT_CWD, "src/field.json");
+    const fieldJsonPath = path.join(INIT_CWD, "src/data/field.json");
     const json = JSON.parse(fs.readFileSync(fieldJsonPath));
 
     // URL
