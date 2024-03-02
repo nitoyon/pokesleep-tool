@@ -3,7 +3,8 @@ import { Alert, Button, Dialog, DialogContent, DialogTitle,
     DialogActions, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { InputAreaData, fields, FieldData, FieldEncounterData } from './InputArea'
+import fields, { FieldData, FieldEncounterData } from '../data/fields';
+import { InputAreaData } from './InputArea'
 import PreviewScore, {PokemonCount, ScoreRange, getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
 import { useTranslation, Trans } from 'react-i18next'
 
@@ -132,7 +133,7 @@ const PreviewEncounterDialog = React.memo(({open, onClose, field, encounter}:Pre
             <Alert severity="info">
                 <Trans i18nKey="guaranteed score info"
                     components={{
-                        x: <a href="https://x.com/pokemon_sleep_y/status/1761283116679979299" target="_blank">x</a>
+                        x: <a href="https://x.com/pokemon_sleep_y/status/1761283116679979299" target="_blank" rel="noreferrer">x</a>
                     }}/>
             </Alert>
             <Alert severity="warning">{t("guaranteed score warning")}</Alert>

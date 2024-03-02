@@ -50,4 +50,5 @@ class Rank {
     }
 }
 
-export { Rank } ;
+export default Rank;
+

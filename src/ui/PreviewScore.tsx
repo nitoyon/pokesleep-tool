@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { InputAreaData, fields } from './InputArea'
-import { Rank } from './Rank';
+import { InputAreaData } from './InputArea'
+import Rank from '../util/Rank';
 import SleepScore from './SleepScore'
+import fields from '../data/fields';
 import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'

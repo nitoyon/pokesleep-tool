@@ -1,9 +1,10 @@
 import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
-import { InputArea, InputAreaData, fields } from './InputArea';
+import { InputArea, InputAreaData } from './InputArea';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import PreviewScore, {getScoreRange} from './PreviewScore';
 import PwaNotify from './PwaBanner';
+import fields from '../data/fields';
 import { useTranslation } from 'react-i18next'
 import PreviewEncounter from './PreviewEncounter';
 
