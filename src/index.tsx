@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App, {loadConfig, saveConfig} from './App';
-import ToolBar from './ToolBar';
+import App, {loadConfig, saveConfig} from './ui/App';
+import ToolBar from './ui/ToolBar';
 import { ThemeProvider, createTheme } from '@mui/material';
 import i18n from './i18n';
 

@@ -4,7 +4,7 @@ import { InputArea, InputAreaData } from './InputArea';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import PreviewScore, {getScoreRange} from './PreviewScore';
 import PwaNotify from './PwaBanner';
-import fields from './data/fields';
+import fields from '../data/fields';
 import { useTranslation } from 'react-i18next'
 import PreviewEncounter from './PreviewEncounter';
 
