@@ -1,5 +1,5 @@
 import './InputArea.css';
-import { Rank } from '../Rank';
+import { Rank } from '../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../data/fields';
 import React, { useCallback, useState } from 'react';
 import { Checkbox, FormControlLabel, InputAdornment, MenuItem,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { InputAreaData } from './InputArea'
-import { Rank } from '../Rank';
+import { Rank } from '../util/Rank';
 import SleepScore from './SleepScore'
 import fields from '../data/fields';
 import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
