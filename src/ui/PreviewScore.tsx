@@ -3,13 +3,12 @@ import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { InputAreaData } from './InputArea'
 import Rank from '../util/Rank';
+import { PokemonCount, getPokemonCount } from '../util/PokemonCount';
 import SleepScore from './SleepScore'
 import fields from '../data/fields';
 import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
-
-export type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
 
 interface PreviewScoreProps {
     /** pokemon count */
@@ -285,17 +284,7 @@ export function getScoreRange(count:PokemonCount, data:InputAreaData): MultipleS
 
     // find second count
     const powerLeft = (100 - range.minScore) * data.strength * data.bonus;
-    let secondCount = 3;
-    for (let i = 0; i < powers.length; i++) {
-        if (powerLeft < powers[i]) {
-            break;
-        }
-        secondCount = 3 + i;
-    }
-    if (secondCount !== 3 && secondCount !== 4 && secondCount !== 5 &&
-        secondCount !== 6 && secondCount !== 7 && secondCount !== 8) {
-        return ret;
-    }
+    const secondCount = getPokemonCount(powers, powerLeft);
 
     // get second sleep
     const _secondCount:PokemonCount = secondCount;

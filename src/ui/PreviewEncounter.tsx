@@ -5,7 +5,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import fields, { FieldData, FieldEncounterData } from '../data/fields';
 import { InputAreaData } from './InputArea'
-import PreviewScore, {PokemonCount, ScoreRange, getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
+import PreviewScore, { ScoreRange, getMinTimeForScore, getMaxTimeForScore } from './PreviewScore';
+import { getPokemonCount } from '../util/PokemonCount';
 import { useTranslation, Trans } from 'react-i18next'
 
 interface PreviewEncounterProps {
@@ -41,8 +42,7 @@ export default function PreviewEncounter({data}:PreviewEncounterProps) {
             if (minScore > maxScore || minScore > 100) {
                 continue;
             }
-            const count =
-                (field.powers.findIndex(p => p > range.end) + 2) as PokemonCount;
+            const count = getPokemonCount(field.powers, range.end);
             const minPower = minScore * data.bonus * data.strength;
             const maxPower = maxScore * data.bonus * data.strength;
             const minTime = getMinTimeForScore(minScore);
