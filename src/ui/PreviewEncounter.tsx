@@ -133,7 +133,7 @@ const PreviewEncounterDialog = React.memo(({open, onClose, field, encounter}:Pre
             <Alert severity="info">
                 <Trans i18nKey="guaranteed score info"
                     components={{
-                        x: <a href="https://x.com/pokemon_sleep_y/status/1761283116679979299" target="_blank" rel="noreferrer">x</a>
+                        x: <a href="https://x.com/pokemon_sleep_y/status/1765687668808323345" target="_blank" rel="noreferrer">x</a>
                     }}/>
             </Alert>
             <Alert severity="warning">{t("guaranteed score warning")}</Alert>
