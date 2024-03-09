@@ -7,6 +7,7 @@ import fields, { FieldData, FieldEncounterData } from '../data/fields';
 import { InputAreaData } from './InputArea'
 import PreviewScore, { ScoreRange, getMinTimeForScore, getMaxTimeForScore } from './PreviewScore';
 import { getPokemonCount } from '../util/PokemonCount';
+import events from '../data/events';
 import { useTranslation, Trans } from 'react-i18next'
 
 interface PreviewEncounterProps {
@@ -70,6 +71,11 @@ export default function PreviewEncounter({data}:PreviewEncounterProps) {
             );
         }
 
+        const now = new Date();
+        const isEventInProgress = events.some(x =>
+            x.encounterDifferentSleepType && x.isInProgress(now));
+        console.log(now, isEventInProgress);
+
         if (ranges.length > 0) {
             encounters.push(<div className="encounter">
                 <span className={type + " sleep_type"}>{t(type)}</span>
@@ -78,6 +84,9 @@ export default function PreviewEncounter({data}:PreviewEncounterProps) {
                     <InfoOutlinedIcon/>
                 </IconButton>
                 {ranges}
+                {isEventInProgress && 
+                    <Alert severity='warning'>{t('not guaranteed because of event')}</Alert>
+                }
             </div>);
         }
     }

@@ -38,6 +38,7 @@
         "guaranteed score text": "<pokemon/> will reliably appear with the next drowsy power in <area/>.",
         "guaranteed score info": "These values are reported base on <x>proprietary research</x>, so there may be a possibility of inaccuracy.",
         "guaranteed score warning": "These values may change due to future Pokémon additions and server-side configuration changes. Also, during events, the Pokémon won't appear as expected.",
+        "not guaranteed because of event": "Due to the ongoing event, the Pokémon won't appear as expected.",
 
         "dozing": "Dozing Type",
         "snoozing": "Snoozing Type",

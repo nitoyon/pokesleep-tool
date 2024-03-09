@@ -205,6 +205,15 @@ div.encounter div.preview_count {
     padding: 0;
 }
 
+div.encounter div.MuiAlert-standard {
+    border-radius: 0 0 0.8rem 0.8rem;
+    padding: 0 0.4rem;
+    margin-top: .3rem;
+}
+div.encounter div.MuiAlert-icon {
+    margin-right: 4px;
+}
+
 div.guaranteed_dlg ul {
     padding-left: 1.5rem;
     margin: 0.5rem 0;
