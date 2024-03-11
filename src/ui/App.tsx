@@ -1,7 +1,9 @@
 import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Tabs, Tab } from '@mui/material';
 import { InputArea, InputAreaData } from './InputArea';
 import GeneralPanel from './GeneralPanel';
+import GraphPanel from './GraphPanel';
 import PwaNotify from './PwaBanner';
 import fields from '../data/fields';
 import { useTranslation } from 'react-i18next'
@@ -88,10 +90,20 @@ export default function App({config}: {config:AppConfig}) {
         saveConfig(config);
     }, [config]);
 
+    const [tab, setTab] = useState(0);
+    const onTabChange = useCallback((event: React.SyntheticEvent, newValue: string) => {
+        setTab(parseInt(newValue));
+    }, [setTab]);
+
     return (
         <div className="content">
             <InputArea data={data} onChange={onChange}/>
-            <GeneralPanel data={data}/>
+            <Tabs value={tab} onChange={onTabChange}>
+                <Tab label="標準"/>
+                <Tab label="ポケモン別"/>
+            </Tabs>
+            {tab === 0 && <GeneralPanel data={data}/>}
+            {tab === 1 && <GraphPanel data={data}/>}
             <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </div>
     );

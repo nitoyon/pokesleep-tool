@@ -312,3 +312,30 @@ button.close_button {
     right: 8px;
     top: 12px;
 }
+
+.x_axis {
+    alignment-baseline: middle;
+    text-anchor: end;
+    font-size: .6rem;
+    fill: #bbb;
+}
+.y_axis {
+    alignment-baseline: hanging;
+    text-anchor: middle;
+    font-size: .6rem;
+    fill: #bbb;
+}
+
+div.linar_graph {
+    width: 100%;
+    height: 300px;
+}
+
+#graph_tooltip {
+    position: absolute;
+    width: inline-block;
+    background: yellow;
+    left: 20px;
+    top: 10px;
+    z-index: 999;
+}
