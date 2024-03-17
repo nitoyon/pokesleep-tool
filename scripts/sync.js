@@ -4,15 +4,102 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const {JSDOM} = require('jsdom');
+const { INIT_CWD } = process.env;
+
+// constants
+const areas = {
+    "ワカクサ": 0,
+    "シアン": 1,
+    "トープ": 2,
+    "ウノハナ": 3,
+    "ラピス": 4
+};
+const sleepTypes = {
+    "うとうと": "dozing",
+    "すやすや": "snoozing",
+    "ぐっすり": "slumbering",
+};
+const berryTypes = {
+    "キーのみ": "normal",
+    "ヒメリのみ": "fire",
+    "オレンのみ": "water",
+    "ウブのみ": "electric",
+    "ドリのみ": "grass",
+    "チーゴのみ": "ice",
+    "クラボのみ": "fighting",
+    "カゴのみ": "poison",
+    "フィラのみ": "ground",
+    "シーヤのみ": "flying",
+    "マゴのみ": "psychic",
+    "ラムのみ": "bug",
+    "オボンのみ": "rock",
+    "ブリーのみ": "ghost",
+    "ヤチェのみ": "dragon",
+    "ウイのみ": "dark",
+    "ベリブのみ": "steel",
+    "モモンのみ": "fairy"
+};
+const specialties = {
+    "食材": "Ingredients",
+    "きのみ": "Berries",
+    "スキル": "Skills",
+};
+const skills = {
+    "食材ゲットS": "Ingredient Magnet S",
+    "げんきチャージS": "Charge Energy S",
+    "エナジーチャージS(ランダム)": "Charge Strength S",
+    "エナジーチャージS": "Charge Strength S",
+    "エナジーチャージM": "Charge Strength M",
+    "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S",
+    "ゆめのかけらゲットS": "Dream Shard Magnet S",
+    "げんきエールS": "Energizing Cheer S",
+    "ゆびをふる": "Metronome",
+    "げんきオールS": "Energy for Everyone S",
+    "おてつだいサポートS": "Extra Helpful S",
+    "料理パワーアップS": "Cooking Power-Up S",
+    "料理チャンスS": "Tasty Chance S",
+};
+const ingredients = {
+    "ふといながねぎ": "leek",
+    "あじわいキノコ": "mashroom",
+    "とくせんエッグ": "egg",
+    "ほっこりポテト": "potato",
+    "とくせんリンゴ": "apple",
+    "げきからハーブ": "herb",
+    "マメミート": "sausage",
+    "モーモーミルク": "milk",
+    "あまいミツ": "honey",
+    "ピュアなオイル": "oil",
+    "あったかジンジャー": "ginger",
+    "あんみんトマト": "tomato",
+    "リラックスカカオ": "cacao",
+    "おいしいシッポ": "tail",
+    "ワカクサ大豆": "soy",
+    "ワカクサコーン": "corn",
+};
 
 async function main() {
-    // read field.json
-    const { INIT_CWD } = process.env;
+/*    // Update field.json
     const fieldJsonPath = path.join(INIT_CWD, "src/data/field.json");
-    const json = JSON.parse(fs.readFileSync(fieldJsonPath));
+    const fieldJson = JSON.parse(fs.readFileSync(fieldJsonPath));
+    await syncRanksAndPowers(fieldJson);
+    fs.writeFileSync(fieldJsonPath, JSON.stringify(fieldJson, null, 4));
 
-    // URL
-    const baseUrl = 'https://wikiwiki.jp/poke_sleep/%E3%83%AA%E3%82%B5%E3%83%BC%E3%83%81%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89/';
+    // Read or create spo.json
+    const spoJsonPath = path.join(INIT_CWD, "src/data/spo.json");
+    let spoJson = {};
+    await syncSPO(spoJson);
+    fs.writeFileSync(spoJsonPath, JSON.stringify(spoJson, null, 4));
+*/
+    // sync pokemon.json
+    await syncPokemon();
+
+    // write field.json
+    console.log("done!");
+}
+
+async function syncRanksAndPowers(fieldJson) {
+    // Update ranks & powers
     const areaNames = [
         "ワカクサ本島",
         "シアンの砂浜",
@@ -21,32 +108,10 @@ async function main() {
         "ラピスラズリ湖畔"
     ];
     for (let i = 0; i < areaNames.length; i++) {
-        const area = areaNames[i];
-        console.log(`Retrieving ${area}`);
-        const url = baseUrl + encodeURI(area);
-        const html = await getHtml(url);
-        json[i].powers = getPowers(html);
+        const area = "リサーチフィールド/" + areaNames[i];
+        const html = await getWikiHtml(area);
+        fieldJson[i].powers = getPowers(html);
     }
-
-    // write field.json
-    fs.writeFileSync(fieldJsonPath, JSON.stringify(json, null, 4));
-    console.log("done!");
-}
-
-async function getHtml(url) {
-    return new Promise((resolve, reject) => {
-        https.get(url, function(res) {
-            let html = '';
-            res
-                .on('data', function(chunk) {
-                    html += chunk;
-                })
-                .on('end', function() {
-                    resolve(html);
-                })
-                .on('error', reject);
-        });
-    });
 }
 
 function getPowers(html) {
@@ -65,5 +130,272 @@ function getPowers(html) {
     });
 }
 
+/* SPO JSON Format
+* {
+*     "PokemonName": {
+*         // key: rarity
+*         // spo: SPO
+*         // id:  internal sleep id (null if unknown)
+*         "1": {spo: 2, id: 7},
+*     }
+* }
+*/
+async function syncSPO(json) {
+    const name = '検証：ねむけパワーと出現寝顔の関係/SPO調整/SPO一覧';
+    const html = await getWikiHtml(name);
+    console.log('  downloaded');
+    updateSPO(json, html);
+    console.log('Parsed SPO');
+}
+
+function updateSPO(json, html) {
+    const dom = new JSDOM(html);
+
+    // find table
+    const tables = dom.window.document.querySelectorAll('table');
+    const table = [...tables].find((t) => {
+        return t.querySelector('td')?.textContent == "フィールド";
+    });
+    if (table == null) { throw new Error('not found'); }
+
+    // parse table
+    const trs = table.querySelectorAll('tbody tr');
+    for (const tr of trs) {
+        // get table data
+        const tds = tr.querySelectorAll('td');
+        const id = parseInt(tds[3].textContent, 10);
+        const name = tds[4].textContent;
+        const rarity = parseInt(tds[5].textContent, 10);
+        const spo = parseInt(tds[6].textContent.replace(/,/g, ''), 10);
+
+        // add to json
+        if (!(name in json)) {
+            json[name] = {};
+        }
+        json[name][rarity] = {spo, id};
+    }
+}
+
+async function syncPokemon() {
+    console.log('Retrieving pokemon list');
+
+    // read i18n/ja.json
+    const pokemonJsonPath = path.join(INIT_CWD, "src/data/pokemon.json");
+    const jaJsonPath = path.join(INIT_CWD, "src/i18n/ja.json");
+    const jaJson = JSON.parse(fs.readFileSync(jaJsonPath));
+    const ja2en = {};
+    const en2ja = jaJson.translation.pokemon;
+    for (const enname of Object.keys(jaJson.translation.pokemon)) {
+        ja2en[jaJson.translation.pokemon[enname]] = enname;
+    }
+
+    // Read or initialize pokemon list
+    console.log('Getting pokemon list');
+    const listHtml = await getWikiHtml("ポケモンの一覧");
+    console.log('  downloaded');
+    const pokemonJson = updatePokemonList(listHtml, ja2en);
+    fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
+
+    // convert pokemon name (ja -> en), and prepare name2id
+    const nameJa2id = {};
+    for (const pokemon of pokemonJson) {
+        const nameJa = en2ja[pokemon.name];
+        nameJa2id[nameJa] = parseInt(pokemon.id, 10);
+    }
+
+    const probHtml = await getWikiHtml('ポケモンの食材確率・スキル発動確率の推定値一覧');
+    updatePokemonProbability(pokemonJson, ja2en, probHtml);
+    fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
+
+    // Update each Pokemon
+    for (const pokemon of pokemonJson) {
+        const name = pokemon.name;
+        const nameJa = en2ja[name];
+
+        const html = await getWikiHtml(nameJa.replace(" ", ""));
+        updatePokemon(pokemon, html, nameJa, nameJa2id);
+    }
+    fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
+}
+
+function updatePokemonList(html, ja2en) {
+    const dom = new JSDOM(html);
+
+    // find table
+    const tables = dom.window.document.querySelectorAll('table');
+
+    const table = [...tables].find((t) => {
+        return t.querySelector('th')?.textContent == "画像";
+    });
+    if (table == null) { throw new Error('not found'); }
+
+    const trs = table.querySelectorAll('tbody>tr');
+    const json = [];
+    for (const tr of trs) {
+        const tds = tr.querySelectorAll('td');
+        const id = parseInt(tds[1].textContent, 10);
+        const nameJa = tds[2].firstChild.textContent.replace("(", " (");
+        const sleepTypeJa = tds[3].textContent;
+        const specialtyJa = tds[4].textContent;
+        const berryJa = tds[5].querySelector("a").getAttribute("title").replace("きのみ/", "");
+        const skillJa = tds[9].textContent;
+        const fp = parseInt(tds[10].textContent, 10);
+        const frequency = parseInt(tds[11].textContent, 10);
+
+        // validate
+        if (!(sleepTypeJa in sleepTypes)) { throw new Error(`Unknown sleep type: ${typeJa}`); }
+        const sleepType = sleepTypes[sleepTypeJa];
+        if (!(berryJa in berryTypes)) { throw new Error(`Unknown berry: ${berryJa}`); }
+        const type = berryTypes[berryJa];
+        if (!(nameJa in ja2en)) { throw new Error(`Unknown pokemon: ${nameJa}`); }
+        const name = ja2en[nameJa];
+        if (!(specialtyJa in specialties)) { throw new Error(`Unknown specialty: ${specialtyJa}`); }
+        const specialty = specialties[specialtyJa];
+        if (!(skillJa in skills)) { throw new Error(`Unknown skill: ${skillJa}`); }
+        const skill = skills[skillJa];
+
+        json.push({
+            id, name, sleepType, type, specialty, skill, fp, frequency, 
+        });
+    }
+    return json;
+}
+
+function updatePokemonProbability(pokemonJson, ja2en, html) {
+    const dom = new JSDOM(html);
+    
+    // find prob table
+    const tables = dom.window.document.querySelectorAll('table');
+    const probTable = [...tables].find((t) => {
+        return t.querySelector('tr>th:nth-child(2)')?.textContent === "名前";
+    });
+    if (probTable == null) { throw new Error('prob table not found'); }
+
+    const trs = probTable.querySelectorAll('tbody>tr');
+    const prob = {};
+    for (const tr of trs) {
+        const tds = tr.querySelectorAll('td');
+        const nameJa = tds[1].textContent.replace("(", " (");
+        const ingRatio = parseFloat(tds[2].textContent.replace("%", ""));
+        const skillRatio = parseFloat(tds[3].textContent.replace("%", ""));
+
+        // validate
+        if (!(nameJa in ja2en)) { throw new Error(`Pokemon ${nameJa} not found`); }
+        const name = ja2en[nameJa];
+        prob[name] = {ingRatio, skillRatio};
+    }
+
+    for (const pokemon of pokemonJson) {
+        if (!(pokemon.name in prob)) {
+            console.warn(`${pokemon.name} not in prob table`);
+            continue;
+        }
+        pokemon.ingRatio = prob[pokemon.name].ingRatio;
+        pokemon.skillRatio = prob[pokemon.name].skillRatio;
+    }
+}
+
+function updatePokemon(json, html, nameJa, nameJa2id) {
+    const dom = new JSDOM(html);
+    const name = json.name;
+
+    // find evolution
+    if (['Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Espeon',
+        'Umbreon', 'Leafeon', 'Glaceon', 'Sylveon'].includes(name)) {
+        json.ancestor = 133;
+    }
+    else if (['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].includes(name)) {
+        json.ancestor = 280;
+    }
+    else {
+        const evolink = dom.window.document.querySelector('h4 a[title="進化"]');
+        if (evolink === null) { throw new Error('進化 not found'); }
+        const ancestor = evolink.parentNode.parentNode.querySelector('p>strong>a')?.textContent;
+        json.ancestor = (ancestor === undefined ? null : nameJa2id[ancestor]);
+    }
+
+    // find ing table
+    const tables = dom.window.document.querySelectorAll('table');
+    const ingTable = [...tables].find((t) => {
+        return t.querySelector('th')?.textContent === "食材";
+    });
+    if (ingTable === null) { throw new Error(`ing table not found`)}
+    const trs = ingTable.querySelectorAll('tbody>tr');
+
+    // get ing1
+    let tds = trs[1].querySelectorAll('td');
+    let ingJa = tds[4].querySelector('a').textContent;
+    let c1 = parseInt(tds[1].textContent.replace("個", ""), 10);
+    let c2 = parseInt(tds[2].textContent.replace("個", ""), 10);
+    let c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
+    if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
+    let ing = ingredients[ingJa];
+    json.ing1 = {name: ing, c1, c2, c3};
+
+    // get ing2
+    tds = trs[2].querySelectorAll('td');
+    ingJa = tds[4].querySelector('a').textContent;
+    c2 = parseInt(tds[2].textContent.replace("個", ""), 10);
+    c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
+    if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
+    ing = ingredients[ingJa];
+    json.ing2 = {name: ing, c2, c3};
+
+    // get ing3
+    tds = trs[3].querySelectorAll('td');
+    ingJa = tds[4].querySelector('a')?.textContent;
+    if (ingJa === undefined) {
+        return;
+    }
+    c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
+    if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
+    ing = ingredients[ingJa];
+    json.ing3 = {name: ing, c3};
+}
+
+async function getWikiHtml(name) {
+    // ensure that cache dir exists
+    const cacheDir = path.join(INIT_CWD, ".cache");
+    if (!fs.existsSync(cacheDir)) {
+        fs.mkdirSync(cacheDir);
+    }
+
+    // return cache if it exists
+    // TODO: cache 1 week
+    const cacheBaseName = name.replace(/\//g, '_');
+    const cachePath = path.join(cacheDir, `${cacheBaseName}.html`);
+    if (fs.existsSync(cachePath)) {
+        console.log(`Retrieving ${name} (cache)`);
+        return fs.readFileSync(cachePath);
+    }
+
+    // download and cache
+    const url = getWikiUrl(name);
+    console.log(`Retrieving ${name}`);
+    const content = await getHtml(url);
+    fs.writeFileSync(cachePath, content);
+    return content;
+}
+
+function getWikiUrl(name) {
+    return "https://wikiwiki.jp/poke_sleep/" + encodeURI(name);        
+}
+
+async function getHtml(url) {
+    return new Promise((resolve, reject) => {
+        https.get(url, function(res) {
+            res.setEncoding('utf-8');
+            let html = '';
+            res
+                .on('data', function(chunk) {
+                    html += chunk;
+                })
+                .on('end', function() {
+                    resolve(html);
+                })
+                .on('error', reject);
+        });
+    });
+}
 
 main();
