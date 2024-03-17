@@ -44,9 +44,6 @@
         "snoozing": "Snoozing Type",
         "slumbering": "Slumbering Type",
 
-        "Chikorita": "Chikorita",
-        "Dratini": "Dratini",
-
         "notice": "Using this tool is easy!\nSimply enter your Research Area and Snorlax strength.\nYou can know how many Pokémon will appear for each sleep score.",
         "notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
         "notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon.",
@@ -67,6 +64,11 @@
         "about1": "This tool is an unofficial tool developed by <profile>nitoyon</profile>.",
         "profile": "http://tech.nitoyon.com/en/about/",
         "about2": "If you have bug reports or improvement suggestions, please contact X (twitter) <x>@nitoyon</x> or <github>GitHub repository</github>.",
-        "about3": "I am referring to the data from '<wiki>ポケモンスリープ攻略・検証Wiki</wiki>'."
+        "about3": "I am referring to the data from '<wiki>ポケモンスリープ攻略・検証Wiki</wiki>'.",
+
+        "pokemon": {
+            "Chikorita": "Chikorita",
+            "Dratini": "Dratini"
+        }
     }
 }

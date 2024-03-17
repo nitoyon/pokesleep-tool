@@ -39,9 +39,6 @@
         "snoozing": "すやすやタイプ",
         "slumbering": "ぐっすりタイプ",
 
-        "Chikorita": "チコリータ",
-        "Dratini": "ミニリュウ",
-
         "notice": "使い方はかんたん！ フィールドと総エナジーを入力するだけです。睡眠スコアごとの出現ポケモン数が分かります。",
         "notice detail1": "グッドスリープデーの間は、[$t(bonus)] の倍率を変更するのを忘れずに。",
         "notice detail2": "[$t(sleep twice)] をチェックすると、分割睡眠したときに出会えるトータルのポケモン数を確認できます。",
@@ -62,6 +59,11 @@
         "about1": "このツールは非公式のツールであり、<profile>nitoyon</profile> が個人で開発しています。",
         "profile": "http://tech.nitoyon.com/ja/about/",
         "about2": "改善要望・不具合報告は、X (twitter) の <x>@nitoyon</x> または <github>GitHub</github> までお願いします。",
-        "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」を参照させていただいています。"
+        "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」を参照させていただいています。",
+
+        "pokemon": {
+            "Chikorita": "チコリータ",
+            "Dratini": "ミニリュウ"
+        }
     }
 }
