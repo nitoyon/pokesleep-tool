@@ -19,10 +19,13 @@ export interface FieldEncounterData {
     /** Name of pokemon */
     pokemon: string;
     /** Sleep type */
-    type: "dozing" | "snoozing" | "slumbering";
+    type: SleepType;
     /** Drowsy power range */
     range: DrowsyPowerRange[];
 }
+
+/** 3 sleep type */
+export type SleepType = "dozing" | "snoozing" | "slumbering";
 
 /**
  * Represents a range for a drowsy power.
