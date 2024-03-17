@@ -11,7 +11,7 @@ interface PokemonData {
     /** Sleep type of the pokemon */
     type: SleepType;
     /** Ancestor pokemon id */
-    ancestor: number;
+    ancestor: number|null;
     /** Rank and sleep styles to encounter the pokmeon per field */
     field: {[fieldIndex: string]: SleepStyleIdAndRank[]};
     /**
