@@ -33,7 +33,7 @@
         "guaranteed score text": "<area/>では、<pokemon/>が次のねむけパワーで確定出現します。",
         "guaranteed score info": "確定帯は、<x>独自調査</x>によって報告された値であるため、正確でない可能性があります。",
         "guaranteed score warning": "今後のポケモン追加やサーバー側での設定変更により、確定帯は変わるかもしれません。また、イベント中は確定帯通りに出ない可能性が高いです。",
-        "not guaranteed because of event": "現在イベント中のため、確定しない可能性が高いです。",
+        "not guaranteed because of update": "Ver.1.4.0 アップデートにより確定しなくなっています。",
 
         "dozing": "うとうとタイプ",
         "snoozing": "すやすやタイプ",
