@@ -5,6 +5,7 @@ import ToolBar from './ToolBar';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
 
+/** Global configuration. */
 interface AppConfig {
     /** current language */
     language: string;
@@ -13,9 +14,32 @@ interface AppConfig {
 }
 
 export default function App({config}: {config:AppConfig}) {
+    useMultilingual(config);
+
+    const onPwaBannerClose = useCallback(() => {
+        config.pwacnt = 0;
+        saveConfig(config);
+    }, [config]);
+
+    return (
+        <>
+            <ToolBar/>
+            <ResearchCalcApp/>
+            <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
+        </>
+    );
+}
+
+/**
+ * A custom react hook for managing multilingual support.
+ * @param config The global configuration object.
+ * @return Current language.
+ */
+function useMultilingual(config: AppConfig) {
     const { t, i18n } = useTranslation();
     const [language, setLanguage] = useState(config.language);
 
+    // Called when the language has been changed
     const onLanguageChanged = useCallback((value:string) => {
         setLanguage(value);
         saveConfig({...config, language: value});
@@ -29,6 +53,7 @@ export default function App({config}: {config:AppConfig}) {
     }, [i18n, onLanguageChanged]);
 
     const updateHtml = useCallback(() => {
+        // Replace on memory HTML
         document.title = t("title");
         const manifest = document.querySelector<HTMLLinkElement>("link[rel='manifest']");
         if (manifest !== null) {
@@ -53,19 +78,7 @@ export default function App({config}: {config:AppConfig}) {
         window.history.replaceState(null, '', url + query);
     }, [language, t]);
     useEffect(updateHtml, [updateHtml, language, i18n, t]);
-
-    const onPwaBannerClose = useCallback(() => {
-        config.pwacnt = 0;
-        saveConfig(config);
-    }, [config]);
-
-    return (
-        <>
-            <ToolBar/>
-            <ResearchCalcApp/>
-            <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
-        </>
-    );
+    return language;
 }
 
 export function loadConfig(language:string): AppConfig {
