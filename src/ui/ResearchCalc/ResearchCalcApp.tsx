@@ -3,9 +3,6 @@ import { InputArea, InputAreaData } from './InputArea';
 import GeneralPanel from './GeneralPanel';
 import fields from '../../data/fields';
 
-interface AppConfig extends InputAreaData {
-}
-
 const config = loadConfig();
 
 export default function ResearchCalcApp() {
@@ -46,8 +43,8 @@ export default function ResearchCalcApp() {
     );
 }
 
-export function loadConfig(): AppConfig {
-    const config: AppConfig = {
+export function loadConfig(): InputAreaData {
+    const config: InputAreaData = {
         fieldIndex: 0,
         strength: 73120,
         bonus: 1,
@@ -79,6 +76,6 @@ export function loadConfig(): AppConfig {
     return config;
 }
 
-export function saveConfig(state:AppConfig) {
+export function saveConfig(state: InputAreaData) {
     localStorage.setItem("ResearchCalcPokeSleep", JSON.stringify(state));
 }
