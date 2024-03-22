@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App, {loadConfig, saveConfig} from './ui/App';
+import ResearchCalcApp, {loadConfig, saveConfig} from './ui/ResearchCalc/ResearchCalcApp';
 import ToolBar from './ui/ToolBar';
 import { ThemeProvider, createTheme } from '@mui/material';
 import i18n from './i18n';
@@ -34,7 +34,7 @@ const theme = createTheme({
         <React.StrictMode>
             <ThemeProvider theme={theme}>
                 <ToolBar/>
-                <App config={config}/>
+                <ResearchCalcApp config={config}/>
             </ThemeProvider>
         </React.StrictMode>
     );

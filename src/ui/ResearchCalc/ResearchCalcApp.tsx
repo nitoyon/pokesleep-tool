@@ -2,8 +2,8 @@ import './App.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { InputArea, InputAreaData } from './InputArea';
 import GeneralPanel from './GeneralPanel';
-import PwaNotify from './PwaBanner';
-import fields from '../data/fields';
+import PwaNotify from '../PwaBanner';
+import fields from '../../data/fields';
 import { useTranslation } from 'react-i18next'
 
 interface AppConfig extends InputAreaData {
@@ -13,7 +13,7 @@ interface AppConfig extends InputAreaData {
     pwacnt: number,
 }
 
-export default function App({config}: {config:AppConfig}) {
+export default function ResearchCalcApp({config}: {config:AppConfig}) {
     const { t, i18n } = useTranslation();
     const [fieldIndex, setFieldIndex] = useState(config.fieldIndex);
     const [strength, setStrength] = useState(config.strength);

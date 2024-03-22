@@ -3,10 +3,10 @@ import { Alert, Button, Dialog, DialogContent, DialogTitle,
     DialogActions, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import fields, { FieldData, FieldEncounterData } from '../data/fields';
+import fields, { FieldData, FieldEncounterData } from '../../data/fields';
 import { InputAreaData } from './InputArea'
 import PreviewScore, { ScoreRange, getMinTimeForScore, getMaxTimeForScore } from './PreviewScore';
-import { getPokemonCount } from '../util/PokemonCount';
+import { getPokemonCount } from '../../util/PokemonCount';
 import { useTranslation, Trans } from 'react-i18next'
 
 interface PreviewEncounterProps {
