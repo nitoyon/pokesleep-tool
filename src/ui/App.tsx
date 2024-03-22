@@ -13,8 +13,11 @@ interface AppConfig {
     pwacnt: number,
 }
 
+type AppType = "ResearchCalc" | "RpCalc";
+
 export default function App({config}: {config:AppConfig}) {
-    useMultilingual(config);
+    const language = useMultilingual(config);
+    useRouter(language);
 
     const onPwaBannerClose = useCallback(() => {
         config.pwacnt = 0;
@@ -36,7 +39,7 @@ export default function App({config}: {config:AppConfig}) {
  * @return Current language.
  */
 function useMultilingual(config: AppConfig) {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const [language, setLanguage] = useState(config.language);
 
     // Called when the language has been changed
@@ -52,6 +55,17 @@ function useMultilingual(config: AppConfig) {
         };
     }, [i18n, onLanguageChanged]);
 
+    return language;
+}
+
+/**
+ * A custom react hook for managing URL.
+ * @param language Current language.
+ * @return Current app type and setter for it.
+ */
+function useRouter(language: string): [AppType, (v:AppType) => void] {
+    const { t, i18n } = useTranslation();
+    const [currentApp, setCurrentApp] = useState<AppType>("ResearchCalc");
     const updateHtml = useCallback(() => {
         // Replace on memory HTML
         document.title = t("title");
@@ -66,19 +80,18 @@ function useMultilingual(config: AppConfig) {
         }
 
         // update URL
-        let url = document.location.origin +
-            document.location.pathname.replace(/index.*\.html/, '');
-        const query = document.location.search;
-        if (!url.endsWith("/")) {
-            url += "/";
+        let url = document.location.origin + "/pokesleep-tool/";
+        if (currentApp === "RpCalc") {
+            url += 'rp/';
         }
         if (language !== "en") {
-            url += "index." + language + ".html";
+            url += `index.${language}.html`;
         }
+        const query = document.location.search;
         window.history.replaceState(null, '', url + query);
     }, [language, t]);
     useEffect(updateHtml, [updateHtml, language, i18n, t]);
-    return language;
+    return [currentApp, setCurrentApp];
 }
 
 export function loadConfig(language:string): AppConfig {
