@@ -3,15 +3,30 @@ import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
 import LanguageDialog from './Dialog/LanguageDialog';
 import ScoreTableDialog from './Dialog/ScoreTableDialog';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { AppType } from './App';
+import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next'
 
-export default function ToolBar() {
+interface ToolBarProps {
+    app: AppType;
+    onAppChange: (value: AppType) => void;
+};
+
+export default function ToolBar({app, onAppChange}: ToolBarProps) {
     const { t } = useTranslation();
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
     const isMoreMenuOpen = Boolean(moreMenuAnchor);
+    const researchCalcClick = (event: React.MouseEvent<HTMLElement>) => {
+        onAppChange("ResearchCalc");
+        setMoreMenuAnchor(null);
+    };
+    const rpCalcClick = (event: React.MouseEvent<HTMLElement>) => {
+        onAppChange("RpCalc");
+        setMoreMenuAnchor(null);
+    };
     const moreButtonClick = (event: React.MouseEvent<HTMLElement>) => {
         setMoreMenuAnchor(event.currentTarget);
     };
@@ -53,12 +68,21 @@ export default function ToolBar() {
 
     return (
         <div className="appbar">
-            <div className="title">{t('title')}</div>
+            <div className="title">{t(`${app}.title`)}</div>
             <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
                 <MoreIcon />
             </IconButton>
             <Menu anchorEl={moreMenuAnchor} open={isMoreMenuOpen}
                 onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
+                <MenuItem onClick={researchCalcClick}>
+                    <ListItemIcon>{app === "ResearchCalc" ? <CheckIcon/> : <Icon/>}</ListItemIcon>
+                    {t("ResearchCalc.short title")}
+                </MenuItem>
+                <MenuItem onClick={rpCalcClick}>
+                    <ListItemIcon>{app === "RpCalc" ? <CheckIcon/> : <Icon/>}</ListItemIcon>
+                    {t("RpCalc.short title")}
+                </MenuItem>
+                <Divider/>
                 <MenuItem onClick={howToMenuClick}>{t('how to use')}</MenuItem>
                 <MenuItem onClick={scoreTableMenuClick}>{t('sleep score table')}</MenuItem>
                 <MenuItem onClick={aboutMenuClick}>{t('about')}</MenuItem>

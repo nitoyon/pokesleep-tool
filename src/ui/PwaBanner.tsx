@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import AppIcon from './Resources/AppIcon';
 import SafariIcon from './Resources/SafariIcon';
+import { AppType } from './App';
 import { Button, IconButton, Dialog, DialogContent, DialogTitle,
     Snackbar, DialogActions} from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
@@ -14,6 +15,8 @@ let defferedPrompt:any = undefined;
 const iOsShowPwaBannerThreshold = 3;
 
 interface PwaBannerProps {
+    /** Current application */
+    app: AppType;
     /** The number of times this app have been opened since the first
      * launch or when the user denied adding this app to home screen.
      */
@@ -31,7 +34,7 @@ interface PwaBannerProps {
  * iOS
  *   Show orignal UI and tells how to add to home screen.
  */
-const PwaBanner = React.memo(({pwaCount, onClose}:PwaBannerProps) => {
+const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
     const { t } = useTranslation();
 
     // iOS: show banner if user visits this page iOsShowPwaBannerThreshold times
@@ -88,7 +91,9 @@ const PwaBanner = React.memo(({pwaCount, onClose}:PwaBannerProps) => {
             <div className="pwa_banner_container">
                 <AppIcon/>
                 <div className="pwa_banner_body">
-                    <p>{t('pwa notice')}</p>
+                    <p><Trans i18nKey="pwa notice"
+                        values={{app: t(`${app}.short title`)}}/>
+                    </p>
                     <Button variant="contained" size="small" className="add" onClick={onAddToHomeScreen}>{t('add to home screen')}</Button>
                     <Button className="later" onClick={onCloseClick}>{t('later')}</Button>
                 </div>

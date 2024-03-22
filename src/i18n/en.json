@@ -1,7 +1,14 @@
 {
     "translation": {
+        "ResearchCalc": {
+            "title": "Research Calc for Pokémon Sleep",
+            "short title": "Research Calc"
+        },
+        "RpCalc": {
+            "title": "RP Calc for Pokémon Sleep",
+            "short title": "RP Calc"
+        },
         "name": "English",
-        "title": "Research Calc for Pokémon Sleep",
         "how to use": "How to Use",
         "about": "About This Tool",
         "sleep score table": "Sleep Score Table",
@@ -51,7 +58,7 @@
         "first sleep": "First sleep",
         "second sleep": "Second sleep",
 
-        "pwa notice": "Add 'Research Calc' to your home screen for fast access.",
+        "pwa notice": "Add '{{app}}' to your home screen for fast access.",
         "add to home screen": "Add to Home Screen",
         "later": "Later",
         "how to add to home screen": "How to Add to Home Screen",

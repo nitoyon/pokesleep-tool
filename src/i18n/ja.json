@@ -1,7 +1,14 @@
 {
     "translation": {
+        "ResearchCalc": {
+            "title": "リサーチ数計算機 for ポケモンスリープ",
+            "short title": "リサーチ数計算機"
+        },
+        "RpCalc": {
+            "title": "SP 計算機 for ポケモンスリープ",
+            "short title": "SP 計算機"
+        },
         "name": "日本語 (Japanese)",
-        "title": "リサーチ数計算機 for ポケモンスリープ",
         "how to use": "つかいかた",
         "about": "このツールについて",
         "sleep score table": "睡眠スコア表",
@@ -46,7 +53,7 @@
         "first sleep": "1回目睡眠",
         "second sleep": "2回目睡眠",
 
-        "pwa notice": "リサーチ数計算機をホーム画面に追加して、アプリとして開けるようにしてみませんか？",
+        "pwa notice": "{{app}}をホーム画面に追加して、アプリとして開けるようにしてみませんか？",
         "add to home screen": "ホーム画面に追加",
         "later": "またあとで",
         "how to add to home screen": "ホーム画面に追加する手順",

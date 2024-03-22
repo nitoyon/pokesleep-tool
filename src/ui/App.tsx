@@ -6,18 +6,22 @@ import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
 
 /** Global configuration. */
-interface AppConfig {
+export interface AppConfig {
     /** current language */
     language: string;
     /** PWA notify check counter */
     pwacnt: number,
 }
 
-type AppType = "ResearchCalc" | "RpCalc";
+export type AppType = "ResearchCalc" | "RpCalc";
 
 export default function App({config}: {config:AppConfig}) {
     const language = useMultilingual(config);
-    useRouter(language);
+    const [curApp, setCurApp] = useRouter(language);
+
+    const onAppChange = useCallback((value: AppType) => {
+        setCurApp(value);
+    }, [setCurApp]);
 
     const onPwaBannerClose = useCallback(() => {
         config.pwacnt = 0;
@@ -26,9 +30,9 @@ export default function App({config}: {config:AppConfig}) {
 
     return (
         <>
-            <ToolBar/>
-            <ResearchCalcApp/>
-            <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
+            <ToolBar app={curApp} onAppChange={onAppChange}/>
+            {curApp === "ResearchCalc" && <ResearchCalcApp/>}
+            <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </>
     );
 }
@@ -64,11 +68,15 @@ function useMultilingual(config: AppConfig) {
  * @return Current app type and setter for it.
  */
 function useRouter(language: string): [AppType, (v:AppType) => void] {
+    let initialApp: AppType = (
+        window.location.pathname.startsWith("/pokesleep-tool/rp/") ?
+        "RpCalc" : "ResearchCalc");
+
     const { t, i18n } = useTranslation();
-    const [currentApp, setCurrentApp] = useState<AppType>("ResearchCalc");
-    const updateHtml = useCallback(() => {
+    const [currentApp, setCurrentApp] = useState<AppType>(initialApp);
+    useEffect(() => {
         // Replace on memory HTML
-        document.title = t("title");
+        document.title = t(`${currentApp}.title`);
         const manifest = document.querySelector<HTMLLinkElement>("link[rel='manifest']");
         if (manifest !== null) {
             const current = manifest.href;
@@ -89,8 +97,7 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
         }
         const query = document.location.search;
         window.history.replaceState(null, '', url + query);
-    }, [language, t]);
-    useEffect(updateHtml, [updateHtml, language, i18n, t]);
+    }, [language, i18n, t, currentApp]);
     return [currentApp, setCurrentApp];
 }
 
