@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {loadConfig, saveConfig} from './ui/ResearchCalc/ResearchCalcApp';
-import App from './ui/App';
+import App, {loadConfig, saveConfig} from './ui/App';
 import { ThemeProvider, createTheme } from '@mui/material';
 import i18n from './i18n';
 

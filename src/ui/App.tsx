@@ -1,12 +1,11 @@
 import './App.css';
-import { InputAreaData } from './ResearchCalc/InputArea';
-import ResearchCalcApp, { saveConfig } from './ResearchCalc/ResearchCalcApp';
+import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
 import ToolBar from './ToolBar';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
 
-interface AppConfig extends InputAreaData {
+interface AppConfig {
     /** current language */
     language: string;
     /** PWA notify check counter */
@@ -63,8 +62,35 @@ export default function App({config}: {config:AppConfig}) {
     return (
         <>
             <ToolBar/>
-            <ResearchCalcApp config={config}/>
+            <ResearchCalcApp/>
             <PwaNotify pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </>
     );
+}
+
+export function loadConfig(language:string): AppConfig {
+    const config: AppConfig = {
+        language,
+        pwacnt: -1,
+    };
+
+    const data = localStorage.getItem("PokeSleepTool");
+    if (data === null) {
+        return config;
+    }
+    const json = JSON.parse(data);
+    if (typeof(json) !== "object" || json == null) {
+        return config;
+    }
+    if (typeof(json.language) === "string") {
+        config.language = json.language;
+    }
+    if (typeof(json.pwacnt) == "number") {
+        config.pwacnt = json.pwacnt;
+    }
+    return config;
+}
+
+export function saveConfig(state:AppConfig) {
+    localStorage.setItem("PokeSleepTool", JSON.stringify(state));
 }
