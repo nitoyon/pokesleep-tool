@@ -1,5 +1,6 @@
 import './App.css';
 import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
+import RpCalcApp from './RpCalc/RpCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
 import ToolBar from './ToolBar';
 import PwaNotify from './PwaBanner';
@@ -32,6 +33,7 @@ export default function App({config}: {config:AppConfig}) {
         <>
             <ToolBar app={curApp} onAppChange={onAppChange}/>
             {curApp === "ResearchCalc" && <ResearchCalcApp/>}
+            {curApp === "RpCalc" && <RpCalcApp/>}
             <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </>
     );
