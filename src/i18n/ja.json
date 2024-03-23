@@ -14,6 +14,7 @@
         "sleep score table": "睡眠スコア表",
         "change language": "言語切り替え",
         "close": "閉じる",
+        "clear": "クリア",
         "details": "詳細",
         "research area": "フィールド",
         "strength": "総エナジー",
@@ -31,6 +32,7 @@
         "num": "{{n, number}}",
         "range separator": "～",
         "hhmm": "{{h}}時間{{m}}分",
+        "mmss": "{{m}}分{{s}}秒",
         "strength too low": "エナジーが <strength/> 必要です。",
         "strength too much": "エナジーが多すぎます。",
         "next strength to get 1 more pokemon": "2回目睡眠までに <strength2/> エナジーを稼ぐと、2回目のリサーチで <count2/> 体に出会えます (※1回目の睡眠スコアが <score1/> のとき)。",
@@ -63,12 +65,31 @@
         "select add to home screen": "[ホーム画面に追加 <add/>] をメニューから選ぶ。",
         "copied": "クリップボードにコピーしました。",
 
+        "pokemon": "ポケモン",
+        "level": "レベル",
+        "name": "名前",
+        "type": "タイプ",
+        "berry": "きのみ",
+        "ingredient": "食材",
+        "skill": "スキル",
+        "frequency": "おてつだい時間",
+        "frequency prefix": "",
+        "Main Skill & Sub Skills": "メインスキル・サブスキル",
+        "nature": "せいかく",
+        "probability": "確率",
+        "strength2": "エナジー",
+
+        "sleeptype": "睡眠タイプ",
+        "pokedexno": "図鑑番号",
+
+        "select subskill at level xxx": "<level/> のサブスキルを選択してください",
+
         "about1": "このツールは非公式のツールであり、<profile>nitoyon</profile> が個人で開発しています。",
         "profile": "http://tech.nitoyon.com/ja/about/",
         "about2": "改善要望・不具合報告は、X (twitter) の <x>@nitoyon</x> または <github>GitHub</github> までお願いします。",
         "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」を参照させていただいています。",
 
-        "skill": {
+        "skills": {
             "Ingredient Magnet S": "食材ゲットS",
             "Charge Energy S": "げんきチャージS",
             "Charge Strength S": "Charge Strength S",
@@ -113,7 +134,7 @@
             "Inventory Up S": "最大所持数アップS"
         },
 
-        "nature": {
+        "natures": {
             "Bashful": "てれや",
             "Hardy": "がんばりや",
             "Docile": "すなお",

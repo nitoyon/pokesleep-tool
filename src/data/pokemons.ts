@@ -59,6 +59,12 @@ export type PokemonSkill = "Ingredient Magnet S" |
     "Cooking Power-Up S" |
     "Tasty Chance S";
 
+export function isSkillLevelMax7(skill: PokemonSkill): boolean {
+    return skill === "Charge Strength M" ||
+        skill === "Charge Strength S" ||
+        skill === "Dream Shard Magnet S";
+}
+    
 export type IngredientName = "leek" | "mashroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn";
