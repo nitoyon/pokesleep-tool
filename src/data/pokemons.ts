@@ -1,7 +1,7 @@
 import pokemon_ from './pokemon.json';
 import {SleepType} from './fields';
 
-interface PokemonData {
+export interface PokemonData {
     /** Pokemon ID */
     id: number;
     /** Pokemon name in English */
