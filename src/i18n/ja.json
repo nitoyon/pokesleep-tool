@@ -68,7 +68,121 @@
         "about2": "改善要望・不具合報告は、X (twitter) の <x>@nitoyon</x> または <github>GitHub</github> までお願いします。",
         "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」を参照させていただいています。",
 
-        "pokemon": {
+        "skill": {
+            "Ingredient Magnet S": "食材ゲットS",
+            "Charge Energy S": "げんきチャージS",
+            "Charge Strength S": "Charge Strength S",
+            "Charge Strength M": "Charge Strength M",
+            "Dream Shard Magnet S": "Dream Shard Magnet S",
+            "Energizing Cheer S": "Energizing Cheer S",
+            "Metronome": "ゆびをふる",
+            "Energy for Everyone S": "Energy for Everyone S",
+            "Extra Helpful S": "Extra Helpful S",
+            "Cooking Power-Up S": "Cooking Power-Up S",
+            "Tasty Chance S": "Tasty Chance S"
+        },
+
+        "subskill": {
+            "Gold colored": "金色サブスキル",
+            "Berry Finding S": "きのみの数S",
+            "Dream Shard Bonus": "ゆめのかけらボーナス",
+            "Energy Recovery Bonus": "げんき回復ボーナス",
+            "Helping Bonus": "おてつだいボーナス",
+            "Research EXP Bonus": "リサーチEXPボーナス",
+            "Sleep EXP Bonus": "睡眠EXPボーナス",
+
+            "Skill Level Up": "スキルレベルアップ",
+            "Skill Level Up M": "スキルレベルアップM",
+            "Skill Level Up S": "スキルレベルアップS",
+
+            "Skill Trigger": "スキル確率アップ",
+            "Skill Trigger M": "スキル確率アップM",
+            "Skill Trigger S": "スキル確率アップS",
+
+            "Helping Speed": "おてつだいスピード",
+            "Helping Speed M": "おてつだいスピードM",
+            "Helping Speed S": "おてつだいスピードS",
+
+            "Ingredient Finder": "食材確率アップ",
+            "Ingredient Finder M": "食材確率アップM",
+            "Ingredient Finder S": "食材確率アップS",
+
+            "Inventory Up": "最大所持数アップ",
+            "Inventory Up L": "最大所持数アップL",
+            "Inventory Up M": "最大所持数アップM",
+            "Inventory Up S": "最大所持数アップS"
+        },
+
+        "nature": {
+            "Bashful": "てれや",
+            "Hardy": "がんばりや",
+            "Docile": "すなお",
+            "Quirky": "きまぐれ",
+            "Serious": "まじめ",
+            "Bold": "ずぶとい",
+            "Impish": "わんぱく",
+            "Lax": "のうてんき",
+            "Relaxed": "のんき",
+            "Timid": "おくびょう",
+            "Hasty": "せっかち",
+            "Jolly": "ようき",
+            "Naive": "むじゃき",
+            "Lonely": "さみしがり",
+            "Adamant": "いじっぱり",
+            "Naughty": "やんちゃ",
+            "Brave": "ゆうかん",
+            "Calm": "おだやか",
+            "Gentle": "おとなしい",
+            "Careful": "しんちょう",
+            "Sassy": "なまいき",
+            "Modest": "ひかえめ",
+            "Mild": "おっとり",
+            "Rash": "うっかりや",
+            "Quiet": "れいせい"
+        },
+        "nature effect": {
+            "No effect": "せいかくによる特徴なし",
+            "Energy recovery": "げんき回復量",
+            "EXP gains": "EXP獲得量",
+            "Main skill chance": "メインスキル発生率",
+            "Speed of help": "おてつだいスピード",
+            "Ingredient finding": "食材おてつだい確率"
+        },
+
+        "types": {
+            "normal": "ノーマル",
+            "fire": "ほのお",
+            "water": "みず",
+            "electric": "でんき",
+            "grass": "くさ",
+            "ice": "こおり",
+            "fighting": "かくとう",
+            "poison": "どく",
+            "ground": "じめん",
+            "flying": "ひこう",
+            "psychic": "エスパー",
+            "bug": "むし",
+            "rock": "いわ",
+            "ghost": "ゴースト",
+            "dragon": "ドラゴン",
+            "dark": "あく",
+            "steel": "はがね",
+            "fairy": "フェアリー"
+        },
+
+        "generation": {
+            "Kanto": "第1世代 (カントー)",
+            "Johto": "第2世代 (ジョウト)",
+            "Hoenn": "第3世代 (ホウエン)",
+            "Sinnoh": "第4世代 (シンオウ)",
+            "Unova": "第5世代 (イッシュ)",
+            "Kalos": "第6世代 (カロス)",
+            "Alola": "第7世代 (アローラ)",
+            "Galar": "第8世代 (ガラル)",
+            "Paldea": "第9世代 (パルデア)"
+        },
+
+        "pokemons": {
             "Bulbasaur": "フシギダネ",
             "Ivysaur": "フシギソウ",
             "Venusaur": "フシギバナ",

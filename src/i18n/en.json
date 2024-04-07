@@ -73,7 +73,121 @@
         "about2": "If you have bug reports or improvement suggestions, please contact X (twitter) <x>@nitoyon</x> or <github>GitHub repository</github>.",
         "about3": "I am referring to the data from '<wiki>ポケモンスリープ攻略・検証Wiki</wiki>'.",
 
-        "pokemon": {
+        "skill": {
+            "Ingredient Magnet S": "Ingredient Magnet S",
+            "Charge Energy S": "Charge Energy S",
+            "Charge Strength S": "Charge Strength S",
+            "Charge Strength M": "Charge Strength M",
+            "Dream Shard Magnet S": "Dream Shard Magnet S",
+            "Energizing Cheer S": "Energizing Cheer S",
+            "Metronome": "Metronome",
+            "Energy for Everyone S": "Energy for Everyone S",
+            "Extra Helpful S": "Extra Helpful S",
+            "Cooking Power-Up S": "Cooking Power-Up S",
+            "Tasty Chance S": "Tasty Chance S"
+        },
+
+        "subskill": {
+            "Gold colored": "金色サブスキル",
+            "Berry Finding S": "Berry Finding S",
+            "Dream Shard Bonus": "Dream Shard Bonus",
+            "Energy Recovery Bonus": "Energy Recovery Bonus",
+            "Helping Bonus": "Helping Bonus",
+            "Research EXP Bonus": "Research EXP Bonus",
+            "Sleep EXP Bonus": "Sleep EXP Bonus",
+
+            "Skill Level Up": "Skill Level Up",
+            "Skill Level Up M": "Skill Level Up M",
+            "Skill Level Up S": "Skill Level Up S",
+
+            "Skill Trigger": "Skill Trigger",
+            "Skill Trigger M": "Skill Trigger M",
+            "Skill Trigger S": "Skill Trigger S",
+
+            "Helping Speed": "Helping Speed",
+            "Helping Speed M": "Helping Speed M",
+            "Helping Speed S": "Helping Speed S",
+
+            "Ingredient Finder": "Ingredient Finder",
+            "Ingredient Finder M": "Ingredient Finder M",
+            "Ingredient Finder S": "Ingredient Finder S",
+
+            "Inventory Up": "Inventory Up",
+            "Inventory Up L": "Inventory Up L",
+            "Inventory Up M": "Inventory Up M",
+            "Inventory Up S": "Inventory Up S"
+        },
+
+        "nature": {
+            "Bashful": "Bashful",
+            "Hardy": "Hardy",
+            "Docile": "Docile",
+            "Quirky": "Quirky",
+            "Serious": "Serious",
+            "Bold": "Bold",
+            "Impish": "Impish",
+            "Lax": "Lax",
+            "Relaxed": "Relaxed",
+            "Timid": "Timid",
+            "Hasty": "Hasty",
+            "Jolly": "Jolly",
+            "Naive": "Naive",
+            "Lonely": "Lonely",
+            "Adamant": "Adamant",
+            "Naughty": "Naughty",
+            "Brave": "Brave",
+            "Calm": "Calm",
+            "Gentle": "Gentle",
+            "Careful": "Careful",
+            "Sassy": "Sassy",
+            "Modest": "Modest",
+            "Mild": "Mild",
+            "Rash": "Rash",
+            "Quiet": "Quiet"
+        },
+        "nature effect": {
+            "No effect": "This nature has no effect",
+            "Energy recovery": "Energy recovery",
+            "EXP gains": "EXP gains",
+            "Main skill chance": "Main skill chance",
+            "Speed of help": "Speed of help",
+            "Ingredient finding": "Ingredient finding"
+        },
+
+        "types": {
+            "normal": "Normal",
+            "fire": "Fire",
+            "water": "Water",
+            "electric": "Electric",
+            "grass": "Grass",
+            "ice": "Ice",
+            "fighting": "Fighting",
+            "poison": "Poison",
+            "ground": "Ground",
+            "flying": "Flying",
+            "psychic": "Psychic",
+            "bug": "Bug",
+            "rock": "Rock",
+            "ghost": "Ghost",
+            "dragon": "Dragon",
+            "dark": "Dark",
+            "steel": "Steel",
+            "fairy": "Fairy"
+        },
+
+        "generation": {
+            "Kanto": "Gen 1 (Kanto)",
+            "Johto": "Gen 2 (Johto)",
+            "Hoenn": "Gen 3 (Hoenn)",
+            "Sinnoh": "Gen 4 (Sinnoh)",
+            "Unova": "Gen 5 (Unova)",
+            "Kalos": "Gen 6 (Kalos)",
+            "Alola": "Gen 7 (Alola)",
+            "Galar": "Gen 8 (Galar)",
+            "Paldea": "Gen 9 (Paldea)"
+        },
+
+        "pokemons": {
             "Bulbasaur": "Bulbasaur",
             "Ivysaur": "Ivysaur",
             "Venusaur": "Venusaur",
