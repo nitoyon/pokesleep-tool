@@ -77,6 +77,28 @@
         "select add to home screen": "Select [Add to Home Screen <add/>] from the menu.",
         "copied": "Copied to the clipboard",
 
+        "rp": "RP",
+        "strength2": "Strength",
+        "rating": "Rating",
+
+        "period": "Period",
+        "1day": "1 day",
+        "1week": "1 week",
+        "whistle": "Whistle",
+        "field bonus": "Field bonus",
+        "favorite berry": "Favorite berry",
+        "helping bonus": "Helping bonus",
+        "good camp ticket": "Good camp ticket",
+        "energy": "Energy",
+        "no healing": "No healing",
+        "healing": "healing",
+        "always 81%+": "Always 81%+",
+        "tap frequency": "Tap frequency",
+        "every minute": "Every minute",
+        "recipe range (the number of ingredients)": "Recipe",
+        "mixed recipe": "Mixed",
+        "average recipe level": "Average recipe level",
+
         "pokemon": "Pokémon",
         "level": "Level",
         "berry": "Berry",
@@ -88,7 +110,9 @@
         "Main Skill & Sub Skills": "Main Skill & Sub Skills",
         "nature": "Nature",
         "probability": "Prob",
-        "strength2": "Strength",
+        "times unit": " times",
+
+        "rate subskill and nature": "Rate subskills and nature",
 
         "sleeptype": "Sleep type",
         "pokedexno": "Pokédex No.",
@@ -98,7 +122,8 @@
         "about1": "This tool is an unofficial tool developed by <profile>nitoyon</profile>.",
         "profile": "http://tech.nitoyon.com/en/about/",
         "about2": "If you have bug reports or improvement suggestions, please contact X (twitter) <x>@nitoyon</x> or <github>GitHub repository</github>.",
-        "about3": "I am referring to the data from '<wiki>ポケモンスリープ攻略・検証Wiki</wiki>'.",
+        "about3": "I am referring to the data from '<wiki>ポケモンスリープ攻略・検証Wiki</wiki>' and '<rp>RP collection project</rp>'.",
+        "about4": "The ingredient icon was created by <chanriwa>ちゃんりわ</chanriwa>.",
 
         "skills": {
             "Ingredient Magnet S": "Ingredient Magnet S",

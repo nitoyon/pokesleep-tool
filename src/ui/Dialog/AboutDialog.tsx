@@ -33,6 +33,11 @@ export default function AboutDialog({open, onClose}: AboutDialogProps) {
                     <Trans i18nKey="about3"
                         components={{
                             wiki: <a href="https://wikiwiki.jp/poke_sleep/">wiki</a>,
+                            rp: <a href="https://docs.google.com/spreadsheets/d/1kBrPl0pdAO8gjOf_NrTgAPseFtqQA27fdfEbMBBeAhs/#gid=1673887151">RP collection project</a>
+                        }}/>
+                    <Trans i18nKey="about4"
+                        components={{
+                            chanriwa: <a href="https://twitter.com/2harpker">chanriwa</a>
                         }}/>
                 </Typography>
             </DialogContent>

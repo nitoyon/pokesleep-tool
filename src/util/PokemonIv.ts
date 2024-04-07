@@ -45,6 +45,15 @@ class PokemonIv {
         ret.nature = this.nature;
         return ret;
     }
+
+    /**
+     * Check whether the pokemon has an active sub-skill 'Helping Bonus'.
+     */
+    get hasHelpingBonusInActiveSubSkills(): boolean {
+        return this.subSkills
+            .getActiveSubSkills(this.level)
+            .some(x => x.name === "Helping Bonus");
+    }
 }
 
 export default PokemonIv;

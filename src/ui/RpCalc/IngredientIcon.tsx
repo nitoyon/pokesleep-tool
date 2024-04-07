@@ -8,7 +8,7 @@ import GingerIcon from '../Resources/GingerIcon';
 import HerbIcon from '../Resources/HerbIcon';
 import HoneyIcon from '../Resources/HoneyIcon';
 import LeekIcon from '../Resources/LeekIcon';
-import MashroomIcon from '../Resources/MashroomIcon';
+import MushroomIcon from '../Resources/MushroomIcon';
 import MilkIcon from '../Resources/MilkIcon';
 import OilIcon from '../Resources/OilIcon';
 import PotatoIcon from '../Resources/PotatoIcon';
@@ -27,7 +27,7 @@ const IngredientIcon = React.memo(({name}: {name: IngredientName}) => {
         case "herb": return <HerbIcon/>;
         case "honey": return <HoneyIcon/>;
         case "leek": return <LeekIcon/>;
-        case "mashroom": return <MashroomIcon/>;
+        case "mushroom": return <MushroomIcon/>;
         case "milk": return <MilkIcon/>;
         case "oil": return <OilIcon/>;
         case "potato": return <PotatoIcon/>;

@@ -4,7 +4,7 @@ import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 
-const ingredientStrength: {[ing in IngredientName]: number} = {
+export const ingredientStrength: {[ing in IngredientName]: number} = {
     "leek": 185,
     "mushroom": 167,
     "egg": 115,
@@ -137,6 +137,29 @@ class PokemonRp {
             , 4);
     }
 
+    frequencyWithHelpingBonus(count: number): number {
+        const helpingSpeed = this.activeSubSkills
+            .reduce((p, c) => p + c.helpingSpeed, 0) * 0.07;
+        if (this.hasHelpingBonusInActiveSubSkills) {
+            count++;
+        }
+        const subSkillFactor = Math.min(helpingSpeed + 0.05 * count, 0.35);
+
+        return this._pokemon.frequency * // Base frequency
+            trunc(
+                // Level Factor
+                (501 - this.level) / 500 *
+                // Nature Factor
+                (this.nature?.speedOfHelpFactor ?? 1) *
+                // Sub-Skill Factor
+                (1 - subSkillFactor)
+            , 4);
+    }
+
+    get hasHelpingBonusInActiveSubSkills(): boolean {
+        return this.activeSubSkills.some(x => x.name === "Helping Bonus");
+    }
+
     get bonus(): number {
         const energy = 1 + ((this.nature?.energyRecoveryFactor ?? 0) * 0.08);
         let subSkillBonus = 0;
@@ -171,27 +194,44 @@ class PokemonRp {
     }
 
     get ingredientEnergy(): number {
-        const ing1 = this._pokemon.ing1;
-        const e1 = ingredientStrength[ing1.name] * ing1.c1;
+        const ing1 = this.ingredient1;
+        const e1 = ingredientStrength[ing1.name] * ing1.count;
         if (this.level < 30) {
             return e1;
         }
 
-        const ing2 = this.ingredient.charAt(1) === 'A' ?
-            this._pokemon.ing1 : this._pokemon.ing2;
-        const e2 = ingredientStrength[ing2.name] * ing2.c2;
+        const ing2 = this.ingredient2;
+        const e2 = ingredientStrength[ing2.name] * ing2.count;
         if (this.level < 60) {
             return Math.floor((e1 + e2) / 2);
         }
 
+        const ing3 = this.ingredient3;
+        const e3 = ingredientStrength[ing3.name] * ing3.count;
+        return Math.floor((e1 + e2 + e3) / 3);
+    }
+
+    get ingredient1() {
+        return {
+            name: this._pokemon.ing1.name,
+            count: this._pokemon.ing1.c1,
+        };
+    }
+
+    get ingredient2() {
+        const ing2 = this.ingredient.charAt(1) === 'A' ?
+            this._pokemon.ing1 : this._pokemon.ing2;
+        return { name: ing2.name, count: ing2.c2 };
+    }
+
+    get ingredient3() {
         const ing3 = this.ingredient.charAt(2) === 'A' ? this._pokemon.ing1 :
             this.ingredient.charAt(2) === 'B' ?
             this._pokemon.ing2 : this._pokemon.ing3;
         if (ing3 === undefined) { throw new Error("this pokemon doesn't have 3rd ing"); }
-        const e3 = ingredientStrength[ing3.name] * ing2.c3;
-        return Math.floor((e1 + e2 + e3) / 3);
+        return { name: ing3.name, count: ing3.c3 };
     }
-    
+
     get ingredientG(): number {
         const table = [1.000,1.003,1.007,1.011,1.016,1.021,1.027,1.033,1.039,1.046,1.053,
             1.061,1.069,1.077,1.085,1.094,1.104,1.114,1.124,1.134,1.145,1.156,
@@ -250,6 +290,9 @@ class PokemonRp {
         }
         if (this._pokemon.skill === "Energy for Everyone S") {
             return [1120, 1593, 2197, 3033, 4187, 5785][this.skillLevel - 1];
+        }
+        if (this._pokemon.skill === "Helper Boost") {
+            return [2800, 3902, 5273, 6975, 9317, 12438][this.skillLevel - 1];
         }
         return [880, 1251, 1726, 2383, 3290, 4546, 5843][this.skillLevel - 1];
     }

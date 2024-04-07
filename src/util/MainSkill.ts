@@ -79,4 +79,5 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         // TODO
         return [0, 0, 0, 0, 0, 0][skillLevel - 1];
     }
+    return [0, 0, 0, 0, 0, 0][skillLevel - 1];
 }    

@@ -35,21 +35,21 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                     fontWeight: 'bold',
                 }}>{t('num', {n: rpResult.rp})}</span>
             </div>
-            <BerryIngSkillView
+            <BerryIngSkillView small
                 berryValue={trunc1(rpResult.berryRp)}
                 berryProb={trunc1(rp.berryRatio * 100)}
                 berrySubValue={`${t('strength2')}: ${rp.berryStrength}×${rp.berryCount}`}
                 ingredientValue={trunc1(rpResult.ingredientRp)}
                 ingredientProb={trunc1(rp.ingredientRatio * 100)}
-                ingredientSubValue={`${t('strength2')}: ${round(rp.ingredientEnergy * rp.ingredientG)}`}
+                ingredientSubValue={`${t('strength2')}: ${round(rp.ingredientEnergy)}×${trunc1(rp.ingredientG)}`}
                 skillValue={trunc1(rpResult.skillRp)}
                 skillProb={trunc1(rp.skillRatio * 100)}
                 skillSubValue={`${t('strength2')}: ${t('num', {n: rp.skillValue})}`}/>
         </div>
         <RaderChart width={width} height={raderHeight} speciality={pokemon.speciality}
-            berry={rpResult.berryRp / 1500}
-            ingredient={rpResult.ingredientRp / 1500}
-            skill={rpResult.skillRp / 1500}/>
+            berry={rpResult.berryRp / 2000}
+            ingredient={rpResult.ingredientRp / 2000}
+            skill={rpResult.skillRp / 2000}/>
     </>);
 });
 

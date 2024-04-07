@@ -67,6 +67,28 @@
         "select add to home screen": "[ホーム画面に追加 <add/>] をメニューから選ぶ。",
         "copied": "クリップボードにコピーしました。",
 
+        "rp": "SP",
+        "strength2": "エナジー",
+        "rating": "個体評価",
+
+        "period": "期間",
+        "1day": "1日",
+        "1week": "1週間",
+        "whistle": "ホイッスル",
+        "field bonus": "フィールドボーナス",
+        "favorite berry": "好みきのみ",
+        "helping bonus": "おてつだいボーナス",
+        "good camp ticket": "いいキャンプチケット",
+        "energy": "げんき",
+        "no healing": "回復なし",
+        "healing": "回復",
+        "always 81%+": "常に81%以上",
+        "tap frequency": "タップ頻度",
+        "every minute": "毎分",
+        "recipe range (the number of ingredients)": "食材を使うレシピ",
+        "mixed recipe": "ごちゃまぜ",
+        "average recipe level": "平均レシピレベル",
+
         "pokemon": "ポケモン",
         "level": "レベル",
         "name": "名前",
@@ -78,7 +100,9 @@
         "Main Skill & Sub Skills": "メインスキル・サブスキル",
         "nature": "せいかく",
         "probability": "確率",
-        "strength2": "エナジー",
+        "times unit": "回",
+
+        "rate subskill and nature": "サブスキル・性格の評価値",
 
         "sleeptype": "睡眠タイプ",
         "pokedexno": "図鑑番号",
@@ -88,7 +112,8 @@
         "about1": "このツールは非公式のツールであり、<profile>nitoyon</profile> が個人で開発しています。",
         "profile": "http://tech.nitoyon.com/ja/about/",
         "about2": "改善要望・不具合報告は、X (twitter) の <x>@nitoyon</x> または <github>GitHub</github> までお願いします。",
-        "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」を参照させていただいています。",
+        "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」と「<rp>RP collection project</rp>」を参照しています。",
+        "about4": "食材のアイコンは <chanriwa>ちゃんりわ</chanriwa> さんが作成してくれました。",
 
         "skills": {
             "Ingredient Magnet S": "食材ゲットS",
