@@ -46,6 +46,16 @@ class SubSkillList {
     }
 
     /**
+     * Creates a deep copy of this instance.
+     * @returns A cloned instance.
+     */
+    clone(): SubSkillList {
+        const ret = new SubSkillList();
+        ret.value = [...this.value];
+        return ret;
+    }
+    
+    /**
      * Get the active sub skill list at the specified level.
      * @param level level of the Pokemon (1 - 100).
      * @returns Array of the active Sub skills.

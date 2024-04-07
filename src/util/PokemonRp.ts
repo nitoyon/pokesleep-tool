@@ -1,4 +1,5 @@
 import pokemons, {IngredientName, PokemonData, PokemonType} from '../data/pokemons';
+import PokemonIv from './PokemonIv';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
@@ -83,7 +84,8 @@ class PokemonRp {
         return this._pokemon;
     }
 
-    constructor(pokemonName: string) {
+    constructor(pokemonIv: PokemonIv) {
+        const pokemonName = pokemonIv.pokemonName;
         this._pokemonName = pokemonName;
         const pokemon = pokemons.find(x => x.name === pokemonName);
         if (pokemon === undefined) {
@@ -91,11 +93,11 @@ class PokemonRp {
         }
         this._pokemon = pokemon;
 
-        this.level = 30;
-        this.skillLevel = 3;
-        this.ingredient = "AAA";
-        this.subSkills = new SubSkillList();
-        this.nature = null;
+        this.level = pokemonIv.level;
+        this.skillLevel = pokemonIv.skillLevel;
+        this.ingredient = pokemonIv.ingredient;
+        this.subSkills = pokemonIv.subSkills;
+        this.nature = pokemonIv.nature;
     }
 
     calculate(): RpCalculateResult {

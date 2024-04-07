@@ -2,8 +2,8 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { isSkillLevelMax7 } from '../../data/pokemons';
 import Nature from '../../util/Nature';
+import PokemonIv from '../../util/PokemonIv';
 import PokemonRp, { IngredientType } from '../../util/PokemonRp';
-import SubSkillList from '../../util/SubSkillList';
 import RpRaderChart from './RpRaderChart';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
@@ -62,29 +62,40 @@ const StyledInputForm = styled('div')({
 const ResearchCalcApp = React.memo(() => {
     const { t } = useTranslation();
     const width = useDomWidth();
-    const [pokemonName, setPokemonName] = React.useState("Bulbasaur");
-    const [level, setLevel] = React.useState(30);
-    const [skillLevel, setSkillLevel] = React.useState(3);
-    const [ingredient, setIngredient] = React.useState<IngredientType>("AAA");
-    const [subSkills, setSubSkills] = React.useState<SubSkillList>(new SubSkillList());
-    const [nature, setNature] = React.useState<Nature>(new Nature("Serious"));
+    const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Bulbasaur"));
 
+    const onPokemonNameChange = React.useCallback((name: string) => {
+        pokemonIv.pokemonName = name;
+        setPokemonIv(pokemonIv.clone());
+    }, [pokemonIv, setPokemonIv]);
+    const onLevelChange = React.useCallback((level: number) => {
+        pokemonIv.level = level;
+        setPokemonIv(pokemonIv.clone());
+    }, [pokemonIv, setPokemonIv]);
+    const onIngredientChange = React.useCallback((value: IngredientType) => {
+        pokemonIv.ingredient = value;
+        setPokemonIv(pokemonIv.clone());
+    }, [pokemonIv, setPokemonIv]);
+    const onSkillLevelChange = React.useCallback((value: number) => {
+        pokemonIv.skillLevel = value;
+        setPokemonIv(pokemonIv.clone());
+    }, [pokemonIv, setPokemonIv]);
     const onSubSkillChange = React.useCallback((event: SubSkillChangeEvent) => {
-        setSubSkills(event.value);
-    }, [setSubSkills]);
+        pokemonIv.subSkills = event.value;
+        setPokemonIv(pokemonIv.clone());
+    }, [pokemonIv, setPokemonIv]);
+    const onNatureChange = React.useCallback((value: Nature) => {
+        pokemonIv.nature = value;
+        setPokemonIv(pokemonIv.clone());
+    }, [pokemonIv, setPokemonIv]);
 
-    const rp = new PokemonRp(pokemonName);
-    rp.level = level;
-    rp.skillLevel = skillLevel;
-    rp.ingredient = ingredient;
-    rp.subSkills = subSkills;
-    rp.nature = nature;
-
+    const rp = new PokemonRp(pokemonIv);
     const rpResult = rp.calculate();
 
     const pokemon = rp.pokemon;
-    if (skillLevel === 7 && !isSkillLevelMax7(pokemon.skill)) {
-        setSkillLevel(6);
+    if (pokemonIv.skillLevel === 7 && !isSkillLevelMax7(pokemon.skill)) {
+        pokemonIv.skillLevel = 6;
+        setPokemonIv(pokemonIv.clone());
     }
 
     const raderHeight = 400;
@@ -142,22 +153,22 @@ const ResearchCalcApp = React.memo(() => {
         <StyledInputForm>
             <div className="table">
                 <div>{t("pokemon")}:</div>
-                <PokemonTextField value={pokemonName} onChange={setPokemonName}/>
+                <PokemonTextField value={pokemonIv.pokemonName} onChange={onPokemonNameChange}/>
                 <div>{t("level")}:</div>
-                <LevelControl value={level} onChange={setLevel}/>
+                <LevelControl value={pokemonIv.level} onChange={onLevelChange}/>
                 <div>{t("ingredient")}:</div>
                 <IngredientTextField pokemon={rp.pokemon}
-                    value={ingredient} onChange={setIngredient}/>
+                    value={pokemonIv.ingredient} onChange={onIngredientChange}/>
                 <div>{t("frequency")}:</div>
                 <div>
                     {t("frequency prefix")}{t('mmss', {m: freqM, s: freqS})}
                 </div>
             </div>
             <h3>{t("Main Skill & Sub Skills")}</h3>
-            <SkillLevelControl pokemon={rp.pokemon} value={skillLevel} onChange={setSkillLevel}/>
-            <SubSkillControl value={subSkills} onChange={onSubSkillChange}/>
+            <SkillLevelControl pokemon={rp.pokemon} value={pokemonIv.skillLevel} onChange={onSkillLevelChange}/>
+            <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
             <h3>{t("nature")}</h3>
-            <NatureTextField value={nature} onChange={setNature}/>
+            <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
         </StyledInputForm>
     </div>;
 });
