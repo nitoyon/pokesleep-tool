@@ -1,37 +1,9 @@
 import React from 'react';
-import { styled } from '@mui/system';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp from '../../util/PokemonRp';
+import BerryIngSkillView from './BerryIngSkillView';
 import RpRaderChart from './RpRaderChart';
 import { useTranslation } from 'react-i18next';
-
-const RpUnit = styled('div')({
-    marginLeft: '0.8rem',
-    marginBottom: '.4rem',
-    '& header': {
-        fontSize: '1rem',
-        '& span': {
-            display: 'inline-block',
-            width: '4rem',
-            fontSize: '.6rem',
-            padding: '.1rem 0',
-            textAlign: 'center',
-            color: 'white',
-            borderRadius: '.6rem',
-            verticalAlign: '20%',
-        },
-        '& strong': {
-            display: 'inline-block',
-            width: '4.5rem',
-            textAlign: 'right',
-            color: '#555',
-        }
-    },
-    '& section': {
-        fontSize: '0.7rem',
-        color: '#666',
-    },
-});
 
 const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
     const { t } = useTranslation();
@@ -66,27 +38,16 @@ const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
                     fontWeight: 'bold',
                 }}>{t('num', {n: rpResult.rp})}</span>
             </div>
-            <RpUnit>
-                <header>
-                    <span style={{background: '#24d76a'}}>{t('berry')}</span>
-                    <strong>{trunc1(rpResult.berryRp)}</strong>
-                </header>
-                <section>{t('probability')}: {round(rp.berryRatio * 100)}%, {t('strength2')}: {rp.berryEnergy}×{rp.berryCount}</section>
-            </RpUnit>
-            <RpUnit>
-                <header>
-                    <span style={{background: '#fab855'}}>{t('ingredient')}</span>
-                    <strong>{trunc1(rpResult.ingredientRp)}</strong>
-                </header>
-                <section>{t('probability')}: {round(rp.ingredientRatio * 100)}%, {t('strength2')}: {round(rp.ingredientEnergy * rp.ingredientG)}</section>
-            </RpUnit>
-            <RpUnit>
-                <header>
-                    <span style={{background: '#44a2fd'}}>{t('skill')}</span>
-                    <strong>{trunc1(rpResult.skillRp)}</strong>
-                </header>
-                <section>{t('probability')}: {round(rp.skillRatio * 100)}%, {t('strength2')}: {t('num', {n: rp.skillValue})}</section>
-            </RpUnit>
+            <BerryIngSkillView
+                berryValue={trunc1(rpResult.berryRp)}
+                berryProb={trunc1(rp.berryRatio * 100)}
+                berrySubValue={`${t('strength2')}: ${rp.berryEnergy}×${rp.berryCount}`}
+                ingredientValue={trunc1(rpResult.ingredientRp)}
+                ingredientProb={trunc1(rp.ingredientRatio * 100)}
+                ingredientSubValue={`${t('strength2')}: ${round(rp.ingredientEnergy * rp.ingredientG)}`}
+                skillValue={trunc1(rpResult.skillRp)}
+                skillProb={trunc1(rp.skillRatio * 100)}
+                skillSubValue={`${t('strength2')}: ${t('num', {n: rp.skillValue})}`}/>
         </div>
         <RpRaderChart rp={rpResult} width={width} height={raderHeight} color={raderColor}/>
     </>);
