@@ -213,7 +213,7 @@ class PokemonRp {
     get berryRp(): number {
         return trunc(
             this.helpCountPer5Hour * this.berryRatio *
-            this.berryEnergy * this.berryCount,
+            this.berryStrength * this.berryCount,
             2);
     }
     
@@ -226,7 +226,7 @@ class PokemonRp {
             (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
     }
 
-    get berryEnergy(): number {
+    get berryStrength(): number {
         const b0 = berryStrength[this._pokemon.type]; 
         return Math.max(
             b0 + this.level - 1,

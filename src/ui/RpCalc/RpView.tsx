@@ -41,7 +41,7 @@ const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
             <BerryIngSkillView
                 berryValue={trunc1(rpResult.berryRp)}
                 berryProb={trunc1(rp.berryRatio * 100)}
-                berrySubValue={`${t('strength2')}: ${rp.berryEnergy}×${rp.berryCount}`}
+                berrySubValue={`${t('strength2')}: ${rp.berryStrength}×${rp.berryCount}`}
                 ingredientValue={trunc1(rpResult.ingredientRp)}
                 ingredientProb={trunc1(rp.ingredientRatio * 100)}
                 ingredientSubValue={`${t('strength2')}: ${round(rp.ingredientEnergy * rp.ingredientG)}`}
