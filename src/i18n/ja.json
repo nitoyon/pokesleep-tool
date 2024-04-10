@@ -32,7 +32,9 @@
         "num": "{{n, number}}",
         "range separator": "～",
         "hhmm": "{{h}}時間{{m}}分",
-        "mmss": "{{m}}分{{s}}秒",
+        "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}分{{s}}秒ごと",
+        "hour2_zero": "",
+        "hour2_other": "{{count}}時間",
         "strength too low": "エナジーが <strength/> 必要です。",
         "strength too much": "エナジーが多すぎます。",
         "next strength to get 1 more pokemon": "2回目睡眠までに <strength2/> エナジーを稼ぐと、2回目のリサーチで <count2/> 体に出会えます (※1回目の睡眠スコアが <score1/> のとき)。",
@@ -73,7 +75,6 @@
         "ingredient": "食材",
         "skill": "スキル",
         "frequency": "おてつだい時間",
-        "frequency prefix": "",
         "Main Skill & Sub Skills": "メインスキル・サブスキル",
         "nature": "せいかく",
         "probability": "確率",
@@ -92,15 +93,15 @@
         "skills": {
             "Ingredient Magnet S": "食材ゲットS",
             "Charge Energy S": "げんきチャージS",
-            "Charge Strength S": "Charge Strength S",
-            "Charge Strength M": "Charge Strength M",
-            "Dream Shard Magnet S": "Dream Shard Magnet S",
-            "Energizing Cheer S": "Energizing Cheer S",
+            "Charge Strength S": "エナジーチャージS",
+            "Charge Strength M": "エナジーチャージM",
+            "Dream Shard Magnet S": "ゆめのかけらゲットS",
+            "Energizing Cheer S": "げんきエールS",
             "Metronome": "ゆびをふる",
-            "Energy for Everyone S": "Energy for Everyone S",
-            "Extra Helpful S": "Extra Helpful S",
-            "Cooking Power-Up S": "Cooking Power-Up S",
-            "Tasty Chance S": "Tasty Chance S"
+            "Energy for Everyone S": "げんきオールS",
+            "Extra Helpful S": "おてつだいサポートS",
+            "Cooking Power-Up S": "料理パワーアップS",
+            "Tasty Chance S": "料理チャンスS"
         },
 
         "subskill": {

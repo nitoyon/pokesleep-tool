@@ -65,7 +65,8 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
     }, [pokemonIv, onChange]);
 
     const rp = new PokemonRp(pokemonIv);
-    const freqM = Math.floor(rp.frequency / 60);
+    const freqH = Math.floor(rp.frequency / 3600);
+    const freqM = Math.floor((rp.frequency / 60) % 60);
     const freqS = Math.floor(rp.frequency % 60);
 
     return <StyledInputForm>
@@ -79,7 +80,7 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
                 value={pokemonIv.ingredient} onChange={onIngredientChange}/>
             <div>{t("frequency")}:</div>
             <div>
-                {t("frequency prefix")}{t('mmss', {m: freqM, s: freqS})}
+                {t('freq hhmmss', {h: freqH, m: freqM, s: freqS})}
             </div>
         </div>
         <h3>{t("Main Skill & Sub Skills")}</h3>
