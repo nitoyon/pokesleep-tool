@@ -41,40 +41,6 @@ form.main div.strength_second_line {
     user-select: none;
 }
 
-button.rank_move {
-    width: 1.3rem;
-    height: 1.3rem;
-    background: white;
-    font-size: .8rem;
-    border-radius: 50%;
-    padding: 0;
-    border: 1px solid #999;
-    color: #000;
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-}
-button.rank_move:hover {
-    background: #f0f0ee;
-}
-button.rank_move:disabled {
-    background: #eee;
-    border: 1px solid #ccc;
-}
-button.rank_move::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1.3rem;
-    height: 1.3rem;
-    display: inline-block;
-    border-radius: 100%;
-    overflow: hidden;
-    background: #999999;
-    opacity: 0;
-}
-
 form.main span.strength_progress {
     width: calc(100% - 4rem);
     margin: 0 1rem;

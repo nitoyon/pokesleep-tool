@@ -1,4 +1,39 @@
 import React from 'react';
+import { styled } from '@mui/system';
+
+const StyledArrowButton = styled('button')({
+    width: '1.3rem',
+    height: '1.3rem',
+    background: 'white',
+    fontSize: '.8rem',
+    borderRadius: '50%',
+    padding: 0,
+    border: '1px solid #999',
+    color: '#000',
+    cursor: 'pointer',
+    flexShrink: 0,
+    position: 'relative',
+    '&:hover': {
+        background: '#f0f0ee',
+    },
+    '&:disabled': {
+        background: '#eee',
+        border: '1px solid #ccc',
+    },
+    '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '1.3rem',
+        height: '1.3rem',
+        display: 'inline-block',
+        borderRadius: '100%',
+        overflow: 'hidden',
+        background: '#999999',
+        opacity: 0,
+    }
+});
 
 interface ArrowButtonProps {
     /** button label */
@@ -27,8 +62,8 @@ const ArrowButton = React.memo(({disabled, label, onClick}:ArrowButtonProps) => 
         onClick?.();
     };
 
-    return <button className="rank_move" disabled={disabled}
-        onClick={onClickHandler}>{label}</button>;
+    return <StyledArrowButton disabled={disabled}
+        onClick={onClickHandler}>{label}</StyledArrowButton>;
 });
 
 export default ArrowButton;
