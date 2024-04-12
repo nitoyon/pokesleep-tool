@@ -1,13 +1,13 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Slider, TextField } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import ArrowButton from '../common/ArrowButton';
 
 const LevelControlContainer = styled('div')({
     display: 'flex',
-    alignItems: 'top',
-    gap: '1rem',
-    paddingRight: '.9rem',
+    alignItems: 'center',
+    gap: '.7rem',
+    height: '1.8rem',
 });
 
 const LevelControl = React.memo(({value, onChange}: {
@@ -38,6 +38,13 @@ const LevelControl = React.memo(({value, onChange}: {
         onChange(value);
     }, [onChange]);
 
+    const onLevelDownClick = React.useCallback(() => {
+        onChange(value - 1);
+    }, [value, onChange]);
+    const onLevelUpClick = React.useCallback(() => {
+        onChange(value + 1);
+    }, [value, onChange]);
+
     const valueText = isEmpty ? "" : value.toString();
     return (<LevelControlContainer>
             <TextField variant="standard" size="small" type="number"
@@ -45,8 +52,10 @@ const LevelControl = React.memo(({value, onChange}: {
                 value={valueText}
                 InputProps={{inputProps: {min: 1, max: 100, inputMode: "numeric", style: {textAlign: 'left'}}}}
                 onChange={_onChange}/>
+            <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
             <Slider min={0} max={100} size="small" style={{userSelect: "none"}}
                 value={value} onChange={_onChange}/>
+            <ArrowButton label="▶" disabled={value === 100} onClick={onLevelUpClick}/>
         </LevelControlContainer>
     );
 });
