@@ -4,7 +4,7 @@ import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import React, { useCallback, useState } from 'react';
 import { Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
-import ArrowButton from './ArrowButton';
+import ArrowButton from '../common/ArrowButton';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useTranslation } from 'react-i18next';
 
