@@ -1,24 +1,9 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { IngredientType } from '../../util/PokemonRp';
-import { IngredientName, PokemonData } from '../../data/pokemons';
+import { PokemonData } from '../../data/pokemons';
 import { Badge, TextField, MenuItem } from '@mui/material';
-import AppleIcon from '../Resources/AppleIcon';
-import CacaoIcon from '../Resources/CacaoIcon';
-import CornIcon from '../Resources/CornIcon';
-import EggIcon from '../Resources/EggIcon';
-import GingerIcon from '../Resources/GingerIcon';
-import HerbIcon from '../Resources/HerbIcon';
-import HoneyIcon from '../Resources/HoneyIcon';
-import LeekIcon from '../Resources/LeekIcon';
-import MashroomIcon from '../Resources/MashroomIcon';
-import MilkIcon from '../Resources/MilkIcon';
-import OilIcon from '../Resources/OilIcon';
-import PotatoIcon from '../Resources/PotatoIcon';
-import SausageIcon from '../Resources/SausageIcon';
-import SoyIcon from '../Resources/SoyIcon';
-import TailIcon from '../Resources/TailIcon';
-import TomatoIcon from '../Resources/TomatoIcon';
+import IngredientIcon from './IngredientIcon';
 
 const BorderedMenuItem = styled(MenuItem)({
     borderTop: '1px dashed #ddd',
@@ -100,28 +85,6 @@ const PokemonIngredient = React.memo(({pokemon, value}: {
         <IngredientIcon name={ing3.name}/>
     </IngredientBadge>;
     return <>{icon1}{icon2}{icon3}</>;
-});
-
-const IngredientIcon = React.memo(({name}: {name: IngredientName}) => {
-    switch (name) {
-        case "apple": return <AppleIcon/>;
-        case "cacao": return <CacaoIcon/>;
-        case "corn": return <CornIcon/>;
-        case "egg": return <EggIcon/>;
-        case "ginger": return <GingerIcon/>;
-        case "herb": return <HerbIcon/>;
-        case "honey": return <HoneyIcon/>;
-        case "leek": return <LeekIcon/>;
-        case "mashroom": return <MashroomIcon/>;
-        case "milk": return <MilkIcon/>;
-        case "oil": return <OilIcon/>;
-        case "potato": return <PotatoIcon/>;
-        case "sausage": return <SausageIcon/>;
-        case "soy": return <SoyIcon/>;
-        case "tail": return <TailIcon/>;
-        case "tomato": return <TomatoIcon/>;
-    }
-    return <></>;
 });
 
 export default IngredientTextField;
