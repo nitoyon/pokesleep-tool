@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { InputAreaData } from './InputArea';
-import BetterSecondSleepDialog, { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
+import BetterSecondSleepDialog, { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import PreviewScore, {getScoreRange} from './PreviewScore';
 import PreviewEncounter from './PreviewEncounter';
 

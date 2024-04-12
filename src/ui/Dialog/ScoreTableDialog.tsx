@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import SleepScore from '../SleepScore';
-import {getMinTimeForScore, getMaxTimeForScore} from '../PreviewScore';
+import {getMinTimeForScore, getMaxTimeForScore} from '../ResearchCalc/PreviewScore';
 import { useTranslation } from 'react-i18next';
 import './ScoreTableDialog.css';
 

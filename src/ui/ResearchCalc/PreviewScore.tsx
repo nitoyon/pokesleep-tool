@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { InputAreaData } from './InputArea'
-import Rank from '../util/Rank';
-import { PokemonCount, getPokemonCount } from '../util/PokemonCount';
-import SleepScore from './SleepScore'
-import fields from '../data/fields';
-import { BetterSecondSleepData } from './Dialog/BetterSecondSleepDialog';
+import Rank from '../../util/Rank';
+import { PokemonCount, getPokemonCount } from '../../util/PokemonCount';
+import SleepScore from '../SleepScore'
+import fields from '../../data/fields';
+import { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 

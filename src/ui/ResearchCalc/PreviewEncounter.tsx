@@ -3,10 +3,10 @@ import { Alert, Button, Dialog, DialogContent, DialogTitle,
     DialogActions, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import fields, { FieldData, FieldEncounterData } from '../data/fields';
+import fields, { FieldData, FieldEncounterData } from '../../data/fields';
 import { InputAreaData } from './InputArea'
 import PreviewScore, { ScoreRange, getMinTimeForScore, getMaxTimeForScore } from './PreviewScore';
-import { getPokemonCount } from '../util/PokemonCount';
+import { getPokemonCount } from '../../util/PokemonCount';
 import { useTranslation, Trans } from 'react-i18next'
 
 interface PreviewEncounterProps {
@@ -73,7 +73,7 @@ export default function PreviewEncounter({data}:PreviewEncounterProps) {
         if (ranges.length > 0) {
             encounters.push(<div className="encounter">
                 <span className={type + " sleep_type"}>{t(type)}</span>
-                {t(pokemon)} {t('guaranteed score')}
+                {t(`pokemon.${pokemon}`)} {t('guaranteed score')}
                 <IconButton aria-label="information" onClick={onClick}>
                     <InfoOutlinedIcon/>
                 </IconButton>
@@ -123,7 +123,7 @@ const PreviewEncounterDialog = React.memo(({open, onClose, field, encounter}:Pre
                 <Trans i18nKey="guaranteed score text"
                     components={{
                         area: <strong>{t(`area.${field.index}`)}</strong>,
-                        pokemon: <strong>{t(encounter.pokemon)}</strong>,
+                        pokemon: <strong>{t(`pokemon.${encounter.pokemon}`)}</strong>,
                     }}/>
             </div>
 

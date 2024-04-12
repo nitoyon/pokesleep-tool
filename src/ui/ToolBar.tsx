@@ -1,4 +1,3 @@
-import './App.css';
 import React, { useState } from 'react';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
