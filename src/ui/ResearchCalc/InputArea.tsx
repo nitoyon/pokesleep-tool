@@ -30,6 +30,9 @@ interface InputAreaData {
     secondSleep: boolean;
 }
 
+const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
 function InputArea({data, onChange: onchange}:InputAreaProps) {
     const { t } = useTranslation();
     const field = fields[data.fieldIndex];
@@ -72,6 +75,12 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     }, [onchange]);
 
     function onSliderChange(e: Event, value: number | Array<any>) {
+        // fix iOS bug on MUI slider
+        // https://github.com/mui/material-ui/issues/31869
+        if (isIOS && e.type === 'mousedown') {
+            return;
+        }
+
         if (typeof(value) !== "number") { return; }
         const strength = Math.min(value, rank.nextStrength - 1);
         onchange?.({...data, strength});
