@@ -1,4 +1,4 @@
-import pokemons, {IngredientName, PokemonData, PokemonType} from '../data/pokemons';
+import {IngredientName, PokemonData, PokemonType} from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
@@ -85,13 +85,8 @@ class PokemonRp {
     }
 
     constructor(pokemonIv: PokemonIv) {
-        const pokemonName = pokemonIv.pokemonName;
-        this._pokemonName = pokemonName;
-        const pokemon = pokemons.find(x => x.name === pokemonName);
-        if (pokemon === undefined) {
-            throw new Error(`Unknown name: ${pokemonName}`);
-        }
-        this._pokemon = pokemon;
+        this._pokemonName = pokemonIv.pokemonName;
+        this._pokemon = pokemonIv.pokemon;
 
         this.level = pokemonIv.level;
         this.skillLevel = pokemonIv.skillLevel;

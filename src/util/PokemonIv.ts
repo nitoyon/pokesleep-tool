@@ -1,4 +1,5 @@
 import Nature from './Nature';
+import pokemons, { PokemonData } from '../data/pokemons';
 import { IngredientType } from './PokemonRp';
 import SubSkillList from './SubSkillList';
 
@@ -7,6 +8,7 @@ import SubSkillList from './SubSkillList';
  */
 class PokemonIv {
     pokemonName: string;
+    pokemon: PokemonData;
     level: number;
     skillLevel: number;
     ingredient: IngredientType;
@@ -16,6 +18,13 @@ class PokemonIv {
     /** Initialize new instance. */
     constructor(pokemonName: string) {
         this.pokemonName = pokemonName;
+        const pokemon = pokemons.find(x => x.name === pokemonName);
+        if (pokemon === undefined) {
+            throw new Error(`Unknown name: ${pokemonName}`);
+        }
+        this.pokemon = pokemon;
+
+        // set default value
         this.level = 30;
         this.skillLevel = 3;
         this.ingredient = "AAA";
