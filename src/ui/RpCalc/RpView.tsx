@@ -5,9 +5,8 @@ import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
 import { useTranslation } from 'react-i18next';
 
-const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
+const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: number}) => {
     const { t } = useTranslation();
-    const width = useDomWidth();
 
     const rp = new PokemonRp(pokemonIv);
     const rpResult = rp.calculate();
@@ -53,20 +52,5 @@ const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
             skill={rpResult.skillRp / 1500}/>
     </>);
 });
-
-function useDomWidth() {
-    const [width, setWidth] = React.useState(0);
-    React.useEffect(() => {
-        const handler = () => {
-            setWidth(document.documentElement.clientWidth);
-        };
-        handler();
-        window.addEventListener("resize", handler);
-        return () => {
-            window.removeEventListener("resize", handler);
-        };
-    }, []);
-    return width;
-}
 
 export default RpView;
