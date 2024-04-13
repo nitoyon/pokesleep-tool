@@ -19,9 +19,12 @@ class SubSkillList {
      * @param value Create an empty list if value is undefined,
      *              clone the given list if value is specified.
      */
-    constructor(value?: SubSkillList) {
+    constructor(value?: SubSkillList|(SubSkill|null)[]) {
         if (value === undefined) {
             this.value = [null, null, null, null, null];
+        }
+        else if (value instanceof Array) {
+            this.value = value;
         }
         else {
             this.value = [...value.value];
