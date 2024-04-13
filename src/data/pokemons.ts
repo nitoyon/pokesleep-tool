@@ -12,7 +12,7 @@ export interface PokemonData {
     /** Type of the pokemon. */
     type: PokemonType;
     /** Specialty of the pokemon. */
-    specialty: PokemonSpeciality;
+    speciality: PokemonSpeciality;
     /** Skill of the pokemon */
     skill: MainSkillName;
     /** Friend point */

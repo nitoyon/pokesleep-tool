@@ -236,7 +236,7 @@ function updatePokemonList(html, ja2en) {
         const id = parseInt(tds[1].textContent, 10);
         const nameJa = tds[2].firstChild.textContent.replace("(", " (");
         const sleepTypeJa = tds[3].textContent;
-        const specialtyJa = tds[4].textContent;
+        const specialityJa = tds[4].textContent;
         const berryJa = tds[5].querySelector("a").getAttribute("title").replace("きのみ/", "");
         const skillJa = tds[9].textContent;
         const fp = parseInt(tds[10].textContent, 10);
@@ -249,8 +249,8 @@ function updatePokemonList(html, ja2en) {
         const type = berryTypes[berryJa];
         if (!(nameJa in ja2en)) { throw new Error(`Unknown pokemon: ${nameJa}`); }
         const name = ja2en[nameJa];
-        if (!(specialtyJa in specialties)) { throw new Error(`Unknown specialty: ${specialtyJa}`); }
-        const specialty = specialties[specialtyJa];
+        if (!(specialityJa in specialties)) { throw new Error(`Unknown speciality: ${specialityJa}`); }
+        const speciality = specialties[specialityJa];
         if (!(skillJa in skills)) { throw new Error(`Unknown skill: ${skillJa}`); }
         const skill = skills[skillJa];
 

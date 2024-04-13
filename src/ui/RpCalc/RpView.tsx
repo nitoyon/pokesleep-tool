@@ -46,7 +46,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                 skillProb={trunc1(rp.skillRatio * 100)}
                 skillSubValue={`${t('strength2')}: ${t('num', {n: rp.skillValue})}`}/>
         </div>
-        <RaderChart width={width} height={raderHeight} speciality={pokemon.specialty}
+        <RaderChart width={width} height={raderHeight} speciality={pokemon.speciality}
             berry={rpResult.berryRp / 1500}
             ingredient={rpResult.ingredientRp / 1500}
             skill={rpResult.skillRp / 1500}/>

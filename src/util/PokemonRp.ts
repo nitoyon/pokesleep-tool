@@ -217,7 +217,7 @@ class PokemonRp {
     }
 
     get berryCount(): number {
-        return (this._pokemon.specialty === "Berries" ? 2 : 1) +
+        return (this._pokemon.speciality === "Berries" ? 2 : 1) +
             (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
     }
 
