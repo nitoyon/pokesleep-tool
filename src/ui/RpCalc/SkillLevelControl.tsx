@@ -1,5 +1,6 @@
 import React from 'react';
-import { PokemonData, isSkillLevelMax7 } from '../../data/pokemons';
+import { PokemonData } from '../../data/pokemons';
+import { isSkillLevelMax7 } from '../../util/MainSkill';
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 

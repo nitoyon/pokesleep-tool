@@ -1,5 +1,5 @@
 import React from 'react';
-import { isSkillLevelMax7 } from '../../data/pokemons';
+import { isSkillLevelMax7 } from '../../util/MainSkill';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp from '../../util/PokemonRp';
 import RpView from './RpView';

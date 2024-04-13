@@ -1,5 +1,6 @@
 import pokemon_ from './pokemon.json';
 import {SleepType} from './fields';
+import { MainSkillName } from '../util/MainSkill';
 
 export interface PokemonData {
     /** Pokemon ID */
@@ -13,7 +14,7 @@ export interface PokemonData {
     /** Specialty of the pokemon. */
     specialty: PokemonSpeciality;
     /** Skill of the pokemon */
-    skill: PokemonSkill;
+    skill: MainSkillName;
     /** Friend point */
     fp: number;
     /** Frequency of the help */
@@ -47,24 +48,6 @@ export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
 
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
-export type PokemonSkill = "Ingredient Magnet S" |
-    "Charge Energy S" |
-    "Charge Strength S" |
-    "Charge Strength M" |
-    "Dream Shard Magnet S" |
-    "Energizing Cheer S" |
-    "Metronome" |
-    "Energy for Everyone S" |
-    "Extra Helpful S" |
-    "Cooking Power-Up S" |
-    "Tasty Chance S";
-
-export function isSkillLevelMax7(skill: PokemonSkill): boolean {
-    return skill === "Charge Strength M" ||
-        skill === "Charge Strength S" ||
-        skill === "Dream Shard Magnet S";
-}
-    
 export type IngredientName = "leek" | "mashroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn";
