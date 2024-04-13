@@ -2,7 +2,7 @@ import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp from '../../util/PokemonRp';
 import BerryIngSkillView from './BerryIngSkillView';
-import RpRaderChart from './RpRaderChart';
+import RaderChart from './RaderChart';
 import { useTranslation } from 'react-i18next';
 
 const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
@@ -14,8 +14,6 @@ const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
 
     const pokemon = rp.pokemon;
     const raderHeight = 400;
-    const raderColor = pokemon.specialty === "Berries" ? "#24d76a" :
-        pokemon.specialty === "Ingredients" ? "#fab855" : "#44a2fd";
     const round = (n: number) => Math.round(n * 10) / 10;
     const trunc1 = (n: number) => {
         n = round(n);
@@ -49,7 +47,10 @@ const RpView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
                 skillProb={trunc1(rp.skillRatio * 100)}
                 skillSubValue={`${t('strength2')}: ${t('num', {n: rp.skillValue})}`}/>
         </div>
-        <RpRaderChart rp={rpResult} width={width} height={raderHeight} color={raderColor}/>
+        <RaderChart width={width} height={raderHeight} speciality={pokemon.specialty}
+            berry={rpResult.berryRp / 1500}
+            ingredient={rpResult.ingredientRp / 1500}
+            skill={rpResult.skillRp / 1500}/>
     </>);
 });
 

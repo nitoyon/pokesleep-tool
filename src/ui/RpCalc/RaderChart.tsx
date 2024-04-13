@@ -1,18 +1,24 @@
 import React from 'react';
+import { PokemonSpeciality } from '../../data/pokemons';
 import { RpCalculateResult } from '../../util/PokemonRp';
 import { useTranslation } from 'react-i18next';
 
-interface RpRaderChartProps {
-    rp: RpCalculateResult;
+interface RaderChartProps {
+    berry: number;
+    ingredient: number;
+    skill: number;
     width: number;
     height: number;
-    color: string;
+    speciality: PokemonSpeciality;
 };
 
-const RpRaderChart = React.memo(({rp, width, height, color}: RpRaderChartProps) => {
+const RaderChart = React.memo(({
+    berry, ingredient, skill, width, height, speciality}: RaderChartProps) => {
     const pad = 15;
     const r = 80;
     const left = Math.min(300, width - pad - r * 1.732 / 2);
+    const color = speciality === "Berries" ? "#24d76a" :
+        speciality === "Ingredients" ? "#fab855" : "#44a2fd";
     return <svg
         width={width} height={height}
         viewBox={`0 0 ${width} ${height}`}
@@ -23,7 +29,8 @@ const RpRaderChart = React.memo(({rp, width, height, color}: RpRaderChartProps) 
         }}>
             <g transform={`translate(${left}, ${r + 90})`}>
                 <RaderChartAxis r={r}/>
-                <RaderLine r={r} rp={rp} color={color}/>
+                <RaderLine r={r} berry={berry} ingredient={ingredient}
+                    skill={skill} color={color}/>
             </g>
         </svg>;
 });
@@ -58,16 +65,22 @@ const RaderChartAxis = React.memo(({r}: {r: number}) => {
     </>;
 });
 
-const RaderLine = React.memo(({r, rp, color}: {r: number, rp: RpCalculateResult, color: string}) => {
-    const berry = rp.berryRp / 1500 * r;
-    const skill = rp.skillRp / 1500 * r;
-    const ing = rp.ingredientRp / 1500 * r;
+const RaderLine = React.memo(({r, berry, ingredient, skill, color}: {
+    r: number,
+    berry: number,
+    ingredient: number,
+    skill: number,
+    color: string,
+}) => {
+    berry = berry * r;
+    ingredient = ingredient * r;
+    skill = skill * r;
     const x1 = 0;
     const y1 = -berry;
     const x2 = -1.732 / 2 * skill;
     const y2 = skill / 2;
-    const x3 = 1.732 / 2 * ing;
-    const y3 = ing / 2;
+    const x3 = 1.732 / 2 * ingredient;
+    const y3 = ingredient / 2;
     return <>
         <g stroke={color} strokeWidth={2} fill={color} fillOpacity="0.3">
             <polygon points={`${x1},${y1},${x2},${y2},${x3},${y3}`}/>
@@ -75,4 +88,4 @@ const RaderLine = React.memo(({r, rp, color}: {r: number, rp: RpCalculateResult,
     </>;
 });
 
-export default RpRaderChart;
+export default RaderChart;
