@@ -8,7 +8,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 5,
         "frequency": 4400,
-        "ingRatio": 25.71,
+        "ingRatio": 25.7,
         "skillRatio": 1.9,
         "ancestor": 1,
         "ing1": {
@@ -36,7 +36,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 12,
         "frequency": 3300,
-        "ingRatio": 25.49,
+        "ingRatio": 25.5,
         "skillRatio": 1.9,
         "ancestor": 1,
         "ing1": {
@@ -64,7 +64,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 2800,
-        "ingRatio": 26.56,
+        "ingRatio": 26.6,
         "skillRatio": 2.1,
         "ancestor": 1,
         "ing1": {
@@ -92,7 +92,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 5,
         "frequency": 4400,
-        "ingRatio": 17.96,
+        "ingRatio": 17.9,
         "skillRatio": 0.8,
         "ancestor": 10,
         "ing1": {
@@ -120,7 +120,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 7,
         "frequency": 4200,
-        "ingRatio": 20.83,
+        "ingRatio": 20.8,
         "skillRatio": 1.8,
         "ancestor": 10,
         "ing1": {
@@ -148,7 +148,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 15,
         "frequency": 2600,
-        "ingRatio": 19.71,
+        "ingRatio": 19.7,
         "skillRatio": 1.4,
         "ancestor": 10,
         "ing1": {
@@ -176,7 +176,7 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 5000,
-        "ingRatio": 23.47,
+        "ingRatio": 23.5,
         "skillRatio": 3.3,
         "ancestor": 23,
         "ing1": {
@@ -204,7 +204,7 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3700,
-        "ingRatio": 26.32,
+        "ingRatio": 26.4,
         "skillRatio": 5.7,
         "ancestor": 23,
         "ing1": {
@@ -232,7 +232,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 5400,
-        "ingRatio": 13.62,
+        "ingRatio": 13.6,
         "skillRatio": 12.6,
         "ancestor": 54,
         "ing1": {
@@ -260,7 +260,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4200,
-        "ingRatio": 19.71,
+        "ingRatio": 19.7,
         "skillRatio": 2.2,
         "ancestor": 56,
         "ing1": {
@@ -288,7 +288,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 2800,
-        "ingRatio": 19.99,
+        "ingRatio": 20,
         "skillRatio": 2.4,
         "ancestor": 56,
         "ing1": {
@@ -316,8 +316,8 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 5200,
-        "ingRatio": 23.28,
-        "skillRatio": 3.91,
+        "ingRatio": 23.3,
+        "skillRatio": 3.9,
         "ancestor": 69,
         "ing1": {
             "name": "tomato",
@@ -484,7 +484,7 @@
         "skill": "Charge Strength S",
         "fp": 16,
         "frequency": 2400,
-        "ingRatio": 20.59,
+        "ingRatio": 20.6,
         "skillRatio": 3.1,
         "ancestor": null,
         "ing1": {
@@ -512,7 +512,7 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 5000,
-        "ingRatio": 24.99,
+        "ingRatio": 25,
         "skillRatio": 2,
         "ancestor": 147,
         "ing1": {
@@ -540,7 +540,7 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3800,
-        "ingRatio": 26.19,
+        "ingRatio": 26.2,
         "skillRatio": 2.5,
         "ancestor": 147,
         "ing1": {
@@ -569,7 +569,7 @@
         "fp": 25,
         "frequency": 2600,
         "ingRatio": 26.4,
-        "skillRatio": 2.59,
+        "skillRatio": 2.6,
         "ancestor": 147,
         "ing1": {
             "name": "herb",
@@ -596,7 +596,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4400,
-        "ingRatio": 16.89,
+        "ingRatio": 16.9,
         "skillRatio": 3.9,
         "ancestor": 152,
         "ing1": {
@@ -624,7 +624,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3300,
-        "ingRatio": 16.81,
+        "ingRatio": 16.8,
         "skillRatio": 3.8,
         "ancestor": 152,
         "ing1": {
@@ -652,7 +652,7 @@
         "skill": "Charge Strength S",
         "fp": 20,
         "frequency": 2800,
-        "ingRatio": 17.44,
+        "ingRatio": 17.5,
         "skillRatio": 4.6,
         "ancestor": 152,
         "ing1": {
@@ -680,7 +680,7 @@
         "skill": "Charge Energy S",
         "fp": 20,
         "frequency": 3200,
-        "ingRatio": 21.85,
+        "ingRatio": 21.9,
         "skillRatio": 14.1,
         "ancestor": 133,
         "ing1": {
@@ -736,7 +736,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 16,
         "frequency": 2500,
-        "ingRatio": 18.79,
+        "ingRatio": 18.8,
         "skillRatio": 1.5,
         "ancestor": null,
         "ing1": {
@@ -764,8 +764,8 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4900,
-        "ingRatio": 20.15,
-        "skillRatio": 4.39,
+        "ingRatio": 20.1,
+        "skillRatio": 4.4,
         "ancestor": 228,
         "ing1": {
             "name": "herb",
@@ -792,7 +792,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3300,
-        "ingRatio": 20.22,
+        "ingRatio": 20.3,
         "skillRatio": 4.6,
         "ancestor": 228,
         "ing1": {
@@ -821,7 +821,7 @@
         "fp": 25,
         "frequency": 2700,
         "ingRatio": 26.6,
-        "skillRatio": 5.19,
+        "skillRatio": 5.2,
         "ancestor": 246,
         "ing1": {
             "name": "ginger",
@@ -848,7 +848,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 12,
         "frequency": 3200,
-        "ingRatio": 20.44,
+        "ingRatio": 20.4,
         "skillRatio": 1.5,
         "ancestor": 287,
         "ing1": {
@@ -876,7 +876,7 @@
         "skill": "Dream Shard Magnet S",
         "fp": 16,
         "frequency": 3600,
-        "ingRatio": 17.05,
+        "ingRatio": 17.1,
         "skillRatio": 5.9,
         "ancestor": null,
         "ing1": {
@@ -904,7 +904,7 @@
         "skill": "Dream Shard Magnet S",
         "fp": 5,
         "frequency": 5900,
-        "ingRatio": 21.45,
+        "ingRatio": 21.4,
         "skillRatio": 6.3,
         "ancestor": 316,
         "ing1": {
@@ -932,8 +932,8 @@
         "skill": "Dream Shard Magnet S",
         "fp": 12,
         "frequency": 3500,
-        "ingRatio": 21.06,
-        "skillRatio": 6.09,
+        "ingRatio": 21,
+        "skillRatio": 6.1,
         "ancestor": 316,
         "ing1": {
             "name": "soy",
@@ -960,8 +960,8 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3700,
-        "ingRatio": 25.68,
-        "skillRatio": 6.09,
+        "ingRatio": 25.8,
+        "skillRatio": 6.1,
         "ancestor": 333,
         "ing1": {
             "name": "egg",
@@ -988,8 +988,8 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 3900,
-        "ingRatio": 17.15,
-        "skillRatio": 2.59,
+        "ingRatio": 17.1,
+        "skillRatio": 2.6,
         "ancestor": 353,
         "ing1": {
             "name": "oil",
@@ -1016,7 +1016,7 @@
         "skill": "Charge Strength S",
         "fp": 16,
         "frequency": 2600,
-        "ingRatio": 17.92,
+        "ingRatio": 17.9,
         "skillRatio": 3.3,
         "ancestor": 353,
         "ing1": {
@@ -1044,8 +1044,8 @@
         "skill": "Charge Strength S",
         "fp": 16,
         "frequency": 3100,
-        "ingRatio": 17.79,
-        "skillRatio": 3.81,
+        "ingRatio": 17.8,
+        "skillRatio": 3.8,
         "ancestor": null,
         "ing1": {
             "name": "cacao",
@@ -1072,7 +1072,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 5600,
-        "ingRatio": 22.78,
+        "ingRatio": 22.8,
         "skillRatio": 4.2,
         "ancestor": 453,
         "ing1": {
@@ -1096,8 +1096,8 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3400,
-        "ingRatio": 22.87,
-        "skillRatio": 4.31,
+        "ingRatio": 22.9,
+        "skillRatio": 4.3,
         "ancestor": 453,
         "ing1": {
             "name": "oil",
@@ -1120,8 +1120,8 @@
         "skill": "Energizing Cheer S",
         "fp": 20,
         "frequency": 3000,
-        "ingRatio": 20.8,
-        "skillRatio": 5.89,
+        "ingRatio": 20.5,
+        "skillRatio": 5.9,
         "ancestor": 133,
         "ing1": {
             "name": "milk",
@@ -1148,7 +1148,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 5,
         "frequency": 3500,
-        "ingRatio": 20.09,
+        "ingRatio": 20.1,
         "skillRatio": 1.1,
         "ancestor": 4,
         "ing1": {
@@ -1176,7 +1176,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 12,
         "frequency": 3000,
-        "ingRatio": 22.72,
+        "ingRatio": 22.7,
         "skillRatio": 1.6,
         "ancestor": 4,
         "ing1": {
@@ -1204,7 +1204,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 2400,
-        "ingRatio": 22.37,
+        "ingRatio": 22.4,
         "skillRatio": 1.6,
         "ancestor": 4,
         "ing1": {
@@ -1232,7 +1232,7 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 4900,
-        "ingRatio": 23.72,
+        "ingRatio": 23.7,
         "skillRatio": 3,
         "ancestor": 19,
         "ing1": {
@@ -1260,7 +1260,7 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3200,
-        "ingRatio": 23.67,
+        "ingRatio": 23.7,
         "skillRatio": 3,
         "ancestor": 19,
         "ing1": {
@@ -1288,7 +1288,7 @@
         "skill": "Charge Strength S",
         "fp": 7,
         "frequency": 2700,
-        "ingRatio": 20.74,
+        "ingRatio": 20.7,
         "skillRatio": 2.1,
         "ancestor": 172,
         "ing1": {
@@ -1316,7 +1316,7 @@
         "skill": "Charge Strength S",
         "fp": 7,
         "frequency": 2600,
-        "ingRatio": 21.87,
+        "ingRatio": 21.8,
         "skillRatio": 2.8,
         "ancestor": null,
         "ing1": {
@@ -1344,7 +1344,7 @@
         "skill": "Dream Shard Magnet S",
         "fp": 7,
         "frequency": 2600,
-        "ingRatio": 13.09,
+        "ingRatio": 13.1,
         "skillRatio": 4.2,
         "ancestor": null,
         "ing1": {
@@ -1372,7 +1372,7 @@
         "skill": "Charge Strength S",
         "fp": 18,
         "frequency": 2200,
-        "ingRatio": 22.41,
+        "ingRatio": 22.4,
         "skillRatio": 3.2,
         "ancestor": 172,
         "ing1": {
@@ -1400,7 +1400,7 @@
         "skill": "Metronome",
         "fp": 7,
         "frequency": 4000,
-        "ingRatio": 16.88,
+        "ingRatio": 16.8,
         "skillRatio": 3.6,
         "ancestor": 173,
         "ing1": {
@@ -1456,7 +1456,7 @@
         "skill": "Energy for Everyone S",
         "fp": 7,
         "frequency": 3900,
-        "ingRatio": 18.27,
+        "ingRatio": 18.2,
         "skillRatio": 4.3,
         "ancestor": 174,
         "ing1": {
@@ -1484,7 +1484,7 @@
         "skill": "Energy for Everyone S",
         "fp": 16,
         "frequency": 2900,
-        "ingRatio": 17.26,
+        "ingRatio": 17.4,
         "skillRatio": 4,
         "ancestor": 174,
         "ing1": {
@@ -1512,8 +1512,8 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4300,
-        "ingRatio": 19.17,
-        "skillRatio": 2.11,
+        "ingRatio": 19.2,
+        "skillRatio": 2.1,
         "ancestor": 50,
         "ing1": {
             "name": "tomato",
@@ -1540,8 +1540,8 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 2800,
-        "ingRatio": 18.96,
-        "skillRatio": 2.01,
+        "ingRatio": 19,
+        "skillRatio": 2,
         "ancestor": 50,
         "ing1": {
             "name": "tomato",
@@ -1568,8 +1568,8 @@
         "skill": "Dream Shard Magnet S",
         "fp": 5,
         "frequency": 4400,
-        "ingRatio": 16.39,
-        "skillRatio": 4.19,
+        "ingRatio": 16.3,
+        "skillRatio": 4.2,
         "ancestor": 52,
         "ing1": {
             "name": "milk",
@@ -1592,7 +1592,7 @@
         "skill": "Dream Shard Magnet S",
         "fp": 12,
         "frequency": 3000,
-        "ingRatio": 16.86,
+        "ingRatio": 16.9,
         "skillRatio": 4.4,
         "ancestor": 52,
         "ing1": {
@@ -1616,7 +1616,7 @@
         "skill": "Extra Helpful S",
         "fp": 5,
         "frequency": 4300,
-        "ingRatio": 13.81,
+        "ingRatio": 13.8,
         "skillRatio": 5,
         "ancestor": 58,
         "ing1": {
@@ -1644,7 +1644,7 @@
         "skill": "Extra Helpful S",
         "fp": 20,
         "frequency": 2500,
-        "ingRatio": 13.61,
+        "ingRatio": 13.6,
         "skillRatio": 4.9,
         "ancestor": 58,
         "ing1": {
@@ -1672,7 +1672,7 @@
         "skill": "Energizing Cheer S",
         "fp": 5,
         "frequency": 5700,
-        "ingRatio": 15.05,
+        "ingRatio": 15.1,
         "skillRatio": 6.7,
         "ancestor": 79,
         "ing1": {
@@ -1700,8 +1700,8 @@
         "skill": "Energizing Cheer S",
         "fp": 12,
         "frequency": 3800,
-        "ingRatio": 15.05,
-        "skillRatio": 6.81,
+        "ingRatio": 15.1,
+        "skillRatio": 6.8,
         "ancestor": 79,
         "ing1": {
             "name": "cacao",
@@ -1756,8 +1756,8 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 2800,
-        "ingRatio": 21.61,
-        "skillRatio": 3.89,
+        "ingRatio": 21.6,
+        "skillRatio": 3.9,
         "ancestor": 439,
         "ing1": {
             "name": "tomato",
@@ -1784,8 +1784,8 @@
         "skill": "Charge Strength S",
         "fp": 16,
         "frequency": 3500,
-        "ingRatio": 20.07,
-        "skillRatio": 3.61,
+        "ingRatio": 20.1,
+        "skillRatio": 3.6,
         "ancestor": null,
         "ing1": {
             "name": "oil",
@@ -1812,7 +1812,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 5,
         "frequency": 3700,
-        "ingRatio": 19.23,
+        "ingRatio": 19.2,
         "skillRatio": 5.5,
         "ancestor": 133,
         "ing1": {
@@ -1840,7 +1840,7 @@
         "skill": "Extra Helpful S",
         "fp": 20,
         "frequency": 2200,
-        "ingRatio": 15.11,
+        "ingRatio": 15.1,
         "skillRatio": 3.9,
         "ancestor": 133,
         "ing1": {
@@ -1868,7 +1868,7 @@
         "skill": "Cooking Power-Up S",
         "fp": 20,
         "frequency": 2700,
-        "ingRatio": 18.54,
+        "ingRatio": 18.5,
         "skillRatio": 5.2,
         "ancestor": 133,
         "ing1": {
@@ -1896,7 +1896,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 3500,
-        "ingRatio": 18.62,
+        "ingRatio": 18.6,
         "skillRatio": 2.1,
         "ancestor": 155,
         "ing1": {
@@ -1924,7 +1924,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3000,
-        "ingRatio": 21.12,
+        "ingRatio": 21.1,
         "skillRatio": 4.1,
         "ancestor": 155,
         "ing1": {
@@ -1952,7 +1952,7 @@
         "skill": "Charge Strength S",
         "fp": 20,
         "frequency": 2400,
-        "ingRatio": 20.61,
+        "ingRatio": 20.8,
         "skillRatio": 3.9,
         "ancestor": 155,
         "ing1": {
@@ -1980,7 +1980,7 @@
         "skill": "Metronome",
         "fp": 12,
         "frequency": 3800,
-        "ingRatio": 16.31,
+        "ingRatio": 16.3,
         "skillRatio": 5.6,
         "ancestor": 175,
         "ing1": {
@@ -2008,7 +2008,7 @@
         "skill": "Charge Strength M",
         "fp": 5,
         "frequency": 4600,
-        "ingRatio": 12.79,
+        "ingRatio": 12.8,
         "skillRatio": 4.7,
         "ancestor": 179,
         "ing1": {
@@ -2032,7 +2032,7 @@
         "skill": "Charge Strength M",
         "fp": 12,
         "frequency": 3300,
-        "ingRatio": 12.71,
+        "ingRatio": 12.7,
         "skillRatio": 4.6,
         "ancestor": 179,
         "ing1": {
@@ -2080,7 +2080,7 @@
         "skill": "Charge Strength M",
         "fp": 20,
         "frequency": 2400,
-        "ingRatio": 16.35,
+        "ingRatio": 16.4,
         "skillRatio": 4.4,
         "ancestor": 133,
         "ing1": {
@@ -2108,7 +2108,7 @@
         "skill": "Energizing Cheer S",
         "fp": 20,
         "frequency": 3400,
-        "ingRatio": 15.06,
+        "ingRatio": 15.1,
         "skillRatio": 6.8,
         "ancestor": 79,
         "ing1": {
@@ -2136,7 +2136,7 @@
         "skill": "Energizing Cheer S",
         "fp": 7,
         "frequency": 3500,
-        "ingRatio": 21.13,
+        "ingRatio": 21.1,
         "skillRatio": 5.8,
         "ancestor": 360,
         "ing1": {
@@ -2164,7 +2164,7 @@
         "skill": "Energy for Everyone S",
         "fp": 5,
         "frequency": 4800,
-        "ingRatio": 14.56,
+        "ingRatio": 14.5,
         "skillRatio": 4.3,
         "ancestor": 280,
         "ing1": {
@@ -2220,7 +2220,7 @@
         "skill": "Energy for Everyone S",
         "fp": 20,
         "frequency": 2400,
-        "ingRatio": 14.39,
+        "ingRatio": 14.4,
         "skillRatio": 4.2,
         "ancestor": 280,
         "ing1": {
@@ -2248,7 +2248,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 5,
         "frequency": 4900,
-        "ingRatio": 21.47,
+        "ingRatio": 21.6,
         "skillRatio": 1.9,
         "ancestor": 287,
         "ing1": {
@@ -2276,7 +2276,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 22,
         "frequency": 3800,
-        "ingRatio": 33.95,
+        "ingRatio": 33.9,
         "skillRatio": 6.7,
         "ancestor": 287,
         "ing1": {
@@ -2304,7 +2304,7 @@
         "skill": "Metronome",
         "fp": 22,
         "frequency": 2600,
-        "ingRatio": 15.78,
+        "ingRatio": 15.8,
         "skillRatio": 5.3,
         "ancestor": 175,
         "ing1": {
@@ -2332,7 +2332,7 @@
         "skill": "Energy for Everyone S",
         "fp": 20,
         "frequency": 2600,
-        "ingRatio": 17.77,
+        "ingRatio": 17.8,
         "skillRatio": 4,
         "ancestor": 133,
         "ing1": {
@@ -2360,6 +2360,8 @@
         "skill": "Tasty Chance S",
         "fp": 16,
         "frequency": 2500,
+        "ingRatio": 17.7,
+        "skillRatio": 4.5,
         "ancestor": null,
         "ing1": {
             "name": "apple",
@@ -2414,7 +2416,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 12,
         "frequency": 3400,
-        "ingRatio": 27.09,
+        "ingRatio": 27.1,
         "skillRatio": 2,
         "ancestor": 7,
         "ing1": {
@@ -2442,7 +2444,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 2800,
-        "ingRatio": 27.46,
+        "ingRatio": 27.5,
         "skillRatio": 2.1,
         "ancestor": 7,
         "ing1": {
@@ -2470,7 +2472,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3400,
-        "ingRatio": 13.48,
+        "ingRatio": 13.5,
         "skillRatio": 12.5,
         "ancestor": 54,
         "ing1": {
@@ -2526,7 +2528,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 4000,
-        "ingRatio": 27.21,
+        "ingRatio": 27.2,
         "skillRatio": 4.8,
         "ancestor": 74,
         "ing1": {
@@ -2582,7 +2584,7 @@
         "skill": "Cooking Power-Up S",
         "fp": 5,
         "frequency": 5800,
-        "ingRatio": 18.22,
+        "ingRatio": 18.2,
         "skillRatio": 6.4,
         "ancestor": 81,
         "ing1": {
@@ -2606,7 +2608,7 @@
         "skill": "Cooking Power-Up S",
         "fp": 12,
         "frequency": 4000,
-        "ingRatio": 18.21,
+        "ingRatio": 18.2,
         "skillRatio": 6.3,
         "ancestor": 81,
         "ing1": {
@@ -2630,7 +2632,7 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 3800,
-        "ingRatio": 18.38,
+        "ingRatio": 18.4,
         "skillRatio": 2,
         "ancestor": 84,
         "ing1": {
@@ -2658,7 +2660,7 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 2400,
-        "ingRatio": 18.41,
+        "ingRatio": 18.4,
         "skillRatio": 2,
         "ancestor": 84,
         "ing1": {
@@ -2686,7 +2688,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 16,
         "frequency": 3100,
-        "ingRatio": 13.18,
+        "ingRatio": 13.2,
         "skillRatio": 2.3,
         "ancestor": 95,
         "ing1": {
@@ -2714,7 +2716,7 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 4800,
-        "ingRatio": 22.32,
+        "ingRatio": 22.3,
         "skillRatio": 4.4,
         "ancestor": 104,
         "ing1": {
@@ -2738,7 +2740,7 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3500,
-        "ingRatio": 22.47,
+        "ingRatio": 22.5,
         "skillRatio": 4.5,
         "ancestor": 104,
         "ing1": {
@@ -2762,7 +2764,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 3100,
-        "ingRatio": 21.13,
+        "ingRatio": 21.2,
         "skillRatio": 6.1,
         "ancestor": 133,
         "ing1": {
@@ -2790,7 +2792,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4500,
-        "ingRatio": 25.29,
+        "ingRatio": 25.3,
         "skillRatio": 5.2,
         "ancestor": 158,
         "ing1": {
@@ -2814,7 +2816,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3400,
-        "ingRatio": 25.29,
+        "ingRatio": 25.3,
         "skillRatio": 5.2,
         "ancestor": 158,
         "ing1": {
@@ -2838,8 +2840,8 @@
         "skill": "Charge Strength S",
         "fp": 20,
         "frequency": 2800,
-        "ingRatio": 25.53,
-        "skillRatio": 5.49,
+        "ingRatio": 25.7,
+        "skillRatio": 5.5,
         "ancestor": 158,
         "ing1": {
             "name": "sausage",
@@ -2890,7 +2892,7 @@
         "skill": "Metronome",
         "fp": 5,
         "frequency": 5600,
-        "ingRatio": 16.39,
+        "ingRatio": 16.4,
         "skillRatio": 3.4,
         "ancestor": 173,
         "ing1": {
@@ -2918,7 +2920,7 @@
         "skill": "Energy for Everyone S",
         "fp": 5,
         "frequency": 5200,
-        "ingRatio": 16.97,
+        "ingRatio": 17,
         "skillRatio": 3.8,
         "ancestor": 174,
         "ing1": {
@@ -3002,7 +3004,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 3000,
-        "ingRatio": 15.39,
+        "ingRatio": 15.4,
         "skillRatio": 3.2,
         "ancestor": 95,
         "ing1": {
@@ -3030,7 +3032,7 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 4800,
-        "ingRatio": 23.79,
+        "ingRatio": 23.8,
         "skillRatio": 4.1,
         "ancestor": 246,
         "ing1": {
@@ -3058,8 +3060,8 @@
         "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3600,
-        "ingRatio": 24.71,
-        "skillRatio": 4.49,
+        "ingRatio": 24.7,
+        "skillRatio": 4.5,
         "ancestor": 246,
         "ing1": {
             "name": "ginger",
@@ -3086,8 +3088,8 @@
         "skill": "Charge Energy S",
         "fp": 5,
         "frequency": 4200,
-        "ingRatio": 17.64,
-        "skillRatio": 3.21,
+        "ingRatio": 17.7,
+        "skillRatio": 3.2,
         "ancestor": 333,
         "ing1": {
             "name": "egg",
@@ -3114,8 +3116,8 @@
         "skill": "Energizing Cheer S",
         "fp": 5,
         "frequency": 5800,
-        "ingRatio": 21.12,
-        "skillRatio": 5.91,
+        "ingRatio": 21.3,
+        "skillRatio": 5.9,
         "ancestor": 360,
         "ing1": {
             "name": "apple",
@@ -3142,7 +3144,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 5,
         "frequency": 5600,
-        "ingRatio": 22.41,
+        "ingRatio": 22.4,
         "skillRatio": 2.3,
         "ancestor": 363,
         "ing1": {
@@ -3170,7 +3172,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 12,
         "frequency": 4000,
-        "ingRatio": 22.05,
+        "ingRatio": 22.1,
         "skillRatio": 2.1,
         "ancestor": 363,
         "ing1": {
@@ -3198,7 +3200,7 @@
         "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 3000,
-        "ingRatio": 22.4,
+        "ingRatio": 22.3,
         "skillRatio": 2.2,
         "ancestor": 363,
         "ing1": {
@@ -3226,7 +3228,7 @@
         "skill": "Charge Strength M",
         "fp": 5,
         "frequency": 6300,
-        "ingRatio": 18.96,
+        "ingRatio": 18.9,
         "skillRatio": 6.1,
         "ancestor": 438,
         "ing1": {
@@ -3254,7 +3256,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4300,
-        "ingRatio": 20.12,
+        "ingRatio": 20.1,
         "skillRatio": 3.2,
         "ancestor": 439,
         "ing1": {
@@ -3282,7 +3284,7 @@
         "skill": "Dream Shard Magnet S",
         "fp": 5,
         "frequency": 4200,
-        "ingRatio": 12.57,
+        "ingRatio": 12.6,
         "skillRatio": 3.8,
         "ancestor": 447,
         "ing1": {
@@ -3310,7 +3312,7 @@
         "skill": "Dream Shard Magnet S",
         "fp": 20,
         "frequency": 2700,
-        "ingRatio": 14.93,
+        "ingRatio": 15,
         "skillRatio": 5.1,
         "ancestor": 447,
         "ing1": {
@@ -3366,7 +3368,7 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 3000,
-        "ingRatio": 25.01,
+        "ingRatio": 25,
         "skillRatio": 4.4,
         "ancestor": 459,
         "ing1": {
@@ -3418,7 +3420,7 @@
         "skill": "Cooking Power-Up S",
         "fp": 20,
         "frequency": 3200,
-        "ingRatio": 21.88,
+        "ingRatio": 21.9,
         "skillRatio": 6.3,
         "ancestor": 133,
         "ing1": {
@@ -3446,7 +3448,7 @@
         "skill": "Extra Helpful S",
         "fp": 22,
         "frequency": 2400,
-        "ingRatio": 14.73,
+        "ingRatio": 14.7,
         "skillRatio": 5.4,
         "ancestor": 280,
         "ing1": {
@@ -3474,7 +3476,7 @@
         "skill": "Charge Strength S",
         "fp": 5,
         "frequency": 4100,
-        "ingRatio": 22.49,
+        "ingRatio": 22.5,
         "skillRatio": 1.1,
         "ancestor": 759,
         "ing1": {
@@ -3502,8 +3504,8 @@
         "skill": "Charge Strength S",
         "fp": 12,
         "frequency": 2800,
-        "ingRatio": 22.89,
-        "skillRatio": 1.31,
+        "ingRatio": 22.9,
+        "skillRatio": 1.3,
         "ancestor": 759,
         "ing1": {
             "name": "corn",
