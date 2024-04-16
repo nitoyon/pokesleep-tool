@@ -2,14 +2,17 @@
 export type MainSkillName = "Ingredient Magnet S" |
     "Charge Energy S" |
     "Charge Strength S" |
+    "Charge Strength S (Random)" |
     "Charge Strength M" |
     "Dream Shard Magnet S" |
+    "Dream Shard Magnet S (Random)" |
     "Energizing Cheer S" |
     "Metronome" |
     "Energy for Everyone S" |
     "Extra Helpful S" |
     "Cooking Power-Up S" |
-    "Tasty Chance S";
+    "Tasty Chance S" |
+    "Helper Boost";
 
 export function isSkillLevelMax7(skill: MainSkillName): boolean {
     return skill === "Charge Strength M" ||
@@ -41,6 +44,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     if (skill === "Charge Strength S") {
         return [400, 569, 765, 1083, 1496, 2066, 2656][skillLevel - 1];
     }
+    if (skill === "Charge Strength S (Random)") {
+        return [400, 569, 765, 1083, 1496, 2066, 2656][skillLevel - 1] * 1.25;
+    }
     if (skill === "Charge Strength M") {
         return [880, 1251, 1726, 2383, 3290, 4546, 5843][skillLevel - 1];
     }
@@ -56,13 +62,18 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     if (skill === "Extra Helpful S") {
         return [5, 6, 7, 8, 9, 10][skillLevel - 1];
     }
+    if (skill === "Helper Boost") {
+        // Assume that 3 same type pokemon exists in the party
+        return [3, 4, 5, 6, 7, 8][skillLevel - 1];
+    }
     if (skill === "Dream Shard Magnet S") {
-        // TODO
-        return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
+        return [240, 340, 480, 670, 920, 1260, 1800][skillLevel - 1];
+    }
+    if (skill === "Dream Shard Magnet S (Random)") {
+        return [240, 340, 480, 670, 920, 1260, 1800][skillLevel - 1] * 1.25;
     }
     if (skill === "Tasty Chance S") {
-        // TODO
-        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+        return [4, 5, 6, 7, 8, 10][skillLevel - 1];
     }
     if (skill === "Metronome") {
         // TODO
