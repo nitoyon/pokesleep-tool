@@ -104,14 +104,17 @@
             "Ingredient Magnet S": "Ingredient Magnet S",
             "Charge Energy S": "Charge Energy S",
             "Charge Strength S": "Charge Strength S",
+            "Charge Strength S (Random)": "Charge Strength S (Random)",
             "Charge Strength M": "Charge Strength M",
             "Dream Shard Magnet S": "Dream Shard Magnet S",
+            "Dream Shard Magnet S (Random)": "Dream Shard Magnet S (Random)",
             "Energizing Cheer S": "Energizing Cheer S",
             "Metronome": "Metronome",
             "Energy for Everyone S": "Energy for Everyone S",
             "Extra Helpful S": "Extra Helpful S",
             "Cooking Power-Up S": "Cooking Power-Up S",
-            "Tasty Chance S": "Tasty Chance S"
+            "Tasty Chance S": "Tasty Chance S",
+            "Helper Boost": "Helper Boost"
         },
 
         "subskill": {
@@ -305,6 +308,7 @@
             "Delibird": "Delibird",
             "Houndour": "Houndour",
             "Houndoom": "Houndoom",
+            "Raikou": "Raikou",
             "Larvitar": "Larvitar",
             "Pupitar": "Pupitar",
             "Tyranitar": "Tyranitar",

@@ -94,14 +94,17 @@
             "Ingredient Magnet S": "食材ゲットS",
             "Charge Energy S": "げんきチャージS",
             "Charge Strength S": "エナジーチャージS",
+            "Charge Strength S (Random)": "エナジーチャージS (ランダム)",
             "Charge Strength M": "エナジーチャージM",
             "Dream Shard Magnet S": "ゆめのかけらゲットS",
+            "Dream Shard Magnet S (Random)": "ゆめのかけらゲットS (ランダム)",
             "Energizing Cheer S": "げんきエールS",
             "Metronome": "ゆびをふる",
             "Energy for Everyone S": "げんきオールS",
             "Extra Helpful S": "おてつだいサポートS",
             "Cooking Power-Up S": "料理パワーアップS",
-            "Tasty Chance S": "料理チャンスS"
+            "Tasty Chance S": "料理チャンスS",
+            "Helper Boost": "おてつだいブースト"
         },
 
         "subskill": {
@@ -295,6 +298,7 @@
             "Delibird": "デリバード",
             "Houndour": "デルビル",
             "Houndoom": "ヘルガー",
+            "Raikou": "ライコウ",
             "Larvitar": "ヨーギラス",
             "Pupitar": "サナギラス",
             "Tyranitar": "バンギラス",

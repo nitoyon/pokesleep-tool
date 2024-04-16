@@ -47,10 +47,10 @@ const specialties = {
 const skills = {
     "食材ゲットS": "Ingredient Magnet S",
     "げんきチャージS": "Charge Energy S",
-    "エナジーチャージS(ランダム)": "Charge Strength S",
+    "エナジーチャージS(ランダム)": "Charge Strength S (Random)",
     "エナジーチャージS": "Charge Strength S",
     "エナジーチャージM": "Charge Strength M",
-    "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S",
+    "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S (Random)",
     "ゆめのかけらゲットS": "Dream Shard Magnet S",
     "げんきエールS": "Energizing Cheer S",
     "ゆびをふる": "Metronome",
@@ -58,6 +58,7 @@ const skills = {
     "おてつだいサポートS": "Extra Helpful S",
     "料理パワーアップS": "Cooking Power-Up S",
     "料理チャンスS": "Tasty Chance S",
+    "おてつだいブースト(でんき)": "Helper Boost",
 };
 const ingredients = {
     "ふといながねぎ": "leek",
