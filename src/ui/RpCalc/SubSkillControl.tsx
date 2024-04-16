@@ -51,7 +51,7 @@ const SubSkillControl = React.memo(({
 });
 
 const StyledSubSkillButton = styled(ButtonBase)({
-    height: '1.5rem',
+    height: '1.6rem',
     padding: '.2rem .5rem',
     border: '1px solid #999',
     borderRadius: '.4rem',
