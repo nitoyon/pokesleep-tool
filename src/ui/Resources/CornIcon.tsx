@@ -2,7 +2,7 @@ import React from 'react';
 
 const CornIcon = React.memo(() => {
     return (
-        <svg width="24" height="24">
+        <svg width="32" height="32">
             <svg viewBox="0 0 72 72">
                 <g transform="rotate(90 36 36)">
                     <path fill="#FCEA2B" stroke="#FCEA2B" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="2" d="M38.6406,52.917 L23.5191,37.7852c-8.8335-8.8335-12.0384-17.6975-8.58-21.1661c0.9229-0.9127,2.2211-1.3691,3.7931-1.3691 c0.5679,0,1.1663,0.0608,1.8052,0.1724c4.2596,0.7809,9.9188,4.1278,15.5678,9.7768l3.4584,3.4584 c-0.8316,1.3286-1.643,2.789-2.3225,4.3509C34.7056,38.7487,33.7523,45.9089,38.6406,52.917z"/>

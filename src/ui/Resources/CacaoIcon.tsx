@@ -2,7 +2,7 @@ import React from 'react';
 
 const CacaoIcon = React.memo(() => {
     return (
-        <svg width="24" height="24">
+        <svg width="32" height="32">
             <svg viewBox="0 0 72 72">
                 <polyline fill="#a57939" points="53 32.7554 53 5.9063 19 5.9063 19 39.5156"/>
                 <polygon fill="#ea5a47" points="55 25 17 32 17 67 55 67 55 25"/>
