@@ -419,7 +419,7 @@ const PokemonSelectDialog = React.memo(({
             groupBy={groupByCallback}
             renderGroup={renderGroup}
             renderOption={(props, option) => (
-                <MenuItem {...props}>
+                <MenuItem key={option.id} {...props}>
                     {option.localName}
                 </MenuItem>
             )}
