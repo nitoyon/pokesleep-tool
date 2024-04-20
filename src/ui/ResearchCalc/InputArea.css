@@ -1,4 +1,5 @@
 form.main {
+    margin-top: .8rem;
     display: grid;
     gap: 0.8rem 1.2rem;
     grid-template-columns: fit-content(200px) 1fr;
