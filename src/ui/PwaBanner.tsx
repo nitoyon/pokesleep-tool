@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import AppIcon from './Resources/AppIcon';
+import ResearchCalcIcon from './Resources/ResearchCalcIcon';
+import IvCalcIcon from './Resources/IvCalcIcon';
 import SafariIcon from './Resources/SafariIcon';
 import { AppType } from './App';
 import { Button, IconButton, Dialog, DialogContent, DialogTitle,
@@ -89,7 +90,7 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
     return (
         <Snackbar open={open} className="pwa_banner">
             <div className="pwa_banner_container">
-                <AppIcon/>
+                {app === "ResearchCalc" ? <ResearchCalcIcon/> : <IvCalcIcon/>}
                 <div className="pwa_banner_body">
                     <p><Trans i18nKey="pwa notice"
                         values={{app: t(`${app}.short title`)}}/>

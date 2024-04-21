@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AppIcon = React.memo(() => {
+const ResearchCalcIcon = React.memo(() => {
     return (
         <svg width="48" height="48">
             <circle cx="12" cy="12" r="12" fill="#faffe9"/>
@@ -34,4 +34,4 @@ const AppIcon = React.memo(() => {
     );
 });
 
-export default AppIcon;
+export default ResearchCalcIcon;

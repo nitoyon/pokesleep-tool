@@ -4,7 +4,7 @@
             stroke-linejoin="round" fill="#faffe9"
             transform="translate(-12,-12) scale(1.3) translate(6.5,6.5)"/>
         <g transform="translate(12,12) scale(0.14)">
-            <g stroke="#666" fill="#fff">
+            <g stroke="#666" fill="#fff" stroke-width="3">
                 <polygon points="0,-40,-34.64,20,34.64,20"/>
                 <polygon points="0,-80,-69.28,40,69.28,40"/>
             </g>
@@ -12,7 +12,7 @@
                 <polygon points="0,-20,-17.32,10,17.32,10"/>
                 <polygon points="0,-60,-51.96,30,51.96,30"/>
             </g>
-            <g stroke="#666">
+            <g stroke="#666" stroke-width="2">
                 <line x1="0" y1="0" x2="0" y2="-80"/>
                 <line x1="0" y1="0" x2="-69.28" y2="40"/>
                 <line x1="0" y1="0" x2="69.28" y2="40"/>
