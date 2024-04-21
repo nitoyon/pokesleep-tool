@@ -24,7 +24,7 @@ export default function ToolBar({app, onAppChange}: ToolBarProps) {
         setMoreMenuAnchor(null);
     };
     const rpCalcClick = (event: React.MouseEvent<HTMLElement>) => {
-        onAppChange("RpCalc");
+        onAppChange("IvCalc");
         setMoreMenuAnchor(null);
     };
     const moreButtonClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -79,8 +79,8 @@ export default function ToolBar({app, onAppChange}: ToolBarProps) {
                     {t("ResearchCalc.short title")}
                 </MenuItem>
                 <MenuItem onClick={rpCalcClick}>
-                    <ListItemIcon>{app === "RpCalc" ? <CheckIcon/> : <Icon/>}</ListItemIcon>
-                    {t("RpCalc.short title")}
+                    <ListItemIcon>{app === "IvCalc" ? <CheckIcon/> : <Icon/>}</ListItemIcon>
+                    {t("IvCalc.short title")}
                 </MenuItem>
                 <Divider/>
                 <MenuItem onClick={howToMenuClick}>{t('how to use')}</MenuItem>

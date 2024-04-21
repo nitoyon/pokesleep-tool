@@ -16,7 +16,7 @@ export default function HowToDialog({open, onClose}: HowToDialogProps) {
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>{t('how to use')}</DialogTitle>
             <DialogContent dividers>
-                <Typography paragraph>{t('notice')}</Typography>
+                <Typography paragraph>{t('ResearchCalc.description')}</Typography>
                 <Typography paragraph>{t('notice detail1')}</Typography>
                 <Typography paragraph>{t('notice detail2')}</Typography>
             </DialogContent>

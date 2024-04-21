@@ -2,11 +2,13 @@
     "translation": {
         "ResearchCalc": {
             "title": "Research Calc for Pokémon Sleep",
-            "short title": "Research Calc"
+            "short title": "Research Calc",
+            "description": "Using this tool is easy! Simply enter your Research Area and Snorlax strength. You can know how many Pokémon will appear for each sleep score."
         },
-        "RpCalc": {
-            "title": "RP Calc for Pokémon Sleep",
-            "short title": "RP Calc"
+        "IvCalc": {
+            "title": "IV Calc for Pokémon Sleep",
+            "short title": "IV Calc",
+            "description": " Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength."
         },
         "langname": "English",
         "how to use": "How to Use",
@@ -60,7 +62,6 @@
         "snoozing": "Snoozing Type",
         "slumbering": "Slumbering Type",
 
-        "notice": "Using this tool is easy!\nSimply enter your Research Area and Snorlax strength.\nYou can know how many Pokémon will appear for each sleep score.",
         "notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
         "notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon.",
 

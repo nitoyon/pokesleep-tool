@@ -2,11 +2,13 @@
     "translation": {
         "ResearchCalc": {
             "title": "リサーチ数計算機 for ポケモンスリープ",
-            "short title": "リサーチ数計算機"
+            "short title": "リサーチ数計算機",
+            "description": "使い方はかんたん！ フィールドと総エナジーを入力するだけです。睡眠スコアごとの出現ポケモン数が分かります。"
         },
-        "RpCalc": {
-            "title": "SP 計算機 for ポケモンスリープ",
-            "short title": "SP 計算機"
+        "IvCalc": {
+            "title": "個体値計算機 for ポケモンスリープ",
+            "short title": "個体値計算機",
+            "description": "使い方はかんたん！ ポケモンのレベルやスキルを入力すると、SP や稼ぐエナジー・強さが分かります。"
         },
         "langname": "日本語 (Japanese)",
         "how to use": "つかいかた",
@@ -50,7 +52,6 @@
         "snoozing": "すやすやタイプ",
         "slumbering": "ぐっすりタイプ",
 
-        "notice": "使い方はかんたん！ フィールドと総エナジーを入力するだけです。睡眠スコアごとの出現ポケモン数が分かります。",
         "notice detail1": "グッドスリープデーの間は、[$t(bonus)] の倍率を変更するのを忘れずに。",
         "notice detail2": "[$t(sleep twice)] をチェックすると、分割睡眠したときに出会えるトータルのポケモン数を確認できます。",
 

@@ -1,6 +1,6 @@
 import './App.css';
 import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
-import RpCalcApp from './IvCalc/IvCalcApp';
+import IvCalcApp from './IvCalc/IvCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
 import ToolBar from './ToolBar';
 import PwaNotify from './PwaBanner';
@@ -14,7 +14,7 @@ export interface AppConfig {
     pwacnt: number,
 }
 
-export type AppType = "ResearchCalc" | "RpCalc";
+export type AppType = "ResearchCalc" | "IvCalc";
 
 export default function App({config}: {config:AppConfig}) {
     const language = useMultilingual(config);
@@ -33,7 +33,7 @@ export default function App({config}: {config:AppConfig}) {
         <>
             <ToolBar app={curApp} onAppChange={onAppChange}/>
             {curApp === "ResearchCalc" && <ResearchCalcApp/>}
-            {curApp === "RpCalc" && <RpCalcApp/>}
+            {curApp === "IvCalc" && <IvCalcApp/>}
             <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </>
     );
@@ -71,8 +71,8 @@ function useMultilingual(config: AppConfig) {
  */
 function useRouter(language: string): [AppType, (v:AppType) => void] {
     let initialApp: AppType = (
-        window.location.pathname.startsWith("/pokesleep-tool/rp/") ?
-        "RpCalc" : "ResearchCalc");
+        window.location.pathname.startsWith("/pokesleep-tool/iv/") ?
+        "IvCalc" : "ResearchCalc");
 
     const { t, i18n } = useTranslation();
     const [currentApp, setCurrentApp] = useState<AppType>(initialApp);
@@ -86,13 +86,13 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
         }
         const description = document.querySelector<HTMLMetaElement>("meta[name='description']");
         if (description !== null) {
-            description.content = t('notice');
+            description.content = t(`${currentApp}.description`);
         }
 
         // update URL
         let url = document.location.origin + "/pokesleep-tool/";
-        if (currentApp === "RpCalc") {
-            url += 'rp/';
+        if (currentApp === "IvCalc") {
+            url += 'iv/';
         }
         if (language !== "en") {
             url += `index.${language}.html`;

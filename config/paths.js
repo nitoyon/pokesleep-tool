@@ -59,8 +59,8 @@ module.exports = {
   appHtmls: [
     resolveApp('public/index.html'),
     resolveApp('public/index.ja.html'),
-    resolveApp('public/rp/index.html'),
-    resolveApp('public/rp/index.ja.html'),
+    resolveApp('public/iv/index.html'),
+    resolveApp('public/iv/index.ja.html'),
   ],
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
