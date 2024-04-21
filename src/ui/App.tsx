@@ -1,6 +1,6 @@
 import './App.css';
 import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
-import RpCalcApp from './RpCalc/RpCalcApp';
+import RpCalcApp from './IvCalc/IvCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
 import ToolBar from './ToolBar';
 import PwaNotify from './PwaBanner';
