@@ -17,6 +17,9 @@ const UnselectableSlider = styled(Slider)({
     },
 });
 
+const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
 const LevelControl = React.memo(({value, onChange}: {
     value: number,
     onChange: (value: number) => void,
@@ -26,6 +29,12 @@ const LevelControl = React.memo(({value, onChange}: {
 
     const _onChange = React.useCallback((e: any) => {
         const rawText = e.target.value;
+
+        // fix iOS bug on MUI slider
+        // https://github.com/mui/material-ui/issues/31869
+        if (isIOS && e.type === 'mousedown') {
+            return;
+        }
 
         // Update isEmpty state
         if (typeof(rawText) === "string" && rawText.trim() === "") {
