@@ -287,6 +287,7 @@ class PokemonRp {
 
     get skillValue(): number {
         if (this._pokemon.skill === "Charge Strength S" ||
+            this._pokemon.skill === "Charge Strength S (Random)" ||
             this._pokemon.skill === "Charge Energy S") {
             return [400, 569, 785, 1083, 1496, 2066, 2656][this.skillLevel - 1];
         }
