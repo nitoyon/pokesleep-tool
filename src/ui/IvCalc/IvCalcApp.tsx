@@ -36,7 +36,7 @@ const ResearchCalcApp = React.memo(() => {
         setTabIndex(newValue);
     }, [setTabIndex]);
 
-    return <div style={{margin: "0 .5rem"}}>
+    return <div style={{margin: "0 .5rem 10rem"}}>
         <StyledTabs value={tabIndex} onChange={onTabChange}>
             <StyledTab label={t('rp')}/>
             <StyledTab label={t('strength2')}/>
