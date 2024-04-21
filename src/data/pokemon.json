@@ -876,8 +876,8 @@
         "skill": "Dream Shard Magnet S (Random)",
         "fp": 16,
         "frequency": 3600,
-        "ingRatio": 17.1,
-        "skillRatio": 5.9,
+        "ingRatio": 18.8,
+        "skillRatio": 6.8,
         "ancestor": null,
         "ing1": {
             "name": "oil",
@@ -933,7 +933,7 @@
         "fp": 12,
         "frequency": 3500,
         "ingRatio": 21,
-        "skillRatio": 6.1,
+        "skillRatio": 7,
         "ancestor": 316,
         "ing1": {
             "name": "soy",
@@ -1700,7 +1700,7 @@
         "skill": "Energizing Cheer S",
         "fp": 12,
         "frequency": 3800,
-        "ingRatio": 15.1,
+        "ingRatio": 19.7,
         "skillRatio": 6.8,
         "ancestor": 79,
         "ing1": {
@@ -2108,8 +2108,8 @@
         "skill": "Energizing Cheer S",
         "fp": 20,
         "frequency": 3400,
-        "ingRatio": 15.1,
-        "skillRatio": 6.8,
+        "ingRatio": 16.6,
+        "skillRatio": 7.4,
         "ancestor": 79,
         "ing1": {
             "name": "cacao",
@@ -3004,8 +3004,8 @@
         "skill": "Charge Strength M",
         "fp": 7,
         "frequency": 4000,
-        "ingRatio": 19.7,
-        "skillRatio": 6.5,
+        "ingRatio": 21.7,
+        "skillRatio": 7.2,
         "ancestor": 438,
         "ing1": {
             "name": "tomato",
