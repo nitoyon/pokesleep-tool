@@ -3,6 +3,7 @@ import React from 'react';
 const ResearchCalcIcon = React.memo(() => {
     return (
         <svg width="48" height="48">
+            <rect cx="0" cy="0" width="24" height="24" fill="#f3ac55"/>
             <g transform="translate(0, 1.8)">
                 <polygon points="12,2.4,20.31,16.8,3.686,16.8,12,2.4"
                     strokeLinejoin="round" fill="#faffe9"
