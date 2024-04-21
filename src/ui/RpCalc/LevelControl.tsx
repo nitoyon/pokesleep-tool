@@ -10,6 +10,13 @@ const LevelControlContainer = styled('div')({
     height: '1.8rem',
 });
 
+const UnselectableSlider = styled(Slider)({
+    userSelect: 'none',
+    '& *': {
+        userSelect: 'none',
+    },
+});
+
 const LevelControl = React.memo(({value, onChange}: {
     value: number,
     onChange: (value: number) => void,
@@ -53,7 +60,7 @@ const LevelControl = React.memo(({value, onChange}: {
                 InputProps={{inputProps: {min: 1, max: 100, inputMode: "numeric", style: {textAlign: 'left'}}}}
                 onChange={_onChange}/>
             <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <Slider min={0} max={100} size="small" style={{userSelect: "none"}}
+            <UnselectableSlider min={0} max={100} size="small" style={{userSelect: "none"}}
                 value={value} onChange={_onChange}/>
             <ArrowButton label="▶" disabled={value === 100} onClick={onLevelUpClick}/>
         </LevelControlContainer>

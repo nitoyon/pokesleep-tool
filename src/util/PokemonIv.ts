@@ -27,7 +27,7 @@ class PokemonIv {
         // set default value
         this.level = 30;
         this.skillLevel = 3;
-        this.ingredient = "AAA";
+        this.ingredient = "ABC";
         this.subSkills = new SubSkillList();
         this.nature = new Nature("Serious");
     }

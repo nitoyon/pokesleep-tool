@@ -29,7 +29,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                     paddingRight: '.4rem',
                     fontSize: '.8rem',
                     verticalAlign: '15%',
-                }}>SP</span>
+                }}>{t('rp')}</span>
                 <span style={{
                     fontSize: '1.5rem',
                     fontWeight: 'bold',

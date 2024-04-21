@@ -16,7 +16,7 @@ const StyledInputForm = styled('div')({
     margin: '1rem .3rem',
     fontSize: '.9rem',
     '& > div.table': {
-        marginTop: '1rem',
+        marginTop: '2rem',
         display: 'grid',
         gap: '.5rem .8rem',
         gridTemplateColumns: 'fit-content(200px) 1fr',
@@ -25,9 +25,10 @@ const StyledInputForm = styled('div')({
         margin: '1rem 0 .3rem -.3rem',
         fontSize: '.8rem',
         padding: '.1rem .5rem',
-        background: '#24cc6a',
+        background: '#557799',
+        borderRadius: '0.4rem',
         color: 'white',
-    }
+    },
 });
 
 /**
@@ -86,7 +87,7 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
         <h3>{t("Main Skill & Sub Skills")}</h3>
         <SkillLevelControl pokemon={rp.pokemon} value={pokemonIv.skillLevel} onChange={onSkillLevelChange}/>
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
-        <h3>{t("nature")}</h3>
+        <h3 className="nature">{t("nature")}</h3>
         <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
     </StyledInputForm>;
 });

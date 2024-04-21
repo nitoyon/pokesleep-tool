@@ -21,7 +21,7 @@ const StyledTab = styled(Tab)({
 
 const ResearchCalcApp = React.memo(() => {
     const [tabIndex, setTabIndex] = React.useState(0);
-    const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Bulbasaur"));
+    const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Dragonite"));
     const width = useDomWidth();
 
     const rp = new PokemonRp(pokemonIv);

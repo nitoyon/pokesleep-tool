@@ -17,6 +17,7 @@ export type MainSkillName = "Ingredient Magnet S" |
 export function isSkillLevelMax7(skill: MainSkillName): boolean {
     return skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
+        skill === "Charge Strength S (Random)" ||
         skill === "Dream Shard Magnet S";
 }
 
