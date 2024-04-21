@@ -47,10 +47,10 @@ const specialties = {
 const skills = {
     "食材ゲットS": "Ingredient Magnet S",
     "げんきチャージS": "Charge Energy S",
-    "エナジーチャージS(ランダム)": "Charge Strength S",
+    "エナジーチャージS(ランダム)": "Charge Strength S (Random)",
     "エナジーチャージS": "Charge Strength S",
     "エナジーチャージM": "Charge Strength M",
-    "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S",
+    "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S (Random)",
     "ゆめのかけらゲットS": "Dream Shard Magnet S",
     "げんきエールS": "Energizing Cheer S",
     "ゆびをふる": "Metronome",
@@ -58,10 +58,11 @@ const skills = {
     "おてつだいサポートS": "Extra Helpful S",
     "料理パワーアップS": "Cooking Power-Up S",
     "料理チャンスS": "Tasty Chance S",
+    "おてつだいブースト(でんき)": "Helper Boost",
 };
 const ingredients = {
     "ふといながねぎ": "leek",
-    "あじわいキノコ": "mashroom",
+    "あじわいキノコ": "mushroom",
     "とくせんエッグ": "egg",
     "ほっこりポテト": "potato",
     "とくせんリンゴ": "apple",
@@ -184,9 +185,9 @@ async function syncPokemon() {
     const jaJsonPath = path.join(INIT_CWD, "src/i18n/ja.json");
     const jaJson = JSON.parse(fs.readFileSync(jaJsonPath));
     const ja2en = {};
-    const en2ja = jaJson.translation.pokemon;
-    for (const enname of Object.keys(jaJson.translation.pokemon)) {
-        ja2en[jaJson.translation.pokemon[enname]] = enname;
+    const en2ja = jaJson.translation.pokemons;
+    for (const enname of Object.keys(jaJson.translation.pokemons)) {
+        ja2en[jaJson.translation.pokemons[enname]] = enname;
     }
 
     // Read or initialize pokemon list
@@ -203,8 +204,10 @@ async function syncPokemon() {
         nameJa2id[nameJa] = parseInt(pokemon.id, 10);
     }
 
-    const probHtml = await getWikiHtml('ポケモンの食材確率・スキル発動確率の推定値一覧');
-    updatePokemonProbability(pokemonJson, ja2en, probHtml);
+    const rpCsv = await getUrlWithCache(
+        'https://docs.google.com/spreadsheets/d/1kBrPl0pdAO8gjOf_NrTgAPseFtqQA27fdfEbMBBeAhs/export?format=csv&gid=1673887151',
+        'RP spread sheet', 'rp.cache', true);
+    updatePokemonProbability(pokemonJson, ja2en, rpCsv);
     fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
 
     // Update each Pokemon
@@ -236,7 +239,7 @@ function updatePokemonList(html, ja2en) {
         const id = parseInt(tds[1].textContent, 10);
         const nameJa = tds[2].firstChild.textContent.replace("(", " (");
         const sleepTypeJa = tds[3].textContent;
-        const specialtyJa = tds[4].textContent;
+        const specialityJa = tds[4].textContent;
         const berryJa = tds[5].querySelector("a").getAttribute("title").replace("きのみ/", "");
         const skillJa = tds[9].textContent;
         const fp = parseInt(tds[10].textContent, 10);
@@ -249,42 +252,33 @@ function updatePokemonList(html, ja2en) {
         const type = berryTypes[berryJa];
         if (!(nameJa in ja2en)) { throw new Error(`Unknown pokemon: ${nameJa}`); }
         const name = ja2en[nameJa];
-        if (!(specialtyJa in specialties)) { throw new Error(`Unknown specialty: ${specialtyJa}`); }
-        const specialty = specialties[specialtyJa];
+        if (!(specialityJa in specialties)) { throw new Error(`Unknown speciality: ${specialityJa}`); }
+        const speciality = specialties[specialityJa];
         if (!(skillJa in skills)) { throw new Error(`Unknown skill: ${skillJa}`); }
         const skill = skills[skillJa];
 
         json.push({
-            id, name, sleepType, type, specialty, skill, fp, frequency, 
+            id, name, sleepType, type, speciality, skill, fp, frequency, 
         });
     }
     return json;
 }
 
-function updatePokemonProbability(pokemonJson, ja2en, html) {
-    const dom = new JSDOM(html);
-    
-    // find prob table
-    const tables = dom.window.document.querySelectorAll('table');
-    const probTable = [...tables].find((t) => {
-        return t.querySelector('tr>th:nth-child(2)')?.textContent === "名前";
-    });
-    if (probTable == null) { throw new Error('prob table not found'); }
-
-    const trs = probTable.querySelectorAll('tbody>tr');
+function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
+    const lines = rpCsv.toString().split(/\n/g);
     const prob = {};
-    for (const tr of trs) {
-        const tds = tr.querySelectorAll('td');
-        const nameJa = tds[1].textContent.replace("(", " (");
-        const ingRatio = parseFloat(tds[2].textContent.replace("%", ""));
-        const skillRatio = parseFloat(tds[3].textContent.replace("%", ""));
-
-        // validate
-        if (!(nameJa in ja2en)) { throw new Error(`Pokemon ${nameJa} not found`); }
-        const name = ja2en[nameJa];
-        prob[name] = {ingRatio, skillRatio};
+    for (const line of lines.filter(x => x.match(/^[^,]+,\d+\.\d+%/))) {
+        let [pokemon, ingRatio, confidence, skillRatio] = line.split(',');
+        if (confidence === 'Placeholder') {
+            continue;
+        }
+        if (pokemon === 'Pikachu (Holiday)') {
+            pokemon = 'Pikachu (Festivo)';
+        }
+        ingRatio = parseFloat(ingRatio.replace('%', ''));
+        skillRatio = parseFloat(skillRatio.replace('%', ''));
+        prob[pokemon] = {ingRatio, skillRatio};
     }
-
     for (const pokemon of pokemonJson) {
         if (!(pokemon.name in prob)) {
             console.warn(`${pokemon.name} not in prob table`);
@@ -354,6 +348,20 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
 }
 
 async function getWikiHtml(name) {
+    // return cache if it exists
+    // TODO: cache 1 week
+    const cacheFileName = name.replace(/\//g, '_') + '.html';
+
+    // download and cache
+    const url = getWikiUrl(name);
+    return await getUrlWithCache(url, name, cacheFileName);
+}
+
+function getWikiUrl(name) {
+    return "https://wikiwiki.jp/poke_sleep/" + encodeURI(name);        
+}
+
+async function getUrlWithCache(url, name, cacheFileName, forceCache) {
     // ensure that cache dir exists
     const cacheDir = path.join(INIT_CWD, ".cache");
     if (!fs.existsSync(cacheDir)) {
@@ -362,23 +370,20 @@ async function getWikiHtml(name) {
 
     // return cache if it exists
     // TODO: cache 1 week
-    const cacheBaseName = name.replace(/\//g, '_');
-    const cachePath = path.join(cacheDir, `${cacheBaseName}.html`);
+    const cachePath = path.join(cacheDir, cacheFileName);
     if (fs.existsSync(cachePath)) {
         console.log(`Retrieving ${name} (cache)`);
         return fs.readFileSync(cachePath);
     }
 
     // download and cache
-    const url = getWikiUrl(name);
+    if (forceCache) {
+        console.error(`Please download ${url} to ${cachePath}`);
+    }
     console.log(`Retrieving ${name}`);
     const content = await getHtml(url);
     fs.writeFileSync(cachePath, content);
     return content;
-}
-
-function getWikiUrl(name) {
-    return "https://wikiwiki.jp/poke_sleep/" + encodeURI(name);        
 }
 
 async function getHtml(url) {

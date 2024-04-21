@@ -3,14 +3,9 @@ import { InputArea, InputAreaData } from './InputArea';
 import GeneralPanel from './GeneralPanel';
 import fields from '../../data/fields';
 
-interface AppConfig extends InputAreaData {
-    /** current language */
-    language: string;
-    /** PWA notify check counter */
-    pwacnt: number,
-}
+const config = loadConfig();
 
-export default function ResearchCalcApp({config}: {config:AppConfig}) {
+export default function ResearchCalcApp() {
     const [fieldIndex, setFieldIndex] = useState(config.fieldIndex);
     const [strength, setStrength] = useState(config.strength);
     const [bonus, setBonus] = useState(config.bonus);
@@ -34,7 +29,7 @@ export default function ResearchCalcApp({config}: {config:AppConfig}) {
             setSecondSleep(value.secondSleep);
         }
         saveConfig({...config, ...value});
-    }, [config]);
+    }, []);
 
     const onChange = useCallback((value: Partial<InputAreaData>) => {
         updateState(value);
@@ -48,14 +43,12 @@ export default function ResearchCalcApp({config}: {config:AppConfig}) {
     );
 }
 
-export function loadConfig(language:string): AppConfig {
-    const config: AppConfig = {
+export function loadConfig(): InputAreaData {
+    const config: InputAreaData = {
         fieldIndex: 0,
         strength: 73120,
         bonus: 1,
         secondSleep: false,
-        language,
-        pwacnt: -1,
     };
 
     const data = localStorage.getItem("ResearchCalcPokeSleep");
@@ -80,15 +73,9 @@ export function loadConfig(language:string): AppConfig {
     if (typeof(json.secondSleep) === "boolean") {
         config.secondSleep = json.secondSleep;
     }
-    if (typeof(json.language) === "string") {
-        config.language = json.language;
-    }
-    if (typeof(json.pwacnt) == "number") {
-        config.pwacnt = json.pwacnt;
-    }
     return config;
 }
 
-export function saveConfig(state:AppConfig) {
+export function saveConfig(state: InputAreaData) {
     localStorage.setItem("ResearchCalcPokeSleep", JSON.stringify(state));
 }

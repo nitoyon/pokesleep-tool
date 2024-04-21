@@ -73,7 +73,7 @@ export default function PreviewEncounter({data}:PreviewEncounterProps) {
         if (ranges.length > 0) {
             encounters.push(<div className="encounter">
                 <span className={type + " sleep_type"}>{t(type)}</span>
-                {t(`pokemon.${pokemon}`)} {t('guaranteed score')}
+                {t(`pokemons.${pokemon}`)} {t('guaranteed score')}
                 <IconButton aria-label="information" onClick={onClick}>
                     <InfoOutlinedIcon/>
                 </IconButton>
@@ -123,7 +123,7 @@ const PreviewEncounterDialog = React.memo(({open, onClose, field, encounter}:Pre
                 <Trans i18nKey="guaranteed score text"
                     components={{
                         area: <strong>{t(`area.${field.index}`)}</strong>,
-                        pokemon: <strong>{t(`pokemon.${encounter.pokemon}`)}</strong>,
+                        pokemon: <strong>{t(`pokemons.${encounter.pokemon}`)}</strong>,
                     }}/>
             </div>
 

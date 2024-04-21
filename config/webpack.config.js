@@ -572,7 +572,7 @@ module.exports = function (webpackEnv) {
             {
               inject: true,
               template: appHtml,
-              filename: path.basename(appHtml),
+              filename: path.join(paths.appBuild, appHtml.substring(paths.appPublic.length+1)),
             },
             isEnvProduction
               ? {

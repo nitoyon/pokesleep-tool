@@ -20,7 +20,7 @@ export default function LanguageDialog({open, onClose}: LanguageDialogProps) {
     const buttons = [];
     const resources = i18n.options.resources;
     for (const lng in resources) {
-        const label = i18n.getResource(lng, "translation", "name");
+        const label = i18n.getResource(lng, "translation", "langname");
         buttons.push(<ToggleButton key={lng} value={lng} aria-label={lng}>{label}</ToggleButton>)
     }
     return (

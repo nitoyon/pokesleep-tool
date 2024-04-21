@@ -1,7 +1,8 @@
 import pokemon_ from './pokemon.json';
 import {SleepType} from './fields';
+import { MainSkillName } from '../util/MainSkill';
 
-interface PokemonData {
+export interface PokemonData {
     /** Pokemon ID */
     id: number;
     /** Pokemon name in English */
@@ -11,9 +12,9 @@ interface PokemonData {
     /** Type of the pokemon. */
     type: PokemonType;
     /** Specialty of the pokemon. */
-    specialty: PokemonSpeciality;
+    speciality: PokemonSpeciality;
     /** Skill of the pokemon */
-    skill: PokemonSkill;
+    skill: MainSkillName;
     /** Friend point */
     fp: number;
     /** Frequency of the help */
@@ -47,19 +48,7 @@ export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
 
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
-export type PokemonSkill = "Ingredient Magnet S" |
-    "Charge Energy S" |
-    "Charge Strength S" |
-    "Charge Strength M" |
-    "Dream Shard Magnet S" |
-    "Energizing Cheer S" |
-    "Metronome" |
-    "Energy for Everyone S" |
-    "Extra Helpful S" |
-    "Cooking Power-Up S" |
-    "Tasty Chance S";
-
-export type IngredientName = "leek" | "mashroom" | "egg" | "potato" |
+export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn";
 
