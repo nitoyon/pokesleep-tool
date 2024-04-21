@@ -241,8 +241,10 @@ class PokemonRp {
         if (this.level - 1 < table.length) {
             return table[this.level - 1];
         }
-        // simple assumption
-        return 1.745 + (this.level - 55) * 0.025;
+        // assumption: RP collection's 'Ingr Growth' sheet
+        return 0.000000398 * Math.pow(this.level, 3) +
+            0.000159 * Math.pow(this.level, 2) +
+            0.00367 * this.level - 0.00609 + 1;
     }
 
     get berryRp(): number {

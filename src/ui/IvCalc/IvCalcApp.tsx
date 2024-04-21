@@ -8,7 +8,7 @@ import RpView from './RpView';
 import StrengthView from './StrengthView';
 import RatingView from './RatingView';
 import IvForm from './IvForm';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const StyledTabs = styled(Tabs)({
     minHeight: '36px',
@@ -22,6 +22,7 @@ const StyledTab = styled(Tab)({
 const ResearchCalcApp = React.memo(() => {
     const [tabIndex, setTabIndex] = React.useState(0);
     const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Dragonite"));
+    const { t } = useTranslation();
     const width = useDomWidth();
 
     const rp = new PokemonRp(pokemonIv);
