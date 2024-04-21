@@ -62,7 +62,7 @@ const skills = {
 };
 const ingredients = {
     "ふといながねぎ": "leek",
-    "あじわいキノコ": "mashroom",
+    "あじわいキノコ": "mushroom",
     "とくせんエッグ": "egg",
     "ほっこりポテト": "potato",
     "とくせんリンゴ": "apple",

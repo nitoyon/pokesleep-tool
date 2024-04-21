@@ -48,7 +48,7 @@ export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
 
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
-export type IngredientName = "leek" | "mashroom" | "egg" | "potato" |
+export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn";
 

@@ -6,7 +6,7 @@ import SubSkillList from './SubSkillList';
 
 const ingredientStrength: {[ing in IngredientName]: number} = {
     "leek": 185,
-    "mashroom": 167,
+    "mushroom": 167,
     "egg": 115,
     "potato": 124,
     "apple": 90,
