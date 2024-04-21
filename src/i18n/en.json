@@ -3,12 +3,16 @@
         "ResearchCalc": {
             "title": "Research Calc for Pokémon Sleep",
             "short title": "Research Calc",
-            "description": "Using this tool is easy! Simply enter your Research Area and Snorlax strength. You can know how many Pokémon will appear for each sleep score."
+            "description": "Using this tool is easy! Simply enter your Research Area and Snorlax strength. You can know how many Pokémon will appear for each sleep score.",
+            "notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
+            "notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon."
         },
         "IvCalc": {
             "title": "IV Calc for Pokémon Sleep",
             "short title": "IV Calc",
-            "description": " Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength."
+            "description": " Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength.",
+            "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
+            "notice detail2": ""
         },
         "langname": "English",
         "how to use": "How to Use",
@@ -62,9 +66,6 @@
         "snoozing": "Snoozing Type",
         "slumbering": "Slumbering Type",
 
-        "notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
-        "notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon.",
-
         "first sleep": "First sleep",
         "second sleep": "Second sleep",
 
@@ -115,6 +116,8 @@
         "ingredients unit": " ingredients",
 
         "rate subskill and nature": "Rate subskills and nature",
+        "rating detail1": "We evaluate subskill and nature tendencies on a scale of 0 to 100 points. For example, in the case of 'berries', the subskill or nature that picks up the most berries are treated as 100 points, while the one that pick up the fewest berries are treated as 0 points.  The amount of 'berries' your Pokémon picks up determines its score, which falls between 0 and 100 points.",
+        "rating detail2": "For Pokémon specialized in berries, it's desirable for their berry score to be high, and for Pokémon specialized in skills, it's desirable for their skill score to be high. However, even for considerably good individuals, scores are evaluated relatively low, so if it's 60 points or above, it can be considered sufficiently strong.",
 
         "sleeptype": "Sleep type",
         "pokedexno": "Pokédex No.",

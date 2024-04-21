@@ -89,7 +89,7 @@ export default function ToolBar({app, onAppChange}: ToolBarProps) {
                 <MenuItem onClick={languageMenuClick}>{t('change language')}</MenuItem>
             </Menu>
             <AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose}/>
-            <HowToDialog open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
+            <HowToDialog app={app} open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
             <ScoreTableDialog open={isScoreTableDialogOpen} onClose={onScoreTableDialogClose}/>
             <LanguageDialog open={isLanguageDialogOpen}
                 onClose={onLanguageDialogClose}/>

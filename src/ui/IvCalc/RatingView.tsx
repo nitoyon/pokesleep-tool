@@ -3,6 +3,9 @@ import PokemonIv from '../../util/PokemonIv';
 import PokemonRating from '../../util/PokemonRating';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent, 
+    DialogContentText, IconButton } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useTranslation } from 'react-i18next';
 
 const RatingView = React.memo(({pokemonIv, width}: {
@@ -10,6 +13,13 @@ const RatingView = React.memo(({pokemonIv, width}: {
     width: number,
 }) => {
     const { t } = useTranslation();
+    const [helpOpen, setHelpOpen] = React.useState(false);
+    const onHelpClick = React.useCallback(() => {
+        setHelpOpen(true);
+    }, [setHelpOpen]);
+    const onHelpDialogClose = React.useCallback(() => {
+        setHelpOpen(false);
+    }, [setHelpOpen]);
 
     const rating = new PokemonRating(pokemonIv);
     const result = rating.calculate();
@@ -23,7 +33,12 @@ const RatingView = React.memo(({pokemonIv, width}: {
     };
 
     return (<div>
-        <p style={{margin: '.6rem 0'}}>{t('rate subskill and nature')}</p>
+        <p style={{margin: '0'}}>
+            {t('rate subskill and nature')}
+            <IconButton onClick={onHelpClick}>
+                <InfoOutlinedIcon style={{color: '#999'}}/>
+            </IconButton>
+        </p>
         <BerryIngSkillView small
             berryValue={<>{trunc1(result.berryScore)}<span>pt</span></>}
             berryProb={trunc1(result.berryRatio * 100)}
@@ -38,7 +53,26 @@ const RatingView = React.memo(({pokemonIv, width}: {
             berry={result.berryScore / 100}
             ingredient={result.ingScore / 100}
             skill={result.skillScore / 100}/>
+        <HelpDialog open={helpOpen} onClose={onHelpDialogClose}/>
     </div>);
+});
+
+const HelpDialog = React.memo(({open, onClose}: {
+    open: boolean,
+    onClose: () => void,
+}) => {
+    const { t } = useTranslation();
+
+    return <Dialog open={open} onClose={onClose}>
+        <DialogTitle>{t('rating')}</DialogTitle>
+        <DialogContent dividers>
+            <DialogContentText>{t('rating detail1')}</DialogContentText>
+            <DialogContentText>{t('rating detail2')}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </Dialog>;
 });
 
 export default RatingView;
