@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { Tab, Tabs } from '@mui/material'; 
 import { isSkillLevelMax7 } from '../../util/MainSkill';
 import PokemonIv from '../../util/PokemonIv';
-import PokemonRp from '../../util/PokemonRp';
+import PokemonRp, { IngredientType } from '../../util/PokemonRp';
 import RpView from './RpView';
 import StrengthView from './StrengthView';
 import RatingView from './RatingView';
@@ -30,6 +30,9 @@ const ResearchCalcApp = React.memo(() => {
     if (pokemonIv.skillLevel === 7 && !isSkillLevelMax7(pokemon.skill)) {
         pokemonIv.skillLevel = 6;
         setPokemonIv(pokemonIv.clone());
+    }
+    if (pokemonIv.ingredient.endsWith('C') && pokemon.ing3 === undefined) {
+        pokemonIv.ingredient = pokemonIv.ingredient.replace('C', 'A') as IngredientType;
     }
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
