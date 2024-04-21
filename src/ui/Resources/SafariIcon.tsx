@@ -2,7 +2,7 @@ import React from 'react';
 
 const SafariIcon = React.memo(() => {
     return (
-        <svg width="32" height="32">
+        <svg width="24" height="24">
             <svg viewBox="0 0 512 512">
                 <rect x="5" y="5" width="502" height="502" rx="30%"
                     stroke="#999999" strokeWidth="10" fill="#ffffff"/>
