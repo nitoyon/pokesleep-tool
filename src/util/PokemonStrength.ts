@@ -2,7 +2,7 @@ import pokemons, {PokemonData} from '../data/pokemons';
 import { IngredientName } from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
-import { getSkillValue, MainSkillName } from './MainSkill';
+import { getSkillValue } from './MainSkill';
 
 /**
  * Represents the parameter of PokemonStrength.calc.
