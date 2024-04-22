@@ -22,7 +22,7 @@ const ResearchCalcIcon = React.memo(() => {
                         <line x1="0" y1="0" x2="-69.28" y2="40"/>
                         <line x1="0" y1="0" x2="69.28" y2="40"/>
                     </g>
-                    <g stroke="#24d76a" strokeWidth="3" fill="#24d76a" fill-opacity="0.3">
+                    <g stroke="#24d76a" strokeWidth="3" fill="#24d76a" fillOpacity="0.3">
                         <polygon points="0,-67.992,-32.194416000000004,18.588,16.786544,9.692"/>
                     </g>
                 </g>
