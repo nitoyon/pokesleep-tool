@@ -153,14 +153,11 @@ class PokemonStrength {
             ingHelpCount * (1 / ingUnlock) * ing2.count;
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRatio;
         let ing3 = undefined;
-        if (this.pokemon.ing3 !== undefined) {
-            ing3 = {...rp.ingredient3, strength: 0};
-            ing3.count = level < 60 ? 0 :
-                ingHelpCount * (1 / ingUnlock) * ing3.count;
-            ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
-        }
-        const ingStrength = ing1.strength + ing2.strength +
-            (ing3 === undefined ? 0 : ing3.strength);
+        ing3 = {...rp.ingredient3, strength: 0};
+        ing3.count = level < 60 ? 0 :
+            ingHelpCount * (1 / ingUnlock) * ing3.count;
+        ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
+        const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
         // calc berry
         const berryRatio = 1 - ingRatio;
