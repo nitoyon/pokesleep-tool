@@ -302,8 +302,7 @@ class PokemonRp {
 }
 
 function trunc(v: number, n: number) {
-    const N = Math.pow(10, n);
-    return Math.floor(v * N) / N;
+    return parseFloat(v.toFixed(n));
 }
 
 export default PokemonRp;
