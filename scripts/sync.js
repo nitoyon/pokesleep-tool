@@ -80,18 +80,18 @@ const ingredients = {
 };
 
 async function main() {
-/*    // Update field.json
+    // Update field.json
     const fieldJsonPath = path.join(INIT_CWD, "src/data/field.json");
     const fieldJson = JSON.parse(fs.readFileSync(fieldJsonPath));
     await syncRanksAndPowers(fieldJson);
     fs.writeFileSync(fieldJsonPath, JSON.stringify(fieldJson, null, 4));
 
     // Read or create spo.json
-    const spoJsonPath = path.join(INIT_CWD, "src/data/spo.json");
+/*    const spoJsonPath = path.join(INIT_CWD, "src/data/spo.json");
     let spoJson = {};
     await syncSPO(spoJson);
-    fs.writeFileSync(spoJsonPath, JSON.stringify(spoJson, null, 4));
-*/
+    fs.writeFileSync(spoJsonPath, JSON.stringify(spoJson, null, 4));*/
+
     // sync pokemon.json
     await syncPokemon();
 
