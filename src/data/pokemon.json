@@ -2408,6 +2408,34 @@
         }
     },
     {
+        "id": 764,
+        "name": "Comfey",
+        "sleepType": "snoozing",
+        "type": "fairy",
+        "speciality": "Ingredients",
+        "skill": "Energizing Cheer S",
+        "fp": 16,
+        "frequency": 2500,
+        "ingRatio": 13.9,
+        "skillRatio": 2.2,
+        "ancestor": null,
+        "ing1": {
+            "name": "corn",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "cacao",
+            "c3": 7
+        }
+    },
+    {
         "id": 7,
         "name": "Squirtle",
         "sleepType": "slumbering",
