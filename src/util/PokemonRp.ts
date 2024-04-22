@@ -302,7 +302,12 @@ class PokemonRp {
 }
 
 function trunc(v: number, n: number) {
-    return parseFloat(v.toFixed(n));
+    const N = Math.pow(10, n);
+    // fix round error
+    // (ex) v=0.051, n=4, v*N -> 509.999999
+    //      (v*N).toFixed(3) -> 510.000
+    const d = parseFloat((v * N).toFixed(3));
+    return Math.floor(d) / N;
 }
 
 export default PokemonRp;
