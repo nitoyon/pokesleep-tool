@@ -1,7 +1,7 @@
 {
-  "short_name": "RP Calc",
-  "name": "RP Calc for Pokémon Sleep",
-  "description": "Using this tool is easy! Simply enter your pokemon, level and skill. You can know not only the current RP, but also future RP.",
+  "short_name": "IV Calc",
+  "name": "IV Calc for Pokémon Sleep",
+  "description": "Using this tool is easy! Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength.",
   "icons": [
     {
       "src": "favicon.svg",
