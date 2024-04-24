@@ -12,6 +12,8 @@ interface ViewInput {
     berryProb: string;
     /** Sub-value of berry. */
     berrySubValue: string;
+    /** Berry info callback */
+    onBerryInfoClick?: () => void;
 
     /** Value of ingredient. */
     ingredientValue: React.ReactElement|string;
@@ -19,6 +21,8 @@ interface ViewInput {
     ingredientProb: string;
     /** Sub-value of ingredient. */
     ingredientSubValue: string;
+    /** Ingredient info callback */
+    onIngredientInfoClick?: () => void;
 
     /** Value of skill. */
     skillValue: React.ReactElement|string;
@@ -26,6 +30,8 @@ interface ViewInput {
     skillProb: string;
     /** Sub-value of skill. */
     skillSubValue: string;
+    /** Skill info callback */
+    onSkillInfoClick?: () => void;
 };
 
 const Unit = styled('div')({

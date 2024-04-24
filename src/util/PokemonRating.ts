@@ -8,17 +8,14 @@ import SubSkillList from './SubSkillList';
 interface RatingCalculateResult {
     berryScore: number;
     berryMax: number;
-    berryMin: number;
     berryCur: number;
     berryRatio: number;
     ingScore: number;
     ingMax: number;
-    ingMin: number;
     ingCur: number;
     ingRatio: number;
     skillScore: number;
     skillMax: number;
-    skillMin: number;
     skillCur: number;
     skillRatio: number;
 }
@@ -50,13 +47,6 @@ class PokemonRating {
             null]);
         berryMaxRp.nature = new Nature("Adamant");
 
-        const berryMinRp = new PokemonRp(this.iv);
-        berryMinRp.subSkills = new SubSkillList([
-            new SubSkill("Ingredient Finder M"),
-            new SubSkill("Ingredient Finder S"),
-            null, null, null]);
-        berryMinRp.nature = new Nature("Modest");
-
         const ingMaxRp = new PokemonRp(this.iv);
         ingMaxRp.subSkills = new SubSkillList([
             new SubSkill("Ingredient Finder M"),
@@ -66,10 +56,6 @@ class PokemonRating {
             new SubSkill("Helping Bonus")])
         ingMaxRp.nature = new Nature("Quiet");
 
-        const ingMinRp = new PokemonRp(this.iv);
-        ingMinRp.subSkills = new SubSkillList();
-        ingMinRp.nature = new Nature("Impish");
-
         const skillMaxRp = new PokemonRp(this.iv);
         skillMaxRp.subSkills = new SubSkillList([
             new SubSkill("Skill Trigger M"),
@@ -78,10 +64,6 @@ class PokemonRating {
             new SubSkill("Helping Speed S"),
             new SubSkill("Helping Bonus")])
         skillMaxRp.nature = new Nature("Sassy");
-
-        const skillMinRp = new PokemonRp(this.iv);
-        skillMinRp.subSkills = new SubSkillList();
-        skillMinRp.nature = new Nature("Lax");
 
         const berryCalc = (rp: PokemonRp) => {
             let ret = (3600 / rp.frequencyWithHelpingBonus(0)) *
@@ -94,28 +76,25 @@ class PokemonRating {
             return ret;
         }
         const berryMax = berryCalc(berryMaxRp);
-        const berryMin = berryCalc(berryMinRp);
         const berryCur = berryCalc(this.rp);
-        const berryScore = (berryCur - berryMin) / (berryMax - berryMin) * 100;
+        const berryScore = berryCur / berryMax * 100;
         const berryRatio = this.rp.berryRatio;
 
         const ingCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.ingredientRatio;
         const ingMax = ingCalc(ingMaxRp);
-        const ingMin = ingCalc(ingMinRp);
         const ingCur = ingCalc(this.rp);
-        const ingScore = (ingCur - ingMin) / (ingMax - ingMin) * 100;
+        const ingScore = ingCur / ingMax * 100;
         const ingRatio = this.rp.ingredientRatio;
 
         const skillCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.skillRatio;
         const skillMax = skillCalc(skillMaxRp);
-        const skillMin = skillCalc(skillMinRp);
         const skillCur = skillCalc(this.rp);
-        const skillScore = (skillCur - skillMin) / (skillMax - skillMin) * 100;
+        const skillScore = skillCur / skillMax * 100;
         const skillRatio = this.rp.skillRatio;
         return {
-            berryScore, berryMax, berryMin, berryCur, berryRatio,
-            ingScore, ingMax, ingMin, ingCur, ingRatio,
-            skillScore, skillMax, skillMin, skillCur, skillRatio,
+            berryScore, berryMax, berryCur, berryRatio,
+            ingScore, ingMax, ingCur, ingRatio,
+            skillScore, skillMax, skillCur, skillRatio,
         };
     }
 }
