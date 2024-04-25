@@ -4,7 +4,7 @@ import PokemonRating from '../../util/PokemonRating';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent, 
-    DialogContentText, IconButton } from '@mui/material';
+    IconButton } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useTranslation } from 'react-i18next';
 
@@ -65,9 +65,9 @@ const HelpDialog = React.memo(({open, onClose}: {
 
     return <Dialog open={open} onClose={onClose}>
         <DialogTitle>{t('rating')}</DialogTitle>
-        <DialogContent dividers>
-            <DialogContentText>{t('rating detail1')}</DialogContentText>
-            <DialogContentText>{t('rating detail2')}</DialogContentText>
+        <DialogContent dividers style={{fontSize: '0.95rem'}}>
+            <p style={{marginTop: 0}}>{t('rating detail1')}</p>
+            <p>{t('rating detail2')}</p>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>

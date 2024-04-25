@@ -5,7 +5,10 @@ import { IngredientName } from '../../data/pokemons';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { getSkillValue } from '../../util/MainSkill';
 import { CalculateParameter } from '../../util/PokemonStrength';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent, 
+    IconButton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -25,7 +28,7 @@ const StyledBerryIngSkillStrengthView = styled('div')({
         gridColumn: '1 / -1',
         display: 'flex',
         alignItems: 'center',
-        margin: '.2rem 0.2rem',
+        margin: '0 0.2rem',
         fontSize: '1.5rem',
         '& > span': {
             transform: 'scale(1, 0.9)',
@@ -112,6 +115,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     settings: CalculateParameter,
 }) => {
     const { t } = useTranslation();
+    const [helpOpen, setHelpOpen] = React.useState(false);
 
     const strength = new PokemonStrength(pokemonIv);
     const isWhistle = (settings.period === 3);
@@ -145,10 +149,21 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
         t, trunc1, trunc2);
 
+    const onHelpClick = React.useCallback(() => {
+        setHelpOpen(true);
+    }, [setHelpOpen]);
+    const onHelpClose = React.useCallback(() => {
+        setHelpOpen(false);
+    }, [setHelpOpen]);
+    
     return <StyledBerryIngSkillStrengthView>
         <h2>
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
             <span>{t('num', {n: Math.round(result.totalStrength)})}</span>
+            <IconButton onClick={onHelpClick}>
+                <InfoOutlinedIcon style={{color: '#999'}}/>
+            </IconButton>
+            <HelpDialog open={helpOpen} onClose={onHelpClose}/>
         </h2>
         <section>
             <h3 style={{background: '#24d76a'}}>{t('berry')}</h3>
@@ -297,5 +312,27 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
             return <>ー</>;
     }
 }
+
+const HelpDialog = React.memo(({open, onClose}: {
+    open: boolean,
+    onClose: () => void,
+}) => {
+    const { t } = useTranslation();
+
+    return <Dialog open={open} onClose={onClose}>
+        <DialogTitle>{t('strength2')}</DialogTitle>
+        <DialogContent dividers style={{fontSize: '0.95rem'}}>
+            <p style={{marginTop: 0}}>{t('strength detail1')}</p>
+            <p>{t('strength detail2')}</p>
+            <ul style={{paddingLeft: '1rem'}}>
+                <li>{t('strength restriction1')}</li>
+                <li>{t('strength restriction2')}</li>
+            </ul>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </Dialog>;
+});
 
 export default StrengthBerryIngSkillStrengthView;
