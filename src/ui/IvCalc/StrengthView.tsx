@@ -75,8 +75,15 @@ const StrengthView = React.memo(({pokemonIv}: {pokemonIv: PokemonIv}) => {
 
     // fix helpingBonusCount
     const hasHelpingBonus = pokemonIv.hasHelpingBonusInActiveSubSkills;
+    const prevHasHelpingBonus = React.useRef<boolean>(hasHelpingBonus);
+    React.useEffect(() => {
+        prevHasHelpingBonus.current = hasHelpingBonus;
+    }, [hasHelpingBonus]);
     if (hasHelpingBonus && settings.helpBonusCount === 0) {
         settings.helpBonusCount = 1;
+    } else if (settings.helpBonusCount === 1 && !hasHelpingBonus &&
+        prevHasHelpingBonus.current) {
+        settings.helpBonusCount = 0;
     } else if (!hasHelpingBonus && settings.helpBonusCount === 5) {
         settings.helpBonusCount = 4;
     }
