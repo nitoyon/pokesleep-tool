@@ -39,7 +39,7 @@ const RatingView = React.memo(({pokemonIv, width}: {
                 <InfoOutlinedIcon style={{color: '#999'}}/>
             </IconButton>
         </p>
-        <BerryIngSkillView small
+        <BerryIngSkillView
             berryValue={<>{trunc1(result.berryScore)}<span>pt</span></>}
             berryProb={trunc1(result.berryRatio * 100)}
             berrySubValue=""

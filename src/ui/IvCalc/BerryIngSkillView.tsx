@@ -3,9 +3,6 @@ import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
 interface ViewInput {
-    /** Width of the view is small or not */
-    small?: boolean;
-
     /** Value of berry. */
     berryValue: React.ReactElement|string;
     /** Probability of berry */
@@ -56,27 +53,21 @@ const Unit = styled('div')({
             borderRadius: '.6rem',
             verticalAlign: '20%',
         },
+        '& > div': {
+            width: '4.5rem',
+            textAlign: 'right',
+            fontWeight: 800,
+            display: 'inline-block',
+            color: '#555',
+            '& > span': {
+                fontSize: '0.7rem',
+                paddingLeft: '.2rem',
+            },
+        },
         '& svg': {
             width: '24px',
             height: '24px',
         }
-    },
-    '&.small header > div': {
-        width: '4.5rem',
-        textAlign: 'right',
-        fontWeight: 800,
-        display: 'inline-block',
-        color: '#555',
-    },
-    '&.large header > div': {
-        fontWeight: 800,
-        paddingLeft: '.8rem',
-        display: 'inline-block',
-        color: '#555',
-    },
-    '& header > div > span': {
-        fontSize: '0.7rem',
-        paddingLeft: '.2rem',
     },
     '& footer': {
         fontSize: '0.7rem',
@@ -89,10 +80,9 @@ const Unit = styled('div')({
  */
 const BerryIngSkillView = React.memo((props: ViewInput) => {
     const { t } = useTranslation();
-    const className = props.small ? "small" : "large";
 
     return (
-        <Unit className={className}>
+        <Unit>
             <header>
                 <span style={{background: '#24d76a'}}>{t('berry')}</span>
                 <div>{props.berryValue}</div>
