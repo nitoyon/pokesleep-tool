@@ -1,4 +1,6 @@
 import React from 'react';
+import { IconButton } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
@@ -64,10 +66,15 @@ const Unit = styled('div')({
                 paddingLeft: '.2rem',
             },
         },
-        '& svg': {
-            width: '24px',
-            height: '24px',
-        }
+        '& > button': {
+            padding: 0,
+            marginLeft: '6px',
+            '& > svg': {
+                width: '20px',
+                height: '20px',
+                color: '#bbb',
+            },
+        },
     },
     '& footer': {
         fontSize: '0.7rem',
@@ -86,6 +93,10 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
             <header>
                 <span style={{background: '#24d76a'}}>{t('berry')}</span>
                 <div>{props.berryValue}</div>
+                {props.onBerryInfoClick !== undefined &&
+                <IconButton onClick={props.onBerryInfoClick} disableRipple>
+                    <InfoOutlinedIcon/>
+                </IconButton>}
             </header>
             <footer>{t('probability')}: {props.berryProb}%</footer>
             <footer>{props.berrySubValue}</footer>
@@ -93,6 +104,10 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
             <header>
                 <span style={{background: '#fab855'}}>{t('ingredient')}</span>
                 <div>{props.ingredientValue}</div>
+                {props.onIngredientInfoClick !== undefined &&
+                <IconButton onClick={props.onIngredientInfoClick}>
+                    <InfoOutlinedIcon/>
+                </IconButton>}
             </header>
             <footer>{t('probability')}: {props.ingredientProb}%</footer>
             <footer>{props.ingredientSubValue}</footer>
@@ -100,6 +115,10 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
             <header>
                 <span style={{background: '#44a2fd'}}>{t('skill')}</span>
                 <div>{props.skillValue}</div>
+                {props.onSkillInfoClick !== undefined &&
+                <IconButton onClick={props.onSkillInfoClick}>
+                    <InfoOutlinedIcon/>
+                </IconButton>}
             </header>
             <footer>{t('probability')}: {props.skillProb}%</footer>
             <footer>{props.skillSubValue}</footer>

@@ -158,7 +158,14 @@ class PokemonRp {
     }
 
     get bonus(): number {
-        const energy = 1 + ((this.nature?.energyRecoveryFactor ?? 0) * 0.08);
+        return trunc(this.energyBonus * this.subSkillBonus, 2);
+    }
+
+    get energyBonus(): number {
+        return 1 + ((this.nature?.energyRecoveryFactor ?? 0) * 0.08);
+    }
+
+    get subSkillBonus(): number {
         let subSkillBonus = 0;
         for (const subSkill of this.activeSubSkills) {
             switch (subSkill.inventory) {
@@ -170,7 +177,7 @@ class PokemonRp {
                 subSkillBonus += 0.221;
             }
         }
-        return trunc(energy * (1 + subSkillBonus), 2);
+        return 1 + subSkillBonus;
     }
 
     get ingredientRp(): number {
@@ -298,13 +305,21 @@ class PokemonRp {
     }
 }
 
-function trunc(v: number, n: number) {
+export function trunc(v: number, n: number) {
     const N = Math.pow(10, n);
     // fix round error
     // (ex) v=0.051, n=4, v*N -> 509.999999
     //      (v*N).toFixed(3) -> 510.000
     const d = parseFloat((v * N).toFixed(3));
     return Math.floor(d) / N;
+}
+
+export function trunc1(v: number) {
+    return trunc(v, 1).toFixed(1);
+}
+
+export function trunc2(v: number) {
+    return trunc(v, 2).toFixed(2);
 }
 
 export default PokemonRp;
