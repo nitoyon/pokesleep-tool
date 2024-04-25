@@ -140,9 +140,6 @@ class PokemonRp {
     frequencyWithHelpingBonus(count: number): number {
         const helpingSpeed = this.activeSubSkills
             .reduce((p, c) => p + c.helpingSpeed, 0) * 0.07;
-        if (this.hasHelpingBonusInActiveSubSkills) {
-            count++;
-        }
         const subSkillFactor = Math.min(helpingSpeed + 0.05 * count, 0.35);
 
         return this._pokemon.frequency * // Base frequency
