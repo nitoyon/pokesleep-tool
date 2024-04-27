@@ -50,16 +50,30 @@ const SubSkillControl = React.memo(({
     </StyledSubSkillContainer>;
 });
 
-const StyledSubSkillButton = styled(ButtonBase)({
-    height: '1.6rem',
-    padding: '.2rem .5rem',
-    border: '1px solid #999',
-    borderRadius: '.4rem',
-    background: '#d0d0d0',
-    '&.gold': { background: '#fbe778', borderColor: '#c19255' },
-    '&.blue': { background: '#d3e9f7', borderColor: '#5e7da0' },
-    '&.white': { background: '#f3f3f3', borderColor: '#999999' },
-    '&.selected': { background: '#888c8f' },
+const StyledSubSkillButton = styled(ButtonBase)(({theme}) => {
+    const buttonTheme = (theme.typography as {button: {
+        fontFamily: string,
+        fontSize: string,
+        fontWeight: number,
+        letterSpacing: string,
+        lineHeight: number,
+    }}).button;
+    return {
+        fontFamily: buttonTheme.fontFamily,
+        fontSize: buttonTheme.fontSize,
+        fontWeight: buttonTheme.fontWeight,
+        letterSpacing: buttonTheme.letterSpacing,
+        lineHeight: buttonTheme.lineHeight,
+        height: '1.6rem',
+        padding: '.2rem .5rem',
+        border: '1px solid #999',
+        borderRadius: '.4rem',
+        background: '#d0d0d0',
+        '&.gold': { background: '#fbe778', borderColor: '#c19255' },
+        '&.blue': { background: '#d3e9f7', borderColor: '#5e7da0' },
+        '&.white': { background: '#f3f3f3', borderColor: '#999999' },
+        '&.selected': { background: '#888c8f' },
+    };
 });
 
 const SubSkillButton = React.memo(({level, value, onClick}: {
