@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Slider, TextField } from '@mui/material';
+import { Autocomplete, Paper, Slider, TextField } from '@mui/material';
 import ArrowButton from '../common/ArrowButton';
 
 const LevelControlContainer = styled('div')({
@@ -26,8 +26,12 @@ const LevelControl = React.memo(({value, onChange}: {
 }) => {
     // Whether TextField is empty or not
     const [isEmpty, setIsEmpty] = React.useState(false);
+    const inputRef = React.useRef<HTMLInputElement|null>(null);
 
     const _onChange = React.useCallback((e: any) => {
+        if (e === null) {
+            return;
+        }
         const rawText = e.target.value;
 
         // fix iOS bug on MUI slider
@@ -53,6 +57,17 @@ const LevelControl = React.memo(({value, onChange}: {
         setIsEmpty(false);
         onChange(value);
     }, [onChange]);
+    const onSelected = React.useCallback((e: any, value: string|null) => {
+        if (value !== null) {
+            onChange(parseInt(value, 10));
+            // fix unknown bug: selected level's is not displayed property.
+            // 1. When the level is 30, tap the textbox and tap level 25.
+            // 2. Tap the textbox, then level 25 should be selected, but
+            //    level 30 is selected.
+            // To avoid this bug, we use  setTimeout() function.
+            setTimeout(() => {inputRef.current?.blur();});
+        }
+    }, [onChange]);
 
     const onLevelDownClick = React.useCallback(() => {
         onChange(value - 1);
@@ -61,13 +76,31 @@ const LevelControl = React.memo(({value, onChange}: {
         onChange(value + 1);
     }, [value, onChange]);
 
+    const options = ["10", "25", "30", "50", "55", "60", "75", "100"];
+    const filterOptions = React.useCallback((x: string[]) => x, []);
+
     const valueText = isEmpty ? "" : value.toString();
     return (<LevelControlContainer>
-            <TextField variant="standard" size="small" type="number"
+            <Autocomplete size="small" options={options}
+                freeSolo disableClearable
+                value={valueText} sx={{width: '3rem'}}
                 onBlur={_onChange}
-                value={valueText}
-                InputProps={{inputProps: {min: 1, max: 100, inputMode: "numeric", style: {textAlign: 'left'}}}}
-                onChange={_onChange}/>
+                onInputChange={_onChange}
+                onChange={onSelected}
+                filterOptions={filterOptions}
+                renderInput={(params) => <TextField {...params}
+                    variant="standard" type="number"
+                    inputRef={inputRef}
+                    inputProps={{
+                        ...params.inputProps,
+                        min: 1,
+                        max: 100,
+                        inputMode: "numeric",
+                        style: {textOverflow: "clip"},
+                    }}
+                />}
+                PaperComponent={StyledPopup}
+            />
             <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
             <UnselectableSlider min={0} max={100} size="small" style={{userSelect: "none"}}
                 value={value} onChange={_onChange}/>
@@ -76,4 +109,29 @@ const LevelControl = React.memo(({value, onChange}: {
     );
 });
 
+const StyledPopup = styled(Paper)({
+    width: '14rem',
+    '& > ul': {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 0,
+        padding: 0,
+        '& > li.MuiAutocomplete-option': {
+            display: 'inline-block',
+            width: '3.5rem',
+            textAlign: 'center',
+            height: '3rem',
+            padding: 0,
+            verticalAlign: 'middle',
+            lineHeight: '2.8rem',
+            borderRight: '1px solid #ccc',
+            borderBottom: '1px solid #ccc',
+        },
+    },
+});
+  
+  
+  
 export default LevelControl;
