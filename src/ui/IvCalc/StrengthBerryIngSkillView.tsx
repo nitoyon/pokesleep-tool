@@ -5,14 +5,13 @@ import { IngredientName } from '../../data/pokemons';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { getSkillValue } from '../../util/MainSkill';
 import { CalculateParameter } from '../../util/PokemonStrength';
-import { Button, Dialog, DialogActions, DialogTitle, DialogContent, 
-    IconButton } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
+import InfoButton from './InfoButton';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientIcon from './IngredientIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
@@ -160,9 +159,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
         <h2>
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
             <span>{t('num', {n: Math.round(result.totalStrength)})}</span>
-            <IconButton onClick={onHelpClick}>
-                <InfoOutlinedIcon style={{color: '#999'}}/>
-            </IconButton>
+            <InfoButton onClick={onHelpClick}/>
             <HelpDialog open={helpOpen} onClose={onHelpClose}/>
         </h2>
         <section>

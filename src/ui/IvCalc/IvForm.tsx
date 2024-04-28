@@ -1,5 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import { Button, Dialog, DialogActions, Switch, ToggleButton,
+    ToggleButtonGroup } from '@mui/material';
 import Nature from '../../util/Nature';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp, { IngredientType } from '../../util/PokemonRp';
@@ -7,9 +9,16 @@ import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
 import SkillLevelControl from './SkillLevelControl';
+import InfoButton from './InfoButton';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
+import MoodIcon from '@mui/icons-material/Mood';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import MoodBadIcon from '@mui/icons-material/MoodBad';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next'
 
 // Style for IvForm
 const StyledInputForm = styled('div')({
@@ -65,10 +74,15 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
         onChange(pokemonIv.clone());
     }, [pokemonIv, onChange]);
 
+    const [frequencyDialogOpen, setFrequencyDialogOpen] = React.useState(false);
+    const onFrequencyInfoClick = React.useCallback(() => {
+        setFrequencyDialogOpen(true);
+    }, [setFrequencyDialogOpen]);
+    const onFrequencyDialogClose = React.useCallback(() => {
+        setFrequencyDialogOpen(false);
+    }, [setFrequencyDialogOpen]);
+
     const rp = new PokemonRp(pokemonIv);
-    const freqH = Math.floor(rp.frequency / 3600);
-    const freqM = Math.floor((rp.frequency / 60) % 60);
-    const freqS = Math.floor(rp.frequency % 60);
 
     return <StyledInputForm>
         <div className="table">
@@ -81,7 +95,10 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
                 value={pokemonIv.ingredient} onChange={onIngredientChange}/>
             <div>{t("frequency")}:</div>
             <div>
-                {t('freq hhmmss', {h: freqH, m: freqM, s: freqS})}
+                {frequencyToString(rp.frequency, t)}
+                <InfoButton onClick={onFrequencyInfoClick}/>
+                <FrequencyInfoDialog rp={rp}
+                    open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
         </div>
         <h3>{t("Main Skill & Sub Skills")}</h3>
@@ -91,5 +108,134 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
         <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
     </StyledInputForm>;
 });
+
+const StyledFrequencyDialog = styled(Dialog)({
+    '& div.MuiPaper-root': {
+        // expand dialog width
+        margin: '20px',
+    },
+    '& article': {
+        margin: '1rem',
+        display: 'grid',
+        gridTemplateColumns: 'max-content 1fr',
+        gridGap: '1rem',
+        rowGap: '0.5rem',
+        fontSize: '0.9rem',
+        alignItems: 'start',
+        '& > span.energy': {
+            display: 'flex',
+            alignItems: 'center',
+        },
+    },
+    '& section': {
+        margin: '0.5rem 1rem 0 1rem',
+        '& > div': {
+            fontSize: '.9rem',
+            display: 'flex',
+            flex: '0 auto',
+            alignItems: 'center',
+            '& > label': {
+                marginRight: 'auto',
+            },
+            '& > div': {
+                paddingLeft: '.5rem',
+                '& > button': {
+                    padding: '2px 7px',
+                },
+            },
+        },
+    },
+});
+
+const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
+    rp: PokemonRp,
+    open: boolean,
+    onClose: () => void
+}) => {
+    const { t } = useTranslation();
+    const [helpingBonus, setHelpingBonus] = React.useState(0);
+    const [campTicket, setCampTicket] = React.useState(false);
+    const [showCount, setShowCount] = React.useState(false);
+    const onHelpingBonusChange = React.useCallback((e: any, value: string|null) => {
+        if (value !== null) {
+            setHelpingBonus(parseInt(value, 10));
+        }
+    }, [setHelpingBonus]);
+    const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCampTicket(e.target.checked);
+    }, [setCampTicket]);
+    const onShowCountChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setShowCount(e.target.checked);
+    }, [setShowCount]);
+
+    // reset state when closed
+    React.useEffect(() => {
+        if (open) { return; }
+        setTimeout(() => {
+            setHelpingBonus(0);
+            setCampTicket(false);
+            setShowCount(false);
+        }, 200);
+    }, [open, setHelpingBonus, setCampTicket, setShowCount]);
+
+    const baseFreq = rp.frequencyWithHelpingBonus(helpingBonus) /
+        (campTicket ? 1.2 : 1);
+    const convertToVal = (rate: number) => (
+        showCount ?
+            t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)}) :
+            frequencyToString(Math.floor(baseFreq * rate), t)
+    );
+    const val20 = convertToVal(1);
+    const val40 = convertToVal(0.71);
+    const val60 = convertToVal(0.62);
+    const val80 = convertToVal(0.52);
+    const val100 = convertToVal(0.45);
+    return <StyledFrequencyDialog open={open} onClose={onClose}>
+        <article>
+            <span className="energy"><MoodIcon sx={{color: '#62d540'}}/>81{t('range separator')}150</span>
+            <span>{val100}</span>
+            <span className="energy"><SentimentSatisfiedAltIcon sx={{color: '#66dcd8'}}/>61{t('range separator')}80</span>
+            <span>{val80}</span>
+            <span className="energy"><SentimentDissatisfiedIcon sx={{color: '#4aacfd'}}/>41{t('range separator')}60</span>
+            <span>{val60}</span>
+            <span className="energy"><SentimentVeryDissatisfiedIcon sx={{color: '#d4b5fd'}}/>21{t('range separator')}40</span>
+            <span>{val40}</span>
+            <span className="energy"><MoodBadIcon sx={{color: '#a5a3a6'}}/>0{t('range separator')}20</span>
+            <span>{val20}</span>
+        </article>
+        <section>
+            <div>
+                <label>{t('helping bonus')}:</label>
+                <ToggleButtonGroup size="small" exclusive
+                    value={helpingBonus} onChange={onHelpingBonusChange}>
+                    <ToggleButton value={0}>0</ToggleButton>
+                    <ToggleButton value={1}>1</ToggleButton>
+                    <ToggleButton value={2}>2</ToggleButton>
+                    <ToggleButton value={3}>3</ToggleButton>
+                    <ToggleButton value={4}>4</ToggleButton>
+                    <ToggleButton value={5}>5</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+            <div>
+                <label>{t('good camp ticket')}:</label>
+                <Switch checked={campTicket} onChange={onCampTicketChange}/>
+            </div>
+            <div>
+                <label>{t('show help count')}:</label>
+                <Switch checked={showCount} onChange={onShowCountChange}/>
+            </div>
+        </section>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledFrequencyDialog>;
+});
+
+function frequencyToString(frequency: number, t: typeof i18next.t): string {
+    const h = Math.floor(frequency / 3600);
+    const m = Math.floor((frequency / 60) % 60);
+    const s = Math.floor(frequency % 60);
+    return t('freq hhmmss', {h, m, s});
+}
 
 export default IvForm;

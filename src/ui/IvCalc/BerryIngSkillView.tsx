@@ -1,6 +1,5 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoButton from './InfoButton';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
@@ -94,9 +93,7 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
                 <span style={{background: '#24d76a'}}>{t('berry')}</span>
                 <div>{props.berryValue}</div>
                 {props.onBerryInfoClick !== undefined &&
-                <IconButton onClick={props.onBerryInfoClick} disableRipple>
-                    <InfoOutlinedIcon/>
-                </IconButton>}
+                <InfoButton onClick={props.onBerryInfoClick}/>}
             </header>
             <footer>{t('probability')}: {props.berryProb}%</footer>
             <footer>{props.berrySubValue}</footer>
@@ -105,9 +102,7 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
                 <span style={{background: '#fab855'}}>{t('ingredient')}</span>
                 <div>{props.ingredientValue}</div>
                 {props.onIngredientInfoClick !== undefined &&
-                <IconButton onClick={props.onIngredientInfoClick}>
-                    <InfoOutlinedIcon/>
-                </IconButton>}
+                <InfoButton onClick={props.onIngredientInfoClick}/>}
             </header>
             <footer>{t('probability')}: {props.ingredientProb}%</footer>
             <footer>{props.ingredientSubValue}</footer>
@@ -116,9 +111,7 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
                 <span style={{background: '#44a2fd'}}>{t('skill')}</span>
                 <div>{props.skillValue}</div>
                 {props.onSkillInfoClick !== undefined &&
-                <IconButton onClick={props.onSkillInfoClick}>
-                    <InfoOutlinedIcon/>
-                </IconButton>}
+                <InfoButton onClick={props.onSkillInfoClick}/>}
             </header>
             <footer>{t('probability')}: {props.skillProb}%</footer>
             <footer>{props.skillSubValue}</footer>

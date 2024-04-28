@@ -126,6 +126,8 @@
         "frequency": "Frequency",
         "Main Skill & Sub Skills": "Main Skill & Sub Skills",
         "nature": "Nature",
+        "show help count": "Show help count",
+        "help count per hour": "{{n}} times/hour",
         "probability": "Prob",
         "times unit": " times",
         "ingredients unit": " ingredients",

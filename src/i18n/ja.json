@@ -116,6 +116,8 @@
         "frequency": "おてつだい時間",
         "Main Skill & Sub Skills": "メインスキル・サブスキル",
         "nature": "せいかく",
+        "show help count": "おてつだい時間表示",
+        "help count per hour": "1時間に {{n}} 回",
         "probability": "確率",
         "times unit": "回",
         "ingredients unit": "食材",

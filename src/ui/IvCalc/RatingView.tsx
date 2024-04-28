@@ -2,10 +2,9 @@ import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRating from '../../util/PokemonRating';
 import BerryIngSkillView from './BerryIngSkillView';
+import InfoButton from './InfoButton';
 import RaderChart from './RaderChart';
-import { Button, Dialog, DialogActions, DialogTitle, DialogContent, 
-    IconButton } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const RatingView = React.memo(({pokemonIv, width}: {
@@ -35,9 +34,7 @@ const RatingView = React.memo(({pokemonIv, width}: {
     return (<div>
         <p style={{margin: '0'}}>
             {t('rate subskill and nature')}
-            <IconButton onClick={onHelpClick}>
-                <InfoOutlinedIcon style={{color: '#999'}}/>
-            </IconButton>
+            <InfoButton onClick={onHelpClick}/>
         </p>
         <BerryIngSkillView
             berryValue={<>{trunc1(result.berryScore)}<span>pt</span></>}
