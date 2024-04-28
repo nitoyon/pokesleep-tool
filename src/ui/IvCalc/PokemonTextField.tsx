@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { SleepType } from '../../data/fields';
@@ -7,6 +6,7 @@ import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams,
     ButtonBase, ClickAwayListener, Dialog, FilterOptionsState,
     Icon, IconButton, InputAdornment, InputBase, ListItemIcon,
     Menu, MenuItem, MenuList, Popper, Paper } from '@mui/material';
+import PokemonIcon from './PokemonIcon';
 import TextLikeButton from './TextLikeButton';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';
@@ -147,6 +147,14 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
     </>;
 });
 
+const StyledDialog = styled(Dialog)({
+    '& > div.MuiDialog-container > div.MuiPaper-root': {
+        // extend dialog width
+        width: '100%',
+        margin: '20px',
+    },
+});
+
 function PopperComponent(props: {
     anchorEl?: any;
     disablePortal?: boolean;
@@ -160,16 +168,51 @@ const StyledAutocompletePopper = styled('div')({
     [`& .${autocompleteClasses.paper}`]: {
         boxShadow: 'none',
         margin: 0,
+        width: '100%',
         color: 'inherit',
         fontSize: 13,
-        minHeight: '40vh',
-        '& > ul': {
+        // pokemon group container
+        '& > ul.MuiAutocomplete-listbox': {
             paddingTop: 0,
+            maxHeight: '60vh',
+            minHeight: '60vh',
+            // pokemon item container
+            '& > li > ul': {
+                userSelect: 'none',
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'left',
+                margin: '0 0 1rem 0',
+                padding: 0,
+                // pokemons item
+                '& > li': {
+                    width: '76px',
+                    height: '80px',
+                    padding: 0,
+                    margin: 0,
+                    position: 'relative',
+                    display: 'block',
+                    // pokemon icon (48px x 48px)
+                    '& > div': {
+                        margin: '4px auto 0 auto',
+                    },
+                    // pokemon name
+                    '& > footer': {
+                        display: 'inline-block',
+                        width: '100%',
+                        fontSize: '12px',
+                        textAlign: 'center',
+                        textWrap: 'wrap',
+                        lineHeight: 1.1,
+                        verticalAlign: 'middle',
+                    },
+                },
+            },
         }
     },
-    "& li": {
-        userSelect: 'none',
-    },
+});
+
+const StyledPokemonItem = styled(MenuItem)({
 });
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
@@ -404,8 +447,9 @@ const PokemonSelectDialog = React.memo(({
         options = options.reverse();
     }
 
-    return <Dialog open={open} onClose={onClose}>
+    return <StyledDialog open={open} onClose={onClose}>
         <Autocomplete options={options}
+            fullWidth
             open
             freeSolo            
             PopperComponent={PopperComponent}
@@ -420,7 +464,8 @@ const PokemonSelectDialog = React.memo(({
             renderGroup={renderGroup}
             renderOption={(props, option) => (
                 <MenuItem key={option.id} {...props}>
-                    {option.localName}
+                    <PokemonIcon id={option.id} size={48}/>
+                    <footer>{option.localName}</footer>
                 </MenuItem>
             )}
             renderInput={(params) => (
@@ -464,7 +509,7 @@ const PokemonSelectDialog = React.memo(({
                 <NorthIcon style={{width: '1rem', height: '1rem'}}/>
             </SortOrderButton>
         </PokemonSelectDialogFooter>
-    </Dialog>;
+    </StyledDialog>;
 });
 
 const sleepType2num = {
