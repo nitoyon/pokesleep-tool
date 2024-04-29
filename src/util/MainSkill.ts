@@ -43,13 +43,13 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [12, 16, 21, 27, 34, 43][skillLevel - 1];
     }
     if (skill === "Charge Strength S") {
-        return [400, 569, 765, 1083, 1496, 2066, 2656][skillLevel - 1];
+        return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
-        return [400, 569, 765, 1083, 1496, 2066, 2656][skillLevel - 1] * 1.25;
+        return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1] * 1.25;
     }
     if (skill === "Charge Strength M") {
-        return [880, 1251, 1726, 2383, 3290, 4546, 5843][skillLevel - 1];
+        return [880, 1251, 1726, 2383, 3290, 4546, 6409][skillLevel - 1];
     }
     if (skill === "Cooking Power-Up S") {
         return [7, 10, 12, 17, 22, 27][skillLevel - 1];
