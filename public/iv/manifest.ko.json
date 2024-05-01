@@ -1,0 +1,20 @@
+{
+  "short_name": "개체값 계산기",
+  "name": "개체값 계산기 for 포켓몬 슬립",
+  "description": "사용 방법은 간단! 포켓몬의 레벨과 스킬을 입력하면, SP나 벌어들이는 에너지, 개체 평가치를 알 수 있습니다.",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "24x24"
+    },
+    {
+      "src": "logo192.png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.ko.html?utm_source=homescreen",
+  "display": "standalone",
+  "theme_color": "#f9f9f9",
+  "background_color": "#ffffff"
+}
