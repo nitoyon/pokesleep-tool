@@ -17,6 +17,8 @@ const theme = createTheme({
     let language = "en";
     if (window.navigator.language.match(/ja/) !== null) {
         language = "ja";
+    } else if (window.navigator.language.match(/ko/) !== null) {
+        language = "ko";
     }
     const config = loadConfig(language);
     config.pwacnt++;
