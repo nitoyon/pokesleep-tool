@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { InputAreaData } from './InputArea';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import PreviewScore, {getScoreRange} from './PreviewScore';
-import PreviewEncounter from './PreviewEncounter';
 
 export default function GeneralPanel({data}: {data: InputAreaData}) {
     const [isBetterSecondSleepDialogOpen, setBetterSecondSleepOpen] = useState(false);
@@ -21,7 +20,6 @@ export default function GeneralPanel({data}: {data: InputAreaData}) {
 
     return (
         <div className="preview">
-            <PreviewEncounter data={data}/>
             <PreviewScore count={4} data={data} ranges={getScoreRange(4, data)}
                 onSecondSleepDetailClick={onSecondSleepDetailClick}/>
             <PreviewScore count={5} data={data} ranges={getScoreRange(5, data)}
