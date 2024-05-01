@@ -213,20 +213,6 @@ div.encounter div.MuiAlert-icon {
     margin-right: 4px;
 }
 
-div.guaranteed_dlg ul {
-    padding-left: 1.5rem;
-    margin: 0.5rem 0;
-    list-style: none;
-}
-
-div.guaranteed_dlg .sleep_type {
-    margin: 0;
-}
-
-div.guaranteed_dlg .MuiAlert-standardWarning {
-    margin-top: .6rem;
-}
-
 div.pwa_banner {
     background: white;
     border-radius: 1rem 1rem 0 0;

@@ -55,13 +55,6 @@
         "strength too much": "Too much snorlax strength.",
         "next strength to get 1 more pokemon": "If you gain <strength2/> strength by the second sleep, you will encounter <count2/> Pokémon during the second sleep session (Only when the first sleep score is <score1/>). ",
 
-        "guaranteed score": "Guaranteed Score",
-        "about guaranteed score": "About Guaranteed Score",
-        "guaranteed score text": "<pokemon/> will reliably appear with the next drowsy power in <area/>.",
-        "guaranteed score info": "These values are reported base on <x>proprietary research</x>, so there may be a possibility of inaccuracy.",
-        "guaranteed score warning": "These values may change due to future Pokémon additions and server-side configuration changes. Also, during events, the Pokémon won't appear as expected.",
-        "not guaranteed because of update": "After the release of version 1.4.0, the Pokémon aren't appearing as expected.",
-
         "dozing": "Dozing Type",
         "snoozing": "Snoozing Type",
         "slumbering": "Slumbering Type",

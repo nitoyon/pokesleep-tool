@@ -45,13 +45,6 @@
         "strength too much": "에너지가 너무 높습니다.",
         "next strength to get 1 more pokemon": "2회차 수면 이전까지 <strength2/> 이상의 에너지를 추가하면, 2회차 리서치에서 <count2/>체까지 만날 수 있습니다 (※1회차 수면 스코어가 <score1/>일 때).",
 
-        "guaranteed score": "확정 출현 점수대",
-        "about guaranteed score": "확정 출현 점수대에 대하여",
-        "guaranteed score text": "<area/>에서, <pokemon/>이 다음의 졸음 파워로 확정 출현합니다.",
-        "guaranteed score info": "확정대는, <x>독자 조사</x>에 의해 보고된 값이기 때문에, 정확하지 않을 수 있습니다.",
-        "guaranteed score warning": "향후 포켓몬 추가나 서버 측에서의 설정 변경으로 인해, 확정대가 변할 수 있습니다. 또한, 이벤트 중에는 확정으로 출현하지 않을 가능성이 높습니다.",
-        "not guaranteed because of update": "Ver.1.4.0 업데이트로 인해 확정되지 않습니다.",
-
         "dozing": "꾸벅꾸벅 타입",
         "snoozing": "새근새근 타입",
         "slumbering": "쿨쿨 타입",
