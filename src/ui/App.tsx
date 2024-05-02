@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next'
 
 /** Global configuration. */
 export interface AppConfig {
+    /** Custom icon URL */
+    iconUrl: string|null;
     /** current language */
     language: string;
     /** PWA notify check counter */
@@ -16,26 +18,36 @@ export interface AppConfig {
 
 export type AppType = "ResearchCalc" | "IvCalc";
 
+export const AppConfigContext = React.createContext<AppConfig>({
+    iconUrl: null, language: "", pwacnt: 0});
+
 export default function App({config}: {config:AppConfig}) {
     const language = useMultilingual(config);
     const [curApp, setCurApp] = useRouter(language);
+    const [appConfig, setAppConfig] = useState(config);
 
     const onAppChange = useCallback((value: AppType) => {
         setCurApp(value);
     }, [setCurApp]);
+    const onAppConfigChange = useCallback((value: AppConfig) => {
+        saveConfig(value)
+        setAppConfig(value);
+    }, [setAppConfig]);
 
     const onPwaBannerClose = useCallback(() => {
-        config.pwacnt = 0;
-        saveConfig(config);
-    }, [config]);
+        appConfig.pwacnt = 0;
+        saveConfig(appConfig);
+        setAppConfig(appConfig);
+    }, [appConfig, setAppConfig]);
 
     return (
-        <>
-            <ToolBar app={curApp} onAppChange={onAppChange}/>
+        <AppConfigContext.Provider value={appConfig}>
+            <ToolBar app={curApp} onAppChange={onAppChange}
+                onAppConfigChange={onAppConfigChange}/>
             {curApp === "ResearchCalc" && <ResearchCalcApp/>}
             {curApp === "IvCalc" && <IvCalcApp/>}
             <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
-        </>
+        </AppConfigContext.Provider>
     );
 }
 
@@ -105,6 +117,7 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
 
 export function loadConfig(language:string): AppConfig {
     const config: AppConfig = {
+        iconUrl: null,
         language,
         pwacnt: -1,
     };
@@ -116,6 +129,10 @@ export function loadConfig(language:string): AppConfig {
     const json = JSON.parse(data);
     if (typeof(json) !== "object" || json == null) {
         return config;
+    }
+    if (typeof(json.iconUrl) === "string" &&
+        json.iconUrl.match(/@ID[1-4]?@/)) {
+        config.iconUrl = json.iconUrl;
     }
     if (typeof(json.language) === "string") {
         config.language = json.language;

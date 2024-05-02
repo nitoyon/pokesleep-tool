@@ -18,7 +18,18 @@
         "how to use": "사용 방법",
         "about": "이 도구에 대하여",
         "sleep score table": "수면 스코어표",
+        "settings": "설정",
+        
         "change language": "언어 전환",
+        "custom icon": "사용자 지정 아이콘",
+        "custom icon summary": "포켓몬 아이콘을 변경할 수 있습니다.",
+        "custom icon placeholder": "사용자 지정 아이콘의 URL",
+        "custom icon details": "URL에서 포켓몬 도감 번호를 지정하려면 @ID1@부터 @ID4@까지 사용하세요. 예를 들어, 포켓몬 도감 번호가 1일 때 @ID3@.png는 001.png로 대체됩니다.",
+        "custom icon details japanese only": "",
+        "custom icon invalid url": "유효한 URL을 입력하세요.",
+        "custom icon id not found": "URL에는 @ID1@, @ID2@, ID3@ 또는 @ID4@가 포함되어야 합니다.",
+        "custom icon invalid message": "사용자 지정 아이콘의 URL이 유효하지 않습니다. 비워 두거나 올바른 값을 설정하세요.",
+
         "close": "닫기",
         "clear": "지우기",
         "details": "세부사항",

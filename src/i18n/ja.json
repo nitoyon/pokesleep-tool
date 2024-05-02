@@ -18,7 +18,18 @@
         "how to use": "つかいかた",
         "about": "このツールについて",
         "sleep score table": "睡眠スコア表",
+        "settings": "設定",
+
         "change language": "言語切り替え",
+        "custom icon": "カスタム アイコン",
+        "custom icon summary": "ポケモンのアイコンを変更できます。",
+        "custom icon placeholder": "カスタム アイコンの URL",
+        "custom icon details": "図鑑番号は @ID1@ ～ @ID4@ で指定します。たとえば、図鑑番号 1 のとき、@ID3@.png は 001.png に置き換えられます。",
+        "custom icon details japanese only": "カスタム アイコンは「ポケモン カスタムアイコン」で検索すると、いくつか見つかります (これらのアイコンは当アプリが提供するものではありません)。",
+        "custom icon invalid url": "http:// または https:// から始まる必要があります。",
+        "custom icon id not found": "@ID1@、@ID2@、@ID3@、@ID4@ のいずれかを含んでいる必要があります。",
+        "custom icon invalid message": "カスタム アイコンが正しい値ではありません。空にするか、正しい値を設定してください。",
+
         "close": "閉じる",
         "clear": "クリア",
         "details": "詳細",

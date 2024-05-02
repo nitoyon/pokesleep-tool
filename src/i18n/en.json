@@ -18,7 +18,18 @@
         "how to use": "How to Use",
         "about": "About This Tool",
         "sleep score table": "Sleep Score Table",
+        "settings": "Settings",
+
         "change language": "Change Language",
+        "custom icon": "Custom Icon",
+        "custom icon summary": "You can change the Pokémon icon.",
+        "custom icon placeholder": "URL of the custom icon",
+        "custom icon details": "Use @ID1@ to @ID4@ in the URL to specify the Pokédex number. For example, @ID3@.png will be replaced with 001.png when the Pokédex number is 1.",
+        "custom icon details japanese only": "",
+        "custom icon invalid url": "Please enter a valid URL.",
+        "custom icon id not found": "URL must include @ID1@, @ID2@, ID3@, or @ID4@.",
+        "custom icon invalid message": "The URL for the custom icon is not valid. Please leave it blank or set the correct value.",
+
         "ok": "OK",
         "close": "Close",
         "clear": "Clear",
