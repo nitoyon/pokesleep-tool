@@ -3,7 +3,8 @@ import { styled } from '@mui/system';
 import { SleepType } from '../../data/fields';
 import pokemons, { PokemonType } from '../../data/pokemons';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams,
-    ButtonBase, ClickAwayListener, Dialog, FilterOptionsState,
+    Button, ButtonBase, ClickAwayListener, Dialog, DialogActions,
+    FilterOptionsState,
     Icon, IconButton, InputAdornment, InputBase, ListItemIcon,
     Menu, MenuItem, MenuList, Popper, Paper } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
@@ -251,6 +252,7 @@ const GroupHeader = styled('div')({
     '&.ice': { backgroundColor: '#68c5df' },
     '&.fighting': { backgroundColor: '#e8a33b' },
     '&.poison': { backgroundColor: '#ab7aca' },
+    '&.ground': { backgroundColor: '#c8a841' },
     '&.flying': { backgroundColor: '#add5ea' },
     '&.psychic': { backgroundColor: '#ed6c94' },
     '&.bug': { backgroundColor: '#a5ab39' },
@@ -269,6 +271,7 @@ const RoundedButton = styled(ButtonBase)({
     color: '#000',
     justifyContent: 'left',
     boxShadow: '0 2px 2px 1px #88666666',
+    fontFamily: 'M PLUS 1p',
     'svg': {
         width: '1.2rem',
         height: '1.2rem',
@@ -310,8 +313,10 @@ const PokemonSelectDialog = React.memo(({
     onChange: (value: PokemonOption) => void,
 }) => {
     const { t } = useTranslation();
+    const [filterOpen, setFilterOpen] = React.useState(false);
     const [sortMenuOpen, setSortMenuOpen] = React.useState(false);
     let [config_, setConfig] = React.useState<PokemonDialogConfig|null>(null);
+    const [filterType, setFilterType] = React.useState<PokemonType|null>(null);
     const sortMenuAnchorRef = React.useRef<HTMLButtonElement>(null);
 
     // initialize config
@@ -331,9 +336,12 @@ const PokemonSelectDialog = React.memo(({
                 return String.fromCharCode(c.charCodeAt(0) + 0x60);
             });
         const input = normalize(state.inputValue);
-        const ret = options.filter((option) =>
+        let ret = options.filter((option) =>
             normalize(option.localName).includes(input));
-        
+        if (filterType !== null) {
+            ret = options.filter((option) => filterType === option.type);
+        }
+
         if (ret.length === 0) {
             // add empty entry
             ret.push({
@@ -346,7 +354,7 @@ const PokemonSelectDialog = React.memo(({
             });
         }
         return ret;
-    }, []);
+    }, [filterType]);
 
     // Selected handler
     const onAutocompleteChange = useCallback((event: any, newValue: PokemonOption|string|null) => {
@@ -409,6 +417,17 @@ const PokemonSelectDialog = React.memo(({
             <ul style={{padding: 0}}>{params.children}</ul>
         </li>
     }, [sortType, t]);
+
+    // Filter button
+    const onFilterButtonClick = useCallback(() => {
+        setFilterOpen(true);
+    }, [setFilterOpen]);
+    const onFilterDialogClose = useCallback(() => {
+        setFilterOpen(false);
+    }, [setFilterOpen]);
+    const onFilterChange = useCallback((value: PokemonType|null) => {
+        setFilterType(value);
+    }, [setFilterType]);
 
     // Sort menu
     const onSortButtonClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -501,6 +520,10 @@ const PokemonSelectDialog = React.memo(({
             onClose={onAutocompleteClose}
             onChange={onAutocompleteChange}/>
         <PokemonSelectDialogFooter>
+            <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "4.5rem", textAlign: 'left'}}
+                onClick={onFilterButtonClick}>
+                <SearchIcon style={{paddingRight: '0'}}/>{t(filterType === null ? 'off' : 'on')}
+            </RoundedButton>
             <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "8rem", textAlign: 'left'}}
                 onClick={onSortButtonClick} ref={sortMenuAnchorRef}>
                 <SortIcon style={{paddingRight: '.4rem'}}/>{t(sortType)}
@@ -525,6 +548,8 @@ const PokemonSelectDialog = React.memo(({
                 <NorthIcon style={{width: '1rem', height: '1rem'}}/>
             </SortOrderButton>
         </PokemonSelectDialogFooter>
+        <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
+            value={filterType} onChange={onFilterChange}/>
     </StyledDialog>;
 });
 
@@ -583,5 +608,82 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     return ret;
 }
 
+const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
+    open: boolean,
+    value: PokemonType|null,
+    onChange: (value: PokemonType|null) => void,
+    onClose: () => void,
+}) => {
+    const { t } = useTranslation();
+    const onClearClick = useCallback(() => {
+        onChange(null);
+    }, [onChange]);
+    const onCloseClick = useCallback(() => {
+        onClose();
+    }, [onClose]);
+    const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        const selected = e.currentTarget.value as PokemonType;
+        onChange(value === selected ? null : selected);
+        onClose();
+    }, [value, onChange, onClose]);
+
+    const types = ["normal", "fire", "water", "electric",
+        "grass", "ice", "fighting", "poison", "ground",
+        "flying", "psychic", "bug", "rock", "ghost",
+        "dragon", "dark", "steel", "fairy"];
+    const buttons: React.ReactElement[] = types.map(type =>
+        <StyledTypeButton
+            key={type} className={type} value={type} onClick={onTypeClick}>
+            {t(`types.${type}`)}
+            {type === value && <CheckIcon/>}
+        </StyledTypeButton>
+    );
+
+    return <Dialog open={open} onClose={onClose}>
+        <div style={{margin: '1rem .5rem 0 .5rem'}}>
+            {buttons}
+        </div>
+        <DialogActions>
+            <Button onClick={onClearClick}>{t('clear')}</Button>
+            <Button onClick={onCloseClick}>{t('close')}</Button>
+        </DialogActions>
+    </Dialog>;
+});
+
+const StyledTypeButton = styled(Button)({
+    width: '5rem',
+    color: 'white',
+    fontSize: '0.9rem',
+    padding: 0,
+    margin: '0.2rem',
+    borderRadius: '0.5rem',
+    '& > svg': {
+        position: 'absolute',
+        background: '#24d76a',
+        borderRadius: '10px',
+        fontSize: '20px',
+        border: '2px solid white',
+        right: '-4px',
+        top: '-4px',
+    },
+    '&.normal': { backgroundColor: '#939393' },
+    '&.fire': { backgroundColor: '#e8554d' },
+    '&.water': { backgroundColor: '#579bf3' },
+    '&.electric': { backgroundColor: '#f1c525' },
+    '&.grass': { backgroundColor: '#57a747' },
+    '&.ice': { backgroundColor: '#68c5df' },
+    '&.fighting': { backgroundColor: '#e8a33b' },
+    '&.poison': { backgroundColor: '#ab7aca' },
+    '&.ground': { backgroundColor: '#c8a841' },
+    '&.flying': { backgroundColor: '#add5ea' },
+    '&.psychic': { backgroundColor: '#ed6c94' },
+    '&.bug': { backgroundColor: '#a5ab39' },
+    '&.rock': { backgroundColor: '#b2b194' },
+    '&.ghost': { backgroundColor: '#8d658e' },
+    '&.dragon': { backgroundColor: '#7482e9' },
+    '&.dark': { backgroundColor: '#706261' },
+    '&.steel': { backgroundColor: '#94b1c2' },
+    '&.fairy': { backgroundColor: '#e48fe3' },
+});
 
 export default PokemonTextField;
