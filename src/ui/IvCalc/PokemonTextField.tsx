@@ -212,9 +212,6 @@ const StyledAutocompletePopper = styled('div')({
     },
 });
 
-const StyledPokemonItem = styled(MenuItem)({
-});
-
 const StyledInput = styled(InputBase)(({ theme }) => ({
     width: 'calc(100% - 8px)',
     padding: 4,
@@ -293,6 +290,16 @@ const SortOrderButton = styled(RoundedButton)({
     },
 });
 
+/**
+ * Pokemon select dialog configuration.
+ */
+interface PokemonDialogConfig {
+    /** Sort type. */
+    sort: "sleeptype"|"name"|"pokedexno"|"type";
+    /** Descending (true) or ascending (false). */
+    descending: boolean;
+}
+
 const PokemonSelectDialog = React.memo(({
     open, pokemonOptions, selectedValue, onClose, onChange,
 }: {
@@ -304,9 +311,14 @@ const PokemonSelectDialog = React.memo(({
 }) => {
     const { t } = useTranslation();
     const [sortMenuOpen, setSortMenuOpen] = React.useState(false);
-    const [sortType, setSortType] = React.useState("sleeptype");
-    const [sortDescending, setSortDescending] = React.useState(false);
+    let [config_, setConfig] = React.useState<PokemonDialogConfig|null>(null);
     const sortMenuAnchorRef = React.useRef<HTMLButtonElement>(null);
+
+    // initialize config
+    const config: PokemonDialogConfig = (config_ === null ?
+        loadPokemonDialogConfig() : config_);
+    const sortType = config.sort;
+    const descending = config.descending;
 
     // Compare inputed text to options
     const filterOptions = useCallback((
@@ -405,16 +417,20 @@ const PokemonSelectDialog = React.memo(({
     const onSortMenuClose = useCallback(() => {
         setSortMenuOpen(false);
     }, [setSortMenuOpen]);
+    const onConfigChange = React.useCallback((value: PokemonDialogConfig) => {
+        setConfig(value);
+        localStorage.setItem('PstPokemonSelectParam', JSON.stringify(value));
+    }, [setConfig]);
     const onToggleSortOrder = useCallback(() => {
-        setSortDescending(!sortDescending);
-    }, [sortDescending, setSortDescending]);
+        onConfigChange({...config, descending: !config.descending});
+    }, [config, onConfigChange]);
     const onSortMenuItemSelected = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
         const value = e.currentTarget.getAttribute('data-value');
-        if (value !== null) {
-            setSortType(value);
+        if (value !== null && value !== undefined) {
+            onConfigChange({...config, sort: value as "sleeptype"|"name"|"pokedexno"|"type"});
             setSortMenuOpen(false);
         }
-    }, [setSortType]);
+    }, [config, onConfigChange, setSortMenuOpen]);
 
     // sort
     let options: PokemonOption[] = [];
@@ -443,7 +459,7 @@ const PokemonSelectDialog = React.memo(({
         default:
             throw new Error('invalid sort type');
     }
-    if (sortDescending) {
+    if (descending) {
         options = options.reverse();
     }
 
@@ -505,7 +521,7 @@ const PokemonSelectDialog = React.memo(({
                     </ClickAwayListener>
                 </Paper>
             </Popper>
-            <SortOrderButton className={sortDescending ? 'desc' : 'asc'} onClick={onToggleSortOrder}>
+            <SortOrderButton className={descending ? 'desc' : 'asc'} onClick={onToggleSortOrder}>
                 <NorthIcon style={{width: '1rem', height: '1rem'}}/>
             </SortOrderButton>
         </PokemonSelectDialogFooter>
@@ -538,6 +554,34 @@ const type2num = {
     "steel": 16,
     "fairy": 17,
 };
+
+/**
+ * Load dialog config from localStorage.
+ * @returns config.
+ */
+function loadPokemonDialogConfig(): PokemonDialogConfig {
+    const ret: PokemonDialogConfig = {
+        sort: "pokedexno",
+        descending: false,
+    };
+
+    const settings = localStorage.getItem('PstPokemonSelectParam');
+    if (settings === null) {
+        return ret;
+    }
+    const json = JSON.parse(settings);
+    if (typeof(json) !== "object" || json === null) {
+        return ret;
+    }
+    if (typeof(json.sort) === "string" &&
+        ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
+        ret.sort = json.sort;
+    }
+    if (typeof(json.descending) === "boolean") {
+        ret.descending = json.descending;
+    }
+    return ret;
+}
 
 
 export default PokemonTextField;
