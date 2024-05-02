@@ -134,6 +134,8 @@
         "rating detail1": "We evaluate subskill and nature tendencies on a scale of 0 to 100 points. For example, in the case of 'berries', the subskill or nature that picks up the most berries are treated as 100 points. We calculate the score based on how much the amount of 'berries' your Pokémon picks up is compared to 100 points.",
         "rating detail2": "For Pokémon specialized in berries, it's desirable for their berry score to be high, and for Pokémon specialized in skills, it's desirable for their skill score to be high. Please understand that this is a simple scoring system because we do not consider the following information for the evaluation: Pokémon species, ingredients, skill levels, certain subskills (bonus or inventory), and certain natures (EXP gains or energy recovery).",
 
+        "on": "ON",
+        "off": "OFF",
         "sleeptype": "Sleep type",
         "pokedexno": "Pokédex No.",
 
