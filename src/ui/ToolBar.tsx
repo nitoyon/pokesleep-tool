@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
-import LanguageDialog from './Dialog/LanguageDialog';
+import SettingsDialog from './Dialog/SettingsDialog';
 import ScoreTableDialog from './Dialog/ScoreTableDialog';
 import { AppType } from './App';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
@@ -107,7 +107,7 @@ export default function ToolBar({app, onAppChange}: ToolBarProps) {
             <AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose}/>
             <HowToDialog app={app} open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
             <ScoreTableDialog open={isScoreTableDialogOpen} onClose={onScoreTableDialogClose}/>
-            <LanguageDialog open={isLanguageDialogOpen}
+            <SettingsDialog open={isLanguageDialogOpen}
                 onClose={onLanguageDialogClose}/>
         </div>
     );
