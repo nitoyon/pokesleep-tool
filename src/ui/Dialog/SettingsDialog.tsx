@@ -3,14 +3,14 @@ import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-interface LanguageDialogProps {
+interface SettingsDialogProps {
     /** Whether dialog is open or not */
     open: boolean;
     /** callback function when dialog is closed */
     onClose: () => void;
 }
 
-export default function LanguageDialog({open, onClose}: LanguageDialogProps) {
+export default function SettingsDialog({open, onClose}: SettingsDialogProps) {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
     const onLanguageChange = (event: React.MouseEvent<HTMLElement>, value: string) => {
