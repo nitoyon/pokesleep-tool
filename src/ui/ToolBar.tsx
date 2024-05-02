@@ -3,7 +3,7 @@ import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
 import SettingsDialog from './Dialog/SettingsDialog';
 import ScoreTableDialog from './Dialog/ScoreTableDialog';
-import { AppType } from './App';
+import { AppConfig, AppType } from './App';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
@@ -16,9 +16,10 @@ import { useTranslation } from 'react-i18next'
 interface ToolBarProps {
     app: AppType;
     onAppChange: (value: AppType) => void;
+    onAppConfigChange: (value: AppConfig) => void;
 };
 
-export default function ToolBar({app, onAppChange}: ToolBarProps) {
+export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarProps) {
     const { t } = useTranslation();
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
@@ -101,13 +102,14 @@ export default function ToolBar({app, onAppChange}: ToolBarProps) {
                 </MenuItem>
                 <MenuItem onClick={languageMenuClick}>
                     <ListItemIcon><SettingsOutlinedIcon/></ListItemIcon>
-                    {t('change language')}
+                    {t('settings')}
                 </MenuItem>
             </Menu>
             <AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose}/>
             <HowToDialog app={app} open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
             <ScoreTableDialog open={isScoreTableDialogOpen} onClose={onScoreTableDialogClose}/>
-            <SettingsDialog open={isLanguageDialogOpen}
+            <SettingsDialog open={isLanguageDialogOpen} app={app}
+                onAppConfigChange={onAppConfigChange}
                 onClose={onLanguageDialogClose}/>
         </div>
     );
