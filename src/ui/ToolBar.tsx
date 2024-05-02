@@ -7,6 +7,10 @@ import { AppType } from './App';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useTranslation } from 'react-i18next'
 
 interface ToolBarProps {
@@ -83,10 +87,22 @@ export default function ToolBar({app, onAppChange}: ToolBarProps) {
                     {t("IvCalc.short title")}
                 </MenuItem>
                 <Divider/>
-                <MenuItem onClick={howToMenuClick}>{t('how to use')}</MenuItem>
-                <MenuItem onClick={scoreTableMenuClick}>{t('sleep score table')}</MenuItem>
-                <MenuItem onClick={aboutMenuClick}>{t('about')}</MenuItem>
-                <MenuItem onClick={languageMenuClick}>{t('change language')}</MenuItem>
+                <MenuItem onClick={howToMenuClick}>
+                    <ListItemIcon><HelpOutlineIcon/></ListItemIcon>
+                    {t('how to use')}
+                </MenuItem>
+                <MenuItem onClick={scoreTableMenuClick}>
+                    <ListItemIcon><ScheduleIcon/></ListItemIcon>
+                    {t('sleep score table')}
+                </MenuItem>
+                <MenuItem onClick={aboutMenuClick}>
+                    <ListItemIcon><InfoOutlinedIcon/></ListItemIcon>
+                    {t('about')}
+                </MenuItem>
+                <MenuItem onClick={languageMenuClick}>
+                    <ListItemIcon><SettingsOutlinedIcon/></ListItemIcon>
+                    {t('change language')}
+                </MenuItem>
             </Menu>
             <AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose}/>
             <HowToDialog app={app} open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
