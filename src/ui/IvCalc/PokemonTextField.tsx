@@ -183,19 +183,23 @@ const StyledAutocompletePopper = styled('div')({
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'left',
-                margin: '0 0 1rem 0',
+                margin: '0 0 .5rem 0',
                 padding: 0,
                 // pokemons item
                 '& > li': {
                     width: '76px',
                     height: '80px',
                     padding: 0,
-                    margin: 0,
+                    margin: '0 0 6px 0',
                     position: 'relative',
                     display: 'block',
                     // pokemon icon (48px x 48px)
                     '& > div': {
                         margin: '4px auto 0 auto',
+                    },
+                    '& > img': {
+                        margin: '4px auto 0 auto',
+                        display: 'block',
                     },
                     // pokemon name
                     '& > footer': {
