@@ -2,7 +2,7 @@ import pokemons, {PokemonData} from '../data/pokemons';
 import { IngredientName } from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
-import { getSkillValue } from './MainSkill';
+import { getSkillValue, isSkillLevelMax7 } from './MainSkill';
 
 /**
  * Represents the parameter of PokemonStrength.calc.
@@ -50,6 +50,11 @@ export interface CalculateParameter {
      * Average recipe level (1 - 55).
      */
     recipeLevel: 1|10|20|30|40|50|55;
+
+    /**
+     * Event option.
+     */
+    event: "none"|"entei 1st week"|"entei 2nd week";
 }
 
 /**
@@ -134,6 +139,8 @@ class PokemonStrength {
             params.averageEfficiency;
         const helpCount = params.period * 3600 / frequency *
             (params.isGoodCampTicketSet ? 1.2 : 1);
+        const isEventBoosted = (params.event !== "none" &&
+            rp.pokemon.type === "fire");
 
         // calc ingredient
         const ingInRecipeStrengthRatio = params.recipeBonus === 0 ? 1 :
@@ -143,19 +150,20 @@ class PokemonStrength {
         const ingRatio = params.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = helpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
+        const ingEventAdd: number = (isEventBoosted ? 1 : 0);
 
         const ing1 = {...rp.ingredient1, strength: 0};
-        ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.count;
+        ing1.count = ingHelpCount * (1 / ingUnlock) * (ing1.count + ingEventAdd);
         ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRatio;
 
         const ing2 = {...rp.ingredient2, strength: 0};
         ing2.count = level < 30 ? 0 :
-            ingHelpCount * (1 / ingUnlock) * ing2.count;
+            ingHelpCount * (1 / ingUnlock) * (ing2.count + ingEventAdd);
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRatio;
         let ing3 = undefined;
         ing3 = {...rp.ingredient3, strength: 0};
         ing3.count = level < 60 ? 0 :
-            ingHelpCount * (1 / ingUnlock) * ing3.count;
+            ingHelpCount * (1 / ingUnlock) * (ing3.count + ingEventAdd);
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
@@ -168,7 +176,7 @@ class PokemonStrength {
             (1 + params.fieldBonus / 100) * (params.favorite ? 2 : 1);
 
         // calc skill
-        const skillRatio = rp.skillRatio;
+        const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         if (params.period !== 3 && params.tapFrequency !== 'none') {
             const helpCountAwake = helpCount * (24 - 8.5) / 24;
@@ -177,7 +185,7 @@ class PokemonStrength {
             const skillCountSleeping = 1 - Math.pow(1 - skillRatio, helpCountSleeping);
             skillCount = skillCountAwake + skillCountSleeping;
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                params);
+                params, isEventBoosted);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -191,9 +199,15 @@ class PokemonStrength {
     }
 
     getSkillValueAndStrength(skillCount: number,
-        params: CalculateParameter): [number, number] {
+        params: CalculateParameter, isEventBoosted: boolean): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
-        const mainSkillBase = getSkillValue(mainSkill, this.iv.skillLevel);
+        let skillLevel = this.iv.skillLevel;
+        if (isEventBoosted) {
+            const maxSkillLevel = isSkillLevelMax7(mainSkill) ? 7 : 6;
+            skillLevel = Math.min(maxSkillLevel,
+                this.iv.skillLevel + (params.event === "entei 1st week" ? 1 : 3));
+        }
+        const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;
         if (mainSkill === "Charge Energy S") {
             const factor = this.iv.nature.energyRecoveryFactor;

@@ -17,6 +17,7 @@ function loadDefaultSettingsProps(): CalculateParameter {
         tapFrequency: "always",
         recipeBonus: 25,
         recipeLevel: 30,
+        event: "none",
     };
 
     const settings = localStorage.getItem('PstStrenghParam');
@@ -58,6 +59,10 @@ function loadDefaultSettingsProps(): CalculateParameter {
     if (typeof(json.recipeLevel) === "number" &&
         [1, 10, 20, 30, 40, 50, 55].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
+    }
+    if (typeof(json.event) === "string" &&
+        ["none", "entei 1st week", "entei 2nd week"].includes(json.event)) {
+        ret.event = json.event;
     }
     return ret;
 }
