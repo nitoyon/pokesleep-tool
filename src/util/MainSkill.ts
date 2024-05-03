@@ -18,7 +18,8 @@ export function isSkillLevelMax7(skill: MainSkillName): boolean {
     return skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
         skill === "Charge Strength S (Random)" ||
-        skill === "Dream Shard Magnet S";
+        skill === "Dream Shard Magnet S" ||
+        skill === "Dream Shard Magnet S (Random)";
 }
 
 export function getSkillValue(skill: MainSkillName, skillLevel: number) {
