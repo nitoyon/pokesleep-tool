@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, FormControl, MenuItem, Select, SelectChangeEvent, Switch } from '@mui/material';
+import { Button, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
+    ToggleButton, ToggleButtonGroup } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { PeriodType } from './StrengthView';
 import { CalculateParameter } from '../../util/PokemonStrength';
@@ -20,6 +21,11 @@ const StyledSettingForm = styled('div')({
         alignItems: 'center',
         '& > label': {
             marginRight: 'auto',
+        },
+        '& > div > button': {
+            fontSize: '0.8rem',
+            padding: '0.5rem 0.2rem',
+            lineHeight: 1.1,
         },
     },
     '& > button': {
@@ -58,6 +64,11 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     }, [onChange, value]);
     const onGoodCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, isGoodCampTicketSet: e.target.checked});
+    }, [onChange, value]);
+    const onEventChange = React.useCallback((e: any, val: string|null) => {
+        if (val !== null) {
+            onChange({...value, event: val as "none"|"entei 1st week"|"entei 2nd week"});
+        }
     }, [onChange, value]);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
@@ -115,6 +126,15 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
             <label>{t('good camp ticket')}:</label>
             <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
         </div>}
+        <div>
+            <label>{t('entei event')}:</label>
+            <ToggleButtonGroup size="small" exclusive
+                value={value.event} onChange={onEventChange}>
+                <ToggleButton value="none">{t('none')}</ToggleButton>
+                <ToggleButton value="entei 1st week">{t('1st week')}</ToggleButton>
+                <ToggleButton value="entei 2nd week">{t('2nd week')}</ToggleButton>
+            </ToggleButtonGroup>
+        </div>
         {detail && <div>
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
