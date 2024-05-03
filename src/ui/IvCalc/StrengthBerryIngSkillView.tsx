@@ -245,14 +245,7 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
-    const mainSkillBase = getSkillValue(mainSkill, pokemonIv.skillLevel);
-    let mainSkillFactor = 1;
-    if (mainSkill === "Charge Energy S") {
-        const factor = pokemonIv.nature.energyRecoveryFactor;
-        mainSkillFactor = (factor === 1 ? 1.2 : factor === -1 ? 0.88 : 1);
-    }
-    const mainSkillValue = trunc1(mainSkillBase * mainSkillFactor * result.skillCount);
-
+    const mainSkillValue = trunc1(result.skillValue);
     switch (mainSkill) {
         case "Charge Energy S":
         case "Energizing Cheer S":
@@ -270,8 +263,7 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
         case "Charge Strength S (Random)":
             return <>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span>{t('num', {n: Math.round(mainSkillBase * mainSkillFactor *
-                    result.skillCount * (1 + settings.fieldBonus / 100))})}</span>
+                <span>{t('num', {n: Math.round(result.skillValue)})}</span>
             </>;
         case "Dream Shard Magnet S":
         case "Dream Shard Magnet S (Random)":
