@@ -1,11 +1,20 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import PokemonIconData from './PokemonIconData';
+import { AppConfigContext } from '../App';
 
 const PokemonIcon = React.memo(({id, size}: {
     id: number,
     size: number,
 }) => {
+    const appConfig = React.useContext(AppConfigContext);
+    if (appConfig.iconUrl !== null && appConfig.iconUrl.match(/^https?:\/\//)) {
+        let url = appConfig.iconUrl;
+        url = url.replace(/@ID(\d)@/g,
+            (m, num) => id.toString().padStart(parseInt(num, 10), "0"));
+        return <img src={url} width={size} height={size} alt={id.toString()}/>;
+    }
+    
     const elements = createIconElements(id, size);
     return <StyledIconContainer style={{width: `${size}px`, height: `${size}px`}}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
