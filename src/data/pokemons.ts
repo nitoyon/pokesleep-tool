@@ -25,6 +25,10 @@ export interface PokemonData {
     skillRatio: number;
     /** Ancestor pokemon id */
     ancestor: number | null;
+    /** Evolution count (-1, 0, 1, 2) */
+    evolutionCount: -1|0|1|2;
+    /** true if Non-evolving pokemon or filal evolution pokemon */
+    isFullyEvolved: boolean;
     ing1: {
         name: IngredientName,
         c1: number,
