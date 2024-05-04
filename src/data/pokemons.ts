@@ -25,6 +25,10 @@ export interface PokemonData {
     skillRatio: number;
     /** Ancestor pokemon id */
     ancestor: number | null;
+    /** Evolution count (-1, 0, 1, 2) */
+    evolutionCount: -1|0|1|2;
+    /** true if Non-evolving pokemon or filal evolution pokemon */
+    isFullyEvolved: boolean;
     ing1: {
         name: IngredientName,
         c1: number,
@@ -45,6 +49,11 @@ export interface PokemonData {
 export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
     "ice" | "fighting" | "poison" | "ground" | "flying" | "psychic" | "bug" |
     "rock" | "ghost" | "dragon" | "dark" | "steel" | "fairy";
+
+export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
+    "electric","grass", "ice", "fighting", "poison", "ground",
+    "flying", "psychic", "bug", "rock", "ghost",
+    "dragon", "dark", "steel", "fairy"];
 
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
