@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { SleepType } from '../../data/fields';
-import pokemons, { PokemonType } from '../../data/pokemons';
+import pokemons, { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams,
     Button, ButtonBase, ClickAwayListener, Dialog, DialogActions,
     FilterOptionsState,
@@ -301,6 +301,8 @@ const SortOrderButton = styled(RoundedButton)({
  * Pokemon select dialog configuration.
  */
 interface PokemonDialogConfig {
+    /** Filter type */
+    filterType: PokemonType|null;
     /** Sort type. */
     sort: "sleeptype"|"name"|"pokedexno"|"type";
     /** Descending (true) or ascending (false). */
@@ -320,12 +322,12 @@ const PokemonSelectDialog = React.memo(({
     const [filterOpen, setFilterOpen] = React.useState(false);
     const [sortMenuOpen, setSortMenuOpen] = React.useState(false);
     let [config_, setConfig] = React.useState<PokemonDialogConfig|null>(null);
-    const [filterType, setFilterType] = React.useState<PokemonType|null>(null);
     const sortMenuAnchorRef = React.useRef<HTMLButtonElement>(null);
 
     // initialize config
     const config: PokemonDialogConfig = (config_ === null ?
         loadPokemonDialogConfig() : config_);
+    const filterType = config.filterType;
     const sortType = config.sort;
     const descending = config.descending;
 
@@ -429,9 +431,10 @@ const PokemonSelectDialog = React.memo(({
     const onFilterDialogClose = useCallback(() => {
         setFilterOpen(false);
     }, [setFilterOpen]);
-    const onFilterChange = useCallback((value: PokemonType|null) => {
-        setFilterType(value);
-    }, [setFilterType]);
+    const onFilterChange = useCallback((value: PokemonDialogConfig) => {
+        setConfig(value);
+        localStorage.setItem('PstPokemonSelectParam', JSON.stringify(value));
+    }, [setConfig]);
 
     // Sort menu
     const onSortButtonClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
@@ -553,7 +556,7 @@ const PokemonSelectDialog = React.memo(({
             </SortOrderButton>
         </PokemonSelectDialogFooter>
         <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
-            value={filterType} onChange={onFilterChange}/>
+            value={config} onChange={onFilterChange}/>
     </StyledDialog>;
 });
 
@@ -590,6 +593,7 @@ const type2num = {
  */
 function loadPokemonDialogConfig(): PokemonDialogConfig {
     const ret: PokemonDialogConfig = {
+        filterType: null,
         sort: "pokedexno",
         descending: false,
     };
@@ -601,6 +605,10 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     const json = JSON.parse(settings);
     if (typeof(json) !== "object" || json === null) {
         return ret;
+    }
+    if (typeof(json.filterType) === "string" &&
+        PokemonTypes.includes(json.filterType)) {
+        ret.filterType = json.filterType;
     }
     if (typeof(json.sort) === "string" &&
         ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
@@ -614,32 +622,29 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
 
 const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     open: boolean,
-    value: PokemonType|null,
-    onChange: (value: PokemonType|null) => void,
+    value: PokemonDialogConfig,
+    onChange: (value: PokemonDialogConfig) => void,
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange(null);
-    }, [onChange]);
+        onChange({...value, filterType: null});
+    }, [value, onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
     }, [onClose]);
     const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         const selected = e.currentTarget.value as PokemonType;
-        onChange(value === selected ? null : selected);
+        onChange({...value,
+            filterType: value.filterType === selected ? null : selected});
         onClose();
     }, [value, onChange, onClose]);
 
-    const types = ["normal", "fire", "water", "electric",
-        "grass", "ice", "fighting", "poison", "ground",
-        "flying", "psychic", "bug", "rock", "ghost",
-        "dragon", "dark", "steel", "fairy"];
-    const buttons: React.ReactElement[] = types.map(type =>
+    const buttons: React.ReactElement[] = PokemonTypes.map(type =>
         <StyledTypeButton
             key={type} className={type} value={type} onClick={onTypeClick}>
             {t(`types.${type}`)}
-            {type === value && <CheckIcon/>}
+            {type === value.filterType && <CheckIcon/>}
         </StyledTypeButton>
     );
 
