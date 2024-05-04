@@ -11,6 +11,9 @@
         "ingRatio": 25.7,
         "skillRatio": 1.9,
         "ancestor": 1,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
         "ing1": {
             "name": "honey",
             "c1": 2,
@@ -39,6 +42,9 @@
         "ingRatio": 25.5,
         "skillRatio": 1.9,
         "ancestor": 1,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
         "ing1": {
             "name": "honey",
             "c1": 2,
@@ -67,6 +73,9 @@
         "ingRatio": 26.6,
         "skillRatio": 2.1,
         "ancestor": 1,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "honey",
             "c1": 2,
@@ -95,6 +104,9 @@
         "ingRatio": 17.9,
         "skillRatio": 0.8,
         "ancestor": 10,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -123,6 +135,9 @@
         "ingRatio": 20.8,
         "skillRatio": 1.8,
         "ancestor": 10,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -151,6 +166,9 @@
         "ingRatio": 19.7,
         "skillRatio": 1.4,
         "ancestor": 10,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -179,6 +197,9 @@
         "ingRatio": 23.5,
         "skillRatio": 3.3,
         "ancestor": 23,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -207,6 +228,9 @@
         "ingRatio": 26.4,
         "skillRatio": 5.7,
         "ancestor": 23,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -235,6 +259,9 @@
         "ingRatio": 13.6,
         "skillRatio": 12.6,
         "ancestor": 54,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -263,6 +290,9 @@
         "ingRatio": 19.7,
         "skillRatio": 2.2,
         "ancestor": 56,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -291,6 +321,9 @@
         "ingRatio": 20,
         "skillRatio": 2.4,
         "ancestor": 56,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -319,6 +352,9 @@
         "ingRatio": 23.3,
         "skillRatio": 3.9,
         "ancestor": 69,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -347,6 +383,9 @@
         "ingRatio": 23.5,
         "skillRatio": 4,
         "ancestor": 69,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -375,6 +414,9 @@
         "ingRatio": 23.3,
         "skillRatio": 3.9,
         "ancestor": 69,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -403,6 +445,9 @@
         "ingRatio": 14.4,
         "skillRatio": 1.5,
         "ancestor": 92,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "herb",
             "c1": 2,
@@ -431,6 +476,9 @@
         "ingRatio": 15.7,
         "skillRatio": 2.2,
         "ancestor": 92,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
         "ing1": {
             "name": "herb",
             "c1": 2,
@@ -459,6 +507,9 @@
         "ingRatio": 16.1,
         "skillRatio": 2.4,
         "ancestor": 92,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "herb",
             "c1": 2,
@@ -487,6 +538,9 @@
         "ingRatio": 20.6,
         "skillRatio": 3.1,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
         "ing1": {
             "name": "honey",
             "c1": 2,
@@ -515,6 +569,9 @@
         "ingRatio": 25,
         "skillRatio": 2,
         "ancestor": 147,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "herb",
             "c1": 2,
@@ -543,6 +600,9 @@
         "ingRatio": 26.2,
         "skillRatio": 2.5,
         "ancestor": 147,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "herb",
             "c1": 2,
@@ -571,6 +631,9 @@
         "ingRatio": 26.4,
         "skillRatio": 2.6,
         "ancestor": 147,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
         "ing1": {
             "name": "herb",
             "c1": 2,
@@ -599,6 +662,9 @@
         "ingRatio": 16.9,
         "skillRatio": 3.9,
         "ancestor": 152,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -627,6 +693,9 @@
         "ingRatio": 16.8,
         "skillRatio": 3.8,
         "ancestor": 152,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 17,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -655,6 +724,9 @@
         "ingRatio": 17.5,
         "skillRatio": 4.6,
         "ancestor": 152,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -683,6 +755,9 @@
         "ingRatio": 21.9,
         "skillRatio": 14.1,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -711,6 +786,9 @@
         "ingRatio": 15.8,
         "skillRatio": 4.5,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -739,6 +817,9 @@
         "ingRatio": 18.8,
         "skillRatio": 1.5,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
         "ing1": {
             "name": "egg",
             "c1": 2,
@@ -767,6 +848,9 @@
         "ingRatio": 20.1,
         "skillRatio": 4.4,
         "ancestor": 228,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -795,6 +879,9 @@
         "ingRatio": 20.3,
         "skillRatio": 4.6,
         "ancestor": 228,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -823,6 +910,9 @@
         "ingRatio": 26.6,
         "skillRatio": 5.2,
         "ancestor": 246,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "ginger",
             "c1": 2,
@@ -851,6 +941,9 @@
         "ingRatio": 20.4,
         "skillRatio": 1.5,
         "ancestor": 287,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -879,6 +972,9 @@
         "ingRatio": 18.8,
         "skillRatio": 6.8,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -907,6 +1003,9 @@
         "ingRatio": 21.4,
         "skillRatio": 6.3,
         "ancestor": 316,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "soy",
             "c1": 1,
@@ -935,6 +1034,9 @@
         "ingRatio": 21,
         "skillRatio": 7,
         "ancestor": 316,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "soy",
             "c1": 1,
@@ -963,6 +1065,9 @@
         "ingRatio": 25.8,
         "skillRatio": 6.1,
         "ancestor": 333,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
         "ing1": {
             "name": "egg",
             "c1": 1,
@@ -991,6 +1096,9 @@
         "ingRatio": 17.1,
         "skillRatio": 2.6,
         "ancestor": 353,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -1019,6 +1127,9 @@
         "ingRatio": 17.9,
         "skillRatio": 3.3,
         "ancestor": 353,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -1047,6 +1158,9 @@
         "ingRatio": 17.8,
         "skillRatio": 3.8,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "cacao",
             "c1": 2,
@@ -1075,6 +1189,9 @@
         "ingRatio": 22.8,
         "skillRatio": 4.2,
         "ancestor": 453,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "oil",
             "c1": 2,
@@ -1099,6 +1216,9 @@
         "ingRatio": 22.9,
         "skillRatio": 4.3,
         "ancestor": 453,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
         "ing1": {
             "name": "oil",
             "c1": 2,
@@ -1123,6 +1243,9 @@
         "ingRatio": 20.5,
         "skillRatio": 5.9,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 13,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -1151,6 +1274,9 @@
         "ingRatio": 20.1,
         "skillRatio": 1.1,
         "ancestor": 4,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "sausage",
             "c1": 2,
@@ -1179,6 +1305,9 @@
         "ingRatio": 22.7,
         "skillRatio": 1.6,
         "ancestor": 4,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 15,
         "ing1": {
             "name": "sausage",
             "c1": 2,
@@ -1207,6 +1336,9 @@
         "ingRatio": 22.4,
         "skillRatio": 1.6,
         "ancestor": 4,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "sausage",
             "c1": 2,
@@ -1235,6 +1367,9 @@
         "ingRatio": 23.7,
         "skillRatio": 3,
         "ancestor": 19,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1263,6 +1398,9 @@
         "ingRatio": 23.7,
         "skillRatio": 3,
         "ancestor": 19,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1291,6 +1429,9 @@
         "ingRatio": 20.7,
         "skillRatio": 2.1,
         "ancestor": 172,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 17,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1319,6 +1460,9 @@
         "ingRatio": 21.8,
         "skillRatio": 2.8,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1347,6 +1491,9 @@
         "ingRatio": 13.1,
         "skillRatio": 4.2,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1375,6 +1522,9 @@
         "ingRatio": 22.4,
         "skillRatio": 3.2,
         "ancestor": 172,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1403,6 +1553,9 @@
         "ingRatio": 16.8,
         "skillRatio": 3.6,
         "ancestor": 173,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 16,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1431,6 +1584,9 @@
         "ingRatio": 16.8,
         "skillRatio": 3.6,
         "ancestor": 173,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 24,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1459,6 +1615,9 @@
         "ingRatio": 18.2,
         "skillRatio": 4.3,
         "ancestor": 174,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -1487,6 +1646,9 @@
         "ingRatio": 17.4,
         "skillRatio": 4,
         "ancestor": 174,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 13,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -1515,6 +1677,9 @@
         "ingRatio": 19.2,
         "skillRatio": 2.1,
         "ancestor": 50,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -1543,6 +1708,9 @@
         "ingRatio": 19,
         "skillRatio": 2,
         "ancestor": 50,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -1571,6 +1739,9 @@
         "ingRatio": 16.3,
         "skillRatio": 4.2,
         "ancestor": 52,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -1595,6 +1766,9 @@
         "ingRatio": 16.9,
         "skillRatio": 4.4,
         "ancestor": 52,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 12,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -1619,6 +1793,9 @@
         "ingRatio": 13.8,
         "skillRatio": 5,
         "ancestor": 58,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -1647,6 +1824,9 @@
         "ingRatio": 13.6,
         "skillRatio": 4.9,
         "ancestor": 58,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -1675,6 +1855,9 @@
         "ingRatio": 15.1,
         "skillRatio": 6.7,
         "ancestor": 79,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -1703,6 +1886,9 @@
         "ingRatio": 19.7,
         "skillRatio": 6.8,
         "ancestor": 79,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -1731,6 +1917,9 @@
         "ingRatio": 22.2,
         "skillRatio": 1.7,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "ginger",
             "c1": 2,
@@ -1759,6 +1948,9 @@
         "ingRatio": 21.6,
         "skillRatio": 3.9,
         "ancestor": 439,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -1787,6 +1979,9 @@
         "ingRatio": 20.1,
         "skillRatio": 3.6,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "oil",
             "c1": 2,
@@ -1815,6 +2010,9 @@
         "ingRatio": 19.2,
         "skillRatio": 5.5,
         "ancestor": 133,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -1843,6 +2041,9 @@
         "ingRatio": 15.1,
         "skillRatio": 3.9,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -1871,6 +2072,9 @@
         "ingRatio": 18.5,
         "skillRatio": 5.2,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -1899,6 +2103,9 @@
         "ingRatio": 18.6,
         "skillRatio": 2.1,
         "ancestor": 155,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
         "ing1": {
             "name": "ginger",
             "c1": 1,
@@ -1927,6 +2134,9 @@
         "ingRatio": 21.1,
         "skillRatio": 4.1,
         "ancestor": 155,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 18,
         "ing1": {
             "name": "ginger",
             "c1": 1,
@@ -1955,6 +2165,9 @@
         "ingRatio": 20.8,
         "skillRatio": 3.9,
         "ancestor": 155,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 23,
         "ing1": {
             "name": "ginger",
             "c1": 1,
@@ -1983,6 +2196,9 @@
         "ingRatio": 16.3,
         "skillRatio": 5.6,
         "ancestor": 175,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "egg",
             "c1": 1,
@@ -2011,6 +2227,9 @@
         "ingRatio": 12.8,
         "skillRatio": 4.7,
         "ancestor": 179,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -2035,6 +2254,9 @@
         "ingRatio": 12.7,
         "skillRatio": 4.6,
         "ancestor": 179,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -2059,6 +2281,9 @@
         "ingRatio": 13,
         "skillRatio": 4.7,
         "ancestor": 179,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 15,
         "ing1": {
             "name": "herb",
             "c1": 1,
@@ -2083,6 +2308,9 @@
         "ingRatio": 16.4,
         "skillRatio": 4.4,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -2111,6 +2339,9 @@
         "ingRatio": 16.6,
         "skillRatio": 7.4,
         "ancestor": 79,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -2139,6 +2370,9 @@
         "ingRatio": 21.1,
         "skillRatio": 5.8,
         "ancestor": 360,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 10,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2167,6 +2401,9 @@
         "ingRatio": 19.2,
         "skillRatio": 1.9,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 22,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -2195,6 +2432,9 @@
         "ingRatio": 14.5,
         "skillRatio": 4.3,
         "ancestor": 280,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2223,6 +2463,9 @@
         "ingRatio": 14.6,
         "skillRatio": 4.3,
         "ancestor": 280,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2251,6 +2494,9 @@
         "ingRatio": 14.4,
         "skillRatio": 4.2,
         "ancestor": 280,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2279,6 +2525,9 @@
         "ingRatio": 21.6,
         "skillRatio": 1.9,
         "ancestor": 287,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 7,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -2307,6 +2556,9 @@
         "ingRatio": 33.9,
         "skillRatio": 6.7,
         "ancestor": 287,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 12,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -2335,6 +2587,9 @@
         "ingRatio": 15.8,
         "skillRatio": 5.3,
         "ancestor": 175,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "egg",
             "c1": 1,
@@ -2363,6 +2618,9 @@
         "ingRatio": 17.8,
         "skillRatio": 4,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 15,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -2391,6 +2649,9 @@
         "ingRatio": 17.7,
         "skillRatio": 4.5,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2419,6 +2680,9 @@
         "ingRatio": 13.9,
         "skillRatio": 2.2,
         "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
         "ing1": {
             "name": "corn",
             "c1": 2,
@@ -2447,6 +2711,9 @@
         "ingRatio": 27.1,
         "skillRatio": 2,
         "ancestor": 7,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "milk",
             "c1": 2,
@@ -2475,6 +2742,9 @@
         "ingRatio": 27.1,
         "skillRatio": 2,
         "ancestor": 7,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
         "ing1": {
             "name": "milk",
             "c1": 2,
@@ -2503,6 +2773,9 @@
         "ingRatio": 27.5,
         "skillRatio": 2.1,
         "ancestor": 7,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
         "ing1": {
             "name": "milk",
             "c1": 2,
@@ -2531,6 +2804,9 @@
         "ingRatio": 13.5,
         "skillRatio": 12.5,
         "ancestor": 54,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 11,
         "ing1": {
             "name": "cacao",
             "c1": 1,
@@ -2559,6 +2835,9 @@
         "ingRatio": 28.1,
         "skillRatio": 5.2,
         "ancestor": 74,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "soy",
             "c1": 2,
@@ -2587,6 +2866,9 @@
         "ingRatio": 27.2,
         "skillRatio": 4.8,
         "ancestor": 74,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "soy",
             "c1": 2,
@@ -2615,6 +2897,9 @@
         "ingRatio": 28,
         "skillRatio": 5.2,
         "ancestor": 74,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "soy",
             "c1": 2,
@@ -2643,6 +2928,9 @@
         "ingRatio": 18.2,
         "skillRatio": 6.4,
         "ancestor": 81,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -2667,6 +2955,9 @@
         "ingRatio": 18.2,
         "skillRatio": 6.3,
         "ancestor": 81,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -2691,6 +2982,9 @@
         "ingRatio": 18.4,
         "skillRatio": 2,
         "ancestor": 84,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
         "ing1": {
             "name": "soy",
             "c1": 1,
@@ -2719,6 +3013,9 @@
         "ingRatio": 18.4,
         "skillRatio": 2,
         "ancestor": 84,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
         "ing1": {
             "name": "soy",
             "c1": 1,
@@ -2747,6 +3044,9 @@
         "ingRatio": 13.2,
         "skillRatio": 2.3,
         "ancestor": 95,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 22,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -2775,6 +3075,9 @@
         "ingRatio": 22.3,
         "skillRatio": 4.4,
         "ancestor": 104,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "ginger",
             "c1": 1,
@@ -2799,6 +3102,9 @@
         "ingRatio": 22.5,
         "skillRatio": 4.5,
         "ancestor": 104,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 15,
         "ing1": {
             "name": "ginger",
             "c1": 1,
@@ -2823,6 +3129,9 @@
         "ingRatio": 21.2,
         "skillRatio": 6.1,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 13,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -2851,6 +3160,9 @@
         "ingRatio": 25.3,
         "skillRatio": 5.2,
         "ancestor": 158,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -2875,6 +3187,9 @@
         "ingRatio": 25.3,
         "skillRatio": 5.2,
         "ancestor": 158,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 15,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -2899,6 +3214,9 @@
         "ingRatio": 25.7,
         "skillRatio": 5.5,
         "ancestor": 158,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "sausage",
             "c1": 1,
@@ -2923,6 +3241,9 @@
         "ingRatio": 21,
         "skillRatio": 2.3,
         "ancestor": 172,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2951,6 +3272,9 @@
         "ingRatio": 16.4,
         "skillRatio": 3.4,
         "ancestor": 173,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2979,6 +3303,9 @@
         "ingRatio": 17,
         "skillRatio": 3.8,
         "ancestor": 174,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "honey",
             "c1": 1,
@@ -3007,6 +3334,9 @@
         "ingRatio": 15.1,
         "skillRatio": 4.9,
         "ancestor": 175,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "egg",
             "c1": 1,
@@ -3035,6 +3365,9 @@
         "ingRatio": 21.7,
         "skillRatio": 7.2,
         "ancestor": 438,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -3063,6 +3396,9 @@
         "ingRatio": 15.4,
         "skillRatio": 3.2,
         "ancestor": 95,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 25,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -3091,6 +3427,9 @@
         "ingRatio": 23.8,
         "skillRatio": 4.1,
         "ancestor": 246,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "ginger",
             "c1": 2,
@@ -3119,6 +3458,9 @@
         "ingRatio": 24.7,
         "skillRatio": 4.5,
         "ancestor": 246,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
         "ing1": {
             "name": "ginger",
             "c1": 2,
@@ -3147,6 +3489,9 @@
         "ingRatio": 17.7,
         "skillRatio": 3.2,
         "ancestor": 333,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
         "ing1": {
             "name": "egg",
             "c1": 1,
@@ -3175,6 +3520,9 @@
         "ingRatio": 21.3,
         "skillRatio": 5.9,
         "ancestor": 360,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 7,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -3203,6 +3551,9 @@
         "ingRatio": 22.4,
         "skillRatio": 2.3,
         "ancestor": 363,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -3231,6 +3582,9 @@
         "ingRatio": 22.1,
         "skillRatio": 2.1,
         "ancestor": 363,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -3259,6 +3613,9 @@
         "ingRatio": 22.3,
         "skillRatio": 2.2,
         "ancestor": 363,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -3287,6 +3644,9 @@
         "ingRatio": 18.9,
         "skillRatio": 6.1,
         "ancestor": 438,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "tomato",
             "c1": 1,
@@ -3315,6 +3675,9 @@
         "ingRatio": 20.1,
         "skillRatio": 3.2,
         "ancestor": 439,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -3343,6 +3706,9 @@
         "ingRatio": 12.6,
         "skillRatio": 3.8,
         "ancestor": 447,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -3371,6 +3737,9 @@
         "ingRatio": 15,
         "skillRatio": 5.1,
         "ancestor": 447,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -3399,6 +3768,9 @@
         "ingRatio": 25.1,
         "skillRatio": 4.4,
         "ancestor": 459,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -3427,6 +3799,9 @@
         "ingRatio": 25,
         "skillRatio": 4.4,
         "ancestor": 459,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -3455,6 +3830,9 @@
         "ingRatio": 17.9,
         "skillRatio": 6.2,
         "ancestor": 81,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 13,
         "ing1": {
             "name": "oil",
             "c1": 1,
@@ -3479,6 +3857,9 @@
         "ingRatio": 21.9,
         "skillRatio": 6.3,
         "ancestor": 133,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 12,
         "ing1": {
             "name": "milk",
             "c1": 1,
@@ -3507,6 +3888,9 @@
         "ingRatio": 14.7,
         "skillRatio": 5.4,
         "ancestor": 280,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -3535,6 +3919,9 @@
         "ingRatio": 22.5,
         "skillRatio": 1.1,
         "ancestor": 759,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
         "ing1": {
             "name": "corn",
             "c1": 2,
@@ -3563,6 +3950,9 @@
         "ingRatio": 22.9,
         "skillRatio": 1.3,
         "ancestor": 759,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
         "ing1": {
             "name": "corn",
             "c1": 2,
