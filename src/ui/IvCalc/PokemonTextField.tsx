@@ -6,7 +6,7 @@ import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams,
     Button, ButtonBase, ClickAwayListener, Dialog, DialogActions,
     FilterOptionsState,
     Icon, IconButton, InputAdornment, InputBase, ListItemIcon,
-    Menu, MenuItem, MenuList, Popper, Paper } from '@mui/material';
+    Menu, MenuItem, MenuList, Popper, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
 import TextLikeButton from './TextLikeButton';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -22,8 +22,10 @@ interface PokemonOption {
     name: string;
     localName: string;
     sleepType: SleepType;
-    type: PokemonType,
-    ancestor: number|null,
+    type: PokemonType;
+    ancestor: number|null;
+    isNonEvolving: boolean;
+    isFullyEvolved: boolean;
 }
 
 const PokemonTextField = React.memo(({value, onChange}: {
@@ -41,6 +43,8 @@ const PokemonTextField = React.memo(({value, onChange}: {
                 sleepType: pokemon.sleepType,
                 type: pokemon.type,
                 ancestor: pokemon.ancestor,
+                isNonEvolving: pokemon.evolutionCount === -1,
+                isFullyEvolved: pokemon.isFullyEvolved,
             })),
         [t]);
     let _selectedOption = pokemonOptions.find(x => x.name === value);
@@ -303,6 +307,8 @@ const SortOrderButton = styled(RoundedButton)({
 interface PokemonDialogConfig {
     /** Filter type */
     filterType: PokemonType|null;
+    /** Filter by evolve */
+    filterEvolve: "all"|"non"|"final";
     /** Sort type. */
     sort: "sleeptype"|"name"|"pokedexno"|"type";
     /** Descending (true) or ascending (false). */
@@ -328,6 +334,7 @@ const PokemonSelectDialog = React.memo(({
     const config: PokemonDialogConfig = (config_ === null ?
         loadPokemonDialogConfig() : config_);
     const filterType = config.filterType;
+    const filterEvolve = config.filterEvolve;
     const sortType = config.sort;
     const descending = config.descending;
 
@@ -345,7 +352,12 @@ const PokemonSelectDialog = React.memo(({
         let ret = options.filter((option) =>
             normalize(option.localName).includes(input));
         if (filterType !== null) {
-            ret = options.filter((option) => filterType === option.type);
+            ret = ret.filter((option) => filterType === option.type);
+        }
+        if (filterEvolve === "final") {
+            ret = ret.filter((option) => option.isFullyEvolved)
+        } else if (filterEvolve === "non") {
+            ret = ret.filter((option) => option.isNonEvolving)
         }
 
         if (ret.length === 0) {
@@ -357,10 +369,12 @@ const PokemonSelectDialog = React.memo(({
                 sleepType: 'dozing',
                 type: 'normal',
                 ancestor: null,
+                isFullyEvolved: false,
+                isNonEvolving: false,
             });
         }
         return ret;
-    }, [filterType]);
+    }, [filterType, filterEvolve]);
 
     // Selected handler
     const onAutocompleteChange = useCallback((event: any, newValue: PokemonOption|string|null) => {
@@ -371,6 +385,7 @@ const PokemonSelectDialog = React.memo(({
             if (selected === undefined) { return; }
         }
         else {
+            // skip empty entry
             if (newValue.id < 0) { return; }
             selected = newValue;
         }
@@ -529,7 +544,7 @@ const PokemonSelectDialog = React.memo(({
         <PokemonSelectDialogFooter>
             <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "4.5rem", textAlign: 'left'}}
                 onClick={onFilterButtonClick}>
-                <SearchIcon style={{paddingRight: '0'}}/>{t(filterType === null ? 'off' : 'on')}
+                <SearchIcon style={{paddingRight: '0'}}/>{t(filterType === null && filterEvolve === "all" ? 'off' : 'on')}
             </RoundedButton>
             <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "8rem", textAlign: 'left'}}
                 onClick={onSortButtonClick} ref={sortMenuAnchorRef}>
@@ -594,6 +609,7 @@ const type2num = {
 function loadPokemonDialogConfig(): PokemonDialogConfig {
     const ret: PokemonDialogConfig = {
         filterType: null,
+        filterEvolve: "all",
         sort: "pokedexno",
         descending: false,
     };
@@ -609,6 +625,10 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     if (typeof(json.filterType) === "string" &&
         PokemonTypes.includes(json.filterType)) {
         ret.filterType = json.filterType;
+    }
+    if (typeof(json.filterEvolve) === "string" &&
+        ["all", "non", "final"].includes(json.filterEvolve)) {
+        ret.filterEvolve = json.filterEvolve;
     }
     if (typeof(json.sort) === "string" &&
         ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
@@ -628,7 +648,7 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange({...value, filterType: null});
+        onChange({...value, filterType: null, filterEvolve: "all"});
     }, [value, onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
@@ -637,6 +657,11 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
         const selected = e.currentTarget.value as PokemonType;
         onChange({...value,
             filterType: value.filterType === selected ? null : selected});
+        onClose();
+    }, [value, onChange, onClose]);
+    const onEvolveChange = useCallback((e: any, val: string|null) => {
+        if (val === null || value.filterEvolve === val) { return; }
+        onChange({...value, filterEvolve: val as "all"|"non"|"final"});
         onClose();
     }, [value, onChange, onClose]);
 
@@ -648,15 +673,43 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
         </StyledTypeButton>
     );
 
-    return <Dialog open={open} onClose={onClose}>
-        <div style={{margin: '1rem .5rem 0 .5rem'}}>
+    return <StyledPokemonFilterDialog open={open} onClose={onClose}>
+        <div>
+            <h3>{t('type')}</h3>
             {buttons}
+        </div>
+        <div>
+            <h3>{t('evolve')}</h3>
+            <ToggleButtonGroup value={value.filterEvolve} exclusive
+                onChange={onEvolveChange}>
+                <ToggleButton value="all">{t('all')}</ToggleButton>
+                <ToggleButton value="non">{t('non-evolve')}</ToggleButton>
+                <ToggleButton value="final">{t('final-evoltion')}</ToggleButton>
+            </ToggleButtonGroup>
         </div>
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
         </DialogActions>
-    </Dialog>;
+    </StyledPokemonFilterDialog>;
+});
+
+const StyledPokemonFilterDialog = styled(Dialog)({
+    'div.MuiPaper-root > div': {
+        margin: '.5rem .5rem 0 .5rem',
+        '& > h3': {
+            margin: '0.5rem 0',
+            fontSize: '1rem',
+        },
+        '& > div': {
+            '& > button:first-child': {
+                borderRadius: '1rem 0 0 1rem',
+            },
+            '& > button:last-child': {
+                borderRadius: '0 1rem 1rem 0',
+            },
+        },
+    },
 });
 
 const StyledTypeButton = styled(Button)({

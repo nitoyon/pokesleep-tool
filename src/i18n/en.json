@@ -147,6 +147,10 @@
 
         "on": "ON",
         "off": "OFF",
+        "evolve": "Evolve",
+        "all": "All",
+        "non-evolve": "Non evolving",
+        "final-evoltion": "Fully evolved",
         "sleeptype": "Sleep type",
         "pokedexno": "Pokédex No.",
 
