@@ -316,7 +316,7 @@ interface PokemonDialogConfig {
 }
 
 const PokemonSelectDialog = React.memo(({
-    open, pokemonOptions, selectedValue, onClose, onChange,
+    open, pokemonOptions, onClose, onChange,
 }: {
     open: boolean,
     pokemonOptions: PokemonOption[],
@@ -337,6 +337,12 @@ const PokemonSelectDialog = React.memo(({
     const filterEvolve = config.filterEvolve;
     const sortType = config.sort;
     const descending = config.descending;
+
+    // close handler
+    const closeHandler = useCallback(() => {
+        setSortMenuOpen(false);
+        onClose();
+    }, [setSortMenuOpen, onClose]);
 
     // Compare inputed text to options
     const filterOptions = useCallback((
@@ -390,15 +396,15 @@ const PokemonSelectDialog = React.memo(({
             selected = newValue;
         }
         onChange(selected);
-        onClose();
-    }, [onChange, onClose, pokemonOptions]);
+        closeHandler();
+    }, [onChange, closeHandler, pokemonOptions]);
 
     // close when ESC key is pressed
     const onAutocompleteClose = useCallback((event: any, reason: string) => {
         if (reason === 'escape') {
-            onClose();
+            closeHandler();
         }
-    }, [onClose]);
+    }, [closeHandler]);
 
     // group by
     const groupByCallback = useCallback((option: PokemonOption) => {
@@ -504,7 +510,7 @@ const PokemonSelectDialog = React.memo(({
         options = options.reverse();
     }
 
-    return <StyledDialog open={open} onClose={onClose}>
+    return <StyledDialog open={open} onClose={closeHandler}>
         <Autocomplete options={options}
             fullWidth
             open
