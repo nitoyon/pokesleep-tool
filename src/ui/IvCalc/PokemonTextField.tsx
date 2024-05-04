@@ -22,9 +22,10 @@ export interface PokemonOption {
     isFullyEvolved: boolean;
 }
 
-const PokemonTextField = React.memo(({value, boxMode, onChange}: {
+const PokemonTextField = React.memo(({value, fixMode, onChange}: {
     value: string,
-    boxMode?: boolean,
+    /** Fix evolutionary line or not */
+    fixMode?: boolean,
     onChange: (value: string) => void,
 }) => {
     const { t } = useTranslation();
@@ -62,7 +63,7 @@ const PokemonTextField = React.memo(({value, boxMode, onChange}: {
     }, [setOpen]);
 
     return (<div>
-        {boxMode ? <>{selectedOption.localName}</> :
+        {fixMode ? <>{selectedOption.localName}</> :
         <TextLikeButton onClick={onInputClick} style={{width: '10rem'}}
             className={open ? 'focused' : ''}>
             {selectedOption.localName}

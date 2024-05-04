@@ -32,6 +32,13 @@
 
         "close": "閉じる",
         "clear": "クリア",
+        "reset": "リセット",
+        "save": "保存",
+        "add": "追加",
+        "edit": "編集",
+        "duplicate": "複製",
+        "delete": "削除",
+
         "details": "詳細",
         "research area": "フィールド",
         "strength": "総エナジー",
@@ -91,6 +98,21 @@
         "rp formula doc url": "https://pks.raenonx.cc/ja/docs/view/help/rp-model",
         "rp formula doc title": "SP計算モデルの解説",
         "rp estimate": "レベル 56 以降の SP は推測値です。",
+
+        "box": "ボックス",
+        "add to box": "ボックスに追加",
+        "export": "エクスポート",
+        "import": "インポート",
+        "pokemon in the box is edited": "ボックス内のポケモンが編集されています。ボックスに反映するには保存してください。",
+
+        "export message1": "ボックス内のポケモン情報はブラウザー上に保存されているため、別の環境には引き継がれません。",
+        "export message2": "別の環境にボックス内のポケモンを移すには、次のデータを移行先の環境でインポートしてください。",
+        "box data": "ボックス情報",
+        "copy to clipboard": "クリップボードにコピー",
+        "copied to clipboard": "クリップボードにコピーしました。",
+        "import message": "エクスポートしたデータをペーストして、[インポート] ボタンを押してください。",
+        "failed to import": "インポートできませんでした。",
+        "imported N pokemon": "{{n}} 件のポケモンをインポートしました。",
 
         "period": "期間",
         "1day": "1日",
