@@ -50,6 +50,11 @@ export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
     "ice" | "fighting" | "poison" | "ground" | "flying" | "psychic" | "bug" |
     "rock" | "ghost" | "dragon" | "dark" | "steel" | "fairy";
 
+export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
+    "electric","grass", "ice", "fighting", "poison", "ground",
+    "flying", "psychic", "bug", "rock", "ghost",
+    "dragon", "dark", "steel", "fairy"];
+
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
 export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
