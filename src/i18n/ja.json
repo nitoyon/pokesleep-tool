@@ -137,6 +137,10 @@
 
         "on": "ON",
         "off": "OFF",
+        "evolve": "進化",
+        "all": "すべて",
+        "non-evolve": "無進化",
+        "final-evoltion": "最終進化",
         "sleeptype": "睡眠タイプ",
         "pokedexno": "図鑑番号",
 
