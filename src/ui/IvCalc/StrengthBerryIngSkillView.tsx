@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import PokemonIv from '../../util/PokemonIv';
 import { IngredientName } from '../../data/pokemons';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
-import { getSkillValue } from '../../util/MainSkill';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
