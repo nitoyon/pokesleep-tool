@@ -297,19 +297,39 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
     if (['Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Espeon',
         'Umbreon', 'Leafeon', 'Glaceon', 'Sylveon'].includes(name)) {
         json.ancestor = 133;
+        json.evolutionCount = (name === 'Eevee' ? 0 : 1);
+        json.isFullyEvolved = (json.evolutionCount === 1);
     }
     else if (['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].includes(name)) {
         json.ancestor = 280;
+        json.evolutionCount = ['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].indexOf(name);
+        if (json.evolutionCount === 3) {
+            json.evolutionCount = 2;
+        }
+        json.isFullyEvolved = (json.evolutionCount === 2);
     }
     else {
         const evolink = dom.window.document.querySelector('h4 a[title="進化"]');
         if (evolink === null) { throw new Error('進化 not found'); }
         const ancestor = evolink.parentNode.parentNode.querySelector('p>strong>a')?.textContent;
+        // Charmander: [4, 5, 6]
+        // Non-evolving: []
+        const evoline = [...evolink.parentNode.parentNode.querySelectorAll('p>strong>a')]
+            .map(x => nameJa2id[x.textContent]);
         json.ancestor = (ancestor === undefined ? null : nameJa2id[ancestor]);
+        json.evolutionCount = evoline.indexOf(json.id);
+        json.isFullyEvolved = (json.evolutionCount === evoline.length - 1);
     }
 
-    // find ing table
+    // find carry limit table
     const tables = dom.window.document.querySelectorAll('table');
+    const carryLimitTable = [...tables].find((t) => {
+        return t.querySelector('th')?.textContent === "初期最大所持数";
+    });
+    if (carryLimitTable === null) { throw new Error('carry limit table not found'); }
+    json.carryLimit = parseInt(carryLimitTable.querySelector('td').textContent, 10);
+
+    // find ing table
     const ingTable = [...tables].find((t) => {
         return t.querySelector('th')?.textContent === "食材";
     });
