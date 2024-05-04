@@ -22,10 +22,9 @@ import i18next from 'i18next'
 
 // Style for IvForm
 const StyledInputForm = styled('div')({
-    margin: '1rem .3rem',
+    margin: '0 .3rem',
     fontSize: '.9rem',
     '& > div.table': {
-        marginTop: '2rem',
         display: 'grid',
         gap: '.5rem .8rem',
         gridTemplateColumns: 'fit-content(200px) 1fr',
@@ -43,8 +42,9 @@ const StyledInputForm = styled('div')({
 /**
  * Represents Pokemon IV form.
  */
-const IvForm = React.memo(({pokemonIv, onChange}: {
+const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
     pokemonIv: PokemonIv,
+    fixMode?: boolean,
     onChange: (value: PokemonIv) => void,
 }) => {
     const { t } = useTranslation();
@@ -91,7 +91,8 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
     return <StyledInputForm>
         <div className="table">
             <div>{t("pokemon")}:</div>
-            <PokemonTextField value={pokemonIv.pokemonName} onChange={onPokemonNameChange}/>
+            <PokemonTextField value={pokemonIv.pokemonName} fixMode={fixMode}
+                onChange={onPokemonNameChange}/>
             <div>{t("level")}:</div>
             <LevelControl value={pokemonIv.level} onChange={onLevelChange}/>
             <div>{t("ingredient")}:</div>

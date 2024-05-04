@@ -32,6 +32,13 @@
 
         "close": "닫기",
         "clear": "지우기",
+        "reset": "리셋",
+        "save": "저장",
+        "add": "추가",
+        "edit": "편집",
+        "duplicate": "복제",
+        "delete": "삭제",
+
         "details": "세부사항",
         "research area": "필드",
         "strength": "총 에너지",
@@ -91,6 +98,21 @@
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
         "rp estimate": "레벨 56 이후의 SP는 추정치입니다.",
+
+        "box": "박스",
+        "add to box": "박스에 추가",
+        "export": "내보내기",
+        "import": "가져오기",
+        "pokemon in the box is edited": "박스 내의 포켓몬이 편집되었습니다. 변경 사항을 적용하려면 저장하십시오.",
+
+        "export message1": "박스 내의 포켓몬 정보는 브라우저에 저장되어 있으며 다른 환경으로 이전되지 않습니다.",
+        "export message2": "박스 내의 포켓몬을 다른 환경으로 옮기려면, 다음 데이터를 대상 환경에서 가져오십시오.",
+        "box data": "박스 정보",
+        "copy to clipboard": "클립보드에 복사",
+        "copied to clipboard": "클립보드에 복사되었습니다.",
+        "import message": "내보낸 데이터를 붙여넣고 [가져오기] 버튼을 누르세요.",
+        "failed to import": "가져오지 못했습니다.",
+        "imported N pokemon": "{{n}}마리의 포켓몬을 가져왔습니다.",
 
         "period": "기간",
         "1day": "1일",

@@ -46,6 +46,7 @@ class PokemonIv {
         ret.ingredient = this.ingredient;
         ret.subSkills = this.subSkills.clone();
         ret.nature = this.nature;
+        ret.normalize();
         return ret;
     }
 
