@@ -1604,6 +1604,68 @@
         }
     },
     {
+        "id": 37,
+        "name": "Vulpix",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Berries",
+        "skill": "Energizing Cheer S",
+        "fp": 5,
+        "frequency": 4700,
+        "ingRatio": 16.8,
+        "skillRatio": 2.7,
+        "ancestor": 37,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
+        "ing1": {
+            "name": "soy",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 3
+        }
+    },
+    {
+        "id": 38,
+        "name": "Ninetales",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Berries",
+        "skill": "Energizing Cheer S",
+        "fp": 20,
+        "frequency": 2600,
+        "ingRatio": 16.5,
+        "skillRatio": 2.5,
+        "ancestor": 37,
+        "evolutionCount": 1,
+        "isFullyEvolved": true,
+        "carryLimit": 23,
+        "ing1": {
+            "name": "soy",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 3
+        }
+    },
+    {
         "id": 39,
         "name": "Jigglypuff",
         "sleepType": "snoozing",

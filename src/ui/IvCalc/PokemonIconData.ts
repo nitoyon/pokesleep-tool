@@ -108,6 +108,16 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.1, color: '#714e2d'},
         {x: 0, y: 0.1, w: 1, h: 0.9, color: '#f7d7d6'},
     ],
+    // Vulpix
+    '37': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f5a478'},
+        {x: 0, y: 0, w: 1, h: 0.3, color: '#ffa76c'},
+        {x: 0, y: 0.8, w: 1, h: 0.2, color: '#e48860'},
+    ],
+    // Ninetales
+    '38': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ffffce'},
+    ],
     // Jigglypuff
     '39': [
         {x: 0, y: 0, w: 1, h: 1, color: '#fce3ea'},
