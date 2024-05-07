@@ -206,7 +206,7 @@ async function syncPokemon() {
 
     const rpCsv = await getUrlWithCache(
         'https://docs.google.com/spreadsheets/d/1kBrPl0pdAO8gjOf_NrTgAPseFtqQA27fdfEbMBBeAhs/export?format=csv&gid=1673887151',
-        'RP spread sheet', 'rp.cache', true);
+        'RP spread sheet', 'rp.cache');
     updatePokemonProbability(pokemonJson, ja2en, rpCsv);
     fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
 
@@ -381,7 +381,7 @@ function getWikiUrl(name) {
     return "https://wikiwiki.jp/poke_sleep/" + encodeURI(name);        
 }
 
-async function getUrlWithCache(url, name, cacheFileName, forceCache) {
+async function getUrlWithCache(url, name, cacheFileName) {
     // ensure that cache dir exists
     const cacheDir = path.join(INIT_CWD, ".cache");
     if (!fs.existsSync(cacheDir)) {
@@ -397,9 +397,6 @@ async function getUrlWithCache(url, name, cacheFileName, forceCache) {
     }
 
     // download and cache
-    if (forceCache) {
-        console.error(`Please download ${url} to ${cachePath}`);
-    }
     console.log(`Retrieving ${name}`);
     const content = await getHtml(url);
     fs.writeFileSync(cachePath, content);
@@ -407,18 +404,31 @@ async function getUrlWithCache(url, name, cacheFileName, forceCache) {
 }
 
 async function getHtml(url) {
+    console.log('getting ', url);
+    const handleResponse = (res, resolve, reject) => {
+        let html = '';
+        res.setEncoding('utf-8');
+        res
+            .on('data', function(chunk) {
+                html += chunk;
+            })
+            .on('end', function() {
+                resolve(html);
+            })
+            .on('error', reject);
+    }
     return new Promise((resolve, reject) => {
         https.get(url, function(res) {
-            res.setEncoding('utf-8');
-            let html = '';
-            res
-                .on('data', function(chunk) {
-                    html += chunk;
-                })
-                .on('end', function() {
-                    resolve(html);
-                })
-                .on('error', reject);
+            if (res.headers.location !== undefined) {
+                res.on('data', function() {})
+                    .on('end', function() {})
+                    .on('error', function() {});
+                https.get(res.headers.location, function(res) {
+                    handleResponse(res, resolve, reject);
+                });
+                return;
+            }
+            handleResponse(res, resolve, reject);
         });
     });
 }
