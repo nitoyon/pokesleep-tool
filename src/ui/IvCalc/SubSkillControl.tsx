@@ -60,12 +60,12 @@ const StyledSubSkillButton = styled(ButtonBase)(({theme}) => {
     }}).button;
     return {
         fontFamily: buttonTheme.fontFamily,
-        fontSize: buttonTheme.fontSize,
+        fontSize: '0.8rem',
         fontWeight: buttonTheme.fontWeight,
         letterSpacing: buttonTheme.letterSpacing,
         lineHeight: buttonTheme.lineHeight,
         height: '1.6rem',
-        padding: '.2rem .5rem',
+        padding: '.2rem',
         border: '1px solid #999',
         borderRadius: '.4rem',
         background: '#d0d0d0',
