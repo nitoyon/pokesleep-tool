@@ -67,7 +67,7 @@ const PokemonTextField = React.memo(({value, onChange}: {
     }, [setOpen]);
 
     return (<div>
-        <TextLikeButton onClick={onInputClick} style={{width: '10rem'}}
+        <TextLikeButton onClick={onInputClick} style={{width: '8rem'}}
             className={open ? 'focused' : ''}>
             {selectedOption.localName}
         </TextLikeButton>
