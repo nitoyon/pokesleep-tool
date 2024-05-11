@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
 import SettingsDialog from './Dialog/SettingsDialog';
-import ScoreTableDialog from './Dialog/ScoreTableDialog';
 import { AppConfig, AppType } from './App';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -10,7 +9,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useTranslation } from 'react-i18next'
 
 interface ToolBarProps {
@@ -45,14 +43,6 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
     };
     const onHowToDialogClose = () => {
         setIsHowToDialogOpen(false);
-    };
-    const [isScoreTableDialogOpen, setIsScoreTableDialogOpen] = useState(false);
-    const scoreTableMenuClick = () => {
-        setIsScoreTableDialogOpen(true);
-        setMoreMenuAnchor(null);
-    };
-    const onScoreTableDialogClose = () => {
-        setIsScoreTableDialogOpen(false);
     };
     const [isAboutDialogOpen, setIsAboutDialogOpen] = useState(false);
     const aboutMenuClick = () => {
@@ -92,10 +82,6 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
                     <ListItemIcon><HelpOutlineIcon/></ListItemIcon>
                     {t('how to use')}
                 </MenuItem>
-                <MenuItem onClick={scoreTableMenuClick}>
-                    <ListItemIcon><ScheduleIcon/></ListItemIcon>
-                    {t('sleep score table')}
-                </MenuItem>
                 <MenuItem onClick={aboutMenuClick}>
                     <ListItemIcon><InfoOutlinedIcon/></ListItemIcon>
                     {t('about')}
@@ -107,7 +93,6 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
             </Menu>
             <AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose}/>
             <HowToDialog app={app} open={isHowToDialogOpen} onClose={onHowToDialogClose}/>
-            <ScoreTableDialog open={isScoreTableDialogOpen} onClose={onScoreTableDialogClose}/>
             <SettingsDialog open={isLanguageDialogOpen} app={app}
                 onAppConfigChange={onAppConfigChange}
                 onClose={onLanguageDialogClose}/>

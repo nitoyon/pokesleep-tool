@@ -2,10 +2,12 @@ import './InputArea.css';
 import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import React, { useCallback, useState } from 'react';
-import { Checkbox, FormControlLabel, InputAdornment, MenuItem,
+import { Button, Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
+import ScoreTableDialog from './ScoreTableDialog';
 import ArrowButton from '../common/ArrowButton';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useTranslation } from 'react-i18next';
 
 interface InputAreaProps {
@@ -38,6 +40,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const field = fields[data.fieldIndex];
     const strength = data.strength;
     const rank = new Rank(strength, field.ranks);
+    const [isScoreTableDialogOpen, setIsScoreTableDialogOpen] = useState(false);
 
     const setRank = useCallback((rankIndex: number) => {
         if (rankIndex < 0 || rankIndex >= field.ranks.length) { return; }
@@ -96,7 +99,15 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({secondSleep});
     }, [onchange]);
 
-    return <form className="main">
+    const onScoreTableButtonClick = useCallback(() => {
+        setIsScoreTableDialogOpen(true);
+    }, [setIsScoreTableDialogOpen]);
+    
+    const onScoreTableDialogClose = useCallback(() => {
+        setIsScoreTableDialogOpen(false);
+    }, [setIsScoreTableDialogOpen]);
+
+    return (<><form className="main">
         <div>{t("research area")}:</div>
         <div>
             <ResearchAreaTextField
@@ -128,6 +139,12 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </form>
+    <div style={{textAlign: 'right'}}>
+        <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
+    </div>
+    <ScoreTableDialog open={isScoreTableDialogOpen}
+        onClose={onScoreTableDialogClose}/>
+    </>);
 }
 
 interface ResearchAreaProps {
