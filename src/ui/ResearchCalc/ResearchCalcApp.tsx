@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { InputArea, InputAreaData } from './InputArea';
 import GeneralPanel from './GeneralPanel';
 import fields from '../../data/fields';
+import { useTranslation } from 'react-i18next'
 
 const config = loadConfig();
 
