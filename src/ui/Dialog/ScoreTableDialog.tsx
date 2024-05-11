@@ -1,9 +1,9 @@
 import React from 'react';
+import { styled } from '@mui/system';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import SleepScore from '../SleepScore';
 import {getMinTimeForScore, getMaxTimeForScore} from '../ResearchCalc/PreviewScore';
 import { useTranslation } from 'react-i18next';
-import './ScoreTableDialog.css';
 
 interface ScoreTableDialogProps {
     /** Whether dialog is open or not */
@@ -26,7 +26,7 @@ export default function ScoreTableDialog({open, onClose}: ScoreTableDialogProps)
     }
 
     return (
-        <Dialog open={open} onClose={onClose} scroll="paper">
+        <StyledDialog open={open} onClose={onClose} scroll="paper">
             <DialogTitle>{t('sleep score table')}</DialogTitle>
             <DialogContent dividers>
                 <div className="sleep_score_table">
@@ -36,6 +36,19 @@ export default function ScoreTableDialog({open, onClose}: ScoreTableDialogProps)
             <DialogActions>
                 <Button onClick={onClose}>{t('close')}</Button>
             </DialogActions>
-        </Dialog>
+        </StyledDialog>
     );
 }
+
+const StyledDialog = styled(Dialog)({
+    '& div.sleep_score_table': {
+        display: 'grid',
+        gridTemplateColumns: 'auto auto auto auto',
+        rowGap: '.5rem',
+        columnGap: '.3rem',
+        '& > span': {
+            fontSize: '.9rem',
+            paddingTop: '.4rem',
+        },
+    },    
+});
