@@ -50,28 +50,32 @@ const IvForm = React.memo(({pokemonIv, onChange}: {
     const { t } = useTranslation();
 
     const onPokemonNameChange = React.useCallback((name: string) => {
-        pokemonIv.pokemonName = name;
-        onChange(pokemonIv.clone());
+        onChange(pokemonIv.clone(name));
     }, [pokemonIv, onChange]);
     const onLevelChange = React.useCallback((level: number) => {
-        pokemonIv.level = level;
-        onChange(pokemonIv.clone());
+        const iv = pokemonIv.clone();
+        iv.level = level;
+        onChange(iv);
     }, [pokemonIv, onChange]);
     const onIngredientChange = React.useCallback((value: IngredientType) => {
-        pokemonIv.ingredient = value;
-        onChange(pokemonIv.clone());
+        const iv = pokemonIv.clone();
+        iv.ingredient = value;
+        onChange(iv);
     }, [pokemonIv, onChange]);
     const onSkillLevelChange = React.useCallback((value: number) => {
-        pokemonIv.skillLevel = value;
-        onChange(pokemonIv.clone());
+        const iv = pokemonIv.clone();
+        iv.skillLevel = value;
+        onChange(iv);
     }, [pokemonIv, onChange]);
     const onSubSkillChange = React.useCallback((event: SubSkillChangeEvent) => {
-        pokemonIv.subSkills = event.value;
-        onChange(pokemonIv.clone());
+        const iv = pokemonIv.clone();
+        iv.subSkills = event.value;
+        onChange(iv);
     }, [pokemonIv, onChange]);
     const onNatureChange = React.useCallback((value: Nature) => {
-        pokemonIv.nature = value;
-        onChange(pokemonIv.clone());
+        const iv = pokemonIv.clone();
+        iv.nature = value;
+        onChange(iv);
     }, [pokemonIv, onChange]);
 
     const [frequencyDialogOpen, setFrequencyDialogOpen] = React.useState(false);
