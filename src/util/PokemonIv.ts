@@ -36,10 +36,11 @@ class PokemonIv {
 
     /**
      * Creates a deep copy of this instance.
+     * @param pokemonName Pokemon's name.
      * @returns A cloned instance.
      */
-    clone(): PokemonIv {
-        const ret = new PokemonIv(this.pokemonName);
+    clone(pokemonName?: string): PokemonIv {
+        const ret = new PokemonIv(pokemonName ?? this.pokemonName);
         ret.level = this.level;
         ret.skillLevel = this.skillLevel;
         ret.ingredient = this.ingredient;
