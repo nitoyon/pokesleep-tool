@@ -49,6 +49,20 @@ class PokemonIv {
     }
 
     /**
+     * Check whether given IV is equal to this IV.
+     * @param iv IV to be compared.
+     * @returns Whether two IV is equal or not.
+     */
+    isEqual(iv: PokemonIv): boolean {
+        return (this.pokemonName === iv.pokemonName &&
+            this.level === iv.level &&
+            this.skillLevel === iv.skillLevel &&
+            this.ingredient === iv.ingredient &&
+            this.subSkills.isEqual(iv.subSkills) &&
+            this.nature.name === iv.nature.name);
+    }
+
+    /**
      * Check whether the pokemon has an active sub-skill 'Helping Bonus'.
      */
     get hasHelpingBonusInActiveSubSkills(): boolean {
