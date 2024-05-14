@@ -12,6 +12,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+div#root {
+    position: relative;
+}
+
 div.appbar {
     background: #665500;
     color: white;
