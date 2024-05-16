@@ -50,6 +50,18 @@ class PokemonIv {
     }
 
     /**
+     * Normalize current state.
+     */
+    normalize() {
+        if (this.skillLevel === 7 && !isSkillLevelMax7(this.pokemon.skill)) {
+            this.skillLevel = 6;
+        }
+        if (this.ingredient.endsWith('C') && this.pokemon.ing3 === undefined) {
+            this.ingredient = this.ingredient.replace('C', 'A') as IngredientType;
+        }
+    }
+
+    /**
      * Check whether given IV is equal to this IV.
      * @param iv IV to be compared.
      * @returns Whether two IV is equal or not.
