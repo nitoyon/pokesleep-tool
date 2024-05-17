@@ -3,6 +3,7 @@ import ResearchCalcIcon from './Resources/ResearchCalcIcon';
 import IvCalcIcon from './Resources/IvCalcIcon';
 import SafariIcon from './Resources/SafariIcon';
 import { AppType } from './App';
+import { copyToClipboard } from '../util/Clipboard';
 import { Button, IconButton, Dialog, DialogContent, DialogTitle,
     Snackbar, DialogActions} from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
@@ -122,16 +123,7 @@ const IPhoneMessageDialog = React.memo(({open, onClose}:IPhoneMessageDialogProps
         if (i18n.language !== "en") {
             url += "index." + i18n.language + ".html";
         }
-        const elm = document.createElement("input");
-        elm.readOnly = true;
-        elm.value = url;
-        elm.style.position = "absolute";
-        elm.style.opacity = "0";
-        document.body.appendChild(elm);
-        elm.setSelectionRange(0, 100);
-        const success = document.execCommand("copy");
-        elm.parentNode?.removeChild(elm);
-        if (success) {
+        if (copyToClipboard(url)) {
             setCopyCompleted(true);
         }
     }, [setCopyCompleted, i18n.language]);
