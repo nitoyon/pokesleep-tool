@@ -100,6 +100,7 @@
         "rp estimate": "レベル 56 以降の SP は推測値です。",
 
         "box": "ボックス",
+        "parameter": "パラメーター",
         "add to box": "ボックスに追加",
         "export": "エクスポート",
         "import": "インポート",

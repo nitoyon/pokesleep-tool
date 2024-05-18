@@ -100,6 +100,7 @@
         "rp estimate": "레벨 56 이후의 SP는 추정치입니다.",
 
         "box": "박스",
+        "parameter": "매개변수",
         "add to box": "박스에 추가",
         "export": "내보내기",
         "import": "가져오기",

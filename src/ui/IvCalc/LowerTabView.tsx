@@ -3,11 +3,13 @@ import { styled } from '@mui/system';
 import { StyledTab, StyledTabs } from './IvCalcApp';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIv from '../../util/PokemonIv';
+import { CalculateParameter } from '../../util/PokemonStrength';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
 import BoxItemDialog from './BoxItemDialog';
 import BoxExportDialog from './BoxExportDialog';
 import BoxImportDialog from './BoxImportDialog';
+import StrengthSettingForm from './StrengthSettingForm';
 import { Button, IconButton, Menu, MenuItem, MenuList, Snackbar }  from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
@@ -18,11 +20,18 @@ const box = new PokemonBox();
 box.load();
 const initialBoxItems = box.items;
 
-const LowerTabView = React.memo(({pokemonIv, onChange}: {
+const LowerTabView = React.memo(({
+    pokemonIv, parameter, upperTabIndex, tabIndex,
+    onChange, onTabIndexChange, onParameterChange,
+}: {
     pokemonIv: PokemonIv,
+    parameter: CalculateParameter,
+    upperTabIndex: number,
+    tabIndex: number,
     onChange: (value: PokemonIv) => void,
+    onTabIndexChange: (value: number) => void,
+    onParameterChange: (value: CalculateParameter) => void,
 }) => {
-    const [pokemonTabIndex, setPokemonTabIndex] = React.useState(0);
     const [items, setItems] = React.useState<PokemonBoxItem[]>(initialBoxItems);
     const [selectedItemId, setSelectedItemId] = React.useState(-1);
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
@@ -33,8 +42,8 @@ const LowerTabView = React.memo(({pokemonIv, onChange}: {
     const [boxImportDialogOpen, setBoxImportDialogOpen] = React.useState(false);
     const { t } = useTranslation();
 
-    const isIvMenuOpen = Boolean(moreMenuAnchor) && pokemonTabIndex === 0;
-    const isBoxMenuOpen = Boolean(moreMenuAnchor) && pokemonTabIndex === 1;
+    const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
+    const isBoxMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 1;
     const boxTabRef = React.useRef<HTMLDivElement | null>(null);
     const selectedItem = box.getById(selectedItemId);
 
@@ -48,9 +57,9 @@ const LowerTabView = React.memo(({pokemonIv, onChange}: {
     }, [pokemonIv, setItems, setMoreMenuAnchor]);
 
     const onPokemonTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
-        setPokemonTabIndex(newValue);
+        onTabIndexChange(newValue);
         setMoreMenuAnchor(null);
-    }, [setPokemonTabIndex]);
+    }, [onTabIndexChange]);
     const moreButtonClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         setMoreMenuAnchor(event.currentTarget);
     }, [setMoreMenuAnchor]);
@@ -155,16 +164,20 @@ const LowerTabView = React.memo(({pokemonIv, onChange}: {
     }, [setBoxImportDialogOpen]);
 
     return (<StyledContainer>
-        <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
+        {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
             <MoreIcon />
-        </IconButton>
-        <StyledTabs value={pokemonTabIndex} onChange={onPokemonTabChange}>
+        </IconButton>}
+        <StyledTabs value={tabIndex} onChange={onPokemonTabChange}>
             <StyledTab label={t('pokemon')}/>
             <StyledTab label={t('box')} ref={boxTabRef}/>
+            {upperTabIndex === 1 && <StyledTab label={t('parameter')}/>}
         </StyledTabs>
-        {pokemonTabIndex === 0 && <IvForm pokemonIv={pokemonIv} onChange={onFormChange}/>}
-        {pokemonTabIndex === 1 && <BoxView items={items}
+        {tabIndex === 0 && <IvForm pokemonIv={pokemonIv} onChange={onFormChange}/>}
+        {tabIndex === 1 && <BoxView items={items}
             selectedId={selectedItemId} onChange={onBoxChange}/>}
+        {tabIndex === 2 && <StrengthSettingForm value={parameter}
+            hasHelpingBonus={pokemonIv.hasHelpingBonusInActiveSubSkills}
+            onChange={onParameterChange}/>}
         <Menu anchorEl={moreMenuAnchor} open={isIvMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
             <MenuList dense>
@@ -201,6 +214,7 @@ const LowerTabView = React.memo(({pokemonIv, onChange}: {
 });
 
 const StyledContainer = styled('div')({
+    'marginTop': '0.8rem',
     '& > button.MuiIconButton-root': {
         float: 'right',
         color: '#999',
