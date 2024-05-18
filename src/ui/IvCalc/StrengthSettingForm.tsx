@@ -3,9 +3,10 @@ import { styled } from '@mui/system';
 import { Button, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { PeriodType } from './StrengthView';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { useTranslation } from 'react-i18next';
+
+type PeriodType = "1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
     padding: '.4rem 1rem 0',

@@ -57,6 +57,10 @@ const ResearchCalcApp = React.memo(() => {
         setPokemonIv(value);
     }, [parameter, pokemonIv, setPokemonIv, onParameterChange]);
 
+    const onParameterEdit = React.useCallback(() => {
+        setLowerTabIndex(2);
+    }, [setLowerTabIndex]);
+
     return <div style={{margin: "0 .5rem 10rem"}}>
         <StyledTabs value={tabIndex} onChange={onTabChange}>
             <StyledTab label={t('rp')}/>
@@ -65,13 +69,14 @@ const ResearchCalcApp = React.memo(() => {
         </StyledTabs>
         {tabIndex === 0 && <RpView pokemonIv={pokemonIv} width={width}/>}
         {tabIndex === 1 && <StrengthView pokemonIv={pokemonIv}
-            parameter={parameter} onParameterChange={onParameterChange}/>}
+            lowerTabIndex={lowerTabIndex} parameter={parameter}
+            onParameterEdit={onParameterEdit}/>}
         {tabIndex === 2 && <RatingView pokemonIv={pokemonIv} width={width}/>}
         <LowerTabView pokemonIv={pokemonIv} parameter={parameter}
             upperTabIndex={tabIndex} tabIndex={lowerTabIndex}
             onChange={onPokemonIvChange}
             onTabIndexChange={setLowerTabIndex}
-            onParameterChange={setParameter}/>
+            onParameterChange={onParameterChange}/>
     </div>;
 });
 
