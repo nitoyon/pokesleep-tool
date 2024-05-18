@@ -22,6 +22,7 @@ const defaultCalculateParameter = loadCalculateParameter();
 
 const ResearchCalcApp = React.memo(() => {
     const [tabIndex, setTabIndex] = React.useState(0);
+    const [lowerTabIndex, setLowerTabIndex] = React.useState(0);
     const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Venusaur"));
     const [parameter, setParameter] = React.useState(defaultCalculateParameter);
     const { t } = useTranslation();
@@ -29,7 +30,10 @@ const ResearchCalcApp = React.memo(() => {
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
-    }, [setTabIndex]);
+        if (newValue !== 1 && lowerTabIndex === 2) {
+            setLowerTabIndex(0);
+        }
+    }, [lowerTabIndex, setTabIndex, setLowerTabIndex]);
 
     const onParameterChange = React.useCallback((value: CalculateParameter) => {
         setParameter(value);
@@ -63,7 +67,11 @@ const ResearchCalcApp = React.memo(() => {
         {tabIndex === 1 && <StrengthView pokemonIv={pokemonIv}
             parameter={parameter} onParameterChange={onParameterChange}/>}
         {tabIndex === 2 && <RatingView pokemonIv={pokemonIv} width={width}/>}
-        <LowerTabView pokemonIv={pokemonIv} onChange={onPokemonIvChange}/>
+        <LowerTabView pokemonIv={pokemonIv} parameter={parameter}
+            upperTabIndex={tabIndex} tabIndex={lowerTabIndex}
+            onChange={onPokemonIvChange}
+            onTabIndexChange={setLowerTabIndex}
+            onParameterChange={setParameter}/>
     </div>;
 });
 

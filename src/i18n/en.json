@@ -110,6 +110,7 @@
         "rp estimate": "RP beyond level 56 is estimated value.",
 
         "box": "Box",
+        "parameter": "Parameter",
         "add to box": "Add to box",
         "export": "Export",
         "import": "Import",
