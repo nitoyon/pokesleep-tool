@@ -291,6 +291,9 @@ export function loadCalculateParameter(): CalculateParameter {
     if (typeof(json.isGoodCampTicketSet) === "boolean") {
         ret.isGoodCampTicketSet = json.isGoodCampTicketSet;
     }
+    if (typeof(json.averageEfficiency) === "number") {
+        ret.averageEfficiency = json.averageEfficiency;
+    }
     if (typeof(json.tapFrequency) === "string" &&
         ["always", "none"].includes(json.tapFrequency)) {
         ret.tapFrequency = json.tapFrequency;
