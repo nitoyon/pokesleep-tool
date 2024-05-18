@@ -9,7 +9,7 @@ import IvForm from './IvForm';
 import BoxItemDialog from './BoxItemDialog';
 import BoxExportDialog from './BoxExportDialog';
 import BoxImportDialog from './BoxImportDialog';
-import StrengthSettingForm from './StrengthSettingForm';
+import StrengthSettingForm from './StrengthParameterForm';
 import { Button, IconButton, Menu, MenuItem, MenuList, Snackbar }  from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
