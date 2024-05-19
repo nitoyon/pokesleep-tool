@@ -41,11 +41,11 @@ const theme = createTheme({
 
     // emulate AdSense banner
     if (window.location.hostname !== "nitoyon.github.io") {
-        document.body.style.padding = '124px 0px 0px';
+        document.body.style.padding = '30px 0px 0px';
         const ins = document.createElement('ins');
         ins.style.display = 'block';
         ins.style.width = '100%';
-        ins.style.height = '124px';
+        ins.style.height = '30px';
         ins.style.clear = 'none';
         ins.style.float = 'none';
         ins.style.top = '0px';
