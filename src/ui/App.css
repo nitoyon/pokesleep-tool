@@ -16,6 +16,10 @@ div#root {
     position: relative;
 }
 
+body > div.MuiDialog-root {
+    z-index: 2147483647;
+}
+
 div.appbar {
     background: #665500;
     color: white;
