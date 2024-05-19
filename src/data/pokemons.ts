@@ -59,7 +59,7 @@ export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
 export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
-    "tomato" | "cacao" | "tail" | "soy" | "corn";
+    "tomato" | "cacao" | "tail" | "soy" | "corn" | "unknown";
 
 const pokemons = pokemon_ as PokemonData[];
 

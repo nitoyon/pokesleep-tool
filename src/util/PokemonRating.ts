@@ -38,6 +38,14 @@ class PokemonRating {
     }
 
     calculate(): RatingCalculateResult {
+        if (this.pokemon.frequency === 0) {
+            return {
+                berryScore: 0, berryMax: 0, berryCur: 0, berryRatio: 0,
+                ingScore: 0, ingMax: 0, ingCur: 0, ingRatio: 0,
+                skillScore: 0, skillMax: 0, skillCur: 0, skillRatio: 0,
+            };
+        }
+
         const berryMaxRp = new PokemonRp(this.iv);
         berryMaxRp.subSkills = new SubSkillList([
             new SubSkill("Berry Finding S"),

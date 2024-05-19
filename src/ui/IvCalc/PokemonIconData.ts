@@ -492,6 +492,13 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.3, color: '#c4a4d9'},
         {x: 0, y: 0, w: 0.3, h: 1, color: '#dff0fa'},
     ],
+    // Entei
+    '244': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#cda269'},
+        {x: 0, y: 0, w: 0.5, h: 0.3, color: '#ea4c45'},
+        {x: 0, y: 0, w: 0.5, h: 0.1, color: '#ffef56'},
+        {x: .5, y: 0, w: 0.7, h: 0.4, color: '#f7fef8'},
+    ],
     // Larvitar
     '246': [
         {x: 0, y: 0, w: 1, h: 1, color: '#a6c06d'},

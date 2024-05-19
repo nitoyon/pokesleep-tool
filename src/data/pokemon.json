@@ -2483,6 +2483,37 @@
         }
     },
     {
+        "id": 244,
+        "name": "Entei",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Skills",
+        "skill": "Helper Boost",
+        "fp": 30,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown",
+            "c3": 0
+        }
+    },
+    {
         "id": 280,
         "name": "Ralts",
         "sleepType": "snoozing",

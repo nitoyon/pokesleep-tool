@@ -135,7 +135,8 @@ class PokemonStrength {
     calculate(params: CalculateParameter): CalculateResult {
         const rp = new PokemonRp(this.iv);
         const level = this.iv.level;
-        const frequency = rp.frequencyWithHelpingBonus(params.helpBonusCount) /
+        const frequency = this.pokemon.frequency === 0 ? Infinity :
+            rp.frequencyWithHelpingBonus(params.helpBonusCount) /
             params.averageEfficiency;
         const helpCount = params.period * 3600 / frequency *
             (params.isGoodCampTicketSet ? 1.2 : 1);
