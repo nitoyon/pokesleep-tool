@@ -6,6 +6,7 @@ import { Button, Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
 import ArrowButton from '../common/ArrowButton';
+import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useTranslation } from 'react-i18next';
@@ -62,9 +63,8 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const onRankDownClick = useCallback(() => { moveRank(-1); }, [moveRank]);
     const onRankUpClick = useCallback(() => { moveRank(1); }, [moveRank]);
 
-    const onFieldChange = useCallback((e: any) => {
-        const fieldIndex = e.target.value as number;
-        onchange?.({fieldIndex});
+    const onFieldChange = useCallback((value: number) => {
+        onchange?.({fieldIndex: value});
     }, [onchange]);
 
     const onStrengthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,37 +146,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onClose={onScoreTableDialogClose} strength={strength}/>
     </>);
 }
-
-interface ResearchAreaProps {
-    value: number;
-    onChange: (e: any) => void;
-}
-
-const ResearchAreaTextField = React.memo(({value, onChange}:ResearchAreaProps) => {
-    const { t } = useTranslation();
-
-    // prepare field menus
-    const fieldMenuItems = [];
-    for (const field of fields) {
-        fieldMenuItems.push(
-            <MenuItem key={field.index} value={field.index}>
-                <span className="field_icon">{field.emoji}</span>
-                {t(`area.${field.index}`)}
-            </MenuItem>
-        );
-    }
-
-    return (
-        <TextField variant="standard" size="small" select value={value}
-            SelectProps={{ MenuProps: {
-                anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                transformOrigin: { vertical: "top", horizontal: "left" },
-            }}}
-            onChange={onChange}>
-            {fieldMenuItems}
-        </TextField>
-    );
-});
 
 interface RankTextFieldProps {
     field: FieldData;
