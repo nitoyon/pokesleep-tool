@@ -189,7 +189,7 @@ const LowerTabView = React.memo(({
         <Menu anchorEl={moreMenuAnchor} open={isBoxMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
             <MenuList dense>
-                <MenuItem onClick={onBoxExportClick}>
+                <MenuItem disabled={box.items.length === 0} onClick={onBoxExportClick}>
                     {t('export')}
                 </MenuItem>
                 <MenuItem onClick={onBoxImportClick}>
