@@ -57,7 +57,7 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
 
     const onFormChange = React.useCallback((value: PokemonIv) => {
         setBoxItem(new PokemonBoxItem(value, boxItem.nickname, boxItem.id));
-        setRp(new PokemonRp(boxItem.iv).calculate().rp);
+        setRp(new PokemonRp(value).calculate().rp);
         if (nickname === localName) {
             setNickname("");
         }
