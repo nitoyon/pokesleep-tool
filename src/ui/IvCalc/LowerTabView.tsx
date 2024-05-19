@@ -10,7 +10,8 @@ import BoxItemDialog from './BoxItemDialog';
 import BoxExportDialog from './BoxExportDialog';
 import BoxImportDialog from './BoxImportDialog';
 import StrengthSettingForm from './StrengthParameterForm';
-import { Button, IconButton, Menu, MenuItem, MenuList, Snackbar }  from '@mui/material';
+import { Button, IconButton, Collapse, Menu, MenuItem, MenuList,
+    Snackbar }  from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 
@@ -172,12 +173,19 @@ const LowerTabView = React.memo(({
             <StyledTab label={t('box')} ref={boxTabRef}/>
             {upperTabIndex === 1 && <StyledTab label={t('parameter')}/>}
         </StyledTabs>
-        {tabIndex === 0 && <IvForm pokemonIv={pokemonIv} onChange={onFormChange}/>}
-        {tabIndex === 1 && <BoxView items={items}
-            selectedId={selectedItemId} onChange={onBoxChange}/>}
-        {tabIndex === 2 && <StrengthSettingForm value={parameter}
-            hasHelpingBonus={pokemonIv.hasHelpingBonusInActiveSubSkills}
-            onChange={onParameterChange}/>}
+
+        <Collapse in={tabIndex === 0} unmountOnExit>
+            <IvForm pokemonIv={pokemonIv} onChange={onFormChange}/>
+        </Collapse>
+        <Collapse in={tabIndex === 1} unmountOnExit>
+            <BoxView items={items}
+                selectedId={selectedItemId} onChange={onBoxChange}/>
+        </Collapse>
+        <Collapse in={tabIndex === 2} unmountOnExit>
+            <StrengthSettingForm value={parameter}
+                hasHelpingBonus={pokemonIv.hasHelpingBonusInActiveSubSkills}
+                onChange={onParameterChange}/>
+        </Collapse>
         <Menu anchorEl={moreMenuAnchor} open={isIvMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
             <MenuList dense>
