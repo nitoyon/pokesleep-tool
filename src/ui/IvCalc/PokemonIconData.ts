@@ -125,7 +125,7 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     // Wigglytuff
     '40': [
         {x: 0, y: 0, w: 1, h: 0.7, color: '#fce3ea'},
-        {x: 0, y: 0.5, w: 1, h: 0.4, r: 0.4, color: '#f9f9fa'},
+        {x: 0, y: 0.5, w: 1, h: 0.6, r: 0.4, color: '#f9f9fa'},
     ],
     // Diglett
     '50': [
