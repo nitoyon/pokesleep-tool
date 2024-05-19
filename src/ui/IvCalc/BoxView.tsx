@@ -3,8 +3,13 @@ import { styled } from '@mui/system';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIcon from './PokemonIcon';
 import { BoxItemActionType } from './LowerTabView';
-import { Button, ButtonBase, IconButton, Menu, MenuItem, MenuList }  from '@mui/material';
+import { Button, ButtonBase, IconButton, ListItemIcon,
+    Menu, MenuItem, MenuList }  from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 
 const BoxView = React.memo(({items, selectedId, onChange}: {
@@ -33,7 +38,10 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
             {elms.length === 0 && <div style={{margin: "2rem auto", color: "#888", fontSize: "0.9rem"}}>まだポケモンが登録されていません。</div>}
             {elms}
         </div>
-        <Button onClick={onAddClick}>{t('add')}</Button>
+        <div style={{margin: '0.4rem 0.4rem 0 0', textAlign: 'right'}}>
+        <Button onClick={onAddClick}
+            startIcon={<AddCircleOutlineIcon/>}>{t('add')}</Button>
+        </div>
     </>;
 });
 
@@ -79,14 +87,17 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
             {selected && <IconButton onClick={onMoreIconClick}><MoreIcon/></IconButton>}
             <Menu anchorEl={moreMenuAnchor} open={isMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-                <MenuList dense>
+                <MenuList>
                     <MenuItem onClick={() => onMenuClick("edit")}>
+                        <ListItemIcon><EditNoteOutlinedIcon/></ListItemIcon>
                         {t('edit')}
                     </MenuItem>
                     <MenuItem onClick={() => onMenuClick("dup")}>
+                        <ListItemIcon><ContentCopyOutlinedIcon/></ListItemIcon>
                         {t('duplicate')}
                     </MenuItem>
                     <MenuItem onClick={() => onMenuClick("remove")}>
+                        <ListItemIcon sx={{minWidth: '24px'}}><RemoveCircleOutlineOutlinedIcon/></ListItemIcon>
                         {t('delete')}
                     </MenuItem>
                 </MenuList>

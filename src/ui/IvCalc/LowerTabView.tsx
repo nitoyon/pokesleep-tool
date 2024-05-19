@@ -10,8 +10,11 @@ import BoxItemDialog from './BoxItemDialog';
 import BoxExportDialog from './BoxExportDialog';
 import BoxImportDialog from './BoxImportDialog';
 import StrengthSettingForm from './StrengthParameterForm';
-import { Button, IconButton, Collapse, Menu, MenuItem, MenuList,
+import { Button, IconButton, Collapse, ListItemIcon, Menu, MenuItem, MenuList,
     Snackbar }  from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 
@@ -208,19 +211,22 @@ const LowerTabView = React.memo(({
         </Collapse>
         <Menu anchorEl={moreMenuAnchor} open={isIvMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-            <MenuList dense>
+            <MenuList>
                 <MenuItem onClick={onAddToBoxClick}>
+                    <ListItemIcon><AddCircleOutlineIcon/></ListItemIcon>
                     {t('add to box')}
                 </MenuItem>
             </MenuList>
         </Menu>
         <Menu anchorEl={moreMenuAnchor} open={isBoxMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-            <MenuList dense>
+            <MenuList>
                 <MenuItem disabled={box.items.length === 0} onClick={onBoxExportClick}>
+                    <ListItemIcon><FileUploadIcon/></ListItemIcon>
                     {t('export')}
                 </MenuItem>
                 <MenuItem onClick={onBoxImportClick}>
+                    <ListItemIcon><FileDownloadIcon/></ListItemIcon>
                     {t('import')}
                 </MenuItem>
             </MenuList>
