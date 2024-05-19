@@ -7,10 +7,24 @@ class PokemonBox {
     private _entries: PokemonBoxItem[] = [];
 
     /**
+     * Get max entry count.
+     */
+    static get maxEntryCount(): number {
+        return 100;
+    }
+
+    /**
      * Get the box entries.
      */
     get items(): PokemonBoxItem[] {
         return [...this._entries];
+    }
+
+    /**
+     * Returns whether we can add item to this box.
+     */
+    get canAdd(): boolean {
+        return this._entries.length < PokemonBox.maxEntryCount;
     }
 
     /**
@@ -19,6 +33,9 @@ class PokemonBox {
      * @returns Added item ID.
      */
     add(iv: PokemonIv, nickname?: string): number {
+        if (!this.canAdd) {
+            throw new Error('max entry count exceeds');
+        }
         const item = new PokemonBoxItem(iv, nickname);
         this._entries.push(item);
         return item.id;
@@ -79,6 +96,10 @@ class PokemonBox {
                 continue;
             }
             newItems.push(new PokemonBoxItem(data.iv, data.nickname));
+
+            if (newItems.length >= PokemonBox.maxEntryCount) {
+                break;
+            }
         }
         this._entries = newItems;
     }

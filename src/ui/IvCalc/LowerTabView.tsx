@@ -41,6 +41,7 @@ const LowerTabView = React.memo(({
     const [boxItemDialogIsEdit, setBoxItemDialogIsEdit] = React.useState(false);
     const [boxExportDialogOpen, setBoxExportDialogOpen] = React.useState(false);
     const [boxImportDialogOpen, setBoxImportDialogOpen] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
     const { t } = useTranslation();
 
     const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
@@ -49,13 +50,19 @@ const LowerTabView = React.memo(({
     const selectedItem = box.getById(selectedItemId);
 
     const onAddToBoxClick = React.useCallback(() => {
+        setMoreMenuAnchor(null);
+
+        if (!box.canAdd) {
+            setAlertMessage(t('box is full'));
+            return;
+        }
+
         const id: number = box.add(pokemonIv);
         box.save();
         setItems(box.items);
         setSelectedItemId(id);
         startAddToBoxAnimation(boxTabRef.current);
-        setMoreMenuAnchor(null);
-    }, [pokemonIv, setItems, setMoreMenuAnchor]);
+    }, [pokemonIv, t]);
 
     const onPokemonTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         onTabIndexChange(newValue);
@@ -71,6 +78,10 @@ const LowerTabView = React.memo(({
     // called when user edit pokemon in BoxView
     const onBoxChange = React.useCallback((id: number, action: BoxItemActionType) => {
         if (action === "add") {
+            if (!box.canAdd) {
+                setAlertMessage(t('box is full'));
+                return;
+            }
             setBoxItemDialogOpen(true);
             setBoxItemDialogKey("dlg" + (new Date()).getTime().toString());
             setBoxItemDialogIsEdit(false);
@@ -100,8 +111,7 @@ const LowerTabView = React.memo(({
             box.save();
             setItems(box.items);
         }
-    }, [setSelectedItemId, setBoxItemDialogOpen, setBoxItemDialogKey,
-        setBoxItemDialogIsEdit, onChange]);
+    }, [t, onChange]);
 
     // called when IV is edited in IvForm
     const onFormChange = React.useCallback((iv: PokemonIv) => {
@@ -114,7 +124,7 @@ const LowerTabView = React.memo(({
 
         // notify to parent component
         onChange(iv);
-    }, [selectedItem, setSelectedItemId, onChange]);
+    }, [selectedItem, onChange]);
 
     const onRestoreClick = React.useCallback(() => {
         if (selectedItem !== null) {
@@ -125,11 +135,15 @@ const LowerTabView = React.memo(({
         box.set(selectedItemId, pokemonIv);
         box.save();
         setItems(box.items);
-    }, [pokemonIv, selectedItemId, setItems]);
+    }, [pokemonIv, selectedItemId]);
+
+    const onAlertMessageClose = React.useCallback(() => {
+        setAlertMessage("");
+    }, [])
 
     const onBoxItemEditDialogClose = React.useCallback(() => {
         setBoxItemDialogOpen(false);
-    }, [setBoxItemDialogOpen]);
+    }, []);
 
     const onBoxItemDialogChange = React.useCallback((value: PokemonBoxItem) => {
         if (value.id === -1) {
@@ -142,7 +156,7 @@ const LowerTabView = React.memo(({
         box.save();
         setItems(box.items);
         onChange(value.iv);
-    }, [setItems, setSelectedItemId, onChange]);
+    }, [onChange]);
 
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(pokemonIv);
@@ -150,19 +164,25 @@ const LowerTabView = React.memo(({
     const onBoxExportClick = React.useCallback(() => {
         setBoxExportDialogOpen(true);
         setMoreMenuAnchor(null);
-    }, [setBoxExportDialogOpen, setMoreMenuAnchor]);
+    }, []);
     const onBoxExportDialogClose = React.useCallback(() => {
         setBoxExportDialogOpen(false);
-    }, [setBoxExportDialogOpen]);
+    }, []);
 
     const onBoxImportClick = React.useCallback(() => {
-        setBoxImportDialogOpen(true);
         setMoreMenuAnchor(null);
-    }, [setBoxImportDialogOpen, setMoreMenuAnchor]);
+
+        if (!box.canAdd) {
+            setAlertMessage(t('box is full'));
+            return;
+        }
+
+        setBoxImportDialogOpen(true);
+    }, [t]);
     const onBoxImportDialogClose = React.useCallback(() => {
         setBoxImportDialogOpen(false);
         setItems(box.items);
-    }, [setBoxImportDialogOpen]);
+    }, []);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -213,6 +233,8 @@ const LowerTabView = React.memo(({
             open={boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
         <BoxImportDialog box={box}
             open={boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
+        <Snackbar open={alertMessage !== ""} message={alertMessage}
+            autoHideDuration={2000} onClose={onAlertMessageClose}/>
         <Snackbar open={isSelectedItemEdited} message={t('pokemon in the box is edited')}
             action={<>
                 <Button onClick={onRestoreClick}>{t('reset')}</Button>
