@@ -18,6 +18,11 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
         onParameterEdit();
     }, [onParameterEdit]);
 
+    let area = t(`area.${parameter.fieldIndex}`);
+    if (parameter.fieldIndex === 0) {
+        area += " (" +
+            parameter.favoriteType.map(x => t(`types.${x}`)).join(", ") + ")";
+    }
     const period = (parameter.period === 24 ? '1day' :
         parameter.period === 168 ? '1week' : 'whistle');
     const enteiEvent = (parameter.event === 'entei 1st week' ? '1st week' :
@@ -28,9 +33,8 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
         <Collapse in={lowerTabIndex !== 2}>
             <StrengthParameterPreview>
                 <ul>
-                    <li>{period === 'whistle' ? t(period) : t('period') + ': ' + t(period)}</li>
-                    <li>{t('field bonus (short)')}: {parameter.fieldBonus}%</li>
-                    <li>{t('favorite berry (short)')}: {t(parameter.favorite ? 'on' : 'off')}</li>
+                    <li>{area} ({parameter.fieldBonus}%)</li>
+                    <li>{t('period')}: {t(period)}</li>
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
                     <li>{t('entei event')}: {t(enteiEvent)}</li>
                 </ul>
@@ -58,7 +62,7 @@ const StrengthParameterPreview = styled('div')({
             display: 'block',
             paddingRight: '1rem',
             '&:last-child': {
-                textAlign: 'right',
+                paddingRight: 0,
             }
         },
     },

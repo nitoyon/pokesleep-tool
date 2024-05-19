@@ -1,7 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { FormControl, MenuItem, Select, SelectChangeEvent, Switch,
+import { Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
+import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { useTranslation } from 'react-i18next';
 
@@ -39,11 +41,32 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
     }, [onChange, value]);
+    const onFieldChange = React.useCallback((fieldIndex: number) => {
+        onChange({...value, fieldIndex});
+    }, [onChange, value]);
+    const onFavoriteBerryChange1 = React.useCallback((e: SelectChangeEvent<PokemonType>) => {
+        const favoriteType = [value.favoriteType[0] ?? "normal",
+            value.favoriteType[1] ?? "normal",
+            value.favoriteType[2] ?? "normal"];
+        favoriteType[0] = e.target.value as PokemonType;
+        onChange({...value, favoriteType});
+    }, [onChange, value]);
+    const onFavoriteBerryChange2 = React.useCallback((e: SelectChangeEvent<PokemonType>) => {
+        const favoriteType = [value.favoriteType[0] ?? "normal",
+            value.favoriteType[1] ?? "normal",
+            value.favoriteType[2] ?? "normal"];
+        favoriteType[1] = e.target.value as PokemonType;
+        onChange({...value, favoriteType});
+    }, [onChange, value]);
+    const onFavoriteBerryChange3 = React.useCallback((e: SelectChangeEvent<PokemonType>) => {
+        const favoriteType = [value.favoriteType[0] ?? "normal",
+            value.favoriteType[1] ?? "normal",
+            value.favoriteType[2] ?? "normal"];
+        favoriteType[2] = e.target.value as PokemonType;
+        onChange({...value, favoriteType});
+    }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, fieldBonus: parseInt(e.target.value, 10)});
-    }, [onChange, value]);
-    const onFavoriteChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({...value, favorite: e.target.checked});
     }, [onChange, value]);
     const onHelpBonusCountChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, helpBonusCount: parseInt(e.target.value, 10) as 0|1|2|3|4});
@@ -69,6 +92,12 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
         onChange({...value, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
     }, [onChange, value]);
 
+    const typeMenus = PokemonTypes.map((x: PokemonType) =>
+        <MenuItem key={x} value={x}>{t(`types.${x}`)}</MenuItem>);
+    while (value.favoriteType.length < 3) {
+        value.favoriteType.push('normal');
+    }
+
     const isNotWhistle = (value.period !== 3);
     return <StyledSettingForm>
         <div>
@@ -79,6 +108,27 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={3}>{t('whistle')}</MenuItem>
             </Select>
         </div>
+        <div>
+            <label>{t('research area')}:</label>
+            <ResearchAreaTextField value={value.fieldIndex} onChange={onFieldChange}/>
+        </div>
+        {value.fieldIndex === 0 && <div>
+            <label>{t('favorite berry')}:</label>
+            <span>
+                <Select variant="standard" size="small" value={value.favoriteType[0]}
+                    onChange={onFavoriteBerryChange1}>
+                    {typeMenus}
+                </Select><> </>
+                <Select variant="standard" size="small" value={value.favoriteType[1]}
+                    onChange={onFavoriteBerryChange2}>
+                    {typeMenus}
+                </Select><> </>
+                <Select variant="standard" size="small" value={value.favoriteType[2]}
+                    onChange={onFavoriteBerryChange3}>
+                    {typeMenus}
+                </Select>
+            </span>
+        </div>}
         <div>
             <label>{t('field bonus')}:</label>
             <Select variant="standard" value={value.fieldBonus.toString()}
@@ -99,10 +149,6 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={55}>55%</MenuItem>
                 <MenuItem value={60}>60%</MenuItem>
             </Select>
-        </div>
-        <div>
-            <label>{t('favorite berry')}:</label>
-            <Switch checked={value.favorite} onChange={onFavoriteChange}/>
         </div>
         {isNotWhistle && <div>
             <label>{t('good camp ticket')}:</label>

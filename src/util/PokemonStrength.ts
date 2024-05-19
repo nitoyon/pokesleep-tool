@@ -1,5 +1,6 @@
 import pokemons, {PokemonData} from '../data/pokemons';
-import { IngredientName } from '../data/pokemons';
+import { IngredientName, PokemonType, PokemonTypes } from '../data/pokemons';
+import fields from '../data/fields';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue, isSkillLevelMax7 } from './MainSkill';
@@ -18,9 +19,12 @@ export interface CalculateParameter {
     /** Field bonus */
     fieldBonus: number;
 
-    /** Snorlax's favorite berry or not */
-    favorite: boolean;
-    
+    /** Index of the current research area */
+    fieldIndex: number;
+
+    /** Snorlax's favorite berry on Greengrass Isle */
+    favoriteType: PokemonType[];
+
     /**
      * The number of pokemon which has helping bonus sub-skill
      * in the team.
@@ -174,7 +178,7 @@ class PokemonStrength {
         const berryCount = rp.berryCount;
         const berryStrength = rp.berryStrength;
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (1 + params.fieldBonus / 100) * (params.favorite ? 2 : 1);
+            (1 + params.fieldBonus / 100) * (this.isFavoriteBerry(params) ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
@@ -244,6 +248,20 @@ class PokemonStrength {
                 return [mainSkillValue, 0];
         }
     }
+
+    isFavoriteBerry(params: CalculateParameter): boolean {
+        let types: PokemonType[] = [];
+        switch (params.fieldIndex) {
+            case 0: types = params.favoriteType; break;
+            case 1: types = ["water", "flying", "fairy"]; break;
+            case 2: types = ["fire", "rock", "ground"]; break;
+            case 3: types = ["ice", "dark", "normal"]; break;
+            case 4: types = ["grass", "fighting", "psychic"]; break;
+            default: return false;
+        }
+
+        return types.includes(this.iv.pokemon.type);
+    }
 }
 
 /**
@@ -254,7 +272,8 @@ export function loadCalculateParameter(): CalculateParameter {
     const ret: CalculateParameter = {
         period: 24,
         fieldBonus: 0,
-        favorite: false,
+        fieldIndex: 4,
+        favoriteType: ["normal", "fire", "water"],
         helpBonusCount: 0,
         isGoodCampTicketSet: false,
         averageEfficiency: 1.8452,
@@ -281,8 +300,15 @@ export function loadCalculateParameter(): CalculateParameter {
         json.fieldBonus >= 0 && json.fieldBonus <= 60) {
         ret.fieldBonus = json.fieldBonus;
     }
-    if (typeof(json.favorite) === "boolean") {
-        ret.favorite = json.favorite;
+    if (typeof(json.fieldIndex) === "number" &&
+        Math.floor(json.fieldIndex) === json.fieldIndex &&
+        json.fieldIndex >= 0 && json.fieldIndex < fields.length) {
+        ret.fieldIndex = json.fieldIndex;
+    }
+    if (Array.isArray(json.favoriteType) &&
+        json.favoriteType.length === 3 &&
+        json.favoriteType.every((x: PokemonType) => PokemonTypes.includes(x))) {
+        ret.favoriteType = json.favoriteType;
     }
     if (typeof(json.helpBonusCount) === "number" &&
         Math.floor(json.helpBonusCount) === json.helpBonusCount &&
