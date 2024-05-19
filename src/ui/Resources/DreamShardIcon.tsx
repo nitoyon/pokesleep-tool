@@ -1,3 +1,5 @@
+// This SVG is originally published at https://uxwing.com/sparkle-icon/
+
 import React from 'react';
 
 const DreamShardIcon = React.memo(() => {
