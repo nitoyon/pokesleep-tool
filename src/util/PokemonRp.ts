@@ -21,6 +21,7 @@ export const ingredientStrength: {[ing in IngredientName]: number} = {
     "tail": 342,
     "soy": 100,
     "corn": 140,
+    "unknown": 0,
 };
 
 const berryStrength: {[type in PokemonType]: number} = {
@@ -122,7 +123,11 @@ class PokemonRp {
     }
 
     get helpCountPer5Hour(): number {
-        return 5 * trunc(3600 / this.frequency, 2);
+        const frequency = this.frequency;
+        if (frequency === 0) {
+            return 0;
+        }
+        return 5 * trunc(3600 / frequency, 2);
     }
 
     get frequency(): number {
