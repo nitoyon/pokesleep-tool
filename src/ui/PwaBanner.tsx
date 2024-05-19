@@ -123,9 +123,9 @@ const IPhoneMessageDialog = React.memo(({open, onClose}:IPhoneMessageDialogProps
         if (i18n.language !== "en") {
             url += "index." + i18n.language + ".html";
         }
-        if (copyToClipboard(url)) {
+        copyToClipboard(url).then(() => {
             setCopyCompleted(true);
-        }
+        }).catch(() => {});
     }, [setCopyCompleted, i18n.language]);
     const onCopyCompletedClose = useCallback(() => {
         setCopyCompleted(false);
