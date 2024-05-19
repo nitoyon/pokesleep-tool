@@ -72,6 +72,10 @@ class SubSkill {
         return (SubSkill.whiteSubSkillNames as any[]).includes(this.value);
     }
 
+    get index(): number {
+        return SubSkill.allSubSkills.findIndex(x => x.name === this.name);
+    }
+
     get skillTrigger(): 0|1|2 {
         switch (this.value) {
             case "Skill Trigger M": return 2;

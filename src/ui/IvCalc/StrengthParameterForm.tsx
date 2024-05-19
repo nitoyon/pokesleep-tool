@@ -1,20 +1,16 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
+import { FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { PeriodType } from './StrengthView';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { useTranslation } from 'react-i18next';
 
+type PeriodType = "1day"|"1week"|"whistle";
+
 const StyledSettingForm = styled('div')({
-    padding: '.4rem 1rem 0',
-    margin: '1rem auto',
-    width: '17rem',
-    border: '1px solid #ccc',
-    borderRadius: '1rem',
-    background: '#f3f5f0',
+    padding: '0 .5rem',
     '& > div': {
+        margin: '0.2rem 0',
         fontSize: '.9rem',
         display: 'flex',
         flex: '0 auto',
@@ -33,22 +29,12 @@ const StyledSettingForm = styled('div')({
     }
 });
 
-const AnnimatedExpandMoreIcon = styled((props: {expand: boolean}) => {
-    const { expand, ...other } = props;
-    return <ExpandMoreIcon {...other} />;
-})(({ expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: 'transform 200ms ease-in-out',
-}));
- 
 const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     onChange: (value: CalculateParameter) => void,
     value: CalculateParameter,
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
-    const [detail, setDetail] = React.useState(false);
 
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
@@ -82,10 +68,6 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     const onRecipeLevelChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
     }, [onChange, value]);
-
-    const onDetailClick = React.useCallback(() => {
-        setDetail(!detail);
-    }, [setDetail, detail]);
 
     const isNotWhistle = (value.period !== 3);
     return <StyledSettingForm>
@@ -135,7 +117,7 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <ToggleButton value="entei 2nd week">{t('2nd week')}</ToggleButton>
             </ToggleButtonGroup>
         </div>
-        {detail && <div>
+        <div>
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
                 onChange={onHelpBonusCountChange}>
@@ -146,8 +128,8 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={4}>×4</MenuItem>
                 {hasHelpingBonus && <MenuItem value={5}>×5</MenuItem>}
             </Select>
-        </div>}
-        {isNotWhistle && detail && <div>
+        </div>
+        {isNotWhistle && <div>
             <label>{t('tap frequency')}:</label>
             <Select variant="standard" value={value.tapFrequency}
                 onChange={onTapFrequencyChange}>
@@ -155,7 +137,7 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value="none">{t('none')}</MenuItem>
             </Select>
         </div>}
-        {isNotWhistle && detail && <div>
+        {isNotWhistle && <div>
             <label>{t('energy')}:</label>
             <Select variant="standard" value={value.averageEfficiency.toString()}
                 onChange={onAverageEfficiencyChange}>
@@ -169,7 +151,7 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={2.2222}>{t('always 81%+')}</MenuItem>
             </Select>
         </div>}
-        {detail && <div>
+        <div>
             <label>{t('recipe range (the number of ingredients)')}:</label>
             <FormControl size="small">
             <Select variant="standard" value={value.recipeBonus.toString()}
@@ -182,8 +164,8 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={35}>53{t('range separator')}55 {t('ingredients unit')}</MenuItem>
                 <MenuItem value={48}>62{t('range separator')}77 {t('ingredients unit')}</MenuItem>
             </Select></FormControl>
-        </div>}
-        {detail && <div>
+        </div>
+        <div>
             <label>{t('average recipe level')}:</label>
             <Select variant="standard" value={value.recipeLevel.toString()}
                 onChange={onRecipeLevelChange}>
@@ -195,10 +177,6 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={50}>50</MenuItem>
                 <MenuItem value={55}>55</MenuItem>
             </Select>
-        </div>}
-        <div>
-            <label/>
-            <Button startIcon={<AnnimatedExpandMoreIcon expand={detail}/>} onClick={onDetailClick}>{t('details')}</Button>
         </div>
     </StyledSettingForm>;
 });

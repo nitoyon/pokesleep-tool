@@ -57,6 +57,19 @@ class SubSkillList {
         ret.value = [...this.value];
         return ret;
     }
+
+    /**
+     * Check whether given skill list is equal to this skill list.
+     * @param list Skill list to be compared.
+     * @returns Whether two skill list is equal or not.
+     */
+    isEqual(list: SubSkillList) {
+        return this.lv10?.name === list.lv10?.name &&
+            this.lv25?.name === list.lv25?.name &&
+            this.lv50?.name === list.lv50?.name &&
+            this.lv75?.name === list.lv75?.name &&
+            this.lv100?.name === list.lv100?.name;
+    }
     
     /**
      * Get the active sub skill list at the specified level.
