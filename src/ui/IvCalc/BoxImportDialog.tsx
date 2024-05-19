@@ -26,6 +26,9 @@ const BoxImportDialog = React.memo(({box, open, onClose}: {
         const lines = value.split(/\n/g);
         let added = 0;
         for (const line of lines) {
+            if (!box.canAdd) {
+                break;
+            }
             const data = box.deserializeItem(line);
             if (data === null) {
                 continue;
