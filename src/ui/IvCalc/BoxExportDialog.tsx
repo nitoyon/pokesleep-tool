@@ -17,8 +17,9 @@ const BoxExportDialog = React.memo(({box, open, onClose}: {
         .join("\n");
 
     const onCopy = React.useCallback(() => {
-        copyToClipboard(value);
-        setCopiedMessageVisible(true);
+        copyToClipboard(value).then(() => {
+            setCopiedMessageVisible(true);
+        }).catch(() => {});
     }, [setCopiedMessageVisible, value]);
     const onCopiedMessageClose = React.useCallback(() => {
         setCopiedMessageVisible(false);
