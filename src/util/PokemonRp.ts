@@ -48,6 +48,8 @@ const berryStrength: {[type in PokemonType]: number} = {
 export type IngredientType = "AAA" | "AAB" | "AAC" |
     "ABA" | "ABB" | "ABC";
 
+export const IngredientTypes: IngredientType[] = ["AAA", "AAB", "AAC", "ABA", "ABB", "ABC"];
+
 export interface RpCalculateResult {
     rp: number;
     berryRp: number;

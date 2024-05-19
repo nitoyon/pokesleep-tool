@@ -3,6 +3,7 @@ import PokemonIv from '../../util/PokemonIv';
 import PokemonRp, { trunc, trunc1, trunc2 } from '../../util/PokemonRp';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
+import RpLabel from './RpLabel';
 import { Button, Dialog, DialogActions } from '@mui/material';
 import { styled } from '@mui/system';
 import { Trans, useTranslation } from 'react-i18next';
@@ -36,19 +37,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     return (<>
         <div>
-            <div style={{transform: 'scale(1, 0.9)'}}>
-                <span style={{
-                    color: '#fd775d',
-                    fontWeight: 'bold',
-                    paddingRight: '.4rem',
-                    fontSize: '.8rem',
-                    verticalAlign: '15%',
-                }}>{t('rp')}</span>
-                <span style={{
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                }}>{t('num', {n: rpResult.rp})}</span>
-            </div>
+            <RpLabel rp={rpResult.rp}/>
             <BerryIngSkillView
                 berryValue={trunc1(rpResult.berryRp)}
                 berryProb={trunc1(rp.berryRatio * 100)}
