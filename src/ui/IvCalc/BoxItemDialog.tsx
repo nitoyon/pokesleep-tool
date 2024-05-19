@@ -135,6 +135,9 @@ const StyledDialog = styled(Dialog)({
                 },
             },
         },
+        '& > div.MuiDialogActions-root': {
+            marginBottom: '1rem',
+        }
     },
 });
 
