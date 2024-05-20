@@ -54,7 +54,7 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const isMenuOpen = Boolean(moreMenuAnchor);
 
-    const longPressHandler = useLongPress(() => {
+    const longPressRef = useLongPress(() => {
         onMenuClick("select");
         onMenuClick("edit");
     }, 500);
@@ -79,7 +79,7 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
     return (
         <StyledBoxLargeItem>
             <ButtonBase onClick={clickHandler} className={selected ? 'selected' : ''}
-                {...longPressHandler}>
+                ref={longPressRef}>
                 <header><span className="lv">Lv.</span>{item.iv.level}</header>
                 <PokemonIcon id={item.iv.pokemon.id} size={32}/>
                 <footer>{nickname}</footer>
@@ -148,37 +148,35 @@ const StyledBoxLargeItem = styled('div')({
     },
 });
 
-// ref) https://zenn.dev/katahei/scraps/7a52c361329387
-type LongPressSet = {
-    onMouseDown: () => void
-    onMouseUp: () => void
-    onMouseLeave: () => void
-    onTouchStart: () => void
-    onTouchEnd: () => void
-  }
-  
-export const useLongPress = (
+function useLongPress(
     callback: () => void,
     ms: number
-): LongPressSet => {
-    let timeout: React.MutableRefObject<NodeJS.Timeout|undefined> = React.useRef();
-  
-    const start = () => {
+) {
+    const timeout = React.useRef<NodeJS.Timeout|null>(null);
+    const ref = React.useRef<HTMLButtonElement|null>(null);
+
+    const touchStart = React.useCallback((e: Event) => {
         timeout.current = setTimeout(callback, ms);
-    };
-  
-    const stop = () => {
+    }, [callback, ms]);
+    const touchEnd = React.useCallback((e: Event) => {
         timeout.current && clearTimeout(timeout.current);
-        timeout.current = undefined;
-    };
-  
-    return {
-        onMouseDown: start,
-        onMouseUp: stop,
-        onMouseLeave: stop,
-        onTouchStart: start,
-        onTouchEnd: stop,
-    };
-};
+        timeout.current = null;
+    }, []);
+    React.useEffect(() => {
+        if (ref.current === null) {
+            return () => {};
+        }
+        const elm = ref.current;
+        elm.addEventListener("touchstart", touchStart);
+        elm.addEventListener("touchmove", touchEnd);
+        elm.addEventListener("touchend", touchEnd);
+        return () => {
+            elm.removeEventListener("touchstart", touchStart);
+            elm.removeEventListener("touchmove", touchEnd);
+            elm.removeEventListener("touchend", touchEnd);
+        }
+    }, [touchStart, touchEnd]);
+    return ref;
+}
 
 export default BoxView;
