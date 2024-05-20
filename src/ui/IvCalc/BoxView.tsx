@@ -155,27 +155,43 @@ function useLongPress(
     const timeout = React.useRef<NodeJS.Timeout|null>(null);
     const ref = React.useRef<HTMLButtonElement|null>(null);
 
-    const touchStart = React.useCallback((e: Event) => {
+    const touchStart = React.useCallback(() => {
         timeout.current = setTimeout(callback, ms);
     }, [callback, ms]);
-    const touchEnd = React.useCallback((e: Event) => {
+    const touchEnd = React.useCallback(() => {
         timeout.current && clearTimeout(timeout.current);
         timeout.current = null;
     }, []);
+
+    const mouseEnd = React.useCallback(() => {
+        document.removeEventListener("mousemove", mouseEnd);
+        document.removeEventListener("mouseup", mouseEnd);
+        timeout.current && clearTimeout(timeout.current);
+        timeout.current = null;
+    }, []);
+    const mouseStart = React.useCallback(() => {
+        if (timeout.current !== null) { return; }
+        timeout.current = setTimeout(callback, ms);
+        document.addEventListener("mousemove", mouseEnd);
+        document.addEventListener("mouseup", mouseEnd);
+    }, [callback, ms, mouseEnd]);
+
     React.useEffect(() => {
         if (ref.current === null) {
             return () => {};
         }
         const elm = ref.current;
         elm.addEventListener("touchstart", touchStart);
+        elm.addEventListener("mousedown", mouseStart);
         elm.addEventListener("touchmove", touchEnd);
         elm.addEventListener("touchend", touchEnd);
         return () => {
             elm.removeEventListener("touchstart", touchStart);
+            elm.removeEventListener("mousedown", mouseStart);
             elm.removeEventListener("touchmove", touchEnd);
             elm.removeEventListener("touchend", touchEnd);
         }
-    }, [touchStart, touchEnd]);
+    }, [mouseStart, touchStart, touchEnd]);
     return ref;
 }
 
