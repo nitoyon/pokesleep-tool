@@ -15,6 +15,10 @@
             "notice detail2": ""
         },
         "langname": "日本語 (Japanese)",
+        "num": "{{n, number}}",
+        "short num unit": "万",
+        "short num unit digits": "4",
+
         "how to use": "つかいかた",
         "about": "このツールについて",
         "sleep score table": "睡眠スコア表",
@@ -53,7 +57,6 @@
         "none": "なし",
         "sleep twice": "分割睡眠する",
         "total n pokemon": "合計<n/>体",
-        "num": "{{n, number}}",
         "range separator": "～",
         "hhmm": "{{h}}時間{{m}}分",
         "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}分{{s}}秒ごと",
