@@ -15,6 +15,10 @@
             "notice detail2": ""
         },
         "langname": "한국어 (Korean)",
+        "num": "{{n, number}}",
+        "short num unit": "만",
+        "short num unit digits": "4",
+
         "how to use": "사용 방법",
         "about": "이 도구에 대하여",
         "sleep score table": "수면 스코어표",
@@ -53,7 +57,6 @@
         "none": "없음",
         "sleep twice": "분할 수면하기",
         "total n pokemon": "총 <n/>체",
-        "num": "{{n, number}}",
         "range separator": "~",
         "hhmm": "{{h}}시간 {{m}}분",
         "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}분 {{s}}초 마다",

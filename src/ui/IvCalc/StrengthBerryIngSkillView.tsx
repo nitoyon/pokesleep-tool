@@ -228,11 +228,37 @@ function getIngArticle(result: CalculateResult, settings: CalculateParameter,
             </span>
             <span className="strength">
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span>{t('num', {n: Math.floor(ing[x].strength)})}</span>
+                <span>{shortenNumber(t, Math.floor(ing[x].strength))}</span>
             </span>
         </React.Fragment>)}
     </>;
     return <article className={`ingc ing${ingNames.length}`}>{ingValue}</article>
+}
+
+/**
+ * Shorten a long number using i18n JSON file.
+ *
+ * For example:
+ * - 123,456 is shortened to "123K" in English.
+ * - 123,456 is shortened to "12.3万" in Japanese.
+ *
+ * @param t    The i18n translation function.
+ * @param n    The number to be formatted.
+ * @returns    The formatted string.
+ */
+function shortenNumber(t: typeof i18next.t, n: number): string {
+    if (n < 100000) {
+        return t('num', {n: n});
+    }
+
+    const digits = t('short num unit digits');
+    if (digits === "4") {
+        return (n / 10000).toFixed(1).toString() + t('short num unit');
+    }
+    if (digits === "3") {
+        return (n / 1000).toFixed(0).toString() + t('short num unit');
+    }
+    throw new Error('unknown short num digits: ' + digits);
 }
 
 function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
