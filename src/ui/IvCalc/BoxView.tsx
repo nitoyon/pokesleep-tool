@@ -112,7 +112,7 @@ const StyledBoxLargeItem = styled('div')({
         display: 'block',
         textAlign: 'center',
         width: '80px',
-        padding: '0.2rem',
+        padding: '0.2rem 0',
         border: '1px solid transparent',
         '& > header': {
             fontSize: '0.7rem',
