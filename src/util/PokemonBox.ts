@@ -1,4 +1,5 @@
 import PokemonIv from './PokemonIv';
+import i18next from 'i18next'
 
 /**
  * Represents Indivisual Values (IV) of the Pokemon.
@@ -175,6 +176,14 @@ export class PokemonBoxItem {
 
     /** Get the ID. */
     get id(): number { return this._id; }
+
+    /** Get the filled nickname */
+    filledNickname(t: typeof i18next.t): string {
+        if (this._nickname !== "") {
+            return this._nickname;
+        }
+        return t(`pokemons.${this.iv.pokemonName}`);
+    }
 }
 
 export default PokemonBox;
