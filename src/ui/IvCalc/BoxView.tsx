@@ -3,6 +3,10 @@ import { styled } from '@mui/system';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIcon from './PokemonIcon';
 import { BoxItemActionType } from './LowerTabView';
+import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
+import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
+import { PokemonType } from '../../data/pokemons';
+import PokemonRp from '../../util/PokemonRp';
 import { Button, ButtonBase, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -18,6 +22,9 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
     onChange: (id: number, action: BoxItemActionType) => void,
 }) => {
     const { t } = useTranslation();
+    const [config, setConfig] = React.useState<PokemonDialogConfig>({
+        filterType: null, filterEvolve: "all", sort: "level", descending: true});
+    const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((id: number, action: BoxItemActionType) => {
         onChange(id, action);
     }, [onChange]);
@@ -26,7 +33,61 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
         onChange(-1, "add");
     }, [onChange]);
 
-    const elms = items.sort((a, b) => b.iv.level - a.iv.level).map((item) => (
+    const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
+        const newValue = {...config,
+            sort: value.sort as "level"|"name"|"pokedexno"|"rp",
+            descending: value.descending};
+        setConfig(newValue);
+    }, [config]);
+    const onFilterButtonClick = React.useCallback(() => {
+        setFilterOpen(true);
+    }, []);
+    const onFilterDialogClose = React.useCallback(() => {
+        setFilterOpen(false);
+    }, [])
+    const onFilterChange = React.useCallback((value: PokemonFilterDialogConfig) => {
+        const newConfig = {...config, ...value};
+        setConfig(newConfig);
+    }, [config]);
+
+    // filter
+    let filtered = items;
+    if (config.filterType !== null) {
+        filtered = filtered.filter(x => x.iv.pokemon.type === config.filterType);
+    }
+    if (config.filterEvolve === "final") {
+        filtered = filtered.filter((item) => item.iv.pokemon.isFullyEvolved);
+    }
+    if (config.filterEvolve === "non") {
+        filtered = filtered.filter((item) => item.iv.pokemon.evolutionCount === -1);
+    }
+
+    // sort
+    let sortedItems: PokemonBoxItem[] = [];
+    if (config.sort === "level") {
+        sortedItems = filtered.sort((a, b) => b.iv.level !== a.iv.level ?
+            b.iv.level - a.iv.level : b.iv.pokemon.id - a.iv.pokemon.id);
+    }
+    else if (config.sort === "name") {
+        sortedItems = filtered.sort((a, b) =>
+            b.filledNickname(t) > a.filledNickname(t) ? 1 :
+            b.filledNickname(t) < a.filledNickname(t) ? -1 : 0);
+    }
+    else if (config.sort === "pokedexno") {
+        sortedItems = filtered.sort((a, b) => b.iv.pokemon.id - a.iv.pokemon.id);
+    }
+    else if (config.sort === "rp") {
+        const rpCache: {[id: string]: number} = {};
+        filtered.forEach((item) => {
+            rpCache[item.id] = new PokemonRp(item.iv).Rp;
+        });
+        sortedItems = filtered.sort((a, b) => rpCache[b.id] - rpCache[a.id]);
+    }
+    if (!config.descending) {
+        sortedItems = sortedItems.reverse();
+    }
+
+    const elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
             onChange={onItemChange}/>));
     
@@ -35,15 +96,49 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
             display: 'flex',
             flexWrap: 'wrap',
         }}>
-            {elms.length === 0 && <div style={{margin: "2rem auto", color: "#888", fontSize: "0.9rem"}}>まだポケモンが登録されていません。</div>}
+            {elms.length === 0 && <div style={{margin: "2rem auto", color: "#888", fontSize: "0.9rem"}}>
+                {items.length === 0 ? t('box is empty') : t('no pokemon found')}
+            </div>}
             {elms}
         </div>
         <div style={{margin: '0.4rem 0.4rem 0 0', textAlign: 'right'}}>
         <Button onClick={onAddClick}
             startIcon={<AddCircleOutlineIcon/>}>{t('add')}</Button>
         </div>
+        <div style={{
+            position: 'sticky',
+            bottom: 0,
+            paddingBottom: '1.2rem',
+            background: '#f76',
+            margin: '.5rem -.5rem 0',
+        }}>
+            <PokemonFilterFooter value={{
+                    isFiltered: config.filterType !== null || config.filterEvolve !== "all",
+                    sort: config.sort,
+                    descending: config.descending,
+                }}
+                onChange={onFilterConfigChange}
+                onFilterButtonClick={onFilterButtonClick}
+                sortTypes={["level", "name", "pokedexno", "rp"]}/>
+        </div>
+        <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
+            value={config} onChange={onFilterChange}/>
     </>;
 });
+
+/**
+ * Pokemon select dialog configuration.
+ */
+interface PokemonDialogConfig {
+    /** Filter type */
+    filterType: PokemonType|null;
+    /** Filter by evolve */
+    filterEvolve: "all"|"non"|"final";
+    /** Sort type. */
+    sort: "level"|"name"|"pokedexno"|"rp";
+    /** Descending (true) or ascending (false). */
+    descending: boolean;
+}
 
 const BoxLargeItem = React.memo(({item, selected, onChange}: {
     item: PokemonBoxItem,
@@ -73,16 +168,13 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
         setMoreMenuAnchor(null);
     }, [item, onChange, setMoreMenuAnchor]);
 
-    const nickname = item.nickname !== "" ? item.nickname :
-        t(`pokemons.${item.iv.pokemonName}`);
-
     return (
         <StyledBoxLargeItem>
             <ButtonBase onClick={clickHandler} className={selected ? 'selected' : ''}
                 ref={longPressRef}>
                 <header><span className="lv">Lv.</span>{item.iv.level}</header>
                 <PokemonIcon id={item.iv.pokemon.id} size={32}/>
-                <footer>{nickname}</footer>
+                <footer>{item.filledNickname(t)}</footer>
             </ButtonBase>
             {selected && <IconButton onClick={onMoreIconClick}><MoreIcon/></IconButton>}
             <Menu anchorEl={moreMenuAnchor} open={isMenuOpen}
