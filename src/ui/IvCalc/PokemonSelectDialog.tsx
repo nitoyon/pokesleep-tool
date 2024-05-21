@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
-import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams,
-    Button, ButtonBase, ClickAwayListener, Dialog, DialogActions,
-    FilterOptionsState, InputAdornment, InputBase,
-    MenuItem, MenuList, Popper, Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
+    FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
+import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
+import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import { PokemonOption } from './PokemonTextField';
-import CheckIcon from '@mui/icons-material/Check';
 import SearchIcon from '@mui/icons-material/Search';
-import SortIcon from '@mui/icons-material/Sort';
-import NorthIcon from '@mui/icons-material/North';
 import { useTranslation } from 'react-i18next';
 
 const StyledDialog = styled(Dialog)({
@@ -93,11 +90,6 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const PokemonSelectDialogFooter = styled('div')({
-    backgroundColor: '#f76',
-    padding: '.5rem .5rem',
-});
-
 const GroupHeader = styled('div')({
     position: 'sticky',
     top: '-1px',
@@ -133,35 +125,6 @@ const GroupHeader = styled('div')({
     '&.fairy': { backgroundColor: '#e48fe3' },
 });
 
-const RoundedButton = styled(ButtonBase)({
-    borderRadius: '3rem',
-    background: 'white',
-    fontSize: '.8rem',
-    color: '#000',
-    justifyContent: 'left',
-    boxShadow: '0 2px 2px 1px #88666666',
-    fontFamily: 'M PLUS 1p',
-    'svg': {
-        width: '1.2rem',
-        height: '1.2rem',
-        color: '#24da6d',
-    }
-});
-const SortOrderButton = styled(RoundedButton)({
-    padding: '.2rem',
-    translation: '0.2s',
-
-    'svg': {
-        width: '1rem', height: '1rem',
-        transform: 'translateY(0%)',
-        transition: '0.2s',
-    },
-    '&.desc svg': {
-        transform: 'rotate(180deg)',
-        transition: '0.2s',
-    },
-});
-
 /**
  * Pokemon select dialog configuration.
  */
@@ -187,9 +150,7 @@ const PokemonSelectDialog = React.memo(({
 }) => {
     const { t } = useTranslation();
     const [filterOpen, setFilterOpen] = React.useState(false);
-    const [sortMenuOpen, setSortMenuOpen] = React.useState(false);
     let [config_, setConfig] = React.useState<PokemonDialogConfig|null>(null);
-    const sortMenuAnchorRef = React.useRef<HTMLButtonElement>(null);
 
     // initialize config
     const config: PokemonDialogConfig = (config_ === null ?
@@ -201,9 +162,8 @@ const PokemonSelectDialog = React.memo(({
 
     // close handler
     const closeHandler = useCallback(() => {
-        setSortMenuOpen(false);
         onClose();
-    }, [setSortMenuOpen, onClose]);
+    }, [onClose]);
 
     // Compare inputed text to options
     const filterOptions = useCallback((
@@ -309,36 +269,21 @@ const PokemonSelectDialog = React.memo(({
     // Filter button
     const onFilterButtonClick = useCallback(() => {
         setFilterOpen(true);
-    }, [setFilterOpen]);
+    }, []);
     const onFilterDialogClose = useCallback(() => {
         setFilterOpen(false);
-    }, [setFilterOpen]);
-    const onFilterChange = useCallback((value: PokemonDialogConfig) => {
-        setConfig(value);
-        localStorage.setItem('PstPokemonSelectParam', JSON.stringify(value));
-    }, [setConfig]);
-
-    // Sort menu
-    const onSortButtonClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
-        setSortMenuOpen(true);
-    }, [setSortMenuOpen]);
-    const onSortMenuClose = useCallback(() => {
-        setSortMenuOpen(false);
-    }, [setSortMenuOpen]);
-    const onConfigChange = React.useCallback((value: PokemonDialogConfig) => {
-        setConfig(value);
-        localStorage.setItem('PstPokemonSelectParam', JSON.stringify(value));
-    }, [setConfig]);
-    const onToggleSortOrder = useCallback(() => {
-        onConfigChange({...config, descending: !config.descending});
-    }, [config, onConfigChange]);
-    const onSortMenuItemSelected = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
-        const value = e.currentTarget.getAttribute('data-value');
-        if (value !== null && value !== undefined) {
-            onConfigChange({...config, sort: value as "sleeptype"|"name"|"pokedexno"|"type"});
-            setSortMenuOpen(false);
-        }
-    }, [config, onConfigChange, setSortMenuOpen]);
+    }, []);
+    const onFilterChange = useCallback((value: PokemonFilterDialogConfig) => {
+        const newConfig = {...config, ...value};
+        setConfig(newConfig);
+        localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
+    }, [config]);
+    const onFilterConfigChange = useCallback((value: PokemonFilterConfig) => {
+        const newValue = {...config, descending: value.descending,
+            sort: value.sort as "sleeptype"|"name"|"pokedexno"|"type"};
+        setConfig(newValue);
+        localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newValue));
+    }, [config]);
 
     // sort
     let options: PokemonOption[] = [];
@@ -408,35 +353,14 @@ const PokemonSelectDialog = React.memo(({
                 )}
             onClose={onAutocompleteClose}
             onChange={onAutocompleteChange}/>
-        <PokemonSelectDialogFooter>
-            <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "4.5rem", textAlign: 'left'}}
-                onClick={onFilterButtonClick}>
-                <SearchIcon style={{paddingRight: '0'}}/>{t(filterType === null && filterEvolve === "all" ? 'off' : 'on')}
-            </RoundedButton>
-            <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "8rem", textAlign: 'left'}}
-                onClick={onSortButtonClick} ref={sortMenuAnchorRef}>
-                <SortIcon style={{paddingRight: '.4rem'}}/>{t(sortType)}
-            </RoundedButton>
-            <Popper open={sortMenuOpen} anchorEl={sortMenuAnchorRef.current} style={{zIndex: 1500}}>
-                <Paper elevation={10}>
-                    <ClickAwayListener onClickAway={onSortMenuClose}>
-                        <MenuList>
-                            <MenuItem onClick={onSortMenuItemSelected} data-value="pokedexno"
-                                selected={sortType === 'pokedexno'}>{t('pokedexno')}</MenuItem>
-                            <MenuItem onClick={onSortMenuItemSelected} data-value="name"
-                                selected={sortType === 'name'}>{t('name')}</MenuItem>
-                            <MenuItem onClick={onSortMenuItemSelected} data-value="sleeptype"
-                                selected={sortType === 'sleeptype'}>{t('sleeptype')}</MenuItem>
-                            <MenuItem onClick={onSortMenuItemSelected} data-value="type"
-                                selected={sortType === 'type'}>{t('type')}</MenuItem>
-                        </MenuList>
-                    </ClickAwayListener>
-                </Paper>
-            </Popper>
-            <SortOrderButton className={descending ? 'desc' : 'asc'} onClick={onToggleSortOrder}>
-                <NorthIcon style={{width: '1rem', height: '1rem'}}/>
-            </SortOrderButton>
-        </PokemonSelectDialogFooter>
+        <PokemonFilterFooter
+            sortTypes={["pokedexno", "name", "sleeptype", "type"]}
+            value={{
+                isFiltered: config.filterEvolve !== "all" || config.filterType !== null,
+                sort: config.sort, descending: config.descending,
+            }}
+            onChange={onFilterConfigChange}
+            onFilterButtonClick={onFilterButtonClick}/>
         <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={config} onChange={onFilterChange}/>
     </StyledDialog>;
@@ -506,113 +430,5 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     }
     return ret;
 }
-
-const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
-    open: boolean,
-    value: PokemonDialogConfig,
-    onChange: (value: PokemonDialogConfig) => void,
-    onClose: () => void,
-}) => {
-    const { t } = useTranslation();
-    const onClearClick = useCallback(() => {
-        onChange({...value, filterType: null, filterEvolve: "all"});
-    }, [value, onChange]);
-    const onCloseClick = useCallback(() => {
-        onClose();
-    }, [onClose]);
-    const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        const selected = e.currentTarget.value as PokemonType;
-        onChange({...value,
-            filterType: value.filterType === selected ? null : selected});
-        onClose();
-    }, [value, onChange, onClose]);
-    const onEvolveChange = useCallback((e: any, val: string|null) => {
-        if (val === null || value.filterEvolve === val) { return; }
-        onChange({...value, filterEvolve: val as "all"|"non"|"final"});
-        onClose();
-    }, [value, onChange, onClose]);
-
-    const buttons: React.ReactElement[] = PokemonTypes.map(type =>
-        <StyledTypeButton
-            key={type} className={type} value={type} onClick={onTypeClick}>
-            {t(`types.${type}`)}
-            {type === value.filterType && <CheckIcon/>}
-        </StyledTypeButton>
-    );
-
-    return <StyledPokemonFilterDialog open={open} onClose={onClose}>
-        <div>
-            <h3>{t('type')}</h3>
-            {buttons}
-        </div>
-        <div>
-            <h3>{t('evolve')}</h3>
-            <ToggleButtonGroup value={value.filterEvolve} exclusive
-                onChange={onEvolveChange}>
-                <ToggleButton value="all">{t('all')}</ToggleButton>
-                <ToggleButton value="non">{t('non-evolve')}</ToggleButton>
-                <ToggleButton value="final">{t('final-evoltion')}</ToggleButton>
-            </ToggleButtonGroup>
-        </div>
-        <DialogActions>
-            <Button onClick={onClearClick}>{t('clear')}</Button>
-            <Button onClick={onCloseClick}>{t('close')}</Button>
-        </DialogActions>
-    </StyledPokemonFilterDialog>;
-});
-
-const StyledPokemonFilterDialog = styled(Dialog)({
-    'div.MuiPaper-root > div': {
-        margin: '.5rem .5rem 0 .5rem',
-        '& > h3': {
-            margin: '0.5rem 0',
-            fontSize: '1rem',
-        },
-        '& > div': {
-            '& > button:first-of-type': {
-                borderRadius: '1rem 0 0 1rem',
-            },
-            '& > button:last-of-type': {
-                borderRadius: '0 1rem 1rem 0',
-            },
-        },
-    },
-});
-
-const StyledTypeButton = styled(Button)({
-    width: '5rem',
-    color: 'white',
-    fontSize: '0.9rem',
-    padding: 0,
-    margin: '0.2rem',
-    borderRadius: '0.5rem',
-    '& > svg': {
-        position: 'absolute',
-        background: '#24d76a',
-        borderRadius: '10px',
-        fontSize: '20px',
-        border: '2px solid white',
-        right: '-4px',
-        top: '-4px',
-    },
-    '&.normal': { backgroundColor: '#939393' },
-    '&.fire': { backgroundColor: '#e8554d' },
-    '&.water': { backgroundColor: '#579bf3' },
-    '&.electric': { backgroundColor: '#f1c525' },
-    '&.grass': { backgroundColor: '#57a747' },
-    '&.ice': { backgroundColor: '#68c5df' },
-    '&.fighting': { backgroundColor: '#e8a33b' },
-    '&.poison': { backgroundColor: '#ab7aca' },
-    '&.ground': { backgroundColor: '#c8a841' },
-    '&.flying': { backgroundColor: '#add5ea' },
-    '&.psychic': { backgroundColor: '#ed6c94' },
-    '&.bug': { backgroundColor: '#a5ab39' },
-    '&.rock': { backgroundColor: '#b2b194' },
-    '&.ghost': { backgroundColor: '#8d658e' },
-    '&.dragon': { backgroundColor: '#7482e9' },
-    '&.dark': { backgroundColor: '#706261' },
-    '&.steel': { backgroundColor: '#94b1c2' },
-    '&.fairy': { backgroundColor: '#e48fe3' },
-});
 
 export default PokemonSelectDialog;
