@@ -55,6 +55,7 @@ const PokemonFilterFooter = React.memo(({
 
     return <StyledPokemonFilterFooter>
         <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "4.5rem", textAlign: 'left'}}
+            key={value.isFiltered.toString() /* quick fix for curious label not updated bug on iOS */}
             onClick={onFilterButtonClick}>
             <SearchIcon style={{paddingRight: '0'}}/>{t(value.isFiltered ? 'on' : 'off')}
         </RoundedButton>
