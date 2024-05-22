@@ -92,7 +92,15 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
     const elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
             onChange={onItemChange}/>));
-    
+
+    const footerValue = React.useMemo(() => ({
+        isFiltered: config.filterType !== null || config.filterEvolve !== "all",
+        sort: config.sort,
+        descending: config.descending,
+    }), [config]);
+    const footerSortTypes = React.useMemo(() => 
+        ["level", "name", "pokedexno", "rp"], []);
+        
     return <>
         <div style={{
             display: 'flex',
@@ -114,14 +122,10 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
             background: '#f76',
             margin: '.5rem -.5rem 0',
         }}>
-            <PokemonFilterFooter value={{
-                    isFiltered: config.filterType !== null || config.filterEvolve !== "all",
-                    sort: config.sort,
-                    descending: config.descending,
-                }}
+            <PokemonFilterFooter value={footerValue}
                 onChange={onFilterConfigChange}
                 onFilterButtonClick={onFilterButtonClick}
-                sortTypes={["level", "name", "pokedexno", "rp"]}/>
+                sortTypes={footerSortTypes}/>
         </div>
         <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={config} onChange={onFilterChange}/>
