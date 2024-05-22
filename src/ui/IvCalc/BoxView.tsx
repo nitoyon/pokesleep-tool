@@ -5,7 +5,7 @@ import PokemonIcon from './PokemonIcon';
 import { BoxItemActionType } from './LowerTabView';
 import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
-import { PokemonType } from '../../data/pokemons';
+import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
 import { Button, ButtonBase, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
@@ -22,8 +22,8 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
     onChange: (id: number, action: BoxItemActionType) => void,
 }) => {
     const { t } = useTranslation();
-    const [config, setConfig] = React.useState<PokemonDialogConfig>({
-        filterType: null, filterEvolve: "all", sort: "level", descending: true});
+    const defaultConfig = React.useMemo(() => loadPokemonDialogConfig(), []);
+    const [config, setConfig] = React.useState<PokemonDialogConfig>(defaultConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((id: number, action: BoxItemActionType) => {
         onChange(id, action);
@@ -37,6 +37,7 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
         const newValue = {...config,
             sort: value.sort as "level"|"name"|"pokedexno"|"rp",
             descending: value.descending};
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newValue));
         setConfig(newValue);
     }, [config]);
     const onFilterButtonClick = React.useCallback(() => {
@@ -47,6 +48,7 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
     }, [])
     const onFilterChange = React.useCallback((value: PokemonFilterDialogConfig) => {
         const newConfig = {...config, ...value};
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newConfig));
         setConfig(newConfig);
     }, [config]);
 
@@ -138,6 +140,44 @@ interface PokemonDialogConfig {
     sort: "level"|"name"|"pokedexno"|"rp";
     /** Descending (true) or ascending (false). */
     descending: boolean;
+}
+
+/**
+ * Load dialog config from localStorage.
+ * @returns config.
+ */
+function loadPokemonDialogConfig(): PokemonDialogConfig {
+    const ret: PokemonDialogConfig = {
+        filterType: null,
+        filterEvolve: "all",
+        sort: "level",
+        descending: true,
+    };
+
+    const settings = localStorage.getItem('PstPokemonBoxParam');
+    if (settings === null) {
+        return ret;
+    }
+    const json = JSON.parse(settings);
+    if (typeof(json) !== "object" || json === null) {
+        return ret;
+    }
+    if (typeof(json.filterType) === "string" &&
+        PokemonTypes.includes(json.filterType)) {
+        ret.filterType = json.filterType;
+    }
+    if (typeof(json.filterEvolve) === "string" &&
+        ["all", "non", "final"].includes(json.filterEvolve)) {
+        ret.filterEvolve = json.filterEvolve;
+    }
+    if (typeof(json.sort) === "string" &&
+        ["level", "name", "pokedexno", "rp"].includes(json.sort)) {
+        ret.sort = json.sort;
+    }
+    if (typeof(json.descending) === "boolean") {
+        ret.descending = json.descending;
+    }
+    return ret;
 }
 
 const BoxLargeItem = React.memo(({item, selected, onChange}: {
