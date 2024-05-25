@@ -120,9 +120,16 @@ const LowerTabView = React.memo(({
     const onFormChange = React.useCallback((iv: PokemonIv) => {
         // if form pokemon differs from the selected pokemon in the box,
         // unselect the pokemon in the box
-        if (selectedItem !== null &&
-            selectedItem.iv.pokemon.ancestor !== iv.pokemon.ancestor) {
-            setSelectedItemId(-1);
+        if (selectedItem !== null) {
+            // Ancestor of Evolving pokemon has changed
+            if (selectedItem.iv.pokemon.ancestor !== iv.pokemon.ancestor) {
+                setSelectedItemId(-1);
+            }
+            // Non-evolving pokemon has changed
+            if (selectedItem.iv.pokemon.ancestor === null &&
+                selectedItem.iv.pokemon.id !== iv.pokemon.id) {
+                setSelectedItemId(-1);
+            }
         }
 
         // notify to parent component
