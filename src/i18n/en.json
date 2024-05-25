@@ -173,6 +173,17 @@
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",
         "strength restriction1": "It is assumed that nighttime 'Sneaky Snacking' does not occur. If it occurs, the actual number of ingredients will be less than the displayed amount.",
         "strength restriction2": "It is assumed that Pokémon's energy is fully recovered to 100% every morning. If not, the actual strength will be less.",
+        "strength skill info": {
+            "Ingredient Magnet S": "Displays the number of ingredients obtained. This value is not counted towards the total strength amount.",
+            "Charge Energy S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
+            "Energizing Cheer S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount.",
+            "Metronome": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
+            "Energy for Everyone S": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
+            "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without field bonuses).",
+            "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
+            "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
+            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without field bonuses)."
+        },
 
         "rate subskill and nature": "Rate subskills and nature",
         "rating detail1": "We evaluate subskill and nature tendencies on a scale of 0 to 100 points. For example, in the case of 'berries', the subskill or nature that picks up the most berries are treated as 100 points. We calculate the score based on how much the amount of 'berries' your Pokémon picks up is compared to 100 points.",
