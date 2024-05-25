@@ -11,11 +11,13 @@ interface ScoreTableDialogProps {
     open: boolean;
     /** callback function when dialog is closed */
     onClose: () => void;
+    /** event bonus (multiplier) */
+    bonus: number;
     /** Current strength.  */
     strength: number;
 }
 
-const ScoreTableDialog = React.memo(({open, onClose, strength}: ScoreTableDialogProps) => {
+const ScoreTableDialog = React.memo(({open, onClose, bonus, strength}: ScoreTableDialogProps) => {
     const { t } = useTranslation();
     const ref0 = React.useRef<HTMLDivElement|null>(null);
     const ref25 = React.useRef<HTMLDivElement|null>(null);
@@ -52,7 +54,7 @@ const ScoreTableDialog = React.memo(({open, onClose, strength}: ScoreTableDialog
                 {getMinTimeForScore(i).toString(t)}
                 <> {t('range separator')} </>
                 {getMaxTimeForScore(i).toString(t)}
-                <div className="time_power">{t('num', {n: i * strength})}</div>
+                <div className="time_power">{t('num', {n: i * strength * bonus})}</div>
             </div>
         </div>);
     }

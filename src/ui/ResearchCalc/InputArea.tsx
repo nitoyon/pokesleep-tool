@@ -143,7 +143,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
     </div>
     <ScoreTableDialog open={isScoreTableDialogOpen}
-        onClose={onScoreTableDialogClose} strength={strength}/>
+        onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
     </>);
 }
 
