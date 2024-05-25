@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import PokemonIv from '../../util/PokemonIv';
 import { IngredientName } from '../../data/pokemons';
+import { MainSkillName } from '../../util/MainSkill';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
@@ -114,6 +115,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
 }) => {
     const { t } = useTranslation();
     const [helpOpen, setHelpOpen] = React.useState(false);
+    const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
     const strength = new PokemonStrength(pokemonIv);
     const isWhistle = (settings.period === 3);
@@ -137,6 +139,13 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
             "." + (m < 10 ? `0${m}` : m.toString());
     };
 
+    const onSkillHelpClick = React.useCallback(() => {
+        setSkillHelpOpen(true);
+    }, []);
+    const onSkillHelpClose = React.useCallback(() => {
+        setSkillHelpOpen(false);
+    }, []);
+
     // format berry value
     const berryStrength = t('num', {n: Math.round(result.berryTotalStrength)});
 
@@ -145,7 +154,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
 
     // skill value
     const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
-        t, trunc1, trunc2);
+        t, trunc1, trunc2, onSkillHelpClick);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -190,6 +199,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
                 <div>{trunc2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>
+        <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
+            skill={pokemonIv.pokemon.skill}/>
     </StyledBerryIngSkillStrengthView>;
 });
 
@@ -264,7 +275,8 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
     settings: CalculateParameter, t: typeof i18next.t,
     trunc1: (n: number) => string,
-    trunc2: (n: number) => string): React.ReactNode {
+    trunc2: (n: number) => string,
+    onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
     }
@@ -277,11 +289,13 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
             return <>
                 <FavoriteBorderIcon sx={{color: "#ff88aa"}}/>
                 <span>{mainSkillValue}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         case "Energy for Everyone S":
             return <>
                 <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/>
                 <span>{mainSkillValue}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         case "Charge Strength M":
         case "Charge Strength S":
@@ -301,26 +315,31 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
             return <>
                 <SearchIcon sx={{color: "#66cc66"}}/>
                 <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         case "Ingredient Magnet S":
             return <>
                 <IngredientsIcon/>
                 <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         case "Cooking Power-Up S":
             return <>
                 <svg width="18" height="18" fill="#886666"><PotIcon/></svg>
                 <span>{mainSkillValue}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         case "Tasty Chance S":
             return <>
                 <svg width="18" height="18" fill="#886666"><PotIcon/></svg>
                 <span>{mainSkillValue}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         case "Metronome":
             return <>
                 <SwipeOutlinedIcon sx={{color: "#999", paddingRight: "0.2rem"}}/>
                 <span>{trunc2(result.skillCount)}</span>
+                <InfoButton onClick={onInfoClick}/>
             </>;
         default:
             return <>ー</>;
@@ -342,6 +361,24 @@ const HelpDialog = React.memo(({open, onClose}: {
                 <li>{t('strength restriction1')}</li>
                 <li>{t('strength restriction2')}</li>
             </ul>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </Dialog>;
+});
+
+const SkillHelpDialog = React.memo(({open, onClose, skill}: {
+    open: boolean,
+    onClose: () => void,
+    skill: MainSkillName,
+}) => {
+    const { t } = useTranslation();
+
+    let text = t(`strength skill info.${skill}`)
+    return <Dialog open={open} onClose={onClose}>
+        <DialogContent style={{fontSize: '0.95rem'}}>
+            {text}
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
