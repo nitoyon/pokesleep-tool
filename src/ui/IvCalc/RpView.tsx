@@ -193,8 +193,8 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
             </>}
             <div><span className="box box5">{param5}</span></div>
             <span><Trans i18nKey="bonus factor" components={{
-                nature: <>{rp.energyBonus.toFixed(2)}</>,
-                subskill: <>{rp.subSkillBonus.toFixed(2)}</>,
+                nature: <>{trunc2(rp.energyBonus)}</>,
+                subskill: <>{trunc2(rp.subSkillBonus)}</>,
             }}/></span>
         </article>
         <footer>
