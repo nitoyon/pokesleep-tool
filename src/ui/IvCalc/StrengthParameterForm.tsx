@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
+import { FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
