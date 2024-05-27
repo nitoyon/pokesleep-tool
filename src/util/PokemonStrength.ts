@@ -95,6 +95,8 @@ export interface CalculateResult {
     ing2: {name: IngredientName, count: number, strength: number};
     /** Ing3 name and count */
     ing3: {name: IngredientName, count: number, strength: number}|undefined;
+    /** Ing1 ~ Ing3 name, count, strength summary */
+    ingredients: {name: IngredientName, count: number, strength: number}[];
 
     /** Skill ratio */
     skillRatio: number;
@@ -172,6 +174,28 @@ class PokemonStrength {
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
+        const ing: {[name: string]: {name: IngredientName, count: number, strength: number}} = {};
+        const ingNames: IngredientName[] = [];
+        ing[ing1.name] = {name: ing1.name, count: ing1.count, strength: ing1.strength};
+        ingNames.push(ing1.name);
+        if (ing2.count > 0) {
+            if (!(ing2.name in ing)) {
+                ing[ing2.name] = {name: ing2.name, count: 0, strength: 0};
+                ingNames.push(ing2.name);
+            }
+            ing[ing2.name].count += ing2.count;
+            ing[ing2.name].strength += ing2.strength;
+        }
+        if (ing3 !== undefined && ing3.count > 0) {
+            if (!(ing3.name in ing)) {
+                ing[ing3.name] = {name: ing3.name, count: 0, strength: 0};
+                ingNames.push(ing3.name);
+            }
+            ing[ing3.name].count += ing3.count;
+            ing[ing3.name].strength += ing3.strength;
+        }
+        const ingredients = ingNames.map(x => ing[x]);
+    
         // calc berry
         const berryRatio = 1 - ingRatio;
         const berryHelpCount = helpCount - ingHelpCount;
@@ -197,7 +221,7 @@ class PokemonStrength {
 
         return {
             frequency, helpCount, totalStrength,
-            ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3,
+            ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength,
         };
