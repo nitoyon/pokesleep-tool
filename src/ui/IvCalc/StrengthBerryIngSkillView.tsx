@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import PokemonIv from '../../util/PokemonIv';
-import { IngredientName } from '../../data/pokemons';
 import { MainSkillName } from '../../util/MainSkill';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { CalculateParameter } from '../../util/PokemonStrength';
@@ -211,39 +210,19 @@ function getIngArticle(result: CalculateResult, settings: CalculateParameter,
         return <article>ー</article>;
     }
 
-    const ing: {[name: string]: {count: number, strength: number}} = {};
-    const ingNames: IngredientName[] = [];
-    ing[result.ing1.name] = {count: result.ing1.count, strength: result.ing1.strength};
-    ingNames.push(result.ing1.name);
-    if (result.ing2.count > 0) {
-        if (!(result.ing2.name in ing)) {
-            ing[result.ing2.name] = {count: 0, strength: 0};
-            ingNames.push(result.ing2.name);
-        }
-        ing[result.ing2.name].count += result.ing2.count;
-        ing[result.ing2.name].strength += result.ing2.strength;
-    }
-    if (result.ing3 !== undefined && result.ing3.count > 0) {
-        if (!(result.ing3.name in ing)) {
-            ing[result.ing3.name] = {count: 0, strength: 0};
-            ingNames.push(result.ing3.name);
-        }
-        ing[result.ing3.name].count += result.ing3.count;
-        ing[result.ing3.name].strength += result.ing3.strength;
-    }
     const ingValue = <>
-        {ingNames.map(x => <React.Fragment key={x}>
+        {result.ingredients.map(x => <React.Fragment key={x.name}>
             <span className="ing">
-                <IngredientIcon name={x}/>
-                <span>{trunc1(ing[x].count)}</span>
+                <IngredientIcon name={x.name}/>
+                <span>{trunc1(x.count)}</span>
             </span>
             <span className="strength">
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span>{shortenNumber(t, Math.floor(ing[x].strength))}</span>
+                <span>{shortenNumber(t, Math.floor(x.strength))}</span>
             </span>
         </React.Fragment>)}
     </>;
-    return <article className={`ingc ing${ingNames.length}`}>{ingValue}</article>
+    return <article className={`ingc ing${result.ingredients.length}`}>{ingValue}</article>
 }
 
 /**
