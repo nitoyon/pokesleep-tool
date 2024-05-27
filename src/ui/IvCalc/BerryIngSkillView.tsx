@@ -9,7 +9,7 @@ interface ViewInput {
     /** Probability of berry */
     berryProb: string;
     /** Sub-value of berry. */
-    berrySubValue: string;
+    berrySubValue: React.ReactElement|string;
     /** Berry info callback */
     onBerryInfoClick?: () => void;
 
@@ -18,7 +18,7 @@ interface ViewInput {
     /** Probability of ingredient */
     ingredientProb: string;
     /** Sub-value of ingredient. */
-    ingredientSubValue: string;
+    ingredientSubValue: React.ReactElement|string;
     /** Ingredient info callback */
     onIngredientInfoClick?: () => void;
 
@@ -27,14 +27,14 @@ interface ViewInput {
     /** Probability of skill */
     skillProb: string;
     /** Sub-value of skill. */
-    skillSubValue: string;
+    skillSubValue: React.ReactElement|string;
     /** Skill info callback */
     onSkillInfoClick?: () => void;
 };
 
 const Unit = styled('div')({
     display: 'grid',
-    gridTemplateColumns: '4.5rem 1fr',
+    gridTemplateColumns: '4.8rem 1fr',
     marginLeft: '0.8rem',
     marginBottom: '.4rem',
     '& header': {
@@ -78,6 +78,18 @@ const Unit = styled('div')({
     '& footer': {
         fontSize: '0.7rem',
         color: '#666',
+        '& > svg': {
+            verticalAlign: 'middle',
+            paddingLeft: '.5rem',
+            '&:first-of-type': {
+                paddingLeft: 0,
+            },
+            '&[width]': {
+                width: '.8rem',
+                height: '.8rem',
+                paddingRight: '0.2rem',
+            },
+        },
     },
 });
 
