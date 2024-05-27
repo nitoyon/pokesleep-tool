@@ -1,10 +1,13 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp, { trunc, trunc1, trunc2 } from '../../util/PokemonRp';
+import PokemonStrength from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
 import RpLabel from './RpLabel';
 import { Button, Dialog, DialogActions } from '@mui/material';
+import IngredientIcon from './IngredientIcon';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { styled } from '@mui/system';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -32,6 +35,20 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
     const rp = new PokemonRp(pokemonIv);
     const rpResult = rp.calculate();
 
+    const strength = new PokemonStrength(pokemonIv).calculate({
+        period: 24,
+        fieldBonus: 0,
+        fieldIndex: 0,
+        favoriteType: [],
+        helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
+        averageEfficiency: 1.8452,
+        isGoodCampTicketSet: false,
+        tapFrequency: "always",
+        recipeBonus: 0,
+        recipeLevel: 1,
+        event: "none",
+    });
+
     const pokemon = rp.pokemon;
     const raderHeight = 400;
 
@@ -41,15 +58,20 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
             <BerryIngSkillView
                 berryValue={trunc1(rpResult.berryRp)}
                 berryProb={trunc1(rp.berryRatio * 100)}
-                berrySubValue={`${t('strength2')}: ${rp.berryStrength}×${rp.berryCount}`}
+                berrySubValue={<>
+                    <LocalFireDepartmentIcon sx={{color: "#ff944b", width: '1rem', height: '1rem'}}/>
+                    {t('num', {n: Math.round(strength.berryTotalStrength)})}
+                </>}
                 onBerryInfoClick={onBerryInfoClick}
                 ingredientValue={trunc1(rpResult.ingredientRp)}
                 ingredientProb={trunc1(rp.ingredientRatio * 100)}
-                ingredientSubValue={`${t('strength2')}: ${rp.ingredientEnergy}×${trunc1(rp.ingredientG)}`}
+                ingredientSubValue={<>{strength.ingredients.map(x => <React.Fragment key={x.name}>
+                    <IngredientIcon name={x.name}/>{trunc1(x.count)}
+                </React.Fragment>)}</>}
                 onIngredientInfoClick={onIngInfoClick}
                 skillValue={trunc1(rpResult.skillRp)}
                 skillProb={trunc1(rp.skillRatio * 100)}
-                skillSubValue={`${t('strength2')}: ${t('num', {n: rp.skillValue})}`}
+                skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
             <RpInfoDialog open={rpInfoOpen} onClose={onRpInfoClose}
                 rp={rp} rpType={rpType}/>
