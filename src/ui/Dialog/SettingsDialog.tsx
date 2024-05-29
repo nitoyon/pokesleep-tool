@@ -55,7 +55,8 @@ export default function SettingsDialog({open, app, onAppConfigChange, onClose}: 
             setAlertOpen(true);
             return;
         }
-        onAppConfigChange({...appConfig, iconUrl: iconUrl !== "" ? iconUrl : null});
+        onAppConfigChange({...appConfig, language: lang,
+            iconUrl: iconUrl !== "" ? iconUrl : null});
         onClose();
     }, [onAppConfigChange, onClose, appConfig, iconUrlInvalid, iconUrl]);
     const onAlertClose = React.useCallback(() => {
