@@ -25,7 +25,7 @@ export default function AboutDialog({open, onClose}: AboutDialogProps) {
                 <Typography paragraph>
                     <Trans i18nKey="about2"
                         components={{
-                            x: <a href="https://twitter.com/nitoyon">@nitoyon</a>,
+                            x: <a href={`https://twitter.com/${t('x username')}`}>@{t('x username')}</a>,
                             github: <a href="https://github.com/nitoyon/pokesleep-tool">GitHub</a>,
                         }}/>
                 </Typography>
