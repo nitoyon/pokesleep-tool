@@ -30,7 +30,7 @@ export default function App({config}: {config:AppConfig}) {
         setCurApp(value);
     }, [setCurApp]);
     const onAppConfigChange = useCallback((value: AppConfig) => {
-        saveConfig(value)
+        saveConfig(value);
         setAppConfig(value);
     }, [setAppConfig]);
 
