@@ -42,6 +42,15 @@ export interface CalculateParameter {
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
 
+    /** Pokemon level (0: current level, Others: specified level) */
+    level: 0|10|25|30|50|55|60|75|100;
+
+    /** Calculate with evolved Pokemon */
+    evolved: boolean;
+
+    /** Calculate with max skill level */
+    maxSkillLevel: boolean;
+
     /** How often tap the pokemon */
     tapFrequency: "always"|"none";
 
@@ -140,7 +149,7 @@ class PokemonStrength {
 
     calculate(params: CalculateParameter): CalculateResult {
         const rp = new PokemonRp(this.iv);
-        const level = this.iv.level;
+        const level = rp.level;
         const frequency = this.pokemon.frequency === 0 ? Infinity :
             rp.frequencyWithHelpingBonus(params.helpBonusCount) /
             params.averageEfficiency;
@@ -300,6 +309,9 @@ export function loadCalculateParameter(): CalculateParameter {
         favoriteType: ["normal", "fire", "water"],
         helpBonusCount: 0,
         isGoodCampTicketSet: false,
+        level: 0,
+        evolved: false,
+        maxSkillLevel: false,
         averageEfficiency: 1.8452,
         tapFrequency: "always",
         recipeBonus: 25,
@@ -341,6 +353,16 @@ export function loadCalculateParameter(): CalculateParameter {
     }
     if (typeof(json.isGoodCampTicketSet) === "boolean") {
         ret.isGoodCampTicketSet = json.isGoodCampTicketSet;
+    }
+    if (typeof(json.level) === "number" &&
+        [0, 10, 25, 30, 50, 55, 60, 75, 100].includes(json.level)) {
+        ret.level = json.level;
+    }
+    if (typeof(json.evolved) === "boolean") {
+        ret.evolved = json.evolved;
+    }
+    if (typeof(json.maxSkillLevel) === "boolean") {
+        ret.maxSkillLevel = json.maxSkillLevel;
     }
     if (typeof(json.averageEfficiency) === "number") {
         ret.averageEfficiency = json.averageEfficiency;

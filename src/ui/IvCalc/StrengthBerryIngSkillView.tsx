@@ -1,10 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import pokemons, { PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { CalculateParameter } from '../../util/PokemonStrength';
-import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
+    Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
@@ -28,8 +30,12 @@ const StyledBerryIngSkillStrengthView = styled('div')({
         alignItems: 'center',
         margin: '0 0.2rem',
         fontSize: '1.5rem',
-        '& > span': {
+        '& > span.strength': {
             transform: 'scale(1, 0.9)',
+        },
+        '& > span.evolved': {
+            paddingLeft: '0.8rem',
+            fontSize: '0.8rem',
         },
     },
     '& > section': {
@@ -114,7 +120,46 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
 }) => {
     const { t } = useTranslation();
     const [helpOpen, setHelpOpen] = React.useState(false);
+    const [decendantId, setDecendantId] = React.useState(0);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
+
+    // change level
+    if (settings.level !== 0) {
+        pokemonIv = pokemonIv.changeLevel(settings.level);
+    }
+    // change skill level
+    if (settings.maxSkillLevel) {
+        pokemonIv = pokemonIv.clone();
+        pokemonIv.skillLevel = 7;
+        pokemonIv.normalize();
+    }
+
+    // evolved pokemon check
+    const decendants: PokemonData[] = React.useMemo(() => {
+        if (!settings.evolved || pokemonIv.pokemon.ancestor === null) {
+            return [];
+        }
+        const lineage = pokemons
+            .filter(x => x.ancestor === pokemonIv.pokemon.ancestor);
+        const maxEvolvutionCount = lineage
+            .reduce((p, c) => Math.max(p, c.evolutionCount), 0);
+        return lineage
+            .filter(x => x.evolutionCount === maxEvolvutionCount);
+    }, [pokemonIv.pokemon, settings.evolved]);
+    let pokemonChanged = false;
+    if (decendants.length > 0) {
+        let showingPokemon = decendants.find(x => x.id === pokemonIv.pokemon.id);
+        if (showingPokemon === undefined) {
+            showingPokemon = decendants.find(x => x.id === decendantId);
+        }
+        if (showingPokemon === undefined) {
+            showingPokemon = decendants[0];
+        }
+        if (showingPokemon.id !== pokemonIv.pokemon.id) {
+            pokemonChanged = true;
+            pokemonIv = pokemonIv.clone(showingPokemon.name);
+        }
+    }
 
     const strength = new PokemonStrength(pokemonIv);
     const isWhistle = (settings.period === 3);
@@ -161,13 +206,28 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     const onHelpClose = React.useCallback(() => {
         setHelpOpen(false);
     }, [setHelpOpen]);
-    
+
+    const onDecendantsChange = React.useCallback((e: SelectChangeEvent) => {
+        setDecendantId(parseInt(e.target.value, 10));
+    }, []);
+
     return <StyledBerryIngSkillStrengthView>
         <h2>
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-            <span>{t('num', {n: Math.round(result.totalStrength)})}</span>
+            <span className="strength">{t('num', {n: Math.round(result.totalStrength)})}</span>
             <InfoButton onClick={onHelpClick}/>
             <HelpDialog open={helpOpen} onClose={onHelpClose}/>
+            {decendants.length === 1 && pokemonChanged && <span className="evolved">
+                {t('strength of x', {x: t(`pokemons.${pokemonIv.pokemon.name}`)})}
+            </span>}
+            {decendants.length > 1 && pokemonChanged && <span className="evolved">
+                <Select variant="standard" value={pokemonIv.pokemon.id.toString()}
+                    onChange={onDecendantsChange}>
+                    {decendants.map(p => <MenuItem key={p.id} value={p.id}>
+                        {t('strength of x', {x: t(`pokemons.${p.name}`)})}
+                    </MenuItem>)}
+                </Select>
+            </span>}
         </h2>
         <section>
             <h3 style={{background: '#24d76a'}}>{t('berry')}</h3>

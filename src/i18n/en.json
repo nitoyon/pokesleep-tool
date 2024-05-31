@@ -135,6 +135,10 @@
         "1day": "1 day",
         "1week": "1 week",
         "whistle": "Whistle",
+        "calc with evolved": "Calculate with evolved Pokémon",
+        "calc with max skill level": "Calculate with max skill level",
+        "calc with max skill level (short)": "Max skill level",
+        "current level": "Current level",
         "field bonus": "Field bonus",
         "favorite berry": "Favorite berry",
         "helping bonus": "Helping bonus",
@@ -169,6 +173,7 @@
         "times unit": " times",
         "ingredients unit": " ingredients",
 
+        "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",
         "strength restriction1": "It is assumed that nighttime 'Sneaky Snacking' does not occur. If it occurs, the actual number of ingredients will be less than the displayed amount.",

@@ -35,6 +35,8 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
                 <ul>
                     <li>{area} ({parameter.fieldBonus}%)</li>
                     <li>{t('period')}: {t(period)}</li>
+                    {parameter.level !== 0 && <li><strong>{t('level')}: {parameter.level}</strong></li>}
+                    {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
                     <li>{t('entei event')}: {t(enteiEvent)}</li>
                 </ul>

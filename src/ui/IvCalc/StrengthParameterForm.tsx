@@ -17,6 +17,9 @@ const StyledSettingForm = styled('div')({
         display: 'flex',
         flex: '0 auto',
         alignItems: 'center',
+        '&.mt': {
+            marginTop: '1rem',
+        },
         '& > label': {
             marginRight: 'auto',
         },
@@ -73,6 +76,15 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     }, [onChange, value]);
     const onGoodCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, isGoodCampTicketSet: e.target.checked});
+    }, [onChange, value]);
+    const onLevelChange = React.useCallback((e: SelectChangeEvent) => {
+        onChange({...value, level: parseInt(e.target.value, 10) as 0|10|25|30|50|55|60|75|100})
+    }, [onChange, value])
+    const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({...value, evolved: e.target.checked});
+    }, [onChange, value]);
+    const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({...value, maxSkillLevel: e.target.checked});
     }, [onChange, value]);
     const onEventChange = React.useCallback((e: any, val: string|null) => {
         if (val !== null) {
@@ -154,7 +166,29 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
             <label>{t('good camp ticket')}:</label>
             <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
         </div>}
+        <div className="mt">
+            <label>{t('level')}:</label>
+            <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>
+                <MenuItem value={0}>{t('current level')}</MenuItem>
+                <MenuItem value={10}>Lv. 10</MenuItem>
+                <MenuItem value={25}>Lv. 25</MenuItem>
+                <MenuItem value={30}>Lv. 30</MenuItem>
+                <MenuItem value={50}>Lv. 50</MenuItem>
+                <MenuItem value={55}>Lv. 55</MenuItem>
+                <MenuItem value={60}>Lv. 60</MenuItem>
+                <MenuItem value={75}>Lv. 75</MenuItem>
+                <MenuItem value={100}>Lv. 100</MenuItem>
+            </Select>
+        </div>
         <div>
+            <label>{t('calc with evolved')}:</label>
+            <Switch checked={value.evolved} onChange={onEvolvedChange}/>
+        </div>
+        <div>
+            <label>{t('calc with max skill level')}:</label>
+            <Switch checked={value.maxSkillLevel} onChange={onMaxSkillLevelChange}/>
+        </div>
+        <div className="mt">
             <label>{t('entei event')}:</label>
             <ToggleButtonGroup size="small" exclusive
                 value={value.event} onChange={onEventChange}>
@@ -163,7 +197,7 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <ToggleButton value="entei 2nd week">{t('2nd week')}</ToggleButton>
             </ToggleButtonGroup>
         </div>
-        <div>
+        <div className="mt">
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
                 onChange={onHelpBonusCountChange}>
@@ -197,7 +231,7 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value={2.2222}>{t('always 81%+')}</MenuItem>
             </Select>
         </div>}
-        <div>
+        <div className="mt">
             <label>{t('recipe range (the number of ingredients)')}:</label>
             <FormControl size="small">
             <Select variant="standard" value={value.recipeBonus.toString()}
