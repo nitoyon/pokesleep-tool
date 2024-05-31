@@ -76,6 +76,14 @@ class SubSkill {
         return SubSkill.allSubSkills.findIndex(x => x.name === this.name);
     }
 
+    get skillLevelUp(): 0|1|2 {
+        switch (this.value) {
+            case "Skill Level Up M": return 2;
+            case "Skill Level Up S": return 1;
+            default: return 0;
+        }
+    }
+
     get skillTrigger(): 0|1|2 {
         switch (this.value) {
             case "Skill Trigger M": return 2;

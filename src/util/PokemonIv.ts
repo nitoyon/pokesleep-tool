@@ -28,10 +28,15 @@ class PokemonIv {
 
         // set default value
         this.level = 30;
-        this.skillLevel = 3;
-        this.ingredient = "ABC";
+        this.skillLevel = Math.min(pokemon.evolutionCount + 1, 1);
+        this.ingredient = pokemon.ing3 !== undefined ? "ABC" : "ABB";
         this.subSkills = new SubSkillList();
         this.nature = new Nature("Serious");
+    }
+
+    /** Get active sub-skills list. */
+    get activeSubSkills(): SubSkill[] {
+        return this.subSkills.getActiveSubSkills(this.level);
     }
 
     /**
@@ -42,7 +47,13 @@ class PokemonIv {
     clone(pokemonName?: string): PokemonIv {
         const ret = new PokemonIv(pokemonName ?? this.pokemonName);
         ret.level = this.level;
+
         ret.skillLevel = this.skillLevel;
+        if (this.pokemon.id !== ret.pokemon.id) {
+            ret.skillLevel += Math.max(0, ret.pokemon.evolutionCount) -
+                Math.max(0, this.pokemon.evolutionCount);
+        }
+
         ret.ingredient = this.ingredient;
         ret.subSkills = this.subSkills.clone();
         ret.nature = this.nature;
@@ -51,9 +62,28 @@ class PokemonIv {
     }
 
     /**
+     * Creates a new PokemonIv instance with a changed level.
+     * @param level The new level for the PokemonIv.
+     * @return A new PokemonIv instance with the specified level.
+     */
+    changeLevel(level: number): PokemonIv {
+        const ret = this.clone();
+        ret.level = level;
+
+        const beforeSkillLevelUp = this.activeSubSkills
+            .reduce((p, c) => p + c.skillLevelUp, 0);
+        const afterSkillLevelUp = ret.activeSubSkills
+            .reduce((p, c) => p + c.skillLevelUp, 0);
+        ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
+        ret.normalize();
+        return ret;
+    }
+
+    /**
      * Normalize current state.
      */
     normalize() {
+        this.skillLevel = Math.min(7, Math.max(this.skillLevel, 1));
         if (this.skillLevel === 7 && !isSkillLevelMax7(this.pokemon.skill)) {
             this.skillLevel = 6;
         }
