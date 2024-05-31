@@ -125,6 +125,10 @@
         "1day": "1日",
         "1week": "1週間",
         "whistle": "ホイッスル",
+        "current level": "現在のレベル",
+        "calc with evolved": "進化後ポケモンで計算",
+        "calc with max skill level": "最大スキルレベルで計算",
+        "calc with max skill level (short)": "最大スキレベ",
         "field bonus": "フィールドボーナス",
         "favorite berry": "好みきのみ",
         "helping bonus": "おてつだいボーナス",
@@ -159,6 +163,7 @@
         "times unit": "回",
         "ingredients unit": "食材",
 
+        "strength of x": "{{x}}のエナジー",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
         "strength detail2": "現時点の計算ロジックには次のような制約があります。",
         "strength restriction1": "夜間の「いつのまに育成」は発生しないものと仮定しています。夜間に「いつのまに育成」が発生しているのであれば、実際の食材数は、表示されている数よりも少なくなります。",
