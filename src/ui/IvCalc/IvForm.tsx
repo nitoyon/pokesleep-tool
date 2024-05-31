@@ -53,8 +53,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         onChange(pokemonIv.clone(name));
     }, [pokemonIv, onChange]);
     const onLevelChange = React.useCallback((level: number) => {
-        const iv = pokemonIv.clone();
-        iv.level = level;
+        const iv = pokemonIv.changeLevel(level);
         onChange(iv);
     }, [pokemonIv, onChange]);
     const onIngredientChange = React.useCallback((value: IngredientType) => {
@@ -68,8 +67,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         onChange(iv);
     }, [pokemonIv, onChange]);
     const onSubSkillChange = React.useCallback((event: SubSkillChangeEvent) => {
-        const iv = pokemonIv.clone();
-        iv.subSkills = event.value;
+        const iv = pokemonIv.changeSubSkills(event.value);
         onChange(iv);
     }, [pokemonIv, onChange]);
     const onNatureChange = React.useCallback((value: Nature) => {

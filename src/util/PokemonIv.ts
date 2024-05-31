@@ -28,7 +28,7 @@ class PokemonIv {
 
         // set default value
         this.level = 30;
-        this.skillLevel = Math.min(pokemon.evolutionCount + 1, 1);
+        this.skillLevel = Math.max(pokemon.evolutionCount + 1, 1);
         this.ingredient = pokemon.ing3 !== undefined ? "ABC" : "ABB";
         this.subSkills = new SubSkillList();
         this.nature = new Nature("Serious");
@@ -69,6 +69,24 @@ class PokemonIv {
     changeLevel(level: number): PokemonIv {
         const ret = this.clone();
         ret.level = level;
+
+        const beforeSkillLevelUp = this.activeSubSkills
+            .reduce((p, c) => p + c.skillLevelUp, 0);
+        const afterSkillLevelUp = ret.activeSubSkills
+            .reduce((p, c) => p + c.skillLevelUp, 0);
+        ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
+        ret.normalize();
+        return ret;
+    }
+
+    /**
+     * Creates a new PokemonIv instance with a changed sub-skills.
+     * @param subSkills The new sub-skills for the PokemonIv.
+     * @return A new PokemonIv instance with the specified sub-skills.
+     */
+    changeSubSkills(subSkills: SubSkillList): PokemonIv {
+        const ret = this.clone();
+        ret.subSkills = subSkills;
 
         const beforeSkillLevelUp = this.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
