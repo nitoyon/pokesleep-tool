@@ -3,9 +3,51 @@ import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
 
 describe('PokemonIV', () => {
+    describe('clone', () => {
+        test('same pokemon', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            expect(iv.skillLevel).toBe(1);
+            iv.skillLevel = 2;
+
+            const iv2 = iv.clone();
+            expect(iv2.skillLevel).toBe(2);
+            expect(iv.isEqual(iv2)).toBe(true);
+        });
+
+        test('evolved pokemon', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            expect(iv.skillLevel).toBe(1);
+            iv.skillLevel = 2;
+
+            const iv2 = iv.clone('Venusaur');
+            expect(iv2.skillLevel).toBe(4);
+        });
+
+        test('evolved pokemon (max skill level 6)', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            expect(iv.skillLevel).toBe(1);
+            iv.skillLevel = 5;
+
+            const iv2 = iv.clone('Venusaur');
+            expect(iv2.skillLevel).toBe(6);
+        });
+    });
+
+    test('changeLevel', () => {
+        const iv = new PokemonIv('Bulbasaur');
+        iv.level = 15;
+        iv.skillLevel = 3;
+        iv.subSkills.lv10 = new SubSkill('Skill Level Up M');
+        iv.subSkills.lv25 = new SubSkill('Skill Level Up S');
+
+        expect(iv.changeLevel(9).skillLevel).toBe(1);
+        expect(iv.changeLevel(25).skillLevel).toBe(4);
+    });
+
     describe('serialize', () => {
         test('empty Bulbasaur', () => {
             const iv = new PokemonIv('Bulbasaur');
+            iv.skillLevel = 3;
             expect(iv.serialize()).toBe('EQCApwj5-38f');
 
             const ret = PokemonIv.deserialize('EQCApwj5-38f');
@@ -30,6 +72,7 @@ describe('PokemonIV', () => {
 
         test('Pikachu (Halloween)', () => {
             const iv = new PokemonIv('Pikachu (Halloween)');
+            iv.skillLevel = 3;
             expect(iv.serialize()).toBe('kQGBpwj5-38f');
 
             const ret = PokemonIv.deserialize('kQGBpwj5-38f');
