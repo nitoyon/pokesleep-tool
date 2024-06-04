@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { FormControl, MenuItem, Select, SelectChangeEvent, Switch,
-    ToggleButton, ToggleButtonGroup } from '@mui/material';
+    } from '@mui/material';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { CalculateParameter } from '../../util/PokemonStrength';
@@ -85,11 +85,6 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     }, [onChange, value]);
     const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, maxSkillLevel: e.target.checked});
-    }, [onChange, value]);
-    const onEventChange = React.useCallback((e: any, val: string|null) => {
-        if (val !== null) {
-            onChange({...value, event: val as "none"|"entei 1st week"|"entei 2nd week"});
-        }
     }, [onChange, value]);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
@@ -187,15 +182,6 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
         <div>
             <label>{t('calc with max skill level')}:</label>
             <Switch checked={value.maxSkillLevel} onChange={onMaxSkillLevelChange}/>
-        </div>
-        <div className="mt">
-            <label>{t('entei event')}:</label>
-            <ToggleButtonGroup size="small" exclusive
-                value={value.event} onChange={onEventChange}>
-                <ToggleButton value="none">{t('none')}</ToggleButton>
-                <ToggleButton value="entei 1st week">{t('1st week')}</ToggleButton>
-                <ToggleButton value="entei 2nd week">{t('2nd week')}</ToggleButton>
-            </ToggleButtonGroup>
         </div>
         <div className="mt">
             <label>{t('helping bonus')}:</label>
