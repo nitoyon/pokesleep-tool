@@ -25,8 +25,6 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
     }
     const period = (parameter.period === 24 ? '1day' :
         parameter.period === 168 ? '1week' : 'whistle');
-    const enteiEvent = (parameter.event === 'entei 1st week' ? '1st week' :
-        parameter.event === 'entei 2nd week' ? '2nd week' : 'none');
 
     return (<div>
         <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}/>
@@ -38,7 +36,6 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
                     {parameter.level !== 0 && <li><strong>{t('level')}: {parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
-                    <li>{t('entei event')}: {t(enteiEvent)}</li>
                 </ul>
                 <Button onClick={onEditClick} size="small">{t('edit')}</Button>
             </StrengthParameterPreview>
