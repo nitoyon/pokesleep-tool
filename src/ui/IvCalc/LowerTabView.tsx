@@ -14,7 +14,8 @@ import { useTranslation } from 'react-i18next';
 
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
-        "closeAlert"|"closeBoxItemDialog";
+        "saveItem"|"restoreItem"|
+        "editDialogClose"|"closeAlert";
 }|{
     type: "select"|"edit"|"dup"|"remove";
     payload: {id: number};
@@ -22,7 +23,7 @@ export type IvAction = {
     type: "addOrEditDone";
     payload: {item: PokemonBoxItem};
 }|{
-    type: "addThis"|"saveToBox";
+    type: "addThis";
     payload: {iv: PokemonIv};
 };
     
@@ -83,6 +84,10 @@ const LowerTabView = React.memo(({
             setBoxExportDialogOpen(true);
             return;
         }
+        if (type === "exportClose") {
+            setBoxExportDialogOpen(false);
+            return;
+        }
         if (type === "import") {
             if (!box.canAdd) {
                 setAlertMessage(t('box is full'));
@@ -92,7 +97,51 @@ const LowerTabView = React.memo(({
             setBoxImportDialogOpen(true);
             return;
         }
- 
+        if (type === "importClose") {
+            setBoxImportDialogOpen(false);
+            const newBox = new PokemonBox(box.items);
+            setBox(newBox);
+            return;
+        }
+        if (type === "restoreItem") {
+            if (selectedItem !== null) {
+                onChange(selectedItem.iv);
+            }
+            return;
+        }
+        if (type === "saveItem") {
+            const newBox = new PokemonBox(box.items);
+            newBox.set(selectedItemId, pokemonIv);
+            newBox.save();
+            setBox(newBox);
+            return;
+        }
+
+        if (type === "editDialogClose") {
+            setBoxItemDialogOpen(false);
+            return;
+        }
+        if (type === "addOrEditDone") {
+            const value = action.payload.item;
+            const newBox = new PokemonBox(box.items);
+            if (value.id === -1) {
+                const id = newBox.add(value.iv, value.nickname);
+                setSelectedItemId(id);
+            }
+            else {
+                newBox.set(value.id, value.iv, value.nickname);
+            }
+            newBox.save();
+            setBox(newBox);
+            onChange(value.iv);
+            return;
+        }
+
+        if (type === "closeAlert") {
+            setAlertMessage("");
+            return;
+        }
+
         // following action requires item
         if (type !== "select" && type !== "edit" &&
             type !== "dup" && type !== "remove")
@@ -124,7 +173,7 @@ const LowerTabView = React.memo(({
             newBox.save();
             setBox(newBox);
         }
-    }, [box, pokemonIv, t, onChange]);
+    }, [box, pokemonIv, selectedItem, selectedItemId, t, onChange]);
 
     // called when IV is edited in IvForm
     const onFormChange = React.useCallback((iv: PokemonIv) => {
@@ -147,38 +196,23 @@ const LowerTabView = React.memo(({
     }, [selectedItem, onChange]);
 
     const onRestoreClick = React.useCallback(() => {
-        if (selectedItem !== null) {
-            onChange(selectedItem.iv);
-        }
-    }, [onChange, selectedItem]);
+        onBoxChange({type: "restoreItem"});
+    }, [onBoxChange]);
     const onSaveClick = React.useCallback(() => {
-        const newBox = new PokemonBox(box.items);
-        newBox.set(selectedItemId, pokemonIv);
-        newBox.save();
-        setBox(newBox);
-    }, [box.items, pokemonIv, selectedItemId]);
+        onBoxChange({type: "saveItem"});
+    }, [onBoxChange]);
 
     const onAlertMessageClose = React.useCallback(() => {
-        setAlertMessage("");
-    }, [])
+        onBoxChange({type: "closeAlert"});
+    }, [onBoxChange])
 
     const onBoxItemEditDialogClose = React.useCallback(() => {
-        setBoxItemDialogOpen(false);
-    }, []);
+        onBoxChange({type: "editDialogClose"});
+    }, [onBoxChange]);
 
     const onBoxItemDialogChange = React.useCallback((value: PokemonBoxItem) => {
-        const newBox = new PokemonBox(box.items);
-        if (value.id === -1) {
-            const id = newBox.add(value.iv, value.nickname);
-            setSelectedItemId(id);
-        }
-        else {
-            newBox.set(value.id, value.iv, value.nickname);
-        }
-        newBox.save();
-        setBox(newBox);
-        onChange(value.iv);
-    }, [box.items, onChange]);
+        onBoxChange({type: "addOrEditDone", payload: {item: value}});
+    }, [onBoxChange]);
 
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(pokemonIv);
@@ -187,13 +221,11 @@ const LowerTabView = React.memo(({
         onBoxChange({type} as IvAction);
     }, [onBoxChange]);
     const onBoxExportDialogClose = React.useCallback(() => {
-        setBoxExportDialogOpen(false);
-    }, []);
+        onBoxChange({type: "exportClose"});
+    }, [onBoxChange]);
     const onBoxImportDialogClose = React.useCallback(() => {
-        setBoxImportDialogOpen(false);
-        const newBox = new PokemonBox(box.items);
-        setBox(newBox);
-    }, [box.items]);
+        onBoxChange({type: "importClose"});
+    }, [onBoxChange]);
 
     return (<div>
         <LowerTabHeader upperTabIndex={upperTabIndex} tabIndex={tabIndex}

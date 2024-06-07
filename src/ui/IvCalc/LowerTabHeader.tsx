@@ -29,7 +29,7 @@ const LowerTabHeader = React.memo(({
 
         const val = e.currentTarget.getAttribute('data-value') || "";
         onMenuItemClick(val);
-        if (val === "addToBox") {
+        if (val === "addThis") {
             startAddToBoxAnimation(boxTabRef.current);
         }
     }, [onMenuItemClick]);
@@ -58,7 +58,7 @@ const LowerTabHeader = React.memo(({
         <Menu anchorEl={moreMenuAnchor} open={isIvMenuOpen}
             onClose={onMoreMenuClose} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
             <MenuList>
-                <MenuItem onClick={onMenuItemClickHandler} data-value="addToBox">
+                <MenuItem onClick={onMenuItemClickHandler} data-value="addThis">
                     <ListItemIcon><AddCircleOutlineIcon/></ListItemIcon>
                     {t('add to box')}
                 </MenuItem>
