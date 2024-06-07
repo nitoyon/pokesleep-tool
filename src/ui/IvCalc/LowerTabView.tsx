@@ -15,9 +15,8 @@ import { useTranslation } from 'react-i18next';
 export type BoxItemActionType = "select"|"add"|"edit"|"dup"|"remove"|
     "addToBox"|"export"|"import";
 
-const box = new PokemonBox();
-box.load();
-const initialBoxItems = box.items;
+const initialBox = new PokemonBox();
+initialBox.load();
 
 const LowerTabView = React.memo(({
     pokemonIv, parameter, upperTabIndex, tabIndex,
@@ -31,7 +30,7 @@ const LowerTabView = React.memo(({
     onTabIndexChange: (value: number) => void,
     onParameterChange: (value: CalculateParameter) => void,
 }) => {
-    const [items, setItems] = React.useState<PokemonBoxItem[]>(initialBoxItems);
+    const [box, setBox] = React.useState<PokemonBox>(initialBox);
     const [selectedItemId, setSelectedItemId] = React.useState(-1);
     const [boxItemDialogOpen, setBoxItemDialogOpen] = React.useState(false);
     const [boxItemDialogKey, setBoxItemDialogKey] = React.useState("");
@@ -61,9 +60,10 @@ const LowerTabView = React.memo(({
                 return;
             }
 
-            const id: number = box.add(pokemonIv);
-            box.save();
-            setItems(box.items);
+            const newBox = new PokemonBox(box.items);
+            const id: number = newBox.add(pokemonIv);
+            newBox.save();
+            setBox(newBox);
             setSelectedItemId(id);
             return;
         }
@@ -94,17 +94,19 @@ const LowerTabView = React.memo(({
             setBoxItemDialogIsEdit(true);
         }
         else if (action === "dup") {
-            const id: number = box.add(item.iv.clone(), item.nickname);
-            box.save();
-            setItems(box.items);
+            const newBox = new PokemonBox(box.items);
+            const id: number = newBox.add(item.iv.clone(), item.nickname);
+            newBox.save();
+            setBox(newBox);
             setSelectedItemId(id);
         }
         else if (action === "remove") {
-            box.remove(id);
-            box.save();
-            setItems(box.items);
+            const newBox = new PokemonBox(box.items);
+            newBox.remove(id);
+            newBox.save();
+            setBox(newBox);
         }
-    }, [pokemonIv, t, onChange]);
+    }, [box, pokemonIv, t, onChange]);
 
     // called when IV is edited in IvForm
     const onFormChange = React.useCallback((iv: PokemonIv) => {
@@ -132,10 +134,11 @@ const LowerTabView = React.memo(({
         }
     }, [onChange, selectedItem]);
     const onSaveClick = React.useCallback(() => {
-        box.set(selectedItemId, pokemonIv);
-        box.save();
-        setItems(box.items);
-    }, [pokemonIv, selectedItemId]);
+        const newBox = new PokemonBox(box.items);
+        newBox.set(selectedItemId, pokemonIv);
+        newBox.save();
+        setBox(newBox);
+    }, [box.items, pokemonIv, selectedItemId]);
 
     const onAlertMessageClose = React.useCallback(() => {
         setAlertMessage("");
@@ -146,17 +149,18 @@ const LowerTabView = React.memo(({
     }, []);
 
     const onBoxItemDialogChange = React.useCallback((value: PokemonBoxItem) => {
+        const newBox = new PokemonBox(box.items);
         if (value.id === -1) {
-            const id = box.add(value.iv, value.nickname);
+            const id = newBox.add(value.iv, value.nickname);
             setSelectedItemId(id);
         }
         else {
-            box.set(value.id, value.iv, value.nickname);
+            newBox.set(value.id, value.iv, value.nickname);
         }
-        box.save();
-        setItems(box.items);
+        newBox.save();
+        setBox(newBox);
         onChange(value.iv);
-    }, [onChange]);
+    }, [box.items, onChange]);
 
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(pokemonIv);
@@ -169,8 +173,9 @@ const LowerTabView = React.memo(({
     }, []);
     const onBoxImportDialogClose = React.useCallback(() => {
         setBoxImportDialogOpen(false);
-        setItems(box.items);
-    }, []);
+        const newBox = new PokemonBox(box.items);
+        setBox(newBox);
+    }, [box.items]);
 
     return (<div>
         <LowerTabHeader upperTabIndex={upperTabIndex} tabIndex={tabIndex}
@@ -180,7 +185,7 @@ const LowerTabView = React.memo(({
         {tabIndex === 0 &&
             <IvForm pokemonIv={pokemonIv} onChange={onFormChange}/>}
         {tabIndex === 1 &&
-            <BoxView items={items}
+            <BoxView items={box.items}
                 selectedId={selectedItemId} onChange={onBoxChange}/>}
         {tabIndex === 2 && 
             <StrengthSettingForm value={parameter}
