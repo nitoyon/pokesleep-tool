@@ -2,11 +2,20 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Tab, Tabs } from '@mui/material'; 
 import PokemonIv from '../../util/PokemonIv';
-import { CalculateParameter, loadCalculateParameter } from '../../util/PokemonStrength';
-import LowerTabView from './LowerTabView';
+import { PokemonBoxItem } from '../../util/PokemonBox';
+import { IvAction, ivStateReducer, initialIvState } from './IvState';
+import { CalculateParameter } from '../../util/PokemonStrength';
+import LowerTabHeader from './LowerTabHeader';
+import BoxView from './BoxView';
+import IvForm from './IvForm';
+import StrengthSettingForm from './StrengthParameterForm';
 import RpView from './RpView';
 import StrengthView from './StrengthView';
 import RatingView from './RatingView';
+import BoxItemDialog from './BoxItemDialog';
+import BoxExportDialog from './BoxExportDialog';
+import BoxImportDialog from './BoxImportDialog';
+import { Button, Snackbar }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export const StyledTabs = styled(Tabs)({
@@ -18,66 +27,112 @@ export const StyledTab = styled(Tab)({
     padding: '6px 16px',
 });
 
-const defaultCalculateParameter = loadCalculateParameter();
-
 const ResearchCalcApp = React.memo(() => {
-    const [tabIndex, setTabIndex] = React.useState(0);
-    const [lowerTabIndex, setLowerTabIndex] = React.useState(0);
-    const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Venusaur"));
-    const [parameter, setParameter] = React.useState(defaultCalculateParameter);
+    const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
     const { t } = useTranslation();
     const width = useDomWidth();
 
-    const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
-        setTabIndex(newValue);
-        if (newValue !== 1 && lowerTabIndex === 2) {
-            setLowerTabIndex(0);
-        }
-    }, [lowerTabIndex, setTabIndex, setLowerTabIndex]);
-
-    const onParameterChange = React.useCallback((value: CalculateParameter) => {
-        setParameter(value);
-        localStorage.setItem('PstStrenghParam', JSON.stringify(value));
-    }, [setParameter]);
+    const selectedItem = state.box.getById(state.selectedItemId);
 
     const onPokemonIvChange = React.useCallback((value: PokemonIv) => {
-        // fix helpingBonusCount
-        const hasHelpingBonus = value.hasHelpingBonusInActiveSubSkills;
-        const prevHasHelpingBonus = pokemonIv.hasHelpingBonusInActiveSubSkills;
-        if (hasHelpingBonus && parameter.helpBonusCount === 0) {
-            onParameterChange({...parameter, helpBonusCount: 1});
-        } else if (parameter.helpBonusCount === 1 && !hasHelpingBonus &&
-            prevHasHelpingBonus) {
-            onParameterChange({...parameter, helpBonusCount: 0});
-        } else if (!hasHelpingBonus && parameter.helpBonusCount === 5) {
-            onParameterChange({...parameter, helpBonusCount: 4});
-        }
-
-        value.normalize();
-        setPokemonIv(value);
-    }, [parameter, pokemonIv, setPokemonIv, onParameterChange]);
+        dispatch({type: "updateIv", payload: {iv: value}});
+    }, []);
 
     const onParameterEdit = React.useCallback(() => {
-        setLowerTabIndex(2);
-    }, [setLowerTabIndex]);
+        dispatch({type: "changeLowerTab", payload: {index: 2}});
+    }, []);
 
-    return <div style={{margin: "0 .5rem 10rem"}}>
-        <StyledTabs value={tabIndex} onChange={onTabChange}>
-            <StyledTab label={t('rp')}/>
-            <StyledTab label={t('strength2')}/>
-            <StyledTab label={t('rating')}/>
-        </StyledTabs>
-        {tabIndex === 0 && <RpView pokemonIv={pokemonIv} width={width}/>}
-        {tabIndex === 1 && <StrengthView pokemonIv={pokemonIv}
-            lowerTabIndex={lowerTabIndex} parameter={parameter}
-            onParameterEdit={onParameterEdit}/>}
-        {tabIndex === 2 && <RatingView pokemonIv={pokemonIv} width={width}/>}
-        <LowerTabView pokemonIv={pokemonIv} parameter={parameter}
-            upperTabIndex={tabIndex} tabIndex={lowerTabIndex}
-            onChange={onPokemonIvChange}
-            onTabIndexChange={setLowerTabIndex}
-            onParameterChange={onParameterChange}/>
-    </div>;
+    const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
+        dispatch({type: "changeUpperTab", payload: {index: newValue}});
+    }, []);
+
+    const onParameterChange = React.useCallback((value: CalculateParameter) => {
+        dispatch({type: "changeParameter", payload: {parameter: value}});
+    }, []);
+
+    const onRestoreClick = React.useCallback(() => {
+        dispatch({type: "restoreItem"});
+    }, []);
+    const onSaveClick = React.useCallback(() => {
+        dispatch({type: "saveItem"});
+    }, []);
+
+    const onAlertMessageClose = React.useCallback(() => {
+        dispatch({type: "closeAlert"});
+    }, [])
+
+    const onBoxItemEditDialogClose = React.useCallback(() => {
+        dispatch({type: "editDialogClose"});
+    }, []);
+
+    const onBoxItemDialogChange = React.useCallback((value: PokemonBoxItem) => {
+        dispatch({type: "addOrEditDone", payload: {item: value}});
+    }, []);
+
+    const isSelectedItemEdited = selectedItem !== null &&
+        !selectedItem.iv.isEqual(state.pokemonIv);
+
+    const onHeaderMenuClick = React.useCallback((type: string) => {
+        dispatch({type} as IvAction);
+    }, []);
+    const onBoxExportDialogClose = React.useCallback(() => {
+        dispatch({type: "exportClose"});
+    }, []);
+    const onBoxImportDialogClose = React.useCallback(() => {
+        dispatch({type: "importClose"});
+    }, []);
+    const onLowerTabChange = React.useCallback((value: number) => {
+        dispatch({type: "changeLowerTab", payload: {index: value}});
+    }, []);
+
+    return <>
+        <div style={{margin: "0 .5rem", position: 'sticky', top: 0,
+            zIndex: 1, background: '#f9f9f9',
+        }}>
+            <StyledTabs value={state.tabIndex} onChange={onTabChange}>
+                <StyledTab label={t('rp')}/>
+                <StyledTab label={t('strength2')}/>
+                <StyledTab label={t('rating')}/>
+            </StyledTabs>
+            {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
+            {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
+                lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
+                onParameterEdit={onParameterEdit}/>}
+            {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
+                <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
+                    isBoxEmpty={state.box.items.length === 0}
+                    onChange={onLowerTabChange}
+                    onMenuItemClick={onHeaderMenuClick}/>
+        </div>
+        <div style={{margin: "0 .5rem"}}>
+            {state.lowerTabIndex === 0 &&
+                <div style={{marginBottom: '10rem'}}>
+                    <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+                </div>}
+            {state.lowerTabIndex === 1 &&
+                <BoxView items={state.box.items}
+                    selectedId={state.selectedItemId} onChange={dispatch}/>}
+            {state.lowerTabIndex === 2 && 
+                <StrengthSettingForm value={state.parameter}
+                    hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
+                    onChange={onParameterChange}/>}
+        </div>
+        <BoxItemDialog key={state.boxItemDialogKey}
+            open={state.boxItemDialogOpen} boxItem={selectedItem}
+            isEdit={state.boxItemDialogIsEdit}
+            onClose={onBoxItemEditDialogClose} onChange={onBoxItemDialogChange}/>
+        <BoxExportDialog box={state.box}
+            open={state.boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
+        <BoxImportDialog box={state.box}
+            open={state.boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
+        <Snackbar open={state.alertMessage !== ""} message={t(state.alertMessage)}
+            autoHideDuration={2000} onClose={onAlertMessageClose}/>
+        <Snackbar open={isSelectedItemEdited} message={t('pokemon in the box is edited')}
+            action={<>
+                <Button onClick={onRestoreClick}>{t('reset')}</Button>
+                <Button onClick={onSaveClick}>{t('save')}</Button>
+            </>}/>
+    </>;
 });
 
 

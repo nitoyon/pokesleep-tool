@@ -2,14 +2,14 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIcon from './PokemonIcon';
-import { BoxItemActionType } from './LowerTabView';
+import { IvAction } from './IvState';
 import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
-import { Button, ButtonBase, IconButton, ListItemIcon,
+import { ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -19,18 +19,18 @@ import { useTranslation } from 'react-i18next';
 const BoxView = React.memo(({items, selectedId, onChange}: {
     items: PokemonBoxItem[],
     selectedId: number,
-    onChange: (id: number, action: BoxItemActionType) => void,
+    onChange: (action: IvAction) => void,
 }) => {
     const { t } = useTranslation();
     const defaultConfig = React.useMemo(() => loadPokemonDialogConfig(), []);
     const [config, setConfig] = React.useState<PokemonDialogConfig>(defaultConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
-    const onItemChange = React.useCallback((id: number, action: BoxItemActionType) => {
-        onChange(id, action);
+    const onItemChange = React.useCallback((action: IvAction) => {
+        onChange(action);
     }, [onChange]);
 
     const onAddClick = React.useCallback(() => {
-        onChange(-1, "add");
+        onChange({type: "add"});
     }, [onChange]);
 
     const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
@@ -105,23 +105,25 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
+            marginBottom: '60px',
         }}>
-            {elms.length === 0 && <div style={{margin: "2rem auto", color: "#888", fontSize: "0.9rem"}}>
+            {elms.length === 0 && <div style={{margin: "5rem auto", color: "#888", fontSize: "0.9rem"}}>
                 {items.length === 0 ? t('box is empty') : t('no pokemon found')}
             </div>}
             {elms}
         </div>
-        <div style={{margin: '0.4rem 0.4rem 0 0', textAlign: 'right'}}>
-        <Button onClick={onAddClick}
-            startIcon={<AddCircleOutlineIcon/>}>{t('add')}</Button>
-        </div>
         <div style={{
             position: 'sticky',
             bottom: 0,
+            paddingLeft: '1rem',
             paddingBottom: '1.2rem',
             background: '#f76',
             margin: '.5rem -.5rem 0',
         }}>
+            <Fab onClick={onAddClick} color="primary" size="medium"
+                sx={{position: 'absolute', bottom: '70px', right: '10px'}}>
+                <AddIcon/>
+            </Fab>
             <PokemonFilterFooter value={footerValue}
                 onChange={onFilterConfigChange}
                 onFilterButtonClick={onFilterButtonClick}
@@ -187,7 +189,7 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
 const BoxLargeItem = React.memo(({item, selected, onChange}: {
     item: PokemonBoxItem,
     selected: boolean,
-    onChange: (id: number, type: BoxItemActionType) => void,
+    onChange: (action: IvAction) => void,
 }) => {
     const { t } = useTranslation();
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
@@ -199,7 +201,7 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
     }, 500);
 
     const clickHandler = React.useCallback(() => {
-        onChange(item.id, "select");
+        onChange({type: "select", payload: {id: item.id}});
     }, [onChange, item.id]);
     const onMoreIconClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         setMoreMenuAnchor(event.currentTarget);
@@ -207,8 +209,8 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
     const onMoreMenuClose = React.useCallback(() => {
         setMoreMenuAnchor(null);
     }, [setMoreMenuAnchor]);
-    const onMenuClick = React.useCallback((action: BoxItemActionType) => {
-        onChange(item.id, action);
+    const onMenuClick = React.useCallback((type: string) => {
+        onChange({type, payload: {id: item.id}} as IvAction);
         setMoreMenuAnchor(null);
     }, [item, onChange, setMoreMenuAnchor]);
 
