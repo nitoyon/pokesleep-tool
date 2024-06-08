@@ -83,6 +83,7 @@ const LowerTabHeader = React.memo(({
 
 const StyledContainer = styled('div')({
     'marginTop': '0.8rem',
+    paddingBottom: '0.1rem',
     '& > button.MuiIconButton-root': {
         float: 'right',
         color: '#999',

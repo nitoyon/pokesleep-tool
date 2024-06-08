@@ -85,23 +85,26 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "changeLowerTab", payload: {index: value}});
     }, []);
 
-    return <div style={{margin: "0 .5rem 10rem"}}>
-        <StyledTabs value={state.tabIndex} onChange={onTabChange}>
-            <StyledTab label={t('rp')}/>
-            <StyledTab label={t('strength2')}/>
-            <StyledTab label={t('rating')}/>
-        </StyledTabs>
-        {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
-        {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
-            lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
-            onParameterEdit={onParameterEdit}/>}
-        {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-        <div>
-            <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
-                isBoxEmpty={state.box.items.length === 0}
-                onChange={onLowerTabChange}
-                onMenuItemClick={onHeaderMenuClick}/>
-
+    return <>
+        <div style={{margin: "0 .5rem", position: 'sticky', top: 0,
+            zIndex: 1, background: '#f9f9f9',
+        }}>
+            <StyledTabs value={state.tabIndex} onChange={onTabChange}>
+                <StyledTab label={t('rp')}/>
+                <StyledTab label={t('strength2')}/>
+                <StyledTab label={t('rating')}/>
+            </StyledTabs>
+            {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
+            {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
+                lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
+                onParameterEdit={onParameterEdit}/>}
+            {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
+                <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
+                    isBoxEmpty={state.box.items.length === 0}
+                    onChange={onLowerTabChange}
+                    onMenuItemClick={onHeaderMenuClick}/>
+        </div>
+        <div style={{margin: "0 .5rem 10rem"}}>
             {state.lowerTabIndex === 0 &&
                 <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>}
             {state.lowerTabIndex === 1 &&
@@ -127,7 +130,7 @@ const ResearchCalcApp = React.memo(() => {
                 <Button onClick={onRestoreClick}>{t('reset')}</Button>
                 <Button onClick={onSaveClick}>{t('save')}</Button>
             </>}/>
-    </div>;
+    </>;
 });
 
 
