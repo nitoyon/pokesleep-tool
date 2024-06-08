@@ -11,6 +11,7 @@ type PeriodType = "1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
     padding: '0 .5rem',
+    marginBottom: '10rem',
     '& > div': {
         margin: '0.2rem 0',
         fontSize: '.9rem',

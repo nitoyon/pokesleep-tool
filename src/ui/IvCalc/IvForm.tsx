@@ -22,7 +22,7 @@ import i18next from 'i18next'
 
 // Style for IvForm
 const StyledInputForm = styled('div')({
-    margin: '0 .3rem',
+    margin: '0 0.3rem 0 0.3rem',
     fontSize: '.9rem',
     '& > div.table': {
         display: 'grid',
