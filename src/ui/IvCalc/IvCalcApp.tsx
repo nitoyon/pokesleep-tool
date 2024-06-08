@@ -41,162 +41,198 @@ export type IvAction = {
 }|{
     type: "addThis";
     payload: {iv: PokemonIv};
+}|{
+    type: "changeUpperTab"|"changeLowerTab",
+    payload: {index: number},
+}|{
+    type: "changeParameter",
+    payload: {parameter: CalculateParameter},
 };
 
 const initialBox = new PokemonBox();
 initialBox.load();
 
+type IvState = {
+    tabIndex: number;
+    lowerTabIndex: number;
+    pokemonIv: PokemonIv;
+    parameter: CalculateParameter;
+    box: PokemonBox;
+    selectedItemId: number;
+    boxItemDialogOpen: boolean;
+    boxItemDialogKey: string;
+    boxItemDialogIsEdit: boolean;
+    boxExportDialogOpen: boolean;
+    boxImportDialogOpen: boolean;
+    alertMessage: string;
+};
+const initialIvState: IvState = {
+    tabIndex: 0,
+    lowerTabIndex: 0,
+    pokemonIv: new PokemonIv("Venusaur"),
+    parameter: defaultCalculateParameter,
+    box: initialBox,
+    selectedItemId: -1,
+    boxItemDialogOpen: false,
+    boxItemDialogKey: "",
+    boxItemDialogIsEdit: false,
+    boxExportDialogOpen: false,
+    boxImportDialogOpen: false,
+    alertMessage: "",
+};
+
 const ResearchCalcApp = React.memo(() => {
-    const [tabIndex, setTabIndex] = React.useState(0);
-    const [lowerTabIndex, setLowerTabIndex] = React.useState(0);
-    const [pokemonIv, setPokemonIv] = React.useState(new PokemonIv("Venusaur"));
-    const [parameter, setParameter] = React.useState(defaultCalculateParameter);
-    const [box, setBox] = React.useState<PokemonBox>(initialBox);
-    const [selectedItemId, setSelectedItemId] = React.useState(-1);
-    const [boxItemDialogOpen, setBoxItemDialogOpen] = React.useState(false);
-    const [boxItemDialogKey, setBoxItemDialogKey] = React.useState("");
-    const [boxItemDialogIsEdit, setBoxItemDialogIsEdit] = React.useState(false);
-    const [boxExportDialogOpen, setBoxExportDialogOpen] = React.useState(false);
-    const [boxImportDialogOpen, setBoxImportDialogOpen] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [state, setState] = React.useState<IvState>(initialIvState);
     const { t } = useTranslation();
     const width = useDomWidth();
 
-    const selectedItem = box.getById(selectedItemId);
+    const selectedItem = state.box.getById(state.selectedItemId);
 
-    const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
-        setTabIndex(newValue);
-        if (newValue !== 1 && lowerTabIndex === 2) {
-            setLowerTabIndex(0);
-        }
-    }, [lowerTabIndex, setTabIndex, setLowerTabIndex]);
-
-    const onParameterChange = React.useCallback((value: CalculateParameter) => {
-        setParameter(value);
-        localStorage.setItem('PstStrenghParam', JSON.stringify(value));
-    }, [setParameter]);
-
-    const onPokemonIvChange = React.useCallback((value: PokemonIv) => {
+    const getStateWhenPokemonIvChange = React.useCallback((value: PokemonIv): IvState => {
         // fix helpingBonusCount
         const hasHelpingBonus = value.hasHelpingBonusInActiveSubSkills;
-        const prevHasHelpingBonus = pokemonIv.hasHelpingBonusInActiveSubSkills;
+        const prevHasHelpingBonus = state.pokemonIv.hasHelpingBonusInActiveSubSkills;
+        let parameter = state.parameter;
         if (hasHelpingBonus && parameter.helpBonusCount === 0) {
-            onParameterChange({...parameter, helpBonusCount: 1});
-        } else if (parameter.helpBonusCount === 1 && !hasHelpingBonus &&
+            parameter = {...parameter, helpBonusCount: 1};
+        } else if (state.parameter.helpBonusCount === 1 && !hasHelpingBonus &&
             prevHasHelpingBonus) {
-            onParameterChange({...parameter, helpBonusCount: 0});
+            parameter = {...parameter, helpBonusCount: 0};
         } else if (!hasHelpingBonus && parameter.helpBonusCount === 5) {
-            onParameterChange({...parameter, helpBonusCount: 4});
+            parameter = {...parameter, helpBonusCount: 4};
         }
 
         value.normalize();
 
         // if form pokemon differs from the selected pokemon in the box,
         // unselect the pokemon in the box
+        let selectedItemId = state.selectedItemId;
         if (selectedItem !== null) {
             // Ancestor of Evolving pokemon has changed
             if (selectedItem.iv.pokemon.ancestor !== value.pokemon.ancestor) {
-                setSelectedItemId(-1);
+                selectedItemId = -1;
             }
             // Non-evolving pokemon has changed
             if (selectedItem.iv.pokemon.ancestor === null &&
                 selectedItem.iv.pokemon.id !== value.pokemon.id) {
-                setSelectedItemId(-1);
-            }
+                    selectedItemId = -1;
+                }
         }
 
-        setPokemonIv(value);
-    }, [parameter, pokemonIv, selectedItem, setPokemonIv, onParameterChange]);
+        return {...state, pokemonIv: value, parameter, selectedItemId};
+    }, [selectedItem, state]);
+
+    const onPokemonIvChange = React.useCallback((value: PokemonIv) => {
+        setState(getStateWhenPokemonIvChange(value));
+    }, [getStateWhenPokemonIvChange]);
 
     const onParameterEdit = React.useCallback(() => {
-        setLowerTabIndex(2);
-    }, [setLowerTabIndex]);
+        setState({...state, lowerTabIndex: 2});
+    }, [state]);
 
     // called when user edit pokemon in BoxView
     const onBoxChange = React.useCallback((action: IvAction) => {
         const type = action.type;
+        if (type === "changeUpperTab") {
+            let value = action.payload.index;
+            if (value !== 1 && state.lowerTabIndex === 2) {
+                value = 0;
+            }
+            setState({...state, tabIndex: value});
+            return;
+        }
+        if (type === "changeLowerTab") {
+            setState({...state, lowerTabIndex: action.payload.index});
+            return;
+        }
+        if (type === "changeParameter") {
+            const value = action.payload.parameter;
+            setState({...state, parameter: value});
+            localStorage.setItem('PstStrenghParam', JSON.stringify(value));
+            return;
+        }
         if (type === "add") {
-            if (!box.canAdd) {
-                setAlertMessage(t('box is full'));
+            if (!state.box.canAdd) {
+                setState({...state, alertMessage: t('box is full')});
                 return;
             }
-            setBoxItemDialogOpen(true);
-            setBoxItemDialogKey("dlg" + (new Date()).getTime().toString());
-            setBoxItemDialogIsEdit(false);
+            setState({...state,
+                boxItemDialogOpen: true,
+                boxItemDialogKey: "dlg" + (new Date()).getTime().toString(),
+                boxItemDialogIsEdit: false,
+            });
             return;
         }
         if (type === "addThis") {
-            if (!box.canAdd) {
-                setAlertMessage(t('box is full'));
+            if (!state.box.canAdd) {
+                setState({...state, alertMessage: t('box is full')});
                 return;
             }
 
-            const newBox = new PokemonBox(box.items);
-            const id: number = newBox.add(pokemonIv);
-            newBox.save();
-            setBox(newBox);
-            setSelectedItemId(id);
+            const box = new PokemonBox(state.box.items);
+            const selectedItemId: number = box.add(state.pokemonIv);
+            box.save();
+            setState({...state, box, selectedItemId});
             return;
         }
         if (type === "export") {
-            setBoxExportDialogOpen(true);
+            setState({...state, boxExportDialogOpen: true});
             return;
         }
         if (type === "exportClose") {
-            setBoxExportDialogOpen(false);
+            setState({...state, boxExportDialogOpen: false});
             return;
         }
         if (type === "import") {
-            if (!box.canAdd) {
-                setAlertMessage(t('box is full'));
+            if (!state.box.canAdd) {
+                setState({...state, alertMessage: t('box is full')});
                 return;
             }
     
-            setBoxImportDialogOpen(true);
+            setState({...state, boxImportDialogOpen: true});
             return;
         }
         if (type === "importClose") {
-            setBoxImportDialogOpen(false);
-            const newBox = new PokemonBox(box.items);
-            setBox(newBox);
+            const box = new PokemonBox(state.box.items);
+            setState({...state, box, boxImportDialogOpen: false});
             return;
         }
         if (type === "restoreItem") {
             if (selectedItem !== null) {
-                onPokemonIvChange(selectedItem.iv);
+                setState({...getStateWhenPokemonIvChange(selectedItem.iv)});
             }
             return;
         }
         if (type === "saveItem") {
-            const newBox = new PokemonBox(box.items);
-            newBox.set(selectedItemId, pokemonIv);
-            newBox.save();
-            setBox(newBox);
+            const box = new PokemonBox(state.box.items);
+            box.set(state.selectedItemId, state.pokemonIv);
+            box.save();
+            setState({...state, box});
             return;
         }
 
         if (type === "editDialogClose") {
-            setBoxItemDialogOpen(false);
+            setState({...state, boxItemDialogOpen: false});
             return;
         }
         if (type === "addOrEditDone") {
             const value = action.payload.item;
-            const newBox = new PokemonBox(box.items);
+            const box = new PokemonBox(state.box.items);
+            let selectedItemId = state.selectedItemId;
             if (value.id === -1) {
-                const id = newBox.add(value.iv, value.nickname);
-                setSelectedItemId(id);
+                selectedItemId = box.add(value.iv, value.nickname);
             }
             else {
-                newBox.set(value.id, value.iv, value.nickname);
+                box.set(value.id, value.iv, value.nickname);
             }
-            newBox.save();
-            setBox(newBox);
-            onPokemonIvChange(value.iv);
+            box.save();
+            const s = getStateWhenPokemonIvChange(value.iv);
+            setState({...s, box, selectedItemId});
             return;
         }
 
         if (type === "closeAlert") {
-            setAlertMessage("");
+            setState({...state, alertMessage: ""});
             return;
         }
 
@@ -207,31 +243,40 @@ const ResearchCalcApp = React.memo(() => {
             return;
         }
         const id = action.payload.id;
-        const item = box.getById(id);
+        const item = state.box.getById(id);
         if (item === null) { return; }
         if (type === "select") {
-            setSelectedItemId(id);
-            onPokemonIvChange(item.iv);
+            const s = getStateWhenPokemonIvChange(item.iv);
+            setState({...s, selectedItemId: id});
         }
         else if (type === "edit") {
-            setBoxItemDialogOpen(true);
-            setBoxItemDialogKey("dlg" + (new Date()).getTime().toString());
-            setBoxItemDialogIsEdit(true);
+            setState({...state,
+                boxItemDialogOpen: true,
+                boxItemDialogKey: "dlg" + (new Date()).getTime().toString(),
+                boxItemDialogIsEdit: true,
+            });
         }
         else if (type === "dup") {
-            const newBox = new PokemonBox(box.items);
-            const id: number = newBox.add(item.iv.clone(), item.nickname);
-            newBox.save();
-            setBox(newBox);
-            setSelectedItemId(id);
+            const box = new PokemonBox(state.box.items);
+            const selectedItemId: number = box.add(item.iv.clone(), item.nickname);
+            box.save();
+            setState({...state, box, selectedItemId});
         }
         else if (type === "remove") {
-            const newBox = new PokemonBox(box.items);
-            newBox.remove(id);
-            newBox.save();
-            setBox(newBox);
+            const box = new PokemonBox(state.box.items);
+            box.remove(id);
+            box.save();
+            setState({...state, box});
         }
-    }, [box, pokemonIv, selectedItem, selectedItemId, t, onPokemonIvChange]);
+    }, [getStateWhenPokemonIvChange, selectedItem, state, t]);
+
+    const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
+        onBoxChange({type: "changeUpperTab", payload: {index: newValue}});
+    }, [onBoxChange]);
+
+    const onParameterChange = React.useCallback((value: CalculateParameter) => {
+        onBoxChange({type: "changeParameter", payload: {parameter: value}});
+    }, [onBoxChange]);
 
     const onRestoreClick = React.useCallback(() => {
         onBoxChange({type: "restoreItem"});
@@ -253,7 +298,7 @@ const ResearchCalcApp = React.memo(() => {
     }, [onBoxChange]);
 
     const isSelectedItemEdited = selectedItem !== null &&
-        !selectedItem.iv.isEqual(pokemonIv);
+        !selectedItem.iv.isEqual(state.pokemonIv);
 
     const onHeaderMenuClick = React.useCallback((type: string) => {
         onBoxChange({type} as IvAction);
@@ -264,42 +309,46 @@ const ResearchCalcApp = React.memo(() => {
     const onBoxImportDialogClose = React.useCallback(() => {
         onBoxChange({type: "importClose"});
     }, [onBoxChange]);
+    const onLowerTabChange = React.useCallback((value: number) => {
+        onBoxChange({type: "changeLowerTab", payload: {index: value}});
+    }, [onBoxChange]);
 
     return <div style={{margin: "0 .5rem 10rem"}}>
-        <StyledTabs value={tabIndex} onChange={onTabChange}>
+        <StyledTabs value={state.tabIndex} onChange={onTabChange}>
             <StyledTab label={t('rp')}/>
             <StyledTab label={t('strength2')}/>
             <StyledTab label={t('rating')}/>
         </StyledTabs>
-        {tabIndex === 0 && <RpView pokemonIv={pokemonIv} width={width}/>}
-        {tabIndex === 1 && <StrengthView pokemonIv={pokemonIv}
-            lowerTabIndex={lowerTabIndex} parameter={parameter}
+        {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
+        {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
+            lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
             onParameterEdit={onParameterEdit}/>}
-        {tabIndex === 2 && <RatingView pokemonIv={pokemonIv} width={width}/>}
+        {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
         <div>
-            <LowerTabHeader upperTabIndex={tabIndex} tabIndex={lowerTabIndex}
-                isBoxEmpty={box.items.length === 0} onChange={setLowerTabIndex}
+            <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
+                isBoxEmpty={state.box.items.length === 0}
+                onChange={onLowerTabChange}
                 onMenuItemClick={onHeaderMenuClick}/>
 
-            {lowerTabIndex === 0 &&
-                <IvForm pokemonIv={pokemonIv} onChange={onPokemonIvChange}/>}
-            {lowerTabIndex === 1 &&
-                <BoxView items={box.items}
-                    selectedId={selectedItemId} onChange={onBoxChange}/>}
-            {lowerTabIndex === 2 && 
-                <StrengthSettingForm value={parameter}
-                    hasHelpingBonus={pokemonIv.hasHelpingBonusInActiveSubSkills}
+            {state.lowerTabIndex === 0 &&
+                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>}
+            {state.lowerTabIndex === 1 &&
+                <BoxView items={state.box.items}
+                    selectedId={state.selectedItemId} onChange={onBoxChange}/>}
+            {state.lowerTabIndex === 2 && 
+                <StrengthSettingForm value={state.parameter}
+                    hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
                     onChange={onParameterChange}/>}
         </div>
-        <BoxItemDialog key={boxItemDialogKey}
-            open={boxItemDialogOpen} boxItem={selectedItem}
-            isEdit={boxItemDialogIsEdit}
+        <BoxItemDialog key={state.boxItemDialogKey}
+            open={state.boxItemDialogOpen} boxItem={selectedItem}
+            isEdit={state.boxItemDialogIsEdit}
             onClose={onBoxItemEditDialogClose} onChange={onBoxItemDialogChange}/>
-        <BoxExportDialog box={box}
-            open={boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
-        <BoxImportDialog box={box}
-            open={boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
-        <Snackbar open={alertMessage !== ""} message={alertMessage}
+        <BoxExportDialog box={state.box}
+            open={state.boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
+        <BoxImportDialog box={state.box}
+            open={state.boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
+        <Snackbar open={state.alertMessage !== ""} message={state.alertMessage}
             autoHideDuration={2000} onClose={onAlertMessageClose}/>
         <Snackbar open={isSelectedItemEdited} message={t('pokemon in the box is edited')}
             action={<>
