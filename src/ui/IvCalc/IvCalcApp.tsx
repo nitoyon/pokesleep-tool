@@ -104,9 +104,11 @@ const ResearchCalcApp = React.memo(() => {
                     onChange={onLowerTabChange}
                     onMenuItemClick={onHeaderMenuClick}/>
         </div>
-        <div style={{margin: "0 .5rem 10rem"}}>
+        <div style={{margin: "0 .5rem"}}>
             {state.lowerTabIndex === 0 &&
-                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>}
+                <div style={{marginBottom: '10rem'}}>
+                    <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+                </div>}
             {state.lowerTabIndex === 1 &&
                 <BoxView items={state.box.items}
                     selectedId={state.selectedItemId} onChange={dispatch}/>}

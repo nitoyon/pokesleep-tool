@@ -7,9 +7,9 @@ import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterD
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
-import { Button, ButtonBase, IconButton, ListItemIcon,
+import { ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -105,23 +105,25 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
+            marginBottom: '60px',
         }}>
-            {elms.length === 0 && <div style={{margin: "2rem auto", color: "#888", fontSize: "0.9rem"}}>
+            {elms.length === 0 && <div style={{margin: "5rem auto", color: "#888", fontSize: "0.9rem"}}>
                 {items.length === 0 ? t('box is empty') : t('no pokemon found')}
             </div>}
             {elms}
         </div>
-        <div style={{margin: '0.4rem 0.4rem 0 0', textAlign: 'right'}}>
-        <Button onClick={onAddClick}
-            startIcon={<AddCircleOutlineIcon/>}>{t('add')}</Button>
-        </div>
         <div style={{
             position: 'sticky',
             bottom: 0,
+            paddingLeft: '1rem',
             paddingBottom: '1.2rem',
             background: '#f76',
             margin: '.5rem -.5rem 0',
         }}>
+            <Fab onClick={onAddClick} color="primary" size="medium"
+                sx={{position: 'absolute', bottom: '70px', right: '10px'}}>
+                <AddIcon/>
+            </Fab>
             <PokemonFilterFooter value={footerValue}
                 onChange={onFilterConfigChange}
                 onFilterButtonClick={onFilterButtonClick}
