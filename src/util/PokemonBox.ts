@@ -15,10 +15,18 @@ class PokemonBox {
     }
 
     /**
+     * Initialize new PokemonBox object.
+     * @param items Initial items.
+     */
+    constructor(items?: PokemonBoxItem[]) {
+        this._entries = items || [];
+    }
+
+    /**
      * Get the box entries.
      */
     get items(): PokemonBoxItem[] {
-        return [...this._entries];
+        return this._entries;
     }
 
     /**
@@ -38,7 +46,7 @@ class PokemonBox {
             throw new Error('max entry count exceeds');
         }
         const item = new PokemonBoxItem(iv, nickname);
-        this._entries.push(item);
+        this._entries = [...this._entries, item];
         return item.id;
     }
 
@@ -60,6 +68,7 @@ class PokemonBox {
         for (let i = 0; i < this._entries.length; i++) {
             if (this._entries[i].id === id) {
                 this._entries[i] = new PokemonBoxItem(iv, nickname, id);
+                this._entries = [...this._entries];
                 break;
             }
         }

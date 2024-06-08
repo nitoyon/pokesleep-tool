@@ -109,7 +109,8 @@ const NatureEditPopper = React.memo(({open, anchorRef, onClose, onChange}: {
         anchorEl={anchorRef.current}
         role={undefined}
         placement="bottom-start"
-        disablePortal>
+        disablePortal
+        sx={{zIndex: 2}}>
         <Paper elevation={12}>
           <ClickAwayListener onClickAway={onClose}>
             <MenuList>
