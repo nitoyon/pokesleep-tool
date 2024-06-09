@@ -25,8 +25,9 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
-const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
+const BoxView = React.memo(({items, selectMode, selectedId, parameter, dispatch}: {
     items: PokemonBoxItem[],
+    selectMode?: boolean,
     selectedId: number,
     parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
@@ -90,8 +91,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            margin: '0 0.5rem 300px 0.5rem',
-            width: 'calc(100% - 1rem)',
+            margin: selectMode ? '0.8rem 0 300px 0' : '0 0.5rem 300px 0.5rem',
+            width: selectMode ? '100%' : 'calc(100% - 1rem)',
         }}>
             {elms.length === 0 && <div style={{margin: "5rem auto 0", color: "#888", fontSize: "0.9rem"}}>
                 {items.length === 0 ? t('box is empty') : errorMessage}
@@ -99,24 +100,25 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
             {elms}
         </div>
         <div style={{
-            position: 'fixed',
+            position: selectMode ? 'sticky' : 'fixed',
             width: '100%',
             bottom: 0,
             margin: '.5rem 0 0',
         }}>
-            <Fab onClick={onAddClick} color="primary" size="medium"
+            {!selectMode && <Fab onClick={onAddClick} color="primary" size="medium"
                 sx={{position: 'absolute', top: '-55px', right: '10px'}}>
                 <AddIcon/>
-            </Fab>
+            </Fab>}
             <BoxExportAlert count={items.length} config={sortConfig}
                 dispatch={dispatch} onChange={onSortConfigChange}/>
             <BoxSortConfigFooter parameter={parameter} sortConfig={sortConfig}
+                sx={{paddingLeft: selectMode ? '0.8rem' : '1.2rem'}}
                 dispatch={dispatch} onChange={onSortConfigChange}/>
             <div style={{
-                paddingLeft: '1rem',
-                paddingBottom: '1.2rem',
+                paddingLeft: selectMode ? 0 : '1rem',
+                paddingBottom: selectMode ? 0 : '1.2rem',
                 background: '#f76',
-                width: 'calc(100% - 1rem)',
+                width: selectMode ? '100%' : 'calc(100% - 1rem)',
             }}>
                 <PokemonFilterFooter value={footerValue}
                     onChange={onFilterConfigChange}
