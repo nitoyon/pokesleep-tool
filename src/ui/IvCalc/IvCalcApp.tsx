@@ -12,6 +12,7 @@ import StrengthSettingForm from './StrengthParameterForm';
 import RpView from './RpView';
 import StrengthView from './StrengthView';
 import RatingView from './RatingView';
+import TeamView from './TeamView';
 import BoxItemDialog from './BoxItemDialog';
 import BoxExportDialog from './BoxExportDialog';
 import BoxImportDialog from './BoxImportDialog';
@@ -93,18 +94,20 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('rp')}/>
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
+                <StyledTab label="チーム"/>
             </StyledTabs>
             {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
             {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
                 lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
                 onParameterEdit={onParameterEdit}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-                <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
-                    isBoxEmpty={state.box.items.length === 0}
-                    onChange={onLowerTabChange}
-                    onMenuItemClick={onHeaderMenuClick}/>
+            {state.tabIndex === 3 && <TeamView/>}
+            {state.tabIndex !== 3 && <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
+                isBoxEmpty={state.box.items.length === 0}
+                onChange={onLowerTabChange}
+                onMenuItemClick={onHeaderMenuClick}/>}
         </div>
-        <div style={{margin: "0 .5rem"}}>
+        {state.tabIndex !== 3 && <div style={{margin: "0 .5rem"}}>
             {state.lowerTabIndex === 0 &&
                 <div style={{marginBottom: '10rem'}}>
                     <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
@@ -116,7 +119,7 @@ const ResearchCalcApp = React.memo(() => {
                 <StrengthSettingForm value={state.parameter}
                     hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
                     onChange={onParameterChange}/>}
-        </div>
+        </div>}
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
