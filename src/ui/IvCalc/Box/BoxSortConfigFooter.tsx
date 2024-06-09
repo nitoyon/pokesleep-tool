@@ -13,10 +13,11 @@ import { IngredientName, IngredientNames } from '../../../data/pokemons';
 import { Divider, FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChange}: {
+const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, sx, onChange}: {
     sortConfig: BoxSortConfig,
     parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
+    sx: object,
     onChange: (value: BoxSortConfig) => void,
 }) => {
     const { t } = useTranslation();
@@ -81,7 +82,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     ) {
         return <></>;
     }
-    return <StyledBoxHeader>
+    return <StyledBoxHeader style={sx}>
         <div>
             <span>
                 <FixedLevelSelect value={parameter} dispatch={dispatch}
@@ -133,11 +134,12 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
 });
 
 const StyledBoxHeader = styled('div')({
+    padding: '.2rem 0 .2rem 0',
+    background: '#f3f5f0',
+    borderTop: '1px solid #ccc',
+    position: 'relative',
+    overflow: 'hidden',
     '& > div': {
-        padding: '.2rem 0 .2rem 1.2rem',
-        background: '#f3f5f0',
-        borderTop: '1px solid #ccc',
-        position: 'relative',
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'stretch',

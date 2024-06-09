@@ -103,7 +103,7 @@ const ResearchCalcApp = React.memo(() => {
                     dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>}
             </>}
         </div>
-        {state.tabIndex === 3 && <TeamView/>}
+        {state.tabIndex === 3 && <TeamView state={state} dispatch={dispatch}/>}
         {state.tabIndex !== 3 && <>
             {state.lowerTabIndex === 0 &&
                 <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
