@@ -101,7 +101,7 @@ const ResearchCalcApp = React.memo(() => {
                 lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
                 onParameterEdit={onParameterEdit}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-            {state.tabIndex === 3 && <TeamView/>}
+            {state.tabIndex === 3 && <TeamView items={state.box.items}/>}
             {state.tabIndex !== 3 && <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
                 isBoxEmpty={state.box.items.length === 0}
                 onChange={onLowerTabChange}

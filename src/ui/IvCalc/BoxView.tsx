@@ -16,8 +16,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 
-const BoxView = React.memo(({items, selectedId, onChange}: {
+const BoxView = React.memo(({items, selectMode, selectedId, onChange}: {
     items: PokemonBoxItem[],
+    selectMode?: boolean,
     selectedId: number,
     onChange: (action: IvAction) => void,
 }) => {
@@ -115,15 +116,15 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
         <div style={{
             position: 'sticky',
             bottom: 0,
-            paddingLeft: '1rem',
-            paddingBottom: '1.2rem',
+            paddingLeft: selectMode ? 0 : '1rem',
+            paddingBottom: selectMode ? 0 : '1.2rem',
             background: '#f76',
-            margin: '.5rem -.5rem 0',
+            margin: selectMode ? 0 : '.5rem -.5rem 0',
         }}>
-            <Fab onClick={onAddClick} color="primary" size="medium"
+            {!selectMode && <Fab onClick={onAddClick} color="primary" size="medium"
                 sx={{position: 'absolute', bottom: '70px', right: '10px'}}>
                 <AddIcon/>
-            </Fab>
+            </Fab>}
             <PokemonFilterFooter value={footerValue}
                 onChange={onFilterConfigChange}
                 onFilterButtonClick={onFilterButtonClick}
