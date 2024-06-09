@@ -111,6 +111,7 @@ function startAddToBoxAnimation(elm: HTMLDivElement|null) {
     div.style.background = "#1976d2";
     div.style.opacity = "0.6";
     div.style.transformOrigin = "top left";
+    div.style.zIndex = "2";
     document.body.appendChild(div);
     const animation = div.animate([
         {transform: `translateX(${-left}px) translateY(${rect.height}px) ` +
