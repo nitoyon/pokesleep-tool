@@ -128,6 +128,7 @@
         "rp": "SP",
         "strength2": "에너지",
         "rating": "개체값 평가",
+        "team": "팀 편성",
 
         "helps per 5 hours": "5시간 동안의 도우미 횟수",
         "berry rate": "열매 확률",
