@@ -11,6 +11,7 @@ import StrengthSettingForm from './Strength/StrengthParameterForm';
 import RpView from './Rp/RpView';
 import StrengthView from './Strength/StrengthView';
 import RatingView from './RatingView';
+import TeamView from './TeamView';
 import BoxItemDialog from './Box/BoxItemDialog';
 import BoxExportDialog from './Box/BoxExportDialog';
 import BoxImportDialog from './Box/BoxImportDialog';
@@ -83,34 +84,40 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('rp')}/>
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
+                <StyledTab label={t('team')}/>
             </StyledTabs>
-            {state.tabIndex === 0 && <RpView state={state} width={width}/>}
-            {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
-            {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-            {state.pokemonIv.pokemon.rateNotFixed && <div style={{
-                border: '1px solid red',
-                background: '#ffeeee',
-                color: 'red',
-                fontSize: '0.9rem',
-                borderRadius: '0.5rem',
-                marginTop: '3px',
-                padding: '0 0.3rem',
-            }}>{t('rate is not fixed')}</div>}
-            <LowerTabHeader state={state}
-                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
+            {state.tabIndex !== 3 && <>
+                {state.tabIndex === 0 && <RpView state={state} width={width}/>}
+                {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
+                {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
+                {state.pokemonIv.pokemon.rateNotFixed && <div style={{
+                    border: '1px solid red',
+                    background: '#ffeeee',
+                    color: 'red',
+                    fontSize: '0.9rem',
+                    borderRadius: '0.5rem',
+                    marginTop: '3px',
+                    padding: '0 0.3rem',
+                }}>{t('rate is not fixed')}</div>}
+                {<LowerTabHeader state={state}
+                    dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>}
+            </>}
         </div>
-        {state.lowerTabIndex === 0 &&
-            <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
-                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
-            </div>}
-        {state.lowerTabIndex === 1 &&
-            <BoxView items={state.box.items} iv={state.pokemonIv}
-                selectedId={state.selectedItemId} dispatch={dispatch}
-                parameter={state.parameter}/>}
-        {state.lowerTabIndex === 2 &&
-            <StrengthSettingForm value={state.parameter}
-                hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                dispatch={dispatch}/>}
+        {state.tabIndex === 3 && <TeamView/>}
+        {state.tabIndex !== 3 && <>
+            {state.lowerTabIndex === 0 &&
+                <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
+                    <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+                </div>}
+            {state.lowerTabIndex === 1 &&
+                <BoxView items={state.box.items}
+                    selectedId={state.selectedItemId} dispatch={dispatch}
+                    parameter={state.parameter}/>}
+            {state.lowerTabIndex === 2 &&
+                <StrengthSettingForm value={state.parameter}
+                    hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
+                    dispatch={dispatch}/>}
+        </>}
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}

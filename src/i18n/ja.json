@@ -360,6 +360,7 @@
         "rp": "SP",
         "strength2": "エナジー",
         "rating": "個体評価",
+        "team": "チーム",
 
         "go to strength tab to show the current condition values": "現在の条件でのエナジー、食材数、スキル回数を表示するには、[$t(strength2)] タブに移動してください。",
         "strength, ingredients, skill count": "エナジー、食材数、スキル回数",

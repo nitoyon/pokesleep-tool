@@ -370,6 +370,7 @@
         "rp": "RP",
         "strength2": "Strength",
         "rating": "Rating",
+        "team": "Team",
 
         "go to strength tab to show the current condition values": "Please go to the [$t(strength2)] tab to display the strength, ingredients and skill count corresponding to the current conditions.",
         "strength, ingredients, skill count": "Strength, ingredients and skill count",
