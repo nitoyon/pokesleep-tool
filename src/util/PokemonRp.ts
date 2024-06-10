@@ -169,7 +169,13 @@ class PokemonRp {
     }
 
     get energyBonus(): number {
-        return 1 + ((this.nature?.energyRecoveryFactor ?? 0) * 0.08);
+        if (this.nature?.isEnergyRecoveryUp) {
+            return 1.08;
+        }
+        if (this.nature?.isEnergyRecoveryDown) {
+            return 0.92;
+        }
+        return 1;
     }
 
     get subSkillBonus(): number {

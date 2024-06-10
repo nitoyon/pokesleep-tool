@@ -235,8 +235,7 @@ class PokemonStrength {
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;
         if (mainSkill === "Charge Energy S") {
-            const factor = this.iv.nature.energyRecoveryFactor;
-            mainSkillFactor = (factor === 1 ? 1.2 : factor === -1 ? 0.88 : 1);
+            mainSkillFactor = this.iv.nature.energyRecoveryFactor;
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + params.fieldBonus / 100);

@@ -82,9 +82,8 @@ class Nature {
         return this.value;
     }
 
-    get energyRecoveryFactor(): PlusMinusOneOrZero {
-        return this.isEnergyRecoveryUp ? 1 : this.isEnergyRecoveryDown ?
-            -1 : 0;
+    get energyRecoveryFactor(): number {
+        return this.isEnergyRecoveryUp ? 1.2 : this.isEnergyRecoveryDown ? 0.88 : 1;
     }
     get speedOfHelpFactor(): number {
         return this.isSpeedOfHelpUp ? 0.9 : this.isSpeedOfHelpDown ?
