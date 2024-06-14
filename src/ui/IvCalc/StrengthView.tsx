@@ -18,10 +18,19 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
         onParameterEdit();
     }, [onParameterEdit]);
 
-    let area = t(`area.${parameter.fieldIndex}`);
-    if (parameter.fieldIndex === 0) {
-        area += " (" +
-            parameter.favoriteType.map(x => t(`types.${x}`)).join(", ") + ")";
+    let area;
+    if (parameter.fieldIndex < 0) {
+        area = `${t('field bonus')}: ${parameter.fieldBonus}%`;
+    }
+    else {
+        if (parameter.fieldIndex !== 0) {
+            area = t(`area.${parameter.fieldIndex}`);
+        }
+        else {
+            area = t('area.0') + " (" +
+                parameter.favoriteType.map(x => t(`types.${x}`)).join(", ") + ")";
+        }
+        area += ` (${parameter.fieldBonus}%)`;
     }
     const period = (parameter.period === 24 ? '1day' :
         parameter.period === 168 ? '1week' : 'whistle');
@@ -31,7 +40,7 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
         <Collapse in={lowerTabIndex !== 2}>
             <StrengthParameterPreview>
                 <ul>
-                    <li>{area} ({parameter.fieldBonus}%)</li>
+                    <li>{area}</li>
                     <li>{t('period')}: {t(period)}</li>
                     {parameter.level !== 0 && <li><strong>{t('level')}: {parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}

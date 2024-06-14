@@ -118,7 +118,8 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
         </div>
         <div>
             <label>{t('research area')}:</label>
-            <ResearchAreaTextField value={value.fieldIndex} onChange={onFieldChange}/>
+            <ResearchAreaTextField value={value.fieldIndex} showEmpty
+                onChange={onFieldChange}/>
         </div>
         {value.fieldIndex === 0 && <div>
             <label>{t('favorite berry')}:</label>
