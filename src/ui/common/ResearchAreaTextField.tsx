@@ -3,8 +3,9 @@ import fields from '../../data/fields';
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const ResearchAreaTextField = React.memo(({value, onChange}:{
+const ResearchAreaTextField = React.memo(({value, showEmpty, onChange}:{
     value: number;
+    showEmpty?: boolean;
     onChange: (value: number) => void;
 }) => {
     const { t } = useTranslation();
@@ -14,6 +15,13 @@ const ResearchAreaTextField = React.memo(({value, onChange}:{
 
     // prepare field menus
     const fieldMenuItems = [];
+    if (showEmpty) {
+        fieldMenuItems.push(
+            <MenuItem key={-1} value={-1}>
+                {t('no favorite berries')}
+            </MenuItem>
+        );
+    }
     for (const field of fields) {
         fieldMenuItems.push(
             <MenuItem key={field.index} value={field.index}>

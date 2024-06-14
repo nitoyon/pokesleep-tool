@@ -292,7 +292,7 @@ export function loadCalculateParameter(): CalculateParameter {
     const ret: CalculateParameter = {
         period: 24,
         fieldBonus: 0,
-        fieldIndex: 4,
+        fieldIndex: -1,
         favoriteType: ["normal", "fire", "water"],
         helpBonusCount: 0,
         isGoodCampTicketSet: false,
@@ -324,7 +324,7 @@ export function loadCalculateParameter(): CalculateParameter {
     }
     if (typeof(json.fieldIndex) === "number" &&
         Math.floor(json.fieldIndex) === json.fieldIndex &&
-        json.fieldIndex >= 0 && json.fieldIndex < fields.length) {
+        json.fieldIndex >= -1 && json.fieldIndex < fields.length) {
         ret.fieldIndex = json.fieldIndex;
     }
     if (Array.isArray(json.favoriteType) &&
