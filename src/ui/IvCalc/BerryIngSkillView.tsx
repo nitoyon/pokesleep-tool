@@ -79,15 +79,19 @@ const Unit = styled('div')({
         fontSize: '0.7rem',
         color: '#666',
         '& > svg': {
-            verticalAlign: 'middle',
+            verticalAlign: 'baseline',
             paddingLeft: '.5rem',
+            width: '.8rem',
+            height: '.8rem',
+            paddingRight: '0.2rem',
             '&:first-of-type': {
                 paddingLeft: 0,
             },
-            '&[width]': {
-                width: '.8rem',
-                height: '.8rem',
-                paddingRight: '0.2rem',
+            '&.MuiSvgIcon-root': {
+                width: '1rem',
+                height: '1rem',
+                verticalAlign: 'top',
+                paddingRight: 0,
             },
         },
     },
