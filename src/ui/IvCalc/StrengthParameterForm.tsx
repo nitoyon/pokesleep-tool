@@ -139,7 +139,7 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
             </span>
         </div>}
         <div>
-            <label>{t('field bonus')}:</label>
+            <label>{t('area bonus')}:</label>
             <Select variant="standard" value={value.fieldBonus.toString()}
                 onChange={onFieldBonusChange}>
                 <MenuItem value={0}>0%</MenuItem>

@@ -20,7 +20,7 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
 
     let area;
     if (parameter.fieldIndex < 0) {
-        area = `${t('field bonus')}: ${parameter.fieldBonus}%`;
+        area = `${t('area bonus')}: ${parameter.fieldBonus}%`;
     }
     else {
         if (parameter.fieldIndex !== 0) {

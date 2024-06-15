@@ -140,7 +140,7 @@
         "calc with max skill level": "Calculate with max skill level",
         "calc with max skill level (short)": "Max skill level",
         "current level": "Current level",
-        "field bonus": "Field bonus",
+        "area bonus": "Area bonus",
         "favorite berry": "Favorite berry",
         "helping bonus": "Helping bonus",
         "good camp ticket": "Good camp ticket",
@@ -182,10 +182,10 @@
             "Energizing Cheer S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount.",
             "Metronome": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
             "Energy for Everyone S": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
-            "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without field bonuses).",
+            "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
             "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
-            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without field bonuses)."
+            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses)."
         },
 
         "rate subskill and nature": "Rate subskills and nature",
