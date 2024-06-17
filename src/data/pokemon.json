@@ -4061,5 +4061,36 @@
             "name": "egg",
             "c3": 9
         }
+    },
+    {
+        "id": 845,
+        "name": "Cramorant",
+        "sleepType": "slumbering",
+        "type": "flying",
+        "speciality": "Ingredients",
+        "skill": "Tasty Chance S",
+        "fp": 16,
+        "frequency": 2700,
+        "ingRatio": 16.5,
+        "skillRatio": 3.3,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "oil",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "egg",
+            "c3": 8
+        }
     }
 ]

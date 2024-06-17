@@ -717,6 +717,13 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.66, y: 0, w: 0.34, h: 0.34, color: '#f5d266'},
         {x: 0.34, y: 0, w: 0.34, h: 0.34, color: '#feadd3'},
     ],
+    // Cramorant
+    '845': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#339eff'},
+        {x: 0.2, y: 0.5, w: 0.6, h: 0.5, r: 0.2, color: '#e3ecff'},
+        {x: 0.3, y: 0.2, w: 0.4, h: 0.15, r: 0.2, color: '#ffea63'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#5f6f73'},
+    ],
 };
 
 export default pokemonRectData;
