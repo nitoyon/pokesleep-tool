@@ -29,6 +29,8 @@ export interface PokemonData {
     evolutionCount: -1|0|1|2;
     /** true if Non-evolving pokemon or filal evolution pokemon */
     isFullyEvolved: boolean;
+    /** Carry limit (excluding 5 * evolutionCount). */
+    carryLimit: number;
     ing1: {
         name: IngredientName,
         c1: number,
