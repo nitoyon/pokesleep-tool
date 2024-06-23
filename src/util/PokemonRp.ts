@@ -317,7 +317,7 @@ export function trunc(v: number, n: number) {
     // fix round error
     // (ex) v=0.051, n=4, v*N -> 509.999999
     //      (v*N).toFixed(3) -> 510.000
-    const d = parseFloat((v * N).toFixed(3));
+    const d = parseFloat((v * N).toFixed(6));
     return Math.floor(d) / N;
 }
 
