@@ -171,12 +171,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
             false : settings.isGoodCampTicketSet,
     });
 
-    function trunc1(n: number): string {
+    function round1(n: number): string {
         n = Math.round(n * 10) / 10;
         return t('num', {n: Math.floor(n)}) +
             "." + (n * 10 % 10);
     }
-    function trunc2(n: number): string {
+    function round2(n: number): string {
         n = Math.round(n * 100) / 100;
         let m = Math.floor(n * 100) % 100;
         return t('num', {n: Math.floor(n)}) +
@@ -194,11 +194,11 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     const berryStrength = t('num', {n: Math.round(result.berryTotalStrength)});
 
     // summarize ing value
-    const ingArticle = getIngArticle(result, settings, t, trunc1);
+    const ingArticle = getIngArticle(result, settings, t, round1);
 
     // skill value
     const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
-        t, trunc1, trunc2, onSkillHelpClick);
+        t, round1, round2, onSkillHelpClick);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -238,24 +238,24 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
                 </div>
             </article>
             <footer>
-                <div>{trunc1(result.berryRatio * 100)}%</div>
-                <div>{trunc1(result.berryHelpCount)}{t('times unit')}</div>
+                <div>{round1(result.berryRatio * 100)}%</div>
+                <div>{round1(result.berryHelpCount)}{t('times unit')}</div>
             </footer>
         </section>
         <section>
             <h3 style={{background: '#fab855'}}>{t('ingredient')}</h3>
             {ingArticle}
             <footer>
-                <div>{trunc1(result.ingRatio * 100)}%</div>
-                <div>{trunc1(result.ingHelpCount)}{t('times unit')}</div>
+                <div>{round1(result.ingRatio * 100)}%</div>
+                <div>{round1(result.ingHelpCount)}{t('times unit')}</div>
             </footer>
         </section>
         <section>
             <h3 style={{background: '#44a2fd'}}>{t('skill')}</h3>
             <article><div>{mainSkillTitle}</div></article>
             <footer>
-                <div>{trunc1(result.skillRatio * 100)}%</div>
-                <div>{trunc2(result.skillCount)}{t('times unit')}</div>
+                <div>{round1(result.skillRatio * 100)}%</div>
+                <div>{round2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
@@ -265,7 +265,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
 
 function getIngArticle(result: CalculateResult, settings: CalculateParameter,
     t: typeof i18next.t,
-    trunc1: (n: number) => string): React.ReactNode {
+    round1: (n: number) => string): React.ReactNode {
     if (settings.tapFrequency === 'none') {
         return <article>ー</article>;
     }
@@ -274,7 +274,7 @@ function getIngArticle(result: CalculateResult, settings: CalculateParameter,
         {result.ingredients.map(x => <React.Fragment key={x.name}>
             <span className="ing">
                 <IngredientIcon name={x.name}/>
-                <span>{trunc1(x.count)}</span>
+                <span>{round1(x.count)}</span>
             </span>
             <span className="strength">
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
@@ -313,15 +313,15 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 
 function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
     settings: CalculateParameter, t: typeof i18next.t,
-    trunc1: (n: number) => string,
-    trunc2: (n: number) => string,
+    round1: (n: number) => string,
+    round2: (n: number) => string,
     onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
-    const mainSkillValue = trunc1(result.skillValue);
+    const mainSkillValue = round1(result.skillValue);
     switch (mainSkill) {
         case "Charge Energy S":
         case "Energizing Cheer S":
@@ -377,7 +377,7 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
         case "Metronome":
             return <>
                 <SwipeOutlinedIcon sx={{color: "#999", paddingRight: "0.2rem"}}/>
-                <span>{trunc2(result.skillCount)}</span>
+                <span>{round2(result.skillCount)}</span>
                 <InfoButton onClick={onInfoClick}/>
             </>;
         default:
