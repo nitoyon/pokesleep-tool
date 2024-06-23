@@ -321,12 +321,4 @@ export function trunc(v: number, n: number) {
     return Math.floor(d) / N;
 }
 
-export function trunc1(v: number) {
-    return trunc(v, 1).toFixed(1);
-}
-
-export function trunc2(v: number) {
-    return trunc(v, 2).toFixed(2);
-}
-
 export default PokemonRp;
