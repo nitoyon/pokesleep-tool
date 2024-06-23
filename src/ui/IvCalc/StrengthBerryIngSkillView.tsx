@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import pokemons, { PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
+import { round1, round2, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
@@ -171,18 +172,6 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
             false : settings.isGoodCampTicketSet,
     });
 
-    function round1(n: number): string {
-        n = Math.round(n * 10) / 10;
-        return t('num', {n: Math.floor(n)}) +
-            "." + (n * 10 % 10);
-    }
-    function round2(n: number): string {
-        n = Math.round(n * 100) / 100;
-        let m = Math.floor(n * 100) % 100;
-        return t('num', {n: Math.floor(n)}) +
-            "." + (m < 10 ? `0${m}` : m.toString());
-    };
-
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
     }, []);
@@ -191,14 +180,14 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     }, []);
 
     // format berry value
-    const berryStrength = t('num', {n: Math.round(result.berryTotalStrength)});
+    const berryStrength = formatWithComma(Math.round(result.berryTotalStrength));
 
     // summarize ing value
-    const ingArticle = getIngArticle(result, settings, t, round1);
+    const ingArticle = getIngArticle(result, settings, t);
 
     // skill value
     const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
-        t, round1, round2, onSkillHelpClick);
+        t, onSkillHelpClick);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -214,7 +203,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     return <StyledBerryIngSkillStrengthView>
         <h2>
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-            <span className="strength">{t('num', {n: Math.round(result.totalStrength)})}</span>
+            <span className="strength">{formatWithComma(Math.round(result.totalStrength))}</span>
             <InfoButton onClick={onHelpClick}/>
             <HelpDialog open={helpOpen} onClose={onHelpClose}/>
             {decendants.length === 1 && pokemonChanged && <span className="evolved">
@@ -264,8 +253,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
 });
 
 function getIngArticle(result: CalculateResult, settings: CalculateParameter,
-    t: typeof i18next.t,
-    round1: (n: number) => string): React.ReactNode {
+    t: typeof i18next.t): React.ReactNode {
     if (settings.tapFrequency === 'none') {
         return <article>ー</article>;
     }
@@ -298,7 +286,7 @@ function getIngArticle(result: CalculateResult, settings: CalculateParameter,
  */
 function shortenNumber(t: typeof i18next.t, n: number): string {
     if (n < 100000) {
-        return t('num', {n: n});
+        return formatWithComma(n);
     }
 
     const digits = t('short num unit digits');
@@ -313,8 +301,6 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 
 function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
     settings: CalculateParameter, t: typeof i18next.t,
-    round1: (n: number) => string,
-    round2: (n: number) => string,
     onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
@@ -341,7 +327,7 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
         case "Charge Strength S (Random)":
             return <>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span>{t('num', {n: Math.round(result.skillValue)})}</span>
+                <span>{formatWithComma(Math.round(result.skillValue))}</span>
             </>;
         case "Dream Shard Magnet S":
         case "Dream Shard Magnet S (Random)":
