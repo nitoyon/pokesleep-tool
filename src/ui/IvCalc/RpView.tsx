@@ -1,6 +1,7 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
-import PokemonRp, { trunc, trunc1, trunc2 } from '../../util/PokemonRp';
+import PokemonRp from '../../util/PokemonRp';
+import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
@@ -58,21 +59,21 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
         <div>
             <RpLabel rp={rpResult.rp}/>
             <BerryIngSkillView
-                berryValue={trunc1(rpResult.berryRp)}
-                berryProb={trunc1(rp.berryRatio * 100)}
+                berryValue={round1(rpResult.berryRp)}
+                berryProb={round1(rp.berryRatio * 100)}
                 berrySubValue={<>
                     <LocalFireDepartmentIcon sx={{color: "#ff944b", width: '1rem', height: '1rem'}}/>
-                    {t('num', {n: Math.round(strength.berryTotalStrength)})}
+                    {formatWithComma(Math.round(strength.berryTotalStrength))}
                 </>}
                 onBerryInfoClick={onBerryInfoClick}
-                ingredientValue={trunc1(rpResult.ingredientRp)}
-                ingredientProb={trunc1(rp.ingredientRatio * 100)}
+                ingredientValue={round1(rpResult.ingredientRp)}
+                ingredientProb={round1(rp.ingredientRatio * 100)}
                 ingredientSubValue={<>{strength.ingredients.map(x => <React.Fragment key={x.name}>
-                    <IngredientIcon name={x.name}/>{trunc1(x.count)}
+                    <IngredientIcon name={x.name}/>{round1(x.count)}
                 </React.Fragment>)}</>}
                 onIngredientInfoClick={onIngInfoClick}
-                skillValue={trunc1(rpResult.skillRp)}
-                skillProb={trunc1(rp.skillRatio * 100)}
+                skillValue={round1(rpResult.skillRp)}
+                skillProb={round1(rp.skillRatio * 100)}
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
             <RpInfoDialog open={rpInfoOpen} onClose={onRpInfoClose}
@@ -155,7 +156,7 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
 }) => {
     const { t } = useTranslation();
     let color = "", rpVal = "", title = t(rpType);
-    const param1 = trunc2(rp.helpCountPer5Hour);
+    const param1 = round2(rp.helpCountPer5Hour);
     const desc1 = t('helps per 5 hours');
     let param2 = "", desc2 = "", param3 = "", desc3 = "",
         param4 = "", desc4 = "";
@@ -163,8 +164,8 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
     const param5 = bonus.toString();
     if (rpType === "berry") {
         color = '#24d76a';
-        rpVal = trunc1(rp.berryRp * bonus);
-        param2 = trunc1(rp.berryRatio * 100) + '%';
+        rpVal = round1(rp.berryRp * bonus);
+        param2 = round1(rp.berryRatio * 100) + '%';
         desc2 = t('berry rate');
         param3 = rp.berryStrength.toString();
         desc3 = t('berry strength');
@@ -173,20 +174,20 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
     }
     else if (rpType === "ingredient") {
         color = '#fab855';
-        rpVal = trunc1(rp.ingredientRp * bonus);
-        param2 = trunc1(rp.ingredientRatio * 100) + '%';
+        rpVal = round1(rp.ingredientRp * bonus);
+        param2 = round1(rp.ingredientRatio * 100) + '%';
         desc2 = t('ingredient rate');
-        param3 = trunc(rp.ingredientEnergy, 1).toString();
+        param3 = round1(rp.ingredientEnergy);
         desc3 = t('ingredient strength');
-        param4 = trunc(rp.ingredientG, 3).toString();
+        param4 = round3(rp.ingredientG);
         desc4 = t('ingredient factor');
     }
     else {
         color = '#44a2fd';
-        rpVal = trunc1(rp.skillRp * bonus);
-        param2 = trunc1(rp.skillRatio * 100) + '%';
+        rpVal = round1(rp.skillRp * bonus);
+        param2 = round1(rp.skillRatio * 100) + '%';
         desc2 = t('skill rate');
-        param3 = t('num', {n: rp.skillValue});
+        param3 = formatWithComma(rp.skillValue);
         desc3 = t('skill strength');
     }
 
@@ -217,8 +218,8 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
             </>}
             <div><span className="box box5">{param5}</span></div>
             <span><Trans i18nKey="bonus factor" components={{
-                nature: <>{trunc2(rp.energyBonus)}</>,
-                subskill: <>{trunc2(rp.subSkillBonus)}</>,
+                nature: <>{round2(rp.energyBonus)}</>,
+                subskill: <>{round2(rp.subSkillBonus)}</>,
             }}/></span>
         </article>
         <footer>
