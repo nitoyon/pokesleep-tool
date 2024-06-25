@@ -1,22 +1,23 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import PokemonIv from '../../util/PokemonIv';
+import { IvAction } from './IvState';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParameterEdit}: {
+const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, dispatch}: {
     pokemonIv: PokemonIv,
     parameter: CalculateParameter,
     lowerTabIndex: number,
-    onParameterEdit: () => void,
+    dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
 
     const onEditClick = React.useCallback(() => {
-        onParameterEdit();
-    }, [onParameterEdit]);
+        dispatch({type: "changeLowerTab", payload: {index: 2}});
+    }, [dispatch]);
 
     let area;
     if (parameter.fieldIndex < 0) {
