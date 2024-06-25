@@ -38,10 +38,6 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "updateIv", payload: {iv: value}});
     }, []);
 
-    const onParameterEdit = React.useCallback(() => {
-        dispatch({type: "changeLowerTab", payload: {index: 2}});
-    }, []);
-
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         dispatch({type: "changeUpperTab", payload: {index: newValue}});
     }, []);
@@ -97,7 +93,7 @@ const ResearchCalcApp = React.memo(() => {
             {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
             {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
                 lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
-                onParameterEdit={onParameterEdit}/>}
+                dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
                 <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
                     isBoxEmpty={state.box.items.length === 0}
