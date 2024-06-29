@@ -1,6 +1,7 @@
 import pokemons, {PokemonData} from '../data/pokemons';
 import { IngredientName, PokemonType, PokemonTypes } from '../data/pokemons';
 import fields from '../data/fields';
+import Energy, { EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue } from './MainSkill';
@@ -39,6 +40,26 @@ export interface CalculateParameter {
      */
     averageEfficiency: number;
 
+    /**
+     * Energy restored by 'energy for all' main skill.
+     */
+    //e4eEnergy: number;
+
+    /**
+     * Triggered count of 'Energy for all' main skill.
+     */
+    //e4eCount: number;
+
+    /**
+     * If true, we assume that energy is always 100.
+     */
+    //isEnergyAlwaysFull: boolean;
+
+    /**
+     * Sleep score of the sleep.
+     */
+    //sleepScore: number;
+
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
 
@@ -69,10 +90,8 @@ export interface CalculateParameter {
  * Represents the result of strength calculation.
  */
 export interface CalculateResult {
-    /** Frequency (Efficiency included) */
-    frequency: number;
-    /** Total help count */
-    helpCount: number;
+    /** energy and help count */
+    energy: EnergyResult;
     /** Total strength (berry + ingredient + skill) */
     totalStrength: number;
 
@@ -145,11 +164,11 @@ class PokemonStrength {
     calculate(params: CalculateParameter): CalculateResult {
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
-        const frequency = this.pokemon.frequency === 0 ? Infinity :
-            rp.frequencyWithHelpingBonus(params.helpBonusCount) /
-            params.averageEfficiency;
-        const helpCount = params.period * 3600 / frequency *
-            (params.isGoodCampTicketSet ? 1.2 : 1);
+        const countRatio = params.period / 24;
+        const energy = new Energy(this.iv).calculate(18, 3, 510, false);
+        const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
+            countRatio;
+        const fullHelpCount = energy.helpCount.asleepFull * countRatio;
 
         // calc ingredient
         const ingInRecipeStrengthRatio = params.recipeBonus === 0 ? 1 :
@@ -157,7 +176,7 @@ class PokemonStrength {
         const ingStrengthRatio = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
             (1 + params.fieldBonus / 100);
         const ingRatio = params.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
-        const ingHelpCount = helpCount * ingRatio;
+        const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
         const ingEventAdd: number = 0;
 
@@ -200,7 +219,7 @@ class PokemonStrength {
     
         // calc berry
         const berryRatio = 1 - ingRatio;
-        const berryHelpCount = helpCount - ingHelpCount;
+        const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
         const berryCount = rp.berryCount;
         const berryStrength = rp.berryStrength;
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
@@ -210,11 +229,9 @@ class PokemonStrength {
         const skillRatio = rp.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         if (params.period !== 3 && params.tapFrequency !== 'none') {
-            const helpCountAwake = helpCount * (24 - 8.5) / 24;
-            const helpCountSleeping = helpCount - helpCountAwake;
-            const skillCountAwake = helpCountAwake * skillRatio;
-            const skillCountSleeping = 1 - Math.pow(1 - skillRatio, helpCountSleeping);
-            skillCount = skillCountAwake + skillCountSleeping;
+            const skillCountAwake = energy.helpCount.awake * skillRatio;
+            const skillCountSleeping = energy.skillProbabilityAfterWakeup;
+            skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
                 params);
         }
@@ -222,7 +239,7 @@ class PokemonStrength {
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
 
         return {
-            frequency, helpCount, totalStrength,
+            energy, totalStrength,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength,
