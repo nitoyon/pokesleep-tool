@@ -264,6 +264,14 @@ class PokemonRp {
             0.00367 * this.level - 0.00609 + 1;
     }
 
+    get bagUsagePerHelp(): number {
+        const ingRatio = this.ingredientRatio;
+        const ingCount = this.level < 30 ? this.ingredient1.count :
+            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count) / 2 :
+            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count) / 3;
+        return (1 - ingRatio) * this.berryCount + ingRatio * ingCount;
+    }
+
     get berryRp(): number {
         return trunc(
             this.helpCountPer5Hour * this.berryRatio *
