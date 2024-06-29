@@ -36,7 +36,8 @@ const StrengthView = React.memo(({state, dispatch}: {
         parameter.period === 168 ? '1week' : 'whistle');
 
     return (<div>
-        <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}/>
+        <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}
+            energyDialogOpen={state.energyDialogOpen} dispatch={dispatch}/>
         <Collapse in={lowerTabIndex !== 2}>
             <StrengthParameterPreview>
                 <ul>
@@ -53,7 +54,7 @@ const StrengthView = React.memo(({state, dispatch}: {
 });
 
 const StrengthParameterPreview = styled('div')({
-    margin: '0.8rem 0 0 0',
+    marginTop: '0.2rem',
     padding: '.4rem .6rem',
     border: '1px solid #ccc',
     borderRadius: '1rem',

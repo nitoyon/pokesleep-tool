@@ -134,6 +134,15 @@ class PokemonIv {
     }
 
     /**
+     * Check whether the pokemon has an active sub-skill 'Energy Recovery Bonus'.
+     */
+    get hasEnergyRecoveryBonusInActiveSubSkills(): boolean {
+        return this.subSkills
+            .getActiveSubSkills(this.level)
+            .some(x => x.name === "Energy Recovery Bonus");
+    }
+
+    /**
      * Get carry limit for this level (assuming evolution count is max).
      */
     get carryLimit(): number {
