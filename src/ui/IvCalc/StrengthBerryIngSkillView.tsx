@@ -6,6 +6,7 @@ import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
 import { CalculateParameter } from '../../util/PokemonStrength';
+import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -14,6 +15,8 @@ import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import InfoButton from './InfoButton';
+import { IvAction } from './IvState';
+import EnergyDialog from './EnergyDialog';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientIcon from './IngredientIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
@@ -113,11 +116,27 @@ const StyledBerryIngSkillStrengthView = styled('div')({
             },
         },
     },
+    '& > footer': {
+        gridColumn: '1 / -1',
+        fontSize: '0.7rem',
+        color: '#666',
+        padding: '.6rem .8rem 0',
+        '& > span': {
+            paddingRight: '0.8rem',
+        },
+        '& > span:last-of-type': {
+            paddingRight: 0,
+        }
+    },
 });
 
-const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
+const StrengthBerryIngSkillStrengthView = React.memo(({
+    pokemonIv, settings, energyDialogOpen, dispatch,
+}: {
     pokemonIv: PokemonIv,
     settings: CalculateParameter,
+    energyDialogOpen: boolean,
+    dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
     const [helpOpen, setHelpOpen] = React.useState(false);
@@ -166,8 +185,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     const isWhistle = (settings.period === 3);
     const result = strength.calculate({
         ...settings,
-        averageEfficiency: isWhistle ?
-            2.2222 : settings.averageEfficiency,
+        isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
         isGoodCampTicketSet: isWhistle ?
             false : settings.isGoodCampTicketSet,
     });
@@ -178,6 +196,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
     const onSkillHelpClose = React.useCallback(() => {
         setSkillHelpOpen(false);
     }, []);
+    const onEfficiencyInfoClick = React.useCallback(() => {
+        dispatch({type: "openEnergyDialog"});
+    }, [dispatch]);
+    const onEfficiencyDialogClose = React.useCallback(() => {
+        dispatch({type: "closeEnergyDialog"});
+    }, [dispatch]);
 
     // format berry value
     const berryStrength = formatWithComma(Math.round(result.berryTotalStrength));
@@ -247,8 +271,16 @@ const StrengthBerryIngSkillStrengthView = React.memo(({pokemonIv, settings}: {
                 <div>{round2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>
+        <footer>
+            <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
+                    new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
+            <span>{t('skill trigger after wake up (short)')}: {round1(result.energy.skillProbabilityAfterWakeup * 100)}%</span>
+            <InfoButton onClick={onEfficiencyInfoClick}/>
+        </footer>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
             skill={pokemonIv.pokemon.skill}/>
+        <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
+            iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;
 });
 

@@ -7,7 +7,7 @@ const defaultCalculateParameter = loadCalculateParameter();
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
         "saveItem"|"restoreItem"|
-        "editDialogClose"|"closeAlert";
+        "editDialogClose"|"closeAlert"|"openEnergyDialog"|"closeEnergyDialog";
 }|{
     type: "select"|"edit"|"dup"|"remove";
     payload: {id: number};
@@ -35,6 +35,7 @@ type IvState = {
     parameter: CalculateParameter;
     box: PokemonBox;
     selectedItemId: number;
+    energyDialogOpen: boolean;
     boxItemDialogOpen: boolean;
     boxItemDialogKey: string;
     boxItemDialogIsEdit: boolean;
@@ -49,6 +50,7 @@ export const initialIvState: IvState = {
     parameter: defaultCalculateParameter,
     box: initialBox,
     selectedItemId: -1,
+    energyDialogOpen: false,
     boxItemDialogOpen: false,
     boxItemDialogKey: "",
     boxItemDialogIsEdit: false,
@@ -75,6 +77,12 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         const value = action.payload.parameter;
         localStorage.setItem('PstStrenghParam', JSON.stringify(value));
         return {...state, parameter: value};
+    }
+    if (type === "openEnergyDialog") {
+        return {...state, energyDialogOpen: true};
+    }
+    if (type === "closeEnergyDialog") {
+        return {...state, energyDialogOpen: false};
     }
     if (type === "add") {
         if (!state.box.canAdd) {
@@ -199,6 +207,18 @@ function getStateWhenPokemonIvChange(state: IvState, value: PokemonIv): IvState 
         parameter = {...parameter, helpBonusCount: 0};
     } else if (!hasHelpingBonus && parameter.helpBonusCount === 5) {
         parameter = {...parameter, helpBonusCount: 4};
+    }
+
+    // fix recoveryBonusCount
+    const hasRecoveryBonus = value.hasEnergyRecoveryBonusInActiveSubSkills;
+    const prevHasRecoveryBonus = state.pokemonIv.hasEnergyRecoveryBonusInActiveSubSkills;
+    if (hasRecoveryBonus && parameter.recoveryBonusCount === 0) {
+        parameter = {...parameter, recoveryBonusCount: 1};
+    } else if (state.parameter.recoveryBonusCount === 1 && !hasRecoveryBonus &&
+        prevHasRecoveryBonus) {
+        parameter = {...parameter, recoveryBonusCount: 0};
+    } else if (!hasRecoveryBonus && parameter.recoveryBonusCount === 5) {
+        parameter = {...parameter, recoveryBonusCount: 4};
     }
 
     value.normalize();

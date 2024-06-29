@@ -33,32 +33,30 @@ export interface CalculateParameter {
     helpBonusCount: 0|1|2|3|4|5;
 
     /**
-     * Average of help efficiency calculated from average energy.
-     *
-     * 2.2222 if energy is always 81~150.
-     * 1 if energy is always 0~20.
-     */
-    averageEfficiency: number;
-
-    /**
      * Energy restored by 'energy for all' main skill.
      */
-    //e4eEnergy: number;
+    e4eEnergy: number;
 
     /**
      * Triggered count of 'Energy for all' main skill.
      */
-    //e4eCount: number;
+    e4eCount: number;
+
+    /**
+     * The number of pokemon which has energy recovery bonus sub-skill
+     * in the team.
+     */
+    recoveryBonusCount: 0|1|2|3|4|5;
 
     /**
      * If true, we assume that energy is always 100.
      */
-    //isEnergyAlwaysFull: boolean;
+    isEnergyAlwaysFull: boolean;
 
     /**
      * Sleep score of the sleep.
      */
-    //sleepScore: number;
+    sleepScore: number;
 
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
@@ -165,7 +163,9 @@ class PokemonStrength {
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
         const countRatio = params.period / 24;
-        const energy = new Energy(this.iv).calculate(18, 3, 510, false);
+        const energy = new Energy(this.iv).calculate(params.e4eEnergy,
+            params.e4eCount, params.sleepScore * 510 / 100, params.isEnergyAlwaysFull,
+            params.helpBonusCount, params.recoveryBonusCount, params.isGoodCampTicketSet);
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
@@ -311,11 +311,15 @@ export function loadCalculateParameter(): CalculateParameter {
         fieldIndex: -1,
         favoriteType: ["normal", "fire", "water"],
         helpBonusCount: 0,
+        e4eEnergy: 18,
+        e4eCount: 3,
+        recoveryBonusCount: 0,
+        isEnergyAlwaysFull: false,
+        sleepScore: 100,
         isGoodCampTicketSet: false,
         level: 0,
         evolved: false,
         maxSkillLevel: false,
-        averageEfficiency: 1.8452,
         tapFrequency: "always",
         recipeBonus: 25,
         recipeLevel: 30,
@@ -366,8 +370,24 @@ export function loadCalculateParameter(): CalculateParameter {
     if (typeof(json.maxSkillLevel) === "boolean") {
         ret.maxSkillLevel = json.maxSkillLevel;
     }
-    if (typeof(json.averageEfficiency) === "number") {
-        ret.averageEfficiency = json.averageEfficiency;
+    if (typeof(json.e4eEnergy) === "number" &&
+        [5, 7, 9, 11, 15, 18].includes(json.e4eEnergy)) {
+        ret.e4eEnergy = json.e4eEnergy;
+    }
+    if (typeof(json.e4eCount) === "number" &&
+        json.e4eCount >= 0 && json.e4eCount <= 10) {
+        ret.e4eCount = json.e4eCount;
+    }
+    if (typeof(json.recoveryBonusCount) === "number" &&
+        json.recoveryBonusCount >= 0 && json.recoveryBonusCount <= 5) {
+        ret.recoveryBonusCount = json.recoveryBonusCount;
+    }
+    if (typeof(json.isEnergyAlwaysFull) === "boolean") {
+        ret.isEnergyAlwaysFull = json.isEnergyAlwaysFull;
+    }
+    if (typeof(json.sleepScore) === "number" &&
+        0 <= json.sleepScore && json.sleepScore <= 100) {
+        ret.sleepScore = json.sleepScore;
     }
     if (typeof(json.tapFrequency) === "string" &&
         ["always", "none"].includes(json.tapFrequency)) {
