@@ -91,9 +91,7 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
             {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
-            {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
-                lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
-                dispatch={dispatch}/>}
+            {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
                 <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
                     isBoxEmpty={state.box.items.length === 0}
