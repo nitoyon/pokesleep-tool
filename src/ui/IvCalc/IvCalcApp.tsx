@@ -4,7 +4,6 @@ import { Tab, Tabs } from '@mui/material';
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { IvAction, ivStateReducer, initialIvState } from './IvState';
-import { CalculateParameter } from '../../util/PokemonStrength';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
@@ -40,10 +39,6 @@ const ResearchCalcApp = React.memo(() => {
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         dispatch({type: "changeUpperTab", payload: {index: newValue}});
-    }, []);
-
-    const onParameterChange = React.useCallback((value: CalculateParameter) => {
-        dispatch({type: "changeParameter", payload: {parameter: value}});
     }, []);
 
     const onRestoreClick = React.useCallback(() => {
@@ -109,7 +104,7 @@ const ResearchCalcApp = React.memo(() => {
             {state.lowerTabIndex === 2 && 
                 <StrengthSettingForm value={state.parameter}
                     hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                    onChange={onParameterChange}/>}
+                    dispatch={dispatch}/>}
         </div>
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
