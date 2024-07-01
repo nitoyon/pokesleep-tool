@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     } from '@mui/material';
+import { IvAction } from './IvState';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { CalculateParameter } from '../../util/PokemonStrength';
@@ -35,12 +36,16 @@ const StyledSettingForm = styled('div')({
     }
 });
 
-const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
-    onChange: (value: CalculateParameter) => void,
+const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
+    dispatch: React.Dispatch<IvAction>,
     value: CalculateParameter,
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
+
+    const onChange = React.useCallback((value: CalculateParameter) => {
+        dispatch({type: "changeParameter", payload: {parameter: value}});
+    }, [dispatch]);
 
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
