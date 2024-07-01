@@ -1,19 +1,18 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import PokemonIv from '../../util/PokemonIv';
-import { IvAction } from './IvState';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import IvState, { IvAction } from './IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, dispatch}: {
-    pokemonIv: PokemonIv,
-    parameter: CalculateParameter,
-    lowerTabIndex: number,
+const StrengthView = React.memo(({state, dispatch}: {
+    state: IvState,
     dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
+    const pokemonIv = state.pokemonIv;
+    const parameter = state.parameter;
+    const lowerTabIndex = state.lowerTabIndex;
 
     const onEditClick = React.useCallback(() => {
         dispatch({type: "changeLowerTab", payload: {index: 2}});
