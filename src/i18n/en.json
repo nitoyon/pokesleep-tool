@@ -12,7 +12,13 @@
             "short title": "IV Calc",
             "description": "Using this tool is easy! Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength.",
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
-            "notice detail2": ""
+            "notice detail2": "",
+            "news": {
+                "energy nature and inventory": {
+                    "headline": "Carry limit and energy recovery nature are now taken into account when calculating strength.",
+                    "detail": "Previously, we have overestimated the abilities of Pokémon whose inventory overflows at night, but we are now approaching the actual number of ingredients and skill occurrences. Additionally, in the [STRENGTH] tab, you can now check the time until full inventory during sleep and the wake up skill%.\nCurrently, the carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state."
+                }
+            }
         },
         "langname": "English",
         "num": "{{n, number}}",
