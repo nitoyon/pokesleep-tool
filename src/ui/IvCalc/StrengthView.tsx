@@ -1,22 +1,22 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import PokemonIv from '../../util/PokemonIv';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import IvState, { IvAction } from './IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParameterEdit}: {
-    pokemonIv: PokemonIv,
-    parameter: CalculateParameter,
-    lowerTabIndex: number,
-    onParameterEdit: () => void,
+const StrengthView = React.memo(({state, dispatch}: {
+    state: IvState,
+    dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
+    const pokemonIv = state.pokemonIv;
+    const parameter = state.parameter;
+    const lowerTabIndex = state.lowerTabIndex;
 
     const onEditClick = React.useCallback(() => {
-        onParameterEdit();
-    }, [onParameterEdit]);
+        dispatch({type: "changeLowerTab", payload: {index: 2}});
+    }, [dispatch]);
 
     let area;
     if (parameter.fieldIndex < 0) {
@@ -36,7 +36,8 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
         parameter.period === 168 ? '1week' : 'whistle');
 
     return (<div>
-        <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}/>
+        <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}
+            energyDialogOpen={state.energyDialogOpen} dispatch={dispatch}/>
         <Collapse in={lowerTabIndex !== 2}>
             <StrengthParameterPreview>
                 <ul>
@@ -53,7 +54,7 @@ const StrengthView = React.memo(({pokemonIv, parameter, lowerTabIndex, onParamet
 });
 
 const StrengthParameterPreview = styled('div')({
-    margin: '0.8rem 0 0 0',
+    marginTop: '0.2rem',
     padding: '.4rem .6rem',
     border: '1px solid #ccc',
     borderRadius: '1rem',

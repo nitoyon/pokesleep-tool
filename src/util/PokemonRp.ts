@@ -169,7 +169,13 @@ class PokemonRp {
     }
 
     get energyBonus(): number {
-        return 1 + ((this.nature?.energyRecoveryFactor ?? 0) * 0.08);
+        if (this.nature?.isEnergyRecoveryUp) {
+            return 1.08;
+        }
+        if (this.nature?.isEnergyRecoveryDown) {
+            return 0.92;
+        }
+        return 1;
     }
 
     get subSkillBonus(): number {
@@ -256,6 +262,14 @@ class PokemonRp {
         return 0.000000398 * Math.pow(this.level, 3) +
             0.000159 * Math.pow(this.level, 2) +
             0.00367 * this.level - 0.00609 + 1;
+    }
+
+    get bagUsagePerHelp(): number {
+        const ingRatio = this.ingredientRatio;
+        const ingCount = this.level < 30 ? this.ingredient1.count :
+            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count) / 2 :
+            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count) / 3;
+        return (1 - ingRatio) * this.berryCount + ingRatio * ingCount;
     }
 
     get berryRp(): number {

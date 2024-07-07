@@ -12,11 +12,7 @@ import SkillLevelControl from './SkillLevelControl';
 import InfoButton from './InfoButton';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
-import MoodIcon from '@mui/icons-material/Mood';
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import MoodBadIcon from '@mui/icons-material/MoodBad';
+import EnergyIcon from '../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -195,15 +191,15 @@ const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
     const val100 = convertToVal(0.45);
     return <StyledFrequencyDialog open={open} onClose={onClose}>
         <article>
-            <span className="energy"><MoodIcon sx={{color: '#62d540'}}/>81{t('range separator')}150</span>
+            <span className="energy"><EnergyIcon energy={100}/>81{t('range separator')}150</span>
             <span>{val100}</span>
-            <span className="energy"><SentimentSatisfiedAltIcon sx={{color: '#66dcd8'}}/>61{t('range separator')}80</span>
+            <span className="energy"><EnergyIcon energy={80}/>61{t('range separator')}80</span>
             <span>{val80}</span>
-            <span className="energy"><SentimentDissatisfiedIcon sx={{color: '#4aacfd'}}/>41{t('range separator')}60</span>
+            <span className="energy"><EnergyIcon energy={60}/>41{t('range separator')}60</span>
             <span>{val60}</span>
-            <span className="energy"><SentimentVeryDissatisfiedIcon sx={{color: '#d4b5fd'}}/>21{t('range separator')}40</span>
+            <span className="energy"><EnergyIcon energy={40}/>21{t('range separator')}40</span>
             <span>{val40}</span>
-            <span className="energy"><MoodBadIcon sx={{color: '#a5a3a6'}}/>0{t('range separator')}20</span>
+            <span className="energy"><EnergyIcon  energy={20}/>0{t('range separator')}20</span>
             <span>{val20}</span>
         </article>
         <section>
