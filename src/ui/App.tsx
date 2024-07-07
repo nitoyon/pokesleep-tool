@@ -3,6 +3,7 @@ import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
 import IvCalcApp from './IvCalc/IvCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
 import ToolBar from './ToolBar';
+import NewsInfo from './NewsInfo';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
 
@@ -14,12 +15,18 @@ export interface AppConfig {
     language: string;
     /** PWA notify check counter */
     pwacnt: number,
+    /** Last news closed */
+    news: {
+        ResearchCalc: string,
+        IvCalc: string,
+    },
 }
 
 export type AppType = "ResearchCalc" | "IvCalc";
 
 export const AppConfigContext = React.createContext<AppConfig>({
-    iconUrl: null, language: "", pwacnt: 0});
+    iconUrl: null, language: "", pwacnt: 0,
+    news: {ResearchCalc: "", IvCalc: ""}});
 
 export default function App({config}: {config:AppConfig}) {
     const language = useMultilingual(config);
@@ -44,6 +51,7 @@ export default function App({config}: {config:AppConfig}) {
         <AppConfigContext.Provider value={appConfig}>
             <ToolBar app={curApp} onAppChange={onAppChange}
                 onAppConfigChange={onAppConfigChange}/>
+            <NewsInfo appType={curApp} onAppConfigChange={onAppConfigChange}/>
             {curApp === "ResearchCalc" && <ResearchCalcApp/>}
             {curApp === "IvCalc" && <IvCalcApp/>}
             <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
@@ -120,6 +128,7 @@ export function loadConfig(language:string): AppConfig {
         iconUrl: null,
         language,
         pwacnt: -1,
+        news: {ResearchCalc: "", IvCalc: ""},
     };
 
     const data = localStorage.getItem("PokeSleepTool");
@@ -139,6 +148,14 @@ export function loadConfig(language:string): AppConfig {
     }
     if (typeof(json.pwacnt) == "number") {
         config.pwacnt = json.pwacnt;
+    }
+    if (typeof(json.news) === "object") {
+        if (typeof(json.news.ResearchCalc) === "string") {
+            config.news.ResearchCalc = json.news.ResearchCalc;
+        }
+        if (typeof(json.news.IvCalc) === "string") {
+            config.news.IvCalc = json.news.IvCalc;
+        }
     }
     return config;
 }

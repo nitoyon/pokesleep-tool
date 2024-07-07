@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { InputAreaData } from './InputArea'
 import Rank from '../../util/Rank';
+import { AmountOfSleep } from '../../util/TimeUtil';
 import { PokemonCount, getPokemonCount } from '../../util/PokemonCount';
 import SleepScore from '../SleepScore'
 import fields from '../../data/fields';
@@ -35,23 +36,6 @@ interface MultipleScoreRange {
     nextStrength: number | null;
 }
 
-class TimeLength {
-    /** Hour */
-    h: number;
-
-    /** Minute */
-    m: number;
-
-    constructor(h:number, m:number) {
-        this.h = h;
-        this.m = m;
-    }
-
-    toString(t:typeof i18next.t):string {
-        return t('hhmm', {h: this.h, m: this.m});
-    }
-}
-
 export interface ScoreRange {
     /** pokemon count */
     count: PokemonCount;
@@ -72,7 +56,7 @@ export interface ScoreRange {
     minScore: number;
 
     /** sleep time to get minScore */
-    minTime: TimeLength;
+    minTime: AmountOfSleep;
 
     /** power when we get minScore */
     minPower: number;
@@ -81,7 +65,7 @@ export interface ScoreRange {
     maxScore: number;
 
     /** sleep time to get maxScore */
-    maxTime: TimeLength;
+    maxTime: AmountOfSleep;
 
     /** poewr when we get maxScore */
     maxPower: number;
@@ -243,11 +227,9 @@ function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
  * @param score score
  * @returns sleep time length
  */
-export function getMinTimeForScore(score: number): TimeLength {
-    const minutes = Math.max(0, Math.ceil((score - 0.5) / 100 * 8.5 * 60));
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-    return new TimeLength(h, m);
+export function getMinTimeForScore(score: number): AmountOfSleep {
+    return new AmountOfSleep(Math.max(0,
+        Math.ceil((score - 0.5) / 100 * 8.5 * 60)));
 }
 
 /**
@@ -255,11 +237,9 @@ export function getMinTimeForScore(score: number): TimeLength {
  * @param score score
  * @returns sleep time
  */
-export function getMaxTimeForScore(score: number): TimeLength {
-    const minutes = Math.min(510, Math.ceil((score + 1 - 0.5) / 100 * 8.5 * 60) - 1);
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-    return new TimeLength(h, m);
+export function getMaxTimeForScore(score: number): AmountOfSleep {
+    return new AmountOfSleep(Math.min(510,
+        Math.ceil((score + 1 - 0.5) / 100 * 8.5 * 60) - 1));
 }
 
 /**

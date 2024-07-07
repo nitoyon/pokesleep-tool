@@ -12,10 +12,17 @@
             "short title": "個体値計算機",
             "description": "使い方はかんたん！ ポケモンのレベルやスキルを入力すると、SP や稼ぐエナジー・強さが分かります。",
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
-            "notice detail2": ""
+            "notice detail2": "",
+            "news": {
+                "energy nature and inventory": {
+                    "headline": "所持数やげんき回復量のせいかくを考慮して、食材・スキル数を計算するようになりました。",
+                    "detail": "いままで、夜間に所持数があふれるポケモンの能力を過大評価していましたが、実際の食材数やスキル発生数に近づきました。さらに、[エナジー] タブにおいて、睡眠中の所持あふれまでの時間や、翌朝スキル発生率を確認できるようになりました。\n現時点では、最大所持数は進化前の状態でつかまえた前提で見積もっています。"
+                }
+            }
         },
         "langname": "日本語 (Japanese)",
         "num": "{{n, number}}",
+        "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",
         "short num unit digits": "4",
 
@@ -136,14 +143,27 @@
         "good camp ticket": "いいキャンプチケット",
         "good camp ticket (short)": "キャンチケ",
         "energy": "げんき",
-        "no healing": "回復なし",
-        "healing": "回復",
-        "always 81%+": "常に81%以上",
         "tap frequency": "タップ頻度",
         "every minute": "毎分",
         "recipe range (the number of ingredients)": "食材を使うレシピ",
         "mixed recipe": "ごちゃまぜ",
         "average recipe level": "平均レシピレベル",
+
+        "sleep score": "睡眠スコア",
+        "help efficiency": "おてつだい効率",
+        "full inventory while sleeping (short)": "睡眠中所持あふれ",
+        "skill trigger after wake up (short)": "翌朝スキル",
+        "average help efficiency": "平均おてつだい効率",
+        "awake": "起床中",
+        "asleep": "睡眠中",
+        "asleep (full inventory)": "睡眠中 (所持あふれ)",
+        "full inventory while sleeping": "睡眠中所持あふれ",
+        "carry limit": "最大所持数",
+        "carry per help": "1回の所持圧迫数",
+        "skill trigger after wake up": "翌朝スキル発生率",
+        "lottery count": "抽選回数",
+        "always 81%+": "常に81%以上",
+        "charge energy not implemented": "現在、げんきチャージSによるげんき回復は考慮されていません。",
 
         "pokemon": "ポケモン",
         "level": "レベル",
@@ -164,8 +184,8 @@
         "strength of x": "{{x}}のエナジー",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
         "strength detail2": "現時点の計算ロジックには次のような制約があります。",
-        "strength restriction1": "夜間の「いつのまに育成」は発生しないものと仮定しています。夜間に「いつのまに育成」が発生しているのであれば、実際の食材数は、表示されている数よりも少なくなります。",
-        "strength restriction2": "毎朝げんき 100% に回復しているものと仮定しています。朝のげんきが 100% で始まらない場合は、実際のエナジー量は少なくなります。",
+        "strength restriction1": "最大所持数は進化前の状態でつかまえた前提で見積もっています。",
+        "strength restriction2": "げんきチャージSによるげんき回復は考慮されていません。",
         "strength skill info": {
             "Ingredient Magnet S": "獲得できる食材の数を表示しています。スキルによる食材は、合計エナジー量には換算していません。",
             "Charge Energy S": "げんき回復量の合計を表示しています。スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。",

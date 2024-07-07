@@ -12,7 +12,13 @@
             "short title": "IV Calc",
             "description": "Using this tool is easy! Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength.",
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
-            "notice detail2": ""
+            "notice detail2": "",
+            "news": {
+                "energy nature and inventory": {
+                    "headline": "Carry limit and energy recovery nature are now taken into account when calculating strength.",
+                    "detail": "Previously, we have overestimated the abilities of Pokémon whose inventory overflows at night, but we are now approaching the actual number of ingredients and skill occurrences. Additionally, in the [STRENGTH] tab, you can now check the time until full inventory during sleep and the wake up skill%.\nCurrently, the carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state."
+                }
+            }
         },
         "langname": "English",
         "num": "{{n, number}}",
@@ -146,14 +152,27 @@
         "good camp ticket": "Good camp ticket",
         "good camp ticket (short)": "Ticket",
         "energy": "Energy",
-        "no healing": "No healing",
-        "healing": "healing",
-        "always 81%+": "Always 81%+",
         "tap frequency": "Tap frequency",
         "every minute": "Every minute",
         "recipe range (the number of ingredients)": "Recipe",
         "mixed recipe": "Mixed",
         "average recipe level": "Average recipe level",
+
+        "sleep score": "Sleep score",
+        "help efficiency": "Help efficiency",
+        "full inventory while sleeping (short)": "Full inventory",
+        "skill trigger after wake up (short)": "Wake up skill%",
+        "average help efficiency": "Average help efficiency",
+        "awake": "Awake",
+        "asleep": "Asleep",
+        "asleep (full inventory)": "Asleep (Full inventory)",
+        "full inventory while sleeping": "Full inventory while sleeping",
+        "carry limit": "Carry limit",
+        "carry per help": "Carry per help",
+        "skill trigger after wake up": "Skill trigger% after wake up",
+        "lottery count": "Lottery count",
+        "always 81%+": "Always 81%+",
+        "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
 
         "pokemon": "Pokémon",
         "level": "Level",
@@ -174,8 +193,8 @@
         "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",
-        "strength restriction1": "It is assumed that nighttime 'Sneaky Snacking' does not occur. If it occurs, the actual number of ingredients will be less than the displayed amount.",
-        "strength restriction2": "It is assumed that Pokémon's energy is fully recovered to 100% every morning. If not, the actual strength will be less.",
+        "strength restriction1": "The carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state.",
+        "strength restriction2": "Energy recovery via Charge Energy S is not included in the calculations.",
         "strength skill info": {
             "Ingredient Magnet S": "Displays the number of ingredients obtained. This value is not counted towards the total strength amount.",
             "Charge Energy S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",

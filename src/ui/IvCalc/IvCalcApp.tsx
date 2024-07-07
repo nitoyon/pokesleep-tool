@@ -4,7 +4,6 @@ import { Tab, Tabs } from '@mui/material';
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { IvAction, ivStateReducer, initialIvState } from './IvState';
-import { CalculateParameter } from '../../util/PokemonStrength';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
@@ -38,16 +37,8 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "updateIv", payload: {iv: value}});
     }, []);
 
-    const onParameterEdit = React.useCallback(() => {
-        dispatch({type: "changeLowerTab", payload: {index: 2}});
-    }, []);
-
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         dispatch({type: "changeUpperTab", payload: {index: newValue}});
-    }, []);
-
-    const onParameterChange = React.useCallback((value: CalculateParameter) => {
-        dispatch({type: "changeParameter", payload: {parameter: value}});
     }, []);
 
     const onRestoreClick = React.useCallback(() => {
@@ -95,9 +86,7 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
             {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
-            {state.tabIndex === 1 && <StrengthView pokemonIv={state.pokemonIv}
-                lowerTabIndex={state.lowerTabIndex} parameter={state.parameter}
-                onParameterEdit={onParameterEdit}/>}
+            {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
                 <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
                     isBoxEmpty={state.box.items.length === 0}
@@ -115,7 +104,7 @@ const ResearchCalcApp = React.memo(() => {
             {state.lowerTabIndex === 2 && 
                 <StrengthSettingForm value={state.parameter}
                     hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                    onChange={onParameterChange}/>}
+                    dispatch={dispatch}/>}
         </div>
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}

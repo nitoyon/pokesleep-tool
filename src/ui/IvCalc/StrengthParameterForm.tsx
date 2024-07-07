@@ -1,7 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { FormControl, MenuItem, Select, SelectChangeEvent, Switch,
+import { Button, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     } from '@mui/material';
+import { IvAction } from './IvState';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { CalculateParameter } from '../../util/PokemonStrength';
@@ -35,12 +36,16 @@ const StyledSettingForm = styled('div')({
     }
 });
 
-const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
-    onChange: (value: CalculateParameter) => void,
+const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
+    dispatch: React.Dispatch<IvAction>,
     value: CalculateParameter,
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
+
+    const onChange = React.useCallback((value: CalculateParameter) => {
+        dispatch({type: "changeParameter", payload: {parameter: value}});
+    }, [dispatch]);
 
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
@@ -90,9 +95,9 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
     }, [onChange, value]);
-    const onAverageEfficiencyChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, averageEfficiency: parseFloat(e.target.value)});
-    }, [onChange, value]);
+    const onEditEnergyClick = React.useCallback(() => {
+        dispatch({type: 'openEnergyDialog'});
+    }, [dispatch]);
     const onRecipeBonusChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, recipeBonus: parseInt(e.target.value)});
     }, [onChange, value]);
@@ -203,19 +208,9 @@ const StrengthSettingForm = React.memo(({onChange, value, hasHelpingBonus}: {
                 <MenuItem value="none">{t('none')}</MenuItem>
             </Select>
         </div>}
-        {isNotWhistle && <div>
+        {isNotWhistle && <div className="mt">
             <label>{t('energy')}:</label>
-            <Select variant="standard" value={value.averageEfficiency.toString()}
-                onChange={onAverageEfficiencyChange}>
-                <MenuItem value={1.4398}>{t('no healing')}</MenuItem>
-                <MenuItem value={1.5412}>18 × 1 {t('healing')}</MenuItem>
-                <MenuItem value={1.6765}>18 × 2 {t('healing')}</MenuItem>
-                <MenuItem value={1.8452}>18 × 3 {t('healing')}</MenuItem>
-                <MenuItem value={2.0274}>18 × 4 {t('healing')}</MenuItem>
-                <MenuItem value={2.1214}>18 × 5 {t('healing')}</MenuItem>
-                <MenuItem value={2.1890}>18 × 6 {t('healing')}</MenuItem>
-                <MenuItem value={2.2222}>{t('always 81%+')}</MenuItem>
-            </Select>
+            <Button onClick={onEditEnergyClick}>{t('edit')}</Button>
         </div>}
         <div className="mt">
             <label>{t('recipe range (the number of ingredients)')}:</label>

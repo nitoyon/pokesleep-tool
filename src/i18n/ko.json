@@ -12,7 +12,13 @@
             "short title": "개체값 계산기",
             "description": "사용 방법은 간단! 포켓몬의 레벨과 스킬을 입력하면, SP나 벌어들이는 에너지, 개체 평가치를 알 수 있습니다.",
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
-            "notice detail2": ""
+            "notice detail2": "",
+            "news": {
+                "energy nature and inventory": {
+                    "headline": "최대 소지 수와 기력 회복량은 총 에너지를 계산할 때 고려됩니다.",
+                    "detail": "이전에는 밤에 인벤토리가 넘치는 포켓몬의 능력을 과대평가했지만, 이제는 실제 재료 수와 기술 발생 수에 접근하고 있습니다. 또한 [총 에너지] 탭에서는 수면 중 인벤토리가 가득 찰 때까지의 시간과 일어날 때 기술 발생률을 확인할 수 있습니다.\n현재로서는 포켓몬을 진화하기 전 상태에서 잡은 것을 가정하여 최대 소지 수를 추정하고 있습니다."
+                }
+            }
         },
         "langname": "한국어 (Korean)",
         "num": "{{n, number}}",
@@ -136,14 +142,27 @@
         "good camp ticket": "좋은 캠프 티켓",
         "good camp ticket (short)": "티켓",
         "energy": "기력",
-        "no healing": "회복 없음",
-        "healing": "회복",
-        "always 81%+": "항상 81% 이상",
         "tap frequency": "탭 빈도",
         "every minute": "매 분",
         "recipe range (the number of ingredients)": "레시피의 식재료 갯수",
         "mixed recipe": "뒤범벅 레시피",
         "average recipe level": "평균 레시피 레벨",
+
+        "sleep score": "수면 스코어",
+        "help efficiency": "도움 효율성",
+        "full inventory while sleeping (short)": "수면 중 전체 인벤토리",
+        "skill trigger after wake up (short)": "각성 후 스킬",
+        "average help efficiency": "평균 도움 효율성",
+        "awake": "깨어 있음",
+        "asleep": "잠자는 중",
+        "asleep (full inventory)": "잠자는 중 (전체 인벤토리)",
+        "full inventory while sleeping": "수면 중 전체 인벤토리",
+        "carry limit": "최대 소지 수",
+        "carry per help": "도움 당 운반",
+        "skill trigger after wake up": "각성 후 스킬 트리거",
+        "lottery count": "추첨을 진행한 횟수",
+        "always 81%+": "항상 81% 이상",
+        "charge energy not implemented": "현재로서는, 기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
 
         "pokemon": "포켓몬",
         "level": "레벨",
@@ -164,8 +183,8 @@
         "strength of x": "{{x}} 의 에너지",
         "strength detail1": "포켓몬이 벌어들이는 에너지와 식재료, 스킬의 평균 발생 횟수를 확인할 수 있습니다.",
         "strength detail2": "현재 시점의 계산 로직에는 다음과 같은 제한이 있습니다.",
-        "strength restriction1": "야간에 '잠시 돌봐줌'은 발생하지 않는 것으로 가정합니다. 야간에 '잠시 돌봐줌'이 발생하고 있다면, 벌어들이는 식재료의 양이 표시된 수 보다 적을 수 있습니다.",
-        "strength restriction2": "매일 아침 포켓몬의 활력이 100%로 회복된다고 가정합니다. 아침에 활력이 100%에서 시작하지 않는 경우는, 벌어들이는 에너지의 양이 표시된 수 보다 적을 수 있습니다.",
+        "strength restriction1": "포켓몬을 진화하기 전 상태에서 잡은 것을 가정하여 최대 소지 수를 추정하고 있습니다.",
+        "strength restriction2": "기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
         "strength skill info": {
             "Ingredient Magnet S": "획득한 재료의 수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
             "Charge Energy S": "회복된 총 에너지 양을 표시합니다. 이 값은 총 강도량에 포함되지 않습니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
