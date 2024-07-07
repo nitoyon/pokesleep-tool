@@ -193,8 +193,8 @@
         "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",
-        "strength restriction1": "It is assumed that nighttime 'Sneaky Snacking' does not occur. If it occurs, the actual number of ingredients will be less than the displayed amount.",
-        "strength restriction2": "It is assumed that Pokémon's energy is fully recovered to 100% every morning. If not, the actual strength will be less.",
+        "strength restriction1": "The carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state.",
+        "strength restriction2": "Energy recovery via Charge Energy S is not included in the calculations.",
         "strength skill info": {
             "Ingredient Magnet S": "Displays the number of ingredients obtained. This value is not counted towards the total strength amount.",
             "Charge Energy S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
