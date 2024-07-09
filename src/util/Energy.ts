@@ -2,7 +2,7 @@ import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 
 /** Efficiency list */
-type EfficiencyList = 2.222 | 1.923 | 1.613 | 1.408 | 1.0;
+type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
 type EnergyEvent = {
     /** Elapsed minutes since waking up */
@@ -257,12 +257,13 @@ class Energy {
             let energy = prevEnergy;
             let start = prevMinutes;
             while (true) {
-                if (energy <= 20) {
+                if (energy <= 1) {
                     energy = 0;
                     break;
                 }
 
-                const threshold = energy % 20 === 0 ? energy - 20 :
+                const threshold = energy <= 40 ? 1 :
+                    energy % 20 === 0 ? energy - 20 :
                     Math.floor(energy / 20) * 20;
                 const end = start + (energy - threshold) * 10;
                 if (end > curMinutes) {
@@ -454,8 +455,8 @@ class Energy {
     getEfficiencyByEnergy(energy: number): EfficiencyList {
         if (energy > 80) { return 2.222; }
         if (energy > 60) { return 1.923; }
-        if (energy > 40) { return 1.613; }
-        if (energy > 20) { return 1.408; }
+        if (energy > 40) { return 1.724; }
+        if (energy > 1) { return 1.515; }
         return 1;
     }
 }
