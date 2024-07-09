@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2024-07-09T13:45:00Z",
+            "id": "v1.9.0"
+        },
+        {
             "date": "2024-07-07T14:00:00Z",
             "id": "energy nature and inventory"
         }
