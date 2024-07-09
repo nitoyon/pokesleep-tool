@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v1.9.0": {
+                    "headline": "Energy efficiency values adjusted in response to changes made by Pokémon Sleep version 1.9.0.",
+                    "detail": "We have responded to the change implemented in Pokémon Sleep 1.9.0, where 'Help from helper Pokémon with low Energy will be slightly more effective.' (ref: ポケモンスリープ攻略・検証Wiki, Pokémon Sleep Info Wiki)\nWe have also increased box capacity from 100 to 150."
+                },
                 "energy nature and inventory": {
                     "headline": "Carry limit and energy recovery nature are now taken into account when calculating strength.",
                     "detail": "Previously, we have overestimated the abilities of Pokémon whose inventory overflows at night, but we are now approaching the actual number of ingredients and skill occurrences. Additionally, in the [STRENGTH] tab, you can now check the time until full inventory during sleep and the wake up skill%.\nCurrently, the carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state."
