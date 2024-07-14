@@ -1263,6 +1263,132 @@
         }
     },
     {
+        "id": 906,
+        "name": "Sprigatito",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRatio": 20.8,
+        "skillRatio": 2.3,
+        "ancestor": 906,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
+        "id": 907,
+        "name": "Floragato",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 12,
+        "frequency": 3500,
+        "ingRatio": 20.9,
+        "skillRatio": 2.3,
+        "ancestor": 906,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
+        "id": 908,
+        "name": "Meowscarada",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 20,
+        "frequency": 2600,
+        "ingRatio": 19,
+        "skillRatio": 2.2,
+        "ratioNotFixed": true,
+        "ancestor": 906,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
+        "id": 911,
+        "name": "Skeledirge",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 20,
+        "frequency": 2700,
+        "ingRatio": 20,
+        "skillRatio": 2,
+        "ratioNotFixed": true,
+        "ancestor": 909,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "apple",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 5
+        }
+    },
+    {
         "id": 4,
         "name": "Charmander",
         "sleepType": "snoozing",
@@ -2793,6 +2919,68 @@
         }
     },
     {
+        "id": 909,
+        "name": "Fuecoco",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 5,
+        "frequency": 4200,
+        "ingRatio": 25.4,
+        "skillRatio": 5.3,
+        "ancestor": 909,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "apple",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 5
+        }
+    },
+    {
+        "id": 910,
+        "name": "Crocalor",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 3100,
+        "ingRatio": 24.7,
+        "skillRatio": 5,
+        "ancestor": 909,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "apple",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 5
+        }
+    },
+    {
         "id": 7,
         "name": "Squirtle",
         "sleepType": "slumbering",
@@ -4091,6 +4279,101 @@
         "ing3": {
             "name": "egg",
             "c3": 8
+        }
+    },
+    {
+        "id": 912,
+        "name": "Quaxly",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength M",
+        "fp": 5,
+        "frequency": 4800,
+        "ingRatio": 26.1,
+        "skillRatio": 2.8,
+        "ancestor": 912,
+        "evolutionCount": 0,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "soy",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "leek",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 6
+        }
+    },
+    {
+        "id": 913,
+        "name": "Quaxwell",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength M",
+        "fp": 12,
+        "frequency": 3600,
+        "ingRatio": 25.9,
+        "skillRatio": 2.7,
+        "ratioNotFixed": true,
+        "ancestor": 912,
+        "evolutionCount": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "soy",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "leek",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 6
+        }
+    },
+    {
+        "id": 914,
+        "name": "Quaquaval",
+        "sleepType": "slumbering",
+        "type": "fighting",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength M",
+        "fp": 20,
+        "frequency": 2600,
+        "ingRatio": 20,
+        "skillRatio": 2,
+        "ratioNotFixed": true,
+        "ancestor": 912,
+        "evolutionCount": 2,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "soy",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "leek",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 6
         }
     }
 ]
