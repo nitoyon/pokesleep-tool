@@ -724,6 +724,91 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.3, y: 0.2, w: 0.4, h: 0.15, r: 0.2, color: '#ffea63'},
         {x: 0, y: 0.9, w: 1, h: 0.1, color: '#5f6f73'},
     ],
+    // Sprigatito
+    '906': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fcffe0'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#7dc556'},
+        {x: 0.15, y: 0.25, w: 0.7, h: 0.55, r: 0.32, color: '#7dc556'},
+    ],
+    // Floragato
+    '907': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fcffe0'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#73d168'},
+        {x: 0.2, y: 0.2, w: 0.6, h: 0.5, r: 0.3, color: '#4e8351'},
+        {x: 0.1, y: 0.8, w: 0.8, h: 0.8, r: 0.1, color: '#75d169'},
+        {x: 0.7, y: 0.7, w: 0.3, h: 0.3, r: 0.15, color: '#e05a8e'},
+    ],
+    // Meowscarada
+    '908': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#feffed'},
+        {x: 0.1, y: 0, w: 0.8, h: 1, color: '#485440'},
+        {x: 0.2, y: 0.2, w: 0.6, h: 0.9, color: '#485440'},
+        {x: 0.42, y: 0.3, w: 0.16, h: 0.16, r: 0.05, color: '#57aa5e'},
+        {x: 0.25, y: 0.5, w: 0.16, h: 0.16, r: 0.05, color: '#57aa5e'},
+        {x: 0.59, y: 0.5, w: 0.16, h: 0.16, r: 0.05, color: '#57aa5e'},
+        {x: 0.3, y: -0.2, w: 0.4, h: 0.4, r: 0.2, color: '#feffed'},
+        {x: 0.3, y: 0.8, w: 0.4, h: 0.19, r: 0.1, color: '#feffed'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#e36586'},
+    ],
+    // Fuecoco
+    '909': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f4693f'},
+        {x: 0.1, y: 0.2, w: 0.8, h: 0.5, r: 0.25, color: '#fffffb'},
+        {x: 0.1, y: 0.4, w: 0.8, h: 0.3, r: 0.15, color: '#fffffb'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#feef7b'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#51545c'},
+        {x: 0.2, y: 0.9, w: 0.6, h: 0.1, color: '#fffada'},
+    ],
+    // Crocalor
+    '910': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fb6855'},
+        {x: 0.2, y: 0.3, w: 0.6, h: 0.5, r: 0.2, color: '#fffffb'},
+        {x: 0.2, y: 0.6, w: 0.6, h: 0.2, color: '#fffffb'},
+        {x: 0, y: 0, w: 1, h: 0.3, color: '#fec960'},
+        {x: 0.4, y: 0, w: 0.2, h: 0.25, r: 0.2, color: '#fffe86'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#56534b'},
+    ],
+    // Skeledirge
+    '911': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fe5d5c'},
+        {x: 0, y: 0, w: 1, h: 0.25, color: '#fea51d'},
+        {x: 0, y: 0.25, w: 1, h: 0.25, color: '#ffff4c'},
+        {x: 0.3, y: 0.2, w: 0.4, h: 0.5, r: 0.15, color: '#ffffff'},
+        {x: 0.3, y: 0.5, w: 0.4, h: 0.5, color: '#ffffff'},
+        {x: 0.4, y: 0.6, w: 0.2, h: 0.2, r: 0.1, color: '#f3a919'},
+        {x: 0.45, y: 0.65, w: 0.1, h: 0.1, r: 0.05, color: '#ffff4d'},
+        {x: 0.4, y: 0.25, w: 0.2, h: 0.18, color: '#de5dff'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#56534b'},
+    ],
+    // Quaxly
+    '912': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fefefe'},
+        {x: 0, y: 0, w: 1, h: 0.55, r: 0.5, color: '#72f5fa'},
+        {x: 0.2, y: 0.65, w: 0.6, h: 0.3, r: 0.5, color: '#fff575'},
+    ],
+    // Quaxwell
+    '913': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fefefe'},
+        {x: 0.25, y: 0, w: 0.5, h: 0.4, r: 0.5, color: '#48a4f4'},
+        {x: 0.25, y: 0.25, w: 0.5, h: 0.2, color: '#48a4f4'},
+        {x: 0.35, y: 0.25, w: 0.3, h: 0.2, color: '#fefefe'},
+        {x: 0.25, y: 0.25, w: 0.5, h: 0.1, color: '#5adcec'},
+        {x: 0.35, y: 0.4, w: 0.3, h: 0.2, r: 0.5, color: '#fff575'},
+        {x: 0, y: 0.65, w: 1, h: 0.15, color: '#48a4f4'},
+        {x: 0.3, y: 0.9, w: 0.4, h: 0.1, color: '#fff575'},
+    ],
+    // Quaquaval
+    '914': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#5878e8'},
+        {x: 0.45, y: 0, w: 0.1, h: 0.2, r: 0.2, color: '#b9ffff'},
+        {x: 0, y: 0.2, w: 1, h: 0.1, color: '#ff4217'},
+        {x: 0, y: 0.3, w: 0.3, h: 0.7, color: '#bdffff'},
+        {x: 0.7, y: 0.3, w: 0.3, h: 0.7, color: '#bdffff'},
+        {x: 0.3, y: 0.3, w: 0.4, h: 0.3, color: '#f0ffff'},
+        {x: 0.35, y: 0.4, w: 0.3, h: 0.2, r: 0.5, color: '#fff575'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#ffdd6e'},
+        {x: 0, y: 0.96, w: 1, h: 0.1, color: '#f87e53'},
+    ],
 };
 
 export default pokemonRectData;
