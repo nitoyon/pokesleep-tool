@@ -88,10 +88,19 @@ const ResearchCalcApp = React.memo(() => {
             {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
             {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-                <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
-                    isBoxEmpty={state.box.items.length === 0}
-                    onChange={onLowerTabChange}
-                    onMenuItemClick={onHeaderMenuClick}/>
+            {state.pokemonIv.pokemon.ratioNotFixed && <div style={{
+                border: '1px solid red',
+                background: '#ffeeee',
+                color: 'red',
+                fontSize: '0.9rem',
+                borderRadius: '0.5rem',
+                marginTop: '3px',
+                padding: '0 0.3rem',
+            }}>{t('ratio is not fixed')}</div>}
+            <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
+                isBoxEmpty={state.box.items.length === 0}
+                onChange={onLowerTabChange}
+                onMenuItemClick={onHeaderMenuClick}/>
         </div>
         <div style={{margin: "0 .5rem"}}>
             {state.lowerTabIndex === 0 &&
