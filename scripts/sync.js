@@ -1,8 +1,8 @@
 'use strict';
-
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const { setTimeout } = require('timers/promises');
 const {JSDOM} = require('jsdom');
 const { INIT_CWD } = process.env;
 
@@ -270,15 +270,16 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
     const prob = {};
     for (const line of lines.filter(x => x.match(/^[^,]+,\d+\.\d+%/))) {
         let [pokemon, ingRatio, confidence, skillRatio] = line.split(',');
+        let unknown = false;
         if (confidence === 'Placeholder') {
-            continue;
+            unknown = true;
         }
         if (pokemon === 'Pikachu (Holiday)') {
             pokemon = 'Pikachu (Festivo)';
         }
         ingRatio = parseFloat(ingRatio.replace('%', ''));
         skillRatio = parseFloat(skillRatio.replace('%', ''));
-        prob[pokemon] = {ingRatio, skillRatio};
+        prob[pokemon] = {ingRatio, skillRatio, unknown};
     }
     for (const pokemon of pokemonJson) {
         if (!(pokemon.name in prob)) {
@@ -287,6 +288,9 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
         }
         pokemon.ingRatio = prob[pokemon.name].ingRatio;
         pokemon.skillRatio = prob[pokemon.name].skillRatio;
+        if (prob[pokemon.name].unknown) {
+            pokemon.ratioNotFixed = true;
+        }
     }
 }
 
@@ -310,7 +314,7 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
         json.isFullyEvolved = (json.evolutionCount === 2);
     }
     else {
-        const evolink = dom.window.document.querySelector('h4 a[title="進化"]');
+        const evolink = dom.window.document.querySelector('h4 a[title="育成/進化"]');
         if (evolink === null) { throw new Error('進化 not found'); }
         const ancestor = evolink.parentNode.parentNode.querySelector('p>strong>a')?.textContent;
         // Charmander: [4, 5, 6]
@@ -401,6 +405,7 @@ async function getUrlWithCache(url, name, cacheFileName) {
     console.log(`Retrieving ${name}`);
     const content = await getHtml(url);
     fs.writeFileSync(cachePath, content);
+    await setTimeout(2000);
     return content;
 }
 
