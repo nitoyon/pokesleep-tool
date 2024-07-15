@@ -23,6 +23,8 @@ export interface PokemonData {
     ingRatio: number;
     /** Ratio for skill occurance. */
     skillRatio: number;
+    /** Whether ratio is not fixed or not */
+    ratioNotFixed?: boolean;
     /** Ancestor pokemon id */
     ancestor: number | null;
     /** Evolution count (-1, 0, 1, 2) */
