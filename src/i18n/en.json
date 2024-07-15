@@ -122,6 +122,7 @@
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
         "rp estimate": "RP beyond level 56 is estimated value.",
+        "ratio is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
 
         "box": "Box",
         "parameter": "Parameter",
