@@ -742,7 +742,6 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     '908': [
         {x: 0, y: 0, w: 1, h: 1, color: '#feffed'},
         {x: 0.1, y: 0, w: 0.8, h: 1, color: '#485440'},
-        {x: 0.2, y: 0.2, w: 0.6, h: 0.9, color: '#485440'},
         {x: 0.42, y: 0.3, w: 0.16, h: 0.16, r: 0.05, color: '#57aa5e'},
         {x: 0.25, y: 0.5, w: 0.16, h: 0.16, r: 0.05, color: '#57aa5e'},
         {x: 0.59, y: 0.5, w: 0.16, h: 0.16, r: 0.05, color: '#57aa5e'},
