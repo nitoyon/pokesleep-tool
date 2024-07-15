@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add paldea starter": {
+                    "headline": "Sprigatito, Fuecoco, Quaxly, and their evolutions are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v1.9.0": {
                     "headline": "Energy efficiency values adjusted in response to changes made by Pokémon Sleep version 1.9.0.",
                     "detail": "We have responded to the change implemented in Pokémon Sleep 1.9.0, where 'Help from helper Pokémon with low Energy will be slightly more effective.' (ref: ポケモンスリープ攻略・検証Wiki, Pokémon Sleep Info Wiki)\nWe have also increased box capacity from 100 to 150."
@@ -122,6 +126,7 @@
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
         "rp estimate": "RP beyond level 56 is estimated value.",
+        "ratio is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
 
         "box": "Box",
         "parameter": "Parameter",
@@ -484,7 +489,16 @@
             "Stufful": "Stufful",
             "Bewear": "Bewear",
             "Comfey": "Comfey",
-            "Cramorant": "Cramorant"
+            "Cramorant": "Cramorant",
+            "Sprigatito": "Sprigatito",
+            "Floragato": "Floragato",
+            "Meowscarada": "Meowscarada",
+            "Fuecoco": "Fuecoco",
+            "Crocalor": "Crocalor",
+            "Skeledirge": "Skeledirge",
+            "Quaxly": "Quaxly",
+            "Quaxwell": "Quaxwell",
+            "Quaquaval": "Quaquaval"
         }
     }
 }
