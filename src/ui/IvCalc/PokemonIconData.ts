@@ -734,8 +734,8 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     '907': [
         {x: 0, y: 0, w: 1, h: 1, color: '#fcffe0'},
         {x: 0, y: 0, w: 1, h: 0.1, color: '#73d168'},
-        {x: 0.2, y: 0.2, w: 0.6, h: 0.5, r: 0.3, color: '#4e8351'},
-        {x: 0.1, y: 0.8, w: 0.8, h: 0.8, r: 0.1, color: '#75d169'},
+        {x: 0.2, y: 0.3, w: 0.6, h: 0.4, r: 0.3, color: '#4e8351'},
+        {x: 0.1, y: 0.9, w: 0.8, h: 0.8, r: 0.1, color: '#75d169'},
         {x: 0.7, y: 0.7, w: 0.3, h: 0.3, r: 0.15, color: '#e05a8e'},
     ],
     // Meowscarada
