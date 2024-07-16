@@ -271,7 +271,7 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
     for (const line of lines.filter(x => x.match(/^[^,]+,\d+\.\d+%/))) {
         let [pokemon, ingRatio, confidence, skillRatio] = line.split(',');
         let unknown = false;
-        if (confidence === 'Placeholder') {
+        if (confidence !== 'Very good') {
             unknown = true;
         }
         if (pokemon === 'Pikachu (Holiday)') {
