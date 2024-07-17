@@ -6,6 +6,7 @@ import SubSkill from './SubSkill';
 describe('Energy', () => {
     test('calculate (e4e x 0)', () => {
         const iv = new PokemonIv('Raichu');
+        iv.subSkills.lv10 = new SubSkill('Inventory Up L');
         const energy = new Energy(iv);
         const result = energy.calculate(18, 0);
 
@@ -22,10 +23,10 @@ describe('Energy', () => {
         expect(result.efficiencies).toEqual([
             {start: 0, end: 210, efficiency: 2.222, isAwake: true, isSnacking: false},
             {start: 210, end: 430, efficiency: 1.923, isAwake: true, isSnacking: false},
-            {start: 430, end: 630, efficiency: 1.613, isAwake: true, isSnacking: false},
-            {start: 630, end: 870, efficiency: 1.408, isAwake: true, isSnacking: false},
-            {start: 870, end: 930, efficiency: 1, isAwake: true, isSnacking: false},
-            {start: 930, end: 1440, efficiency: 1, isAwake: false, isSnacking: false},
+            {start: 430, end: 630, efficiency: 1.724, isAwake: true, isSnacking: false},
+            {start: 630, end: 930, efficiency: 1.515, isAwake: true, isSnacking: false},
+            {start: 930, end: 1060, efficiency: 1.515, isAwake: false, isSnacking: false},
+            {start: 1060, end: 1440, efficiency: 1, isAwake: false, isSnacking: false},
         ]);
     });
 
@@ -52,15 +53,12 @@ describe('Energy', () => {
     test('calculate (e4e x 0, Energy recovery down, Energy Recovery Bonus)', () => {
         const iv = new PokemonIv('Raichu');
         iv.nature = new Nature('Hasty'); // Energy recovery down
-        iv.subSkills.lv10 = new SubSkill("Energy Recovery Bonus");
         const energy = new Energy(iv);
 
-        iv.level = 9;
         let result = energy.calculate(18, 0);
         expect(result.events[0].energyAfter).toBe(88);
 
-        iv.level = 10;
-        result = energy.calculate(18, 0);
+        result = energy.calculate(18, 0, 510, false, 0, 1);
         expect(result.events[0].energyAfter).toBe(100);
     });
 
@@ -70,9 +68,9 @@ describe('Energy', () => {
         const result = energy.calculate(18, 2);
 
         expect(result.averageEfficiency).toEqual({
-            total: 1.713,
-            awake: 1.969,
-            asleep: 1.244,
+            total: 1.812,
+            awake: 1.987,
+            asleep: 1.493,
         });
     });
 
@@ -94,8 +92,8 @@ describe('Energy', () => {
         const result = energy.calculate(18, 0, 0);
 
         expect(result.averageEfficiency).toEqual({
-            total: 1,
-            awake: 1,
+            total: 1.043,
+            awake: 1.043,
             asleep: 1,
         });
 
