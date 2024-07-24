@@ -63,13 +63,7 @@
         "strength": "Snorlax strength",
         "bonus": "Event bonus",
         "no favorite berries": "No favorite berries",
-        "area": [
-            "Greengrass Isle",
-            "Cyan Beach",
-            "Taupe Hollow",
-            "Snowdrop Tundra",
-            "Lapis Lakeside"
-        ],
+        "area": ["Greengrass Isle", "Cyan Beach", "Taupe Hollow", "Snowdrop Tundra", "Lapis Lakeside"],
         "none": "None",
         "sleep twice": "Sleep twice a day",
         "total n pokemon": "Total <n/>",
@@ -146,6 +140,11 @@
         "import message": "Paste the exported data and press the [Import] button.",
         "failed to import": "Failed to import.",
         "imported N pokemon": "Imported {{n}} Pokémon.",
+
+        "delete all": "Delete all",
+        "delete all message": "You can delete all the Pokémon in the box. Are you sure you want to delete all the Pokémon?",
+        "delete all pokemon": "Delete all the Pokémon",
+        "deleted all pokemon": "Deleted all the Pokémon.",
 
         "period": "Period",
         "1day": "1 day",
@@ -230,7 +229,7 @@
         "pokedexno": "Pokédex No.",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
-    
+
         "about1": "This tool is an unofficial tool developed by <profile>nitoyon</profile>.",
         "profile": "http://tech.nitoyon.com/en/about/",
         "x username": "nitoyon1",
