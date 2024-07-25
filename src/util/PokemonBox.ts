@@ -55,9 +55,12 @@ class PokemonBox {
      * @param id ID.
      */
     remove(id: number) {
-        this._entries = this._entries.filter((x) => x.id !== id);
+        this._entries = this._entries.filter(x => x.id !== id);
     }
 
+    /**
+     * Remove all items.
+     */
     removeAll() {
         this._entries = [];
     }
@@ -83,15 +86,15 @@ class PokemonBox {
      * @param id ID.
      * @returns box item if found. undefined if not found.
      */
-    getById(id: number): PokemonBoxItem | null {
-        return this._entries.find((x) => x.id === id) ?? null;
+    getById(id: number): PokemonBoxItem|null {
+        return this._entries.find(x => x.id === id) ?? null;
     }
 
     /**
      * Load box data from local storage.
      */
     load() {
-        const data = localStorage.getItem('PstPokeBox');
+        const data = localStorage.getItem("PstPokeBox");
         if (data === null) {
             return [];
         }
@@ -102,7 +105,7 @@ class PokemonBox {
 
         const newItems: PokemonBoxItem[] = [];
         for (const item of json) {
-            if (typeof item !== 'string') {
+            if (typeof(item) !== "string") {
                 continue;
             }
             const data = this.deserializeItem(item);
@@ -123,18 +126,19 @@ class PokemonBox {
      * @param text   text data.
      * @returns      parsed data.
      */
-    deserializeItem(text: string): { iv: PokemonIv; nickname: string } | null {
-        const index = text.indexOf('@');
+    deserializeItem(text: string): {iv: PokemonIv, nickname: string}|null {
+        const index = text.indexOf("@");
         let ivPart = text;
-        let nickname = '';
+        let nickname = "";
         if (index !== -1) {
             ivPart = text.substring(0, index);
             nickname = text.substring(index + 1);
         }
         try {
             const iv = PokemonIv.deserialize(ivPart);
-            return { iv, nickname };
-        } catch {
+            return {iv, nickname};
+        }
+        catch {
             return null;
         }
     }
@@ -143,7 +147,8 @@ class PokemonBox {
      * Save box data to local storage.
      */
     save() {
-        localStorage.setItem('PstPokeBox', JSON.stringify(this._entries.map((x) => x.serialize())));
+        localStorage.setItem("PstPokeBox", JSON.stringify(this._entries
+            .map(x => x.serialize())));
     }
 }
 
@@ -163,8 +168,8 @@ export class PokemonBoxItem {
      */
     constructor(iv: PokemonIv, nickname?: string, id?: number) {
         this._iv = iv;
-        this._nickname = nickname ?? '';
-        this._id = id !== undefined ? id : PokemonBoxItem.nextId++;
+        this._nickname = nickname ?? "";
+        this._id = (id !== undefined ? id : PokemonBoxItem.nextId++);
     }
 
     /**
@@ -173,30 +178,24 @@ export class PokemonBoxItem {
      */
     serialize(): string {
         const serializedIv = this._iv.serialize();
-        if (this._nickname === '') {
+        if (this._nickname === "") {
             return serializedIv;
         }
-        return serializedIv + '@' + this._nickname;
+        return serializedIv + "@" + this._nickname;
     }
 
     /** Get the Pokemon IV. */
-    get iv(): PokemonIv {
-        return this._iv;
-    }
+    get iv(): PokemonIv { return this._iv; }
 
     /** Get the nickname of the Pokemon. */
-    get nickname(): string {
-        return this._nickname;
-    }
+    get nickname(): string { return this._nickname; }
 
     /** Get the ID. */
-    get id(): number {
-        return this._id;
-    }
+    get id(): number { return this._id; }
 
     /** Get the filled nickname */
     filledNickname(t: typeof i18next.t): string {
-        if (this._nickname !== '') {
+        if (this._nickname !== "") {
             return this._nickname;
         }
         return t(`pokemons.${this.iv.pokemonName}`);
