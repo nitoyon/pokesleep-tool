@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Tab, Tabs } from '@mui/material'; 
+import { Button, Snackbar, Tab, Tabs } from '@mui/material'; 
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { IvAction, ivStateReducer, initialIvState } from './IvState';
@@ -14,7 +14,7 @@ import RatingView from './RatingView';
 import BoxItemDialog from './BoxItemDialog';
 import BoxExportDialog from './BoxExportDialog';
 import BoxImportDialog from './BoxImportDialog';
-import { Button, Snackbar }  from '@mui/material';
+import BoxDeleteAllDialog from './BoxDeleteAllDialog';
 import { useTranslation } from 'react-i18next';
 
 export const StyledTabs = styled(Tabs)({
@@ -72,6 +72,9 @@ const ResearchCalcApp = React.memo(() => {
     const onBoxImportDialogClose = React.useCallback(() => {
         dispatch({type: "importClose"});
     }, []);
+    const onBoxDeleteAllDialogClose = React.useCallback(() => {
+        dispatch({type: "deleteAllClose"});
+    }, []);
     const onLowerTabChange = React.useCallback((value: number) => {
         dispatch({type: "changeLowerTab", payload: {index: value}});
     }, []);
@@ -123,6 +126,8 @@ const ResearchCalcApp = React.memo(() => {
             open={state.boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
         <BoxImportDialog box={state.box}
             open={state.boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
+        <BoxDeleteAllDialog box={state.box}
+            open={state.boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
         <Snackbar open={state.alertMessage !== ""} message={t(state.alertMessage)}
             autoHideDuration={2000} onClose={onAlertMessageClose}/>
         <Snackbar open={isSelectedItemEdited} message={t('pokemon in the box is edited')}

@@ -1,5 +1,5 @@
 import PokemonIv from './PokemonIv';
-import i18next from 'i18next'
+import i18next from 'i18next';
 
 /**
  * Represents Indivisual Values (IV) of the Pokemon.
@@ -59,6 +59,13 @@ class PokemonBox {
     }
 
     /**
+     * Remove all items.
+     */
+    removeAll() {
+        this._entries = [];
+    }
+
+    /**
      * Change the item by ID.
      * @param id ID.
      * @param nickname Nickname of the pockemon.
@@ -73,7 +80,7 @@ class PokemonBox {
             }
         }
     }
-    
+
     /**
      * Get box item by ID.
      * @param id ID.

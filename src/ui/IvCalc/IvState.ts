@@ -6,7 +6,7 @@ const defaultCalculateParameter = loadCalculateParameter();
 
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
-        "saveItem"|"restoreItem"|
+        "deleteAll" | "deleteAllClose" | "saveItem"|"restoreItem"|
         "editDialogClose"|"closeAlert"|"openEnergyDialog"|"closeEnergyDialog";
 }|{
     type: "select"|"edit"|"dup"|"remove";
@@ -41,6 +41,7 @@ type IvState = {
     boxItemDialogIsEdit: boolean;
     boxExportDialogOpen: boolean;
     boxImportDialogOpen: boolean;
+    boxDeleteAllDialogOpen: boolean;
     alertMessage: string;
 };
 export const initialIvState: IvState = {
@@ -56,6 +57,7 @@ export const initialIvState: IvState = {
     boxItemDialogIsEdit: false,
     boxExportDialogOpen: false,
     boxImportDialogOpen: false,
+    boxDeleteAllDialogOpen: false,
     alertMessage: "",
 };
 
@@ -123,6 +125,12 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     if (type === "importClose") {
         const box = new PokemonBox(state.box.items);
         return {...state, box, boxImportDialogOpen: false};
+    }
+    if (type === "deleteAll") {
+        return {...state, boxDeleteAllDialogOpen: true};
+    }
+    if (type === "deleteAllClose") {
+        return {...state, boxDeleteAllDialogOpen: false};
     }
     if (type === "restoreItem") {
         if (selectedItem !== null) {

@@ -1,11 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { StyledTab, StyledTabs } from './IvCalcApp';
-import { IconButton, ListItemIcon, Menu, MenuItem, MenuList }  from '@mui/material';
+import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 const LowerTabHeader = React.memo(({
@@ -75,6 +76,12 @@ const LowerTabHeader = React.memo(({
                 <MenuItem data-value="import" onClick={onMenuItemClickHandler}>
                     <ListItemIcon><FileDownloadIcon/></ListItemIcon>
                     {t('import')}
+                </MenuItem>
+                <Divider />
+                <MenuItem data-value="deleteAll" onClick={onMenuItemClickHandler}
+                    disabled={isBoxEmpty}>
+                    <ListItemIcon><DeleteIcon /></ListItemIcon>
+                    {t('delete all')}
                 </MenuItem>
             </MenuList>
         </Menu>
