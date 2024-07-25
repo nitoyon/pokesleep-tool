@@ -63,7 +63,13 @@
         "strength": "Snorlax strength",
         "bonus": "Event bonus",
         "no favorite berries": "No favorite berries",
-        "area": ["Greengrass Isle", "Cyan Beach", "Taupe Hollow", "Snowdrop Tundra", "Lapis Lakeside"],
+        "area": [
+            "Greengrass Isle",
+            "Cyan Beach",
+            "Taupe Hollow",
+            "Snowdrop Tundra",
+            "Lapis Lakeside"
+        ],
         "none": "None",
         "sleep twice": "Sleep twice a day",
         "total n pokemon": "Total <n/>",
