@@ -50,6 +50,7 @@
 
         "ok": "OK",
         "close": "Close",
+        "cancel": "Cancel",
         "clear": "Clear",
         "reset": "Reset",
         "save": "Save",
@@ -147,6 +148,10 @@
         "failed to import": "Failed to import.",
         "imported N pokemon": "Imported {{n}} Pokémon.",
 
+        "delete all": "Delete all",
+        "delete all message": "Are you sure you want to delete all the Pokémon in the box?",
+        "deleted all pokemon": "Deleted all the Pokémon in the box.",
+
         "period": "Period",
         "1day": "1 day",
         "1week": "1 week",
@@ -230,7 +235,7 @@
         "pokedexno": "Pokédex No.",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
-    
+
         "about1": "This tool is an unofficial tool developed by <profile>nitoyon</profile>.",
         "profile": "http://tech.nitoyon.com/en/about/",
         "x username": "nitoyon1",

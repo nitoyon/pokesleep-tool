@@ -37,7 +37,7 @@
         "about": "이 도구에 대하여",
         "sleep score table": "수면 스코어표",
         "settings": "설정",
-        
+
         "change language": "언어 전환",
         "custom icon": "사용자 지정 아이콘",
         "custom icon summary": "포켓몬 아이콘을 변경할 수 있습니다.",
@@ -49,6 +49,7 @@
         "custom icon invalid message": "사용자 지정 아이콘의 URL이 유효하지 않습니다. 비워 두거나 올바른 값을 설정하세요.",
 
         "close": "닫기",
+        "cancel": "취소",
         "clear": "지우기",
         "reset": "리셋",
         "save": "저장",
@@ -136,6 +137,10 @@
         "import message": "내보낸 데이터를 붙여넣고 [가져오기] 버튼을 누르세요.",
         "failed to import": "가져오지 못했습니다.",
         "imported N pokemon": "{{n}}마리의 포켓몬을 가져왔습니다.",
+
+        "delete all": "모두 삭제",
+        "delete all message": "상자 안의 모든 포켓몬을 삭제하시겠습니까?",
+        "deleted all pokemon": "상자 안의 모든 포켓몬을 삭제했습니다.",
 
         "period": "기간",
         "1day": "1일",
