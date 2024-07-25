@@ -49,6 +49,7 @@
         "custom icon invalid message": "사용자 지정 아이콘의 URL이 유효하지 않습니다. 비워 두거나 올바른 값을 설정하세요.",
 
         "close": "닫기",
+        "cancel": "취소",
         "clear": "지우기",
         "reset": "리셋",
         "save": "저장",
@@ -138,9 +139,8 @@
         "imported N pokemon": "{{n}}마리의 포켓몬을 가져왔습니다.",
 
         "delete all": "모두 삭제",
-        "delete all message": "상자의 모든 포켓몬을 삭제합니다. 모든 포켓몬을 삭제하시겠습니까?",
-        "delete all pokemon": "포켓몬 모두 삭제",
-        "deleted all pokemon": "포켓몬을 모두 삭제했습니다.",
+        "delete all message": "상자 안의 모든 포켓몬을 삭제하시겠습니까?",
+        "deleted all pokemon": "상자 안의 모든 포켓몬을 삭제했습니다.",
 
         "period": "기간",
         "1day": "1일",

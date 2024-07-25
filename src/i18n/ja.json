@@ -50,6 +50,7 @@
         "custom icon invalid message": "カスタム アイコンが正しい値ではありません。空にするか、正しい値を設定してください。",
 
         "close": "閉じる",
+        "cancel": "キャンセル",
         "clear": "クリア",
         "reset": "リセット",
         "save": "保存",
@@ -139,9 +140,8 @@
         "imported N pokemon": "{{n}} 件のポケモンをインポートしました。",
 
         "delete all": "すべて削除",
-        "delete all message": "ボックス内のポケモンをすべて削除します。すべてのポケモンを削除してもよろしいですか？",
-        "delete all pokemon": "ポケモンをすべて削除",
-        "deleted all pokemon": "ポケモンをすべて削除しました。",
+        "delete all message": "ボックス内のポケモンをすべて削除してよいですか？",
+        "deleted all pokemon": "ボックス内のポケモンをすべて削除しました。",
 
         "period": "期間",
         "1day": "1日",

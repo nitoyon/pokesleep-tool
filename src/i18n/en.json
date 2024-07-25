@@ -50,6 +50,7 @@
 
         "ok": "OK",
         "close": "Close",
+        "cancel": "Cancel",
         "clear": "Clear",
         "reset": "Reset",
         "save": "Save",
@@ -148,9 +149,8 @@
         "imported N pokemon": "Imported {{n}} Pokémon.",
 
         "delete all": "Delete all",
-        "delete all message": "You can delete all the Pokémon in the box. Are you sure you want to delete all the Pokémon?",
-        "delete all pokemon": "Delete all the Pokémon",
-        "deleted all pokemon": "Deleted all the Pokémon.",
+        "delete all message": "Are you sure you want to delete all the Pokémon in the box?",
+        "deleted all pokemon": "Deleted all the Pokémon in the box.",
 
         "period": "Period",
         "1day": "1 day",

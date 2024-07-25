@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { StyledTab, StyledTabs } from './IvCalcApp';
-import { IconButton, ListItemIcon, Menu, MenuItem, MenuList } from '@mui/material';
+import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -77,6 +77,7 @@ const LowerTabHeader = React.memo(({
                     <ListItemIcon><FileDownloadIcon/></ListItemIcon>
                     {t('import')}
                 </MenuItem>
+                <Divider />
                 <MenuItem data-value="deleteAll" onClick={onMenuItemClickHandler}
                     disabled={isBoxEmpty}>
                     <ListItemIcon><DeleteIcon /></ListItemIcon>
