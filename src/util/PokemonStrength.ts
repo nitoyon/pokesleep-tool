@@ -159,23 +159,21 @@ class PokemonStrength {
         this.pokemon = pokemon;
     }
 
-    calculate(params: CalculateParameter): CalculateResult {
+    calculate(param: CalculateParameter): CalculateResult {
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
-        const countRatio = params.period / 24;
-        const energy = new Energy(this.iv).calculate(params.e4eEnergy,
-            params.e4eCount, params.sleepScore, params.isEnergyAlwaysFull,
-            params.helpBonusCount, params.recoveryBonusCount, params.isGoodCampTicketSet);
+        const countRatio = param.period / 24;
+        const energy = new Energy(this.iv).calculate(param);
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
 
         // calc ingredient
-        const ingInRecipeStrengthRatio = params.recipeBonus === 0 ? 1 :
-            (1 + params.recipeBonus / 100) * (1 + recipeLevelBonus[params.recipeLevel] / 100);
+        const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
+            (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
         const ingStrengthRatio = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
-            (1 + params.fieldBonus / 100);
-        const ingRatio = params.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
+            (1 + param.fieldBonus / 100);
+        const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
         const ingEventAdd: number = 0;
@@ -223,17 +221,17 @@ class PokemonStrength {
         const berryCount = rp.berryCount;
         const berryStrength = rp.berryStrength;
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (1 + params.fieldBonus / 100) * (this.isFavoriteBerry(params) ? 2 : 1);
+            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0;
-        if (params.period !== 3 && params.tapFrequency !== 'none') {
+        if (param.period !== 3 && param.tapFrequency !== 'none') {
             const skillCountAwake = energy.helpCount.awake * skillRatio;
             const skillCountSleeping = energy.skillProbabilityAfterWakeup;
             skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                params);
+                param);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -246,7 +244,7 @@ class PokemonStrength {
         };
     }
 
-    getSkillValueAndStrength(skillCount: number, params: CalculateParameter): [number, number] {
+    getSkillValueAndStrength(skillCount: number, param: CalculateParameter): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
@@ -255,7 +253,7 @@ class PokemonStrength {
             mainSkillFactor = this.iv.nature.energyRecoveryFactor;
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
-        const strengthPerHelp = 300 * (1 + params.fieldBonus / 100);
+        const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
         switch (mainSkill) {
             case "Charge Energy S":
             case "Energizing Cheer S":
@@ -267,7 +265,7 @@ class PokemonStrength {
             case "Charge Strength M":
             case "Charge Strength S":
             case "Charge Strength S (Random)":
-                const strength = mainSkillValue * (1 + params.fieldBonus / 100);
+                const strength = mainSkillValue * (1 + param.fieldBonus / 100);
                 return [strength, strength];
 
             case "Extra Helpful S":
@@ -285,10 +283,10 @@ class PokemonStrength {
         }
     }
 
-    isFavoriteBerry(params: CalculateParameter): boolean {
+    isFavoriteBerry(param: CalculateParameter): boolean {
         let types: PokemonType[] = [];
-        switch (params.fieldIndex) {
-            case 0: types = params.favoriteType; break;
+        switch (param.fieldIndex) {
+            case 0: types = param.favoriteType; break;
             case 1: types = ["water", "flying", "fairy"]; break;
             case 2: types = ["fire", "rock", "ground"]; break;
             case 3: types = ["ice", "dark", "normal"]; break;

@@ -1,14 +1,27 @@
-import Energy from './Energy';
+import Energy, { EnergyParameter } from './Energy';
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
+
+const paramBase = {
+    e4eEnergy: 18,
+    e4eCount: 3,
+    sleepScore: 100,
+    helpBonusCount: 0,
+    recoveryBonusCount: 0,
+    isEnergyAlwaysFull: false,
+    isGoodCampTicketSet: false,
+};
+function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
+    return Object.assign({}, paramBase, obj) as EnergyParameter;
+}
 
 describe('Energy', () => {
     test('calculate (e4e x 0)', () => {
         const iv = new PokemonIv('Raichu');
         iv.subSkills.lv10 = new SubSkill('Inventory Up L');
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 0);
+        const result = energy.calculate(createParam({e4eCount: 0}));
 
         expect(result.events).toEqual([
             { minutes: 0, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false },
@@ -34,7 +47,7 @@ describe('Energy', () => {
         const iv = new PokemonIv('Raichu');
         iv.nature = new Nature('Hasty'); // Energy recovery down
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 0);
+        const result = energy.calculate(createParam({e4eCount: 0}));
 
         expect(result.events[0].energyAfter).toBe(88);
         expect(result.efficiencies[0]).toEqual({
@@ -55,17 +68,17 @@ describe('Energy', () => {
         iv.nature = new Nature('Hasty'); // Energy recovery down
         const energy = new Energy(iv);
 
-        let result = energy.calculate(18, 0);
+        let result = energy.calculate(createParam({e4eCount: 0}));
         expect(result.events[0].energyAfter).toBe(88);
 
-        result = energy.calculate(18, 0, 100, false, 0, 1);
+        result = energy.calculate(createParam({e4eCount: 0, recoveryBonusCount: 1}));
         expect(result.events[0].energyAfter).toBe(100);
     });
 
     test('calculate (e4e x 2)', () => {
         const iv = new PokemonIv('Pikachu');
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 2);
+        const result = energy.calculate(createParam({e4eCount: 2}));
 
         expect(result.averageEfficiency).toEqual({
             total: 1.812,
@@ -77,7 +90,7 @@ describe('Energy', () => {
     test('calculate (e4e x 7)', () => {
         const iv = new PokemonIv('Pikachu');
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 7);
+        const result = energy.calculate(createParam({e4eCount: 7}));
 
         expect(result.averageEfficiency).toEqual({
             total: 2.222,
@@ -89,7 +102,7 @@ describe('Energy', () => {
     test('calculate (score 0)', () => {
         const iv = new PokemonIv('Pikachu');
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 0, 0);
+        const result = energy.calculate(createParam({e4eCount: 0, sleepScore: 0}));
 
         expect(result.averageEfficiency).toEqual({
             total: 1.043,
@@ -125,7 +138,7 @@ describe('Energy', () => {
         iv.pokemon.frequency = 1800; // 30min
 
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 0, 90);
+        const result = energy.calculate(createParam({e4eCount: 0, sleepScore: 90}));
 
         // sleep from 981 min
         const sleepEvent = result.events.find(x => x.type === 'sleep');
@@ -153,7 +166,7 @@ describe('Energy', () => {
         // change pokemon's speciality to Berries
         iv.pokemon.speciality = "Berries";
         const energy2 = new Energy(iv);
-        const result2 = energy2.calculate(18, 0, 90);
+        const result2 = energy2.calculate(createParam({e4eCount: 0, sleepScore: 90}));
 
         // snacking earlier
         const snackEvent2 = result2.events.find(x => x.type === 'snack');
