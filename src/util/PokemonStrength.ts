@@ -1,7 +1,7 @@
 import pokemons, {PokemonData} from '../data/pokemons';
 import { IngredientName, PokemonType, PokemonTypes } from '../data/pokemons';
 import fields from '../data/fields';
-import Energy, { EnergyResult } from './Energy';
+import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue } from './MainSkill';
@@ -9,7 +9,7 @@ import { getSkillValue } from './MainSkill';
 /**
  * Represents the parameter of PokemonStrength.calc.
  */
-export interface CalculateParameter {
+export interface CalculateParameter extends EnergyParameter {
     /**
      * How many hours' worth of accumulated strength to calculate.
      *
@@ -25,41 +25,6 @@ export interface CalculateParameter {
 
     /** Snorlax's favorite berry on Greengrass Isle */
     favoriteType: PokemonType[];
-
-    /**
-     * The number of pokemon which has helping bonus sub-skill
-     * in the team.
-     */
-    helpBonusCount: 0|1|2|3|4|5;
-
-    /**
-     * Energy restored by 'energy for all' main skill.
-     */
-    e4eEnergy: number;
-
-    /**
-     * Triggered count of 'Energy for all' main skill.
-     */
-    e4eCount: number;
-
-    /**
-     * The number of pokemon which has energy recovery bonus sub-skill
-     * in the team.
-     */
-    recoveryBonusCount: 0|1|2|3|4|5;
-
-    /**
-     * If true, we assume that energy is always 100.
-     */
-    isEnergyAlwaysFull: boolean;
-
-    /**
-     * Sleep score of the sleep.
-     */
-    sleepScore: number;
-
-    /** Whether good camp ticket is set or not */
-    isGoodCampTicketSet: boolean;
 
     /** Pokemon level (0: current level, Others: specified level) */
     level: 0|10|25|30|50|55|60|75|100;
