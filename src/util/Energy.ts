@@ -37,6 +37,12 @@ export interface EnergyParameter {
      */
     sleepScore: number;
 
+    /** How often tap the pokemon (awake) */
+    tapFrequency: "always"|"none";
+
+    /** How often tap the pokemon (asleep) */
+    tapFrequencyAsleep: "always"|"none";
+
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
 }
