@@ -74,20 +74,20 @@ class Energy {
         this._iv = iv;
     }
 
-    calculate(restoreEnergy: number, restoreCount: number,
-        sleepMinutes: number = 510, always100: boolean = false,
+    calculate(e4eEnergy: number, e4eCount: number,
+        sleepMinutes: number = 510, isEnergyAlwaysFull: boolean = false,
         helpBonusCount: 0|1|2|3|4|5 = 0, recoveryBonusCount: 0|1|2|3|4|5 = 0,
         isGoodCampTicketSet: boolean = false,
     ): EnergyResult {
         const recoveryFactor = this._iv.nature.energyRecoveryFactor;
         const sleepRecovery = Math.min(100, Math.round(sleepMinutes / 510 * 100) * recoveryFactor *
             (1 + 0.14 * recoveryBonusCount));
-        const myRestoreEnergy = restoreEnergy * recoveryFactor;
+        const myRestoreEnergy = e4eEnergy * recoveryFactor;
         const sleepTime = 1440 - sleepMinutes;
 
         let events: EnergyEvent[];
         let efficiencies: EfficiencyEvent[];
-        if (always100) {
+        if (isEnergyAlwaysFull) {
             events = [
                 {minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false },
                 {minutes: sleepTime, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false },
@@ -99,7 +99,7 @@ class Energy {
             ];
         }
         else {
-            events = this.createEvents(restoreCount, sleepTime);
+            events = this.createEvents(e4eCount, sleepTime);
 
             // 1st calculation to know the initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
@@ -124,7 +124,7 @@ class Energy {
 
         // calculate Sneaky Snacking
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, always100,
+            this.calculateSneakySnacking(events, efficiencies, isEnergyAlwaysFull,
                 helpBonusCount, isGoodCampTicketSet);
 
         return {sleepTime, events, efficiencies,
@@ -135,15 +135,15 @@ class Energy {
 
     /**
      * Create recovery events (energyBefore and energyAfter is filled with -1).
-     * @param restoreCount The number of times the 'Energy for everyone' skill is triggered.
+     * @param e4eCount The number of times the 'Energy for everyone' skill is triggered.
      * @param sleepTime The time when going to bed.
      * @returns Event list.
      */
-    createEvents(restoreCount: number, sleepTime: number): EnergyEvent[] {
+    createEvents(e4eCount: number, sleepTime: number): EnergyEvent[] {
         // Assumptions:
         // * Sleep at 23:30., wake up at 8:00.
         // * Cook at 10:00, 14:00, and 20:00.
-        // * Restore occurs every (15.5 / (restoreCount + 1)) hours
+        // * Restore occurs every (15.5 / (e4eCount + 1)) hours
         let events: EnergyEvent[] = [
             // 8:00
             {minutes: 0, type: 'wake', energyBefore: -1, energyAfter: -1, isSnacking: false },
@@ -154,9 +154,9 @@ class Energy {
             // 20:00
             {minutes: 720, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
         ];
-        for (let i = 0; i < restoreCount; i++) {
+        for (let i = 0; i < e4eCount; i++) {
             events.push({
-                minutes: Math.floor((i + 1) * 930 / (restoreCount + 1) / 10) * 10, 
+                minutes: Math.floor((i + 1) * 930 / (e4eCount + 1) / 10) * 10,
                 type: 'e4e',
                 energyBefore: -1, energyAfter: -1,
                 isSnacking: false,
@@ -335,13 +335,13 @@ class Energy {
      * Calculate sneaky snacking and returns help count while sleeping.
      * @param events Events.
      * @param efficiencies Efficiencies.
-     * @param always100 Energy is always 100 or not.
+     * @param isEnergyAlwaysFull Energy is always 100 or not.
      * @param helpBonusCount The number of pokemon which has helping bonus sub-skill.
      * @param isGoodCampTicketSet Whether good camp ticket is set or not.
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        always100: boolean, helpBonusCount: 0|1|2|3|4|5, isGoodCampTicketSet: boolean
+        isEnergyAlwaysFull: boolean, helpBonusCount: 0|1|2|3|4|5, isGoodCampTicketSet: boolean
     ):
     {
         timeToFullInventory: number,
@@ -400,7 +400,7 @@ class Energy {
             }
 
             if (i < events.length - 1 && events[i + 1].minutes > timeFullInventory) {
-                const energy = always100 ? 100 : Math.max(0,
+                const energy = isEnergyAlwaysFull ? 100 : Math.max(0,
                     event.energyAfter - (timeFullInventory - event.minutes) / 10);
                 events.splice(i + 1, 0, {
                     minutes: timeFullInventory, type: 'snack',
