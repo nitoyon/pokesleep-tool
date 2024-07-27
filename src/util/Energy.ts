@@ -82,7 +82,10 @@ export type EnergyResult = {
     events: EnergyEvent[];
     /** Efficiency event list */
     efficiencies: EfficiencyEvent[];
-    /** Sleep time required to fulfill inventory */
+    /** Whether inventory can be full
+     * (awake tap frequency == always && asleep tap frequency == none) */
+    canBeFullInventory: boolean;
+    /** Sleep time required to fulfill inventory. -1 when not fulfilled. */
     timeToFullInventory: number,
     /** Skill% after wakeup */
     skillProbabilityAfterWakeup: number,
@@ -165,9 +168,13 @@ class Energy {
         // calculate Sneaky Snacking
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param.isEnergyAlwaysFull,
-                param.helpBonusCount, param.isGoodCampTicketSet);
+                param.helpBonusCount, param.isGoodCampTicketSet,
+                param.tapFrequency === "none",
+                param.tapFrequencyAsleep === "always");
+        const canBeFullInventory = (param.tapFrequency === "always" &&
+            param.tapFrequencyAsleep === "none");
 
-        return {sleepTime, events, efficiencies,
+        return {sleepTime, events, efficiencies, canBeFullInventory,
             timeToFullInventory, helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep: sleep },
         };
@@ -378,10 +385,13 @@ class Energy {
      * @param isEnergyAlwaysFull Energy is always 100 or not.
      * @param helpBonusCount The number of pokemon which has helping bonus sub-skill.
      * @param isGoodCampTicketSet Whether good camp ticket is set or not.
+     * @param alwaysSnacking Whether always snacking or not.
+     * @param alwaysTapAsleep Whether tap every minute while sleeping.
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        isEnergyAlwaysFull: boolean, helpBonusCount: 0|1|2|3|4|5, isGoodCampTicketSet: boolean
+        isEnergyAlwaysFull: boolean, helpBonusCount: 0|1|2|3|4|5, isGoodCampTicketSet: boolean,
+        alwaysSnacking: boolean, alwaysTapAsleep: boolean
     ):
     {
         timeToFullInventory: number,
@@ -402,11 +412,12 @@ class Energy {
             (isGoodCampTicketSet ? 1.2 : 1);
         const bagUsagePerHelp = rp.bagUsagePerHelp;
 
+        // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;
         let timeToFullInventory = 9999; // elapsed time since sleep start when bag becomes full
         let timeFullInventory = 9999; // time when bag becomes full
-        const sleepEfficiencies = efficiencies.filter(x => !x.isAwake);
-        let asleepNotFull = 0;
+        const sleepEfficiencies = alwaysSnacking || alwaysTapAsleep ? [] :
+            efficiencies.filter(x => !x.isAwake);
         for (const efficiency of sleepEfficiencies) {
             // calculate help count for this efficiency
             const time = efficiency.end - efficiency.start;
@@ -417,14 +428,12 @@ class Energy {
             const bagUsage = bagUsagePerHelp * helpCount;
             if (bagUsage < carryLeft) {
                 carryLeft -= bagUsage;
-                asleepNotFull += helpCount;
                 continue;
             }
 
             // If bag reaches full capacity at this frequency, calculate when the bag
             // becomes full
             const requiredHelpCount = carryLeft / bagUsagePerHelp;
-            asleepNotFull += requiredHelpCount;
             timeToFullInventory = requiredHelpCount * freq / 60 +
                 efficiency.start - sleepEfficiencies[0].start;
             timeFullInventory = timeToFullInventory + sleepEfficiencies[0].start;
@@ -434,7 +443,7 @@ class Energy {
         // Apply isSnacking to events and efficiencies
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            if (event.minutes >= timeFullInventory) {
+            if (alwaysSnacking || event.minutes >= timeFullInventory) {
                 event.isSnacking = true;
                 continue;
             }
@@ -450,7 +459,7 @@ class Energy {
         }
         for (let i = 0; i < efficiencies.length; i++) {
             const efficiency = efficiencies[i];
-            if (efficiency.start >= timeFullInventory) {
+            if (alwaysSnacking || efficiency.start >= timeFullInventory) {
                 efficiency.isSnacking = true;
                 continue;
             }
@@ -473,8 +482,11 @@ class Energy {
         const awake = efficiencies
             .filter(x => x.isAwake)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
+        const asleepNotFull = efficiencies
+            .filter(x => !x.isAwake && !x.isSnacking)
+            .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const asleepFull = efficiencies
-            .filter(x => x.isSnacking)
+            .filter(x => !x.isAwake && x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
         const skillProbabilityAfterWakeup = 1 - Math.pow(1 - rp.skillRatio,
