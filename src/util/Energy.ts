@@ -4,13 +4,40 @@ import PokemonRp from './PokemonRp';
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
-type EnergyParameter = {
+export interface EnergyParameter {
+    /**
+     * Energy restored by 'energy for all' main skill.
+     */
     e4eEnergy: number;
+
+    /**
+     * Triggered count of 'Energy for all' main skill.
+     */
     e4eCount: number;
-    sleepMingutes: number;
-    isEnergyAlwaysFull: boolean;
+
+    /**
+     * The number of pokemon which has helping bonus sub-skill
+     * in the team.
+     */
     helpBonusCount: 0|1|2|3|4|5;
+
+    /**
+     * The number of pokemon which has energy recovery bonus sub-skill
+     * in the team.
+     */
     recoveryBonusCount: 0|1|2|3|4|5;
+
+    /**
+     * If true, we assume that energy is always 100.
+     */
+    isEnergyAlwaysFull: boolean;
+
+    /**
+     * Sleep score of the sleep.
+     */
+    sleepScore: number;
+
+    /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
 }
 
@@ -84,21 +111,17 @@ class Energy {
         this._iv = iv;
     }
 
-    calculate(e4eEnergy: number, e4eCount: number,
-        sleepScore: number = 100, isEnergyAlwaysFull: boolean = false,
-        helpBonusCount: 0|1|2|3|4|5 = 0, recoveryBonusCount: 0|1|2|3|4|5 = 0,
-        isGoodCampTicketSet: boolean = false,
-    ): EnergyResult {
-        const sleepMinutes = sleepScore * 510 / 100;
+    calculate(param: EnergyParameter): EnergyResult {
+        const sleepMinutes = param.sleepScore * 510 / 100;
         const recoveryFactor = this._iv.nature.energyRecoveryFactor;
         const sleepRecovery = Math.min(100, Math.round(sleepMinutes / 510 * 100) * recoveryFactor *
-            (1 + 0.14 * recoveryBonusCount));
-        const myRestoreEnergy = e4eEnergy * recoveryFactor;
+            (1 + 0.14 * param.recoveryBonusCount));
+        const myRestoreEnergy = param.e4eEnergy * recoveryFactor;
         const sleepTime = 1440 - sleepMinutes;
 
         let events: EnergyEvent[];
         let efficiencies: EfficiencyEvent[];
-        if (isEnergyAlwaysFull) {
+        if (param.isEnergyAlwaysFull) {
             events = [
                 {minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false },
                 {minutes: sleepTime, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false },
@@ -110,7 +133,7 @@ class Energy {
             ];
         }
         else {
-            events = this.createEvents(e4eCount, sleepTime);
+            events = this.createEvents(param.e4eCount, sleepTime);
 
             // 1st calculation to know the initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
@@ -135,8 +158,8 @@ class Energy {
 
         // calculate Sneaky Snacking
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, isEnergyAlwaysFull,
-                helpBonusCount, isGoodCampTicketSet);
+            this.calculateSneakySnacking(events, efficiencies, param.isEnergyAlwaysFull,
+                param.helpBonusCount, param.isGoodCampTicketSet);
 
         return {sleepTime, events, efficiencies,
             timeToFullInventory, helpCount, skillProbabilityAfterWakeup,
