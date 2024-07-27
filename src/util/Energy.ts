@@ -4,6 +4,16 @@ import PokemonRp from './PokemonRp';
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
+type EnergyParameter = {
+    e4eEnergy: number;
+    e4eCount: number;
+    sleepMingutes: number;
+    isEnergyAlwaysFull: boolean;
+    helpBonusCount: 0|1|2|3|4|5;
+    recoveryBonusCount: 0|1|2|3|4|5;
+    isGoodCampTicketSet: boolean;
+}
+
 type EnergyEvent = {
     /** Elapsed minutes since waking up */
     minutes: number;
@@ -75,10 +85,11 @@ class Energy {
     }
 
     calculate(e4eEnergy: number, e4eCount: number,
-        sleepMinutes: number = 510, isEnergyAlwaysFull: boolean = false,
+        sleepScore: number = 100, isEnergyAlwaysFull: boolean = false,
         helpBonusCount: 0|1|2|3|4|5 = 0, recoveryBonusCount: 0|1|2|3|4|5 = 0,
         isGoodCampTicketSet: boolean = false,
     ): EnergyResult {
+        const sleepMinutes = sleepScore * 510 / 100;
         const recoveryFactor = this._iv.nature.energyRecoveryFactor;
         const sleepRecovery = Math.min(100, Math.round(sleepMinutes / 510 * 100) * recoveryFactor *
             (1 + 0.14 * recoveryBonusCount));

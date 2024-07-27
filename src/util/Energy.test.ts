@@ -58,7 +58,7 @@ describe('Energy', () => {
         let result = energy.calculate(18, 0);
         expect(result.events[0].energyAfter).toBe(88);
 
-        result = energy.calculate(18, 0, 510, false, 0, 1);
+        result = energy.calculate(18, 0, 100, false, 0, 1);
         expect(result.events[0].energyAfter).toBe(100);
     });
 
@@ -125,19 +125,19 @@ describe('Energy', () => {
         iv.pokemon.frequency = 1800; // 30min
 
         const energy = new Energy(iv);
-        const result = energy.calculate(18, 0, 460);
+        const result = energy.calculate(18, 0, 90);
 
-        // sleep from 980 min
+        // sleep from 981 min
         const sleepEvent = result.events.find(x => x.type === 'sleep');
         expect(sleepEvent).toEqual({
-            type: 'sleep', minutes: 980,
+            type: 'sleep', minutes: 981,
             energyBefore: 0, energyAfter: 0, isSnacking: false,
         });
 
-        // snacking from 980 + 300 min (30min x 10)
+        // snacking from 981 + 300 min (30min x 10)
         const snackEvent = result.events.find(x => x.type === 'snack');
         expect(snackEvent).toEqual({
-            type: 'snack', minutes: 1280,
+            type: 'snack', minutes: 1281,
             energyBefore: 0, energyAfter: 0, isSnacking: true,
         });
         expect(result.helpCount.asleepNotFull).toBe(10);
@@ -146,14 +146,14 @@ describe('Energy', () => {
         // efficiency for snacking is added
         const ef = result.efficiencies.find(x => x.isSnacking);
         expect(ef).toEqual({
-            start: 1280, end: 1440, efficiency: 1,
+            start: 1281, end: 1440, efficiency: 1,
             isAwake: false, isSnacking: true,
         });
 
         // change pokemon's speciality to Berries
         iv.pokemon.speciality = "Berries";
         const energy2 = new Energy(iv);
-        const result2 = energy2.calculate(18, 0, 460);
+        const result2 = energy2.calculate(18, 0, 90);
 
         // snacking earlier
         const snackEvent2 = result2.events.find(x => x.type === 'snack');
