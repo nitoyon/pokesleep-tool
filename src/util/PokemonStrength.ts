@@ -164,7 +164,7 @@ class PokemonStrength {
         const level = rp.level;
         const countRatio = params.period / 24;
         const energy = new Energy(this.iv).calculate(params.e4eEnergy,
-            params.e4eCount, params.sleepScore * 510 / 100, params.isEnergyAlwaysFull,
+            params.e4eCount, params.sleepScore, params.isEnergyAlwaysFull,
             params.helpBonusCount, params.recoveryBonusCount, params.isGoodCampTicketSet);
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
