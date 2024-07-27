@@ -154,6 +154,7 @@ describe('Energy', () => {
             type: 'snack', minutes: 1281,
             energyBefore: 0, energyAfter: 0, isSnacking: true,
         });
+        expect(result.timeToFullInventory).toBe(300);
         expect(result.helpCount.asleepNotFull).toBe(10);
         expect(result.skillProbabilityAfterWakeup).toBe(1 - Math.pow(0.9, 10));
 
@@ -173,5 +174,28 @@ describe('Energy', () => {
         const snackEvent2 = result2.events.find(x => x.type === 'snack');
         expect(snackEvent2?.minutes).toBeLessThan(1280);
         expect(result2.helpCount.asleepNotFull).toBeCloseTo(10 / 1.9);
+    });
+
+    test('no snacking (always tap)', () => {
+        const iv = new PokemonIv('Eevee');
+        iv.nature = new Nature('Hasty'); // Energy recovery down
+        iv.level = 1;
+
+        // change pokemon parameter
+        iv.pokemon = {...iv.pokemon};
+        iv.pokemon.carryLimit = 10;
+        iv.pokemon.ingRatio = 10;
+        iv.pokemon.skillRatio = 10;
+        iv.pokemon.frequency = 1800; // 30min
+
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({
+            e4eCount: 0,
+            sleepScore: 90,
+            tapFrequencyAsleep: "always",
+        }));
+        const snackEvent = result.events.find(x => x.type === 'snack');
+        expect(snackEvent).toBe(undefined);
+        expect(result.timeToFullInventory).toBe(-1);
     });
 });
