@@ -7,6 +7,7 @@ const paramBase = {
     e4eEnergy: 18,
     e4eCount: 3,
     sleepScore: 100,
+    tapFrequencyAsleep: "none",
     helpBonusCount: 0,
     recoveryBonusCount: 0,
     isEnergyAlwaysFull: false,

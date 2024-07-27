@@ -35,9 +35,6 @@ export interface CalculateParameter extends EnergyParameter {
     /** Calculate with max skill level */
     maxSkillLevel: boolean;
 
-    /** How often tap the pokemon */
-    tapFrequency: "always"|"none";
-
     /**
      * Recipe bonus, which increases as the number of ingredients increases.
      */
@@ -284,6 +281,7 @@ export function loadCalculateParameter(): CalculateParameter {
         evolved: false,
         maxSkillLevel: false,
         tapFrequency: "always",
+        tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
     };
@@ -355,6 +353,10 @@ export function loadCalculateParameter(): CalculateParameter {
     if (typeof(json.tapFrequency) === "string" &&
         ["always", "none"].includes(json.tapFrequency)) {
         ret.tapFrequency = json.tapFrequency;
+    }
+    if (typeof(json.tapFrequencyAsleep) === "string" &&
+        ["always", "none"].includes(json.tapFrequencyAsleep)) {
+        ret.tapFrequencyAsleep = json.tapFrequencyAsleep;
     }
     if (typeof(json.recipeBonus) === "number" &&
         [0, 6, 11, 17, 25, 35, 48].includes(json.recipeBonus)) {
