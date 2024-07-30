@@ -52,6 +52,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
         evolved: false,
         maxSkillLevel: false,
         tapFrequency: "always",
+        tapFrequencyAsleep: "none",
         recipeBonus: 0,
         recipeLevel: 1,
     });
