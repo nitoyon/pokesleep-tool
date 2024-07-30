@@ -272,9 +272,17 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         <footer>
-            <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
-                    new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
-            <span>{t('skill trigger after wake up (short)')}: {round1(result.energy.skillProbabilityAfterWakeup * 100)}%</span>
+            {result.energy.canBeFullInventory ? <>
+                <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
+                        new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
+                <span>{t('skill trigger after wake up (short)')}: {round1(result.energy.skillProbabilityAfterWakeup * 100)}%</span>
+            </> :
+            <>
+                <span>
+                    {t('help efficiency')}: {result.energy.averageEfficiency.total} (
+                    {t('awake')}: {result.energy.averageEfficiency.awake}, {t('asleep')}: {result.energy.averageEfficiency.asleep})
+                </span>
+            </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}

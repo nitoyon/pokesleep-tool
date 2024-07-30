@@ -65,6 +65,18 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
             isGoodCampTicketSet: e.target.checked,
         }}});
     }, [dispatch, parameter]);
+    const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
+        dispatch({type: "changeParameter", payload: { parameter: {
+            ...parameter,
+            tapFrequency: e.target.value as "always"|"none",
+        }}});
+    }, [dispatch, parameter]);
+    const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
+        dispatch({type: "changeParameter", payload: { parameter: {
+            ...parameter,
+            tapFrequencyAsleep: e.target.value as "always"|"none",
+        }}});
+    }, [dispatch, parameter]);
 
     if (!open) {
         return <></>;
@@ -147,31 +159,53 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                 </div>
             </div>
         </section>
-        <footer>
+        <section>
             <div>
+                <label>{t('tap frequency')} ({t('awake')}):</label>
+                <Select variant="standard" value={parameter.tapFrequency}
+                    onChange={onTapFrequencyChange}>
+                    <MenuItem value="always">{t('every minute')}</MenuItem>
+                    <MenuItem value="none">{t('none')}</MenuItem>
+                </Select>
+            </div>
+            <div>
+                <label>{t('tap frequency')} ({t('asleep')}):</label>
+                {parameter.tapFrequency === "none" ?
+                    <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
+                    <Select variant="standard" value={parameter.tapFrequencyAsleep}
+                        onChange={onTapFrequencyAsleepChange}>
+                        <MenuItem value="always">{t('every minute')}</MenuItem>
+                        <MenuItem value="none">{t('none')}</MenuItem>
+                    </Select>}
+            </div>
+        </section>
+        <footer>
+            <section className="first">
                 <label>{t('average help efficiency')}:</label>
                 <div>{energy.averageEfficiency.total}</div>
                 <footer>
                     <span>{t('awake')}: {energy.averageEfficiency.awake}</span>
                     <span>{t('asleep')}: {energy.averageEfficiency.asleep}</span>
                 </footer>
-            </div>
-            <div>
-                <label>{t('full inventory while sleeping')}:</label>
-                <div>{energy.timeToFullInventory < 0 ? t('none') :
-                    new AmountOfSleep(energy.timeToFullInventory).toString(t)}</div>
-                <footer>
-                    <span>{t('carry limit')}: {carryLimit}</span>
-                    <span>{t('carry per help')}: {new PokemonRp(iv).bagUsagePerHelp.toFixed(1)}</span>
-                </footer>
-            </div>
-            <div>
-                <label>{t('skill trigger after wake up')}:</label>
-                <div>{(energy.skillProbabilityAfterWakeup * 100).toFixed(1)}%</div>
-                <footer>
-                    <span>{t('lottery count')}: {energy.helpCount.asleepNotFull.toFixed(2)}</span>
-                </footer>
-            </div>
+            </section>
+            <Collapse in={energy.canBeFullInventory}>
+                <section>
+                    <label>{t('full inventory while sleeping')}:</label>
+                    <div>{energy.timeToFullInventory < 0 ? t('none') :
+                        new AmountOfSleep(energy.timeToFullInventory).toString(t)}</div>
+                    <footer>
+                        <span>{t('carry limit')}: {carryLimit}</span>
+                        <span>{t('carry per help')}: {new PokemonRp(iv).bagUsagePerHelp.toFixed(1)}</span>
+                    </footer>
+                </section>
+                <section>
+                    <label>{t('skill trigger after wake up')}:</label>
+                    <div>{(energy.skillProbabilityAfterWakeup * 100).toFixed(1)}%</div>
+                    <footer>
+                        <span>{t('lottery count')}: {energy.helpCount.asleepNotFull.toFixed(2)}</span>
+                    </footer>
+                </section>
+            </Collapse>
         </footer>
         {iv.pokemon.skill === "Charge Energy S" && 
             <div className="warning">{t('charge energy not implemented')}</div>}
@@ -212,6 +246,7 @@ const StyledEnergyDialog = styled(Dialog)({
         // extend dialog width
         width: '100%',
         margin: '20px',
+        maxHeight: 'calc(100% - 20px)',
     },
 
     '& .MuiPaper-root': {
@@ -231,6 +266,9 @@ const StyledEnergyDialog = styled(Dialog)({
                 '& > label': {
                     marginRight: 'auto',
                     fontSize: '0.9rem',
+                    '&.indent': {
+                        marginLeft: '1rem',
+                    },
                 },
                 '& .MuiSelect-select': {
                     paddingTop: '1px',
@@ -249,13 +287,14 @@ const StyledEnergyDialog = styled(Dialog)({
             background: '#eee',
             borderRadius: '0.9rem',
             padding: '0.5rem 0.7rem',
-            '& > div': {
+            '& section': {
                 display: 'grid',
                 gridTemplateColumns: '1fr fit-content(200px)',
                 marginTop: '0.4rem',
-                '&:first-of-type': {
+                '&.first': {
                     marginTop: 0,
                 },
+                padding: 0,
                 '& > div': {
                     textAlign: 'right',
                 },
@@ -385,8 +424,8 @@ const EnergyLine = React.memo(({width, height, result}: {
 
     const energyPoints1: string[] = [];
     const energyPoints2: string[] = [];
-    let isSnacking = false;
-    let snackX: string = width.toString();
+    let isSnacking = result.events[0].isSnacking;
+    let snackX: string = isSnacking ? m2x(0).toFixed(2) : width.toString();
     for (let i = 0; i < result.events.length; i++) {
         const yb = energy2y(result.events[i].energyBefore, height).toFixed(2);
         const ya = energy2y(result.events[i].energyAfter, height).toFixed(2);
@@ -467,7 +506,7 @@ const EnergyHover = React.memo(({width, height, x, gx, gy, result}: {
     let state = "";
     const isSnacking = efficiency.isSnacking;
     if (efficiency.isAwake) {
-        state = t('awake');
+        state = isSnacking ? t('asleep (full inventory)') : t('awake');
     }
     else {
         state = isSnacking ? t('asleep (full inventory)') : t('asleep');

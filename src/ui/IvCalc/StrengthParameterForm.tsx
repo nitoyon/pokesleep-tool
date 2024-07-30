@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
+import { Button, Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     } from '@mui/material';
 import { IvAction } from './IvState';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
@@ -13,7 +13,7 @@ type PeriodType = "1day"|"1week"|"whistle";
 const StyledSettingForm = styled('div')({
     padding: '0 .5rem',
     marginBottom: '10rem',
-    '& > div': {
+    '& section': {
         margin: '0.2rem 0',
         fontSize: '.9rem',
         display: 'flex',
@@ -95,6 +95,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
     }, [onChange, value]);
+    const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
+        onChange({...value, tapFrequencyAsleep: e.target.value as "always"|"none"});
+    }, [onChange, value]);
     const onEditEnergyClick = React.useCallback(() => {
         dispatch({type: 'openEnergyDialog'});
     }, [dispatch]);
@@ -113,37 +116,39 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
 
     const isNotWhistle = (value.period !== 3);
     return <StyledSettingForm>
-        <div>
+        <section>
             <label>{t('period')}:</label>
             <Select variant="standard" onChange={onPeriodChange} value={value.period.toString()}>
                 <MenuItem value={24}>{t('1day')}</MenuItem>
                 <MenuItem value={168}>{t('1week')}</MenuItem>
                 <MenuItem value={3}>{t('whistle')}</MenuItem>
             </Select>
-        </div>
-        <div>
+        </section>
+        <section>
             <label>{t('research area')}:</label>
             <ResearchAreaTextField value={value.fieldIndex} showEmpty
                 onChange={onFieldChange}/>
-        </div>
-        {value.fieldIndex === 0 && <div>
-            <label>{t('favorite berry')}:</label>
-            <span>
-                <Select variant="standard" size="small" value={value.favoriteType[0]}
-                    onChange={onFavoriteBerryChange1}>
-                    {typeMenus}
-                </Select><> </>
-                <Select variant="standard" size="small" value={value.favoriteType[1]}
-                    onChange={onFavoriteBerryChange2}>
-                    {typeMenus}
-                </Select><> </>
-                <Select variant="standard" size="small" value={value.favoriteType[2]}
-                    onChange={onFavoriteBerryChange3}>
-                    {typeMenus}
-                </Select>
-            </span>
-        </div>}
-        <div>
+        </section>
+        <Collapse in={value.fieldIndex === 0}>
+            <section>
+                <label>{t('favorite berry')}:</label>
+                <span>
+                    <Select variant="standard" size="small" value={value.favoriteType[0]}
+                        onChange={onFavoriteBerryChange1}>
+                        {typeMenus}
+                    </Select><> </>
+                    <Select variant="standard" size="small" value={value.favoriteType[1]}
+                        onChange={onFavoriteBerryChange2}>
+                        {typeMenus}
+                    </Select><> </>
+                    <Select variant="standard" size="small" value={value.favoriteType[2]}
+                        onChange={onFavoriteBerryChange3}>
+                        {typeMenus}
+                    </Select>
+                </span>
+            </section>
+        </Collapse>
+        <section>
             <label>{t('area bonus')}:</label>
             <Select variant="standard" value={value.fieldBonus.toString()}
                 onChange={onFieldBonusChange}>
@@ -161,12 +166,14 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={55}>55%</MenuItem>
                 <MenuItem value={60}>60%</MenuItem>
             </Select>
-        </div>
-        {isNotWhistle && <div>
-            <label>{t('good camp ticket')}:</label>
-            <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
-        </div>}
-        <div className="mt">
+        </section>
+        <Collapse in={isNotWhistle}>
+            <section>
+                <label>{t('good camp ticket')}:</label>
+                <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
+            </section>
+        </Collapse>
+        <section className="mt">
             <label>{t('level')}:</label>
             <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>
                 <MenuItem value={0}>{t('current level')}</MenuItem>
@@ -179,16 +186,16 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={75}>Lv. 75</MenuItem>
                 <MenuItem value={100}>Lv. 100</MenuItem>
             </Select>
-        </div>
-        <div>
+        </section>
+        <section>
             <label>{t('calc with evolved')}:</label>
             <Switch checked={value.evolved} onChange={onEvolvedChange}/>
-        </div>
-        <div>
+        </section>
+        <section>
             <label>{t('calc with max skill level')}:</label>
             <Switch checked={value.maxSkillLevel} onChange={onMaxSkillLevelChange}/>
-        </div>
-        <div className="mt">
+        </section>
+        <section className="mt">
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
                 onChange={onHelpBonusCountChange}>
@@ -199,20 +206,32 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={4}>×4</MenuItem>
                 {hasHelpingBonus && <MenuItem value={5}>×5</MenuItem>}
             </Select>
-        </div>
-        {isNotWhistle && <div>
-            <label>{t('tap frequency')}:</label>
-            <Select variant="standard" value={value.tapFrequency}
-                onChange={onTapFrequencyChange}>
-                <MenuItem value="always">{t('every minute')}</MenuItem>
-                <MenuItem value="none">{t('none')}</MenuItem>
-            </Select>
-        </div>}
-        {isNotWhistle && <div className="mt">
-            <label>{t('energy')}:</label>
-            <Button onClick={onEditEnergyClick}>{t('edit')}</Button>
-        </div>}
-        <div className="mt">
+        </section>
+        <Collapse in={isNotWhistle}>
+            <section>
+                <label>{t('tap frequency')} ({t('awake')}):</label>
+                <Select variant="standard" value={value.tapFrequency}
+                    onChange={onTapFrequencyChange}>
+                    <MenuItem value="always">{t('every minute')}</MenuItem>
+                    <MenuItem value="none">{t('none')}</MenuItem>
+                </Select>
+            </section>
+            <section>
+                <label>{t('tap frequency')} ({t('asleep')}):</label>
+                {value.tapFrequency === "none" ?
+                    <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
+                    <Select variant="standard" value={value.tapFrequencyAsleep}
+                        onChange={onTapFrequencyAsleepChange}>
+                        <MenuItem value="always">{t('every minute')}</MenuItem>
+                        <MenuItem value="none">{t('none')}</MenuItem>
+                    </Select>}
+            </section>
+            <section className="mt">
+                <label>{t('energy')}:</label>
+                <Button onClick={onEditEnergyClick}>{t('edit')}</Button>
+            </section>
+        </Collapse>
+        <section className="mt">
             <label>{t('recipe range (the number of ingredients)')}:</label>
             <FormControl size="small">
             <Select variant="standard" value={value.recipeBonus.toString()}
@@ -225,8 +244,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={35}>53{t('range separator')}55 {t('ingredients unit')}</MenuItem>
                 <MenuItem value={48}>62{t('range separator')}77 {t('ingredients unit')}</MenuItem>
             </Select></FormControl>
-        </div>
-        <div>
+        </section>
+        <section>
             <label>{t('average recipe level')}:</label>
             <Select variant="standard" value={value.recipeLevel.toString()}
                 onChange={onRecipeLevelChange}>
@@ -238,7 +257,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={50}>50</MenuItem>
                 <MenuItem value={55}>55</MenuItem>
             </Select>
-        </div>
+        </section>
     </StyledSettingForm>;
 });
 
