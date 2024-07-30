@@ -95,6 +95,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
     }, [onChange, value]);
+    const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
+        onChange({...value, tapFrequencyAsleep: e.target.value as "always"|"none"});
+    }, [onChange, value]);
     const onEditEnergyClick = React.useCallback(() => {
         dispatch({type: 'openEnergyDialog'});
     }, [dispatch]);
@@ -206,12 +209,22 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <Collapse in={isNotWhistle}>
             <section>
-                <label>{t('tap frequency')}:</label>
+                <label>{t('tap frequency')} ({t('awake')}):</label>
                 <Select variant="standard" value={value.tapFrequency}
                     onChange={onTapFrequencyChange}>
                     <MenuItem value="always">{t('every minute')}</MenuItem>
                     <MenuItem value="none">{t('none')}</MenuItem>
                 </Select>
+            </section>
+            <section>
+                <label>{t('tap frequency')} ({t('asleep')}):</label>
+                {value.tapFrequency === "none" ?
+                    <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
+                    <Select variant="standard" value={value.tapFrequencyAsleep}
+                        onChange={onTapFrequencyAsleepChange}>
+                        <MenuItem value="always">{t('every minute')}</MenuItem>
+                        <MenuItem value="none">{t('none')}</MenuItem>
+                    </Select>}
             </section>
             <section className="mt">
                 <label>{t('energy')}:</label>
