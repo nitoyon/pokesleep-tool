@@ -97,7 +97,7 @@ const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
     }
 
     const lines = t(`${appType}.news.${article.id}.detail`).split(/\n/g);
-    lines.unshift(t(`${appType}.news.${article.id}.headline`));
+    const title = t(`${appType}.news.${article.id}.headline`);
 
     let date = "";
     if (Intl && Intl.RelativeTimeFormat) {
@@ -124,7 +124,8 @@ const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
     }
     
     return <StyledNewsArticleDialog open={open} onClose={onClose}>
-        <header>{date}</header>
+        <time>{date}</time>
+        <header>{title}</header>
         {lines.map((x, i) => <p key={i}>{x}</p>)}
         <DialogActions disableSpacing>
             <Button onClick={onClose}>{t('close')}</Button>
@@ -135,9 +136,14 @@ const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
 const StyledNewsArticleDialog = styled(Dialog)({
     '& .MuiPaper-root': {
         padding: '1rem 1rem 0 1rem',
-        '& > header': {
+        '& > time': {
             fontSize: '0.7rem',
             color: '#888',
+        },
+        '& > header': {
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            marginBottom: '0.3rem',
         },
         '& > p': {
             fontSize: '0.9rem',
