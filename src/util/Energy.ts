@@ -500,8 +500,19 @@ class Energy {
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
-        skillProbabilityAfterWakeup.once = 1 - Math.pow(1 - rp.skillRatio,
-            Math.ceil(asleepNotFull));
+        const lotteryCount = Math.ceil(asleepNotFull);
+        if (lotteryCount > 0) {
+            const skillNone = Math.pow(1 - rp.skillRatio, lotteryCount);
+            if (this._iv.pokemon.speciality !== 'Skills') {
+                skillProbabilityAfterWakeup.once = 1 - skillNone;
+            }
+            else {
+                const skillOnce = lotteryCount * rp.skillRatio *
+                    Math.pow(1 - rp.skillRatio, lotteryCount - 1);
+                skillProbabilityAfterWakeup.once = skillOnce;
+                skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
+            }
+        }
         return {timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { awake, asleepNotFull, asleepFull }
         };

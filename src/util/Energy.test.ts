@@ -156,7 +156,10 @@ describe('Energy', () => {
         });
         expect(result.timeToFullInventory).toBe(300);
         expect(result.helpCount.asleepNotFull).toBe(10);
-        expect(result.skillProbabilityAfterWakeup.once).toBe(1 - Math.pow(0.9, 10));
+        expect(result.skillProbabilityAfterWakeup.once)
+            .toBe(10 * 0.1 * Math.pow(0.9, 9));
+        expect(result.skillProbabilityAfterWakeup.twice)
+            .toBe(1 - Math.pow(0.9, 10) - result.skillProbabilityAfterWakeup.once);
 
         // efficiency for snacking is added
         const ef = result.efficiencies.find(x => x.isSnacking);
