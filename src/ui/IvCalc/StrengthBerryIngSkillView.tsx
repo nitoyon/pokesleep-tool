@@ -123,6 +123,10 @@ const StyledBerryIngSkillStrengthView = styled('div')({
         padding: '.6rem .8rem 0',
         '& > span': {
             paddingRight: '0.8rem',
+            '& > small': {
+                fontSize: '0.6rem',
+                padding: '0 0.1rem',
+            },
         },
         '& > span:last-of-type': {
             paddingRight: 0,
@@ -275,7 +279,15 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             {result.energy.canBeFullInventory ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
-                <span>{t('skill trigger after wake up (short)')}: {round1(result.energy.skillProbabilityAfterWakeup.once * 100)}%</span>
+                <span>
+                    {t('skill trigger after wake up (short)')}<>: </>
+                    {pokemonIv.pokemon.speciality !== "Skills" ?
+                    round1(result.energy.skillProbabilityAfterWakeup.once * 100) + '%' :
+                    <>
+                        ❶{round1(result.energy.skillProbabilityAfterWakeup.once * 100)}%<> </>
+                        ❷{round1(result.energy.skillProbabilityAfterWakeup.twice * 100)}%
+                    </>}
+                </span>
             </> :
             <>
                 <span>
