@@ -275,7 +275,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             {result.energy.canBeFullInventory ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
-                <span>{t('skill trigger after wake up (short)')}: {round1(result.energy.skillProbabilityAfterWakeup * 100)}%</span>
+                <span>{t('skill trigger after wake up (short)')}: {round1(result.energy.skillProbabilityAfterWakeup.once * 100)}%</span>
             </> :
             <>
                 <span>
