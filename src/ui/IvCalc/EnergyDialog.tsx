@@ -200,7 +200,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                 </section>
                 <section>
                     <label>{t('skill trigger after wake up')}:</label>
-                    <div>{(energy.skillProbabilityAfterWakeup * 100).toFixed(1)}%</div>
+                    <div>{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%</div>
                     <footer>
                         <span>{t('lottery count')}: {energy.helpCount.asleepNotFull.toFixed(2)}</span>
                     </footer>

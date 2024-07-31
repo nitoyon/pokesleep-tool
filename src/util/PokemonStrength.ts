@@ -190,7 +190,8 @@ class PokemonStrength {
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         if (param.period !== 3 && param.tapFrequency !== 'none') {
             const skillCountAwake = energy.helpCount.awake * skillRatio;
-            const skillCountSleeping = energy.skillProbabilityAfterWakeup;
+            const skillCountSleeping = energy.skillProbabilityAfterWakeup.once +
+                energy.skillProbabilityAfterWakeup.twice * 2;
             skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
                 param);
