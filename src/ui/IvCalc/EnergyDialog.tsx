@@ -195,12 +195,20 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                         new AmountOfSleep(energy.timeToFullInventory).toString(t)}</div>
                     <footer>
                         <span>{t('carry limit')}: {carryLimit}</span>
-                        <span>{t('carry per help')}: {new PokemonRp(iv).bagUsagePerHelp.toFixed(1)}</span>
+                        <span>{t('sneaky snacking')}: {energy.timeToFullInventory < 0 ? t('none') :
+                            energy.helpCount.asleepFull.toFixed(1) + ' ' + t('times unit')}</span>
                     </footer>
                 </section>
                 <section>
                     <label>{t('skill trigger after wake up')}:</label>
-                    <div>{(energy.skillProbabilityAfterWakeup * 100).toFixed(1)}%</div>
+                    <div>
+                        {iv.pokemon.speciality !== 'Skills' ?
+                        <>{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%</> :
+                        <>
+                            ❶{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%<> </>
+                            ❷{(energy.skillProbabilityAfterWakeup.twice * 100).toFixed(1)}%
+                        </>}
+                    </div>
                     <footer>
                         <span>{t('lottery count')}: {energy.helpCount.asleepNotFull.toFixed(2)}</span>
                     </footer>
