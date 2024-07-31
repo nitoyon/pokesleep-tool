@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "bank main skill": {
+                    "headline": "The probability of the main skill being banked is now available.",
+                    "detail": "In the [Energy] tab, you can now see the probability of the main skill being banked in the [Wake up skill] section. This number is also reflected in the calculation of skill occurrences.\nAdditionally, a new setting item, [Tap frequency (Asleep)], has been added. You can now check the abilities when sneaky snacking does not occur during the night."
+                },
                 "add paldea starter": {
                     "headline": "Sprigatito, Fuecoco, Quaxly, and their evolutions are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
