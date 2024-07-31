@@ -88,7 +88,14 @@ export type EnergyResult = {
     /** Sleep time required to fulfill inventory. -1 when not fulfilled. */
     timeToFullInventory: number,
     /** Skill% after wakeup */
-    skillProbabilityAfterWakeup: number,
+    skillProbabilityAfterWakeup: {
+        /** Skill triggered once% after wakeup */
+        once: number,
+        /** Skill triggered twice% after wakeup.
+         * Always 0 if speciality is not skill.
+         */
+        twice: number,
+    },
     /** Help count */
     helpCount: {
         /** Help count while awake */
@@ -395,7 +402,10 @@ class Energy {
     ):
     {
         timeToFullInventory: number,
-        skillProbabilityAfterWakeup: number,
+        skillProbabilityAfterWakeup: {
+            once: number,
+            twice: number,
+        },
         helpCount: {
             awake: number,
             asleepNotFull: number,
@@ -489,8 +499,20 @@ class Energy {
             .filter(x => !x.isAwake && x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
-        const skillProbabilityAfterWakeup = 1 - Math.pow(1 - rp.skillRatio,
-            Math.ceil(asleepNotFull));
+        const skillProbabilityAfterWakeup = {once: 0, twice: 0};
+        const lotteryCount = Math.ceil(asleepNotFull);
+        if (lotteryCount > 0) {
+            const skillNone = Math.pow(1 - rp.skillRatio, lotteryCount);
+            if (this._iv.pokemon.speciality !== 'Skills') {
+                skillProbabilityAfterWakeup.once = 1 - skillNone;
+            }
+            else {
+                const skillOnce = lotteryCount * rp.skillRatio *
+                    Math.pow(1 - rp.skillRatio, lotteryCount - 1);
+                skillProbabilityAfterWakeup.once = skillOnce;
+                skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
+            }
+        }
         return {timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { awake, asleepNotFull, asleepFull }
         };

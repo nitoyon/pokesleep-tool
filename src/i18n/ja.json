@@ -166,7 +166,7 @@
 
         "sleep score": "睡眠スコア",
         "help efficiency": "おてつだい効率",
-        "full inventory while sleeping (short)": "睡眠中所持あふれ",
+        "full inventory while sleeping (short)": "夜間いつ育",
         "skill trigger after wake up (short)": "翌朝スキル",
         "average help efficiency": "平均おてつだい効率",
         "awake": "起床中",
@@ -175,7 +175,7 @@
         "asleep (full inventory)": "睡眠中 (所持あふれ)",
         "full inventory while sleeping": "睡眠中所持あふれ",
         "carry limit": "最大所持数",
-        "carry per help": "1回の所持圧迫数",
+        "sneaky snacking": "いつのまに育成",
         "skill trigger after wake up": "翌朝スキル発生率",
         "lottery count": "抽選回数",
         "always 81%+": "常に81%以上",
