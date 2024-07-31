@@ -195,7 +195,8 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                         new AmountOfSleep(energy.timeToFullInventory).toString(t)}</div>
                     <footer>
                         <span>{t('carry limit')}: {carryLimit}</span>
-                        <span>{t('carry per help')}: {new PokemonRp(iv).bagUsagePerHelp.toFixed(1)}</span>
+                        <span>{t('sneaky snacking')}: {energy.timeToFullInventory < 0 ? t('none') :
+                            energy.helpCount.asleepFull.toFixed(1) + ' ' + t('times unit')}</span>
                     </footer>
                 </section>
                 <section>
