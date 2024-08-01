@@ -62,7 +62,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     return (<>
         <div>
-            <RpLabel rp={rpResult.rp} isEstimated={pokemonIv.level >= 56}/>
+            <RpLabel rp={rpResult.rp} isEstimated={pokemonIv.level > 60}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
                 berryProb={round1(rp.berryRatio * 100)}
