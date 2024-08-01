@@ -15,9 +15,12 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Helper Boost";
 
 export function isSkillLevelMax7(skill: MainSkillName): boolean {
-    return skill === "Charge Strength M" ||
+    return skill === "Ingredient Magnet S" ||
+        skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
         skill === "Charge Strength S (Random)" ||
+        skill === "Extra Helpful S" ||
+        skill === "Cooking Power-Up S" ||
         skill === "Dream Shard Magnet S" ||
         skill === "Dream Shard Magnet S (Random)";
 }
@@ -38,7 +41,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     }
 
     if (skill === "Ingredient Magnet S") {
-        return [6, 8, 11, 14, 17, 21][skillLevel - 1];
+        return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
     }
     if (skill === "Charge Energy S") {
         return [12, 16, 21, 27, 34, 43][skillLevel - 1];
@@ -53,7 +56,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [880, 1251, 1726, 2383, 3290, 4546, 6409][skillLevel - 1];
     }
     if (skill === "Cooking Power-Up S") {
-        return [7, 10, 12, 17, 22, 27][skillLevel - 1];
+        return [7, 10, 12, 17, 22, 27, 31][skillLevel - 1];
     }
     if (skill === "Energizing Cheer S") {
         return [14, 17, 23, 29, 38, 51][skillLevel - 1];
@@ -62,7 +65,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [5, 7, 9, 11, 15, 18][skillLevel - 1];
     }
     if (skill === "Extra Helpful S") {
-        return [5, 6, 7, 8, 9, 10][skillLevel - 1];
+        return [5, 6, 7, 8, 9, 10, 11][skillLevel - 1];
     }
     if (skill === "Helper Boost") {
         // Assume that 3 same type pokemon exists in the party
