@@ -16,7 +16,7 @@
             "news": {
                 "bank main skill": {
                     "headline": "The probability of the main skill being banked is now available.",
-                    "detail": "In the [Energy] tab, you can now see the probability of the main skill being banked in the [Wake up skill] section. This number is also reflected in the calculation of skill occurrences.\nAdditionally, a new setting item, [Tap frequency (Asleep)], has been added. You can now check the abilities when sneaky snacking does not occur during the night."
+                    "detail": "In the [Energy] tab, you can now see the probability of the main skill being banked in the [Wake up skill] section (only Pokémon with the Skills specialty). This number is also reflected in the calculation of skill occurrences.\nAdditionally, a new setting item, [Tap frequency (Asleep)], has been added. You can now check the abilities when sneaky snacking does not occur during the night."
                 },
                 "add paldea starter": {
                     "headline": "Sprigatito, Fuecoco, Quaxly, and their evolutions are added!!!",
