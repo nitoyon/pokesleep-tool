@@ -12,6 +12,7 @@
         "skillRatio": 1.9,
         "ancestor": 1,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -43,6 +44,7 @@
         "skillRatio": 1.9,
         "ancestor": 1,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 14,
         "ing1": {
@@ -74,6 +76,7 @@
         "skillRatio": 2.1,
         "ancestor": 1,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -105,6 +108,7 @@
         "skillRatio": 0.8,
         "ancestor": 10,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -136,6 +140,7 @@
         "skillRatio": 1.8,
         "ancestor": 10,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -167,6 +172,7 @@
         "skillRatio": 1.4,
         "ancestor": 10,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 21,
         "ing1": {
@@ -198,6 +204,7 @@
         "skillRatio": 3.3,
         "ancestor": 23,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -229,6 +236,7 @@
         "skillRatio": 5.7,
         "ancestor": 23,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -260,6 +268,7 @@
         "skillRatio": 12.6,
         "ancestor": 54,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -291,6 +300,7 @@
         "skillRatio": 2.2,
         "ancestor": 56,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -322,6 +332,7 @@
         "skillRatio": 2.4,
         "ancestor": 56,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -353,6 +364,7 @@
         "skillRatio": 3.9,
         "ancestor": 69,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -384,6 +396,7 @@
         "skillRatio": 4,
         "ancestor": 69,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -415,6 +428,7 @@
         "skillRatio": 3.9,
         "ancestor": 69,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -446,6 +460,7 @@
         "skillRatio": 1.5,
         "ancestor": 92,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -477,6 +492,7 @@
         "skillRatio": 2.2,
         "ancestor": 92,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 14,
         "ing1": {
@@ -508,6 +524,7 @@
         "skillRatio": 2.4,
         "ancestor": 92,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -539,6 +556,7 @@
         "skillRatio": 3.1,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 24,
         "ing1": {
@@ -570,6 +588,7 @@
         "skillRatio": 2,
         "ancestor": 147,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -601,6 +620,7 @@
         "skillRatio": 2.5,
         "ancestor": 147,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -632,6 +652,7 @@
         "skillRatio": 2.6,
         "ancestor": 147,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 20,
         "ing1": {
@@ -663,6 +684,7 @@
         "skillRatio": 3.9,
         "ancestor": 152,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -694,6 +716,7 @@
         "skillRatio": 3.8,
         "ancestor": 152,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 17,
         "ing1": {
@@ -725,6 +748,7 @@
         "skillRatio": 4.6,
         "ancestor": 152,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 20,
         "ing1": {
@@ -756,6 +780,7 @@
         "skillRatio": 14.1,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -787,6 +812,7 @@
         "skillRatio": 4.7,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 20,
         "ing1": {
@@ -818,6 +844,7 @@
         "skillRatio": 1.5,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 20,
         "ing1": {
@@ -849,6 +876,7 @@
         "skillRatio": 4.4,
         "ancestor": 228,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -880,6 +908,7 @@
         "skillRatio": 4.6,
         "ancestor": 228,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -911,6 +940,7 @@
         "skillRatio": 5.2,
         "ancestor": 246,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -942,6 +972,7 @@
         "skillRatio": 1.5,
         "ancestor": 287,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -973,6 +1004,7 @@
         "skillRatio": 6.8,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -1004,6 +1036,7 @@
         "skillRatio": 6.3,
         "ancestor": 316,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -1035,6 +1068,7 @@
         "skillRatio": 7,
         "ancestor": 316,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -1066,6 +1100,7 @@
         "skillRatio": 6.1,
         "ancestor": 333,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -1097,6 +1132,7 @@
         "skillRatio": 2.6,
         "ancestor": 353,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -1128,6 +1164,7 @@
         "skillRatio": 3.3,
         "ancestor": 353,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -1159,6 +1196,7 @@
         "skillRatio": 3.8,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -1190,6 +1228,7 @@
         "skillRatio": 4.2,
         "ancestor": 453,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -1217,6 +1256,7 @@
         "skillRatio": 4.3,
         "ancestor": 453,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -1244,6 +1284,7 @@
         "skillRatio": 5.9,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 13,
         "ing1": {
@@ -1275,6 +1316,7 @@
         "skillRatio": 2.3,
         "ancestor": 906,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -1306,6 +1348,7 @@
         "skillRatio": 2.3,
         "ancestor": 906,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 14,
         "ing1": {
@@ -1337,6 +1380,7 @@
         "skillRatio": 2.2,
         "ancestor": 906,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -1368,6 +1412,7 @@
         "skillRatio": 6.2,
         "ancestor": 909,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -1399,6 +1444,7 @@
         "skillRatio": 1.1,
         "ancestor": 4,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -1430,6 +1476,7 @@
         "skillRatio": 1.6,
         "ancestor": 4,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 15,
         "ing1": {
@@ -1461,6 +1508,7 @@
         "skillRatio": 1.6,
         "ancestor": 4,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -1492,6 +1540,7 @@
         "skillRatio": 3,
         "ancestor": 19,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -1523,6 +1572,7 @@
         "skillRatio": 3,
         "ancestor": 19,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -1554,6 +1604,7 @@
         "skillRatio": 2.1,
         "ancestor": 172,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 17,
         "ing1": {
@@ -1585,6 +1636,7 @@
         "skillRatio": 2.8,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -1616,6 +1668,7 @@
         "skillRatio": 4.2,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -1647,6 +1700,7 @@
         "skillRatio": 3.2,
         "ancestor": 172,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 21,
         "ing1": {
@@ -1678,6 +1732,7 @@
         "skillRatio": 3.6,
         "ancestor": 173,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 16,
         "ing1": {
@@ -1709,6 +1764,7 @@
         "skillRatio": 3.6,
         "ancestor": 173,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 24,
         "ing1": {
@@ -1740,6 +1796,7 @@
         "skillRatio": 2.7,
         "ancestor": 37,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -1771,6 +1828,7 @@
         "skillRatio": 2.5,
         "ancestor": 37,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 23,
         "ing1": {
@@ -1802,6 +1860,7 @@
         "skillRatio": 4.3,
         "ancestor": 174,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -1833,6 +1892,7 @@
         "skillRatio": 4,
         "ancestor": 174,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 13,
         "ing1": {
@@ -1864,6 +1924,7 @@
         "skillRatio": 2.1,
         "ancestor": 50,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -1895,6 +1956,7 @@
         "skillRatio": 2,
         "ancestor": 50,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -1926,6 +1988,7 @@
         "skillRatio": 4.2,
         "ancestor": 52,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -1953,6 +2016,7 @@
         "skillRatio": 4.4,
         "ancestor": 52,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 12,
         "ing1": {
@@ -1980,6 +2044,7 @@
         "skillRatio": 5,
         "ancestor": 58,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -2011,6 +2076,7 @@
         "skillRatio": 4.9,
         "ancestor": 58,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -2042,6 +2108,7 @@
         "skillRatio": 6.7,
         "ancestor": 79,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -2073,6 +2140,7 @@
         "skillRatio": 6.8,
         "ancestor": 79,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -2104,6 +2172,7 @@
         "skillRatio": 1.7,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -2135,6 +2204,7 @@
         "skillRatio": 3.9,
         "ancestor": 439,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -2166,6 +2236,7 @@
         "skillRatio": 3.6,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -2197,6 +2268,7 @@
         "skillRatio": 5.5,
         "ancestor": 133,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -2228,6 +2300,7 @@
         "skillRatio": 3.9,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -2259,6 +2332,7 @@
         "skillRatio": 5.2,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -2290,6 +2364,7 @@
         "skillRatio": 2.1,
         "ancestor": 155,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 14,
         "ing1": {
@@ -2321,6 +2396,7 @@
         "skillRatio": 4.1,
         "ancestor": 155,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 18,
         "ing1": {
@@ -2352,6 +2428,7 @@
         "skillRatio": 3.9,
         "ancestor": 155,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 23,
         "ing1": {
@@ -2383,6 +2460,7 @@
         "skillRatio": 5.6,
         "ancestor": 175,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -2414,6 +2492,7 @@
         "skillRatio": 4.7,
         "ancestor": 179,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -2441,6 +2520,7 @@
         "skillRatio": 4.6,
         "ancestor": 179,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -2468,6 +2548,7 @@
         "skillRatio": 4.7,
         "ancestor": 179,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 15,
         "ing1": {
@@ -2495,6 +2576,7 @@
         "skillRatio": 4.4,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -2526,6 +2608,7 @@
         "skillRatio": 7.4,
         "ancestor": 79,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -2557,6 +2640,7 @@
         "skillRatio": 6.4,
         "ancestor": 360,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 13,
         "ing1": {
@@ -2588,6 +2672,7 @@
         "skillRatio": 1.9,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 22,
         "ing1": {
@@ -2619,6 +2704,7 @@
         "skillRatio": 2.3,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -2650,6 +2736,7 @@
         "skillRatio": 4.3,
         "ancestor": 280,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -2681,6 +2768,7 @@
         "skillRatio": 4.3,
         "ancestor": 280,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -2712,6 +2800,7 @@
         "skillRatio": 4.2,
         "ancestor": 280,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -2743,6 +2832,7 @@
         "skillRatio": 1.9,
         "ancestor": 287,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 7,
         "ing1": {
@@ -2774,6 +2864,7 @@
         "skillRatio": 6.7,
         "ancestor": 287,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 12,
         "ing1": {
@@ -2805,6 +2896,7 @@
         "skillRatio": 5.3,
         "ancestor": 175,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -2836,6 +2928,7 @@
         "skillRatio": 4,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 15,
         "ing1": {
@@ -2867,6 +2960,7 @@
         "skillRatio": 4.5,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -2898,6 +2992,7 @@
         "skillRatio": 2.2,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 20,
         "ing1": {
@@ -2929,6 +3024,7 @@
         "skillRatio": 5.3,
         "ancestor": 909,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -2960,6 +3056,7 @@
         "skillRatio": 5,
         "ancestor": 909,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 16,
         "ing1": {
@@ -2991,6 +3088,7 @@
         "skillRatio": 2,
         "ancestor": 7,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -3022,6 +3120,7 @@
         "skillRatio": 2,
         "ancestor": 7,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 14,
         "ing1": {
@@ -3053,6 +3152,7 @@
         "skillRatio": 2.1,
         "ancestor": 7,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
@@ -3084,6 +3184,7 @@
         "skillRatio": 12.5,
         "ancestor": 54,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -3115,6 +3216,7 @@
         "skillRatio": 5.2,
         "ancestor": 74,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -3146,6 +3248,7 @@
         "skillRatio": 4.8,
         "ancestor": 74,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -3177,6 +3280,7 @@
         "skillRatio": 5.2,
         "ancestor": 74,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -3208,6 +3312,7 @@
         "skillRatio": 6.4,
         "ancestor": 81,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -3235,6 +3340,7 @@
         "skillRatio": 6.3,
         "ancestor": 81,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -3262,6 +3368,7 @@
         "skillRatio": 2,
         "ancestor": 84,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -3293,6 +3400,7 @@
         "skillRatio": 2,
         "ancestor": 84,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 21,
         "ing1": {
@@ -3324,6 +3432,7 @@
         "skillRatio": 2.3,
         "ancestor": 95,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 22,
         "ing1": {
@@ -3355,6 +3464,7 @@
         "skillRatio": 4.4,
         "ancestor": 104,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -3382,6 +3492,7 @@
         "skillRatio": 4.5,
         "ancestor": 104,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 15,
         "ing1": {
@@ -3409,6 +3520,7 @@
         "skillRatio": 6.1,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 13,
         "ing1": {
@@ -3440,6 +3552,7 @@
         "skillRatio": 5.2,
         "ancestor": 158,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
@@ -3467,6 +3580,7 @@
         "skillRatio": 5.2,
         "ancestor": 158,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 15,
         "ing1": {
@@ -3494,6 +3608,7 @@
         "skillRatio": 5.5,
         "ancestor": 158,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -3521,6 +3636,7 @@
         "skillRatio": 2.3,
         "ancestor": 172,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -3552,6 +3668,7 @@
         "skillRatio": 3.4,
         "ancestor": 173,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -3583,6 +3700,7 @@
         "skillRatio": 3.8,
         "ancestor": 174,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -3614,6 +3732,7 @@
         "skillRatio": 4.9,
         "ancestor": 175,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -3645,6 +3764,7 @@
         "skillRatio": 7.2,
         "ancestor": 438,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 16,
         "ing1": {
@@ -3676,6 +3796,7 @@
         "skillRatio": 3.2,
         "ancestor": 95,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 25,
         "ing1": {
@@ -3707,6 +3828,7 @@
         "skillRatio": 4.1,
         "ancestor": 246,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -3738,6 +3860,7 @@
         "skillRatio": 4.5,
         "ancestor": 246,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -3769,6 +3892,7 @@
         "skillRatio": 3.2,
         "ancestor": 333,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 12,
         "ing1": {
@@ -3800,6 +3924,7 @@
         "skillRatio": 5.9,
         "ancestor": 360,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 7,
         "ing1": {
@@ -3831,6 +3956,7 @@
         "skillRatio": 2.3,
         "ancestor": 363,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -3862,6 +3988,7 @@
         "skillRatio": 2.1,
         "ancestor": 363,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -3893,6 +4020,7 @@
         "skillRatio": 2.2,
         "ancestor": 363,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 18,
         "ing1": {
@@ -3924,6 +4052,7 @@
         "skillRatio": 6.1,
         "ancestor": 438,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 8,
         "ing1": {
@@ -3955,6 +4084,7 @@
         "skillRatio": 3.2,
         "ancestor": 439,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -3986,6 +4116,7 @@
         "skillRatio": 3.8,
         "ancestor": 447,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 9,
         "ing1": {
@@ -4017,6 +4148,7 @@
         "skillRatio": 5.1,
         "ancestor": 447,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 14,
         "ing1": {
@@ -4048,6 +4180,7 @@
         "skillRatio": 4.4,
         "ancestor": 459,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -4079,6 +4212,7 @@
         "skillRatio": 4.4,
         "ancestor": 459,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 21,
         "ing1": {
@@ -4110,6 +4244,7 @@
         "skillRatio": 6.2,
         "ancestor": 81,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 13,
         "ing1": {
@@ -4137,6 +4272,7 @@
         "skillRatio": 6.3,
         "ancestor": 133,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 12,
         "ing1": {
@@ -4168,6 +4304,7 @@
         "skillRatio": 5.4,
         "ancestor": 280,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -4199,6 +4336,7 @@
         "skillRatio": 1.1,
         "ancestor": 759,
         "evolutionCount": 0,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 13,
         "ing1": {
@@ -4230,6 +4368,7 @@
         "skillRatio": 1.3,
         "ancestor": 759,
         "evolutionCount": 1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 20,
         "ing1": {
@@ -4261,6 +4400,7 @@
         "skillRatio": 3.3,
         "ancestor": null,
         "evolutionCount": -1,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
@@ -4292,6 +4432,7 @@
         "skillRatio": 2.8,
         "ancestor": 912,
         "evolutionCount": 0,
+        "evolutionLeft": 2,
         "isFullyEvolved": false,
         "carryLimit": 10,
         "ing1": {
@@ -4323,6 +4464,7 @@
         "skillRatio": 2.7,
         "ancestor": 912,
         "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 14,
         "ing1": {
@@ -4354,6 +4496,7 @@
         "skillRatio": 2.4,
         "ancestor": 912,
         "evolutionCount": 2,
+        "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 19,
         "ing1": {
