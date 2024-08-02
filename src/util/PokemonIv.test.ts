@@ -23,13 +23,13 @@ describe('PokemonIV', () => {
             expect(iv2.skillLevel).toBe(4);
         });
 
-        test('evolved pokemon (max skill level 6)', () => {
+        test('evolved pokemon (max skill level 7)', () => {
             const iv = new PokemonIv('Bulbasaur');
             expect(iv.skillLevel).toBe(1);
             iv.skillLevel = 5;
 
             const iv2 = iv.clone('Venusaur');
-            expect(iv2.skillLevel).toBe(6);
+            expect(iv2.skillLevel).toBe(7);
         });
     });
 
