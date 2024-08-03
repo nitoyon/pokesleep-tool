@@ -203,7 +203,8 @@
         "frequency": "Frequency",
         "carry limit": "Carry limit",
         "Main Skill & Sub Skills": "Main Skill & Sub Skills",
-        "nature": "Nature",
+        "additional stats": "Additional stats",
+        "sleeping time shared": "Sleeping Time Shared",
         "show help count": "Show help count",
         "help count per hour": "{{n}} times/hour",
         "probability": "Prob",
@@ -213,6 +214,12 @@
         "evolved once": "Evolved once",
         "evolved twice": "Evolved twice",
         "not evolved": "Not evolved",
+
+        "200 hours-": "less than 200 hours",
+        "200 hours+": "200-500 hours",
+        "500 hours+": "500-1000 hours",
+        "1000 hours+": "1000-2000 hours",
+        "2000 hours+": "2000 hours or more",
 
         "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",

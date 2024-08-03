@@ -194,7 +194,8 @@
         "frequency": "おてつだい時間",
         "carry limit": "最大所持数",
         "Main Skill & Sub Skills": "メインスキル・サブスキル",
-        "nature": "せいかく",
+        "additional stats": "詳細ステータス",
+        "sleeping time shared": "一緒に眠った時間",
         "show help count": "おてつだい回数表示",
         "help count per hour": "1時間に {{n}} 回",
         "probability": "確率",
@@ -204,6 +205,12 @@
         "evolved once": "1回進化",
         "evolved twice": "2回進化",
         "not evolved": "直ゲット",
+
+        "200 hours-": "200時間未満",
+        "200 hours+": "200～500時間",
+        "500 hours+": "500～1000時間",
+        "1000 hours+": "1000～2000時間以上",
+        "2000 hours+": "2000時間以上",
 
         "strength of x": "{{x}}のエナジー",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
