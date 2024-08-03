@@ -178,7 +178,6 @@
         "asleep": "睡眠中",
         "asleep (full inventory)": "睡眠中 (所持あふれ)",
         "full inventory while sleeping": "睡眠中所持あふれ",
-        "carry limit": "最大所持数",
         "sneaky snacking": "いつのまに育成",
         "skill trigger after wake up": "翌朝スキル発生率",
         "lottery count": "抽選回数",
@@ -193,6 +192,7 @@
         "ingredient": "食材",
         "skill": "スキル",
         "frequency": "おてつだい時間",
+        "carry limit": "最大所持数",
         "Main Skill & Sub Skills": "メインスキル・サブスキル",
         "nature": "せいかく",
         "show help count": "おてつだい回数表示",
@@ -200,6 +200,10 @@
         "probability": "確率",
         "times unit": "回",
         "ingredients unit": "食材",
+
+        "evolved once": "1回進化",
+        "evolved twice": "2回進化",
+        "not evolved": "直ゲット",
 
         "strength of x": "{{x}}のエナジー",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",

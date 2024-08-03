@@ -10,6 +10,7 @@ import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
 import SkillLevelControl from './SkillLevelControl';
 import InfoButton from './InfoButton';
+import CarryLimitTextField from './CarryLimitTextField';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
 import EnergyIcon from '../Resources/EnergyIcon';
@@ -57,6 +58,11 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         iv.ingredient = value;
         onChange(iv);
     }, [pokemonIv, onChange]);
+    const onEvolvedCountChange = React.useCallback((value: 0|1|2) => {
+        const iv = pokemonIv.clone();
+        iv.evolvedCount = value;
+        onChange(iv);
+    }, [pokemonIv, onChange]);
     const onSkillLevelChange = React.useCallback((value: number) => {
         const iv = pokemonIv.clone();
         iv.skillLevel = value;
@@ -99,6 +105,8 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
                 <FrequencyInfoDialog rp={rp}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
+            <div>{t("carry limit")}:</div>
+            <CarryLimitTextField iv={pokemonIv} onChange={onEvolvedCountChange}/>
         </div>
         <h3>{t("Main Skill & Sub Skills")}</h3>
         <SkillLevelControl pokemon={rp.pokemon} value={pokemonIv.skillLevel} onChange={onSkillLevelChange}/>

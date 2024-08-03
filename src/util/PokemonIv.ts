@@ -161,7 +161,7 @@ class PokemonIv {
      */
     get carryLimit(): number {
         return this.pokemon.carryLimit +
-            5 * Math.max(0, this.pokemon.evolutionCount) +
+            5 * Math.max(0, this.evolvedCount) +
             this.subSkills.getActiveSubSkills(this.level).reduce((p, c) => p + c.inventory, 0) * 6;
     }
 

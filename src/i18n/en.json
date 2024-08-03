@@ -187,7 +187,6 @@
         "asleep": "Asleep",
         "asleep (full inventory)": "Asleep (Full inventory)",
         "full inventory while sleeping": "Full inventory while sleeping",
-        "carry limit": "Carry limit",
         "sneaky snacking": "Sneaky snacking",
         "skill trigger after wake up": "Skill trigger% after wake up",
         "lottery count": "Lottery count",
@@ -202,6 +201,7 @@
         "name": "Name",
         "type": "Type",
         "frequency": "Frequency",
+        "carry limit": "Carry limit",
         "Main Skill & Sub Skills": "Main Skill & Sub Skills",
         "nature": "Nature",
         "show help count": "Show help count",
@@ -209,6 +209,10 @@
         "probability": "Prob",
         "times unit": " times",
         "ingredients unit": " ingredients",
+
+        "evolved once": "Evolved once",
+        "evolved twice": "Evolved twice",
+        "not evolved": "Not evolved",
 
         "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
