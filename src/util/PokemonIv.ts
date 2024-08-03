@@ -162,7 +162,21 @@ class PokemonIv {
     get carryLimit(): number {
         return this.pokemon.carryLimit +
             5 * Math.max(0, this.evolvedCount) +
+            this.ribbonCarryLimit +
             this.subSkills.getActiveSubSkills(this.level).reduce((p, c) => p + c.inventory, 0) * 6;
+    }
+
+    /**
+     * Get carry limit added by the Good-Night Ribbon.
+     */
+    get ribbonCarryLimit(): number {
+        switch (this.ribbon) {
+            case 1: return 1;
+            case 2: return 3;
+            case 3: return 6;
+            case 4: return 8;
+            default: return 0;
+        }
     }
 
     /**

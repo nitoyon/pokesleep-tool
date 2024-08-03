@@ -79,6 +79,9 @@ class PokemonRp {
     /** Nature of the pokemon */
     nature: Nature|null;
 
+    /** Ribbon level */
+    ribbon: 0|1|2|3|4;
+
     get pokemonName(): string {
         return this._pokemonName;
     }
@@ -96,6 +99,7 @@ class PokemonRp {
         this.ingredient = pokemonIv.ingredient;
         this.subSkills = pokemonIv.subSkills;
         this.nature = pokemonIv.nature;
+        this.ribbon = pokemonIv.ribbon;
     }
 
     calculate(): RpCalculateResult {
@@ -139,9 +143,33 @@ class PokemonRp {
                 (501 - this.level) / 500 *
                 // Nature Factor
                 (this.nature?.speedOfHelpFactor ?? 1) *
+                // Good-Night Ribbon Factor
+                this.speedOfRibbonFactor *
                 // Sub-Skill Factor
                 (1 - this.activeSubSkills.reduce((p, c) => p + c.helpingSpeed, 0) * 0.07)
             , 4);
+    }
+
+    /**
+     * Get speed factor by the Good-Night Ribbon.
+     */
+    get speedOfRibbonFactor(): number {
+        if (this.pokemon.evolutionLeft === 0) {
+            return 1;
+        }
+        if (this.ribbon >= 4) {
+            switch (this.pokemon.evolutionLeft) {
+                case 2: return 0.75;
+                case 1: return 0.88; 
+            }
+        }
+        if (this.ribbon >= 1) {
+            switch (this.pokemon.evolutionLeft) {
+                case 2: return 0.89;
+                case 1: return 0.95; 
+            }
+        }
+        return 1;
     }
 
     frequencyWithHelpingBonus(count: number): number {

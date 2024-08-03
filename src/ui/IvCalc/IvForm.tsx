@@ -13,6 +13,7 @@ import InfoButton from './InfoButton';
 import CarryLimitTextField from './CarryLimitTextField';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
+import SleepingTimeControl from './SleepingTimeControl';
 import EnergyIcon from '../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
@@ -77,6 +78,11 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         iv.nature = value;
         onChange(iv);
     }, [pokemonIv, onChange]);
+    const onRibbonChange = React.useCallback((value: 0|1|2|3|4) => {
+        const iv = pokemonIv.clone();
+        iv.ribbon = value;
+        onChange(iv);
+    }, [pokemonIv, onChange]);
 
     const [frequencyDialogOpen, setFrequencyDialogOpen] = React.useState(false);
     const onFrequencyInfoClick = React.useCallback(() => {
@@ -111,8 +117,12 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         <h3>{t("Main Skill & Sub Skills")}</h3>
         <SkillLevelControl pokemon={rp.pokemon} value={pokemonIv.skillLevel} onChange={onSkillLevelChange}/>
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
-        <h3 className="nature">{t("nature")}</h3>
+        <h3 className="nature">{t("additional stats")}</h3>
         <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
+        <div style={{marginTop: '0.8rem'}}>
+            <span style={{paddingRight: '0.7rem'}}>{t("sleeping time shared")}:</span>
+            <SleepingTimeControl value={pokemonIv.ribbon} onChange={onRibbonChange}/>
+        </div>
     </StyledInputForm>;
 });
 

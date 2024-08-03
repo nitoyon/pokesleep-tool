@@ -61,7 +61,8 @@ const CarryLimitPopper = React.memo(({open, anchorRef, iv, onClose, onChange}: {
     }, [onChange, onClose]);
 
     let menuItems: React.ReactNode[] = [];
-    const inventory = iv.subSkills.getActiveSubSkills(iv.level).reduce((p, c) => p + c.inventory, 0) * 6;
+    const inventory = iv.ribbonCarryLimit +
+        iv.subSkills.getActiveSubSkills(iv.level).reduce((p, c) => p + c.inventory, 0) * 6;
     for (let i = 0; i <= iv.pokemon.evolutionCount; i++) {
         const val = iv.pokemon.evolutionCount - i;
         const carry = iv.pokemon.carryLimit + 5 * val + inventory;
