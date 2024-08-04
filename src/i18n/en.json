@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "evolution count and ribbon": {
+                    "headline": "The evolution count and the level of Good-Night Ribbon are now configurable.",
+                    "detail": "You can now specify the evolution count with [$t(carry limit)] and the sleeping time with [$t(sleeping time shared)].\nThis allows you to check Pokémon performance with appropriate values for '$t(carry limit)' and '$t(frequency)'."
+                },
                 "bank main skill": {
                     "headline": "The probability of the main skill being banked is now available.",
                     "detail": "In the [Energy] tab, you can now see the probability of the main skill being banked in the [Wake up skill] section (only Pokémon with the Skills specialty). This number is also reflected in the calculation of skill occurrences.\nAdditionally, a new setting item, [Tap frequency (Asleep)], has been added. You can now check the abilities when sneaky snacking does not occur during the night."
