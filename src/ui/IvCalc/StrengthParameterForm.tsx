@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { Button, Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
     } from '@mui/material';
 import { IvAction } from './IvState';
+import AreaBonusControl from './AreaBonusControl';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { CalculateParameter } from '../../util/PokemonStrength';
@@ -74,8 +75,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         favoriteType[2] = e.target.value as PokemonType;
         onChange({...value, favoriteType});
     }, [onChange, value]);
-    const onFieldBonusChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, fieldBonus: parseInt(e.target.value, 10)});
+    const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
+        onChange({...value, fieldBonus});
     }, [onChange, value]);
     const onHelpBonusCountChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, helpBonusCount: parseInt(e.target.value, 10) as 0|1|2|3|4});
@@ -150,22 +151,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </Collapse>
         <section>
             <label>{t('area bonus')}:</label>
-            <Select variant="standard" value={value.fieldBonus.toString()}
-                onChange={onFieldBonusChange}>
-                <MenuItem value={0}>0%</MenuItem>
-                <MenuItem value={5}>5%</MenuItem>
-                <MenuItem value={10}>10%</MenuItem>
-                <MenuItem value={15}>15%</MenuItem>
-                <MenuItem value={20}>20%</MenuItem>
-                <MenuItem value={25}>25%</MenuItem>
-                <MenuItem value={30}>30%</MenuItem>
-                <MenuItem value={35}>35%</MenuItem>
-                <MenuItem value={40}>40%</MenuItem>
-                <MenuItem value={45}>45%</MenuItem>
-                <MenuItem value={50}>50%</MenuItem>
-                <MenuItem value={55}>55%</MenuItem>
-                <MenuItem value={60}>60%</MenuItem>
-            </Select>
+            <AreaBonusControl value={value.fieldBonus}
+                onChange={onFieldBonusChange}/>
         </section>
         <Collapse in={isNotWhistle}>
             <section>
