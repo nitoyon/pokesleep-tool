@@ -118,8 +118,7 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
 const StyledDialog = styled(Dialog)({
     '& div.MuiDialog-paper': {
         '& > article': {
-            padding: '.5rem .5rem 0 .5rem',
-            flex: 1,
+            padding: '.5rem .5rem 4rem .5rem',
 
             '& > div.icon': {
                 margin: '.2rem auto',
@@ -136,7 +135,12 @@ const StyledDialog = styled(Dialog)({
             },
         },
         '& > div.MuiDialogActions-root': {
-            marginBottom: '1rem',
+            position: 'fixed',
+            padding: '0 0.5rem 1rem 0.5rem',
+            margin: 0,
+            background: 'rgba(255, 255, 255, 0.8)',
+            width: 'calc(100% - 1rem)',
+            bottom: 0,
         }
     },
 });
