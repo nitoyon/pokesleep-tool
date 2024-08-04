@@ -303,6 +303,7 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
         'Umbreon', 'Leafeon', 'Glaceon', 'Sylveon'].includes(name)) {
         json.ancestor = 133;
         json.evolutionCount = (name === 'Eevee' ? 0 : 1);
+        json.evolutionLeft = 1 - json.evolutionCount;
         json.isFullyEvolved = (json.evolutionCount === 1);
     }
     else if (['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].includes(name)) {
@@ -311,7 +312,17 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
         if (json.evolutionCount === 3) {
             json.evolutionCount = 2;
         }
+        json.evolutionLeft = 2 - json.evolutionCount;
         json.isFullyEvolved = (json.evolutionCount === 2);
+    }
+    else if (['Slowpoke', 'Slowbro', 'Slowking'].includes(name)) {
+        json.ancestor = 79;
+        json.evolutionCount = ['Slowpoke', 'Slowbro', 'Slowking'].indexOf(name);
+        if (json.evolutionCount === 2) {
+            json.evolutionCount = 1;
+        }
+        json.evolutionLeft = 1 - json.evolutionCount;
+        json.isFullyEvolved = (json.evolutionCount === 1);
     }
     else {
         const evolink = dom.window.document.querySelector('h4 a[title="育成/進化"]');
@@ -323,6 +334,7 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
             .map(x => nameJa2id[x.textContent]);
         json.ancestor = (ancestor === undefined ? null : nameJa2id[ancestor]);
         json.evolutionCount = evoline.indexOf(json.id);
+        json.evolutionLeft = evoline.length - json.evolutionCount - 1;
         json.isFullyEvolved = (json.evolutionCount === evoline.length - 1);
     }
 
