@@ -10,8 +10,10 @@ import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
 import SkillLevelControl from './SkillLevelControl';
 import InfoButton from './InfoButton';
+import CarryLimitTextField from './CarryLimitTextField';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
+import SleepingTimeControl from './SleepingTimeControl';
 import EnergyIcon from '../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
@@ -57,6 +59,11 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         iv.ingredient = value;
         onChange(iv);
     }, [pokemonIv, onChange]);
+    const onEvolvedCountChange = React.useCallback((value: 0|1|2) => {
+        const iv = pokemonIv.clone();
+        iv.evolvedCount = value;
+        onChange(iv);
+    }, [pokemonIv, onChange]);
     const onSkillLevelChange = React.useCallback((value: number) => {
         const iv = pokemonIv.clone();
         iv.skillLevel = value;
@@ -69,6 +76,11 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
     const onNatureChange = React.useCallback((value: Nature) => {
         const iv = pokemonIv.clone();
         iv.nature = value;
+        onChange(iv);
+    }, [pokemonIv, onChange]);
+    const onRibbonChange = React.useCallback((value: 0|1|2|3|4) => {
+        const iv = pokemonIv.clone();
+        iv.ribbon = value;
         onChange(iv);
     }, [pokemonIv, onChange]);
 
@@ -99,12 +111,18 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
                 <FrequencyInfoDialog rp={rp}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
+            <div>{t("carry limit")}:</div>
+            <CarryLimitTextField iv={pokemonIv} onChange={onEvolvedCountChange}/>
         </div>
         <h3>{t("Main Skill & Sub Skills")}</h3>
         <SkillLevelControl pokemon={rp.pokemon} value={pokemonIv.skillLevel} onChange={onSkillLevelChange}/>
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
-        <h3 className="nature">{t("nature")}</h3>
+        <h3 className="nature">{t("additional stats")}</h3>
         <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
+        <div style={{marginTop: '0.8rem'}}>
+            <span style={{paddingRight: '0.7rem'}}>{t("sleeping time shared")}:</span>
+            <SleepingTimeControl value={pokemonIv.ribbon} onChange={onRibbonChange}/>
+        </div>
     </StyledInputForm>;
 });
 

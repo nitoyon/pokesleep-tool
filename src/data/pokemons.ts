@@ -29,6 +29,8 @@ export interface PokemonData {
     ancestor: number | null;
     /** Evolution count (-1, 0, 1, 2) */
     evolutionCount: -1|0|1|2;
+    /** Number of remaining evolutions (0, 1, 2) */
+    evolutionLeft: 0|1|2;
     /** true if Non-evolving pokemon or filal evolution pokemon */
     isFullyEvolved: boolean;
     /** Carry limit (excluding 5 * evolutionCount). */
