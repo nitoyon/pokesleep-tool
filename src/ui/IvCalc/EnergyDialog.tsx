@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import { IvAction } from './IvState';
 import EnergyIcon from '../Resources/EnergyIcon';
 import PokemonIv from '../../util/PokemonIv';
-import PokemonRp from '../../util/PokemonRp';
 import { CalculateParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { EnergyResult } from '../../util/Energy';
