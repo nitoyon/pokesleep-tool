@@ -23,12 +23,13 @@ const StyledInputForm = styled('div')({
     margin: '0 0.3rem 0 0.3rem',
     fontSize: '.9rem',
     '& > div.table': {
+        width: '100%',
         display: 'grid',
-        gap: '.5rem .8rem',
+        gap: 'clamp(.3rem, 0.7vh, .5rem) .8rem',
         gridTemplateColumns: 'fit-content(200px) 1fr',
     },
     '& > h3': {
-        margin: '1rem 0 .3rem -.3rem',
+        margin: 'clamp(0.7rem, 1.8vh, 1rem) 0 .3rem -.3rem',
         fontSize: '.8rem',
         padding: '.1rem .5rem',
         background: '#557799',
@@ -119,7 +120,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
         <h3 className="nature">{t("additional stats")}</h3>
         <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
-        <div style={{marginTop: '0.8rem'}}>
+        <div style={{marginTop: 'clamp(.3rem, 0.7vh, .5rem)'}}>
             <span style={{paddingRight: '0.7rem'}}>{t("sleeping time shared")}:</span>
             <SleepingTimeControl value={pokemonIv.ribbon} onChange={onRibbonChange}/>
         </div>

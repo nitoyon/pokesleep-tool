@@ -17,11 +17,11 @@ import BoxImportDialog from './BoxImportDialog';
 import BoxDeleteAllDialog from './BoxDeleteAllDialog';
 import { useTranslation } from 'react-i18next';
 
-export const StyledTabs = styled(Tabs)({
+const StyledTabs = styled(Tabs)({
     minHeight: '36px',
-    marginBottom: '.7rem',
+    marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
 });
-export const StyledTab = styled(Tab)({
+const StyledTab = styled(Tab)({
     minHeight: '36px',
     padding: '6px 16px',
 });

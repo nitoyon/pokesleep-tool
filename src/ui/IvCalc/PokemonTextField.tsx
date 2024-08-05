@@ -64,7 +64,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
 
     return (<div>
         {fixMode ? <>{selectedOption.localName}</> :
-        <TextLikeButton onClick={onInputClick} style={{width: '8rem'}}
+        <TextLikeButton onClick={onInputClick} style={{width: '8rem', fontSize: '0.9rem'}}
             className={open ? 'focused' : ''}>
             {selectedOption.localName}
         </TextLikeButton>}
@@ -76,6 +76,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
 
 const StyledEvolveButton = styled(IconButton)({
     color: '#6c9',
+    fontSize: '0.9rem',
     '&:disabled': {
         color: '#999',
     }

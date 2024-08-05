@@ -1,4 +1,5 @@
 import React from 'react';
+import { styled } from '@mui/system';
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +13,7 @@ const SleepingTimeControl = React.memo(({value, onChange}: {
         onChange(e.target.value as 0|1|2|3|4);
     }, [onChange]);
 
-    return <TextField variant="standard" size="small" select
+    return <StyledTextField variant="standard" size="small" select
             value={value}
             SelectProps={{ MenuProps: {
                 anchorOrigin: { vertical: "bottom", horizontal: "left" },
@@ -24,7 +25,15 @@ const SleepingTimeControl = React.memo(({value, onChange}: {
             <MenuItem value={2}>{t('500 hours+')}</MenuItem>
             <MenuItem value={3}>{t('1000 hours+')}</MenuItem>
             <MenuItem value={4}>{t('2000 hours+')}</MenuItem>
-        </TextField>;
+        </StyledTextField>;
+});
+
+const StyledTextField = styled(TextField)({
+    '& .MuiSelect-select': {
+        paddingTop: '1px',
+        paddingBottom: '1px',
+        fontSize: '0.9rem',
+    },
 });
 
 export default SleepingTimeControl;
