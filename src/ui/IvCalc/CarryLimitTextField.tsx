@@ -36,7 +36,7 @@ const CarryLimitTextField = React.memo(({iv, onChange}: {
     return <>
             <TextLikeButton ref={anchorRef} onClick={onClick}
                 className={open ? "focused" : ""}
-                style={{width: '2.5rem'}}>
+                style={{width: '2.5rem', fontSize: '0.9rem'}}>
                 {iv.carryLimit}
             </TextLikeButton>
             <CarryLimitPopper open={open} anchorRef={anchorRef}
