@@ -96,7 +96,7 @@ const LevelControl = React.memo(({value, onChange}: {
                         min: 1,
                         max: 100,
                         inputMode: "numeric",
-                        style: {textOverflow: "clip"},
+                        style: {textOverflow: "clip", fontSize: '0.9rem'},
                     }}
                 />}
                 PaperComponent={StyledPopup}

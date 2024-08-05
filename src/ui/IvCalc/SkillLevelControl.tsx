@@ -1,4 +1,5 @@
 import React from 'react';
+import { styled } from '@mui/system';
 import { PokemonData } from '../../data/pokemons';
 import { isSkillLevelMax7 } from '../../util/MainSkill';
 import { MenuItem, TextField } from '@mui/material';
@@ -22,7 +23,7 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
         onChange(e.target.value as number);
     }, [onChange]);
 
-    return <div>
+    return <StyledSkillLevel>
         <span style={{marginRight: '1rem'}}>{t(`skills.${pokemon.skill}`)}</span>
         <TextField variant="standard" size="small" select
             value={value}
@@ -34,7 +35,15 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
             onChange={_onChange}>
             {options}
         </TextField>
-    </div>;
+    </StyledSkillLevel>;
+});
+
+const StyledSkillLevel = styled('div')({
+    '& .MuiSelect-select': {
+        paddingTop: '1px',
+        paddingBottom: '1px',
+        fontSize: '0.9rem',
+    },
 });
 
 export default SkillLevelControl;
