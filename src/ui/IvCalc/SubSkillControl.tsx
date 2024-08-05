@@ -11,7 +11,7 @@ export interface SubSkillChangeEvent {
 };
 
 const StyledSubSkillContainer = styled('div')({
-    margin: '.5rem 0',
+    margin: 'clamp(.3rem, 0.7vh, .5rem) 0',
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gridGap: '.4rem .5rem',
