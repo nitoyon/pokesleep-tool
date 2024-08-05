@@ -1,7 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { StyledTab, StyledTabs } from './IvCalcApp';
-import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList } from '@mui/material';
+import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
+    Tab, Tabs
+ } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -89,12 +90,20 @@ const LowerTabHeader = React.memo(({
 });
 
 const StyledContainer = styled('div')({
-    'marginTop': '0.8rem',
-    paddingBottom: '0.1rem',
+    'marginTop': 'clamp(.3rem, 0.6vh, .7rem)',
     '& > button.MuiIconButton-root': {
         float: 'right',
         color: '#999',
     },
+});
+
+const StyledTabs = styled(Tabs)({
+    minHeight: 'clamp(20px, 3vh, 36px)',
+    marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
+});
+const StyledTab = styled(Tab)({
+    minHeight: 'clamp(20px, 3vh, 36px)',
+    padding: '6px 16px',
 });
 
 /**
