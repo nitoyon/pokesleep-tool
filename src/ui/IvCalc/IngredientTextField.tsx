@@ -50,10 +50,10 @@ const IngredientTextField = React.memo(({pokemon, value, onChange}: {
 
 const IngredientBadge = styled(Badge)(({ theme }) => ({
     marginRight: '.8rem',
-    width: 30,
-    height: 30,
+    width: 26,
+    height: 26,
     '& .MuiBadge-badge': {
-        top: 26,
+        top: 23,
         right: 4,
         border: '1px solid #ccbb88',
         fontSize: '0.5rem',
@@ -63,7 +63,11 @@ const IngredientBadge = styled(Badge)(({ theme }) => ({
         backgroundColor: "#ffffff",
         boxShadow: '0 1px 2px 1px rgba(128, 128, 128, 0.4)',
         zIndex: 0,
-    }
+    },
+    '& > svg': {
+        width: '20px',
+        height: '20px',
+    },
 }));
 
 const PokemonIngredient = React.memo(({pokemon, value}: {
