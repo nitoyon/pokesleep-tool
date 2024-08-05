@@ -106,6 +106,7 @@ const BoxView = React.memo(({items, selectedId, onChange}: {
             display: 'flex',
             flexWrap: 'wrap',
             marginBottom: '60px',
+            width: '100%',
         }}>
             {elms.length === 0 && <div style={{margin: "5rem auto", color: "#888", fontSize: "0.9rem"}}>
                 {items.length === 0 ? t('box is empty') : t('no pokemon found')}
