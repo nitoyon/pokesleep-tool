@@ -7,17 +7,19 @@ import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 const LowerTabHeader = React.memo(({
-    upperTabIndex, tabIndex, isBoxEmpty, dispatch,
+    upperTabIndex, tabIndex, isBoxEmpty, dispatch, onShare,
 }: {
     upperTabIndex: number,
     tabIndex: number,
     isBoxEmpty: boolean,
     dispatch: (action: IvAction) => void,
+    onShare: () => void,
 }) => {
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const { t } = useTranslation();
@@ -35,6 +37,11 @@ const LowerTabHeader = React.memo(({
             startAddToBoxAnimation(boxTabRef.current);
         }
     }, [dispatch]);
+
+    const onShareHandler = React.useCallback(() => {
+        setMoreMenuAnchor(null);
+        onShare();
+    }, [onShare]);
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         dispatch({type: "changeLowerTab", payload: {index: newValue}});
@@ -63,6 +70,10 @@ const LowerTabHeader = React.memo(({
                 <MenuItem onClick={onMenuItemClickHandler} data-value="addThis">
                     <ListItemIcon><AddCircleOutlineIcon/></ListItemIcon>
                     {t('add to box')}
+                </MenuItem>
+                <MenuItem onClick={onShareHandler} data-value="share">
+                    <ListItemIcon><IosShareIcon/></ListItemIcon>
+                    {t('share')}
                 </MenuItem>
             </MenuList>
         </Menu>
