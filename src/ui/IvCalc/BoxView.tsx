@@ -12,14 +12,16 @@ import { ButtonBase, Fab, IconButton, ListItemIcon,
 import AddIcon from '@mui/icons-material/Add';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 
-const BoxView = React.memo(({items, selectedId, dispatch}: {
+const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
     dispatch: (action: IvAction) => void,
+    onShare: () => void,
 }) => {
     const { t } = useTranslation();
     const defaultConfig = React.useMemo(() => loadPokemonDialogConfig(), []);
@@ -91,7 +93,7 @@ const BoxView = React.memo(({items, selectedId, dispatch}: {
 
     const elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
-            onChange={onItemChange}/>));
+            onChange={onItemChange} onShare={onShare}/>));
 
     const footerValue = React.useMemo(() => ({
         isFiltered: config.filterType !== null || config.filterEvolve !== "all",
@@ -187,10 +189,11 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     return ret;
 }
 
-const BoxLargeItem = React.memo(({item, selected, onChange}: {
+const BoxLargeItem = React.memo(({item, selected, onChange, onShare}: {
     item: PokemonBoxItem,
     selected: boolean,
     onChange: (action: IvAction) => void,
+    onShare: () => void,
 }) => {
     const { t } = useTranslation();
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
@@ -214,6 +217,10 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
         onChange({type, payload: {id: item.id}} as IvAction);
         setMoreMenuAnchor(null);
     }, [item, onChange, setMoreMenuAnchor]);
+    const onShareClick = React.useCallback(() => {
+        setMoreMenuAnchor(null);
+        onShare();
+    }, [onShare]);
 
     return (
         <StyledBoxLargeItem>
@@ -230,6 +237,10 @@ const BoxLargeItem = React.memo(({item, selected, onChange}: {
                     <MenuItem onClick={() => onMenuClick("edit")}>
                         <ListItemIcon><EditNoteOutlinedIcon/></ListItemIcon>
                         {t('edit')}
+                    </MenuItem>
+                    <MenuItem onClick={onShareClick}>
+                        <ListItemIcon><IosShareIcon/></ListItemIcon>
+                        {t('share')}
                     </MenuItem>
                     <MenuItem onClick={() => onMenuClick("dup")}>
                         <ListItemIcon><ContentCopyOutlinedIcon/></ListItemIcon>

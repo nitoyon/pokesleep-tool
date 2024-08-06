@@ -23,6 +23,9 @@ export type IvAction = {
 }|{
     type: "changeParameter",
     payload: {parameter: CalculateParameter},
+}|{
+    type: "showAlert",
+    payload: {message: string},
 };
 
 const initialBox = new PokemonBox();
@@ -164,6 +167,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         return {...s, box, selectedItemId};
     }
 
+    if (type === "showAlert") {
+        return {...state, alertMessage: action.payload.message};
+    }
     if (type === "closeAlert") {
         return {...state, alertMessage: ""};
     }
