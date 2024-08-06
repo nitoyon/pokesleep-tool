@@ -139,8 +139,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         return state;
     }
     if (type === "saveItem") {
+        const nickName = state.box.getById(state.selectedItemId)?.nickname;
         const box = new PokemonBox(state.box.items);
-        box.set(state.selectedItemId, state.pokemonIv);
+        box.set(state.selectedItemId, state.pokemonIv, nickName);
         box.save();
         return {...state, box};
     }
