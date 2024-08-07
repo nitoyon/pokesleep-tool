@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { Button, Snackbar, Tab, Tabs } from '@mui/material'; 
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
-import { IvAction, ivStateReducer, initialIvState } from './IvState';
+import { ivStateReducer, initialIvState } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
@@ -63,9 +63,6 @@ const ResearchCalcApp = React.memo(() => {
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(state.pokemonIv);
 
-    const onHeaderMenuClick = React.useCallback((type: string) => {
-        dispatch({type} as IvAction);
-    }, []);
     const onBoxExportDialogClose = React.useCallback(() => {
         dispatch({type: "exportClose"});
     }, []);
@@ -74,9 +71,6 @@ const ResearchCalcApp = React.memo(() => {
     }, []);
     const onBoxDeleteAllDialogClose = React.useCallback(() => {
         dispatch({type: "deleteAllClose"});
-    }, []);
-    const onLowerTabChange = React.useCallback((value: number) => {
-        dispatch({type: "changeLowerTab", payload: {index: value}});
     }, []);
 
     return <>
@@ -101,9 +95,7 @@ const ResearchCalcApp = React.memo(() => {
                 padding: '0 0.3rem',
             }}>{t('ratio is not fixed')}</div>}
             <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
-                isBoxEmpty={state.box.items.length === 0}
-                onChange={onLowerTabChange}
-                onMenuItemClick={onHeaderMenuClick}/>
+                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>
         <div style={{margin: "0 .5rem"}}>
             {state.lowerTabIndex === 0 &&
