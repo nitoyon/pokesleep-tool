@@ -16,22 +16,22 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 
-const BoxView = React.memo(({items, selectedId, onChange}: {
+const BoxView = React.memo(({items, selectedId, dispatch}: {
     items: PokemonBoxItem[],
     selectedId: number,
-    onChange: (action: IvAction) => void,
+    dispatch: (action: IvAction) => void,
 }) => {
     const { t } = useTranslation();
     const defaultConfig = React.useMemo(() => loadPokemonDialogConfig(), []);
     const [config, setConfig] = React.useState<PokemonDialogConfig>(defaultConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((action: IvAction) => {
-        onChange(action);
-    }, [onChange]);
+        dispatch(action);
+    }, [dispatch]);
 
     const onAddClick = React.useCallback(() => {
-        onChange({type: "add"});
-    }, [onChange]);
+        dispatch({type: "add"});
+    }, [dispatch]);
 
     const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
         const newValue = {...config,
