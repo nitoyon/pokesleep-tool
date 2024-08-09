@@ -117,7 +117,7 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
         if (language !== "en") {
             url += `index.${language}.html`;
         }
-        const query = document.location.search;
+        const query = document.location.search + document.location.hash;
         window.history.replaceState(null, '', url + query);
     }, [language, i18n, t, currentApp]);
     return [currentApp, setCurrentApp];

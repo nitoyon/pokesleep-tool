@@ -1,23 +1,25 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import { IvAction } from './IvState';
 import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
     Tab, Tabs
  } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 const LowerTabHeader = React.memo(({
-    upperTabIndex, tabIndex, isBoxEmpty, onChange, onMenuItemClick,
+    upperTabIndex, tabIndex, isBoxEmpty, dispatch, onShare,
 }: {
     upperTabIndex: number,
     tabIndex: number,
     isBoxEmpty: boolean,
-    onChange: (value: number) => void,
-    onMenuItemClick: (value: string) => void,
+    dispatch: (action: IvAction) => void,
+    onShare: () => void,
 }) => {
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const { t } = useTranslation();
@@ -29,17 +31,22 @@ const LowerTabHeader = React.memo(({
     const onMenuItemClickHandler = React.useCallback((e: React.MouseEvent<HTMLLIElement>) => {
         setMoreMenuAnchor(null);
 
-        const val = e.currentTarget.getAttribute('data-value') || "";
-        onMenuItemClick(val);
-        if (val === "addThis") {
+        const type = e.currentTarget.getAttribute('data-value') || "";
+        dispatch({type} as IvAction);
+        if (type === "addThis") {
             startAddToBoxAnimation(boxTabRef.current);
         }
-    }, [onMenuItemClick]);
+    }, [dispatch]);
+
+    const onShareHandler = React.useCallback(() => {
+        setMoreMenuAnchor(null);
+        onShare();
+    }, [onShare]);
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
-        onChange(newValue);
+        dispatch({type: "changeLowerTab", payload: {index: newValue}});
         setMoreMenuAnchor(null);
-    }, [onChange]);
+    }, [dispatch]);
     const moreButtonClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         setMoreMenuAnchor(event.currentTarget);
     }, []);
@@ -63,6 +70,10 @@ const LowerTabHeader = React.memo(({
                 <MenuItem onClick={onMenuItemClickHandler} data-value="addThis">
                     <ListItemIcon><AddCircleOutlineIcon/></ListItemIcon>
                     {t('add to box')}
+                </MenuItem>
+                <MenuItem onClick={onShareHandler} data-value="share">
+                    <ListItemIcon><IosShareIcon/></ListItemIcon>
+                    {t('share')}
                 </MenuItem>
             </MenuList>
         </Menu>
