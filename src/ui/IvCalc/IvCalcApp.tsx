@@ -2,8 +2,9 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Snackbar, Tab, Tabs } from '@mui/material'; 
 import PokemonIv from '../../util/PokemonIv';
+import { copyToClipboard } from '../../util/Clipboard';
 import { PokemonBoxItem } from '../../util/PokemonBox';
-import { IvAction, ivStateReducer, initialIvState } from './IvState';
+import { ivStateReducer, initialIvState } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
@@ -25,6 +26,18 @@ const StyledTab = styled(Tab)({
     minHeight: '36px',
     padding: '6px 16px',
 });
+
+// Apply PokemonIv in location hash to initialState
+(() => {
+    const m = document.location.hash.match(/#p=(.*)/);
+    if (m === null) {
+        return;
+    }
+    try {
+        initialIvState.pokemonIv = PokemonIv.deserialize(m[1]);
+    }
+    catch { }
+})();
 
 const ResearchCalcApp = React.memo(() => {
     const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
@@ -63,9 +76,6 @@ const ResearchCalcApp = React.memo(() => {
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(state.pokemonIv);
 
-    const onHeaderMenuClick = React.useCallback((type: string) => {
-        dispatch({type} as IvAction);
-    }, []);
     const onBoxExportDialogClose = React.useCallback(() => {
         dispatch({type: "exportClose"});
     }, []);
@@ -75,9 +85,23 @@ const ResearchCalcApp = React.memo(() => {
     const onBoxDeleteAllDialogClose = React.useCallback(() => {
         dispatch({type: "deleteAllClose"});
     }, []);
-    const onLowerTabChange = React.useCallback((value: number) => {
-        dispatch({type: "changeLowerTab", payload: {index: value}});
-    }, []);
+
+    const onShare = React.useCallback(() => {
+        const id = state.pokemonIv.serialize();
+        const baseUrl = window.location.href.split("#")[0];
+        const url = `${baseUrl}#p=${id}`;
+
+        // share url
+        if (navigator.share) {
+            return navigator.share({url});
+        }
+
+        return copyToClipboard(url)
+            .then(() => {
+                const message = t('copied');
+                dispatch({type: "showAlert", payload: {message}})
+            });
+    }, [state.pokemonIv, t]);
 
     return <>
         <div style={{margin: "0 .5rem", position: 'sticky', top: 0,
@@ -101,9 +125,8 @@ const ResearchCalcApp = React.memo(() => {
                 padding: '0 0.3rem',
             }}>{t('ratio is not fixed')}</div>}
             <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
-                isBoxEmpty={state.box.items.length === 0}
-                onChange={onLowerTabChange}
-                onMenuItemClick={onHeaderMenuClick}/>
+                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}
+                onShare={onShare}/>
         </div>
         <div style={{margin: "0 .5rem"}}>
             {state.lowerTabIndex === 0 &&
@@ -111,8 +134,8 @@ const ResearchCalcApp = React.memo(() => {
                     <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
                 </div>}
             {state.lowerTabIndex === 1 &&
-                <BoxView items={state.box.items}
-                    selectedId={state.selectedItemId} onChange={dispatch}/>}
+                <BoxView items={state.box.items} onShare={onShare}
+                    selectedId={state.selectedItemId} dispatch={dispatch}/>}
             {state.lowerTabIndex === 2 && 
                 <StrengthSettingForm value={state.parameter}
                     hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
