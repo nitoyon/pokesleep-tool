@@ -88,7 +88,9 @@ const ResearchCalcApp = React.memo(() => {
 
     const onShare = React.useCallback(() => {
         const id = state.pokemonIv.serialize();
-        const baseUrl = window.location.href.split("#")[0];
+        const baseUrl = window.location.href.split("#")[0]
+            .replace(/utm_source=homescreen&?/, '')
+            .replace(/\?$/, '');
         const url = `${baseUrl}#p=${id}`;
 
         // share url
