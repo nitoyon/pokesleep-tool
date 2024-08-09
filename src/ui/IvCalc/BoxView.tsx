@@ -69,23 +69,34 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
     // sort
     let sortedItems: PokemonBoxItem[] = [];
     if (config.sort === "level") {
-        sortedItems = filtered.sort((a, b) => b.iv.level !== a.iv.level ?
-            b.iv.level - a.iv.level : b.iv.pokemon.id - a.iv.pokemon.id);
+        sortedItems = filtered.sort((a, b) =>
+            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            items.indexOf(b) - items.indexOf(a));
     }
     else if (config.sort === "name") {
         sortedItems = filtered.sort((a, b) =>
             b.filledNickname(t) > a.filledNickname(t) ? 1 :
-            b.filledNickname(t) < a.filledNickname(t) ? -1 : 0);
+            b.filledNickname(t) < a.filledNickname(t) ? -1 :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            items.indexOf(b) - items.indexOf(a));
     }
     else if (config.sort === "pokedexno") {
-        sortedItems = filtered.sort((a, b) => b.iv.pokemon.id - a.iv.pokemon.id);
+        sortedItems = filtered.sort((a, b) =>
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            items.indexOf(b) - items.indexOf(a));
     }
     else if (config.sort === "rp") {
         const rpCache: {[id: string]: number} = {};
         filtered.forEach((item) => {
             rpCache[item.id] = new PokemonRp(item.iv).Rp;
         });
-        sortedItems = filtered.sort((a, b) => rpCache[b.id] - rpCache[a.id]);
+        sortedItems = filtered.sort((a, b) =>
+            rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            items.indexOf(b) - items.indexOf(a));
     }
     if (!config.descending) {
         sortedItems = sortedItems.reverse();
