@@ -27,6 +27,18 @@ const StyledTab = styled(Tab)({
     padding: '6px 16px',
 });
 
+// Apply PokemonIv in location hash to initialState
+(() => {
+    const m = document.location.hash.match(/#p=(.*)/);
+    if (m === null) {
+        return;
+    }
+    try {
+        initialIvState.pokemonIv = PokemonIv.deserialize(m[1]);
+    }
+    catch { }
+})();
+
 const ResearchCalcApp = React.memo(() => {
     const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
     const { t } = useTranslation();
@@ -89,7 +101,7 @@ const ResearchCalcApp = React.memo(() => {
                 const message = t('copied');
                 dispatch({type: "showAlert", payload: {message}})
             });
-    }, []);
+    }, [state.pokemonIv, t]);
 
     return <>
         <div style={{margin: "0 .5rem", position: 'sticky', top: 0,
