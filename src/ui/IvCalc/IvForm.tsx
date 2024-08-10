@@ -121,7 +121,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
         <h3 className="nature">{t("additional stats")}</h3>
         <NatureTextField value={pokemonIv.nature} onChange={onNatureChange}/>
-        <div style={{marginTop: 'clamp(.3rem, 0.7vh, .5rem)'}}>
+        <div style={{marginTop: '.7rem'}}>
             <span style={{paddingRight: '0.7rem'}}>{t("sleeping time shared")}:</span>
             <SleepingTimeControl value={pokemonIv.ribbon} onChange={onRibbonChange}/>
         </div>
