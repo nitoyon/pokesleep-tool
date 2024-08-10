@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Dialog, DialogActions, MenuItem, Select, SelectChangeEvent,
+import { Button, Dialog, DialogActions,
     Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Nature from '../../util/Nature';
 import PokemonIv from '../../util/PokemonIv';
