@@ -203,9 +203,9 @@ const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
             t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)}) :
             frequencyToString(Math.floor(baseFreq * rate), t)
     );
-    const val20 = convertToVal(1);
-    const val40 = convertToVal(0.71);
-    const val60 = convertToVal(0.62);
+    const val0 = convertToVal(1);
+    const val40 = convertToVal(0.66);
+    const val60 = convertToVal(0.58);
     const val80 = convertToVal(0.52);
     const val100 = convertToVal(0.45);
     return <StyledFrequencyDialog open={open} onClose={onClose}>
@@ -216,10 +216,10 @@ const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
             <span>{val80}</span>
             <span className="energy"><EnergyIcon energy={60}/>41{t('range separator')}60</span>
             <span>{val60}</span>
-            <span className="energy"><EnergyIcon energy={40}/>21{t('range separator')}40</span>
+            <span className="energy"><EnergyIcon energy={40}/>1{t('range separator')}40</span>
             <span>{val40}</span>
-            <span className="energy"><EnergyIcon  energy={20}/>0{t('range separator')}20</span>
-            <span>{val20}</span>
+            <span className="energy"><EnergyIcon  energy={20}/>0</span>
+            <span>{val0}</span>
         </article>
         <section>
             <div>
