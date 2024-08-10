@@ -13,6 +13,12 @@ const theme = createTheme({
 });
 
 (function() {
+    // add error handler
+    window.addEventListener('error', (event) => {
+        const { message, filename, lineno, colno, error } = event;
+        alert(`Uncaught error: ${message} (${filename}:${lineno}:${colno}) ${error.stack}`);
+    });
+
     // set default language using browser language
     let language = "en";
     if (window.navigator.language.match(/ja/) !== null) {
