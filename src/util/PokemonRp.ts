@@ -183,6 +183,8 @@ class PokemonRp {
                 (501 - this.level) / 500 *
                 // Nature Factor
                 (this.nature?.speedOfHelpFactor ?? 1) *
+                // Good-Night Ribbon Factor
+                this.speedOfRibbonFactor *
                 // Sub-Skill Factor
                 (1 - subSkillFactor)
             , 4);

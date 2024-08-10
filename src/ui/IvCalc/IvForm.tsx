@@ -1,9 +1,10 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Dialog, DialogActions, Switch, ToggleButton,
-    ToggleButtonGroup } from '@mui/material';
+import { Button, Dialog, DialogActions, MenuItem, Select, SelectChangeEvent,
+    Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Nature from '../../util/Nature';
 import PokemonIv from '../../util/PokemonIv';
+import { AmountOfSleep } from '../../util/TimeUtil';
 import PokemonRp, { IngredientType } from '../../util/PokemonRp';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
@@ -109,7 +110,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <div>
                 {frequencyToString(rp.frequency, t)}
                 <InfoButton onClick={onFrequencyInfoClick}/>
-                <FrequencyInfoDialog rp={rp}
+                <FrequencyInfoDialog rp={rp} iv={pokemonIv}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
             <div>{t("carry limit")}:</div>
@@ -161,19 +162,25 @@ const StyledFrequencyDialog = styled(Dialog)({
                     padding: '2px 7px',
                 },
             },
+            '& > button.MuiToggleButton-root': {
+                lineHeight: 1.3,
+                height: '3rem',
+            },
         },
     },
 });
 
-const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
+const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     rp: PokemonRp,
+    iv: PokemonIv,
     open: boolean,
     onClose: () => void
 }) => {
     const { t } = useTranslation();
     const [helpingBonus, setHelpingBonus] = React.useState(0);
     const [campTicket, setCampTicket] = React.useState(false);
-    const [showCount, setShowCount] = React.useState(false);
+    const [value, setValue] = React.useState<"frequency"|"count"|"full">("frequency");
+
     const onHelpingBonusChange = React.useCallback((e: any, value: string|null) => {
         if (value !== null) {
             setHelpingBonus(parseInt(value, 10));
@@ -182,9 +189,13 @@ const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
     const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setCampTicket(e.target.checked);
     }, [setCampTicket]);
-    const onShowCountChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setShowCount(e.target.checked);
-    }, [setShowCount]);
+    const onValueChange = React.useCallback((e: any, value: string|null) => {
+        if (value === null) {
+            return;
+        }
+        console.log(value);
+        setValue(value as "frequency"|"count"|"full");
+    }, []);
 
     // reset state when closed
     React.useEffect(() => {
@@ -192,17 +203,28 @@ const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
         setTimeout(() => {
             setHelpingBonus(0);
             setCampTicket(false);
-            setShowCount(false);
+            setValue("frequency");
         }, 200);
-    }, [open, setHelpingBonus, setCampTicket, setShowCount]);
+    }, [open]);
+    if (!open) {
+        return <></>;
+    }
 
     const baseFreq = rp.frequencyWithHelpingBonus(helpingBonus) /
         (campTicket ? 1.2 : 1);
-    const convertToVal = (rate: number) => (
-        showCount ?
-            t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)}) :
-            frequencyToString(Math.floor(baseFreq * rate), t)
-    );
+    const convertToVal = (rate: number) => {
+        switch (value) {
+            case "frequency":
+                return frequencyToString(Math.floor(baseFreq * rate), t);
+            case "count":
+                return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
+            case "full":
+                const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
+                const mins = carryLimit / rp.bagUsagePerHelp * baseFreq * rate / 60;
+                return new AmountOfSleep(mins).toString(t);
+        }
+        return "";
+    };
     const val0 = convertToVal(1);
     const val40 = convertToVal(0.66);
     const val60 = convertToVal(0.58);
@@ -239,9 +261,14 @@ const FrequencyInfoDialog = React.memo(({rp, open, onClose}: {
                 <Switch checked={campTicket} onChange={onCampTicketChange}/>
             </div>
             <div>
-                <label>{t('show help count')}:</label>
-                <Switch checked={showCount} onChange={onShowCountChange}/>
+                <label>{t('value')}:</label>
             </div>
+            <ToggleButtonGroup exclusive size="small" value={value}
+                onChange={onValueChange}>
+                <ToggleButton value="frequency">{t('frequency')}</ToggleButton>
+                <ToggleButton value="count">{t('help count')}</ToggleButton>
+                <ToggleButton value="full">{t('time to full inventory')}</ToggleButton>
+            </ToggleButtonGroup>
         </section>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
