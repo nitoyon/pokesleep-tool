@@ -125,7 +125,7 @@
         "rp formula": "SP 계산식은 Mathcode의 Goobliss, Harold, Jeancory가 연구한 것을 사용합니다. 계산식에 대한 자세한 내용은 포슬립 위키의 문서 <link/>을 참조하세요.",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
-        "rp estimate": "레벨 56 이후의 SP는 추정치입니다.",
+        "rp estimate": "레벨 {{level}} 이후의 SP는 추정치입니다.",
         "estimated value": "추정치",
         "ratio is not fixed": "이 포켓몬의 재료 확률과 스킬 확률은 아직 확정되지 않았기 때문에 임시 값을 표시하고 있습니다.",
 

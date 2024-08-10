@@ -12,6 +12,8 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { styled } from '@mui/system';
 import { Trans, useTranslation } from 'react-i18next';
 
+const rpEstimateThreshold = 61;
+
 const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: number}) => {
     const { t } = useTranslation();
     const [rpInfoOpen, setRpInfoOpen] = React.useState(false);
@@ -62,7 +64,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     return (<>
         <div>
-            <RpLabel rp={rpResult.rp} isEstimated={pokemonIv.level > 60}/>
+            <RpLabel rp={rpResult.rp} isEstimated={pokemonIv.level >= rpEstimateThreshold}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
                 berryProb={round1(rp.berryRatio * 100)}
@@ -231,7 +233,7 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
             <p><Trans i18nKey="rp formula" components={{
                 link: <a href={t('rp formula doc url')}>{t('rp formula doc title')}</a>
             }}/></p>
-            <p>{t('rp estimate')}</p>
+            <p>{t('rp estimate', {level: rpEstimateThreshold})}</p>
         </footer>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
