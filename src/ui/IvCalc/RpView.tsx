@@ -41,8 +41,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
     const strengthParameter = createStrengthParameter({
         helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
     });
-    const strength = new PokemonStrength(pokemonIv)
-        .calculate(strengthParameter);
+    const strength = new PokemonStrength(pokemonIv, strengthParameter).calculate();
 
     const pokemon = rp.pokemon;
     const raderHeight = 400;

@@ -180,14 +180,14 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
         }
     }
 
-    const strength = new PokemonStrength(pokemonIv);
     const isWhistle = (settings.period === 3);
-    const result = strength.calculate({
+    const strength = new PokemonStrength(pokemonIv, {
         ...settings,
         isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
         isGoodCampTicketSet: isWhistle ?
             false : settings.isGoodCampTicketSet,
     });
+    const result = strength.calculate();
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);

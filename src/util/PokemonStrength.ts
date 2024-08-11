@@ -1,4 +1,4 @@
-import pokemons, {PokemonData} from '../data/pokemons';
+import pokemons from '../data/pokemons';
 import { IngredientName, PokemonType, PokemonTypes } from '../data/pokemons';
 import fields from '../data/fields';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
@@ -110,18 +110,19 @@ const recipeLevelBonus = {
  */
 class PokemonStrength {
     private iv: PokemonIv;
-    private pokemon: PokemonData;
+    private param: StrengthParameter;
 
-    constructor(iv: PokemonIv) {
+    constructor(iv: PokemonIv, param: StrengthParameter) {
         this.iv = iv;
+        this.param = param;
         const pokemon = pokemons.find(x => x.name === iv.pokemonName);
         if (pokemon === undefined) {
             throw new Error(`Unknown name: ${iv.pokemonName}`);
         }
-        this.pokemon = pokemon;
     }
 
-    calculate(param: StrengthParameter): StrengthResult {
+    calculate(): StrengthResult {
+        const param = this.param;
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
         const countRatio = param.period / 24;
