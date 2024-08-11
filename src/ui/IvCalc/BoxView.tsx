@@ -7,6 +7,7 @@ import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterD
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
+import PokemonStrength, { CalculateParameter } from '../../util/PokemonStrength';
 import { ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,9 +18,10 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 
-const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
+const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
+    parameter: CalculateParameter,
     dispatch: (action: IvAction) => void,
     onShare: () => void,
 }) => {
@@ -37,7 +39,7 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
 
     const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
         const newValue = {...config,
-            sort: value.sort as "level"|"name"|"pokedexno"|"rp",
+            sort: value.sort as "level"|"name"|"pokedexno"|"rp"|"berry",
             descending: value.descending};
         localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newValue));
         setConfig(newValue);
@@ -96,6 +98,17 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
             rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            b.id - a.id);
+    }
+    else if (config.sort === "berry") {
+        const cache: {[id: string]: number} = {};
+        filtered.forEach((item) => {
+            const strength = new PokemonStrength(item.iv);
+            cache[item.id] = strength.calculate(parameter).berryTotalStrength;
+        });
+        sortedItems = filtered.sort((a, b) =>
+            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.id - a.id);
     }
     if (!config.descending) {
@@ -157,7 +170,7 @@ interface PokemonDialogConfig {
     /** Filter by evolve */
     filterEvolve: "all"|"non"|"final";
     /** Sort type. */
-    sort: "level"|"name"|"pokedexno"|"rp";
+    sort: "level"|"name"|"pokedexno"|"rp"|"berry";
     /** Descending (true) or ascending (false). */
     descending: boolean;
 }
@@ -191,7 +204,7 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
         ret.filterEvolve = json.filterEvolve;
     }
     if (typeof(json.sort) === "string" &&
-        ["level", "name", "pokedexno", "rp"].includes(json.sort)) {
+        ["level", "name", "pokedexno", "rp", "berry"].includes(json.sort)) {
         ret.sort = json.sort;
     }
     if (typeof(json.descending) === "boolean") {
