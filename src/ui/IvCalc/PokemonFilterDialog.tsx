@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
+import TypeButton from './TypeButton';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Button, Dialog, DialogActions,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -29,8 +29,7 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     const onCloseClick = useCallback(() => {
         onClose();
     }, [onClose]);
-    const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        const selected = e.currentTarget.value as PokemonType;
+    const onTypeClick = useCallback((selected: PokemonType) => {
         onChange({...value,
             filterType: value.filterType === selected ? null : selected});
         onClose();
@@ -42,12 +41,8 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     }, [value, onChange, onClose]);
 
     const buttons: React.ReactElement[] = PokemonTypes.map(type =>
-        <StyledTypeButton
-            key={type} className={type} value={type} onClick={onTypeClick}>
-            {t(`types.${type}`)}
-            {type === value.filterType && <CheckIcon/>}
-        </StyledTypeButton>
-    );
+        <TypeButton key={type} type={type} onClick={onTypeClick}
+            checked={type === value.filterType}/>);
 
     return <StyledPokemonFilterDialog open={open} onClose={onClose}>
         <div>
@@ -86,42 +81,6 @@ const StyledPokemonFilterDialog = styled(Dialog)({
             },
         },
     },
-});
-
-const StyledTypeButton = styled(Button)({
-    width: '5rem',
-    color: 'white',
-    fontSize: '0.9rem',
-    padding: 0,
-    margin: '0.2rem',
-    borderRadius: '0.5rem',
-    '& > svg': {
-        position: 'absolute',
-        background: '#24d76a',
-        borderRadius: '10px',
-        fontSize: '20px',
-        border: '2px solid white',
-        right: '-4px',
-        top: '-4px',
-    },
-    '&.normal': { backgroundColor: '#939393' },
-    '&.fire': { backgroundColor: '#e8554d' },
-    '&.water': { backgroundColor: '#579bf3' },
-    '&.electric': { backgroundColor: '#f1c525' },
-    '&.grass': { backgroundColor: '#57a747' },
-    '&.ice': { backgroundColor: '#68c5df' },
-    '&.fighting': { backgroundColor: '#e8a33b' },
-    '&.poison': { backgroundColor: '#ab7aca' },
-    '&.ground': { backgroundColor: '#c8a841' },
-    '&.flying': { backgroundColor: '#add5ea' },
-    '&.psychic': { backgroundColor: '#ed6c94' },
-    '&.bug': { backgroundColor: '#a5ab39' },
-    '&.rock': { backgroundColor: '#b2b194' },
-    '&.ghost': { backgroundColor: '#8d658e' },
-    '&.dragon': { backgroundColor: '#7482e9' },
-    '&.dark': { backgroundColor: '#706261' },
-    '&.steel': { backgroundColor: '#94b1c2' },
-    '&.fairy': { backgroundColor: '#e48fe3' },
 });
 
 export default PokemonFilterDialog;
