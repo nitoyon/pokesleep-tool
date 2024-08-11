@@ -7,7 +7,7 @@ import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterD
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
-import PokemonStrength, { CalculateParameter } from '../../util/PokemonStrength';
+import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
 import { ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
-    parameter: CalculateParameter,
+    parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
     onShare: () => void,
 }) => {

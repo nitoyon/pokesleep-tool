@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { IvAction } from './IvState';
 import EnergyIcon from '../Resources/EnergyIcon';
 import PokemonIv from '../../util/PokemonIv';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import { StrengthParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { EnergyResult } from '../../util/Energy';
 import { Collapse, Button, Dialog, DialogActions, MenuItem, Popper,
@@ -14,7 +14,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     open: boolean,
     iv: PokemonIv,
     energy: EnergyResult,
-    parameter: CalculateParameter,
+    parameter: StrengthParameter,
     onClose: () => void,
     dispatch: React.Dispatch<IvAction>,
 }) => {

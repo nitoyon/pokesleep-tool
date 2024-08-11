@@ -9,7 +9,7 @@ import { getSkillValue } from './MainSkill';
 /**
  * Represents the parameter of PokemonStrength.calc.
  */
-export interface CalculateParameter extends EnergyParameter {
+export interface StrengthParameter extends EnergyParameter {
     /**
      * How many hours' worth of accumulated strength to calculate.
      *
@@ -121,7 +121,7 @@ class PokemonStrength {
         this.pokemon = pokemon;
     }
 
-    calculate(param: CalculateParameter): CalculateResult {
+    calculate(param: StrengthParameter): CalculateResult {
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
         const countRatio = param.period / 24;
@@ -213,7 +213,7 @@ class PokemonStrength {
         };
     }
 
-    getSkillValueAndStrength(skillCount: number, param: CalculateParameter): [number, number] {
+    getSkillValueAndStrength(skillCount: number, param: StrengthParameter): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
@@ -252,7 +252,7 @@ class PokemonStrength {
         }
     }
 
-    isFavoriteBerry(param: CalculateParameter): boolean {
+    isFavoriteBerry(param: StrengthParameter): boolean {
         let types: PokemonType[] = [];
         switch (param.fieldIndex) {
             case 0: types = param.favoriteType; break;
@@ -268,11 +268,11 @@ class PokemonStrength {
 }
 
 /**
- * Load CalculateParameter fron localStorage.
+ * Load StrengthParameter fron localStorage.
  * @returns Loaded parameter.
  */
-export function loadCalculateParameter(): CalculateParameter {
-    const ret: CalculateParameter = {
+export function loadStrengthParameter(): StrengthParameter {
+    const ret: StrengthParameter = {
         period: 24,
         fieldBonus: 0,
         fieldIndex: -1,
