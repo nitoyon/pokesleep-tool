@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import pokemons, { PokemonData } from '../../data/pokemons';
+import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
@@ -160,15 +160,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     // evolved pokemon check
     const decendants: PokemonData[] = React.useMemo(() => {
-        if (!settings.evolved || pokemonIv.pokemon.ancestor === null) {
+        if (!settings.evolved) {
             return [];
         }
-        const lineage = pokemons
-            .filter(x => x.ancestor === pokemonIv.pokemon.ancestor);
-        const maxEvolvutionCount = lineage
-            .reduce((p, c) => Math.max(p, c.evolutionCount), 0);
-        return lineage
-            .filter(x => x.evolutionCount === maxEvolvutionCount);
+        return getDecendants(pokemonIv.pokemon);
     }, [pokemonIv.pokemon, settings.evolved]);
     let pokemonChanged = false;
     if (decendants.length > 0) {
