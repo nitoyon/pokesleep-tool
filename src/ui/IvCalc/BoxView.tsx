@@ -72,20 +72,20 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
         sortedItems = filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            items.indexOf(b) - items.indexOf(a));
+            b.id - a.id);
     }
     else if (config.sort === "name") {
         sortedItems = filtered.sort((a, b) =>
             b.filledNickname(t) > a.filledNickname(t) ? 1 :
             b.filledNickname(t) < a.filledNickname(t) ? -1 :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            items.indexOf(b) - items.indexOf(a));
+            b.id - a.id);
     }
     else if (config.sort === "pokedexno") {
         sortedItems = filtered.sort((a, b) =>
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            items.indexOf(b) - items.indexOf(a));
+            b.id - a.id);
     }
     else if (config.sort === "rp") {
         const rpCache: {[id: string]: number} = {};
@@ -96,7 +96,7 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
             rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            items.indexOf(b) - items.indexOf(a));
+            b.id - a.id);
     }
     if (!config.descending) {
         sortedItems = sortedItems.reverse();
@@ -112,7 +112,7 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
         descending: config.descending,
     }), [config]);
     const footerSortTypes = React.useMemo(() => 
-        ["level", "name", "pokedexno", "rp"], []);
+        ["level", "name", "pokedexno", "rp", "berry"], []);
         
     return <>
         <div style={{
