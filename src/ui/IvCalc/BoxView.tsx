@@ -17,6 +17,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next'
 
 const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     items: PokemonBoxItem[],
@@ -57,62 +58,26 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     }, [config]);
 
     // filter
-    let filtered = items;
-    if (config.filterType !== null) {
-        filtered = filtered.filter(x => x.iv.pokemon.type === config.filterType);
-    }
-    if (config.filterEvolve === "final") {
-        filtered = filtered.filter((item) => item.iv.pokemon.isFullyEvolved);
-    }
-    if (config.filterEvolve === "non") {
-        filtered = filtered.filter((item) => item.iv.pokemon.evolutionCount === -1);
-    }
+    let filtered = React.useMemo(() => {
+        let ret = items;
+        if (config.filterType !== null) {
+            ret = ret.filter(x => x.iv.pokemon.type === config.filterType);
+        }
+        if (config.filterEvolve === "final") {
+            ret = ret.filter((item) => item.iv.pokemon.isFullyEvolved);
+        }
+        if (config.filterEvolve === "non") {
+            ret = ret.filter((item) => item.iv.pokemon.evolutionCount === -1);
+        }
+        return ret;
+    }, [items, config]);
 
     // sort
-    let sortedItems: PokemonBoxItem[] = [];
-    if (config.sort === "level") {
-        sortedItems = filtered.sort((a, b) =>
-            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id);
-    }
-    else if (config.sort === "name") {
-        sortedItems = filtered.sort((a, b) =>
-            b.filledNickname(t) > a.filledNickname(t) ? 1 :
-            b.filledNickname(t) < a.filledNickname(t) ? -1 :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id);
-    }
-    else if (config.sort === "pokedexno") {
-        sortedItems = filtered.sort((a, b) =>
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.id - a.id);
-    }
-    else if (config.sort === "rp") {
-        const rpCache: {[id: string]: number} = {};
-        filtered.forEach((item) => {
-            rpCache[item.id] = new PokemonRp(item.iv).Rp;
-        });
-        sortedItems = filtered.sort((a, b) =>
-            rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.id - a.id);
-    }
-    else if (config.sort === "berry") {
-        const cache: {[id: string]: number} = {};
-        filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            cache[item.id] = strength.calculate().berryTotalStrength;
-        });
-        sortedItems = filtered.sort((a, b) =>
-            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id);
-    }
+    let sortedItems: PokemonBoxItem[] = React.useMemo(
+        () => sortPokemonItems(filtered, config.sort, parameter, t),
+        [config.sort, filtered, parameter, t]);
     if (!config.descending) {
-        sortedItems = sortedItems.reverse();
+        sortedItems = [...sortedItems].reverse();
     }
 
     const elms = sortedItems.map((item) => (
@@ -160,6 +125,55 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             value={config} onChange={onFilterChange}/>
     </>;
 });
+
+function sortPokemonItems(filtered: PokemonBoxItem[],
+    sort: "level"|"name"|"pokedexno"|"rp"|"berry",
+    parameter: StrengthParameter,
+    t: typeof i18next.t
+) {
+    if (sort === "level") {
+        return filtered.sort((a, b) =>
+            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.id - a.id);
+    }
+    else if (sort === "name") {
+        return filtered.sort((a, b) =>
+            b.filledNickname(t) > a.filledNickname(t) ? 1 :
+            b.filledNickname(t) < a.filledNickname(t) ? -1 :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.id - a.id);
+    }
+    else if (sort === "pokedexno") {
+        return filtered.sort((a, b) =>
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            b.id - a.id);
+    }
+    else if (sort === "rp") {
+        const rpCache: {[id: string]: number} = {};
+        filtered.forEach((item) => {
+            rpCache[item.id] = new PokemonRp(item.iv).Rp;
+        });
+        return filtered.sort((a, b) =>
+            rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
+            b.id - a.id);
+    }
+    else if (sort === "berry") {
+        const cache: {[id: string]: number} = {};
+        filtered.forEach((item) => {
+            const strength = new PokemonStrength(item.iv, parameter);
+            cache[item.id] = strength.calculate().berryTotalStrength;
+        });
+        return filtered.sort((a, b) =>
+            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.id - a.id);
+    }
+    return filtered;
+}
 
 /**
  * Pokemon select dialog configuration.
