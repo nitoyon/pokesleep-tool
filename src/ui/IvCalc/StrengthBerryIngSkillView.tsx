@@ -147,47 +147,20 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [decendantId, setDecendantId] = React.useState(0);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
-    // change level
-    if (settings.level !== 0) {
-        pokemonIv = pokemonIv.changeLevel(settings.level);
-    }
-    // change skill level
-    if (settings.maxSkillLevel) {
-        pokemonIv = pokemonIv.clone();
-        pokemonIv.skillLevel = 7;
-        pokemonIv.normalize();
-    }
-
-    // evolved pokemon check
-    const decendants: PokemonData[] = React.useMemo(() => {
-        if (!settings.evolved) {
-            return [];
-        }
-        return getDecendants(pokemonIv.pokemon);
-    }, [pokemonIv.pokemon, settings.evolved]);
-    let pokemonChanged = false;
-    if (decendants.length > 0) {
-        let showingPokemon = decendants.find(x => x.id === pokemonIv.pokemon.id);
-        if (showingPokemon === undefined) {
-            showingPokemon = decendants.find(x => x.id === decendantId);
-        }
-        if (showingPokemon === undefined) {
-            showingPokemon = decendants[0];
-        }
-        if (showingPokemon.id !== pokemonIv.pokemon.id) {
-            pokemonChanged = true;
-            pokemonIv = pokemonIv.clone(showingPokemon.name);
-        }
-    }
-
     const isWhistle = (settings.period === 3);
     const strength = new PokemonStrength(pokemonIv, {
         ...settings,
         isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
         isGoodCampTicketSet: isWhistle ?
             false : settings.isGoodCampTicketSet,
-    });
+    }, decendantId);
     const result = strength.calculate();
+
+    let decendants: PokemonData[] = [];
+    if (pokemonIv.pokemon.name !== strength.pokemonIv.pokemon.name) {
+        pokemonIv = strength.pokemonIv;
+        decendants = getDecendants(pokemonIv.pokemon);
+    }
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
@@ -229,10 +202,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <span className="strength">{formatWithComma(Math.round(result.totalStrength))}</span>
             <InfoButton onClick={onHelpClick}/>
             <HelpDialog open={helpOpen} onClose={onHelpClose}/>
-            {decendants.length === 1 && pokemonChanged && <span className="evolved">
+            {decendants.length === 1 && <span className="evolved">
                 {t('strength of x', {x: t(`pokemons.${pokemonIv.pokemon.name}`)})}
             </span>}
-            {decendants.length > 1 && pokemonChanged && <span className="evolved">
+            {decendants.length > 1 && <span className="evolved">
                 <Select variant="standard" value={pokemonIv.pokemon.id.toString()}
                     onChange={onDecendantsChange}>
                     {decendants.map(p => <MenuItem key={p.id} value={p.id}>

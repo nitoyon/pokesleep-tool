@@ -1,5 +1,6 @@
 import pokemons from '../data/pokemons';
-import { IngredientName, PokemonType, PokemonTypes } from '../data/pokemons';
+import { IngredientName, getDecendants, PokemonType, PokemonTypes
+} from '../data/pokemons';
 import fields from '../data/fields';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
@@ -112,13 +113,65 @@ class PokemonStrength {
     private iv: PokemonIv;
     private param: StrengthParameter;
 
-    constructor(iv: PokemonIv, param: StrengthParameter) {
-        this.iv = iv;
+    constructor(iv: PokemonIv, param: StrengthParameter, decendantId?: number) {
         this.param = param;
+        this.iv = this.changePokemonIv(iv, decendantId);
         const pokemon = pokemons.find(x => x.name === iv.pokemonName);
         if (pokemon === undefined) {
             throw new Error(`Unknown name: ${iv.pokemonName}`);
         }
+    }
+
+    /** Get the PokemonIv to be calculated. */
+    get pokemonIv(): PokemonIv {
+        return this.iv;
+    }
+
+    /**
+     * Update PokemonIv as specified by param.
+     * @param pokemonIv    The PokmeonIv object to be modified.
+     * @param decendantId  Optional evolved pokemon ID.
+     * @returns The updated PokemonIv object.
+     */
+    changePokemonIv(pokemonIv: PokemonIv, decendantId?: number): PokemonIv {
+        // change level if `level` is specified
+        const settings =this.param;
+        if (settings.level !== 0) {
+            pokemonIv = pokemonIv.changeLevel(settings.level);
+        }
+        // change skill level if `maxSkillLevel` is specified
+        if (settings.maxSkillLevel) {
+            pokemonIv = pokemonIv.clone();
+            pokemonIv.skillLevel = 7;
+            pokemonIv.normalize();
+        }
+
+        // evolve the pokemon if `evolved` is specified
+        if (!settings.evolved) {
+            return pokemonIv;
+        }
+
+        // Change pokemon
+        const decendants = getDecendants(pokemonIv.pokemon);
+        if (decendants.length === 0) {
+            return pokemonIv;
+        }
+        let showingPokemon = decendants.find(x => x.id === pokemonIv.pokemon.id);
+        if (showingPokemon !== undefined) {
+            // already evolved
+            return pokemonIv;
+        }
+
+        // decendantId is given, select the pokemon
+        showingPokemon = decendants.find(x => x.id === decendantId);
+        if (showingPokemon === undefined) {
+            // otherwise, use the first decendant
+            showingPokemon = decendants[0];
+        }
+        if (showingPokemon.id !== pokemonIv.pokemon.id) {
+            pokemonIv = pokemonIv.clone(showingPokemon.name);
+        }
+        return pokemonIv;
     }
 
     calculate(): StrengthResult {
