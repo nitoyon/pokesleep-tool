@@ -103,8 +103,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     else if (config.sort === "berry") {
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv);
-            cache[item.id] = strength.calculate(parameter).berryTotalStrength;
+            const strength = new PokemonStrength(item.iv, parameter);
+            cache[item.id] = strength.calculate().berryTotalStrength;
         });
         sortedItems = filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
