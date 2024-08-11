@@ -5,7 +5,7 @@ import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import { StrengthParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Select, SelectChangeEvent, MenuItem } from '@mui/material';
@@ -138,7 +138,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     pokemonIv, settings, energyDialogOpen, dispatch,
 }: {
     pokemonIv: PokemonIv,
-    settings: CalculateParameter,
+    settings: StrengthParameter,
     energyDialogOpen: boolean,
     dispatch: React.Dispatch<IvAction>,
 }) => {
@@ -299,7 +299,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     </StyledBerryIngSkillStrengthView>;
 });
 
-function getIngArticle(result: CalculateResult, settings: CalculateParameter,
+function getIngArticle(result: CalculateResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
     if (settings.tapFrequency === 'none') {
         return <article>ー</article>;
@@ -347,7 +347,7 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 }
 
 function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
-    settings: CalculateParameter, t: typeof i18next.t,
+    settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;

@@ -6,7 +6,7 @@ import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import { StrengthParameter } from '../../util/PokemonStrength';
 import { useTranslation } from 'react-i18next';
 
 type PeriodType = "1day"|"1week"|"whistle";
@@ -39,12 +39,12 @@ const StyledSettingForm = styled('div')({
 
 const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     dispatch: React.Dispatch<IvAction>,
-    value: CalculateParameter,
+    value: StrengthParameter,
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
 
-    const onChange = React.useCallback((value: CalculateParameter) => {
+    const onChange = React.useCallback((value: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
 

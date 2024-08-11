@@ -1,8 +1,8 @@
 import PokemonIv from '../../util/PokemonIv';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
-import { CalculateParameter, loadCalculateParameter } from '../../util/PokemonStrength';
+import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
 
-const defaultCalculateParameter = loadCalculateParameter();
+const defaultStrengthParameter = loadStrengthParameter();
 
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
@@ -22,7 +22,7 @@ export type IvAction = {
     payload: {index: number},
 }|{
     type: "changeParameter",
-    payload: {parameter: CalculateParameter},
+    payload: {parameter: StrengthParameter},
 }|{
     type: "showAlert",
     payload: {message: string},
@@ -35,7 +35,7 @@ type IvState = {
     tabIndex: number;
     lowerTabIndex: number;
     pokemonIv: PokemonIv;
-    parameter: CalculateParameter;
+    parameter: StrengthParameter;
     box: PokemonBox;
     selectedItemId: number;
     energyDialogOpen: boolean;
@@ -51,7 +51,7 @@ export const initialIvState: IvState = {
     tabIndex: 0,
     lowerTabIndex: 0,
     pokemonIv: new PokemonIv("Venusaur"),
-    parameter: defaultCalculateParameter,
+    parameter: defaultStrengthParameter,
     box: initialBox,
     selectedItemId: -1,
     energyDialogOpen: false,
