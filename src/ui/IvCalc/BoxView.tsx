@@ -5,7 +5,7 @@ import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
 import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
-import { PokemonType, PokemonTypes } from '../../data/pokemons';
+import { PokemonType } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
 import { ButtonBase, Fab, IconButton, ListItemIcon,
@@ -27,8 +27,12 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     onShare: () => void,
 }) => {
     const { t } = useTranslation();
-    const defaultConfig = React.useMemo(() => loadPokemonDialogConfig(), []);
-    const [config, setConfig] = React.useState<PokemonDialogConfig>(defaultConfig);
+    const defaultSortConfig = React.useMemo(() => loadBoxSortConfig(), []);
+    const [sortConfig, setSortConfig] = React.useState<BoxSortConfig>(defaultSortConfig);
+    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>({
+        filterType: null,
+        filterEvolve: "all",
+    });
     const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((action: IvAction) => {
         dispatch(action);
@@ -38,13 +42,13 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         dispatch({type: "add"});
     }, [dispatch]);
 
-    const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
-        const newValue = {...config,
+    const onSortConfigChange = React.useCallback((value: PokemonFilterConfig) => {
+        const newValue = {...sortConfig,
             sort: value.sort as "level"|"name"|"pokedexno"|"rp"|"berry",
             descending: value.descending};
         localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newValue));
-        setConfig(newValue);
-    }, [config]);
+        setSortConfig(newValue);
+    }, [sortConfig]);
     const onFilterButtonClick = React.useCallback(() => {
         setFilterOpen(true);
     }, []);
@@ -52,31 +56,30 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         setFilterOpen(false);
     }, [])
     const onFilterChange = React.useCallback((value: PokemonFilterDialogConfig) => {
-        const newConfig = {...config, ...value};
-        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newConfig));
-        setConfig(newConfig);
-    }, [config]);
+        const newConfig = {...filterConfig, ...value};
+        setFilterConfig(newConfig);
+    }, [filterConfig]);
 
     // filter
     let filtered = React.useMemo(() => {
         let ret = items;
-        if (config.filterType !== null) {
-            ret = ret.filter(x => x.iv.pokemon.type === config.filterType);
+        if (filterConfig.filterType !== null) {
+            ret = ret.filter(x => x.iv.pokemon.type === filterConfig.filterType);
         }
-        if (config.filterEvolve === "final") {
+        if (filterConfig.filterEvolve === "final") {
             ret = ret.filter((item) => item.iv.pokemon.isFullyEvolved);
         }
-        if (config.filterEvolve === "non") {
+        if (filterConfig.filterEvolve === "non") {
             ret = ret.filter((item) => item.iv.pokemon.evolutionCount === -1);
         }
         return ret;
-    }, [items, config]);
+    }, [items, filterConfig]);
 
     // sort
     let sortedItems: PokemonBoxItem[] = React.useMemo(
-        () => sortPokemonItems(filtered, config.sort, parameter, t),
-        [config.sort, filtered, parameter, t]);
-    if (!config.descending) {
+        () => sortPokemonItems(filtered, sortConfig.sort, parameter, t),
+        [sortConfig.sort, filtered, parameter, t]);
+    if (!sortConfig.descending) {
         sortedItems = [...sortedItems].reverse();
     }
 
@@ -85,10 +88,10 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             onChange={onItemChange} onShare={onShare}/>));
 
     const footerValue = React.useMemo(() => ({
-        isFiltered: config.filterType !== null || config.filterEvolve !== "all",
-        sort: config.sort,
-        descending: config.descending,
-    }), [config]);
+        isFiltered: filterConfig.filterType !== null || filterConfig.filterEvolve !== "all",
+        sort: sortConfig.sort,
+        descending: sortConfig.descending,
+    }), [filterConfig, sortConfig]);
     const footerSortTypes = React.useMemo(() => 
         ["level", "name", "pokedexno", "rp", "berry"], []);
         
@@ -117,12 +120,12 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
                 <AddIcon/>
             </Fab>
             <PokemonFilterFooter value={footerValue}
-                onChange={onFilterConfigChange}
+                onChange={onSortConfigChange}
                 onFilterButtonClick={onFilterButtonClick}
                 sortTypes={footerSortTypes}/>
         </div>
         <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
-            value={config} onChange={onFilterChange}/>
+            value={filterConfig} onChange={onFilterChange}/>
     </>;
 });
 
@@ -176,13 +179,9 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
 }
 
 /**
- * Pokemon select dialog configuration.
+ * Pokemon box sort configuration.
  */
-interface PokemonDialogConfig {
-    /** Filter type */
-    filterType: PokemonType|null;
-    /** Filter by evolve */
-    filterEvolve: "all"|"non"|"final";
+interface BoxSortConfig {
     /** Sort type. */
     sort: "level"|"name"|"pokedexno"|"rp"|"berry";
     /** Descending (true) or ascending (false). */
@@ -190,13 +189,21 @@ interface PokemonDialogConfig {
 }
 
 /**
- * Load dialog config from localStorage.
+ * Pokmeon box filter configuration.
+ */
+interface BoxFilterConfig {
+    /** Filter type */
+    filterType: PokemonType|null;
+    /** Filter by evolve */
+    filterEvolve: "all"|"non"|"final";
+}
+
+/**
+ * Load box sort config from localStorage.
  * @returns config.
  */
-function loadPokemonDialogConfig(): PokemonDialogConfig {
-    const ret: PokemonDialogConfig = {
-        filterType: null,
-        filterEvolve: "all",
+function loadBoxSortConfig(): BoxSortConfig {
+    const ret: BoxSortConfig = {
         sort: "level",
         descending: true,
     };
@@ -208,14 +215,6 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     const json = JSON.parse(settings);
     if (typeof(json) !== "object" || json === null) {
         return ret;
-    }
-    if (typeof(json.filterType) === "string" &&
-        PokemonTypes.includes(json.filterType)) {
-        ret.filterType = json.filterType;
-    }
-    if (typeof(json.filterEvolve) === "string" &&
-        ["all", "non", "final"].includes(json.filterEvolve)) {
-        ret.filterEvolve = json.filterEvolve;
     }
     if (typeof(json.sort) === "string" &&
         ["level", "name", "pokedexno", "rp", "berry"].includes(json.sort)) {
