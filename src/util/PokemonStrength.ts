@@ -268,11 +268,14 @@ class PokemonStrength {
 }
 
 /**
- * Load StrengthParameter fron localStorage.
- * @returns Loaded parameter.
+ * Create a StrengthParameter from Partial<StrengthParameter>.
+ * @param param The partial values to overwrite default values.
+ * @returns The resulting StrengthParameter.
  */
-export function loadStrengthParameter(): StrengthParameter {
-    const ret: StrengthParameter = {
+export function createStrengthParameter(
+    param: Partial<StrengthParameter>
+): StrengthParameter {
+    const defaultParameters: StrengthParameter = {
         period: 24,
         fieldBonus: 0,
         fieldIndex: -1,
@@ -289,9 +292,18 @@ export function loadStrengthParameter(): StrengthParameter {
         maxSkillLevel: false,
         tapFrequency: "always",
         tapFrequencyAsleep: "none",
-        recipeBonus: 25,
-        recipeLevel: 30,
+        recipeBonus: 0,
+        recipeLevel: 1,
     };
+    return { ...defaultParameters, ...param };
+}
+
+/**
+ * Load StrengthParameter fron localStorage.
+ * @returns Loaded parameter.
+ */
+export function loadStrengthParameter(): StrengthParameter {
+    const ret: StrengthParameter = createStrengthParameter({});
 
     const settings = localStorage.getItem('PstStrenghParam');
     if (settings === null) {

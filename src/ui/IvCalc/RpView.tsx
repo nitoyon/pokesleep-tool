@@ -2,7 +2,7 @@ import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp from '../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
-import PokemonStrength from '../../util/PokemonStrength';
+import PokemonStrength, { createStrengthParameter } from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
 import RpLabel from './RpLabel';
@@ -38,26 +38,11 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
     const rp = new PokemonRp(pokemonIv);
     const rpResult = rp.calculate();
 
-    const strength = new PokemonStrength(pokemonIv).calculate({
-        period: 24,
-        fieldBonus: 0,
-        fieldIndex: 0,
-        favoriteType: [],
+    const strengthParameter = createStrengthParameter({
         helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
-        e4eEnergy: 18,
-        e4eCount: 3,
-        recoveryBonusCount: 0,
-        isEnergyAlwaysFull: false,
-        sleepScore: 100,
-        isGoodCampTicketSet: false,
-        level: 0,
-        evolved: false,
-        maxSkillLevel: false,
-        tapFrequency: "always",
-        tapFrequencyAsleep: "none",
-        recipeBonus: 0,
-        recipeLevel: 1,
     });
+    const strength = new PokemonStrength(pokemonIv)
+        .calculate(strengthParameter);
 
     const pokemon = rp.pokemon;
     const raderHeight = 400;
