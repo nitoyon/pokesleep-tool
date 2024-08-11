@@ -49,7 +49,7 @@ export interface StrengthParameter extends EnergyParameter {
 /**
  * Represents the result of strength calculation.
  */
-export interface CalculateResult {
+export interface StrengthResult {
     /** energy and help count */
     energy: EnergyResult;
     /** Total strength (berry + ingredient + skill) */
@@ -121,7 +121,7 @@ class PokemonStrength {
         this.pokemon = pokemon;
     }
 
-    calculate(param: StrengthParameter): CalculateResult {
+    calculate(param: StrengthParameter): StrengthResult {
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
         const countRatio = param.period / 24;
