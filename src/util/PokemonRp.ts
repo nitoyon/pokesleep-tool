@@ -50,7 +50,7 @@ export type IngredientType = "AAA" | "AAB" | "AAC" |
 
 export const IngredientTypes: IngredientType[] = ["AAA", "AAB", "AAC", "ABA", "ABB", "ABC"];
 
-export interface RpCalculateResult {
+export interface RpStrengthResult {
     rp: number;
     berryRp: number;
     ingredientRp: number;
@@ -102,7 +102,7 @@ class PokemonRp {
         this.ribbon = pokemonIv.ribbon;
     }
 
-    calculate(): RpCalculateResult {
+    calculate(): RpStrengthResult {
         const frequency = this.frequency;
         const bonus = this.bonus;
         const ingredientRp = this.ingredientRp;
