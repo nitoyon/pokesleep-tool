@@ -3,8 +3,8 @@ import { styled } from '@mui/system';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
-import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
+import BoxFilterDialog from './BoxFilterDialog';
 import { PokemonType } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
@@ -55,7 +55,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     const onFilterDialogClose = React.useCallback(() => {
         setFilterOpen(false);
     }, [])
-    const onFilterChange = React.useCallback((value: PokemonFilterDialogConfig) => {
+    const onFilterChange = React.useCallback((value: BoxFilterConfig) => {
         const newConfig = {...filterConfig, ...value};
         setFilterConfig(newConfig);
     }, [filterConfig]);
@@ -124,7 +124,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
                 onFilterButtonClick={onFilterButtonClick}
                 sortTypes={footerSortTypes}/>
         </div>
-        <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
+        <BoxFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={filterConfig} onChange={onFilterChange}/>
     </>;
 });
@@ -191,7 +191,7 @@ interface BoxSortConfig {
 /**
  * Pokmeon box filter configuration.
  */
-interface BoxFilterConfig {
+export interface BoxFilterConfig {
     /** Filter type */
     filterType: PokemonType|null;
     /** Filter by evolve */
