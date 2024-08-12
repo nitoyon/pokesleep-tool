@@ -23,7 +23,6 @@ import i18next from 'i18next'
 let boxFilterConfig: BoxFilterConfig = {
     name: "",
     filterTypes: [],
-    filterEvolve: "all",
 };
 
 const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
@@ -76,12 +75,6 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         }
         if (filterConfig.filterTypes.length !== 0) {
             ret = ret.filter(x => filterConfig.filterTypes.includes(x.iv.pokemon.type));
-        }
-        if (filterConfig.filterEvolve === "final") {
-            ret = ret.filter((item) => item.iv.pokemon.isFullyEvolved);
-        }
-        if (filterConfig.filterEvolve === "non") {
-            ret = ret.filter((item) => item.iv.pokemon.evolutionCount === -1);
         }
         return ret;
     }, [items, filterConfig, t]);
@@ -207,8 +200,6 @@ export interface BoxFilterConfig {
     name: string;
     /** Filter type */
     filterTypes: PokemonType[];
-    /** Filter by evolve */
-    filterEvolve: "all"|"non"|"final";
 }
 
 /**
