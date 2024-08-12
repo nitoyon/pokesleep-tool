@@ -112,7 +112,7 @@ const BoxView = React.memo(({items, selectedId, dispatch, onShare}: {
         descending: config.descending,
     }), [config]);
     const footerSortTypes = React.useMemo(() => 
-        ["level", "name", "pokedexno", "rp", "berry"], []);
+        ["level", "name", "pokedexno", "rp"], []);
         
     return <>
         <div style={{
