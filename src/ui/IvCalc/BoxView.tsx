@@ -22,7 +22,7 @@ import i18next from 'i18next'
 /** Cache for latest filter config */
 let boxFilterConfig: BoxFilterConfig = {
     name: "",
-    filterType: null,
+    filterTypes: [],
     filterEvolve: "all",
 };
 
@@ -74,8 +74,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
                 t(`pokemons.${x.iv.pokemonName}`).indexOf(filterConfig.name) !== -1
             );
         }
-        if (filterConfig.filterType !== null) {
-            ret = ret.filter(x => x.iv.pokemon.type === filterConfig.filterType);
+        if (filterConfig.filterTypes.length !== 0) {
+            ret = ret.filter(x => filterConfig.filterTypes.includes(x.iv.pokemon.type));
         }
         if (filterConfig.filterEvolve === "final") {
             ret = ret.filter((item) => item.iv.pokemon.isFullyEvolved);
@@ -99,7 +99,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             onChange={onItemChange} onShare={onShare}/>));
 
     const footerValue = React.useMemo(() => ({
-        isFiltered: filterConfig.name !== "" || filterConfig.filterType !== null || filterConfig.filterEvolve !== "all",
+        isFiltered: filterConfig.name !== "" || filterConfig.filterTypes.length > 0 || filterConfig.filterEvolve !== "all",
         sort: sortConfig.sort,
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
@@ -206,7 +206,7 @@ export interface BoxFilterConfig {
     /** Name */
     name: string;
     /** Filter type */
-    filterType: PokemonType|null;
+    filterTypes: PokemonType[];
     /** Filter by evolve */
     filterEvolve: "all"|"non"|"final";
 }

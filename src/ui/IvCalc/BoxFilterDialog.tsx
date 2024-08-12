@@ -16,7 +16,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange({name: "", filterType: null, filterEvolve: "all"});
+        onChange({name: "", filterTypes: [], filterEvolve: "all"});
     }, [onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
@@ -25,10 +25,11 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
         onChange({...value, name: e.target.value});
     }, [value, onChange]);
     const onTypeClick = useCallback((selected: PokemonType) => {
-        onChange({...value,
-            filterType: value.filterType === selected ? null : selected});
-        onClose();
-    }, [value, onChange, onClose]);
+        const filterTypes: PokemonType[] = value.filterTypes.includes(selected) ?
+            value.filterTypes.filter(x => x !== selected) :
+            [...value.filterTypes, selected];
+        onChange({...value, filterTypes});
+    }, [value, onChange]);
     const onEvolveChange = useCallback((e: any, val: string|null) => {
         if (val === null || value.filterEvolve === val) { return; }
         onChange({...value, filterEvolve: val as "all"|"non"|"final"});
@@ -37,7 +38,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 
     const buttons: React.ReactElement[] = PokemonTypes.map(type =>
         <TypeButton key={type} type={type} onClick={onTypeClick}
-            checked={type === value.filterType}/>);
+            checked={value.filterTypes.includes(type)}/>);
 
     return <StyledPokemonFilterDialog open={open} onClose={onClose}>
         <div>
