@@ -16,19 +16,19 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange({name: "", filterTypes: []});
+        onChange(new BoxFilterConfig({}));
     }, [onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
     }, [onClose]);
     const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({...value, name: e.target.value});
+        onChange(new BoxFilterConfig({...value, name: e.target.value}));
     }, [value, onChange]);
     const onTypeClick = useCallback((selected: PokemonType) => {
         const filterTypes: PokemonType[] = value.filterTypes.includes(selected) ?
             value.filterTypes.filter(x => x !== selected) :
             [...value.filterTypes, selected];
-        onChange({...value, filterTypes});
+        onChange(new BoxFilterConfig({...value, filterTypes}));
     }, [value, onChange]);
 
     const buttons: React.ReactElement[] = PokemonTypes.map(type =>
