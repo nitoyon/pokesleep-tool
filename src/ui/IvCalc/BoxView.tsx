@@ -58,19 +58,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     }, []);
 
     // filter
-    let filtered = React.useMemo(() => {
-        let ret = items;
-        if (filterConfig.name !== "") {
-            ret = ret.filter(x =>
-                x.nickname.indexOf(filterConfig.name) !== -1 ||
-                t(`pokemons.${x.iv.pokemonName}`).indexOf(filterConfig.name) !== -1
-            );
-        }
-        if (filterConfig.filterTypes.length !== 0) {
-            ret = ret.filter(x => filterConfig.filterTypes.includes(x.iv.pokemon.type));
-        }
-        return ret;
-    }, [items, filterConfig, t]);
+    let filtered = React.useMemo(() => filterConfig.filter(items, t),
+        [items, filterConfig, t]);
 
     // sort
     let sortedItems: PokemonBoxItem[] = React.useMemo(
@@ -208,6 +197,26 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     constructor(values: Partial<IBoxFilterConfig>) {
         this.name = values.name ?? "";
         this.filterTypes = values.filterTypes ?? [];
+    }
+
+    /**
+     * Filter the given box item based on the current filter config.
+     * @param items An array of box items to be filtered.
+     * @param t The `i18next.t` function for translations.
+     * @returns An array of filtered box items.
+     */
+    filter(items: PokemonBoxItem[], t: typeof i18next.t): PokemonBoxItem[] {
+        let ret = items;
+        if (this.name !== "") {
+            ret = ret.filter(x =>
+                x.nickname.indexOf(this.name) !== -1 ||
+                t(`pokemons.${x.iv.pokemonName}`).indexOf(this.name) !== -1
+            );
+        }
+        if (this.filterTypes.length !== 0) {
+            ret = ret.filter(x => this.filterTypes.includes(x.iv.pokemon.type));
+        }
+        return ret;
     }
 
     /** Check whether the instance is empty */
