@@ -248,6 +248,8 @@
         "final-evoltion": "最終進化",
         "sleeptype": "睡眠タイプ",
         "pokedexno": "図鑑番号",
+        "main skill": "メインスキル",
+        "sub skills": "サブスキル",
         "unlocked only": "解放済みのみ",
 
         "select subskill at level xxx": "<level/> のサブスキルを選択してください",
