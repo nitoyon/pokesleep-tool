@@ -3,8 +3,9 @@ import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
 import { BoxFilterConfig } from './BoxView';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
-import { Button, Dialog, DialogActions,
+import { Button, Dialog, DialogActions, InputAdornment, TextField,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
 const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
@@ -15,11 +16,14 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange({...value, filterType: null, filterEvolve: "all"});
-    }, [value, onChange]);
+        onChange({name: "", filterType: null, filterEvolve: "all"});
+    }, [onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
     }, [onClose]);
+    const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({...value, name: e.target.value});
+    }, [value, onChange]);
     const onTypeClick = useCallback((selected: PokemonType) => {
         onChange({...value,
             filterType: value.filterType === selected ? null : selected});
@@ -36,6 +40,15 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             checked={type === value.filterType}/>);
 
     return <StyledPokemonFilterDialog open={open} onClose={onClose}>
+        <div>
+            <TextField size="small" fullWidth value={value.name}
+                onChange={onNameChange}
+                InputProps={{
+                    endAdornment: <InputAdornment position="start">
+                        <SearchIcon />
+                    </InputAdornment>
+                }}/>
+        </div>
         <div>
             <h3>{t('type')}</h3>
             {buttons}
