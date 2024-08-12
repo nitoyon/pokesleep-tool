@@ -63,6 +63,11 @@ export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
 
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
+export const IngredientNames: IngredientName[] = [
+    "leek", "mushroom", "egg", "potato",
+    "apple", "herb", "sausage", "milk", "honey", "oil", "ginger",
+    "tomato", "cacao", "tail", "soy", "corn"];
+
 export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn" | "unknown";
