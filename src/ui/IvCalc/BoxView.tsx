@@ -7,6 +7,7 @@ import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter'
 import BoxFilterDialog from './BoxFilterDialog';
 import { IngredientName, PokemonType } from '../../data/pokemons';
 import { MainSkillName } from '../../util/MainSkill';
+import { SubSkillType } from '../../util/SubSkill';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
 import { ButtonBase, Fab, IconButton, ListItemIcon,
@@ -189,6 +190,12 @@ interface IBoxFilterConfig {
     ingredientUnlockedOnly: boolean;
     /** Filter main skill */
     mainSkillNames: MainSkillName[];
+    /** Filter sub skills */
+    subSkillNames: SubSkillType[];
+    /** Include only Pokemon with the subSkillName unlocked */
+    subSkillUnlockedOnly: boolean;
+    /** Include only Pokemon with the subSkillName unlocked */
+    subSkillAnd: boolean;
 }
 
 /**
@@ -205,6 +212,12 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     ingredientUnlockedOnly: boolean;
     /** Filter main skill */
     mainSkillNames: MainSkillName[];
+    /** Filter sub skills */
+    subSkillNames: SubSkillType[];
+    /** Include only Pokemon with the subSkillName unlocked */
+    subSkillUnlockedOnly: boolean;
+    /** Include only Pokemon with the subSkillName unlocked */
+    subSkillAnd: boolean;
 
     /** Initialize the instance */
     constructor(values: Partial<IBoxFilterConfig>) {
@@ -213,6 +226,9 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         this.ingredientName = values.ingredientName;
         this.ingredientUnlockedOnly = values.ingredientUnlockedOnly ?? false;
         this.mainSkillNames = values.mainSkillNames ?? [];
+        this.subSkillNames = values.subSkillNames ?? [];
+        this.subSkillUnlockedOnly = values.subSkillUnlockedOnly ?? true;
+        this.subSkillAnd = values.subSkillAnd ?? true;
     }
 
     /**
@@ -243,6 +259,22 @@ export class BoxFilterConfig implements IBoxFilterConfig {
             ret = ret.filter(x => this.mainSkillNames
                 .some(n => x.iv.pokemon.skill.startsWith(n)));
         }
+        if (this.subSkillNames.length !== 0) {
+            console.log("and", this.subSkillAnd);
+            ret = ret.filter(x => {
+                const subSkills = x.iv.subSkills
+                    .getActiveSubSkills(this.subSkillUnlockedOnly ? x.iv.level : 100)
+                    .map(x => x.name);
+                if (this.subSkillAnd) {
+                    return this.subSkillNames
+                        .every(skill => subSkills.includes(skill));
+                }
+                else {
+                    return this.subSkillNames
+                        .some(skill => subSkills.includes(skill));
+                }
+            });
+        }
         return ret;
     }
 
@@ -251,7 +283,8 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         return this.name === "" &&
             this.filterTypes.length === 0 &&
             this.ingredientName === undefined &&
-            this.mainSkillNames.length === 0;
+            this.mainSkillNames.length === 0 &&
+            this.subSkillNames.length === 0;
     }
 }
 
