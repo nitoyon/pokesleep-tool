@@ -16,7 +16,7 @@ type WhiteSubSkillType = "Helping Speed S" |
     "Ingredient Finder S" |
     "Inventory Up S" |
     "Skill Trigger S";
-type SubSkillType = GoldSubSkillType | BlueSubSkillType | WhiteSubSkillType;
+export type SubSkillType = GoldSubSkillType | BlueSubSkillType | WhiteSubSkillType;
 
 /**
  * Represents the nature of the pokemon.
@@ -51,11 +51,11 @@ class SubSkill {
     ];
     private static allSubSkillsCache: SubSkill[] = [];
     
-    constructor(subSkill: string) {
+    constructor(subSkill: SubSkillType) {
         if (!(SubSkill.subSkillNames as any[]).includes(subSkill)) {
             throw new Error(`Invalid subskill specified: ${subSkill}`);
         }
-        this.value = subSkill as SubSkillType;  
+        this.value = subSkill;  
     }
 
     get name(): SubSkillType {
