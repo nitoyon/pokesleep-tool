@@ -6,6 +6,7 @@ import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
 import { IngredientName, PokemonType } from '../../data/pokemons';
+import { MainSkillName } from '../../util/MainSkill';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
 import { ButtonBase, Fab, IconButton, ListItemIcon,
@@ -186,6 +187,8 @@ interface IBoxFilterConfig {
     ingredientName?: IngredientName;
     /** Include only Pokemon with the ingredientName unlocked */
     ingredientUnlockedOnly: boolean;
+    /** Filter main skill */
+    mainSkillNames: MainSkillName[];
 }
 
 /**
@@ -200,6 +203,8 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     ingredientName?: IngredientName;
     /** Include only Pokemon with the ingredientName unlocked */
     ingredientUnlockedOnly: boolean;
+    /** Filter main skill */
+    mainSkillNames: MainSkillName[];
 
     /** Initialize the instance */
     constructor(values: Partial<IBoxFilterConfig>) {
@@ -207,6 +212,7 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         this.filterTypes = values.filterTypes ?? [];
         this.ingredientName = values.ingredientName;
         this.ingredientUnlockedOnly = values.ingredientUnlockedOnly ?? false;
+        this.mainSkillNames = values.mainSkillNames ?? [];
     }
 
     /**
@@ -233,6 +239,10 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         if (this.filterTypes.length !== 0) {
             ret = ret.filter(x => this.filterTypes.includes(x.iv.pokemon.type));
         }
+        if (this.mainSkillNames.length !== 0) {
+            ret = ret.filter(x => this.mainSkillNames
+                .some(n => x.iv.pokemon.skill.startsWith(n)));
+        }
         return ret;
     }
 
@@ -240,7 +250,8 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     get isEmpty(): Boolean {
         return this.name === "" &&
             this.filterTypes.length === 0 &&
-            this.ingredientName === undefined;
+            this.ingredientName === undefined &&
+            this.mainSkillNames.length === 0;
     }
 }
 

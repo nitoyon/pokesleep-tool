@@ -3,8 +3,11 @@ import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
 import { BoxFilterConfig } from './BoxView';
 import IngredientIcon from './IngredientIcon';
+import MainSkillIcon from './MainSkillIcon';
 import { IngredientName, IngredientNames, PokemonType, PokemonTypes
 } from '../../data/pokemons';
+import { MainSkillName } from '../../util/MainSkill';
+import SubSkill, { SubSkillType } from '../../util/SubSkill';
 import { Button, Dialog, DialogActions, InputAdornment, Switch,
     Tab, Tabs, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
@@ -48,6 +51,9 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
     const onIngredientUnlockedOnlyChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(new BoxFilterConfig({...value, ingredientUnlockedOnly: e.target.checked}));
     }, [onChange, value]);
+    const onMainSkillChange = useCallback((mainSkillNames: MainSkillName[]) => {
+        onChange(new BoxFilterConfig({...value, mainSkillNames}));
+    }, [value, onChange]);
 
     const typeButtons: React.ReactElement[] = PokemonTypes.map(type =>
         <TypeButton key={type} type={type} onClick={onTypeClick}
@@ -70,6 +76,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             value={tabIndex} onChange={onTabChange}>
             <Tab label={t('type')} value={0}/>
             <Tab label={t('ingredient')} value={1}/>
+            <Tab label={t('main skill')} value={2}/>
         </Tabs>
         {tabIndex === 0 && <div>{typeButtons}</div>}
         {tabIndex === 1 && <div>
@@ -80,6 +87,8 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
                     onChange={onIngredientUnlockedOnlyChange}/>
             </section>
         </div>}
+        {tabIndex === 2 && <MainSkillTab value={value.mainSkillNames}
+            onChange={onMainSkillChange}/>}
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
@@ -135,6 +144,88 @@ const StyledIngredientButton = styled(Button)({
         border: '2px solid white',
         bottom: '0px',
         right: '10px',
+    },
+});
+
+const MainSkillTab = React.memo(({value, onChange}: {
+    value: MainSkillName[];
+    onChange: (value: MainSkillName[]) => void,
+}) => {
+    const mainSkills: MainSkillName[] = [
+        "Charge Strength S", "Charge Strength M",
+        "Ingredient Magnet S", "Energy for Everyone S",
+        "Charge Energy S", "Energizing Cheer S",
+        "Cooking Power-Up S", "Tasty Chance S",
+        "Extra Helpful S", "Helper Boost",
+        "Dream Shard Magnet S", "Metronome",
+    ];
+    const onMainSkillClick = useCallback((selected: MainSkillName) => {
+        const newValue = value.includes(selected) ?
+            value.filter(x => x !== selected) :
+            [...value, selected];
+        onChange(newValue);
+    }, [value, onChange]);
+
+    const mainSkillButtons: React.ReactElement[] = mainSkills.map(skill =>
+        <MainSkillButton key={skill} mainSkill={skill} onClick={onMainSkillClick}
+            checked={value.includes(skill)}/>);
+
+    return <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '0.5rem',
+        marginTop: '1rem',
+    }}>
+        {mainSkillButtons}
+    </div>;
+});
+
+const MainSkillButton = React.memo(({mainSkill, checked, onClick}: {
+    mainSkill: MainSkillName,
+    checked: boolean,
+    onClick: (value: MainSkillName) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const onMainSkillClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        const value = e.currentTarget.value as MainSkillName;
+        onClick(value);
+    }, [onClick]);
+    return <StyledMainSkillButton
+        value={mainSkill} onClick={onMainSkillClick}>
+        <div>
+            {!checked && <MainSkillIcon mainSkill={mainSkill}/>}
+            {checked && <CheckIcon/>}
+        </div>
+        {t(`skills.${mainSkill}`)}
+    </StyledMainSkillButton>;
+});
+
+const StyledMainSkillButton = styled(Button)({
+    height: '2.2rem',
+    lineHeight: 1.2,
+    margin: '1%',
+    color: 'black',
+    fontSize: '0.8rem',
+    justifyContent: 'left',
+    alignItems: 'center',
+    textAlign: 'left',
+    padding: 0,
+    textTransform: 'none',
+    '& > div': {
+        width: '24px',
+        '& > svg': {
+            marginRight: '4px',
+        },
+        '& > svg[data-testid="CheckIcon"]': {
+            color: 'white',
+            width: '18px',
+            height: '18px',
+            background: '#24d76a',
+            borderRadius: '5px',
+            fontSize: '15px',
+            border: '2px solid white',
+        },
     },
 });
 

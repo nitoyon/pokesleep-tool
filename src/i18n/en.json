@@ -257,6 +257,8 @@
         "final-evoltion": "Fully evolved",
         "sleeptype": "Sleep type",
         "pokedexno": "Pokédex No.",
+        "main skill": "Main skill",
+        "sub skills": "Sub skills",
         "unlocked only": "Unlocked only",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
