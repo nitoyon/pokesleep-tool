@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import SubSkill from '../../util/SubSkill';
+import SubSkill, { SubSkillType } from '../../util/SubSkill';
 import SubSkillList from '../../util/SubSkillList';
 import { Badge, Button, ButtonBase, Dialog, DialogActions } from '@mui/material';
 import { useTranslation, Trans } from 'react-i18next';
@@ -144,7 +144,7 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
 
     const onClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         const newValue = new SubSkillList(value);
-        const skill = new SubSkill(event.currentTarget.value);
+        const skill = new SubSkill(event.currentTarget.value as SubSkillType);
         const currentLevel = newValue.getSubSkillLevel(skill);
         if (currentLevel === -1) {
             newValue.set(level, skill);
@@ -166,7 +166,7 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
         onLevelChange(10);
     }, [onChange, onLevelChange]);
 
-    const createButton = React.useCallback((name: string,
+    const createButton = React.useCallback((name: SubSkillType,
         label: string|undefined) => {
         const subSkill = new SubSkill(name);
         const color = subSkill.isGold ? "gold" :

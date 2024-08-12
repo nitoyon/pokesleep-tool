@@ -1,4 +1,4 @@
-import SubSkill from './SubSkill';
+import SubSkill, { SubSkillType } from './SubSkill';
 
 describe('SubSkill', () => {
     test('works fine when Helping Speed M is given', () => {
@@ -38,6 +38,6 @@ describe('SubSkill', () => {
     });
 
     test('throws error when invalid nature is given', () => {
-        expect(() => {new SubSkill("a")}).toThrow();
+        expect(() => {new SubSkill("a" as SubSkillType)}).toThrow();
     });
 });
