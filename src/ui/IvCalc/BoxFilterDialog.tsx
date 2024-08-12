@@ -4,7 +4,7 @@ import TypeButton from './TypeButton';
 import { BoxFilterConfig } from './BoxView';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Button, Dialog, DialogActions, InputAdornment, TextField,
-    ToggleButton, ToggleButtonGroup } from '@mui/material';
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +16,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange({name: "", filterTypes: [], filterEvolve: "all"});
+        onChange({name: "", filterTypes: []});
     }, [onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
@@ -30,11 +30,6 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             [...value.filterTypes, selected];
         onChange({...value, filterTypes});
     }, [value, onChange]);
-    const onEvolveChange = useCallback((e: any, val: string|null) => {
-        if (val === null || value.filterEvolve === val) { return; }
-        onChange({...value, filterEvolve: val as "all"|"non"|"final"});
-        onClose();
-    }, [value, onChange, onClose]);
 
     const buttons: React.ReactElement[] = PokemonTypes.map(type =>
         <TypeButton key={type} type={type} onClick={onTypeClick}
@@ -54,15 +49,6 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             <h3>{t('type')}</h3>
             {buttons}
         </div>
-        <div>
-            <h3>{t('evolve')}</h3>
-            <ToggleButtonGroup value={value.filterEvolve} exclusive
-                onChange={onEvolveChange}>
-                <ToggleButton value="all">{t('all')}</ToggleButton>
-                <ToggleButton value="non">{t('non-evolve')}</ToggleButton>
-                <ToggleButton value="final">{t('final-evoltion')}</ToggleButton>
-            </ToggleButtonGroup>
-        </div>
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
@@ -76,14 +62,6 @@ const StyledPokemonFilterDialog = styled(Dialog)({
         '& > h3': {
             margin: '0.5rem 0',
             fontSize: '1rem',
-        },
-        '& > div': {
-            '& > button:first-of-type': {
-                borderRadius: '1rem 0 0 1rem',
-            },
-            '& > button:last-of-type': {
-                borderRadius: '0 1rem 1rem 0',
-            },
         },
     },
 });
