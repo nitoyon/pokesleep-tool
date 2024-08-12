@@ -19,12 +19,6 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
-/** Cache for latest filter config */
-let boxFilterConfig: BoxFilterConfig = {
-    name: "",
-    filterTypes: [],
-};
-
 const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
@@ -59,10 +53,9 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         setFilterOpen(false);
     }, [])
     const onFilterChange = React.useCallback((value: BoxFilterConfig) => {
-        const newConfig = {...filterConfig, ...value};
-        boxFilterConfig = {...newConfig};
-        setFilterConfig(newConfig);
-    }, [filterConfig]);
+        boxFilterConfig = value;
+        setFilterConfig(boxFilterConfig);
+    }, []);
 
     // filter
     let filtered = React.useMemo(() => {
@@ -92,7 +85,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             onChange={onItemChange} onShare={onShare}/>));
 
     const footerValue = React.useMemo(() => ({
-        isFiltered: filterConfig.name !== "" || filterConfig.filterTypes.length > 0 || filterConfig.filterEvolve !== "all",
+        isFiltered: !filterConfig.isEmpty,
         sort: sortConfig.sort,
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
@@ -195,12 +188,37 @@ interface BoxSortConfig {
 /**
  * Pokmeon box filter configuration.
  */
-export interface BoxFilterConfig {
+interface IBoxFilterConfig {
     /** Name */
     name: string;
     /** Filter type */
     filterTypes: PokemonType[];
 }
+
+/**
+ * Pokmeon box filter configuration class.
+ */
+export class BoxFilterConfig implements IBoxFilterConfig {
+    /** Name */
+    name: string;
+    /** Filter type */
+    filterTypes: PokemonType[];
+
+    /** Initialize the instance */
+    constructor(values: Partial<IBoxFilterConfig>) {
+        this.name = values.name ?? "";
+        this.filterTypes = values.filterTypes ?? [];
+    }
+
+    /** Check whether the instance is empty */
+    get isEmpty(): Boolean {
+        return this.name === "" &&
+            this.filterTypes.length === 0;
+    }
+}
+
+/** Cache for latest filter config */
+let boxFilterConfig = new BoxFilterConfig({});
 
 /**
  * Load box sort config from localStorage.
