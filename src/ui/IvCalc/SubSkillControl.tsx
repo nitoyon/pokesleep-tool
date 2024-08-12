@@ -95,7 +95,6 @@ const SubSkillButton = React.memo(({level, value, onClick}: {
 });
 
 const StyledEditSubSkillContainer = styled('div')({
-    padding: '0 1rem',
     'header': {
         fontSize: '.9rem',
     },
@@ -127,9 +126,19 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     top: '0',
     '& .MuiBadge-badge': {
         border: `2px solid ${theme.palette.background.paper}`,
+        backgroundColor: "#24d76a",
+        padding: 0,
+        '& > svg': {
+            width: '14px',
+            height: '14px',
+            fontSize: '12px',
+            padding: 0,
+            margin: 0,
+        },
+    },
+    '&.isnum .MuiBadge-badge': {
         padding: '0 4px',
-        backgroundColor: "#24d76a"
-    }
+    },
 }));
   
 const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, onLevelChange}: {
@@ -179,8 +188,10 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
             components={{
                 level: <strong>{t('level')} {level}</strong>,
             }}/></div>
-        <EditSubSkillControl subSkill2Badge={subSkill2Badge}
-            onClick={onClick}/>
+        <div style={{padding: '0 1rem'}}>
+            <EditSubSkillControl subSkill2Badge={subSkill2Badge}
+                onClick={onClick}/>
+        </div>
         <DialogActions>
             <Button onClick={onClear}>{t('clear')}</Button>
             <Button onClick={onClose}>{t('close')}</Button>
@@ -188,8 +199,8 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
     </Dialog>;
 });
 
-const EditSubSkillControl = React.memo(({subSkill2Badge, onClick}: {
-    subSkill2Badge: (subSkill: SubSkill) => number,
+export const EditSubSkillControl = React.memo(({subSkill2Badge, onClick}: {
+    subSkill2Badge: (subSkill: SubSkill) => number|React.ReactElement,
     onClick: (value: SubSkillType) => void,
 }) => {
     const { t } = useTranslation();
@@ -213,7 +224,8 @@ const EditSubSkillControl = React.memo(({subSkill2Badge, onClick}: {
                 className={cls}
                 value={name}>
                 {label}
-                <StyledBadge color="secondary" badgeContent={badge} max={100}/>
+                <StyledBadge color="secondary" badgeContent={badge} max={100}
+                    className={typeof(badge) === 'number' ? 'isnum' : ''}/>
             </StyledSubSkillButton>
         </>;
     }, [onClickHandler, subSkill2Badge, t]);

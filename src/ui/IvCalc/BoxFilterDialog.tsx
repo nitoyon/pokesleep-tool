@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
 import { BoxFilterConfig } from './BoxView';
+import { EditSubSkillControl } from './SubSkillControl';
 import IngredientIcon from './IngredientIcon';
 import MainSkillIcon from './MainSkillIcon';
 import { IngredientName, IngredientNames, PokemonType, PokemonTypes
@@ -77,6 +78,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             <Tab label={t('type')} value={0}/>
             <Tab label={t('ingredient')} value={1}/>
             <Tab label={t('main skill')} value={2}/>
+            <Tab label={t('sub skills')} value={3}/>
         </Tabs>
         {tabIndex === 0 && <div>{typeButtons}</div>}
         {tabIndex === 1 && <div>
@@ -89,6 +91,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
         </div>}
         {tabIndex === 2 && <MainSkillTab value={value.mainSkillNames}
             onChange={onMainSkillChange}/>}
+        {tabIndex === 3 && <SubSkillTab value={value} onChange={onChange}/>}
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
@@ -227,6 +230,45 @@ const StyledMainSkillButton = styled(Button)({
             border: '2px solid white',
         },
     },
+});
+
+const SubSkillTab = React.memo(({value, onChange}: {
+    value: BoxFilterConfig,
+    onChange: (value: BoxFilterConfig) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const onClick = useCallback((selected: SubSkillType) => {
+        const subSkillNames = value.subSkillNames.includes(selected) ?
+            value.subSkillNames.filter(x => x !== selected) :
+            [...value.subSkillNames, selected];
+        onChange(new BoxFilterConfig({...value, subSkillNames}));
+    }, [value, onChange]);
+    const onSubSkillUnlockedOnlyChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(new BoxFilterConfig({...value, subSkillUnlockedOnly: e.target.checked}));
+    }, [value, onChange]);
+    const onSubSkillAndChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(new BoxFilterConfig({...value, subSkillAnd: e.target.checked}));
+    }, [value, onChange]);
+
+    const subSkill2Badge = React.useCallback((subSkill: SubSkill) => {
+        return value.subSkillNames.includes(subSkill.name) ? <CheckIcon/> : 0;
+    }, [value]);
+
+    return <div style={{padding: '0 0.5rem'}}>
+        <EditSubSkillControl subSkill2Badge={subSkill2Badge}
+            onClick={onClick}/>
+        <section>
+            <label>{t('unlocked only')}:</label>
+            <Switch checked={value.subSkillUnlockedOnly}
+                onChange={onSubSkillUnlockedOnlyChange}/>
+        </section>
+        <section>
+            <label>AND:</label>
+            <Switch checked={value.subSkillAnd}
+                onChange={onSubSkillAndChange}/>
+        </section>
+    </div>;
 });
 
 export default BoxFilterDialog;
