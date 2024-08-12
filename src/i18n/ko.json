@@ -246,6 +246,8 @@
         "final-evoltion": "완전한 진화",
         "sleeptype": "수면 타입",
         "pokedexno": "도감 번호",
+        "unlocked only": "오직 잠금 해제됨",
+
         "select subskill at level xxx": "<level/>의 서브 스킬을 선택해주세요",
 
         "about1": "이 도구는 비공식 도구이며, <profile>nitoyon</profile>이 개인적으로 개발했습니다.",

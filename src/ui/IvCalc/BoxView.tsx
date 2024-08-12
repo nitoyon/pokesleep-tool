@@ -5,7 +5,7 @@ import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
-import { PokemonType } from '../../data/pokemons';
+import { IngredientName, PokemonType } from '../../data/pokemons';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
 import { ButtonBase, Fab, IconButton, ListItemIcon,
@@ -182,6 +182,10 @@ interface IBoxFilterConfig {
     name: string;
     /** Filter type */
     filterTypes: PokemonType[];
+    /** Filter ingredient */
+    ingredientName?: IngredientName;
+    /** Include only Pokemon with the ingredientName unlocked */
+    ingredientUnlockedOnly: boolean;
 }
 
 /**
@@ -192,11 +196,17 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     name: string;
     /** Filter type */
     filterTypes: PokemonType[];
+    /** Filter ingredient */
+    ingredientName?: IngredientName;
+    /** Include only Pokemon with the ingredientName unlocked */
+    ingredientUnlockedOnly: boolean;
 
     /** Initialize the instance */
     constructor(values: Partial<IBoxFilterConfig>) {
         this.name = values.name ?? "";
         this.filterTypes = values.filterTypes ?? [];
+        this.ingredientName = values.ingredientName;
+        this.ingredientUnlockedOnly = values.ingredientUnlockedOnly ?? false;
     }
 
     /**
@@ -208,10 +218,17 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     filter(items: PokemonBoxItem[], t: typeof i18next.t): PokemonBoxItem[] {
         let ret = items;
         if (this.name !== "") {
+            const name = this.name.toLowerCase();
             ret = ret.filter(x =>
-                x.nickname.indexOf(this.name) !== -1 ||
-                t(`pokemons.${x.iv.pokemonName}`).indexOf(this.name) !== -1
+                x.nickname.toLowerCase().indexOf(this.name) !== -1 ||
+                t(`pokemons.${x.iv.pokemonName}`).toLowerCase().indexOf(name) !== -1
             );
+        }
+        if (this.ingredientName !== undefined) {
+            const ing: IngredientName = this.ingredientName;
+            const unlocked = this.ingredientUnlockedOnly;
+            ret = ret.filter(x =>
+                x.iv.getIngredients(unlocked).includes(ing));
         }
         if (this.filterTypes.length !== 0) {
             ret = ret.filter(x => this.filterTypes.includes(x.iv.pokemon.type));
@@ -222,7 +239,8 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     /** Check whether the instance is empty */
     get isEmpty(): Boolean {
         return this.name === "" &&
-            this.filterTypes.length === 0;
+            this.filterTypes.length === 0 &&
+            this.ingredientName === undefined;
     }
 }
 
