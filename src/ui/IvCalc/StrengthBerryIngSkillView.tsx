@@ -9,18 +9,12 @@ import { StrengthParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Select, SelectChangeEvent, MenuItem } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import MainSkillIcon from './MainSkillIcon';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import InfoButton from './InfoButton';
 import { IvAction } from './IvState';
 import EnergyDialog from './EnergyDialog';
-import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientIcon from './IngredientIcon';
-import IngredientsIcon from '../Resources/IngredientsIcon';
-import PotIcon from '../Resources/PotIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -327,68 +321,22 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
-    const mainSkillValue = round1(result.skillValue);
-    switch (mainSkill) {
-        case "Charge Energy S":
-        case "Energizing Cheer S":
-            return <>
-                <FavoriteBorderIcon sx={{color: "#ff88aa"}}/>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Energy for Everyone S":
-            return <>
-                <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Charge Strength M":
-        case "Charge Strength S":
-        case "Charge Strength S (Random)":
-            return <>
-                <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span>{formatWithComma(Math.round(result.skillValue))}</span>
-            </>;
-        case "Dream Shard Magnet S":
-        case "Dream Shard Magnet S (Random)":
-            return <>
-                <DreamShardIcon/>
-                <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-            </>;
-        case "Extra Helpful S":
-        case "Helper Boost":
-            return <>
-                <SearchIcon sx={{color: "#66cc66"}}/>
-                <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Ingredient Magnet S":
-            return <>
-                <IngredientsIcon/>
-                <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Cooking Power-Up S":
-            return <>
-                <svg width="18" height="18" fill="#886666"><PotIcon/></svg>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Tasty Chance S":
-            return <>
-                <svg width="18" height="18" fill="#886666"><PotIcon/></svg>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Metronome":
-            return <>
-                <SwipeOutlinedIcon sx={{color: "#999", paddingRight: "0.2rem"}}/>
-                <span>{round2(result.skillCount)}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        default:
-            return <>ー</>;
+    let mainSkillValue: string;
+    if (mainSkill.startsWith("Charge Strength")) {
+        mainSkillValue = Math.round(result.skillValue).toString();
     }
+    else if (mainSkill === "Metronome") {
+        mainSkillValue = round2(result.skillCount);
+    }
+    else {
+        mainSkillValue = round1(result.skillValue);
+    }
+
+    return <>
+        <MainSkillIcon mainSkill={mainSkill}/>
+        <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
+        <InfoButton onClick={onInfoClick}/>
+    </>;
 }
 
 const HelpDialog = React.memo(({open, onClose}: {
