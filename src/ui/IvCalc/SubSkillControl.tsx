@@ -142,9 +142,9 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
 }) => {
     const { t } = useTranslation();
 
-    const onClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const onClick = React.useCallback((subSkillType: SubSkillType) => {
         const newValue = new SubSkillList(value);
-        const skill = new SubSkill(event.currentTarget.value as SubSkillType);
+        const skill = new SubSkill(subSkillType);
         const currentLevel = newValue.getSubSkillLevel(skill);
         if (currentLevel === -1) {
             newValue.set(level, skill);
@@ -166,26 +166,10 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
         onLevelChange(10);
     }, [onChange, onLevelChange]);
 
-    const createButton = React.useCallback((name: SubSkillType,
-        label: string|undefined) => {
-        const subSkill = new SubSkill(name);
-        const color = subSkill.isGold ? "gold" :
-            subSkill.isBlue ? "blue" : "white";
+    const subSkill2Badge = React.useCallback((subSkill: SubSkill) => {
         const level = value.getSubSkillLevel(subSkill);
-        const badge = level < 0 ? 0 : level;
-        const cls = level > 0 ? `${color} selected` : color;
-        if (label === undefined) {
-            label = t(`subskill.${name}`);
-        }
-        return <>
-            <StyledSubSkillButton onClick={onClick}
-                className={cls}
-                value={name}>
-                {label}
-                <StyledBadge color="secondary" badgeContent={badge} max={100}/>
-            </StyledSubSkillButton>
-        </>;
-    }, [onClick, t, value]);
+        return level < 0 ? 0 : level;
+    }, [value]);
 
     return <Dialog open={open} onClose={onClose}>
         <div style={{
@@ -195,48 +179,82 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
             components={{
                 level: <strong>{t('level')} {level}</strong>,
             }}/></div>
-        <StyledEditSubSkillContainer>
-            <header>{t('subskill.Gold colored')}</header>
-            <div className="subskill_list50">
-                {createButton("Berry Finding S", undefined)}
-                {createButton("Helping Bonus", undefined)}
-                {createButton("Sleep EXP Bonus", undefined)}
-                {createButton("Research EXP Bonus", undefined)}
-                {createButton("Energy Recovery Bonus", undefined)}
-                {createButton("Dream Shard Bonus", undefined)}
-            </div>
-            <div className="subskill_list25">
-                <header>{t('subskill.Skill Level Up')}</header>
-                {createButton("Skill Level Up M", "M")}
-                {createButton("Skill Level Up S", "S")}
-            </div>
-            <div className="subskill_list25">
-                <header>{t('subskill.Skill Trigger')}</header>
-                {createButton("Skill Trigger M", "M")}
-                {createButton("Skill Trigger S", "S")}
-            </div>
-            <div className="subskill_list25">
-                <header>{t('subskill.Helping Speed')}</header>
-                {createButton("Helping Speed M", "M")}
-                {createButton("Helping Speed S", "S")}
-            </div>
-            <div className="subskill_list25">
-                <header>{t('subskill.Ingredient Finder')}</header>
-                {createButton("Ingredient Finder M", "M")}
-                {createButton("Ingredient Finder S", "S")}
-            </div>
-            <div className="subskill_list25">
-                <header>{t('subskill.Inventory Up')}</header>
-                {createButton("Inventory Up L", "L")}
-                {createButton("Inventory Up M", "M")}
-                {createButton("Inventory Up S", "S")}
-            </div>
-        </StyledEditSubSkillContainer>
+        <EditSubSkillControl subSkill2Badge={subSkill2Badge}
+            onClick={onClick}/>
         <DialogActions>
             <Button onClick={onClear}>{t('clear')}</Button>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
     </Dialog>;
+});
+
+const EditSubSkillControl = React.memo(({subSkill2Badge, onClick}: {
+    subSkill2Badge: (subSkill: SubSkill) => number,
+    onClick: (value: SubSkillType) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const onClickHandler = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+        onClick(event.currentTarget.value as SubSkillType)
+    }, [onClick]);
+
+    const createButton = React.useCallback((name: SubSkillType,
+        label: string|undefined) => {
+        const subSkill = new SubSkill(name);
+        const color = subSkill.isGold ? "gold" :
+            subSkill.isBlue ? "blue" : "white";
+        const badge = subSkill2Badge(subSkill);
+        const cls = badge !== 0 ? `${color} selected` : color;
+        if (label === undefined) {
+            label = t(`subskill.${name}`);
+        }
+        return <>
+            <StyledSubSkillButton onClick={onClickHandler}
+                className={cls}
+                value={name}>
+                {label}
+                <StyledBadge color="secondary" badgeContent={badge} max={100}/>
+            </StyledSubSkillButton>
+        </>;
+    }, [onClickHandler, subSkill2Badge, t]);
+
+    return <StyledEditSubSkillContainer>
+        <header>{t('subskill.Gold colored')}</header>
+        <div className="subskill_list50">
+            {createButton("Berry Finding S", undefined)}
+            {createButton("Helping Bonus", undefined)}
+            {createButton("Sleep EXP Bonus", undefined)}
+            {createButton("Research EXP Bonus", undefined)}
+            {createButton("Energy Recovery Bonus", undefined)}
+            {createButton("Dream Shard Bonus", undefined)}
+        </div>
+        <div className="subskill_list25">
+            <header>{t('subskill.Skill Level Up')}</header>
+            {createButton("Skill Level Up M", "M")}
+            {createButton("Skill Level Up S", "S")}
+        </div>
+        <div className="subskill_list25">
+            <header>{t('subskill.Skill Trigger')}</header>
+            {createButton("Skill Trigger M", "M")}
+            {createButton("Skill Trigger S", "S")}
+        </div>
+        <div className="subskill_list25">
+            <header>{t('subskill.Helping Speed')}</header>
+            {createButton("Helping Speed M", "M")}
+            {createButton("Helping Speed S", "S")}
+        </div>
+        <div className="subskill_list25">
+            <header>{t('subskill.Ingredient Finder')}</header>
+            {createButton("Ingredient Finder M", "M")}
+            {createButton("Ingredient Finder S", "S")}
+        </div>
+        <div className="subskill_list25">
+            <header>{t('subskill.Inventory Up')}</header>
+            {createButton("Inventory Up L", "L")}
+            {createButton("Inventory Up M", "M")}
+            {createButton("Inventory Up S", "S")}
+        </div>
+    </StyledEditSubSkillContainer>;
 });
 
 export default SubSkillControl;
