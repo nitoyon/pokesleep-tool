@@ -30,6 +30,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     const defaultSortConfig = React.useMemo(() => loadBoxSortConfig(), []);
     const [sortConfig, setSortConfig] = React.useState<BoxSortConfig>(defaultSortConfig);
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>({
+        name: "",
         filterType: null,
         filterEvolve: "all",
     });
@@ -63,6 +64,12 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     // filter
     let filtered = React.useMemo(() => {
         let ret = items;
+        if (filterConfig.name !== "") {
+            ret = ret.filter(x =>
+                x.nickname.indexOf(filterConfig.name) !== -1 ||
+                t(`pokemons.${x.iv.pokemonName}`).indexOf(filterConfig.name) !== -1
+            );
+        }
         if (filterConfig.filterType !== null) {
             ret = ret.filter(x => x.iv.pokemon.type === filterConfig.filterType);
         }
@@ -73,7 +80,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             ret = ret.filter((item) => item.iv.pokemon.evolutionCount === -1);
         }
         return ret;
-    }, [items, filterConfig]);
+    }, [items, filterConfig, t]);
 
     // sort
     let sortedItems: PokemonBoxItem[] = React.useMemo(
@@ -88,7 +95,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             onChange={onItemChange} onShare={onShare}/>));
 
     const footerValue = React.useMemo(() => ({
-        isFiltered: filterConfig.filterType !== null || filterConfig.filterEvolve !== "all",
+        isFiltered: filterConfig.name !== "" || filterConfig.filterType !== null || filterConfig.filterEvolve !== "all",
         sort: sortConfig.sort,
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
@@ -192,6 +199,8 @@ interface BoxSortConfig {
  * Pokmeon box filter configuration.
  */
 export interface BoxFilterConfig {
+    /** Name */
+    name: string;
     /** Filter type */
     filterType: PokemonType|null;
     /** Filter by evolve */
