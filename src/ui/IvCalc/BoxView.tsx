@@ -19,6 +19,13 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
+/** Cache for latest filter config */
+let boxFilterConfig: BoxFilterConfig = {
+    name: "",
+    filterType: null,
+    filterEvolve: "all",
+};
+
 const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
@@ -29,11 +36,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     const { t } = useTranslation();
     const defaultSortConfig = React.useMemo(() => loadBoxSortConfig(), []);
     const [sortConfig, setSortConfig] = React.useState<BoxSortConfig>(defaultSortConfig);
-    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>({
-        name: "",
-        filterType: null,
-        filterEvolve: "all",
-    });
+    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((action: IvAction) => {
         dispatch(action);
@@ -58,6 +61,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     }, [])
     const onFilterChange = React.useCallback((value: BoxFilterConfig) => {
         const newConfig = {...filterConfig, ...value};
+        boxFilterConfig = {...newConfig};
         setFilterConfig(newConfig);
     }, [filterConfig]);
 
