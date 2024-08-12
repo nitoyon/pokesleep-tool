@@ -1,5 +1,6 @@
-import pokemons, {PokemonData} from '../data/pokemons';
-import { IngredientName, PokemonType, PokemonTypes } from '../data/pokemons';
+import pokemons from '../data/pokemons';
+import { IngredientName, getDecendants, PokemonType, PokemonTypes
+} from '../data/pokemons';
 import fields from '../data/fields';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
@@ -9,7 +10,7 @@ import { getSkillValue } from './MainSkill';
 /**
  * Represents the parameter of PokemonStrength.calc.
  */
-export interface CalculateParameter extends EnergyParameter {
+export interface StrengthParameter extends EnergyParameter {
     /**
      * How many hours' worth of accumulated strength to calculate.
      *
@@ -49,7 +50,7 @@ export interface CalculateParameter extends EnergyParameter {
 /**
  * Represents the result of strength calculation.
  */
-export interface CalculateResult {
+export interface StrengthResult {
     /** energy and help count */
     energy: EnergyResult;
     /** Total strength (berry + ingredient + skill) */
@@ -110,18 +111,71 @@ const recipeLevelBonus = {
  */
 class PokemonStrength {
     private iv: PokemonIv;
-    private pokemon: PokemonData;
+    private param: StrengthParameter;
 
-    constructor(iv: PokemonIv) {
-        this.iv = iv;
+    constructor(iv: PokemonIv, param: StrengthParameter, decendantId?: number) {
+        this.param = param;
+        this.iv = this.changePokemonIv(iv, decendantId);
         const pokemon = pokemons.find(x => x.name === iv.pokemonName);
         if (pokemon === undefined) {
             throw new Error(`Unknown name: ${iv.pokemonName}`);
         }
-        this.pokemon = pokemon;
     }
 
-    calculate(param: CalculateParameter): CalculateResult {
+    /** Get the PokemonIv to be calculated. */
+    get pokemonIv(): PokemonIv {
+        return this.iv;
+    }
+
+    /**
+     * Update PokemonIv as specified by param.
+     * @param pokemonIv    The PokmeonIv object to be modified.
+     * @param decendantId  Optional evolved pokemon ID.
+     * @returns The updated PokemonIv object.
+     */
+    changePokemonIv(pokemonIv: PokemonIv, decendantId?: number): PokemonIv {
+        // change level if `level` is specified
+        const settings =this.param;
+        if (settings.level !== 0) {
+            pokemonIv = pokemonIv.changeLevel(settings.level);
+        }
+        // change skill level if `maxSkillLevel` is specified
+        if (settings.maxSkillLevel) {
+            pokemonIv = pokemonIv.clone();
+            pokemonIv.skillLevel = 7;
+            pokemonIv.normalize();
+        }
+
+        // evolve the pokemon if `evolved` is specified
+        if (!settings.evolved) {
+            return pokemonIv;
+        }
+
+        // Change pokemon
+        const decendants = getDecendants(pokemonIv.pokemon);
+        if (decendants.length === 0) {
+            return pokemonIv;
+        }
+        let showingPokemon = decendants.find(x => x.id === pokemonIv.pokemon.id);
+        if (showingPokemon !== undefined) {
+            // already evolved
+            return pokemonIv;
+        }
+
+        // decendantId is given, select the pokemon
+        showingPokemon = decendants.find(x => x.id === decendantId);
+        if (showingPokemon === undefined) {
+            // otherwise, use the first decendant
+            showingPokemon = decendants[0];
+        }
+        if (showingPokemon.id !== pokemonIv.pokemon.id) {
+            pokemonIv = pokemonIv.clone(showingPokemon.name);
+        }
+        return pokemonIv;
+    }
+
+    calculate(): StrengthResult {
+        const param = this.param;
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
         const countRatio = param.period / 24;
@@ -213,7 +267,7 @@ class PokemonStrength {
         };
     }
 
-    getSkillValueAndStrength(skillCount: number, param: CalculateParameter): [number, number] {
+    getSkillValueAndStrength(skillCount: number, param: StrengthParameter): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
@@ -252,7 +306,7 @@ class PokemonStrength {
         }
     }
 
-    isFavoriteBerry(param: CalculateParameter): boolean {
+    isFavoriteBerry(param: StrengthParameter): boolean {
         let types: PokemonType[] = [];
         switch (param.fieldIndex) {
             case 0: types = param.favoriteType; break;
@@ -268,11 +322,14 @@ class PokemonStrength {
 }
 
 /**
- * Load CalculateParameter fron localStorage.
- * @returns Loaded parameter.
+ * Create a StrengthParameter from Partial<StrengthParameter>.
+ * @param param The partial values to overwrite default values.
+ * @returns The resulting StrengthParameter.
  */
-export function loadCalculateParameter(): CalculateParameter {
-    const ret: CalculateParameter = {
+export function createStrengthParameter(
+    param: Partial<StrengthParameter>
+): StrengthParameter {
+    const defaultParameters: StrengthParameter = {
         period: 24,
         fieldBonus: 0,
         fieldIndex: -1,
@@ -289,9 +346,18 @@ export function loadCalculateParameter(): CalculateParameter {
         maxSkillLevel: false,
         tapFrequency: "always",
         tapFrequencyAsleep: "none",
-        recipeBonus: 25,
-        recipeLevel: 30,
+        recipeBonus: 0,
+        recipeLevel: 1,
     };
+    return { ...defaultParameters, ...param };
+}
+
+/**
+ * Load StrengthParameter fron localStorage.
+ * @returns Loaded parameter.
+ */
+export function loadStrengthParameter(): StrengthParameter {
+    const ret: StrengthParameter = createStrengthParameter({});
 
     const settings = localStorage.getItem('PstStrenghParam');
     if (settings === null) {

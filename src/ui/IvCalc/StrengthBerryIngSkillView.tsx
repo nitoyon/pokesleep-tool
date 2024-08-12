@@ -1,11 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import pokemons, { PokemonData } from '../../data/pokemons';
+import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
-import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import PokemonStrength, { StrengthResult } from '../../util/PokemonStrength';
+import { StrengthParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Select, SelectChangeEvent, MenuItem } from '@mui/material';
@@ -138,7 +138,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     pokemonIv, settings, energyDialogOpen, dispatch,
 }: {
     pokemonIv: PokemonIv,
-    settings: CalculateParameter,
+    settings: StrengthParameter,
     energyDialogOpen: boolean,
     dispatch: React.Dispatch<IvAction>,
 }) => {
@@ -147,52 +147,20 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [decendantId, setDecendantId] = React.useState(0);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
-    // change level
-    if (settings.level !== 0) {
-        pokemonIv = pokemonIv.changeLevel(settings.level);
-    }
-    // change skill level
-    if (settings.maxSkillLevel) {
-        pokemonIv = pokemonIv.clone();
-        pokemonIv.skillLevel = 7;
-        pokemonIv.normalize();
-    }
-
-    // evolved pokemon check
-    const decendants: PokemonData[] = React.useMemo(() => {
-        if (!settings.evolved || pokemonIv.pokemon.ancestor === null) {
-            return [];
-        }
-        const lineage = pokemons
-            .filter(x => x.ancestor === pokemonIv.pokemon.ancestor);
-        const maxEvolvutionCount = lineage
-            .reduce((p, c) => Math.max(p, c.evolutionCount), 0);
-        return lineage
-            .filter(x => x.evolutionCount === maxEvolvutionCount);
-    }, [pokemonIv.pokemon, settings.evolved]);
-    let pokemonChanged = false;
-    if (decendants.length > 0) {
-        let showingPokemon = decendants.find(x => x.id === pokemonIv.pokemon.id);
-        if (showingPokemon === undefined) {
-            showingPokemon = decendants.find(x => x.id === decendantId);
-        }
-        if (showingPokemon === undefined) {
-            showingPokemon = decendants[0];
-        }
-        if (showingPokemon.id !== pokemonIv.pokemon.id) {
-            pokemonChanged = true;
-            pokemonIv = pokemonIv.clone(showingPokemon.name);
-        }
-    }
-
-    const strength = new PokemonStrength(pokemonIv);
     const isWhistle = (settings.period === 3);
-    const result = strength.calculate({
+    const strength = new PokemonStrength(pokemonIv, {
         ...settings,
         isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
         isGoodCampTicketSet: isWhistle ?
             false : settings.isGoodCampTicketSet,
-    });
+    }, decendantId);
+    const result = strength.calculate();
+
+    let decendants: PokemonData[] = [];
+    if (pokemonIv.pokemon.name !== strength.pokemonIv.pokemon.name) {
+        pokemonIv = strength.pokemonIv;
+        decendants = getDecendants(pokemonIv.pokemon);
+    }
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
@@ -234,10 +202,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <span className="strength">{formatWithComma(Math.round(result.totalStrength))}</span>
             <InfoButton onClick={onHelpClick}/>
             <HelpDialog open={helpOpen} onClose={onHelpClose}/>
-            {decendants.length === 1 && pokemonChanged && <span className="evolved">
+            {decendants.length === 1 && <span className="evolved">
                 {t('strength of x', {x: t(`pokemons.${pokemonIv.pokemon.name}`)})}
             </span>}
-            {decendants.length > 1 && pokemonChanged && <span className="evolved">
+            {decendants.length > 1 && <span className="evolved">
                 <Select variant="standard" value={pokemonIv.pokemon.id.toString()}
                     onChange={onDecendantsChange}>
                     {decendants.map(p => <MenuItem key={p.id} value={p.id}>
@@ -304,7 +272,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     </StyledBerryIngSkillStrengthView>;
 });
 
-function getIngArticle(result: CalculateResult, settings: CalculateParameter,
+function getIngArticle(result: StrengthResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
     if (settings.tapFrequency === 'none') {
         return <article>ー</article>;
@@ -351,8 +319,8 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
     throw new Error('unknown short num digits: ' + digits);
 }
 
-function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
-    settings: CalculateParameter, t: typeof i18next.t,
+function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
+    settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
