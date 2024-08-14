@@ -262,6 +262,11 @@ function updatePokemonList(html, ja2en) {
             id, name, sleepType, type, speciality, skill, fp, frequency, 
         });
     }
+
+    json.sort(function(a, b) {
+        return a.id !== b.id ? a.id - b.id :
+            a.name > b.name ? 1: -1;
+    });
     return json;
 }
 
