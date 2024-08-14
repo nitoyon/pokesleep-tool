@@ -87,7 +87,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            marginBottom: '60px',
+            marginBottom: '120px',
             width: '100%',
         }}>
             {elms.length === 0 && <div style={{margin: "5rem auto", color: "#888", fontSize: "0.9rem"}}>
@@ -96,7 +96,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             {elms}
         </div>
         <div style={{
-            position: 'sticky',
+            position: 'fixed',
+            width: '100%',
             bottom: 0,
             paddingLeft: '1rem',
             paddingBottom: '1.2rem',
@@ -104,7 +105,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
             margin: '.5rem -.5rem 0',
         }}>
             <Fab onClick={onAddClick} color="primary" size="medium"
-                sx={{position: 'absolute', bottom: '70px', right: '10px'}}>
+                sx={{position: 'absolute', bottom: '70px', right: '2rem'}}>
                 <AddIcon/>
             </Fab>
             <PokemonFilterFooter value={footerValue}
