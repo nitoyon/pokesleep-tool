@@ -73,25 +73,33 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
                     </InputAdornment>
                 }}/>
         </div>
-        <Tabs variant="scrollable" scrollButtons="auto"
+        <StyledTabs variant="scrollable" scrollButtons
             value={tabIndex} onChange={onTabChange}>
-            <Tab label={t('type')} value={0}/>
-            <Tab label={t('ingredient')} value={1}/>
-            <Tab label={t('main skill')} value={2}/>
-            <Tab label={t('sub skills')} value={3}/>
-        </Tabs>
-        {tabIndex === 0 && <div>{typeButtons}</div>}
-        {tabIndex === 1 && <div>
-            {ingButtons}
-            <section>
-                <label>{t('unlocked only')}:</label>
-                <Switch checked={value.ingredientUnlockedOnly}
-                    onChange={onIngredientUnlockedOnlyChange}/>
-            </section>
-        </div>}
-        {tabIndex === 2 && <MainSkillTab value={value.mainSkillNames}
-            onChange={onMainSkillChange}/>}
-        {tabIndex === 3 && <SubSkillTab value={value} onChange={onChange}/>}
+            <StyledTab label={t('type')} value={0}/>
+            <StyledTab label={t('ingredient')} value={1}/>
+            <StyledTab label={t('main skill')} value={2}/>
+            <StyledTab label={t('sub skills')} value={3}/>
+        </StyledTabs>
+        <div className="tabContainer">
+            <div className={`tabChild ${tabIndex === 0 ? 'tabChildActive' : ''}`}>
+                {typeButtons}
+            </div>
+            <div className={`tabChild ${tabIndex === 1 ? 'tabChildActive' : ''}`}>
+                {ingButtons}
+                <section>
+                    <label>{t('unlocked only')}:</label>
+                    <Switch checked={value.ingredientUnlockedOnly}
+                        onChange={onIngredientUnlockedOnlyChange}/>
+                </section>
+            </div>
+            <div className={`tabChild ${tabIndex === 2 ? 'tabChildActive' : ''}`}>
+                <MainSkillTab value={value.mainSkillNames}
+                    onChange={onMainSkillChange}/>
+            </div>
+            <div className={`tabChild ${tabIndex === 3 ? 'tabChildActive' : ''}`}>
+                <SubSkillTab value={value} onChange={onChange}/>
+            </div>
+        </div>
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
@@ -100,19 +108,45 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 });
 
 const StyledPokemonFilterDialog = styled(Dialog)({
-    'div.MuiPaper-root > div': {
-        margin: '.5rem .5rem 0 .5rem',
-        '& > section': {
-            margin: '0.3rem 0.8rem 0 0.8rem',
-            fontSize: '.9rem',
-            display: 'flex',
-            flex: '0 auto',
-            alignItems: 'center',
-            '& > label': {
-                marginRight: 'auto',
+    'div.MuiPaper-root': {
+        '& > div': {
+            margin: '.5rem .5rem 0 .5rem',
+        },
+        '& > div.tabContainer': {
+            display: 'grid',
+            '& > div.tabChild': {
+                gridArea: '1 / 1',
+                visibility: 'hidden',
+                '& > section': {
+                    margin: '0 0.8rem',
+                    fontSize: '.9rem',
+                    display: 'flex',
+                    flex: '0 auto',
+                    alignItems: 'center',
+                    '&:first-of-type': {
+                        marginTop: '0.3rem',
+                    },
+                    '& > label': {
+                        marginRight: 'auto',
+                    },
+                },
+            },
+            '& > div.tabChild.tabChildActive': {
+                visibility: 'visible',
             },
         },
     },
+});
+
+const StyledTabs = styled(Tabs)({
+    minHeight: '36px',
+    marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
+});
+const StyledTab = styled(Tab)({
+    minHeight: '36px',
+    minWidth: '0',
+    padding: '6px 8px',
+    textTransform: 'none',
 });
 
 const IngredientButton = React.memo(({ingredient, checked, onClick}: {
@@ -177,7 +211,6 @@ const MainSkillTab = React.memo(({value, onChange}: {
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
         gap: '0.5rem',
-        marginTop: '1rem',
     }}>
         {mainSkillButtons}
     </div>;
@@ -255,20 +288,20 @@ const SubSkillTab = React.memo(({value, onChange}: {
         return value.subSkillNames.includes(subSkill.name) ? <CheckIcon/> : 0;
     }, [value]);
 
-    return <div style={{padding: '0 0.5rem'}}>
+    return <>
         <EditSubSkillControl subSkill2Badge={subSkill2Badge}
             onClick={onClick}/>
         <section>
             <label>{t('unlocked only')}:</label>
-            <Switch checked={value.subSkillUnlockedOnly}
+            <Switch checked={value.subSkillUnlockedOnly} size="small"
                 onChange={onSubSkillUnlockedOnlyChange}/>
         </section>
         <section>
             <label>AND:</label>
-            <Switch checked={value.subSkillAnd}
+            <Switch checked={value.subSkillAnd} size="small"
                 onChange={onSubSkillAndChange}/>
         </section>
-    </div>;
+    </>;
 });
 
 export default BoxFilterDialog;
