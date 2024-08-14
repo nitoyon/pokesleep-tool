@@ -96,1342 +96,6 @@
         }
     },
     {
-        "id": 10,
-        "name": "Caterpie",
-        "sleepType": "dozing",
-        "type": "bug",
-        "speciality": "Berries",
-        "skill": "Ingredient Magnet S",
-        "fp": 5,
-        "frequency": 4400,
-        "ingRatio": 17.9,
-        "skillRatio": 0.8,
-        "ancestor": 10,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 11,
-        "ing1": {
-            "name": "honey",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tomato",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "soy",
-            "c3": 4
-        }
-    },
-    {
-        "id": 11,
-        "name": "Metapod",
-        "sleepType": "dozing",
-        "type": "bug",
-        "speciality": "Berries",
-        "skill": "Ingredient Magnet S",
-        "fp": 7,
-        "frequency": 4200,
-        "ingRatio": 20.8,
-        "skillRatio": 1.8,
-        "ancestor": 10,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 13,
-        "ing1": {
-            "name": "honey",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tomato",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "soy",
-            "c3": 4
-        }
-    },
-    {
-        "id": 12,
-        "name": "Butterfree",
-        "sleepType": "dozing",
-        "type": "bug",
-        "speciality": "Berries",
-        "skill": "Ingredient Magnet S",
-        "fp": 15,
-        "frequency": 2600,
-        "ingRatio": 19.7,
-        "skillRatio": 1.4,
-        "ancestor": 10,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 21,
-        "ing1": {
-            "name": "honey",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tomato",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "soy",
-            "c3": 4
-        }
-    },
-    {
-        "id": 23,
-        "name": "Ekans",
-        "sleepType": "dozing",
-        "type": "poison",
-        "speciality": "Berries",
-        "skill": "Charge Energy S",
-        "fp": 5,
-        "frequency": 5000,
-        "ingRatio": 23.5,
-        "skillRatio": 3.3,
-        "ancestor": 23,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "sausage",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "egg",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "herb",
-            "c3": 3
-        }
-    },
-    {
-        "id": 24,
-        "name": "Arbok",
-        "sleepType": "dozing",
-        "type": "poison",
-        "speciality": "Berries",
-        "skill": "Charge Energy S",
-        "fp": 12,
-        "frequency": 3700,
-        "ingRatio": 26.4,
-        "skillRatio": 5.7,
-        "ancestor": 23,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "sausage",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "egg",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "herb",
-            "c3": 3
-        }
-    },
-    {
-        "id": 54,
-        "name": "Psyduck",
-        "sleepType": "dozing",
-        "type": "water",
-        "speciality": "Skills",
-        "skill": "Charge Strength S (Random)",
-        "fp": 5,
-        "frequency": 5400,
-        "ingRatio": 13.6,
-        "skillRatio": 12.6,
-        "ancestor": 54,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 8,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "apple",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 5
-        }
-    },
-    {
-        "id": 56,
-        "name": "Mankey",
-        "sleepType": "dozing",
-        "type": "fighting",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 5,
-        "frequency": 4200,
-        "ingRatio": 19.7,
-        "skillRatio": 2.2,
-        "ancestor": 56,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 12,
-        "ing1": {
-            "name": "sausage",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "honey",
-            "c3": 4
-        }
-    },
-    {
-        "id": 57,
-        "name": "Primeape",
-        "sleepType": "dozing",
-        "type": "fighting",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 12,
-        "frequency": 2800,
-        "ingRatio": 20,
-        "skillRatio": 2.4,
-        "ancestor": 56,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 17,
-        "ing1": {
-            "name": "sausage",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "honey",
-            "c3": 4
-        }
-    },
-    {
-        "id": 69,
-        "name": "Bellsprout",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 5,
-        "frequency": 5200,
-        "ingRatio": 23.3,
-        "skillRatio": 3.9,
-        "ancestor": 69,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 8,
-        "ing1": {
-            "name": "tomato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "potato",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 4
-        }
-    },
-    {
-        "id": 70,
-        "name": "Weepinbell",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 12,
-        "frequency": 3800,
-        "ingRatio": 23.5,
-        "skillRatio": 4,
-        "ancestor": 69,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 12,
-        "ing1": {
-            "name": "tomato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "potato",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 4
-        }
-    },
-    {
-        "id": 71,
-        "name": "Victreebel",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 20,
-        "frequency": 2800,
-        "ingRatio": 23.3,
-        "skillRatio": 3.9,
-        "ancestor": 69,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 17,
-        "ing1": {
-            "name": "tomato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "potato",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 4
-        }
-    },
-    {
-        "id": 92,
-        "name": "Gastly",
-        "sleepType": "dozing",
-        "type": "ghost",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S (Random)",
-        "fp": 5,
-        "frequency": 3800,
-        "ingRatio": 14.4,
-        "skillRatio": 1.5,
-        "ancestor": 92,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "herb",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 8
-        }
-    },
-    {
-        "id": 93,
-        "name": "Haunter",
-        "sleepType": "dozing",
-        "type": "ghost",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S (Random)",
-        "fp": 12,
-        "frequency": 3000,
-        "ingRatio": 15.7,
-        "skillRatio": 2.2,
-        "ancestor": 92,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "herb",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 8
-        }
-    },
-    {
-        "id": 94,
-        "name": "Gengar",
-        "sleepType": "dozing",
-        "type": "ghost",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S (Random)",
-        "fp": 22,
-        "frequency": 2200,
-        "ingRatio": 16.1,
-        "skillRatio": 2.4,
-        "ancestor": 92,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "herb",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 8
-        }
-    },
-    {
-        "id": 127,
-        "name": "Pinsir",
-        "sleepType": "dozing",
-        "type": "bug",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S",
-        "fp": 16,
-        "frequency": 2400,
-        "ingRatio": 21.6,
-        "skillRatio": 3.1,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 24,
-        "ing1": {
-            "name": "honey",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "apple",
-            "c2": 5,
-            "c3": 8
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 7
-        }
-    },
-    {
-        "id": 147,
-        "name": "Dratini",
-        "sleepType": "dozing",
-        "type": "dragon",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 5,
-        "frequency": 5000,
-        "ingRatio": 25,
-        "skillRatio": 2,
-        "ancestor": 147,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 9,
-        "ing1": {
-            "name": "herb",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "corn",
-            "c2": 4,
-            "c3": 7
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 8
-        }
-    },
-    {
-        "id": 148,
-        "name": "Dragonair",
-        "sleepType": "dozing",
-        "type": "dragon",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 12,
-        "frequency": 3800,
-        "ingRatio": 26.2,
-        "skillRatio": 2.5,
-        "ancestor": 147,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 12,
-        "ing1": {
-            "name": "herb",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "corn",
-            "c2": 4,
-            "c3": 7
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 8
-        }
-    },
-    {
-        "id": 149,
-        "name": "Dragonite",
-        "sleepType": "dozing",
-        "type": "dragon",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 25,
-        "frequency": 2600,
-        "ingRatio": 26.4,
-        "skillRatio": 2.6,
-        "ancestor": 147,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 20,
-        "ing1": {
-            "name": "herb",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "corn",
-            "c2": 4,
-            "c3": 7
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 8
-        }
-    },
-    {
-        "id": 152,
-        "name": "Chikorita",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 5,
-        "frequency": 4400,
-        "ingRatio": 16.9,
-        "skillRatio": 3.9,
-        "ancestor": 152,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 12,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "honey",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 3
-        }
-    },
-    {
-        "id": 153,
-        "name": "Bayleef",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 12,
-        "frequency": 3300,
-        "ingRatio": 16.8,
-        "skillRatio": 3.8,
-        "ancestor": 152,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 17,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "honey",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 3
-        }
-    },
-    {
-        "id": 154,
-        "name": "Meganium",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 20,
-        "frequency": 2800,
-        "ingRatio": 17.5,
-        "skillRatio": 4.6,
-        "ancestor": 152,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 20,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "honey",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 3
-        }
-    },
-    {
-        "id": 197,
-        "name": "Umbreon",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Skills",
-        "skill": "Charge Energy S",
-        "fp": 20,
-        "frequency": 3200,
-        "ingRatio": 21.9,
-        "skillRatio": 14.1,
-        "ancestor": 133,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 214,
-        "name": "Heracross",
-        "sleepType": "dozing",
-        "type": "bug",
-        "speciality": "Skills",
-        "skill": "Ingredient Magnet S",
-        "fp": 16,
-        "frequency": 2400,
-        "ingRatio": 15.8,
-        "skillRatio": 4.7,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 20,
-        "ing1": {
-            "name": "honey",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 4
-        }
-    },
-    {
-        "id": 225,
-        "name": "Delibird",
-        "sleepType": "dozing",
-        "type": "flying",
-        "speciality": "Ingredients",
-        "skill": "Ingredient Magnet S",
-        "fp": 16,
-        "frequency": 2500,
-        "ingRatio": 18.8,
-        "skillRatio": 1.5,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 20,
-        "ing1": {
-            "name": "egg",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "apple",
-            "c2": 6,
-            "c3": 9
-        },
-        "ing3": {
-            "name": "cacao",
-            "c3": 5
-        }
-    },
-    {
-        "id": 228,
-        "name": "Houndour",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Berries",
-        "skill": "Charge Strength S",
-        "fp": 5,
-        "frequency": 4900,
-        "ingRatio": 20.1,
-        "skillRatio": 4.4,
-        "ancestor": 228,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "herb",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 3,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 3
-        }
-    },
-    {
-        "id": 229,
-        "name": "Houndoom",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Berries",
-        "skill": "Charge Strength S",
-        "fp": 12,
-        "frequency": 3300,
-        "ingRatio": 20.3,
-        "skillRatio": 4.6,
-        "ancestor": 228,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "herb",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 3,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 3
-        }
-    },
-    {
-        "id": 248,
-        "name": "Tyranitar",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 25,
-        "frequency": 2700,
-        "ingRatio": 26.6,
-        "skillRatio": 5.2,
-        "ancestor": 246,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 19,
-        "ing1": {
-            "name": "ginger",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "soy",
-            "c2": 5,
-            "c3": 8
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 8
-        }
-    },
-    {
-        "id": 288,
-        "name": "Vigoroth",
-        "sleepType": "dozing",
-        "type": "normal",
-        "speciality": "Berries",
-        "skill": "Ingredient Magnet S",
-        "fp": 12,
-        "frequency": 3200,
-        "ingRatio": 20.4,
-        "skillRatio": 1.5,
-        "ancestor": 287,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 9,
-        "ing1": {
-            "name": "tomato",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "honey",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "apple",
-            "c3": 4
-        }
-    },
-    {
-        "id": 302,
-        "name": "Sableye",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Skills",
-        "skill": "Dream Shard Magnet S (Random)",
-        "fp": 16,
-        "frequency": 3600,
-        "ingRatio": 18.8,
-        "skillRatio": 6.8,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 16,
-        "ing1": {
-            "name": "oil",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "cacao",
-            "c3": 3
-        }
-    },
-    {
-        "id": 316,
-        "name": "Gulpin",
-        "sleepType": "dozing",
-        "type": "poison",
-        "speciality": "Skills",
-        "skill": "Dream Shard Magnet S (Random)",
-        "fp": 5,
-        "frequency": 5900,
-        "ingRatio": 21.4,
-        "skillRatio": 6.3,
-        "ancestor": 316,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 8,
-        "ing1": {
-            "name": "soy",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "honey",
-            "c3": 4
-        }
-    },
-    {
-        "id": 317,
-        "name": "Swalot",
-        "sleepType": "dozing",
-        "type": "poison",
-        "speciality": "Skills",
-        "skill": "Dream Shard Magnet S (Random)",
-        "fp": 12,
-        "frequency": 3500,
-        "ingRatio": 21,
-        "skillRatio": 7,
-        "ancestor": 316,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 19,
-        "ing1": {
-            "name": "soy",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "honey",
-            "c3": 4
-        }
-    },
-    {
-        "id": 334,
-        "name": "Altaria",
-        "sleepType": "dozing",
-        "type": "dragon",
-        "speciality": "Berries",
-        "skill": "Charge Energy S",
-        "fp": 12,
-        "frequency": 3700,
-        "ingRatio": 25.8,
-        "skillRatio": 6.1,
-        "ancestor": 333,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "egg",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "soy",
-            "c2": 3,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "apple",
-            "c3": 5
-        }
-    },
-    {
-        "id": 353,
-        "name": "Shuppet",
-        "sleepType": "dozing",
-        "type": "ghost",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 5,
-        "frequency": 3900,
-        "ingRatio": 17.1,
-        "skillRatio": 2.6,
-        "ancestor": 353,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 11,
-        "ing1": {
-            "name": "oil",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "mushroom",
-            "c3": 3
-        }
-    },
-    {
-        "id": 354,
-        "name": "Banette",
-        "sleepType": "dozing",
-        "type": "ghost",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 16,
-        "frequency": 2600,
-        "ingRatio": 17.9,
-        "skillRatio": 3.3,
-        "ancestor": 353,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 19,
-        "ing1": {
-            "name": "oil",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "mushroom",
-            "c3": 3
-        }
-    },
-    {
-        "id": 359,
-        "name": "Absol",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S",
-        "fp": 16,
-        "frequency": 3100,
-        "ingRatio": 17.8,
-        "skillRatio": 3.8,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "cacao",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "apple",
-            "c2": 8,
-            "c3": 12
-        },
-        "ing3": {
-            "name": "mushroom",
-            "c3": 7
-        }
-    },
-    {
-        "id": 453,
-        "name": "Croagunk",
-        "sleepType": "dozing",
-        "type": "poison",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S",
-        "fp": 5,
-        "frequency": 5600,
-        "ingRatio": 22.8,
-        "skillRatio": 4.2,
-        "ancestor": 453,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "oil",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "sausage",
-            "c2": 5,
-            "c3": 8
-        }
-    },
-    {
-        "id": 454,
-        "name": "Toxicroak",
-        "sleepType": "dozing",
-        "type": "poison",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S",
-        "fp": 12,
-        "frequency": 3400,
-        "ingRatio": 22.9,
-        "skillRatio": 4.3,
-        "ancestor": 453,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "oil",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "sausage",
-            "c2": 5,
-            "c3": 8
-        }
-    },
-    {
-        "id": 470,
-        "name": "Leafeon",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Skills",
-        "skill": "Energizing Cheer S",
-        "fp": 20,
-        "frequency": 3000,
-        "ingRatio": 20.5,
-        "skillRatio": 5.9,
-        "ancestor": 133,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 13,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 906,
-        "name": "Sprigatito",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Ingredients",
-        "skill": "Cooking Power-Up S",
-        "fp": 5,
-        "frequency": 4600,
-        "ingRatio": 20.8,
-        "skillRatio": 2.3,
-        "ancestor": 906,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "potato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "milk",
-            "c2": 6,
-            "c3": 9
-        },
-        "ing3": {
-            "name": "ginger",
-            "c3": 8
-        }
-    },
-    {
-        "id": 907,
-        "name": "Floragato",
-        "sleepType": "dozing",
-        "type": "grass",
-        "speciality": "Ingredients",
-        "skill": "Cooking Power-Up S",
-        "fp": 12,
-        "frequency": 3500,
-        "ingRatio": 20.9,
-        "skillRatio": 2.3,
-        "ancestor": 906,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "potato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "milk",
-            "c2": 6,
-            "c3": 9
-        },
-        "ing3": {
-            "name": "ginger",
-            "c3": 8
-        }
-    },
-    {
-        "id": 908,
-        "name": "Meowscarada",
-        "sleepType": "dozing",
-        "type": "dark",
-        "speciality": "Ingredients",
-        "skill": "Cooking Power-Up S",
-        "fp": 20,
-        "frequency": 2600,
-        "ingRatio": 19,
-        "skillRatio": 2.2,
-        "ancestor": 906,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "potato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "milk",
-            "c2": 6,
-            "c3": 9
-        },
-        "ing3": {
-            "name": "ginger",
-            "c3": 8
-        }
-    },
-    {
-        "id": 911,
-        "name": "Skeledirge",
-        "sleepType": "dozing",
-        "type": "ghost",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 20,
-        "frequency": 2700,
-        "ingRatio": 26.8,
-        "skillRatio": 6.2,
-        "ancestor": 909,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 19,
-        "ing1": {
-            "name": "apple",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "sausage",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "herb",
-            "c3": 5
-        }
-    },
-    {
         "id": 4,
         "name": "Charmander",
         "sleepType": "snoozing",
@@ -1528,6 +192,198 @@
         }
     },
     {
+        "id": 7,
+        "name": "Squirtle",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Ingredient Magnet S",
+        "fp": 5,
+        "frequency": 4500,
+        "ingRatio": 27.1,
+        "skillRatio": 2,
+        "ancestor": 7,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "milk",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 7
+        }
+    },
+    {
+        "id": 8,
+        "name": "Wartortle",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Ingredient Magnet S",
+        "fp": 12,
+        "frequency": 3400,
+        "ingRatio": 27.1,
+        "skillRatio": 2,
+        "ancestor": 7,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "milk",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 7
+        }
+    },
+    {
+        "id": 9,
+        "name": "Blastoise",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Ingredient Magnet S",
+        "fp": 20,
+        "frequency": 2800,
+        "ingRatio": 27.5,
+        "skillRatio": 2.1,
+        "ancestor": 7,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "milk",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 7
+        }
+    },
+    {
+        "id": 10,
+        "name": "Caterpie",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Berries",
+        "skill": "Ingredient Magnet S",
+        "fp": 5,
+        "frequency": 4400,
+        "ingRatio": 17.9,
+        "skillRatio": 0.8,
+        "ancestor": 10,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "honey",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tomato",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 4
+        }
+    },
+    {
+        "id": 11,
+        "name": "Metapod",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Berries",
+        "skill": "Ingredient Magnet S",
+        "fp": 7,
+        "frequency": 4200,
+        "ingRatio": 20.8,
+        "skillRatio": 1.8,
+        "ancestor": 10,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
+        "ing1": {
+            "name": "honey",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tomato",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 4
+        }
+    },
+    {
+        "id": 12,
+        "name": "Butterfree",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Berries",
+        "skill": "Ingredient Magnet S",
+        "fp": 15,
+        "frequency": 2600,
+        "ingRatio": 19.7,
+        "skillRatio": 1.4,
+        "ancestor": 10,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
+        "ing1": {
+            "name": "honey",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tomato",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 4
+        }
+    },
+    {
         "id": 19,
         "name": "Rattata",
         "sleepType": "snoozing",
@@ -1592,6 +448,70 @@
         }
     },
     {
+        "id": 23,
+        "name": "Ekans",
+        "sleepType": "dozing",
+        "type": "poison",
+        "speciality": "Berries",
+        "skill": "Charge Energy S",
+        "fp": 5,
+        "frequency": 5000,
+        "ingRatio": 23.5,
+        "skillRatio": 3.3,
+        "ancestor": 23,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 3
+        }
+    },
+    {
+        "id": 24,
+        "name": "Arbok",
+        "sleepType": "dozing",
+        "type": "poison",
+        "speciality": "Berries",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 3700,
+        "ingRatio": 26.4,
+        "skillRatio": 5.7,
+        "ancestor": 23,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 3
+        }
+    },
+    {
         "id": 25,
         "name": "Pikachu",
         "sleepType": "snoozing",
@@ -1625,20 +545,20 @@
     },
     {
         "id": 25,
-        "name": "Pikachu (Halloween)",
+        "name": "Pikachu (Festivo)",
         "sleepType": "snoozing",
         "type": "electric",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
+        "speciality": "Skills",
+        "skill": "Dream Shard Magnet S",
         "fp": 7,
         "frequency": 2600,
-        "ingRatio": 21.8,
-        "skillRatio": 2.8,
+        "ingRatio": 13.1,
+        "skillRatio": 4.2,
         "ancestor": null,
         "evolutionCount": -1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 18,
+        "carryLimit": 16,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -1657,20 +577,20 @@
     },
     {
         "id": 25,
-        "name": "Pikachu (Festivo)",
+        "name": "Pikachu (Halloween)",
         "sleepType": "snoozing",
         "type": "electric",
-        "speciality": "Skills",
-        "skill": "Dream Shard Magnet S",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
         "fp": 7,
         "frequency": 2600,
-        "ingRatio": 13.1,
-        "skillRatio": 4.2,
+        "ingRatio": 21.8,
+        "skillRatio": 2.8,
         "ancestor": null,
         "evolutionCount": -1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 16,
+        "carryLimit": 18,
         "ing1": {
             "name": "apple",
             "c1": 1,
@@ -2032,6 +952,134 @@
         }
     },
     {
+        "id": 54,
+        "name": "Psyduck",
+        "sleepType": "dozing",
+        "type": "water",
+        "speciality": "Skills",
+        "skill": "Charge Strength S (Random)",
+        "fp": 5,
+        "frequency": 5400,
+        "ingRatio": 13.6,
+        "skillRatio": 12.6,
+        "ancestor": 54,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "apple",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 5
+        }
+    },
+    {
+        "id": 55,
+        "name": "Golduck",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Skills",
+        "skill": "Charge Strength S (Random)",
+        "fp": 12,
+        "frequency": 3400,
+        "ingRatio": 16.2,
+        "skillRatio": 12.5,
+        "ancestor": 54,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "apple",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 5
+        }
+    },
+    {
+        "id": 56,
+        "name": "Mankey",
+        "sleepType": "dozing",
+        "type": "fighting",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 5,
+        "frequency": 4200,
+        "ingRatio": 19.7,
+        "skillRatio": 2.2,
+        "ancestor": 56,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 4
+        }
+    },
+    {
+        "id": 57,
+        "name": "Primeape",
+        "sleepType": "dozing",
+        "type": "fighting",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 12,
+        "frequency": 2800,
+        "ingRatio": 20,
+        "skillRatio": 2.4,
+        "ancestor": 56,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 4
+        }
+    },
+    {
         "id": 58,
         "name": "Growlithe",
         "sleepType": "snoozing",
@@ -2096,117 +1144,21 @@
         }
     },
     {
-        "id": 79,
-        "name": "Slowpoke",
-        "sleepType": "snoozing",
-        "type": "water",
-        "speciality": "Skills",
-        "skill": "Energizing Cheer S",
+        "id": 69,
+        "name": "Bellsprout",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
         "fp": 5,
-        "frequency": 5700,
-        "ingRatio": 15.1,
-        "skillRatio": 6.7,
-        "ancestor": 79,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 9,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tail",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "tomato",
-            "c3": 5
-        }
-    },
-    {
-        "id": 80,
-        "name": "Slowbro",
-        "sleepType": "snoozing",
-        "type": "water",
-        "speciality": "Skills",
-        "skill": "Energizing Cheer S",
-        "fp": 12,
-        "frequency": 3800,
-        "ingRatio": 19.7,
-        "skillRatio": 6.8,
-        "ancestor": 79,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 16,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tail",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "tomato",
-            "c3": 5
-        }
-    },
-    {
-        "id": 115,
-        "name": "Kangaskhan",
-        "sleepType": "snoozing",
-        "type": "normal",
-        "speciality": "Ingredients",
-        "skill": "Ingredient Magnet S",
-        "fp": 16,
-        "frequency": 2800,
-        "ingRatio": 22.2,
-        "skillRatio": 1.7,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "ginger",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "potato",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "soy",
-            "c3": 8
-        }
-    },
-    {
-        "id": 122,
-        "name": "Mr. Mime",
-        "sleepType": "snoozing",
-        "type": "psychic",
-        "speciality": "Ingredients",
-        "skill": "Charge Strength S",
-        "fp": 12,
-        "frequency": 2800,
-        "ingRatio": 21.6,
+        "frequency": 5200,
+        "ingRatio": 23.3,
         "skillRatio": 3.9,
-        "ancestor": 439,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 17,
+        "ancestor": 69,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
         "ing1": {
             "name": "tomato",
             "c1": 2,
@@ -2224,983 +1176,67 @@
         }
     },
     {
-        "id": 132,
-        "name": "Ditto",
-        "sleepType": "snoozing",
-        "type": "normal",
+        "id": 70,
+        "name": "Weepinbell",
+        "sleepType": "dozing",
+        "type": "grass",
         "speciality": "Ingredients",
-        "skill": "Charge Strength S (Random)",
-        "fp": 16,
-        "frequency": 3500,
-        "ingRatio": 20.1,
-        "skillRatio": 3.6,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 17,
-        "ing1": {
-            "name": "oil",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "leek",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "tail",
-            "c3": 3
-        }
-    },
-    {
-        "id": 133,
-        "name": "Eevee",
-        "sleepType": "snoozing",
-        "type": "normal",
-        "speciality": "Skills",
-        "skill": "Ingredient Magnet S",
-        "fp": 5,
-        "frequency": 3700,
-        "ingRatio": 19.2,
-        "skillRatio": 5.5,
-        "ancestor": 133,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 12,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 135,
-        "name": "Jolteon",
-        "sleepType": "snoozing",
-        "type": "electric",
-        "speciality": "Skills",
-        "skill": "Extra Helpful S",
-        "fp": 20,
-        "frequency": 2200,
-        "ingRatio": 15.1,
-        "skillRatio": 3.9,
-        "ancestor": 133,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 17,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 136,
-        "name": "Flareon",
-        "sleepType": "snoozing",
-        "type": "fire",
-        "speciality": "Skills",
-        "skill": "Cooking Power-Up S",
-        "fp": 20,
-        "frequency": 2700,
-        "ingRatio": 18.5,
-        "skillRatio": 5.2,
-        "ancestor": 133,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 155,
-        "name": "Cyndaquil",
-        "sleepType": "snoozing",
-        "type": "fire",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 5,
-        "frequency": 3500,
-        "ingRatio": 18.6,
-        "skillRatio": 2.1,
-        "ancestor": 155,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "ginger",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "herb",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 3
-        }
-    },
-    {
-        "id": 156,
-        "name": "Quilava",
-        "sleepType": "snoozing",
-        "type": "fire",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 12,
-        "frequency": 3000,
-        "ingRatio": 21.1,
-        "skillRatio": 4.1,
-        "ancestor": 155,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "ginger",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "herb",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 3
-        }
-    },
-    {
-        "id": 157,
-        "name": "Typhlosion",
-        "sleepType": "snoozing",
-        "type": "fire",
-        "speciality": "Berries",
-        "skill": "Charge Strength S (Random)",
-        "fp": 20,
-        "frequency": 2400,
-        "ingRatio": 20.8,
-        "skillRatio": 3.9,
-        "ancestor": 155,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 23,
-        "ing1": {
-            "name": "ginger",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "herb",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 3
-        }
-    },
-    {
-        "id": 176,
-        "name": "Togetic",
-        "sleepType": "snoozing",
-        "type": "fairy",
-        "speciality": "Skills",
-        "skill": "Metronome",
+        "skill": "Charge Energy S",
         "fp": 12,
         "frequency": 3800,
-        "ingRatio": 16.3,
-        "skillRatio": 5.6,
-        "ancestor": 175,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "egg",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "cacao",
-            "c3": 3
-        }
-    },
-    {
-        "id": 179,
-        "name": "Mareep",
-        "sleepType": "snoozing",
-        "type": "electric",
-        "speciality": "Skills",
-        "skill": "Charge Strength M",
-        "fp": 5,
-        "frequency": 4600,
-        "ingRatio": 12.8,
-        "skillRatio": 4.7,
-        "ancestor": 179,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 9,
-        "ing1": {
-            "name": "herb",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "egg",
-            "c2": 3,
-            "c3": 4
-        }
-    },
-    {
-        "id": 180,
-        "name": "Flaaffy",
-        "sleepType": "snoozing",
-        "type": "electric",
-        "speciality": "Skills",
-        "skill": "Charge Strength M",
-        "fp": 12,
-        "frequency": 3300,
-        "ingRatio": 12.7,
-        "skillRatio": 4.6,
-        "ancestor": 179,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 11,
-        "ing1": {
-            "name": "herb",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "egg",
-            "c2": 3,
-            "c3": 4
-        }
-    },
-    {
-        "id": 181,
-        "name": "Ampharos",
-        "sleepType": "snoozing",
-        "type": "electric",
-        "speciality": "Skills",
-        "skill": "Charge Strength M",
-        "fp": 20,
-        "frequency": 2500,
-        "ingRatio": 13,
-        "skillRatio": 4.7,
-        "ancestor": 179,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 15,
-        "ing1": {
-            "name": "herb",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "egg",
-            "c2": 3,
-            "c3": 4
-        }
-    },
-    {
-        "id": 196,
-        "name": "Espeon",
-        "sleepType": "snoozing",
-        "type": "psychic",
-        "speciality": "Skills",
-        "skill": "Charge Strength M",
-        "fp": 20,
-        "frequency": 2400,
-        "ingRatio": 16.4,
-        "skillRatio": 4.4,
-        "ancestor": 133,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 16,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 199,
-        "name": "Slowking",
-        "sleepType": "snoozing",
-        "type": "water",
-        "speciality": "Skills",
-        "skill": "Energizing Cheer S",
-        "fp": 20,
-        "frequency": 3400,
-        "ingRatio": 16.6,
-        "skillRatio": 7.4,
-        "ancestor": 79,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 17,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tail",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "tomato",
-            "c3": 5
-        }
-    },
-    {
-        "id": 202,
-        "name": "Wobbuffet",
-        "sleepType": "snoozing",
-        "type": "psychic",
-        "speciality": "Skills",
-        "skill": "Energizing Cheer S",
-        "fp": 7,
-        "frequency": 3500,
-        "ingRatio": 21.1,
-        "skillRatio": 6.4,
-        "ancestor": 360,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 13,
-        "ing1": {
-            "name": "apple",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "oil",
-            "c3": 3
-        }
-    },
-    {
-        "id": 243,
-        "name": "Raikou",
-        "sleepType": "snoozing",
-        "type": "electric",
-        "speciality": "Skills",
-        "skill": "Helper Boost",
-        "fp": 30,
-        "frequency": 2100,
-        "ingRatio": 19.2,
-        "skillRatio": 1.9,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 22,
-        "ing1": {
-            "name": "sausage",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "herb",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 2
-        }
-    },
-    {
-        "id": 244,
-        "name": "Entei",
-        "sleepType": "snoozing",
-        "type": "fire",
-        "speciality": "Skills",
-        "skill": "Helper Boost",
-        "fp": 30,
-        "frequency": 2400,
-        "ingRatio": 18.7,
-        "skillRatio": 2.3,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 19,
-        "ing1": {
-            "name": "oil",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "tomato",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "mushroom",
-            "c3": 3
-        }
-    },
-    {
-        "id": 280,
-        "name": "Ralts",
-        "sleepType": "snoozing",
-        "type": "psychic",
-        "speciality": "Skills",
-        "skill": "Energy for Everyone S",
-        "fp": 5,
-        "frequency": 4800,
-        "ingRatio": 14.5,
-        "skillRatio": 4.3,
-        "ancestor": 280,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 9,
-        "ing1": {
-            "name": "apple",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "corn",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 2
-        }
-    },
-    {
-        "id": 281,
-        "name": "Kirlia",
-        "sleepType": "snoozing",
-        "type": "psychic",
-        "speciality": "Skills",
-        "skill": "Energy for Everyone S",
-        "fp": 12,
-        "frequency": 3500,
-        "ingRatio": 14.6,
-        "skillRatio": 4.3,
-        "ancestor": 280,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 13,
-        "ing1": {
-            "name": "apple",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "corn",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 2
-        }
-    },
-    {
-        "id": 282,
-        "name": "Gardevoir",
-        "sleepType": "snoozing",
-        "type": "psychic",
-        "speciality": "Skills",
-        "skill": "Energy for Everyone S",
-        "fp": 20,
-        "frequency": 2400,
-        "ingRatio": 14.4,
-        "skillRatio": 4.2,
-        "ancestor": 280,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 18,
-        "ing1": {
-            "name": "apple",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "corn",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "leek",
-            "c3": 2
-        }
-    },
-    {
-        "id": 287,
-        "name": "Slakoth",
-        "sleepType": "snoozing",
-        "type": "normal",
-        "speciality": "Berries",
-        "skill": "Ingredient Magnet S",
-        "fp": 5,
-        "frequency": 4900,
-        "ingRatio": 21.6,
-        "skillRatio": 1.9,
-        "ancestor": 287,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 7,
-        "ing1": {
-            "name": "tomato",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "honey",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "apple",
-            "c3": 4
-        }
-    },
-    {
-        "id": 289,
-        "name": "Slaking",
-        "sleepType": "snoozing",
-        "type": "normal",
-        "speciality": "Berries",
-        "skill": "Ingredient Magnet S",
-        "fp": 22,
-        "frequency": 3800,
-        "ingRatio": 33.9,
-        "skillRatio": 6.7,
-        "ancestor": 287,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 12,
-        "ing1": {
-            "name": "tomato",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "honey",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "apple",
-            "c3": 4
-        }
-    },
-    {
-        "id": 468,
-        "name": "Togekiss",
-        "sleepType": "snoozing",
-        "type": "fairy",
-        "speciality": "Skills",
-        "skill": "Metronome",
-        "fp": 22,
-        "frequency": 2600,
-        "ingRatio": 15.8,
-        "skillRatio": 5.3,
-        "ancestor": 175,
-        "evolutionCount": 2,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 16,
-        "ing1": {
-            "name": "egg",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "cacao",
-            "c3": 3
-        }
-    },
-    {
-        "id": 700,
-        "name": "Sylveon",
-        "sleepType": "snoozing",
-        "type": "fairy",
-        "speciality": "Skills",
-        "skill": "Energy for Everyone S",
-        "fp": 20,
-        "frequency": 2600,
-        "ingRatio": 17.8,
+        "ingRatio": 23.5,
         "skillRatio": 4,
-        "ancestor": 133,
+        "ancestor": 69,
         "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 15,
-        "ing1": {
-            "name": "milk",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 3
-        }
-    },
-    {
-        "id": 702,
-        "name": "Dedenne",
-        "sleepType": "snoozing",
-        "type": "electric",
-        "speciality": "Skills",
-        "skill": "Tasty Chance S",
-        "fp": 16,
-        "frequency": 2500,
-        "ingRatio": 17.7,
-        "skillRatio": 4.5,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 19,
-        "ing1": {
-            "name": "apple",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 1,
-            "c3": 2
-        },
-        "ing3": {
-            "name": "corn",
-            "c3": 2
-        }
-    },
-    {
-        "id": 764,
-        "name": "Comfey",
-        "sleepType": "snoozing",
-        "type": "fairy",
-        "speciality": "Ingredients",
-        "skill": "Energizing Cheer S",
-        "fp": 16,
-        "frequency": 2500,
-        "ingRatio": 13.9,
-        "skillRatio": 2.2,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 20,
-        "ing1": {
-            "name": "corn",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "ginger",
-            "c2": 6,
-            "c3": 9
-        },
-        "ing3": {
-            "name": "cacao",
-            "c3": 7
-        }
-    },
-    {
-        "id": 909,
-        "name": "Fuecoco",
-        "sleepType": "snoozing",
-        "type": "fire",
-        "speciality": "Ingredients",
-        "skill": "Charge Energy S",
-        "fp": 5,
-        "frequency": 4200,
-        "ingRatio": 25.4,
-        "skillRatio": 5.3,
-        "ancestor": 909,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 11,
+        "carryLimit": 12,
         "ing1": {
-            "name": "apple",
+            "name": "tomato",
             "c1": 2,
             "c2": 5,
             "c3": 7
         },
         "ing2": {
-            "name": "sausage",
+            "name": "potato",
             "c2": 4,
             "c3": 6
         },
         "ing3": {
-            "name": "herb",
-            "c3": 5
+            "name": "leek",
+            "c3": 4
         }
     },
     {
-        "id": 910,
-        "name": "Crocalor",
-        "sleepType": "snoozing",
-        "type": "fire",
+        "id": 71,
+        "name": "Victreebel",
+        "sleepType": "dozing",
+        "type": "grass",
         "speciality": "Ingredients",
         "skill": "Charge Energy S",
-        "fp": 12,
-        "frequency": 3100,
-        "ingRatio": 24.7,
-        "skillRatio": 5,
-        "ancestor": 909,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 16,
-        "ing1": {
-            "name": "apple",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "sausage",
-            "c2": 4,
-            "c3": 6
-        },
-        "ing3": {
-            "name": "herb",
-            "c3": 5
-        }
-    },
-    {
-        "id": 7,
-        "name": "Squirtle",
-        "sleepType": "slumbering",
-        "type": "water",
-        "speciality": "Ingredients",
-        "skill": "Ingredient Magnet S",
-        "fp": 5,
-        "frequency": 4500,
-        "ingRatio": 27.1,
-        "skillRatio": 2,
-        "ancestor": 7,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 10,
-        "ing1": {
-            "name": "milk",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 7
-        }
-    },
-    {
-        "id": 8,
-        "name": "Wartortle",
-        "sleepType": "slumbering",
-        "type": "water",
-        "speciality": "Ingredients",
-        "skill": "Ingredient Magnet S",
-        "fp": 12,
-        "frequency": 3400,
-        "ingRatio": 27.1,
-        "skillRatio": 2,
-        "ancestor": 7,
-        "evolutionCount": 1,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "milk",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "cacao",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 7
-        }
-    },
-    {
-        "id": 9,
-        "name": "Blastoise",
-        "sleepType": "slumbering",
-        "type": "water",
-        "speciality": "Ingredients",
-        "skill": "Ingredient Magnet S",
         "fp": 20,
         "frequency": 2800,
-        "ingRatio": 27.5,
-        "skillRatio": 2.1,
-        "ancestor": 7,
+        "ingRatio": 23.3,
+        "skillRatio": 3.9,
+        "ancestor": 69,
         "evolutionCount": 2,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
         "carryLimit": 17,
         "ing1": {
-            "name": "milk",
+            "name": "tomato",
             "c1": 2,
             "c2": 5,
             "c3": 7
         },
         "ing2": {
-            "name": "cacao",
-            "c2": 3,
-            "c3": 5
-        },
-        "ing3": {
-            "name": "sausage",
-            "c3": 7
-        }
-    },
-    {
-        "id": 55,
-        "name": "Golduck",
-        "sleepType": "slumbering",
-        "type": "water",
-        "speciality": "Skills",
-        "skill": "Charge Strength S (Random)",
-        "fp": 12,
-        "frequency": 3400,
-        "ingRatio": 16.2,
-        "skillRatio": 12.5,
-        "ancestor": 54,
-        "evolutionCount": 1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 14,
-        "ing1": {
-            "name": "cacao",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "apple",
+            "name": "potato",
             "c2": 4,
             "c3": 6
         },
         "ing3": {
-            "name": "sausage",
-            "c3": 5
+            "name": "leek",
+            "c3": 4
         }
     },
     {
@@ -3297,6 +1333,70 @@
         "ing3": {
             "name": "mushroom",
             "c3": 4
+        }
+    },
+    {
+        "id": 79,
+        "name": "Slowpoke",
+        "sleepType": "snoozing",
+        "type": "water",
+        "speciality": "Skills",
+        "skill": "Energizing Cheer S",
+        "fp": 5,
+        "frequency": 5700,
+        "ingRatio": 15.1,
+        "skillRatio": 6.7,
+        "ancestor": 79,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tail",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "tomato",
+            "c3": 5
+        }
+    },
+    {
+        "id": 80,
+        "name": "Slowbro",
+        "sleepType": "snoozing",
+        "type": "water",
+        "speciality": "Skills",
+        "skill": "Energizing Cheer S",
+        "fp": 12,
+        "frequency": 3800,
+        "ingRatio": 19.7,
+        "skillRatio": 6.8,
+        "ancestor": 79,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tail",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "tomato",
+            "c3": 5
         }
     },
     {
@@ -3420,6 +1520,102 @@
         }
     },
     {
+        "id": 92,
+        "name": "Gastly",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S (Random)",
+        "fp": 5,
+        "frequency": 3800,
+        "ingRatio": 14.4,
+        "skillRatio": 1.5,
+        "ancestor": 92,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "herb",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 8
+        }
+    },
+    {
+        "id": 93,
+        "name": "Haunter",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S (Random)",
+        "fp": 12,
+        "frequency": 3000,
+        "ingRatio": 15.7,
+        "skillRatio": 2.2,
+        "ancestor": 92,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "herb",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 8
+        }
+    },
+    {
+        "id": 94,
+        "name": "Gengar",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S (Random)",
+        "fp": 22,
+        "frequency": 2200,
+        "ingRatio": 16.1,
+        "skillRatio": 2.4,
+        "ancestor": 92,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "herb",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 8
+        }
+    },
+    {
         "id": 95,
         "name": "Onix",
         "sleepType": "slumbering",
@@ -3508,6 +1704,166 @@
         }
     },
     {
+        "id": 115,
+        "name": "Kangaskhan",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "speciality": "Ingredients",
+        "skill": "Ingredient Magnet S",
+        "fp": 16,
+        "frequency": 2800,
+        "ingRatio": 22.2,
+        "skillRatio": 1.7,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "ginger",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 8
+        }
+    },
+    {
+        "id": 122,
+        "name": "Mr. Mime",
+        "sleepType": "snoozing",
+        "type": "psychic",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 12,
+        "frequency": 2800,
+        "ingRatio": 21.6,
+        "skillRatio": 3.9,
+        "ancestor": 439,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "tomato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 4
+        }
+    },
+    {
+        "id": 127,
+        "name": "Pinsir",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 16,
+        "frequency": 2400,
+        "ingRatio": 21.6,
+        "skillRatio": 3.1,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 24,
+        "ing1": {
+            "name": "honey",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "apple",
+            "c2": 5,
+            "c3": 8
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 7
+        }
+    },
+    {
+        "id": 132,
+        "name": "Ditto",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S (Random)",
+        "fp": 16,
+        "frequency": 3500,
+        "ingRatio": 20.1,
+        "skillRatio": 3.6,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "oil",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "leek",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "tail",
+            "c3": 3
+        }
+    },
+    {
+        "id": 133,
+        "name": "Eevee",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "speciality": "Skills",
+        "skill": "Ingredient Magnet S",
+        "fp": 5,
+        "frequency": 3700,
+        "ingRatio": 19.2,
+        "skillRatio": 5.5,
+        "ancestor": 133,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
         "id": 134,
         "name": "Vaporeon",
         "sleepType": "slumbering",
@@ -3536,6 +1892,358 @@
         },
         "ing3": {
             "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
+        "id": 135,
+        "name": "Jolteon",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Extra Helpful S",
+        "fp": 20,
+        "frequency": 2200,
+        "ingRatio": 15.1,
+        "skillRatio": 3.9,
+        "ancestor": 133,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
+        "id": 136,
+        "name": "Flareon",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Skills",
+        "skill": "Cooking Power-Up S",
+        "fp": 20,
+        "frequency": 2700,
+        "ingRatio": 18.5,
+        "skillRatio": 5.2,
+        "ancestor": 133,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
+        "id": 147,
+        "name": "Dratini",
+        "sleepType": "dozing",
+        "type": "dragon",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 5,
+        "frequency": 5000,
+        "ingRatio": 25,
+        "skillRatio": 2,
+        "ancestor": 147,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "herb",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 8
+        }
+    },
+    {
+        "id": 148,
+        "name": "Dragonair",
+        "sleepType": "dozing",
+        "type": "dragon",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 3800,
+        "ingRatio": 26.2,
+        "skillRatio": 2.5,
+        "ancestor": 147,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "herb",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 8
+        }
+    },
+    {
+        "id": 149,
+        "name": "Dragonite",
+        "sleepType": "dozing",
+        "type": "dragon",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 25,
+        "frequency": 2600,
+        "ingRatio": 26.4,
+        "skillRatio": 2.6,
+        "ancestor": 147,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "herb",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 8
+        }
+    },
+    {
+        "id": 152,
+        "name": "Chikorita",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 5,
+        "frequency": 4400,
+        "ingRatio": 16.9,
+        "skillRatio": 3.9,
+        "ancestor": 152,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "honey",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 3
+        }
+    },
+    {
+        "id": 153,
+        "name": "Bayleef",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 12,
+        "frequency": 3300,
+        "ingRatio": 16.8,
+        "skillRatio": 3.8,
+        "ancestor": 152,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "honey",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 3
+        }
+    },
+    {
+        "id": 154,
+        "name": "Meganium",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 20,
+        "frequency": 2800,
+        "ingRatio": 17.5,
+        "skillRatio": 4.6,
+        "ancestor": 152,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "honey",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 3
+        }
+    },
+    {
+        "id": 155,
+        "name": "Cyndaquil",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 5,
+        "frequency": 3500,
+        "ingRatio": 18.6,
+        "skillRatio": 2.1,
+        "ancestor": 155,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "ginger",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 3
+        }
+    },
+    {
+        "id": 156,
+        "name": "Quilava",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 12,
+        "frequency": 3000,
+        "ingRatio": 21.1,
+        "skillRatio": 4.1,
+        "ancestor": 155,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "ginger",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 3
+        }
+    },
+    {
+        "id": 157,
+        "name": "Typhlosion",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 20,
+        "frequency": 2400,
+        "ingRatio": 20.8,
+        "skillRatio": 3.9,
+        "ancestor": 155,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 23,
+        "ing1": {
+            "name": "ginger",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "oil",
             "c3": 3
         }
     },
@@ -3752,6 +2460,122 @@
         }
     },
     {
+        "id": 176,
+        "name": "Togetic",
+        "sleepType": "snoozing",
+        "type": "fairy",
+        "speciality": "Skills",
+        "skill": "Metronome",
+        "fp": 12,
+        "frequency": 3800,
+        "ingRatio": 16.3,
+        "skillRatio": 5.6,
+        "ancestor": 175,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "egg",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "cacao",
+            "c3": 3
+        }
+    },
+    {
+        "id": 179,
+        "name": "Mareep",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Charge Strength M",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRatio": 12.8,
+        "skillRatio": 4.7,
+        "ancestor": 179,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "herb",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 3,
+            "c3": 4
+        }
+    },
+    {
+        "id": 180,
+        "name": "Flaaffy",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Charge Strength M",
+        "fp": 12,
+        "frequency": 3300,
+        "ingRatio": 12.7,
+        "skillRatio": 4.6,
+        "ancestor": 179,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "herb",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 3,
+            "c3": 4
+        }
+    },
+    {
+        "id": 181,
+        "name": "Ampharos",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Charge Strength M",
+        "fp": 20,
+        "frequency": 2500,
+        "ingRatio": 13,
+        "skillRatio": 4.7,
+        "ancestor": 179,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 15,
+        "ing1": {
+            "name": "herb",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 3,
+            "c3": 4
+        }
+    },
+    {
         "id": 185,
         "name": "Sudowoodo",
         "sleepType": "slumbering",
@@ -3784,6 +2608,134 @@
         }
     },
     {
+        "id": 196,
+        "name": "Espeon",
+        "sleepType": "snoozing",
+        "type": "psychic",
+        "speciality": "Skills",
+        "skill": "Charge Strength M",
+        "fp": 20,
+        "frequency": 2400,
+        "ingRatio": 16.4,
+        "skillRatio": 4.4,
+        "ancestor": 133,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
+        "id": 197,
+        "name": "Umbreon",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Skills",
+        "skill": "Charge Energy S",
+        "fp": 20,
+        "frequency": 3200,
+        "ingRatio": 21.9,
+        "skillRatio": 14.1,
+        "ancestor": 133,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
+        "id": 199,
+        "name": "Slowking",
+        "sleepType": "snoozing",
+        "type": "water",
+        "speciality": "Skills",
+        "skill": "Energizing Cheer S",
+        "fp": 20,
+        "frequency": 3400,
+        "ingRatio": 16.6,
+        "skillRatio": 7.4,
+        "ancestor": 79,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tail",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "tomato",
+            "c3": 5
+        }
+    },
+    {
+        "id": 202,
+        "name": "Wobbuffet",
+        "sleepType": "snoozing",
+        "type": "psychic",
+        "speciality": "Skills",
+        "skill": "Energizing Cheer S",
+        "fp": 7,
+        "frequency": 3500,
+        "ingRatio": 21.1,
+        "skillRatio": 6.4,
+        "ancestor": 360,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 13,
+        "ing1": {
+            "name": "apple",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 3
+        }
+    },
+    {
         "id": 208,
         "name": "Steelix",
         "sleepType": "slumbering",
@@ -3812,6 +2764,198 @@
         },
         "ing3": {
             "name": "potato",
+            "c3": 3
+        }
+    },
+    {
+        "id": 214,
+        "name": "Heracross",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Skills",
+        "skill": "Ingredient Magnet S",
+        "fp": 16,
+        "frequency": 2400,
+        "ingRatio": 15.8,
+        "skillRatio": 4.7,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "honey",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 4
+        }
+    },
+    {
+        "id": 225,
+        "name": "Delibird",
+        "sleepType": "dozing",
+        "type": "flying",
+        "speciality": "Ingredients",
+        "skill": "Ingredient Magnet S",
+        "fp": 16,
+        "frequency": 2500,
+        "ingRatio": 18.8,
+        "skillRatio": 1.5,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "egg",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "apple",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "cacao",
+            "c3": 5
+        }
+    },
+    {
+        "id": 228,
+        "name": "Houndour",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Berries",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 4900,
+        "ingRatio": 20.1,
+        "skillRatio": 4.4,
+        "ancestor": 228,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "herb",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 3
+        }
+    },
+    {
+        "id": 229,
+        "name": "Houndoom",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Berries",
+        "skill": "Charge Strength S",
+        "fp": 12,
+        "frequency": 3300,
+        "ingRatio": 20.3,
+        "skillRatio": 4.6,
+        "ancestor": 228,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "herb",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 3
+        }
+    },
+    {
+        "id": 243,
+        "name": "Raikou",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Helper Boost",
+        "fp": 30,
+        "frequency": 2100,
+        "ingRatio": 19.2,
+        "skillRatio": 1.9,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 22,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 2
+        }
+    },
+    {
+        "id": 244,
+        "name": "Entei",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Skills",
+        "skill": "Helper Boost",
+        "fp": 30,
+        "frequency": 2400,
+        "ingRatio": 18.7,
+        "skillRatio": 2.3,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "oil",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "tomato",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "mushroom",
             "c3": 3
         }
     },
@@ -3880,6 +3024,326 @@
         }
     },
     {
+        "id": 248,
+        "name": "Tyranitar",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 25,
+        "frequency": 2700,
+        "ingRatio": 26.6,
+        "skillRatio": 5.2,
+        "ancestor": 246,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "ginger",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 5,
+            "c3": 8
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 8
+        }
+    },
+    {
+        "id": 280,
+        "name": "Ralts",
+        "sleepType": "snoozing",
+        "type": "psychic",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 5,
+        "frequency": 4800,
+        "ingRatio": 14.5,
+        "skillRatio": 4.3,
+        "ancestor": 280,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "apple",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 2
+        }
+    },
+    {
+        "id": 281,
+        "name": "Kirlia",
+        "sleepType": "snoozing",
+        "type": "psychic",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 12,
+        "frequency": 3500,
+        "ingRatio": 14.6,
+        "skillRatio": 4.3,
+        "ancestor": 280,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
+        "ing1": {
+            "name": "apple",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 2
+        }
+    },
+    {
+        "id": 282,
+        "name": "Gardevoir",
+        "sleepType": "snoozing",
+        "type": "psychic",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 20,
+        "frequency": 2400,
+        "ingRatio": 14.4,
+        "skillRatio": 4.2,
+        "ancestor": 280,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "apple",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "leek",
+            "c3": 2
+        }
+    },
+    {
+        "id": 287,
+        "name": "Slakoth",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "speciality": "Berries",
+        "skill": "Ingredient Magnet S",
+        "fp": 5,
+        "frequency": 4900,
+        "ingRatio": 21.6,
+        "skillRatio": 1.9,
+        "ancestor": 287,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 7,
+        "ing1": {
+            "name": "tomato",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "honey",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "apple",
+            "c3": 4
+        }
+    },
+    {
+        "id": 288,
+        "name": "Vigoroth",
+        "sleepType": "dozing",
+        "type": "normal",
+        "speciality": "Berries",
+        "skill": "Ingredient Magnet S",
+        "fp": 12,
+        "frequency": 3200,
+        "ingRatio": 20.4,
+        "skillRatio": 1.5,
+        "ancestor": 287,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "tomato",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "honey",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "apple",
+            "c3": 4
+        }
+    },
+    {
+        "id": 289,
+        "name": "Slaking",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "speciality": "Berries",
+        "skill": "Ingredient Magnet S",
+        "fp": 22,
+        "frequency": 3800,
+        "ingRatio": 33.9,
+        "skillRatio": 6.7,
+        "ancestor": 287,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "tomato",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "honey",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "apple",
+            "c3": 4
+        }
+    },
+    {
+        "id": 302,
+        "name": "Sableye",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Skills",
+        "skill": "Dream Shard Magnet S (Random)",
+        "fp": 16,
+        "frequency": 3600,
+        "ingRatio": 18.8,
+        "skillRatio": 6.8,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "oil",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "cacao",
+            "c3": 3
+        }
+    },
+    {
+        "id": 316,
+        "name": "Gulpin",
+        "sleepType": "dozing",
+        "type": "poison",
+        "speciality": "Skills",
+        "skill": "Dream Shard Magnet S (Random)",
+        "fp": 5,
+        "frequency": 5900,
+        "ingRatio": 21.4,
+        "skillRatio": 6.3,
+        "ancestor": 316,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
+        "ing1": {
+            "name": "soy",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 4
+        }
+    },
+    {
+        "id": 317,
+        "name": "Swalot",
+        "sleepType": "dozing",
+        "type": "poison",
+        "speciality": "Skills",
+        "skill": "Dream Shard Magnet S (Random)",
+        "fp": 12,
+        "frequency": 3500,
+        "ingRatio": 21,
+        "skillRatio": 7,
+        "ancestor": 316,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "soy",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 4
+        }
+    },
+    {
         "id": 333,
         "name": "Swablu",
         "sleepType": "slumbering",
@@ -3909,6 +3373,134 @@
         "ing3": {
             "name": "apple",
             "c3": 5
+        }
+    },
+    {
+        "id": 334,
+        "name": "Altaria",
+        "sleepType": "dozing",
+        "type": "dragon",
+        "speciality": "Berries",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 3700,
+        "ingRatio": 25.8,
+        "skillRatio": 6.1,
+        "ancestor": 333,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "egg",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "apple",
+            "c3": 5
+        }
+    },
+    {
+        "id": 353,
+        "name": "Shuppet",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 5,
+        "frequency": 3900,
+        "ingRatio": 17.1,
+        "skillRatio": 2.6,
+        "ancestor": 353,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "oil",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "mushroom",
+            "c3": 3
+        }
+    },
+    {
+        "id": 354,
+        "name": "Banette",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Berries",
+        "skill": "Charge Strength S (Random)",
+        "fp": 16,
+        "frequency": 2600,
+        "ingRatio": 17.9,
+        "skillRatio": 3.3,
+        "ancestor": 353,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "oil",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "mushroom",
+            "c3": 3
+        }
+    },
+    {
+        "id": 359,
+        "name": "Absol",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 16,
+        "frequency": 3100,
+        "ingRatio": 17.8,
+        "skillRatio": 3.8,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "cacao",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "apple",
+            "c2": 8,
+            "c3": 12
+        },
+        "ing3": {
+            "name": "mushroom",
+            "c3": 7
         }
     },
     {
@@ -4168,6 +3760,62 @@
         }
     },
     {
+        "id": 453,
+        "name": "Croagunk",
+        "sleepType": "dozing",
+        "type": "poison",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 5600,
+        "ingRatio": 22.8,
+        "skillRatio": 4.2,
+        "ancestor": 453,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "oil",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 5,
+            "c3": 8
+        }
+    },
+    {
+        "id": 454,
+        "name": "Toxicroak",
+        "sleepType": "dozing",
+        "type": "poison",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 12,
+        "frequency": 3400,
+        "ingRatio": 22.9,
+        "skillRatio": 4.3,
+        "ancestor": 453,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "oil",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 5,
+            "c3": 8
+        }
+    },
+    {
         "id": 459,
         "name": "Snover",
         "sleepType": "slumbering",
@@ -4260,6 +3908,70 @@
         }
     },
     {
+        "id": 468,
+        "name": "Togekiss",
+        "sleepType": "snoozing",
+        "type": "fairy",
+        "speciality": "Skills",
+        "skill": "Metronome",
+        "fp": 22,
+        "frequency": 2600,
+        "ingRatio": 15.8,
+        "skillRatio": 5.3,
+        "ancestor": 175,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "egg",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "cacao",
+            "c3": 3
+        }
+    },
+    {
+        "id": 470,
+        "name": "Leafeon",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Skills",
+        "skill": "Energizing Cheer S",
+        "fp": 20,
+        "frequency": 3000,
+        "ingRatio": 20.5,
+        "skillRatio": 5.9,
+        "ancestor": 133,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 13,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
         "id": 471,
         "name": "Glaceon",
         "sleepType": "slumbering",
@@ -4320,6 +4032,70 @@
         },
         "ing3": {
             "name": "leek",
+            "c3": 2
+        }
+    },
+    {
+        "id": 700,
+        "name": "Sylveon",
+        "sleepType": "snoozing",
+        "type": "fairy",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 20,
+        "frequency": 2600,
+        "ingRatio": 17.8,
+        "skillRatio": 4,
+        "ancestor": 133,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 15,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
+        }
+    },
+    {
+        "id": 702,
+        "name": "Dedenne",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Tasty Chance S",
+        "fp": 16,
+        "frequency": 2500,
+        "ingRatio": 17.7,
+        "skillRatio": 4.5,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "apple",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ing3": {
+            "name": "corn",
             "c3": 2
         }
     },
@@ -4388,6 +4164,38 @@
         }
     },
     {
+        "id": 764,
+        "name": "Comfey",
+        "sleepType": "snoozing",
+        "type": "fairy",
+        "speciality": "Ingredients",
+        "skill": "Energizing Cheer S",
+        "fp": 16,
+        "frequency": 2500,
+        "ingRatio": 13.9,
+        "skillRatio": 2.2,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "corn",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "cacao",
+            "c3": 7
+        }
+    },
+    {
         "id": 845,
         "name": "Cramorant",
         "sleepType": "slumbering",
@@ -4417,6 +4225,198 @@
         "ing3": {
             "name": "egg",
             "c3": 8
+        }
+    },
+    {
+        "id": 906,
+        "name": "Sprigatito",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRatio": 20.8,
+        "skillRatio": 2.3,
+        "ancestor": 906,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
+        "id": 907,
+        "name": "Floragato",
+        "sleepType": "dozing",
+        "type": "grass",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 12,
+        "frequency": 3500,
+        "ingRatio": 20.9,
+        "skillRatio": 2.3,
+        "ancestor": 906,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
+        "id": 908,
+        "name": "Meowscarada",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 20,
+        "frequency": 2600,
+        "ingRatio": 19,
+        "skillRatio": 2.2,
+        "ancestor": 906,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
+        "id": 909,
+        "name": "Fuecoco",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 5,
+        "frequency": 4200,
+        "ingRatio": 25.4,
+        "skillRatio": 5.3,
+        "ancestor": 909,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "apple",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 5
+        }
+    },
+    {
+        "id": 910,
+        "name": "Crocalor",
+        "sleepType": "snoozing",
+        "type": "fire",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 3100,
+        "ingRatio": 24.7,
+        "skillRatio": 5,
+        "ancestor": 909,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "apple",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 5
+        }
+    },
+    {
+        "id": 911,
+        "name": "Skeledirge",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 20,
+        "frequency": 2700,
+        "ingRatio": 26.8,
+        "skillRatio": 6.2,
+        "ancestor": 909,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "apple",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 4,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "herb",
+            "c3": 5
         }
     },
     {
