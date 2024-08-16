@@ -45,6 +45,11 @@ export interface EnergyParameter {
 
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
+
+    /**
+     * Event option.
+     */
+    event: "none"|"1st week"|"2nd week";
 }
 
 type EnergyEvent = {
@@ -173,6 +178,8 @@ class Energy {
             .filter(x => !x.isAwake));
 
         // calculate Sneaky Snacking
+        const isEventBoosted = (param.event !== "none" &&
+            this._iv.pokemon.type === "water");
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
@@ -499,13 +506,16 @@ class Energy {
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
         if (lotteryCount > 0) {
-            const skillNone = Math.pow(1 - rp.skillRatio, lotteryCount);
+            const isEventBoosted = (param.event !== "none" &&
+                this._iv.pokemon.type === "water");
+            const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
+            const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.speciality !== 'Skills') {
                 skillProbabilityAfterWakeup.once = 1 - skillNone;
             }
             else {
-                const skillOnce = lotteryCount * rp.skillRatio *
-                    Math.pow(1 - rp.skillRatio, lotteryCount - 1);
+                const skillOnce = lotteryCount * skillRatio *
+                    Math.pow(1 - skillRatio, lotteryCount - 1);
                 skillProbabilityAfterWakeup.once = skillOnce;
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
