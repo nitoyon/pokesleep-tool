@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "suicune event simmulation": {
+                    "headline": "스이쿤 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
+                    "detail": "[$t(strength2)] 탭에서 수이크닝 이벤트 중 물 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
+                },
                 "evolution count and ribbon": {
                     "headline": "진화 횟수와 굿나잇리본의 레벨이 이제 설정 가능합니다.",
                     "detail": "이제 [$t(carry limit)]로 진화 횟수를, [$t(sleeping time shared)]로 수면 시간을 지정할 수 있습니다.\n이를 통해 '$t(carry limit)'와 '$t(frequency)'에 적절한 값을 사용하여 포켓몬 성능을 확인할 수 있습니다."
