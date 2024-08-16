@@ -21,16 +21,15 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
-const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
+const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
     parameter: StrengthParameter,
+    sortConfig: BoxSortConfig,
     dispatch: (action: IvAction) => void,
     onShare: () => void,
 }) => {
     const { t } = useTranslation();
-    const defaultSortConfig = React.useMemo(() => loadBoxSortConfig(), []);
-    const [sortConfig, setSortConfig] = React.useState<BoxSortConfig>(defaultSortConfig);
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((action: IvAction) => {
@@ -45,9 +44,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         const newValue = {...sortConfig,
             sort: value.sort as BoxSortType,
             descending: value.descending};
-        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newValue));
-        setSortConfig(newValue);
-    }, [sortConfig]);
+        dispatch({type: 'changeBoxSortConfig', payload: {parameter: newValue}});
+    }, [dispatch, sortConfig]);
     const onFilterButtonClick = React.useCallback(() => {
         setFilterOpen(true);
     }, []);
@@ -173,7 +171,7 @@ export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry";
 /**
  * Pokemon box sort configuration.
  */
-interface BoxSortConfig {
+export interface BoxSortConfig {
     /** Sort type. */
     sort: BoxSortType;
     /** Descending (true) or ascending (false). */
@@ -299,7 +297,7 @@ let boxFilterConfig = new BoxFilterConfig({});
  * Load box sort config from localStorage.
  * @returns config.
  */
-function loadBoxSortConfig(): BoxSortConfig {
+export function loadBoxSortConfig(): BoxSortConfig {
     const ret: BoxSortConfig = {
         sort: "level",
         descending: true,
