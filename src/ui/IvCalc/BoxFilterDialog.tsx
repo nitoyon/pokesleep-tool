@@ -23,9 +23,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
 
-    let defaultTabIndex = value.filterTypes.length !== 0 ? 0 :
-        value.ingredientName !== undefined ? 1 : 0;
-    const [tabIndex, setTabIndex] = React.useState(defaultTabIndex);
+    const [tabIndex, setTabIndex] = React.useState(0);
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
     }, []);
@@ -145,7 +143,7 @@ const StyledTabs = styled(Tabs)({
 const StyledTab = styled(Tab)({
     minHeight: '36px',
     minWidth: '0',
-    padding: '6px 8px',
+    padding: '6px 5px',
     textTransform: 'none',
 });
 
