@@ -174,10 +174,7 @@ class Energy {
 
         // calculate Sneaky Snacking
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, param.isEnergyAlwaysFull,
-                param.helpBonusCount, param.isGoodCampTicketSet,
-                param.tapFrequency === "none",
-                param.tapFrequencyAsleep === "always");
+            this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
@@ -389,17 +386,11 @@ class Energy {
      * Calculate sneaky snacking and returns help count while sleeping.
      * @param events Events.
      * @param efficiencies Efficiencies.
-     * @param isEnergyAlwaysFull Energy is always 100 or not.
-     * @param helpBonusCount The number of pokemon which has helping bonus sub-skill.
-     * @param isGoodCampTicketSet Whether good camp ticket is set or not.
-     * @param alwaysSnacking Whether always snacking or not.
-     * @param alwaysTapAsleep Whether tap every minute while sleeping.
+     * @param param EnergyParameter.
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        isEnergyAlwaysFull: boolean, helpBonusCount: 0|1|2|3|4|5, isGoodCampTicketSet: boolean,
-        alwaysSnacking: boolean, alwaysTapAsleep: boolean
-    ):
+        param: EnergyParameter):
     {
         timeToFullInventory: number,
         skillProbabilityAfterWakeup: {
@@ -412,6 +403,12 @@ class Energy {
             asleepFull: number,
         },
     } {
+        const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
+        const helpBonusCount = param.helpBonusCount;
+        const isGoodCampTicketSet = param.isGoodCampTicketSet;
+        const alwaysSnacking = param.tapFrequency === "none";
+        const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
+
         // get carry limit (assumes that we evolved this pokemon from the beginning)
         const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1));
 
