@@ -323,7 +323,7 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     const mainSkill = pokemonIv.pokemon.skill;
     let mainSkillValue: string;
     if (mainSkill.startsWith("Charge Strength")) {
-        mainSkillValue = Math.round(result.skillValue).toString();
+        mainSkillValue = formatWithComma(Math.round(result.skillValue));
     }
     else if (mainSkill === "Metronome") {
         mainSkillValue = round2(result.skillCount);
