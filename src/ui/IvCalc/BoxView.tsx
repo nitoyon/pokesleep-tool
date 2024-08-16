@@ -5,7 +5,7 @@ import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
-import { IngredientName, PokemonType } from '../../data/pokemons';
+import { IngredientName, IngredientNames, PokemonType } from '../../data/pokemons';
 import { MainSkillName } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
 import PokemonRp from '../../util/PokemonRp';
@@ -63,8 +63,8 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
 
     // sort
     let sortedItems: PokemonBoxItem[] = React.useMemo(
-        () => sortPokemonItems(filtered, sortConfig.sort, parameter, t),
-        [sortConfig.sort, filtered, parameter, t]);
+        () => sortPokemonItems(filtered, sortConfig, parameter, t),
+        [sortConfig, filtered, parameter, t]);
     if (!sortConfig.descending) {
         sortedItems = [...sortedItems].reverse();
     }
@@ -79,7 +79,7 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
     const footerSortTypes = React.useMemo(() => 
-        ["level", "name", "pokedexno", "rp", "berry"], []);
+        ["level", "name", "pokedexno", "rp", "berry", "ingredient"], []);
         
     return <>
         <div style={{
@@ -117,10 +117,11 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
 });
 
 function sortPokemonItems(filtered: PokemonBoxItem[],
-    sort: BoxSortType,
+    sortConfig: BoxSortConfig,
     parameter: StrengthParameter,
     t: typeof i18next.t
 ) {
+    const sort = sortConfig.sort;
     if (sort === "level") {
         return filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
@@ -162,11 +163,32 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.id - a.id);
     }
+    else if (sort === "ingredient") {
+        const cache: {[id: string]: number} = {};
+        filtered.forEach((item) => {
+            const strength = new PokemonStrength(item.iv, parameter);
+            const res = strength.calculate().ingredients;
+            if (sortConfig.ingredient === "unknown") {
+                // total ingredient count
+                cache[item.id] = res.reduce((p, c) => p + c.count, 0);
+            }
+            else {
+                // specified ingredient count
+                cache[item.id] = res
+                    .find(x => x.name === sortConfig.ingredient)?.count ?? 0;
+            }
+        });
+        return filtered
+            .filter(x => cache[x.id] > 0)
+            .sort((a, b) =>
+                cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
+                b.id - a.id);
+    }
     return filtered;
 }
 
 /** Represents the field by which the box are sorted.  */
-export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry";
+export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry"|"ingredient";
 
 /**
  * Pokemon box sort configuration.
@@ -174,6 +196,8 @@ export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry";
 export interface BoxSortConfig {
     /** Sort type. */
     sort: BoxSortType;
+    /** Ingredient name when `sort` is `"ingredient"`. */
+    ingredient: IngredientName;
     /** Descending (true) or ascending (false). */
     descending: boolean;
 }
@@ -262,7 +286,6 @@ export class BoxFilterConfig implements IBoxFilterConfig {
                 .some(n => x.iv.pokemon.skill.startsWith(n)));
         }
         if (this.subSkillNames.length !== 0) {
-            console.log("and", this.subSkillAnd);
             ret = ret.filter(x => {
                 const subSkills = x.iv.subSkills
                     .getActiveSubSkills(this.subSkillUnlockedOnly ? x.iv.level : 100)
@@ -300,6 +323,7 @@ let boxFilterConfig = new BoxFilterConfig({});
 export function loadBoxSortConfig(): BoxSortConfig {
     const ret: BoxSortConfig = {
         sort: "level",
+        ingredient: "unknown",
         descending: true,
     };
 
@@ -312,8 +336,12 @@ export function loadBoxSortConfig(): BoxSortConfig {
         return ret;
     }
     if (typeof(json.sort) === "string" &&
-        ["level", "name", "pokedexno", "rp", "berry"].includes(json.sort)) {
+        ["level", "name", "pokedexno", "rp", "berry", "ingredient"].includes(json.sort)) {
         ret.sort = json.sort;
+    }
+    if (typeof(json.ingredient) === "string" &&
+        IngredientNames.includes(json.ingredient)) {
+        ret.ingredient = json.ingredient;
     }
     if (typeof(json.descending) === "boolean") {
         ret.descending = json.descending;

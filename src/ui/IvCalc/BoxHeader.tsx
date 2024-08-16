@@ -2,8 +2,10 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { IvAction } from './IvState';
 import { BoxSortConfig } from './BoxView';
+import IngredientIcon from './IngredientIcon';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { StrengthParameter } from '../../util/PokemonStrength';
+import { IngredientName, IngredientNames } from '../../data/pokemons';
 import { Select, SelectChangeEvent, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -23,8 +25,27 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
     const onFieldChange = React.useCallback((fieldIndex: number) => {
         onChange({...parameter, fieldIndex});
     }, [onChange, parameter]);
+    const onIngredientChange = React.useCallback((e: SelectChangeEvent) => {
+        dispatch({type: "changeBoxSortConfig", payload: { parameter: {
+            ...sortConfig, ingredient: e.target.value as IngredientName,
+        }}});
+    }, [dispatch, sortConfig]);
 
-    if (sortConfig.sort !== "berry") {
+    const ingMenus = React.useMemo(() => {
+        const ret: React.ReactElement[] = IngredientNames.map(ing =>
+            <IngMenuItem key={ing} value={ing}>
+                <IngredientIcon name={ing}/>
+            </IngMenuItem>);
+        ret.unshift(<IngMenuItem key="unknown" value="unknown">
+            {t('total')}
+        </IngMenuItem>);
+        return ret;
+    }, [t]);
+
+
+    if (sortConfig.sort !== "berry" &&
+        sortConfig.sort !== "ingredient"
+    ) {
         return <></>;
     }
     return <StyledBoxHeader>
@@ -42,10 +63,16 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
                     <MenuItem value={100}>Lv. 100</MenuItem>
                 </Select>
             </span>
-            <span>
+            {sortConfig.sort === "berry" && <span>
                 <ResearchAreaTextField value={parameter.fieldIndex} showEmpty
                     onChange={onFieldChange}/>
-            </span>
+            </span>}
+            {sortConfig.sort === "ingredient" && <span>
+                <Select variant="standard" onChange={onIngredientChange}
+                    value={sortConfig.ingredient}>
+                    {ingMenus}
+                </Select>
+            </span>}
         </div>
     </StyledBoxHeader>;
 });
@@ -66,11 +93,26 @@ const StyledBoxHeader = styled('div')({
             '&:first-of-type': {
                 marginLeft: 0,
             },
-        },
-        '& div': {
-            fontSize: '0.9rem',
+
+            '& > div': {
+                fontSize: '0.9rem',
+                '& > div.MuiSelect-select': {
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                },
+                '& svg': {
+                    paddingLeft: '5px',
+                    width: '18px',
+                    height: '18px',
+                },
+            },
         },
     },
+});
+
+const IngMenuItem = styled(MenuItem)({
+    width: '4rem',
+    float: 'left',
 });
 
 export default BoxHeader;

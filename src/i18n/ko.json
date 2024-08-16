@@ -256,6 +256,7 @@
         "main skill": "메인 스킬",
         "sub skills": "서브 스킬",
         "unlocked only": "오직 잠금 해제됨",
+        "total": "총계",
 
         "select subskill at level xxx": "<level/>의 서브 스킬을 선택해주세요",
 
