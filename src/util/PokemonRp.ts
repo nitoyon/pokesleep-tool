@@ -163,7 +163,7 @@ class PokemonRp {
                 case 1: return 0.88; 
             }
         }
-        if (this.ribbon >= 1) {
+        if (this.ribbon >= 2) {
             switch (this.pokemon.evolutionLeft) {
                 case 2: return 0.89;
                 case 1: return 0.95; 

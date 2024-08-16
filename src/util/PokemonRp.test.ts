@@ -29,6 +29,26 @@ describe('PokemonRP', () => {
             const rp = new PokemonRp(iv);
             expect(Math.floor(rp.frequency)).toBe(27 * 60);
         });
+
+        test('test with ribbon', () => {
+            const iv = new PokemonIv('Pichu');
+            iv.level = 1;
+
+            iv.ribbon = 0;
+            expect(new PokemonRp(iv).frequency).toBe(4300);
+
+            iv.ribbon = 1;
+            expect(new PokemonRp(iv).frequency).toBe(4300);
+
+            iv.ribbon = 2;
+            expect(Math.floor(new PokemonRp(iv).frequency)).toBe(3827);
+
+            iv.ribbon = 3;
+            expect(Math.floor(new PokemonRp(iv).frequency)).toBe(3827);
+
+            iv.ribbon = 4;
+            expect(Math.floor(new PokemonRp(iv).frequency)).toBe(3225);
+        });
     });
 
     describe('RP', () => {

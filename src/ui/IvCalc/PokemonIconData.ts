@@ -437,10 +437,23 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#c1907a'},
         {x: 0, y: 0, w: 1, h: 0.2, color: '#8fc261'},
     ],
+    // Wooper
+    '194': [
+        {x: 0.1, y: 0.15, w: 0.8, h: 0.6, r: 0.35, color: '#6cecff'},
+        {x: 0.3, y: 0.65, w: 0.4, h: 0.4, r: 0.2, color: '#6cecff'},
+        {x: 0.46, y: 0.78, w: 0.08, h: 0.04, r: 0.025, color: '#0c5a8f'},
+        {x: 0.43, y: 0.85, w: 0.14, h: 0.04, r: 0.025, color: '#0c5a8f'},
+        {x: 0.4, y: 0.92, w: 0.2, h: 0.04, r: 0.025, color: '#0c5a8f'},
+    ],
+    // Quagsire
+    '195': [
+        {x: 0.1, y: 0, w: 0.8, h: 1, r: 0.3, color: '#95ecff'},
+        {x: 0.05, y: 0.4, w: 0.9, h: 0.6, r: 0.2, color: '#95ecff'}
+    ],
     // Espeon
     '196': [
         {x: 0, y: 0, w: 1, h: 1, color: '#ebd9e8'},
-        {x: 0.45, y: 0.2, w: 0.1, h: 0.1, r: 0.05, color: '#d85861'},
+        {x: 0.43, y: 0.2, w: 0.14, h: 0.14, r: 0.07, color: '#d85861'},
     ],
     // Umbreon
     '197': [
@@ -457,7 +470,9 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     ],
     // Wobbuffet
     '202': [
-        {x: 0, y: 0, w: 1, h: 1, color: '#8ce0f8'},
+        {x: 0.7, y: 0.8, w: 0.3, h: 0.25, r: 0.2, color: '#484848'},
+        {x: 0.2, y: 0.05, w: 0.6, h: 1.2, r: 0.2, color: '#8ce0f8'},
+        {x: 0.87, y: 0.87, w: 0.08, h: 0.08, r: 0.04, color: '#ffffff'}
     ],
     // Steelix
     '208': [
@@ -590,7 +605,11 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     ],
     // Wynaut
     '360': [
-        {x: 0, y: 0, w: 1, h: 1, color: '#96e9f0'},
+        {x: 0.15, y: 0.15, w: 0.7, h: 0.7, r: 0.33, color: '#96e9f0'},
+        {x: 0.6, y: 0.85, w: 0.35, h: 0.15, r: 0.1, color: '#494949'},
+        {x: 0.83, y: 0.89, w: 0.08, h: 0.08, r: 0.04, color: '#ffffff'},
+        {x: 0.26, y: 0.65, w: 0.48, h: 0.4, r: 0.3, color: '#96e9f0'},
+        {x: 0.25, y: 0.8, w: 0.5, h: 0.2, r: 0.1    , color: '#96e9f0'},
     ],
     // Spheal
     '363': [
