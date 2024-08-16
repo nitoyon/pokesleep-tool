@@ -7,7 +7,7 @@ import IngredientIcon from './IngredientIcon';
 import MainSkillIcon from './MainSkillIcon';
 import { IngredientName, IngredientNames, PokemonType, PokemonTypes
 } from '../../data/pokemons';
-import { MainSkillName } from '../../util/MainSkill';
+import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import SubSkill, { SubSkillType } from '../../util/SubSkill';
 import { Button, Dialog, DialogActions, InputAdornment, Switch,
     Tab, Tabs, TextField } from '@mui/material';
@@ -186,14 +186,6 @@ const MainSkillTab = React.memo(({value, onChange}: {
     value: MainSkillName[];
     onChange: (value: MainSkillName[]) => void,
 }) => {
-    const mainSkills: MainSkillName[] = [
-        "Charge Strength S", "Charge Strength M",
-        "Ingredient Magnet S", "Energy for Everyone S",
-        "Charge Energy S", "Energizing Cheer S",
-        "Cooking Power-Up S", "Tasty Chance S",
-        "Extra Helpful S", "Helper Boost",
-        "Dream Shard Magnet S", "Metronome",
-    ];
     const onMainSkillClick = useCallback((selected: MainSkillName) => {
         const newValue = value.includes(selected) ?
             value.filter(x => x !== selected) :
@@ -201,7 +193,7 @@ const MainSkillTab = React.memo(({value, onChange}: {
         onChange(newValue);
     }, [value, onChange]);
 
-    const mainSkillButtons: React.ReactElement[] = mainSkills.map(skill =>
+    const mainSkillButtons: React.ReactElement[] = MainSkillNames.map(skill =>
         <MainSkillButton key={skill} mainSkill={skill} onClick={onMainSkillClick}
             checked={value.includes(skill)}/>);
 
