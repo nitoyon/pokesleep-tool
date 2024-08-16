@@ -2,8 +2,6 @@ import PokemonIv from '../../util/PokemonIv';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
 import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
 
-const defaultStrengthParameter = loadStrengthParameter();
-
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
         "deleteAll" | "deleteAllClose" | "saveItem"|"restoreItem"|
@@ -47,22 +45,40 @@ type IvState = {
     boxDeleteAllDialogOpen: boolean;
     alertMessage: string;
 };
-export const initialIvState: IvState = {
-    tabIndex: 0,
-    lowerTabIndex: 0,
-    pokemonIv: new PokemonIv("Venusaur"),
-    parameter: defaultStrengthParameter,
-    box: initialBox,
-    selectedItemId: -1,
-    energyDialogOpen: false,
-    boxItemDialogOpen: false,
-    boxItemDialogKey: "",
-    boxItemDialogIsEdit: false,
-    boxExportDialogOpen: false,
-    boxImportDialogOpen: false,
-    boxDeleteAllDialogOpen: false,
-    alertMessage: "",
-};
+
+/**
+ * Get initial IvState object.
+ * @returns Initial IvState.
+ */
+export function getInitialIvState(): IvState {
+    const ret = {
+        tabIndex: 0,
+        lowerTabIndex: 0,
+        pokemonIv: new PokemonIv("Venusaur"),
+        parameter: loadStrengthParameter(),
+        box: initialBox,
+        selectedItemId: -1,
+        energyDialogOpen: false,
+        boxItemDialogOpen: false,
+        boxItemDialogKey: "",
+        boxItemDialogIsEdit: false,
+        boxExportDialogOpen: false,
+        boxImportDialogOpen: false,
+        boxDeleteAllDialogOpen: false,
+        alertMessage: "",
+    };
+
+    // Update initial pokemonIv
+    const m = document.location.hash.match(/#p=(.*)/);
+    if (m !== null) {
+        try {
+            ret.pokemonIv = PokemonIv.deserialize(m[1]);
+        }
+        catch { }
+    }
+
+    return ret;
+}
 
 export function ivStateReducer(state: IvState, action: IvAction): IvState {
     const type = action.type;
