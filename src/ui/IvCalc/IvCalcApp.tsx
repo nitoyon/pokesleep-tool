@@ -4,7 +4,7 @@ import { Button, Snackbar, Tab, Tabs } from '@mui/material';
 import PokemonIv from '../../util/PokemonIv';
 import { copyToClipboard } from '../../util/Clipboard';
 import { PokemonBoxItem } from '../../util/PokemonBox';
-import { ivStateReducer, initialIvState } from './IvState';
+import { getInitialIvState, ivStateReducer } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
@@ -27,17 +27,7 @@ const StyledTab = styled(Tab)({
     padding: '6px 16px',
 });
 
-// Apply PokemonIv in location hash to initialState
-(() => {
-    const m = document.location.hash.match(/#p=(.*)/);
-    if (m === null) {
-        return;
-    }
-    try {
-        initialIvState.pokemonIv = PokemonIv.deserialize(m[1]);
-    }
-    catch { }
-})();
+const initialIvState = getInitialIvState();
 
 const ResearchCalcApp = React.memo(() => {
     const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
