@@ -45,6 +45,11 @@ export interface EnergyParameter {
 
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
+
+    /**
+     * Event option.
+     */
+    event: "none"|"1st week"|"2nd week";
 }
 
 type EnergyEvent = {
@@ -173,11 +178,10 @@ class Energy {
             .filter(x => !x.isAwake));
 
         // calculate Sneaky Snacking
+        const isEventBoosted = (param.event !== "none" &&
+            this._iv.pokemon.type === "water");
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, param.isEnergyAlwaysFull,
-                param.helpBonusCount, param.isGoodCampTicketSet,
-                param.tapFrequency === "none",
-                param.tapFrequencyAsleep === "always");
+            this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
@@ -389,17 +393,11 @@ class Energy {
      * Calculate sneaky snacking and returns help count while sleeping.
      * @param events Events.
      * @param efficiencies Efficiencies.
-     * @param isEnergyAlwaysFull Energy is always 100 or not.
-     * @param helpBonusCount The number of pokemon which has helping bonus sub-skill.
-     * @param isGoodCampTicketSet Whether good camp ticket is set or not.
-     * @param alwaysSnacking Whether always snacking or not.
-     * @param alwaysTapAsleep Whether tap every minute while sleeping.
+     * @param param EnergyParameter.
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        isEnergyAlwaysFull: boolean, helpBonusCount: 0|1|2|3|4|5, isGoodCampTicketSet: boolean,
-        alwaysSnacking: boolean, alwaysTapAsleep: boolean
-    ):
+        param: EnergyParameter):
     {
         timeToFullInventory: number,
         skillProbabilityAfterWakeup: {
@@ -412,6 +410,12 @@ class Energy {
             asleepFull: number,
         },
     } {
+        const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
+        const helpBonusCount = param.helpBonusCount;
+        const isGoodCampTicketSet = param.isGoodCampTicketSet;
+        const alwaysSnacking = param.tapFrequency === "none";
+        const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
+
         // get carry limit (assumes that we evolved this pokemon from the beginning)
         const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1));
 
@@ -502,13 +506,16 @@ class Energy {
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
         if (lotteryCount > 0) {
-            const skillNone = Math.pow(1 - rp.skillRatio, lotteryCount);
+            const isEventBoosted = (param.event !== "none" &&
+                this._iv.pokemon.type === "water");
+            const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
+            const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.speciality !== 'Skills') {
                 skillProbabilityAfterWakeup.once = 1 - skillNone;
             }
             else {
-                const skillOnce = lotteryCount * rp.skillRatio *
-                    Math.pow(1 - rp.skillRatio, lotteryCount - 1);
+                const skillOnce = lotteryCount * skillRatio *
+                    Math.pow(1 - skillRatio, lotteryCount - 1);
                 skillProbabilityAfterWakeup.once = skillOnce;
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
