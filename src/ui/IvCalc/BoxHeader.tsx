@@ -3,8 +3,10 @@ import { styled } from '@mui/system';
 import { IvAction } from './IvState';
 import { BoxSortConfig } from './BoxView';
 import IngredientIcon from './IngredientIcon';
+import MainSkillIcon from './MainSkillIcon';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { StrengthParameter } from '../../util/PokemonStrength';
+import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { IngredientName, IngredientNames } from '../../data/pokemons';
 import { Select, SelectChangeEvent, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +32,11 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
             ...sortConfig, ingredient: e.target.value as IngredientName,
         }}});
     }, [dispatch, sortConfig]);
+    const onSkillChange = React.useCallback((e: SelectChangeEvent) => {
+        dispatch({type: "changeBoxSortConfig", payload: { parameter: {
+            ...sortConfig, mainSkill: e.target.value as MainSkillName,
+        }}});
+    }, [dispatch, sortConfig]);
 
     const ingMenus = React.useMemo(() => {
         const ret: React.ReactElement[] = IngredientNames.map(ing =>
@@ -42,9 +49,17 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
         return ret;
     }, [t]);
 
+    const skillMenus = React.useMemo(() => {
+        return MainSkillNames.map(name =>
+            <SkillMenuItem key={name} value={name}>
+                <MainSkillIcon mainSkill={name}/>
+                {t(`skills.${name}`)}
+            </SkillMenuItem>);
+    }, [t]);
 
     if (sortConfig.sort !== "berry" &&
-        sortConfig.sort !== "ingredient"
+        sortConfig.sort !== "ingredient" &&
+        sortConfig.sort !== "skill count"
     ) {
         return <></>;
     }
@@ -67,10 +82,16 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
                 <ResearchAreaTextField value={parameter.fieldIndex} showEmpty
                     onChange={onFieldChange}/>
             </span>}
-            {sortConfig.sort === "ingredient" && <span>
+            {sortConfig.sort === "ingredient" && <span className="ing">
                 <Select variant="standard" onChange={onIngredientChange}
                     value={sortConfig.ingredient}>
                     {ingMenus}
+                </Select>
+            </span>}
+            {sortConfig.sort === "skill count" && <span className="skill">
+                <Select variant="standard" onChange={onSkillChange}
+                    value={sortConfig.mainSkill}>
+                    {skillMenus}
                 </Select>
             </span>}
         </div>
@@ -82,29 +103,36 @@ const StyledBoxHeader = styled('div')({
     padding: '0 0.4rem 4px',
 
     '& > div': {
-        padding: '.2rem .6rem',
+        padding: '.2rem 0 .2rem .6rem',
         border: '1px solid #ccc',
         borderRadius: '0.5rem',
         background: '#f3f5f0',
         position: 'relative',
 
         '& > span': {
-            marginLeft: '1rem',
-            '&:first-of-type': {
-                marginLeft: 0,
+            marginRight: '.6rem',
+            '&:last-of-type': {
+                marginRight: 0,
             },
 
             '& > div': {
-                fontSize: '0.9rem',
+                fontSize: '0.8rem',
                 '& > div.MuiSelect-select': {
                     paddingTop: 0,
                     paddingBottom: 0,
                 },
-                '& svg': {
-                    paddingLeft: '5px',
-                    width: '18px',
-                    height: '18px',
-                },
+            },
+
+            '&.ing svg': {
+                paddingLeft: '5px',
+                width: '18px',
+                height: '18px',
+            },
+            '&.skill svg': {
+                width: '18px',
+                height: '18px',
+                paddingRight: '4px',
+                verticalAlign: 'top',
             },
         },
     },
@@ -113,6 +141,19 @@ const StyledBoxHeader = styled('div')({
 const IngMenuItem = styled(MenuItem)({
     width: '4rem',
     float: 'left',
+});
+const SkillMenuItem = styled(MenuItem)({
+    width: '50%',
+    fontSize: '0.8rem',
+    float: 'left',
+    paddingLeft: '4px',
+    textWrap: 'wrap',
+    '& > svg': {
+        width: '18px',
+        height: '18px',
+        paddingRight: '4px',
+        flexShrink: 0,
+    },
 });
 
 export default BoxHeader;

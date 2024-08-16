@@ -6,7 +6,7 @@ import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
 import { IngredientName, IngredientNames, PokemonType } from '../../data/pokemons';
-import { MainSkillName } from '../../util/MainSkill';
+import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
@@ -79,7 +79,7 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
     const footerSortTypes = React.useMemo(() => 
-        ["level", "name", "pokedexno", "rp", "berry", "ingredient"], []);
+        ["level", "name", "pokedexno", "rp", "berry", "ingredient", "skill count"], []);
         
     return <>
         <div style={{
@@ -184,11 +184,23 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
                 cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
                 b.id - a.id);
     }
+    else if (sort === "skill count") {
+        const cache: {[id: string]: number} = {};
+        filtered = filtered
+            .filter(x => x.iv.pokemon.skill === sortConfig.mainSkill);
+        filtered.forEach((item) => {
+            const strength = new PokemonStrength(item.iv, parameter);
+            cache[item.id] = strength.calculate().skillCount;
+        });
+        return filtered.sort((a, b) =>
+            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
+            b.id - a.id);
+    }
     return filtered;
 }
 
 /** Represents the field by which the box are sorted.  */
-export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry"|"ingredient";
+export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry"|"ingredient"|"skill count";
 
 /**
  * Pokemon box sort configuration.
@@ -198,6 +210,8 @@ export interface BoxSortConfig {
     sort: BoxSortType;
     /** Ingredient name when `sort` is `"ingredient"`. */
     ingredient: IngredientName;
+    /** Main skill name when `sort` is `"skill count"`. */
+    mainSkill: MainSkillName;
     /** Descending (true) or ascending (false). */
     descending: boolean;
 }
@@ -324,6 +338,7 @@ export function loadBoxSortConfig(): BoxSortConfig {
     const ret: BoxSortConfig = {
         sort: "level",
         ingredient: "unknown",
+        mainSkill: "Energy for Everyone S",
         descending: true,
     };
 
@@ -336,12 +351,16 @@ export function loadBoxSortConfig(): BoxSortConfig {
         return ret;
     }
     if (typeof(json.sort) === "string" &&
-        ["level", "name", "pokedexno", "rp", "berry", "ingredient"].includes(json.sort)) {
+        ["level", "name", "pokedexno", "rp", "berry", "ingredient", "skill count"].includes(json.sort)) {
         ret.sort = json.sort;
     }
     if (typeof(json.ingredient) === "string" &&
         IngredientNames.includes(json.ingredient)) {
         ret.ingredient = json.ingredient;
+    }
+    if (typeof(json.mainSkill) === "string" &&
+        MainSkillNames.includes(json.mainSkill)) {
+        ret.mainSkill = json.mainSkill;
     }
     if (typeof(json.descending) === "boolean") {
         ret.descending = json.descending;
