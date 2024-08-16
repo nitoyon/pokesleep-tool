@@ -1,6 +1,7 @@
 import PokemonIv from '../../util/PokemonIv';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
 import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
+import { BoxSortConfig, loadBoxSortConfig } from './BoxView';
 
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
@@ -21,6 +22,9 @@ export type IvAction = {
 }|{
     type: "changeParameter",
     payload: {parameter: StrengthParameter},
+}|{
+    type: "changeBoxSortConfig",
+    payload: {parameter: BoxSortConfig},
 }|{
     type: "showAlert",
     payload: {message: string},
@@ -43,6 +47,7 @@ type IvState = {
     boxExportDialogOpen: boolean;
     boxImportDialogOpen: boolean;
     boxDeleteAllDialogOpen: boolean;
+    boxSortConfig: BoxSortConfig;
     alertMessage: string;
 };
 
@@ -51,7 +56,7 @@ type IvState = {
  * @returns Initial IvState.
  */
 export function getInitialIvState(): IvState {
-    const ret = {
+    const ret: IvState = {
         tabIndex: 0,
         lowerTabIndex: 0,
         pokemonIv: new PokemonIv("Venusaur"),
@@ -65,6 +70,7 @@ export function getInitialIvState(): IvState {
         boxExportDialogOpen: false,
         boxImportDialogOpen: false,
         boxDeleteAllDialogOpen: false,
+        boxSortConfig: loadBoxSortConfig(),
         alertMessage: "",
     };
 
@@ -98,6 +104,11 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         const value = action.payload.parameter;
         localStorage.setItem('PstStrenghParam', JSON.stringify(value));
         return {...state, parameter: value};
+    }
+    if (type === "changeBoxSortConfig") {
+        const boxSortConfig = action.payload.parameter;
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(boxSortConfig));
+        return {...state, boxSortConfig};
     }
     if (type === "openEnergyDialog") {
         return {...state, energyDialogOpen: true};

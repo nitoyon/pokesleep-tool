@@ -127,7 +127,7 @@ const ResearchCalcApp = React.memo(() => {
         {state.lowerTabIndex === 1 &&
             <BoxView items={state.box.items} onShare={onShare}
                 selectedId={state.selectedItemId} dispatch={dispatch}
-                parameter={state.parameter}/>}
+                parameter={state.parameter} sortConfig={state.boxSortConfig}/>}
         {state.lowerTabIndex === 2 &&
             <StrengthSettingForm value={state.parameter}
                 hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
