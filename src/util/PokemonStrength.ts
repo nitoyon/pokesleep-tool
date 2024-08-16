@@ -4,7 +4,7 @@ import fields from '../data/fields';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
-import { getSkillValue } from './MainSkill';
+import { getSkillValue, isSkillLevelMax7 } from './MainSkill';
 
 /**
  * Represents the parameter of PokemonStrength.calc.
@@ -129,6 +129,8 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
+        const isEventBoosted = (param.event !== "none" &&
+            rp.pokemon.type === "water");
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -138,7 +140,7 @@ class PokemonStrength {
         const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
-        const ingEventAdd: number = 0;
+        const ingEventAdd: number = (isEventBoosted && param.period !== 3 ? 1 : 0);
 
         const ing1 = {...rp.ingredient1, strength: 0};
         ing1.count = ingHelpCount * (1 / ingUnlock) * (ing1.count + ingEventAdd);
@@ -186,7 +188,7 @@ class PokemonStrength {
             (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
 
         // calc skill
-        const skillRatio = rp.skillRatio;
+        const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         if (param.period !== 3 && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
@@ -200,7 +202,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param);
+                param, isEventBoosted);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -213,9 +215,16 @@ class PokemonStrength {
         };
     }
 
-    getSkillValueAndStrength(skillCount: number, param: CalculateParameter): [number, number] {
+    getSkillValueAndStrength(skillCount: number, param: CalculateParameter,
+        isEventBoosted: boolean
+    ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
+        if (isEventBoosted) {
+            const maxSkillLevel = isSkillLevelMax7(mainSkill) ? 7 : 6;
+            skillLevel = Math.min(maxSkillLevel,
+                this.iv.skillLevel + (param.event === "1st week" ? 1 : 3));
+        }
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;
         if (mainSkill === "Charge Energy S") {
@@ -291,6 +300,7 @@ export function loadCalculateParameter(): CalculateParameter {
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
+        event: 'none',
     };
 
     const settings = localStorage.getItem('PstStrenghParam');
@@ -372,6 +382,10 @@ export function loadCalculateParameter(): CalculateParameter {
     if (typeof(json.recipeLevel) === "number" &&
         [1, 10, 20, 30, 40, 50, 55].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
+    }
+    if (typeof(json.event) === "string" &&
+        ["none", "1st week", "2nd week"].includes(json.event)) {
+        ret.event = json.event;
     }
     return ret;
 }
