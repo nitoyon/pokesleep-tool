@@ -6,6 +6,7 @@ import { copyToClipboard } from '../../util/Clipboard';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { getInitialIvState, ivStateReducer } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
+import BoxHeader from './BoxHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
 import StrengthSettingForm from './StrengthParameterForm';
@@ -119,6 +120,9 @@ const ResearchCalcApp = React.memo(() => {
             <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}
                 onShare={onShare}/>
+            {state.lowerTabIndex === 1 &&
+                <BoxHeader parameter={state.parameter} sortConfig={state.boxSortConfig}
+                    dispatch={dispatch}/>}
         </div>
         {state.lowerTabIndex === 0 &&
             <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
