@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 type PeriodType = "1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
-    padding: '0 .5rem',
+    padding: '0 1rem',
     marginBottom: '10rem',
     '& section': {
         margin: '0.2rem 0',

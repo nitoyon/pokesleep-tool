@@ -106,7 +106,7 @@ const ResearchCalcApp = React.memo(() => {
     }, [state.pokemonIv, t]);
 
     return <>
-        <div style={{margin: "0 .5rem", position: 'sticky', top: 0,
+        <div style={{padding: "0 .5rem", position: 'sticky', top: 0,
             zIndex: 1, background: '#f9f9f9',
         }}>
             <StyledTabs value={state.tabIndex} onChange={onTabChange}>
@@ -130,20 +130,18 @@ const ResearchCalcApp = React.memo(() => {
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}
                 onShare={onShare}/>
         </div>
-        <div style={{margin: "0 .5rem"}}>
-            {state.lowerTabIndex === 0 &&
-                <div style={{marginBottom: '10rem'}}>
-                    <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
-                </div>}
-            {state.lowerTabIndex === 1 &&
-                <BoxView items={state.box.items} onShare={onShare}
-                    selectedId={state.selectedItemId} dispatch={dispatch}
-                    parameter={state.parameter}/>}
-            {state.lowerTabIndex === 2 && 
-                <StrengthSettingForm value={state.parameter}
-                    hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                    dispatch={dispatch}/>}
-        </div>
+        {state.lowerTabIndex === 0 &&
+            <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
+                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+            </div>}
+        {state.lowerTabIndex === 1 &&
+            <BoxView items={state.box.items} onShare={onShare}
+                selectedId={state.selectedItemId} dispatch={dispatch}
+                parameter={state.parameter}/>}
+        {state.lowerTabIndex === 2 &&
+            <StrengthSettingForm value={state.parameter}
+                hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
+                dispatch={dispatch}/>}
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}

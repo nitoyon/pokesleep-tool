@@ -87,8 +87,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            marginBottom: '120px',
-            width: '100%',
+            margin: '0 0.5rem 120px 0.5rem',
+            width: 'calc(100% - 1rem)',
         }}>
             {elms.length === 0 && <div style={{margin: "5rem auto", color: "#888", fontSize: "0.9rem"}}>
                 {items.length === 0 ? t('box is empty') : t('no pokemon found')}
@@ -97,12 +97,12 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         </div>
         <div style={{
             position: 'fixed',
-            width: '100%',
+            width: 'calc(100% - 1rem)',
             bottom: 0,
             paddingLeft: '1rem',
             paddingBottom: '1.2rem',
             background: '#f76',
-            margin: '.5rem -.5rem 0',
+            margin: '.5rem 0 0',
         }}>
             <Fab onClick={onAddClick} color="primary" size="medium"
                 sx={{position: 'absolute', bottom: '70px', right: '2rem'}}>
