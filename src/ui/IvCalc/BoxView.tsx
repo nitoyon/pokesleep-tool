@@ -43,7 +43,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
 
     const onSortConfigChange = React.useCallback((value: PokemonFilterConfig) => {
         const newValue = {...sortConfig,
-            sort: value.sort as "level"|"name"|"pokedexno"|"rp"|"berry",
+            sort: value.sort as BoxSortType,
             descending: value.descending};
         localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newValue));
         setSortConfig(newValue);
@@ -119,7 +119,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
 });
 
 function sortPokemonItems(filtered: PokemonBoxItem[],
-    sort: "level"|"name"|"pokedexno"|"rp"|"berry",
+    sort: BoxSortType,
     parameter: StrengthParameter,
     t: typeof i18next.t
 ) {
@@ -167,12 +167,15 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
     return filtered;
 }
 
+/** Represents the field by which the box are sorted.  */
+export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry";
+
 /**
  * Pokemon box sort configuration.
  */
 interface BoxSortConfig {
     /** Sort type. */
-    sort: "level"|"name"|"pokedexno"|"rp"|"berry";
+    sort: BoxSortType;
     /** Descending (true) or ascending (false). */
     descending: boolean;
 }
