@@ -335,7 +335,9 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     return <>
         <MainSkillIcon mainSkill={mainSkill}/>
         <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-        <InfoButton onClick={onInfoClick}/>
+        {!mainSkill.startsWith("Charge Strength") &&
+        !mainSkill.startsWith("Dream Shard") &&
+        <InfoButton onClick={onInfoClick}/>}
     </>;
 }
 
