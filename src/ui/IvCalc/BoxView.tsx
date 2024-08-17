@@ -22,15 +22,15 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
-const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch, onShare}: {
+const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     items: PokemonBoxItem[],
     selectedId: number,
     parameter: StrengthParameter,
-    sortConfig: BoxSortConfig,
     dispatch: (action: IvAction) => void,
     onShare: () => void,
 }) => {
     const { t } = useTranslation();
+    const [sortConfig, setSortConfig] = React.useState(loadBoxSortConfig());
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const onItemChange = React.useCallback((action: IvAction) => {
@@ -41,12 +41,17 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
         dispatch({type: "add"});
     }, [dispatch]);
 
-    const onSortConfigChange = React.useCallback((value: PokemonFilterConfig) => {
+    const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
         const newValue = {...sortConfig,
             sort: value.sort as BoxSortType,
             descending: value.descending};
-        dispatch({type: 'changeBoxSortConfig', payload: {parameter: newValue}});
-    }, [dispatch, sortConfig]);
+        setSortConfig(newValue);
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(newValue));
+    }, [sortConfig]);
+    const onSortConfigChange = React.useCallback((value: BoxSortConfig) => {
+        setSortConfig(value);
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify(value));
+    }, []);
     const onFilterButtonClick = React.useCallback(() => {
         setFilterOpen(true);
     }, []);
@@ -105,7 +110,7 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
                 <AddIcon/>
             </Fab>
             <BoxSortConfigFooter parameter={parameter} sortConfig={sortConfig}
-                dispatch={dispatch}/>
+                dispatch={dispatch} onChange={onSortConfigChange}/>
             <div style={{
                 paddingLeft: '1rem',
                 paddingBottom: '1.2rem',
@@ -113,7 +118,7 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
                 width: 'calc(100% - 1rem)',
             }}>
                 <PokemonFilterFooter value={footerValue}
-                    onChange={onSortConfigChange}
+                    onChange={onFilterConfigChange}
                     onFilterButtonClick={onFilterButtonClick}
                     sortTypes={footerSortTypes}/>
             </div>
@@ -341,7 +346,7 @@ let boxFilterConfig = new BoxFilterConfig({});
  * Load box sort config from localStorage.
  * @returns config.
  */
-export function loadBoxSortConfig(): BoxSortConfig {
+function loadBoxSortConfig(): BoxSortConfig {
     const ret: BoxSortConfig = {
         sort: "level",
         ingredient: "unknown",
