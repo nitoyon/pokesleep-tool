@@ -199,9 +199,11 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
     else if (sort === "skill count") {
         const cache: {[id: string]: number} = {};
         filtered = filtered
-            .filter(x => x.iv.pokemon.skill === sortConfig.mainSkill);
+            .filter(x => x.iv.pokemon.skill.startsWith(sortConfig.mainSkill));
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
+            const strength = new PokemonStrength(item.iv, {
+                ...parameter, maxSkillLevel: true,
+            });
             cache[item.id] = strength.calculate().skillCount;
         });
         return filtered.sort((a, b) =>
