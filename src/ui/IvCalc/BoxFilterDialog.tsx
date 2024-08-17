@@ -143,7 +143,7 @@ const StyledTabs = styled(Tabs)({
 const StyledTab = styled(Tab)({
     minHeight: '36px',
     minWidth: '0',
-    padding: '6px 5px',
+    padding: '6px 8px',
     textTransform: 'none',
 });
 
