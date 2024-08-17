@@ -11,7 +11,7 @@ import { IngredientName, IngredientNames } from '../../data/pokemons';
 import { Select, SelectChangeEvent, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
+const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch}: {
     sortConfig: BoxSortConfig,
     parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
@@ -153,4 +153,4 @@ const SkillMenuItem = styled(MenuItem)({
     },
 });
 
-export default BoxHeader;
+export default BoxSortConfigFooter;

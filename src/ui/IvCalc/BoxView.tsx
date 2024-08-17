@@ -5,7 +5,7 @@ import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
-import BoxHeader from './BoxHeader';
+import BoxSortConfigFooter from './BoxSortConfigFooter';
 import { IngredientName, IngredientNames, PokemonType } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
@@ -104,7 +104,7 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
                 sx={{position: 'absolute', top: '-55px', right: '10px'}}>
                 <AddIcon/>
             </Fab>
-            <BoxHeader parameter={parameter} sortConfig={sortConfig}
+            <BoxSortConfigFooter parameter={parameter} sortConfig={sortConfig}
                 dispatch={dispatch}/>
             <div style={{
                 paddingLeft: '1rem',
