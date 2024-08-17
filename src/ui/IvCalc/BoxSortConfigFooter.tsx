@@ -8,7 +8,7 @@ import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { StrengthParameter } from '../../util/PokemonStrength';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { IngredientName, IngredientNames } from '../../data/pokemons';
-import { Select, SelectChangeEvent, MenuItem }  from '@mui/material';
+import { FormControlLabel, Select, SelectChangeEvent, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChange}: {
@@ -37,6 +37,9 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
         onChange({
             ...sortConfig, mainSkill: e.target.value as MainSkillName,
         });
+    }, [onChange, sortConfig]);
+    const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onParameterChange({...parameter, evolved: e.target.checked});
     }, [onChange, sortConfig]);
 
     const ingMenus = React.useMemo(() => {
@@ -95,6 +98,13 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     {skillMenus}
                 </Select>
             </span>}
+            <span className="evolved">
+                <FormControlLabel control={
+                    <Switch checked={parameter.evolved} size="small"
+                        onChange={onEvolvedChange} />
+                    }
+                    label={t('calc with evolved (short)')} />
+            </span>
         </div>
     </StyledBoxHeader>;
 });
@@ -117,6 +127,9 @@ const StyledBoxHeader = styled('div')({
                     paddingBottom: 0,
                 },
             },
+            '& span': {
+                fontSize: '0.8rem',
+            },
 
             '&.field > div': {
                 paddingTop: '4px',
@@ -131,6 +144,12 @@ const StyledBoxHeader = styled('div')({
                 height: '18px',
                 paddingRight: '4px',
                 verticalAlign: 'top',
+            },
+            '&.evolved': {
+                paddingLeft: '5px',
+                '& span.MuiTypography-root': {
+                    textWrap: 'nowrap',
+                },
             },
         },
     },
