@@ -78,7 +78,7 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
                     <MenuItem value={100}>Lv. 100</MenuItem>
                 </Select>
             </span>
-            {sortConfig.sort === "berry" && <span>
+            {sortConfig.sort === "berry" && <span className="field">
                 <ResearchAreaTextField value={parameter.fieldIndex} showEmpty
                     onChange={onFieldChange}/>
             </span>}
@@ -99,23 +99,17 @@ const BoxHeader = React.memo(({sortConfig, parameter, dispatch}: {
 });
 
 const StyledBoxHeader = styled('div')({
-    background: '#f9f9f9',
-    padding: '0 0.4rem 4px',
-
     '& > div': {
-        padding: '.2rem 0 .2rem .6rem',
-        border: '1px solid #ccc',
-        borderRadius: '0.5rem',
+        padding: '.2rem 0 .2rem 1.2rem',
         background: '#f3f5f0',
+        borderTop: '1px solid #ccc',
         position: 'relative',
+        display: 'flex',
+        alignItems: 'stretch',
+        gap: '10px',
 
         '& > span': {
-            marginRight: '.6rem',
-            '&:last-of-type': {
-                marginRight: 0,
-            },
-
-            '& > div': {
+            '& div': {
                 fontSize: '0.8rem',
                 '& > div.MuiSelect-select': {
                     paddingTop: 0,
@@ -123,6 +117,9 @@ const StyledBoxHeader = styled('div')({
                 },
             },
 
+            '&.field > div': {
+                paddingTop: '4px',
+            },
             '&.ing svg': {
                 paddingLeft: '5px',
                 width: '18px',

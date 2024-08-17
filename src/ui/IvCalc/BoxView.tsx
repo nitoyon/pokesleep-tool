@@ -5,6 +5,7 @@ import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
+import BoxHeader from './BoxHeader';
 import { IngredientName, IngredientNames, PokemonType } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
@@ -95,21 +96,27 @@ const BoxView = React.memo(({items, selectedId, parameter, sortConfig, dispatch,
         </div>
         <div style={{
             position: 'fixed',
-            width: 'calc(100% - 1rem)',
+            width: '100%',
             bottom: 0,
-            paddingLeft: '1rem',
-            paddingBottom: '1.2rem',
-            background: '#f76',
             margin: '.5rem 0 0',
         }}>
             <Fab onClick={onAddClick} color="primary" size="medium"
-                sx={{position: 'absolute', bottom: '70px', right: '2rem'}}>
+                sx={{position: 'absolute', top: '-55px', right: '10px'}}>
                 <AddIcon/>
             </Fab>
-            <PokemonFilterFooter value={footerValue}
-                onChange={onSortConfigChange}
-                onFilterButtonClick={onFilterButtonClick}
-                sortTypes={footerSortTypes}/>
+            <BoxHeader parameter={parameter} sortConfig={sortConfig}
+                dispatch={dispatch}/>
+            <div style={{
+                paddingLeft: '1rem',
+                paddingBottom: '1.2rem',
+                background: '#f76',
+                width: 'calc(100% - 1rem)',
+            }}>
+                <PokemonFilterFooter value={footerValue}
+                    onChange={onSortConfigChange}
+                    onFilterButtonClick={onFilterButtonClick}
+                    sortTypes={footerSortTypes}/>
+            </div>
         </div>
         <BoxFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={filterConfig} onChange={onFilterChange}/>
