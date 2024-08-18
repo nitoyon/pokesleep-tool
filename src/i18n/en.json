@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "box filter and sort improvement": {
+                    "headline": "Box filtering and sorting have significantly evolved.",
+                    "detail": "You can now filter the box by Spiecies Name, Nickname, $t(ingredient), $t(main skill), and $t(sub skills).\nAdditionally, sorting options have been expanded to include $t(berry), $t(ingredient), and $t(skill count)."
+                },
                 "suicune event simmulation": {
                     "headline": "You can now simulate Suicune event.",
                     "detail": "You can now check the performance of Water-type Pokémon during the Suicune event in the [$t(strength2)] tab calculations."
