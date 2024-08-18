@@ -200,12 +200,11 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
                 onChange={onHelpBonusCountChange}>
-                {!hasHelpingBonus && <MenuItem value={0}>{t('none')}</MenuItem>}
-                <MenuItem value={1}>×1</MenuItem>
-                <MenuItem value={2}>×2</MenuItem>
-                <MenuItem value={3}>×3</MenuItem>
-                <MenuItem value={4}>×4</MenuItem>
-                {hasHelpingBonus && <MenuItem value={5}>×5</MenuItem>}
+                <MenuItem value={0}>{hasHelpingBonus ? '×1' : t('none')}</MenuItem>
+                <MenuItem value={1}>{hasHelpingBonus ? '×2' : '×1'}</MenuItem>
+                <MenuItem value={2}>{hasHelpingBonus ? '×3' : '×2'}</MenuItem>
+                <MenuItem value={3}>{hasHelpingBonus ? '×4' : '×3'}</MenuItem>
+                <MenuItem value={4}>{hasHelpingBonus ? '×5' : '×4'}</MenuItem>
             </Select>
         </section>
         <Collapse in={isNotWhistle}>

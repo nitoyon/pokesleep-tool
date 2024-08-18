@@ -37,7 +37,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     const onRecoveryBonusCountChange = React.useCallback((e: SelectChangeEvent) => {
         dispatch({type: "changeParameter", payload: { parameter: {
             ...parameter,
-            recoveryBonusCount: parseInt(e.target.value, 10) as 0|1|2|3|4|5,
+            recoveryBonusCount: parseInt(e.target.value, 10) as 0|1|2|3|4,
         }}});
     }, [dispatch, parameter]);
     const onScoreChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,12 +122,11 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                     <label>{t('subskill.Energy Recovery Bonus')}:</label>
                     <Select variant="standard" value={parameter.recoveryBonusCount.toString()}
                         onChange={onRecoveryBonusCountChange}>
-                        {!hasRecoveryBonus && <MenuItem value={0}>{t('none')}</MenuItem>}
-                        <MenuItem value={1}>×1</MenuItem>
-                        <MenuItem value={2}>×2</MenuItem>
-                        <MenuItem value={3}>×3</MenuItem>
-                        <MenuItem value={4}>×4</MenuItem>
-                        {hasRecoveryBonus && <MenuItem value={5}>×5</MenuItem>}
+                        <MenuItem value={0}>{hasRecoveryBonus ? '×1' : t('none')}</MenuItem>
+                        <MenuItem value={1}>{hasRecoveryBonus ? '×2' : '×1'}</MenuItem>
+                        <MenuItem value={2}>{hasRecoveryBonus ? '×3' : '×2'}</MenuItem>
+                        <MenuItem value={3}>{hasRecoveryBonus ? '×4' : '×3'}</MenuItem>
+                        <MenuItem value={4}>{hasRecoveryBonus ? '×5' : '×4'}</MenuItem>
                     </Select>
                 </div>
                 <div>

@@ -226,32 +226,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 
 function getStateWhenPokemonIvChange(state: IvState, value: PokemonIv): IvState {
     const selectedItem = state.box.getById(state.selectedItemId);
-
-    // fix helpingBonusCount
-    const hasHelpingBonus = value.hasHelpingBonusInActiveSubSkills;
-    const prevHasHelpingBonus = state.pokemonIv.hasHelpingBonusInActiveSubSkills;
-    let parameter = state.parameter;
-    if (hasHelpingBonus && parameter.helpBonusCount === 0) {
-        parameter = {...parameter, helpBonusCount: 1};
-    } else if (state.parameter.helpBonusCount === 1 && !hasHelpingBonus &&
-        prevHasHelpingBonus) {
-        parameter = {...parameter, helpBonusCount: 0};
-    } else if (!hasHelpingBonus && parameter.helpBonusCount === 5) {
-        parameter = {...parameter, helpBonusCount: 4};
-    }
-
-    // fix recoveryBonusCount
-    const hasRecoveryBonus = value.hasEnergyRecoveryBonusInActiveSubSkills;
-    const prevHasRecoveryBonus = state.pokemonIv.hasEnergyRecoveryBonusInActiveSubSkills;
-    if (hasRecoveryBonus && parameter.recoveryBonusCount === 0) {
-        parameter = {...parameter, recoveryBonusCount: 1};
-    } else if (state.parameter.recoveryBonusCount === 1 && !hasRecoveryBonus &&
-        prevHasRecoveryBonus) {
-        parameter = {...parameter, recoveryBonusCount: 0};
-    } else if (!hasRecoveryBonus && parameter.recoveryBonusCount === 5) {
-        parameter = {...parameter, recoveryBonusCount: 4};
-    }
-
     value.normalize();
 
     // if form pokemon differs from the selected pokemon in the box,
@@ -269,7 +243,7 @@ function getStateWhenPokemonIvChange(state: IvState, value: PokemonIv): IvState 
             }
     }
 
-    return {...state, pokemonIv: value, parameter, selectedItemId};
+    return {...state, pokemonIv: value, selectedItemId};
 }
 
 export default IvState;
