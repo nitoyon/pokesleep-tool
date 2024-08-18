@@ -63,10 +63,57 @@ export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
 
 export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
 
+export const IngredientNames: IngredientName[] = [
+    "leek", "mushroom", "egg", "potato",
+    "apple", "herb", "sausage", "milk", "honey", "oil", "ginger",
+    "tomato", "cacao", "tail", "soy", "corn"];
+
 export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn" | "unknown";
 
 const pokemons = pokemon_ as PokemonData[];
+
+const ancestorId2Decendants = new Map<number, PokemonData[]>();
+
+/**
+ * Gets the descendants of the specified Pokémon.
+ * @param {Pokemon} pokemon - The Pokémon for which to get the descendants.
+ * @returns {Array} An array of descendants of the specified Pokémon.
+ */
+export function getDecendants(pokemon: PokemonData): PokemonData[] {
+    if (ancestorId2Decendants.size === 0) {
+        // get ancestor of the lineage
+        const ancestorId2evoCount = new Map<number, number>();
+        for (const pokemon of pokemons) {
+            const ancestor = pokemon.ancestor ?? 0;
+            if (ancestor === 0) {
+                continue;
+            }
+            const count = ancestorId2evoCount.get(ancestor);
+            if (count !== undefined) {
+                ancestorId2evoCount.set(ancestor,
+                    Math.max(pokemon.evolutionCount, count));
+            }
+            else {
+                ancestorId2evoCount.set(ancestor, pokemon.evolutionCount);
+            }
+        }
+
+        for (const [ancestorId, count] of ancestorId2evoCount) {
+            ancestorId2Decendants.set(ancestorId, pokemons
+                .filter(x => x.ancestor === ancestorId &&
+                    x.evolutionCount === count));
+        }
+    }
+
+    if (pokemon.ancestor !== null) {
+        const ret = ancestorId2Decendants.get(pokemon.ancestor);
+        if (ret !== undefined) {
+            return ret;
+        }
+    }
+    return [];
+}
 
 export default pokemons;

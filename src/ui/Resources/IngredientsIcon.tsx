@@ -26,7 +26,6 @@ import React from 'react';
 
 const IngredientsIcon = React.memo(() => {
     return (
-        <svg width="20" height="20">
             <svg viewBox="0 0 200 200">
                 <g transform="scale(0.6)">
                     <g transform="translate(30, 0)">
@@ -54,7 +53,6 @@ const IngredientsIcon = React.memo(() => {
                     </g>
                 </g>
             </svg>
-        </svg>
     );
 });
 

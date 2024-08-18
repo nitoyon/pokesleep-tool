@@ -1,8 +1,6 @@
 import PokemonIv from '../../util/PokemonIv';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
-import { CalculateParameter, loadCalculateParameter } from '../../util/PokemonStrength';
-
-const defaultCalculateParameter = loadCalculateParameter();
+import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
 
 export type IvAction = {
     type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
@@ -22,7 +20,7 @@ export type IvAction = {
     payload: {index: number},
 }|{
     type: "changeParameter",
-    payload: {parameter: CalculateParameter},
+    payload: {parameter: StrengthParameter},
 }|{
     type: "showAlert",
     payload: {message: string},
@@ -35,7 +33,7 @@ type IvState = {
     tabIndex: number;
     lowerTabIndex: number;
     pokemonIv: PokemonIv;
-    parameter: CalculateParameter;
+    parameter: StrengthParameter;
     box: PokemonBox;
     selectedItemId: number;
     energyDialogOpen: boolean;
@@ -47,22 +45,40 @@ type IvState = {
     boxDeleteAllDialogOpen: boolean;
     alertMessage: string;
 };
-export const initialIvState: IvState = {
-    tabIndex: 0,
-    lowerTabIndex: 0,
-    pokemonIv: new PokemonIv("Venusaur"),
-    parameter: defaultCalculateParameter,
-    box: initialBox,
-    selectedItemId: -1,
-    energyDialogOpen: false,
-    boxItemDialogOpen: false,
-    boxItemDialogKey: "",
-    boxItemDialogIsEdit: false,
-    boxExportDialogOpen: false,
-    boxImportDialogOpen: false,
-    boxDeleteAllDialogOpen: false,
-    alertMessage: "",
-};
+
+/**
+ * Get initial IvState object.
+ * @returns Initial IvState.
+ */
+export function getInitialIvState(): IvState {
+    const ret: IvState = {
+        tabIndex: 0,
+        lowerTabIndex: 0,
+        pokemonIv: new PokemonIv("Venusaur"),
+        parameter: loadStrengthParameter(),
+        box: initialBox,
+        selectedItemId: -1,
+        energyDialogOpen: false,
+        boxItemDialogOpen: false,
+        boxItemDialogKey: "",
+        boxItemDialogIsEdit: false,
+        boxExportDialogOpen: false,
+        boxImportDialogOpen: false,
+        boxDeleteAllDialogOpen: false,
+        alertMessage: "",
+    };
+
+    // Update initial pokemonIv
+    const m = document.location.hash.match(/#p=(.*)/);
+    if (m !== null) {
+        try {
+            ret.pokemonIv = PokemonIv.deserialize(m[1]);
+        }
+        catch { }
+    }
+
+    return ret;
+}
 
 export function ivStateReducer(state: IvState, action: IvAction): IvState {
     const type = action.type;
@@ -210,32 +226,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 
 function getStateWhenPokemonIvChange(state: IvState, value: PokemonIv): IvState {
     const selectedItem = state.box.getById(state.selectedItemId);
-
-    // fix helpingBonusCount
-    const hasHelpingBonus = value.hasHelpingBonusInActiveSubSkills;
-    const prevHasHelpingBonus = state.pokemonIv.hasHelpingBonusInActiveSubSkills;
-    let parameter = state.parameter;
-    if (hasHelpingBonus && parameter.helpBonusCount === 0) {
-        parameter = {...parameter, helpBonusCount: 1};
-    } else if (state.parameter.helpBonusCount === 1 && !hasHelpingBonus &&
-        prevHasHelpingBonus) {
-        parameter = {...parameter, helpBonusCount: 0};
-    } else if (!hasHelpingBonus && parameter.helpBonusCount === 5) {
-        parameter = {...parameter, helpBonusCount: 4};
-    }
-
-    // fix recoveryBonusCount
-    const hasRecoveryBonus = value.hasEnergyRecoveryBonusInActiveSubSkills;
-    const prevHasRecoveryBonus = state.pokemonIv.hasEnergyRecoveryBonusInActiveSubSkills;
-    if (hasRecoveryBonus && parameter.recoveryBonusCount === 0) {
-        parameter = {...parameter, recoveryBonusCount: 1};
-    } else if (state.parameter.recoveryBonusCount === 1 && !hasRecoveryBonus &&
-        prevHasRecoveryBonus) {
-        parameter = {...parameter, recoveryBonusCount: 0};
-    } else if (!hasRecoveryBonus && parameter.recoveryBonusCount === 5) {
-        parameter = {...parameter, recoveryBonusCount: 4};
-    }
-
     value.normalize();
 
     // if form pokemon differs from the selected pokemon in the box,
@@ -253,7 +243,7 @@ function getStateWhenPokemonIvChange(state: IvState, value: PokemonIv): IvState 
             }
     }
 
-    return {...state, pokemonIv: value, parameter, selectedItemId};
+    return {...state, pokemonIv: value, selectedItemId};
 }
 
 export default IvState;

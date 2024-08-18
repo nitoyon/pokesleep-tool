@@ -5,7 +5,7 @@ import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 
-interface RatingCalculateResult {
+interface RatingStrengthResult {
     berryScore: number;
     berryMax: number;
     berryCur: number;
@@ -37,7 +37,7 @@ class PokemonRating {
         this.rp = new PokemonRp(pokemonIv);
     }
 
-    calculate(): RatingCalculateResult {
+    calculate(): RatingStrengthResult {
         if (this.pokemon.frequency === 0) {
             return {
                 berryScore: 0, berryMax: 0, berryCur: 0, berryRatio: 0,

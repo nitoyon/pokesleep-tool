@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "box filter and sort improvement": {
+                    "headline": "Box filtering and sorting have significantly evolved.",
+                    "detail": "You can now filter the box by Spiecies Name, Nickname, $t(ingredient), $t(main skill), and $t(sub skills).\nAdditionally, sorting options have been expanded to include $t(berry), $t(ingredient), and $t(skill count)."
+                },
                 "suicune event simmulation": {
                     "headline": "You can now simulate Suicune event.",
                     "detail": "You can now check the performance of Water-type Pokémon during the Suicune event in the [$t(strength2)] tab calculations."
@@ -152,6 +156,8 @@
         "box is full": "The box is full. Please delete the unnecessary Pokémon.",
         "box is empty": "No Pokémon have been registered yet.",
         "no pokemon found": "No Pokémon matching the specified criteria were found.",
+        "no ingredient": "Configured not to collect ingredients.",
+        "no skill": "Configured not to trigger skills.",
 
         "export message1": "The Pokémon information in the box is saved in the browser and will not be transferred to another environment.",
         "export message2": "To transfer the Pokémon in the box to another environment, please import the following data into the target environment.",
@@ -171,6 +177,7 @@
         "1week": "1 week",
         "whistle": "Whistle",
         "calc with evolved": "Calculate with evolved Pokémon",
+        "calc with evolved (short)": "Evolved",
         "calc with max skill level": "Calculate with max skill level",
         "calc with max skill level (short)": "Max skill level",
         "current level": "Current level",
@@ -264,6 +271,11 @@
         "final-evoltion": "Fully evolved",
         "sleeptype": "Sleep type",
         "pokedexno": "Pokédex No.",
+        "main skill": "Main skill",
+        "sub skills": "Sub skills",
+        "unlocked only": "Unlocked only",
+        "total": "Total",
+        "skill count": "Skill count",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
 

@@ -6,13 +6,13 @@ import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import { StrengthParameter } from '../../util/PokemonStrength';
 import { useTranslation } from 'react-i18next';
 
 type PeriodType = "1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
-    padding: '0 .5rem',
+    padding: '0 1rem',
     marginBottom: '10rem',
     '& section': {
         margin: '0.2rem 0',
@@ -39,12 +39,12 @@ const StyledSettingForm = styled('div')({
 
 const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     dispatch: React.Dispatch<IvAction>,
-    value: CalculateParameter,
+    value: StrengthParameter,
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
 
-    const onChange = React.useCallback((value: CalculateParameter) => {
+    const onChange = React.useCallback((value: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
 
@@ -200,12 +200,11 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
                 onChange={onHelpBonusCountChange}>
-                {!hasHelpingBonus && <MenuItem value={0}>{t('none')}</MenuItem>}
-                <MenuItem value={1}>×1</MenuItem>
-                <MenuItem value={2}>×2</MenuItem>
-                <MenuItem value={3}>×3</MenuItem>
-                <MenuItem value={4}>×4</MenuItem>
-                {hasHelpingBonus && <MenuItem value={5}>×5</MenuItem>}
+                <MenuItem value={0}>{hasHelpingBonus ? '×1' : t('none')}</MenuItem>
+                <MenuItem value={1}>{hasHelpingBonus ? '×2' : '×1'}</MenuItem>
+                <MenuItem value={2}>{hasHelpingBonus ? '×3' : '×2'}</MenuItem>
+                <MenuItem value={3}>{hasHelpingBonus ? '×4' : '×3'}</MenuItem>
+                <MenuItem value={4}>{hasHelpingBonus ? '×5' : '×4'}</MenuItem>
             </Select>
         </section>
         <Collapse in={isNotWhistle}>
