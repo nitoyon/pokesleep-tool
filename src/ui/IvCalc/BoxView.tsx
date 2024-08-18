@@ -68,11 +68,11 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         [items, filterConfig, t]);
 
     // sort
-    let sortedItems: PokemonBoxItem[] = React.useMemo(
+    const [sortedItems, errorMessage] = React.useMemo(
         () => sortPokemonItems(filtered, sortConfig, parameter, t),
         [sortConfig, filtered, parameter, t]);
     if (!sortConfig.descending) {
-        sortedItems = [...sortedItems].reverse();
+        sortedItems.reverse();
     }
 
     const elms = sortedItems.map((item) => (
@@ -91,11 +91,11 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            margin: '0 0.5rem 120px 0.5rem',
+            margin: '0 0.5rem 300px 0.5rem',
             width: 'calc(100% - 1rem)',
         }}>
-            {elms.length === 0 && <div style={{margin: "5rem auto", color: "#888", fontSize: "0.9rem"}}>
-                {items.length === 0 ? t('box is empty') : t('no pokemon found')}
+            {elms.length === 0 && <div style={{margin: "5rem auto 0", color: "#888", fontSize: "0.9rem"}}>
+                {items.length === 0 ? t('box is empty') : errorMessage}
             </div>}
             {elms}
         </div>
@@ -128,41 +128,55 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     </>;
 });
 
+/**
+ * Filter the given Pokemon box items.
+ * @param filtered The array of Pokémon box items to be filtered.
+ * @param sortConfig Sort configuration.
+ * @param parameter Strength parameter.
+ * @param t The translation function from i18next.
+ * @returns A tuple containing:
+ *   - An array of filtered and sorted Pokémon box items.
+ *   - An error string, if any error occurs; otherwise, an empty string.
+ */
 function sortPokemonItems(filtered: PokemonBoxItem[],
     sortConfig: BoxSortConfig,
     parameter: StrengthParameter,
     t: typeof i18next.t
-) {
+): [PokemonBoxItem[], string] {
+    if (filtered.length === 0) {
+        return [[], t('no pokemon found')];
+    }
+
     const sort = sortConfig.sort;
     if (sort === "level") {
-        return filtered.sort((a, b) =>
+        return [filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id);
+            b.id - a.id), ''];
     }
     else if (sort === "name") {
-        return filtered.sort((a, b) =>
+        return [filtered.sort((a, b) =>
             b.filledNickname(t) > a.filledNickname(t) ? 1 :
             b.filledNickname(t) < a.filledNickname(t) ? -1 :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id);
+            b.id - a.id), ''];
     }
     else if (sort === "pokedexno") {
-        return filtered.sort((a, b) =>
+        return [filtered.sort((a, b) =>
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.id - a.id);
+            b.id - a.id), ''];
     }
     else if (sort === "rp") {
         const rpCache: {[id: string]: number} = {};
         filtered.forEach((item) => {
             rpCache[item.id] = new PokemonRp(item.iv).Rp;
         });
-        return filtered.sort((a, b) =>
+        return [filtered.sort((a, b) =>
             rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.id - a.id);
+            b.id - a.id), ''];
     }
     else if (sort === "berry") {
         const cache: {[id: string]: number} = {};
@@ -170,12 +184,16 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
             const strength = new PokemonStrength(item.iv, parameter);
             cache[item.id] = strength.calculate().berryTotalStrength;
         });
-        return filtered.sort((a, b) =>
+        return [filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id);
+            b.id - a.id), ''];
     }
     else if (sort === "ingredient") {
+        if (parameter.tapFrequency === 'none') {
+            return [[], t('no ingredient')];
+        }
+
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
             const strength = new PokemonStrength(item.iv, parameter);
@@ -190,13 +208,19 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
                     .find(x => x.name === sortConfig.ingredient)?.count ?? 0;
             }
         });
-        return filtered
+        const ret = filtered
             .filter(x => cache[x.id] > 0)
             .sort((a, b) =>
                 cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
                 b.id - a.id);
+        return [ret, ret.length > 0 ? '' : t('no pokemon found')]
     }
     else if (sort === "skill count") {
+        if (parameter.tapFrequency === 'none' ||
+            parameter.period === 3) {
+            return [[], t('no skill')];
+        }
+
         const cache: {[id: string]: number} = {};
         filtered = filtered
             .filter(x => x.iv.pokemon.skill.startsWith(sortConfig.mainSkill));
@@ -206,11 +230,12 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
             });
             cache[item.id] = strength.calculate().skillCount;
         });
-        return filtered.sort((a, b) =>
+        const ret = filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
             b.id - a.id);
+        return [ret, ret.length > 0 ? '' : t('no pokemon found')]
     }
-    return filtered;
+    return [filtered, ''];
 }
 
 /** Represents the field by which the box are sorted.  */
