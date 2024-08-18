@@ -424,7 +424,7 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.recoveryBonusCount) === "number" &&
         json.recoveryBonusCount >= 0 && json.recoveryBonusCount <= 5) {
-        ret.recoveryBonusCount = json.recoveryBonusCount;
+        ret.recoveryBonusCount = Math.min(json.recoveryBonusCount, 4) as 0|1|2|3|4;
     }
     if (typeof(json.isEnergyAlwaysFull) === "boolean") {
         ret.isEnergyAlwaysFull = json.isEnergyAlwaysFull;
