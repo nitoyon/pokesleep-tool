@@ -14,6 +14,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "box filter and sort improvement": {
+                    "headline": "ボックスのフィルタリングと並び替えが大幅に進化しました。",
+                    "detail": "ボックスを「名前・ニックネーム・$t(ingredient)・$t(main skill)・$t(sub skills)」でフィルタリングできるようになりました。\nまた、ボックスの並び替えに「$t(berry)・$t(ingredient)・$t(skill count)」を追加しました。"
+                },
                 "suicune event simmulation": {
                     "headline": "スイクン イベントのシミュレーションをできるようになりました。",
                     "detail": "[$t(strength2)] タブでの計算において、スイクン イベント中のみずポケモンの性能を確認できるようになりました。"
