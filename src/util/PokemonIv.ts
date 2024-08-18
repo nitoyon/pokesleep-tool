@@ -1,5 +1,5 @@
 import Nature from './Nature';
-import pokemons, { PokemonData } from '../data/pokemons';
+import pokemons, { IngredientName, PokemonData } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
 import { isSkillLevelMax7 } from './MainSkill';
 import SubSkill from './SubSkill';
@@ -102,6 +102,31 @@ class PokemonIv {
             .reduce((p, c) => p + c.skillLevelUp, 0);
         ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
         ret.normalize();
+        return ret;
+    }
+
+    /**
+     * Get IngredientName[] which the Pokemon can gather
+     * @param unlockedOnly Unlocked ingredients only or not.
+     * @returns Ingredients.
+     */
+    getIngredients(unlockedOnly: boolean): IngredientName[] {
+        const ret: IngredientName[] = [this.pokemon.ing1.name];
+
+        if (!unlockedOnly || this.level >= 30) {
+            if (this.ingredient.charAt(1) === 'B') {
+                ret.push(this.pokemon.ing2.name);
+            }
+        }
+
+        if (!unlockedOnly || this.level >= 60) {
+            const ing3 = this.ingredient.charAt(2) === 'A' ? this.pokemon.ing1 :
+                this.ingredient.charAt(2) === 'B' ?
+                this.pokemon.ing2 : this.pokemon.ing3;
+            if (ing3 !== undefined && !ret.includes(ing3.name)) {
+                ret.push(ing3.name);
+            }
+        }
         return ret;
     }
 

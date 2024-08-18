@@ -16,16 +16,16 @@ export interface EnergyParameter {
     e4eCount: number;
 
     /**
-     * The number of pokemon which has helping bonus sub-skill
-     * in the team.
+     * The number of other pokemon in the team that have
+     * the Helping Bonus sub-skill.
      */
-    helpBonusCount: 0|1|2|3|4|5;
+    helpBonusCount: 0|1|2|3|4;
 
     /**
-     * The number of pokemon which has energy recovery bonus sub-skill
-     * in the team.
+     * The number of other pokemon in the team that have
+     * Recovery Bonus sub-skill.
      */
-    recoveryBonusCount: 0|1|2|3|4|5;
+    recoveryBonusCount: 0|1|2|3|4;
 
     /**
      * If true, we assume that energy is always 100.

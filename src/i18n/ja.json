@@ -14,6 +14,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "box filter and sort improvement": {
+                    "headline": "ボックスのフィルタリングと並び替えが大幅に進化しました。",
+                    "detail": "ボックスを「名前・ニックネーム・$t(ingredient)・$t(main skill)・$t(sub skills)」でフィルタリングできるようになりました。\nまた、ボックスの並び替えに「$t(berry)・$t(ingredient)・$t(skill count)」を追加しました。"
+                },
                 "suicune event simmulation": {
                     "headline": "スイクン イベントのシミュレーションをできるようになりました。",
                     "detail": "[$t(strength2)] タブでの計算において、スイクン イベント中のみずポケモンの性能を確認できるようになりました。"
@@ -143,6 +147,8 @@
         "box is full": "ボックスが満杯です。整理してください。",
         "box is empty": "まだポケモンが登録されていません。",
         "no pokemon found": "条件にマッチするポケモンが見つかりませんでした。",
+        "no ingredient": "食材を拾わない設定になっています。",
+        "no skill": "スキルを発生しない設定になっています。",
 
         "export message1": "ボックス内のポケモン情報はブラウザー上に保存されているため、別の環境には引き継がれません。",
         "export message2": "別の環境にボックス内のポケモンを移すには、次のデータを移行先の環境でインポートしてください。",
@@ -163,6 +169,7 @@
         "whistle": "ホイッスル",
         "current level": "現在のレベル",
         "calc with evolved": "進化後ポケモンで計算",
+        "calc with evolved (short)": "進化後",
         "calc with max skill level": "最大スキルレベルで計算",
         "calc with max skill level (short)": "最大スキレベ",
         "area bonus": "フィールドボーナス",
@@ -255,6 +262,11 @@
         "final-evoltion": "最終進化",
         "sleeptype": "睡眠タイプ",
         "pokedexno": "図鑑番号",
+        "main skill": "メインスキル",
+        "sub skills": "サブスキル",
+        "unlocked only": "解放済みのみ",
+        "total": "合計",
+        "skill count": "スキル回数",
 
         "select subskill at level xxx": "<level/> のサブスキルを選択してください",
 

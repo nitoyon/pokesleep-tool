@@ -1,26 +1,20 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import pokemons, { PokemonData } from '../../data/pokemons';
+import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
-import PokemonStrength, { CalculateResult } from '../../util/PokemonStrength';
-import { CalculateParameter } from '../../util/PokemonStrength';
+import PokemonStrength, { StrengthResult } from '../../util/PokemonStrength';
+import { StrengthParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Select, SelectChangeEvent, MenuItem } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import MainSkillIcon from './MainSkillIcon';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import InfoButton from './InfoButton';
 import { IvAction } from './IvState';
 import EnergyDialog from './EnergyDialog';
-import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientIcon from './IngredientIcon';
-import IngredientsIcon from '../Resources/IngredientsIcon';
-import PotIcon from '../Resources/PotIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -138,7 +132,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     pokemonIv, settings, energyDialogOpen, dispatch,
 }: {
     pokemonIv: PokemonIv,
-    settings: CalculateParameter,
+    settings: StrengthParameter,
     energyDialogOpen: boolean,
     dispatch: React.Dispatch<IvAction>,
 }) => {
@@ -147,52 +141,20 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [decendantId, setDecendantId] = React.useState(0);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
-    // change level
-    if (settings.level !== 0) {
-        pokemonIv = pokemonIv.changeLevel(settings.level);
-    }
-    // change skill level
-    if (settings.maxSkillLevel) {
-        pokemonIv = pokemonIv.clone();
-        pokemonIv.skillLevel = 7;
-        pokemonIv.normalize();
-    }
-
-    // evolved pokemon check
-    const decendants: PokemonData[] = React.useMemo(() => {
-        if (!settings.evolved || pokemonIv.pokemon.ancestor === null) {
-            return [];
-        }
-        const lineage = pokemons
-            .filter(x => x.ancestor === pokemonIv.pokemon.ancestor);
-        const maxEvolvutionCount = lineage
-            .reduce((p, c) => Math.max(p, c.evolutionCount), 0);
-        return lineage
-            .filter(x => x.evolutionCount === maxEvolvutionCount);
-    }, [pokemonIv.pokemon, settings.evolved]);
-    let pokemonChanged = false;
-    if (decendants.length > 0) {
-        let showingPokemon = decendants.find(x => x.id === pokemonIv.pokemon.id);
-        if (showingPokemon === undefined) {
-            showingPokemon = decendants.find(x => x.id === decendantId);
-        }
-        if (showingPokemon === undefined) {
-            showingPokemon = decendants[0];
-        }
-        if (showingPokemon.id !== pokemonIv.pokemon.id) {
-            pokemonChanged = true;
-            pokemonIv = pokemonIv.clone(showingPokemon.name);
-        }
-    }
-
-    const strength = new PokemonStrength(pokemonIv);
     const isWhistle = (settings.period === 3);
-    const result = strength.calculate({
+    const strength = new PokemonStrength(pokemonIv, {
         ...settings,
         isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
         isGoodCampTicketSet: isWhistle ?
             false : settings.isGoodCampTicketSet,
-    });
+    }, decendantId);
+    const result = strength.calculate();
+
+    let decendants: PokemonData[] = [];
+    if (pokemonIv.pokemon.name !== strength.pokemonIv.pokemon.name) {
+        pokemonIv = strength.pokemonIv;
+        decendants = getDecendants(pokemonIv.pokemon);
+    }
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
@@ -234,10 +196,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <span className="strength">{formatWithComma(Math.round(result.totalStrength))}</span>
             <InfoButton onClick={onHelpClick}/>
             <HelpDialog open={helpOpen} onClose={onHelpClose}/>
-            {decendants.length === 1 && pokemonChanged && <span className="evolved">
+            {decendants.length === 1 && <span className="evolved">
                 {t('strength of x', {x: t(`pokemons.${pokemonIv.pokemon.name}`)})}
             </span>}
-            {decendants.length > 1 && pokemonChanged && <span className="evolved">
+            {decendants.length > 1 && <span className="evolved">
                 <Select variant="standard" value={pokemonIv.pokemon.id.toString()}
                     onChange={onDecendantsChange}>
                     {decendants.map(p => <MenuItem key={p.id} value={p.id}>
@@ -304,7 +266,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     </StyledBerryIngSkillStrengthView>;
 });
 
-function getIngArticle(result: CalculateResult, settings: CalculateParameter,
+function getIngArticle(result: StrengthResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
     if (settings.tapFrequency === 'none') {
         return <article>ー</article>;
@@ -351,76 +313,32 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
     throw new Error('unknown short num digits: ' + digits);
 }
 
-function getMainSkillTitle(pokemonIv: PokemonIv, result: CalculateResult,
-    settings: CalculateParameter, t: typeof i18next.t,
+function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
+    settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
-    const mainSkillValue = round1(result.skillValue);
-    switch (mainSkill) {
-        case "Charge Energy S":
-        case "Energizing Cheer S":
-            return <>
-                <FavoriteBorderIcon sx={{color: "#ff88aa"}}/>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Energy for Everyone S":
-            return <>
-                <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Charge Strength M":
-        case "Charge Strength S":
-        case "Charge Strength S (Random)":
-            return <>
-                <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span>{formatWithComma(Math.round(result.skillValue))}</span>
-            </>;
-        case "Dream Shard Magnet S":
-        case "Dream Shard Magnet S (Random)":
-            return <>
-                <DreamShardIcon/>
-                <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-            </>;
-        case "Extra Helpful S":
-        case "Helper Boost":
-            return <>
-                <SearchIcon sx={{color: "#66cc66"}}/>
-                <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Ingredient Magnet S":
-            return <>
-                <IngredientsIcon/>
-                <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Cooking Power-Up S":
-            return <>
-                <svg width="18" height="18" fill="#886666"><PotIcon/></svg>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Tasty Chance S":
-            return <>
-                <svg width="18" height="18" fill="#886666"><PotIcon/></svg>
-                <span>{mainSkillValue}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        case "Metronome":
-            return <>
-                <SwipeOutlinedIcon sx={{color: "#999", paddingRight: "0.2rem"}}/>
-                <span>{round2(result.skillCount)}</span>
-                <InfoButton onClick={onInfoClick}/>
-            </>;
-        default:
-            return <>ー</>;
+    let mainSkillValue: string;
+    if (mainSkill.startsWith("Charge Strength")) {
+        mainSkillValue = formatWithComma(Math.round(result.skillValue));
     }
+    else if (mainSkill === "Metronome") {
+        mainSkillValue = round2(result.skillCount);
+    }
+    else {
+        mainSkillValue = round1(result.skillValue);
+    }
+
+    return <>
+        <MainSkillIcon mainSkill={mainSkill}/>
+        <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
+        {!mainSkill.startsWith("Charge Strength") &&
+        !mainSkill.startsWith("Dream Shard") &&
+        <InfoButton onClick={onInfoClick}/>}
+    </>;
 }
 
 const HelpDialog = React.memo(({open, onClose}: {

@@ -27,8 +27,8 @@ const StrengthView = React.memo(({state, dispatch}: {
             area = t(`area.${parameter.fieldIndex}`);
         }
         else {
-            area = t('area.0') + " (" +
-                parameter.favoriteType.map(x => t(`types.${x}`)).join(", ") + ")";
+            area = parameter
+                .favoriteType.map(x => t(`types.${x}`)).join(", ");
         }
         area += ` (${parameter.fieldBonus}%)`;
     }
@@ -42,8 +42,8 @@ const StrengthView = React.memo(({state, dispatch}: {
             <StrengthParameterPreview>
                 <ul>
                     <li>{area}</li>
-                    <li>{t('period')}: {t(period)}</li>
-                    {parameter.level !== 0 && <li><strong>{t('level')}: {parameter.level}</strong></li>}
+                    <li>{t(period)}</li>
+                    {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
                     <li>{t('event name')}: {t(parameter.event)}</li>

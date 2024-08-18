@@ -14,6 +14,15 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Tasty Chance S" |
     "Helper Boost";
 
+export const MainSkillNames: MainSkillName[] = [
+    "Charge Strength S", "Charge Strength M",
+    "Ingredient Magnet S", "Energy for Everyone S",
+    "Charge Energy S", "Energizing Cheer S",
+    "Cooking Power-Up S", "Tasty Chance S",
+    "Extra Helpful S", "Helper Boost",
+    "Dream Shard Magnet S", "Metronome",
+];
+
 export function isSkillLevelMax7(skill: MainSkillName): boolean {
     return skill === "Ingredient Magnet S" ||
         skill === "Charge Strength M" ||

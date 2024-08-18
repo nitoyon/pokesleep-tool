@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "box filter and sort improvement": {
+                    "headline": "박스 필터링 및 정렬 기능이 크게 향상되었습니다.",
+                    "detail": "이제 박스를 종 이름, 닉네임, $t(ingredient), $t(main skill), $t(sub skills) 로 필터링할 수 있습니다.\n추가로, 박스의 정렬 옵션이 $t(berry), $t(ingredient), $t(skill count) 로 확장되었습니다."
+                },
                 "suicune event simmulation": {
                     "headline": "스이쿤 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
                     "detail": "[$t(strength2)] 탭에서 수이크닝 이벤트 중 물 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
@@ -142,6 +146,8 @@
         "box is full": "박스가 가득 찼습니다. 불필요한 포켓몬을 삭제해주세요.",
         "box is empty": "등록된 포켓몬이 없습니다.",
         "no pokemon found": "지정된 조건에 맞는 포켓몬을 찾을 수 없습니다.",
+        "no ingredient": "재료를 수집하지 않는 설정입니다.",
+        "no skill": "스킬이 발생하지 않는 설정입니다.",
 
         "export message1": "박스 내의 포켓몬 정보는 브라우저에 저장되어 있으며 다른 환경으로 이전되지 않습니다.",
         "export message2": "박스 내의 포켓몬을 다른 환경으로 옮기려면, 다음 데이터를 대상 환경에서 가져오십시오.",
@@ -161,6 +167,7 @@
         "1week": "1주",
         "whistle": "휘슬",
         "calc with evolved": "진화한 포켓몬으로 계산하다",
+        "calc with evolved (short)": "진화한",
         "calc with max skill level": "최대 기술 레벨로 계산하다",
         "calc with max skill level (short)": "최대 기술 레벨",
         "current level": "현재 레벨",
@@ -253,6 +260,12 @@
         "final-evoltion": "완전한 진화",
         "sleeptype": "수면 타입",
         "pokedexno": "도감 번호",
+        "main skill": "메인 스킬",
+        "sub skills": "서브 스킬",
+        "unlocked only": "오직 잠금 해제됨",
+        "total": "총계",
+        "skill count": "스킬 수",
+
         "select subskill at level xxx": "<level/>의 서브 스킬을 선택해주세요",
 
         "about1": "이 도구는 비공식 도구이며, <profile>nitoyon</profile>이 개인적으로 개발했습니다.",

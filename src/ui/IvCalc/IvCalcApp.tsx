@@ -4,7 +4,7 @@ import { Button, Snackbar, Tab, Tabs } from '@mui/material';
 import PokemonIv from '../../util/PokemonIv';
 import { copyToClipboard } from '../../util/Clipboard';
 import { PokemonBoxItem } from '../../util/PokemonBox';
-import { ivStateReducer, initialIvState } from './IvState';
+import { getInitialIvState, ivStateReducer } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './BoxView';
 import IvForm from './IvForm';
@@ -27,17 +27,7 @@ const StyledTab = styled(Tab)({
     padding: '6px 16px',
 });
 
-// Apply PokemonIv in location hash to initialState
-(() => {
-    const m = document.location.hash.match(/#p=(.*)/);
-    if (m === null) {
-        return;
-    }
-    try {
-        initialIvState.pokemonIv = PokemonIv.deserialize(m[1]);
-    }
-    catch { }
-})();
+const initialIvState = getInitialIvState();
 
 const ResearchCalcApp = React.memo(() => {
     const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
@@ -106,7 +96,7 @@ const ResearchCalcApp = React.memo(() => {
     }, [state.pokemonIv, t]);
 
     return <>
-        <div style={{margin: "0 .5rem", position: 'sticky', top: 0,
+        <div style={{padding: "0 .5rem", position: 'sticky', top: 0,
             zIndex: 1, background: '#f9f9f9',
         }}>
             <StyledTabs value={state.tabIndex} onChange={onTabChange}>
@@ -130,19 +120,18 @@ const ResearchCalcApp = React.memo(() => {
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}
                 onShare={onShare}/>
         </div>
-        <div style={{margin: "0 .5rem"}}>
-            {state.lowerTabIndex === 0 &&
-                <div style={{marginBottom: '10rem'}}>
-                    <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
-                </div>}
-            {state.lowerTabIndex === 1 &&
-                <BoxView items={state.box.items} onShare={onShare}
-                    selectedId={state.selectedItemId} dispatch={dispatch}/>}
-            {state.lowerTabIndex === 2 && 
-                <StrengthSettingForm value={state.parameter}
-                    hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                    dispatch={dispatch}/>}
-        </div>
+        {state.lowerTabIndex === 0 &&
+            <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
+                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+            </div>}
+        {state.lowerTabIndex === 1 &&
+            <BoxView items={state.box.items} onShare={onShare}
+                selectedId={state.selectedItemId} dispatch={dispatch}
+                parameter={state.parameter}/>}
+        {state.lowerTabIndex === 2 &&
+            <StrengthSettingForm value={state.parameter}
+                hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
+                dispatch={dispatch}/>}
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
