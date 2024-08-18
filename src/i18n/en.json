@@ -152,6 +152,8 @@
         "box is full": "The box is full. Please delete the unnecessary Pokémon.",
         "box is empty": "No Pokémon have been registered yet.",
         "no pokemon found": "No Pokémon matching the specified criteria were found.",
+        "no ingredient": "Configured not to collect ingredients.",
+        "no skill": "Configured not to trigger skills.",
 
         "export message1": "The Pokémon information in the box is saved in the browser and will not be transferred to another environment.",
         "export message2": "To transfer the Pokémon in the box to another environment, please import the following data into the target environment.",
