@@ -178,8 +178,6 @@ class Energy {
             .filter(x => !x.isAwake));
 
         // calculate Sneaky Snacking
-        const isEventBoosted = (param.event !== "none" &&
-            this._iv.pokemon.type === "water");
         const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
