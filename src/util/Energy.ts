@@ -409,7 +409,8 @@ class Energy {
         },
     } {
         const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
-        const helpBonusCount = param.helpBonusCount;
+        const helpBonusCount = param.helpBonusCount +
+            (this._iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
         const isGoodCampTicketSet = param.isGoodCampTicketSet;
         const alwaysSnacking = param.tapFrequency === "none";
         const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
