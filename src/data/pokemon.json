@@ -2608,6 +2608,71 @@
         }
     },
     {
+        "id": 194,
+        "name": "Wooper",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 5,
+        "frequency": 5900,
+        "ingRatio": 20.1,
+        "skillRatio": 3.8,
+        "ancestor": 194,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "mushroom",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 6,
+            "c3": 10
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 12
+        }
+    },
+    {
+        "id": 195,
+        "name": "Quagsire",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 3400,
+        "ingRatio": 19,
+        "skillRatio": 3.2,
+        "ratioNotFixed": true,
+        "ancestor": 194,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "mushroom",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 6,
+            "c3": 10
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 12
+        }
+    },
+    {
         "id": 196,
         "name": "Espeon",
         "sleepType": "snoozing",
