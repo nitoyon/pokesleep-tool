@@ -2650,7 +2650,6 @@
         "frequency": 3400,
         "ingRatio": 19,
         "skillRatio": 3.2,
-        "ratioNotFixed": true,
         "ancestor": 194,
         "evolutionCount": 1,
         "evolutionLeft": 0,
