@@ -408,6 +408,16 @@ class Energy {
             asleepFull: number,
         },
     } {
+        if (this._iv.pokemon.frequency === 0) {
+            return {
+                timeToFullInventory: -1,
+                skillProbabilityAfterWakeup: { once: 0, twice: 0 },
+                helpCount: {
+                    awake: 0, asleepNotFull: 0, asleepFull: 0
+                }
+            };
+        }
+
         const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
         const helpBonusCount = param.helpBonusCount +
             (this._iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
@@ -420,8 +430,7 @@ class Energy {
 
         // calculate the number of berries and ings per help
         const rp = new PokemonRp(this._iv);
-        const baseFreq = this._iv.pokemon.frequency === 0 ? Infinity :
-            rp.frequencyWithHelpingBonus(helpBonusCount) /
+        const baseFreq = rp.frequencyWithHelpingBonus(helpBonusCount) /
             (isGoodCampTicketSet ? 1.2 : 1);
         const bagUsagePerHelp = rp.bagUsagePerHelp;
 

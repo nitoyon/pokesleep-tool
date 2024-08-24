@@ -514,6 +514,12 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 0.5, h: 0.1, color: '#ffef56'},
         {x: .5, y: 0, w: 0.7, h: 0.4, color: '#f7fef8'},
     ],
+    // Suicune
+    '245': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#63eaf9'},
+        {x: 0, y: 0, w: 0.5, h: 0.3, color: '#0fcce3'},
+        {x: .5, y: 0, w: 0.7, h: 0.5, color: '#9284d5'},
+    ],
     // Larvitar
     '246': [
         {x: 0, y: 0, w: 1, h: 1, color: '#a6c06d'},
