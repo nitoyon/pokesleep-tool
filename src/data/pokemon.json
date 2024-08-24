@@ -3024,6 +3024,38 @@
         }
     },
     {
+        "id": 245,
+        "name": "Suicune",
+        "sleepType": "slumbering",
+        "type": "water",
+        "speciality": "Skills",
+        "skill": "Helper Boost",
+        "fp": 30,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "unknown",
+            "c3": 3
+        }
+    },
+    {
         "id": 246,
         "name": "Larvitar",
         "sleepType": "slumbering",
