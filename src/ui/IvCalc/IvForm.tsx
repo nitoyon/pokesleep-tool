@@ -193,7 +193,6 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
         if (value === null) {
             return;
         }
-        console.log(value);
         setValue(value as "frequency"|"count"|"full");
     }, []);
 
