@@ -64,20 +64,20 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
     }, []);
 
     // filter
-    let filtered = React.useMemo(() => filterConfig.filter(items, t),
+    const filtered = React.useMemo(() => filterConfig.filter(items, t),
         [items, filterConfig, t]);
 
     // sort
     const [sortedItems, errorMessage] = React.useMemo(
         () => sortPokemonItems(filtered, sortConfig, parameter, t),
         [sortConfig, filtered, parameter, t]);
-    if (!sortConfig.descending) {
-        sortedItems.reverse();
-    }
 
-    const elms = sortedItems.map((item) => (
+    let elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
             onChange={onItemChange} onShare={onShare}/>));
+    if (!sortConfig.descending) {
+        elms = [...elms].reverse();
+    }
 
     const footerValue = React.useMemo(() => ({
         isFiltered: !filterConfig.isEmpty,
@@ -146,6 +146,9 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
     if (filtered.length === 0) {
         return [[], t('no pokemon found')];
     }
+
+    // Create a shallow copy of `filtered` because Array.sort mutates it
+    filtered = [...filtered];
 
     const sort = sortConfig.sort;
     if (sort === "level") {
