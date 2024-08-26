@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { ButtonBase, ClickAwayListener, MenuItem, MenuList, Popper, Paper } from '@mui/material';
+import { ButtonBase, MenuItem, MenuList } from '@mui/material';
+import PopperMenu from '../common/PopperMenu';
 import SearchIcon from '@mui/icons-material/Search';
 import SortIcon from '@mui/icons-material/Sort';
 import NorthIcon from '@mui/icons-material/North';
@@ -63,13 +64,9 @@ const PokemonFilterFooter = React.memo(({
             onClick={onSortButtonClick} ref={sortMenuAnchorRef}>
             <SortIcon style={{paddingRight: '.4rem'}}/>{t(value.sort)}
         </RoundedButton>
-        <Popper open={sortMenuOpen} anchorEl={sortMenuAnchorRef.current} style={{zIndex: 1500}}>
-            <Paper elevation={10}>
-                <ClickAwayListener onClickAway={onSortMenuClose}>
-                    <MenuList>{menuItems}</MenuList>
-                </ClickAwayListener>
-            </Paper>
-        </Popper>
+        <PopperMenu open={sortMenuOpen} onClose={onSortMenuClose} anchorEl={sortMenuAnchorRef.current}>
+            <MenuList>{menuItems}</MenuList>
+        </PopperMenu>
         <SortOrderButton className={value.descending ? 'desc' : 'asc'} onClick={onToggleSortOrder}>
             <NorthIcon style={{width: '1rem', height: '1rem'}}/>
         </SortOrderButton>
