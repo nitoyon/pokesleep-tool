@@ -9,11 +9,19 @@ const PopperMenu = React.memo(({
     open: boolean,
     onClose: () => void,
 }) => {
+    const onClickAway = React.useCallback((e: MouseEvent | TouchEvent) => {
+        // if anchorEl is clicked, we shouldn't reopen the popper
+        if (e.target === anchorEl) {
+            e.preventDefault();
+        }
+        onClose();
+    }, [anchorEl, onClose]);
+
     return (
         <Popper open={open} anchorEl={anchorEl} placement="bottom-start"
             style={{zIndex: 1500}}>
             <Paper elevation={10}>
-                <ClickAwayListener onClickAway={onClose}>
+                <ClickAwayListener onClickAway={onClickAway}>
                     {children}
                 </ClickAwayListener>
             </Paper>
