@@ -3040,19 +3040,19 @@
         "isFullyEvolved": true,
         "carryLimit": 0,
         "ing1": {
-            "name": "unknown",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
         },
         "ing2": {
-            "name": "unknown",
-            "c2": 2,
-            "c3": 4
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
         },
         "ing3": {
-            "name": "unknown",
-            "c3": 3
+            "name": "unknown3",
+            "c3": 0
         }
     },
     {

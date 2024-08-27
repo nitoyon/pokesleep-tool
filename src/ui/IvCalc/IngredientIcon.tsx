@@ -35,6 +35,18 @@ const IngredientIcon = React.memo(({name}: {name: IngredientName}) => {
         case "soy": return <SoyIcon/>;
         case "tail": return <TailIcon/>;
         case "tomato": return <TomatoIcon/>;
+        case "unknown1":
+            return <svg width="24" height="24" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" fill="#eaae35"/>
+            </svg>;
+        case "unknown2":
+            return <svg width="24" height="24" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" fill="#56c0fe"/>
+            </svg>;
+        case "unknown3":
+            return <svg width="24" height="24" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8" fill="#f55865"/>
+            </svg>;
     }
     return <></>;
 });

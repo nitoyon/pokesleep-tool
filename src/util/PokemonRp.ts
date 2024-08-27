@@ -22,6 +22,9 @@ export const ingredientStrength: {[ing in IngredientName]: number} = {
     "soy": 100,
     "corn": 140,
     "unknown": 0,
+    "unknown1": 0,
+    "unknown2": 0,
+    "unknown3": 0,
 };
 
 const berryStrength: {[type in PokemonType]: number} = {
