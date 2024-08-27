@@ -70,7 +70,8 @@ export const IngredientNames: IngredientName[] = [
 
 export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
-    "tomato" | "cacao" | "tail" | "soy" | "corn" | "unknown";
+    "tomato" | "cacao" | "tail" | "soy" | "corn" |
+    "unknown" | "unknown1" | "unknown2" | "unknown3";
 
 const pokemons = pokemon_ as PokemonData[];
 
