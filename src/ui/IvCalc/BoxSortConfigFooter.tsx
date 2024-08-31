@@ -4,11 +4,12 @@ import { IvAction } from './IvState';
 import { BoxSortConfig } from './BoxView';
 import IngredientIcon from './IngredientIcon';
 import MainSkillIcon from './MainSkillIcon';
-import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import SelectEx from '../common/SelectEx';
 import { StrengthParameter } from '../../util/PokemonStrength';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { IngredientName, IngredientNames } from '../../data/pokemons';
-import { FormControlLabel, Select, SelectChangeEvent, Switch, MenuItem }  from '@mui/material';
+import fields from '../../data/fields';
+import { FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChange}: {
@@ -22,20 +23,20 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     const onParameterChange = React.useCallback((value: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
-    const onLevelChange = React.useCallback((e: SelectChangeEvent) => {
-        onParameterChange({...parameter, level: parseInt(e.target.value, 10) as 0|10|25|30|50|55|60|75|100})
+    const onLevelChange = React.useCallback((value: string) => {
+        onParameterChange({...parameter, level: parseInt(value, 10) as 0|10|25|30|50|55|60|75|100})
     }, [onParameterChange, parameter])
-    const onFieldChange = React.useCallback((fieldIndex: number) => {
-        onParameterChange({...parameter, fieldIndex});
+    const onFieldChange = React.useCallback((value: string) => {
+        onParameterChange({...parameter, fieldIndex: parseInt(value, 10)});
     }, [onParameterChange, parameter]);
-    const onIngredientChange = React.useCallback((e: SelectChangeEvent) => {
+    const onIngredientChange = React.useCallback((value: string) => {
         onChange({
-            ...sortConfig, ingredient: e.target.value as IngredientName,
+            ...sortConfig, ingredient: value as IngredientName,
         });
     }, [onChange, sortConfig]);
-    const onSkillChange = React.useCallback((e: SelectChangeEvent) => {
+    const onSkillChange = React.useCallback((value: string) => {
         onChange({
-            ...sortConfig, mainSkill: e.target.value as MainSkillName,
+            ...sortConfig, mainSkill: value as MainSkillName,
         });
     }, [onChange, sortConfig]);
     const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +48,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             <IngMenuItem key={ing} value={ing}>
                 <IngredientIcon name={ing}/>
             </IngMenuItem>);
-        ret.unshift(<IngMenuItem key="unknown" value="unknown">
+        ret.push(<IngMenuItem key="unknown" value="unknown">
             {t('total')}
         </IngMenuItem>);
         return ret;
@@ -61,6 +62,20 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             </SkillMenuItem>);
     }, [t]);
 
+    const fieldMenus = React.useMemo(() => {
+        // prepare field menus
+        const ret = fields.map((field) =>
+            <MenuItem key={field.index} value={field.index}>
+                <span>{field.emoji}</span>
+                {t(`area.${field.index}`)}
+            </MenuItem>
+        );
+        ret.unshift(<MenuItem key={-1} value={-1}>
+            {t('no favorite berries')}
+        </MenuItem>);
+        return ret;
+    }, [t]);
+
     if (sortConfig.sort !== "berry" &&
         sortConfig.sort !== "ingredient" &&
         sortConfig.sort !== "skill count"
@@ -70,8 +85,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     return <StyledBoxHeader>
         <div>
             <span>
-                <Select variant="standard" onChange={onLevelChange}
-                    value={parameter.level.toString()}>
+                <SelectEx onChange={onLevelChange} value={parameter.level}
+                    sx={{padding: '0 .5rem', fontSize: '0.8rem', textWrap: 'nowrap'}}>
                     <MenuItem value={0}>{t('current level')}</MenuItem>
                     <MenuItem value={10}>Lv. 10</MenuItem>
                     <MenuItem value={25}>Lv. 25</MenuItem>
@@ -80,23 +95,36 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     <MenuItem value={60}>Lv. 60</MenuItem>
                     <MenuItem value={75}>Lv. 75</MenuItem>
                     <MenuItem value={100}>Lv. 100</MenuItem>
-                </Select>
+                </SelectEx>
             </span>
             {sortConfig.sort === "berry" && <span className="field">
-                <ResearchAreaTextField value={parameter.fieldIndex} showEmpty
-                    onChange={onFieldChange}/>
+                <SelectEx value={parameter.fieldIndex} onChange={onFieldChange}
+                    sx={{padding: '0 .5rem', fontSize: '0.8rem'}}>
+                {fieldMenus}
+                </SelectEx>
             </span>}
             {sortConfig.sort === "ingredient" && <span className="ing">
-                <Select variant="standard" onChange={onIngredientChange}
-                    value={sortConfig.ingredient}>
+                <SelectEx onChange={onIngredientChange}
+                    value={sortConfig.ingredient}
+                    sx={{padding: '0 .5rem', fontSize: '0.8rem'}}
+                    menuSx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        width: '16rem',
+                    }}>
                     {ingMenus}
-                </Select>
+                </SelectEx>
             </span>}
             {sortConfig.sort === "skill count" && <span className="skill">
-                <Select variant="standard" onChange={onSkillChange}
+                <SelectEx onChange={onSkillChange}
+                    sx={{fontSize: '0.8rem', textWrap: 'nowrap'}}
+                    menuSx={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                    }}
                     value={sortConfig.mainSkill}>
                     {skillMenus}
-                </Select>
+                </SelectEx>
             </span>}
             <span className="evolved">
                 <FormControlLabel control={
@@ -135,7 +163,7 @@ const StyledBoxHeader = styled('div')({
                 paddingTop: '4px',
             },
             '&.ing svg': {
-                paddingLeft: '5px',
+                padding: '0 5px',
                 width: '18px',
                 height: '18px',
             },
@@ -157,18 +185,16 @@ const StyledBoxHeader = styled('div')({
 
 const IngMenuItem = styled(MenuItem)({
     width: '4rem',
-    float: 'left',
 });
 const SkillMenuItem = styled(MenuItem)({
-    width: '50%',
+    maxWidth: '12rem',
     fontSize: '0.8rem',
-    float: 'left',
     paddingLeft: '4px',
     textWrap: 'wrap',
     '& > svg': {
         width: '18px',
         height: '18px',
-        paddingRight: '4px',
+        padding: '0 4px',
         flexShrink: 0,
     },
 });

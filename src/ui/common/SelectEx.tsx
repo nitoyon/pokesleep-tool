@@ -8,12 +8,14 @@ const SelectEx = React.memo(({
     value,
     renderValue,
     sx,
+    menuSx,
     onChange
 }: {
     children: React.ReactNode|React.ReactNode[],
     value: string|number,
     renderValue?: (value: string|number) => React.ReactNode,
     sx?: object,
+    menuSx?: object,
     onChange?: (value: string) => void,
 }) => {
     const [open, setOpen] = React.useState(false);
@@ -64,7 +66,7 @@ const SelectEx = React.memo(({
             {valueElement}
         </TextLikeButton>
         <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}>
-            <MenuList onClick={onMenuClick}>
+            <MenuList onClick={onMenuClick} style={menuSx}>
                 {children}
             </MenuList>
         </PopperMenu>
