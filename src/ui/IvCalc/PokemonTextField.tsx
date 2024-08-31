@@ -4,7 +4,7 @@ import { SleepType } from '../../data/fields';
 import pokemons, { PokemonType } from '../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
-import TextLikeButton from './TextLikeButton';
+import TextLikeButton from '../common/TextLikeButton';
 import PokemonSelectDialog from './PokemonSelectDialog';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';

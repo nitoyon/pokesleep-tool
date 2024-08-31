@@ -1,8 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import Nature, { NatureEffect } from '../../util/Nature';
-import { MenuList, MenuItem, Popper, Paper, ClickAwayListener } from '@mui/material';
-import TextLikeButton from './TextLikeButton';
+import { MenuList, MenuItem } from '@mui/material';
+import PopperMenu from '../common/PopperMenu';
+import TextLikeButton from '../common/TextLikeButton';
 import { useTranslation } from 'react-i18next';
 
 const NatureTextField = React.memo(({value, onChange}: {
@@ -105,21 +106,11 @@ const NatureEditPopper = React.memo(({open, anchorRef, onClose, onChange}: {
         }
     }, [open]);
 
-    return <Popper open={open}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        placement="bottom-start"
-        disablePortal
-        sx={{zIndex: 2}}>
-        <Paper elevation={12}>
-          <ClickAwayListener onClickAway={onClose}>
-            <MenuList>
-                {menuItems}
-            </MenuList>
-          </ClickAwayListener>
-        </Paper>
-  </Popper>
-;
+    return <PopperMenu open={open} onClose={onClose} anchorEl={anchorRef.current}>
+        <MenuList>
+            {menuItems}
+        </MenuList>
+  </PopperMenu>;
 });
 
 const StyledNatureElement = styled('div')({
