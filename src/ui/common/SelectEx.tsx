@@ -26,22 +26,12 @@ const SelectEx = React.memo(({
     const onClose = React.useCallback(() => {
         setOpen(false);
     }, []);
-    const onMenuClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
+    const onMenuClick = React.useCallback((child: React.ReactElement<any>) => {
         if (onChange === undefined) {
             return;
         }
 
-        let elm: HTMLElement|null = event.target as HTMLElement;
-        while (elm !== null) {
-            if (elm.nodeName === 'LI') {
-                break;
-            }
-            elm = elm.parentElement;
-        }
-        if (elm === null) {
-            return;
-        }
-        const value = elm.getAttribute('value');
+        const value = child.props.value as string;
         if (value !== null) {
             onChange(value);
         }
@@ -59,6 +49,17 @@ const SelectEx = React.memo(({
         valueElement = selectedChild.props.children;
     }
 
+    const menuItems = childrenArray.map(child => {
+        if (!React.isValidElement(child)) {
+            return null;
+        }
+        const selected = (value === child.props.value);
+        return React.cloneElement(child as React.ReactElement<any>, {
+            onClick: () => { onMenuClick(child) },
+            selected,
+        });
+    });
+
     return <>
         <TextLikeButton ref={anchorRef} onClick={onClick}
             style={sx}
@@ -66,8 +67,8 @@ const SelectEx = React.memo(({
             {valueElement}
         </TextLikeButton>
         <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}>
-            <MenuList onClick={onMenuClick} style={menuSx}>
-                {children}
+            <MenuList style={menuSx}>
+                {menuItems}
             </MenuList>
         </PopperMenu>
     </>;
