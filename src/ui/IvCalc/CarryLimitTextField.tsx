@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import PokemonIv from '../../util/PokemonIv';
 import { MenuList, MenuItem } from '@mui/material';
 import PopperMenu from '../common/PopperMenu';
-import TextLikeButton from './TextLikeButton';
+import TextLikeButton from '../common/TextLikeButton';
 import { useTranslation } from 'react-i18next';
 
 const CarryLimitTextField = React.memo(({iv, onChange}: {
