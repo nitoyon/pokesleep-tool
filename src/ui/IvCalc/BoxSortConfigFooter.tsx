@@ -40,7 +40,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     }, [onChange, sortConfig]);
     const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onParameterChange({...parameter, evolved: e.target.checked});
-    }, [onChange, onParameterChange, sortConfig]);
+    }, [parameter, onParameterChange]);
 
     const ingMenus = React.useMemo(() => {
         const ret: React.ReactElement[] = IngredientNames.map(ing =>
