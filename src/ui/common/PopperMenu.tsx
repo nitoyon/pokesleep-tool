@@ -19,7 +19,7 @@ const PopperMenu = React.memo(({
 
     return (
         <Popper open={open} anchorEl={anchorEl} placement="bottom-start"
-            style={{zIndex: 1500}}>
+            style={{zIndex: 1500, maxWidth: '95vw'}}>
             <Paper elevation={10}>
                 <ClickAwayListener onClickAway={onClickAway}>
                     {children}
