@@ -2,7 +2,6 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Snackbar, Tab, Tabs } from '@mui/material'; 
 import PokemonIv from '../../util/PokemonIv';
-import { copyToClipboard } from '../../util/Clipboard';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { getInitialIvState, ivStateReducer } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
@@ -76,25 +75,6 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "deleteAllClose"});
     }, []);
 
-    const onShare = React.useCallback(() => {
-        const id = state.pokemonIv.serialize();
-        const baseUrl = window.location.href.split("#")[0]
-            .replace(/utm_source=homescreen&?/, '')
-            .replace(/\?$/, '');
-        const url = `${baseUrl}#p=${id}`;
-
-        // share url
-        if (navigator.share) {
-            return navigator.share({url});
-        }
-
-        return copyToClipboard(url)
-            .then(() => {
-                const message = t('copied');
-                dispatch({type: "showAlert", payload: {message}})
-            });
-    }, [state.pokemonIv, t]);
-
     return <>
         <div style={{padding: "0 .5rem", position: 'sticky', top: 0,
             zIndex: 1, background: '#f9f9f9',
@@ -116,16 +96,15 @@ const ResearchCalcApp = React.memo(() => {
                 marginTop: '3px',
                 padding: '0 0.3rem',
             }}>{t('ratio is not fixed')}</div>}
-            <LowerTabHeader upperTabIndex={state.tabIndex} tabIndex={state.lowerTabIndex}
-                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}
-                onShare={onShare}/>
+            <LowerTabHeader state={state}
+                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>
         {state.lowerTabIndex === 0 &&
             <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
                 <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
             </div>}
         {state.lowerTabIndex === 1 &&
-            <BoxView items={state.box.items} onShare={onShare}
+            <BoxView items={state.box.items}
                 selectedId={state.selectedItemId} dispatch={dispatch}
                 parameter={state.parameter}/>}
         {state.lowerTabIndex === 2 &&
