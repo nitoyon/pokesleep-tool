@@ -6,6 +6,7 @@ import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
+import { shareIv } from './ShareUtil';
 import { IngredientName, IngredientNames, PokemonType } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
@@ -22,20 +23,16 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
-const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
+const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
     items: PokemonBoxItem[],
     selectedId: number,
     parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
-    onShare: () => void,
 }) => {
     const { t } = useTranslation();
     const [sortConfig, setSortConfig] = React.useState(loadBoxSortConfig());
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
-    const onItemChange = React.useCallback((action: IvAction) => {
-        dispatch(action);
-    }, [dispatch]);
 
     const onAddClick = React.useCallback(() => {
         dispatch({type: "add"});
@@ -74,7 +71,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch, onShare}: {
 
     let elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
-            onChange={onItemChange} onShare={onShare}/>));
+            dispatch={dispatch}/>));
     if (!sortConfig.descending) {
         elms = [...elms].reverse();
     }
@@ -410,11 +407,10 @@ function loadBoxSortConfig(): BoxSortConfig {
     return ret;
 }
 
-const BoxLargeItem = React.memo(({item, selected, onChange, onShare}: {
+const BoxLargeItem = React.memo(({item, selected, dispatch}: {
     item: PokemonBoxItem,
     selected: boolean,
-    onChange: (action: IvAction) => void,
-    onShare: () => void,
+    dispatch: (action: IvAction) => void,
 }) => {
     const { t } = useTranslation();
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
@@ -426,8 +422,8 @@ const BoxLargeItem = React.memo(({item, selected, onChange, onShare}: {
     }, 500);
 
     const clickHandler = React.useCallback(() => {
-        onChange({type: "select", payload: {id: item.id}});
-    }, [onChange, item.id]);
+        dispatch({type: "select", payload: {id: item.id}});
+    }, [dispatch, item.id]);
     const onMoreIconClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         setMoreMenuAnchor(event.currentTarget);
     }, [setMoreMenuAnchor]);
@@ -435,13 +431,13 @@ const BoxLargeItem = React.memo(({item, selected, onChange, onShare}: {
         setMoreMenuAnchor(null);
     }, [setMoreMenuAnchor]);
     const onMenuClick = React.useCallback((type: string) => {
-        onChange({type, payload: {id: item.id}} as IvAction);
+        dispatch({type, payload: {id: item.id}} as IvAction);
         setMoreMenuAnchor(null);
-    }, [item, onChange, setMoreMenuAnchor]);
+    }, [item, dispatch, setMoreMenuAnchor]);
     const onShareClick = React.useCallback(() => {
         setMoreMenuAnchor(null);
-        onShare();
-    }, [onShare]);
+        shareIv(item.iv, dispatch, t);
+    }, [dispatch, item.iv, t]);
 
     return (
         <StyledBoxLargeItem>

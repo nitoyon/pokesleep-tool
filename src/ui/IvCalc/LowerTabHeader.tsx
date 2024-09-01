@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { IvAction } from './IvState';
+import IvState, { IvAction } from './IvState';
+import { shareIv } from './ShareUtil';
 import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
     Tab, Tabs
  } from '@mui/material';
@@ -13,14 +14,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 const LowerTabHeader = React.memo(({
-    upperTabIndex, tabIndex, isBoxEmpty, dispatch, onShare,
+    state, isBoxEmpty, dispatch,
 }: {
-    upperTabIndex: number,
-    tabIndex: number,
+    state: IvState,
     isBoxEmpty: boolean,
     dispatch: (action: IvAction) => void,
-    onShare: () => void,
 }) => {
+    const upperTabIndex = state.tabIndex;
+    const tabIndex = state.lowerTabIndex;
+
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const { t } = useTranslation();
 
@@ -40,8 +42,8 @@ const LowerTabHeader = React.memo(({
 
     const onShareHandler = React.useCallback(() => {
         setMoreMenuAnchor(null);
-        onShare();
-    }, [onShare]);
+        shareIv(state.pokemonIv, dispatch, t);
+    }, [dispatch, state.pokemonIv, t]);
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         dispatch({type: "changeLowerTab", payload: {index: newValue}});
