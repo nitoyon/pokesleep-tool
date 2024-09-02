@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add suicune": {
+                    "headline": "Suicune are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "add wooper and quagsire": {
                     "headline": "Wooper and Quagsire are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
