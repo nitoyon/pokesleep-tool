@@ -60,6 +60,7 @@ const skills = {
     "料理チャンスS": "Tasty Chance S",
     "おてつだいブースト(でんき)": "Helper Boost",
     "おてつだいブースト(ほのお)": "Helper Boost",
+    "おてつだいブースト(みず)": "Helper Boost",
 };
 const ingredients = {
     "ふといながねぎ": "leek",

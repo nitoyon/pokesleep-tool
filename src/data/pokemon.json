@@ -3031,28 +3031,28 @@
         "speciality": "Skills",
         "skill": "Helper Boost",
         "fp": 30,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 2700,
+        "ingRatio": 27.7,
+        "skillRatio": 2.6,
         "ancestor": null,
         "evolutionCount": -1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 17,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "apple",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "oil",
+            "c2": 2,
+            "c3": 2
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "corn",
+            "c3": 3
         }
     },
     {
