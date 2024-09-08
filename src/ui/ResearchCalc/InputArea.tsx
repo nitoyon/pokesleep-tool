@@ -1,6 +1,7 @@
 import './InputArea.css';
 import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
+import { getEventBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
@@ -224,7 +225,12 @@ interface EventBonusProps {
 
 const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     const { t } = useTranslation();
-    return (
+
+    const bonus = getEventBonus(new Date());
+    const open = (bonus !== value);
+    const bonusVal = bonus === 1 ? t("none") : `×${bonus}`;
+
+    return (<>
         <TextField variant="standard" size="small" select
                 value={value} onChange={onChange}>
                 <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
@@ -234,7 +240,8 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
                 <MenuItem key="3" value={3} dense>×3</MenuItem>
                 <MenuItem key="4" value={4} dense>×4</MenuItem>
         </TextField>
-    );
+        {open && <span style={{fontSize: '0.8rem', marginLeft: '0.5rem', textWrap: 'nowrap'}}>⚠️{t('current bonus')}: {bonusVal}</span>}
+    </>);
 });
 
 interface SecondSleepCheckboxProps {
