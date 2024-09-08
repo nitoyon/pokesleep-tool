@@ -6,25 +6,31 @@ import events_ from './event.json';
 export class EventData {
     /** Event name (English) */
     name: string;
-    /** Start date time */
-    start: Date;
-    /** End date time */
-    end: Date;
-    /** Event type (campaign or event) */
-    type: "campaign" | "event";
-    /** Whether we can encounter Pokemon of different sleep types */
-    encounterDifferentSleepType: boolean;
+    /** Target date */
+    day: Date;
+    /** Event bonus for drowsy power */
+    bonus: number;
+
+    /** Get start date. */
+    get startDate(): Date {
+        return new Date(this.day.getFullYear(), this.day.getMonth(),
+            this.day.getDate(), 4, 0, 0);
+    }
+
+    /** Get end date. */
+    get endDate(): Date {
+        const time = this.startDate.getTime();
+        return new Date(time + 24 * 60 * 60 * 1000);
+    }
 
     /**
      * Initialize EventData object.
      * @param data JSON data.
      */
     constructor(data: JsonEventData) {
-        this.start = new Date(data.start);
-        this.end = new Date(data.end);
-        this.type = data.type;
+        this.day = new Date(data.day);
         this.name = data.name;
-        this.encounterDifferentSleepType = data.encounterDifferentSleepType;
+        this.bonus = data.bonus;
     }
 
     /**
@@ -33,21 +39,33 @@ export class EventData {
      * @returns In progress or not.
      */
     isInProgress(date: Date): boolean {
-        return this.start <= date && date <= this.end;
+        return this.startDate <= date && date < this.endDate;
     }
+}
+
+/**
+ * 
+ * @param date Date to be checked.
+ * @param overrideEvents Events. If now specified, default events is used. 
+ * @returns Bonus value.
+ */
+export function getEventBonus(date: Date, overrideEvents?: EventData[]): number {
+    const evts = overrideEvents ?? events;
+    for (const event of evts) {
+        if (event.isInProgress(date)) {
+            return event.bonus;
+        }
+    }
+    return 1;
 }
 
 interface JsonEventData {
     /** Event name */
     name: string;
-    /** Start date time (YYYY-MM-DD hh:mm) */
-    start: string;
-    /** End date time (YYYY-MM-DD hh:mm) */
-    end: string;
-    /** Event type (campaign or event) */
-    type: "campaign" | "event";
-    /** Whether we can encounter Pokemon of different sleep types */
-    encounterDifferentSleepType: boolean;
+    /** Start date time (YYYY-MM-DD) */
+    day: string;
+    /** Event bonus for drowsy power */
+    bonus: number;
 }
 
 const events = (events_ as JsonEventData[])
