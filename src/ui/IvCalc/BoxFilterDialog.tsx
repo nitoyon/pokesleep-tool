@@ -4,7 +4,7 @@ import TypeButton from './TypeButton';
 import { BoxFilterConfig } from './BoxView';
 import { EditSubSkillControl } from './SubSkillControl';
 import IngredientButton from './IngredientButton';
-import MainSkillIcon from './MainSkillIcon';
+import MainSkillButton from './MainSkillButton';
 import { IngredientName, IngredientNames, PokemonType, PokemonTypes
 } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
@@ -169,55 +169,6 @@ const MainSkillTab = React.memo(({value, onChange}: {
     }}>
         {mainSkillButtons}
     </div>;
-});
-
-const MainSkillButton = React.memo(({mainSkill, checked, onClick}: {
-    mainSkill: MainSkillName,
-    checked: boolean,
-    onClick: (value: MainSkillName) => void,
-}) => {
-    const { t } = useTranslation();
-
-    const onMainSkillClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        const value = e.currentTarget.value as MainSkillName;
-        onClick(value);
-    }, [onClick]);
-    return <StyledMainSkillButton
-        value={mainSkill} onClick={onMainSkillClick}>
-        <div>
-            {!checked && <MainSkillIcon mainSkill={mainSkill}/>}
-            {checked && <CheckIcon/>}
-        </div>
-        {t(`skills.${mainSkill}`)}
-    </StyledMainSkillButton>;
-});
-
-const StyledMainSkillButton = styled(Button)({
-    height: '2.2rem',
-    lineHeight: 1.2,
-    margin: '1%',
-    color: 'black',
-    fontSize: '0.8rem',
-    justifyContent: 'left',
-    alignItems: 'center',
-    textAlign: 'left',
-    padding: 0,
-    textTransform: 'none',
-    '& > div': {
-        width: '24px',
-        '& > svg': {
-            marginRight: '4px',
-        },
-        '& > svg[data-testid="CheckIcon"]': {
-            color: 'white',
-            width: '18px',
-            height: '18px',
-            background: '#24d76a',
-            borderRadius: '5px',
-            fontSize: '15px',
-            border: '2px solid white',
-        },
-    },
 });
 
 const SubSkillTab = React.memo(({value, onChange}: {
