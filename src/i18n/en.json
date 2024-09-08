@@ -88,7 +88,7 @@
         "research area": "Research area",
         "strength": "Snorlax strength",
         "bonus": "Event bonus",
-        "current bonus": "Today's bonus",
+        "bonus not match": "Today's event bonus is {{bonus}}.",
         "no favorite berries": "No favorite berries",
         "area": [
             "Greengrass Isle",

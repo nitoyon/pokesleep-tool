@@ -3,7 +3,7 @@ import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import { getEventBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
-import { Button, Checkbox, FormControlLabel, InputAdornment, MenuItem,
+import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
 import ArrowButton from '../common/ArrowButton';
@@ -225,10 +225,16 @@ interface EventBonusProps {
 
 const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     const { t } = useTranslation();
+    const [todaysBonus, setTodaysBonus] = useState(getEventBonus(new Date()));
+    React.useEffect(() => {
+        const id = setInterval(function() {
+            setTodaysBonus(getEventBonus(new Date()));
+        }, 5000);
+        return () => clearInterval(id);
+    }, []);
 
-    const bonus = getEventBonus(new Date());
-    const open = (bonus !== value);
-    const bonusVal = bonus === 1 ? t("none") : `×${bonus}`;
+    const open = (todaysBonus !== value);
+    const bonusVal = todaysBonus === 1 ? t("none") : `×${todaysBonus}`;
 
     return (<>
         <TextField variant="standard" size="small" select
@@ -240,7 +246,9 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
                 <MenuItem key="3" value={3} dense>×3</MenuItem>
                 <MenuItem key="4" value={4} dense>×4</MenuItem>
         </TextField>
-        {open && <span style={{fontSize: '0.8rem', marginLeft: '0.5rem', textWrap: 'nowrap'}}>⚠️{t('current bonus')}: {bonusVal}</span>}
+        <Collapse in={open} style={{fontSize: '0.8rem', padding: '0.2rem 0 0 1rem', textIndent: '-1rem'}}>
+            ⚠️{t('bonus not match', {bonus: bonusVal})}
+        </Collapse>
     </>);
 });
 
