@@ -128,11 +128,37 @@ const GroupHeader = styled('div')({
 /**
  * Pokemon select dialog configuration.
  */
-export interface PokemonFilterConfig {
+export class PokemonFilterConfig {
     /** Filter type */
     filterType: PokemonType|null;
     /** Filter by evolve */
     filterEvolve: "all"|"non"|"final";
+
+    /** Initialize the instance */
+    constructor(values: Partial<PokemonFilterConfig>) {
+        this.filterType = values.filterType ?? null;
+        this.filterEvolve = values.filterEvolve ?? "all";
+    }
+
+    load(json: any) {
+        if (typeof(json) !== "object") {
+            return;
+        }
+        if (typeof(json.filterType) === "string" &&
+            PokemonTypes.includes(json.filterType)) {
+            this.filterType = json.filterType;
+        }
+        if (typeof(json.filterEvolve) === "string" &&
+            ["all", "non", "final"].includes(json.filterEvolve)) {
+            this.filterEvolve = json.filterEvolve;
+        }
+    }
+
+    /** Check ON or OFF. */
+    get isFiltered(): boolean {
+        return this.filterEvolve !== "all" ||
+            this.filterType !== null;
+    }
 }
 
 /**
@@ -282,7 +308,7 @@ const PokemonSelectDialog = React.memo(({
         setFilterOpen(false);
     }, []);
     const onFilterChange = useCallback((value: PokemonFilterConfig) => {
-        const newConfig = {...config, filter: {...value}};
+        const newConfig = {...config, filter: value};
         setConfig(newConfig);
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
     }, [config]);
@@ -364,7 +390,7 @@ const PokemonSelectDialog = React.memo(({
         <PokemonFilterFooter
             sortTypes={["pokedexno", "name", "sleeptype", "type"]}
             value={{
-                isFiltered: config.filter.filterEvolve !== "all" || config.filter.filterType !== null,
+                isFiltered: config.filter.isFiltered,
                 sort: config.sort, descending: config.descending,
             }}
             onChange={onFilterConfigChange}
@@ -407,10 +433,7 @@ const type2num = {
  */
 function loadPokemonDialogConfig(): PokemonDialogConfig {
     const ret: PokemonDialogConfig = {
-        filter: {
-            filterType: null,
-            filterEvolve: "all",
-        },
+        filter: new PokemonFilterConfig({}),
         sort: "pokedexno",
         descending: false,
     };
@@ -431,14 +454,7 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
             filterEvolve: json.filterEvolve,
         };
     }
-    if (typeof(json.filter.filterType) === "string" &&
-        PokemonTypes.includes(json.filter.filterType)) {
-        ret.filter.filterType = json.filter.filterType;
-    }
-    if (typeof(json.filter.filterEvolve) === "string" &&
-        ["all", "non", "final"].includes(json.filter.filterEvolve)) {
-        ret.filter.filterEvolve = json.filter.filterEvolve;
-    }
+    ret.filter.load(json.filter);
     if (typeof(json.sort) === "string" &&
         ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
         ret.sort = json.sort;
