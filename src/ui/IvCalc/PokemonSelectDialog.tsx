@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { PokemonType, PokemonTypes } from '../../data/pokemons';
+import { PokemonTypes } from '../../data/pokemons';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
@@ -129,10 +129,8 @@ const GroupHeader = styled('div')({
  * Pokemon select dialog configuration.
  */
 interface PokemonDialogConfig {
-    /** Filter type */
-    filterType: PokemonType|null;
-    /** Filter by evolve */
-    filterEvolve: "all"|"non"|"final";
+    /** Filter config. */
+    filter: PokemonFilterDialogConfig,
     /** Sort type. */
     sort: "sleeptype"|"name"|"pokedexno"|"type";
     /** Descending (true) or ascending (false). */
@@ -155,8 +153,8 @@ const PokemonSelectDialog = React.memo(({
     // initialize config
     const config: PokemonDialogConfig = (config_ === null ?
         loadPokemonDialogConfig() : config_);
-    const filterType = config.filterType;
-    const filterEvolve = config.filterEvolve;
+    const filterType = config.filter.filterType;
+    const filterEvolve = config.filter.filterEvolve;
     const sortType = config.sort;
     const descending = config.descending;
 
@@ -274,7 +272,7 @@ const PokemonSelectDialog = React.memo(({
         setFilterOpen(false);
     }, []);
     const onFilterChange = useCallback((value: PokemonFilterDialogConfig) => {
-        const newConfig = {...config, ...value};
+        const newConfig = {...config, filter: {...value}};
         setConfig(newConfig);
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
     }, [config]);
@@ -356,13 +354,13 @@ const PokemonSelectDialog = React.memo(({
         <PokemonFilterFooter
             sortTypes={["pokedexno", "name", "sleeptype", "type"]}
             value={{
-                isFiltered: config.filterEvolve !== "all" || config.filterType !== null,
+                isFiltered: config.filter.filterEvolve !== "all" || config.filter.filterType !== null,
                 sort: config.sort, descending: config.descending,
             }}
             onChange={onFilterConfigChange}
             onFilterButtonClick={onFilterButtonClick}/>
         <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
-            value={config} onChange={onFilterChange}/>
+            value={config.filter} onChange={onFilterChange}/>
     </StyledDialog>;
 });
 
@@ -399,8 +397,10 @@ const type2num = {
  */
 function loadPokemonDialogConfig(): PokemonDialogConfig {
     const ret: PokemonDialogConfig = {
-        filterType: null,
-        filterEvolve: "all",
+        filter: {
+            filterType: null,
+            filterEvolve: "all",
+        },
         sort: "pokedexno",
         descending: false,
     };
@@ -413,13 +413,21 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     if (typeof(json) !== "object" || json === null) {
         return ret;
     }
-    if (typeof(json.filterType) === "string" &&
-        PokemonTypes.includes(json.filterType)) {
-        ret.filterType = json.filterType;
+
+    // update from old config
+    if (json.filter === undefined) {
+        json.filter = {
+            filterType: json.filterType,
+            filterEvolve: json.filterEvolve,
+        };
     }
-    if (typeof(json.filterEvolve) === "string" &&
-        ["all", "non", "final"].includes(json.filterEvolve)) {
-        ret.filterEvolve = json.filterEvolve;
+    if (typeof(json.filter.filterType) === "string" &&
+        PokemonTypes.includes(json.filter.filterType)) {
+        ret.filter.filterType = json.filter.filterType;
+    }
+    if (typeof(json.filter.filterEvolve) === "string" &&
+        ["all", "non", "final"].includes(json.filter.filterEvolve)) {
+        ret.filter.filterEvolve = json.filter.filterEvolve;
     }
     if (typeof(json.sort) === "string" &&
         ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
