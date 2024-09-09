@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { PokemonType, PokemonTypes } from '../../data/pokemons';
+import { IngredientName, IngredientNames, PokemonType, PokemonTypes } from '../../data/pokemons';
+import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
@@ -133,11 +134,26 @@ export class PokemonFilterConfig {
     filterType: PokemonType|null;
     /** Filter by evolve */
     filterEvolve: "all"|"non"|"final";
+    /** Fileter by ingredient name. */
+    ingredientName: IngredientName;
+    /** Specify if specified ingredient is A */
+    ingredientA: boolean;
+    /** Specify if specified ingredient is B */
+    ingredientB: boolean;
+    /** Specify if specified ingredient is C */
+    ingredientC: boolean;
+    /** Filter by main skill name. */
+    mainSkillNames: MainSkillName[];
 
     /** Initialize the instance */
     constructor(values: Partial<PokemonFilterConfig>) {
         this.filterType = values.filterType ?? null;
         this.filterEvolve = values.filterEvolve ?? "all";
+        this.ingredientName = values.ingredientName ?? "unknown";
+        this.ingredientA = values.ingredientA ?? true;
+        this.ingredientB = values.ingredientB ?? true;
+        this.ingredientC = values.ingredientC ?? true;
+        this.mainSkillNames = values.mainSkillNames ?? [];
     }
 
     load(json: any) {
@@ -152,12 +168,39 @@ export class PokemonFilterConfig {
             ["all", "non", "final"].includes(json.filterEvolve)) {
             this.filterEvolve = json.filterEvolve;
         }
+        if (typeof(json.ingredientName) === "string" &&
+            IngredientNames.includes(json.ingredientName)) {
+            this.ingredientName = json.ingredientName;
+        }
+        if (typeof(json.ingredientA) === "boolean") {
+            this.ingredientA = json.ingredientA;
+        }
+        if (typeof(json.ingredientB) === "boolean") {
+            this.ingredientB = json.ingredientB;
+        }
+        if (typeof(json.ingredientC) === "boolean") {
+            this.ingredientC = json.ingredientC;
+        }
+        if (Array.isArray(json.mainSkillNames) &&
+            json.mainSkillNames.every((x: any) => MainSkillNames.includes(x))) {
+            this.mainSkillNames = json.mainSkillNames;
+        }
     }
 
     /** Check ON or OFF. */
     get isFiltered(): boolean {
         return this.filterEvolve !== "all" ||
-            this.filterType !== null;
+            this.filterType !== null ||
+            this.ingredientName !== 'unknown' ||
+            this.mainSkillNames.length > 0;
+    }
+
+    /** Get initial tab index of filter dialog */
+    get tabIndex(): number {
+        if (this.filterEvolve !== 'all') { return 0; }
+        if (this.ingredientName !== 'unknown') { return 1; }
+        if (this.mainSkillNames.length > 0) { return 2; }
+        return 0;
     }
 
     /**
@@ -167,6 +210,7 @@ export class PokemonFilterConfig {
      * @returns The list of Pokémon that match the filter criteria.
      */
     filter(options: PokemonOption[], text: string): PokemonOption[] {
+        // filter by text
         const normalize = (val: string) => val.toLowerCase().trim()
             // Hiragana to Katakana (for Japanese)
             .replace(/[ぁ-ん]/g, (c) => {
@@ -175,13 +219,30 @@ export class PokemonFilterConfig {
         const input = normalize(text);
         let ret = options.filter((option) =>
             normalize(option.localName).includes(input));
+
+        // filter by type
         if (this.filterType !== null) {
             ret = ret.filter((option) => this.filterType === option.type);
         }
+
+        // filter by evolve
         if (this.filterEvolve === "final") {
             ret = ret.filter((option) => option.isFullyEvolved)
         } else if (this.filterEvolve === "non") {
             ret = ret.filter((option) => option.isNonEvolving)
+        }
+
+        // filter by ingredient
+        if (this.ingredientName !== 'unknown') {
+            ret = ret.filter((option) =>
+                (this.ingredientA && this.ingredientName === option.ing1Name) ||
+                (this.ingredientB && this.ingredientName === option.ing2Name) ||
+                (this.ingredientC && this.ingredientName === option.ing3Name));
+        }
+
+        // filter by main skill
+        if (this.mainSkillNames.length > 0) {
+            ret = ret.filter((option) => this.mainSkillNames.includes(option.skill));
         }
 
         if (ret.length === 0) {
@@ -192,9 +253,13 @@ export class PokemonFilterConfig {
                 localName: '',
                 sleepType: 'dozing',
                 type: 'normal',
+                skill: 'Charge Energy S',
                 ancestor: null,
                 isFullyEvolved: false,
                 isNonEvolving: false,
+                ing1Name: 'unknown',
+                ing2Name: 'unknown',
+                ing3Name: undefined,
             });
         }
         return ret;
