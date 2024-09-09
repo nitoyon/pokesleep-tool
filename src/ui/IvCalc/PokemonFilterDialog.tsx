@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
-import { PokemonFilterDialogConfig } from './PokemonSelectDialog';
+import { PokemonFilterConfig } from './PokemonSelectDialog';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Button, Dialog, DialogActions,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next';
 
 const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     open: boolean,
-    value: PokemonFilterDialogConfig,
-    onChange: (value: PokemonFilterDialogConfig) => void,
+    value: PokemonFilterConfig,
+    onChange: (value: PokemonFilterConfig) => void,
     onClose: () => void,
 }) => {
     const { t } = useTranslation();

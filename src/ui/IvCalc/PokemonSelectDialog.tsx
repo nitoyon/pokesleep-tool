@@ -128,7 +128,7 @@ const GroupHeader = styled('div')({
 /**
  * Pokemon select dialog configuration.
  */
-export interface PokemonFilterDialogConfig {
+export interface PokemonFilterConfig {
     /** Filter type */
     filterType: PokemonType|null;
     /** Filter by evolve */
@@ -140,7 +140,7 @@ export interface PokemonFilterDialogConfig {
  */
 interface PokemonDialogConfig {
     /** Filter config. */
-    filter: PokemonFilterDialogConfig,
+    filter: PokemonFilterConfig,
     /** Sort type. */
     sort: "sleeptype"|"name"|"pokedexno"|"type";
     /** Descending (true) or ascending (false). */
@@ -281,7 +281,7 @@ const PokemonSelectDialog = React.memo(({
     const onFilterDialogClose = useCallback(() => {
         setFilterOpen(false);
     }, []);
-    const onFilterChange = useCallback((value: PokemonFilterDialogConfig) => {
+    const onFilterChange = useCallback((value: PokemonFilterConfig) => {
         const newConfig = {...config, filter: {...value}};
         setConfig(newConfig);
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
