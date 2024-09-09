@@ -1,20 +1,11 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
+import { PokemonFilterDialogConfig } from './PokemonSelectDialog';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Button, Dialog, DialogActions,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-/**
- * Pokemon select dialog configuration.
- */
-export interface PokemonFilterDialogConfig {
-    /** Filter type */
-    filterType: PokemonType|null;
-    /** Filter by evolve */
-    filterEvolve: "all"|"non"|"final";
-}
 
 const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     open: boolean,
