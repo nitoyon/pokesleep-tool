@@ -5,7 +5,7 @@ import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialo
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
 import PokemonFilterDialog from './PokemonFilterDialog';
-import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
+import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterFooter';
 import { PokemonOption } from './PokemonTextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
@@ -286,7 +286,7 @@ const PokemonSelectDialog = React.memo(({
         setConfig(newConfig);
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
     }, [config]);
-    const onFilterConfigChange = useCallback((value: PokemonFilterConfig) => {
+    const onFilterConfigChange = useCallback((value: PokemonFilterFooterConfig) => {
         const newValue = {...config, descending: value.descending,
             sort: value.sort as "sleeptype"|"name"|"pokedexno"|"type"};
         setConfig(newValue);

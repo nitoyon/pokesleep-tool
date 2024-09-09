@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIcon from './PokemonIcon';
 import { IvAction } from './IvState';
-import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
+import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
 import { shareIv } from './ShareUtil';
@@ -38,7 +38,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         dispatch({type: "add"});
     }, [dispatch]);
 
-    const onFilterConfigChange = React.useCallback((value: PokemonFilterConfig) => {
+    const onFilterConfigChange = React.useCallback((value: PokemonFilterFooterConfig) => {
         const newValue = {...sortConfig,
             sort: value.sort as BoxSortType,
             descending: value.descending};
