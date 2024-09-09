@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { PokemonTypes } from '../../data/pokemons';
+import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
-import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
+import PokemonFilterDialog from './PokemonFilterDialog';
 import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
 import { PokemonOption } from './PokemonTextField';
 import SearchIcon from '@mui/icons-material/Search';
@@ -124,6 +124,16 @@ const GroupHeader = styled('div')({
     '&.steel': { backgroundColor: '#94b1c2' },
     '&.fairy': { backgroundColor: '#e48fe3' },
 });
+
+/**
+ * Pokemon select dialog configuration.
+ */
+export interface PokemonFilterDialogConfig {
+    /** Filter type */
+    filterType: PokemonType|null;
+    /** Filter by evolve */
+    filterEvolve: "all"|"non"|"final";
+}
 
 /**
  * Pokemon select dialog configuration.
