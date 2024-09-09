@@ -15,19 +15,19 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
     const onClearClick = useCallback(() => {
-        onChange({...value, filterType: null, filterEvolve: "all"});
+        onChange(new PokemonFilterConfig({...value, filterType: null, filterEvolve: "all"}));
     }, [value, onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
     }, [onClose]);
     const onTypeClick = useCallback((selected: PokemonType) => {
-        onChange({...value,
-            filterType: value.filterType === selected ? null : selected});
+        onChange(new PokemonFilterConfig({...value,
+            filterType: value.filterType === selected ? null : selected}));
         onClose();
     }, [value, onChange, onClose]);
     const onEvolveChange = useCallback((e: any, val: string|null) => {
         if (val === null || value.filterEvolve === val) { return; }
-        onChange({...value, filterEvolve: val as "all"|"non"|"final"});
+        onChange(new PokemonFilterConfig({...value, filterEvolve: val as "all"|"non"|"final"}));
         onClose();
     }, [value, onChange, onClose]);
 
