@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { SleepType } from '../../data/fields';
-import pokemons, { PokemonType } from '../../data/pokemons';
+import pokemons, { IngredientName, PokemonType } from '../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
 import TextLikeButton from '../common/TextLikeButton';
@@ -9,6 +9,7 @@ import PokemonSelectDialog from './PokemonSelectDialog';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
+import { MainSkillName } from '../../util/MainSkill';
 
 /** Autocomplete option list */
 export interface PokemonOption {
@@ -17,9 +18,13 @@ export interface PokemonOption {
     localName: string;
     sleepType: SleepType;
     type: PokemonType;
+    skill: MainSkillName,
     ancestor: number|null;
     isNonEvolving: boolean;
     isFullyEvolved: boolean;
+    ing1Name: IngredientName;
+    ing2Name: IngredientName;
+    ing3Name?: IngredientName;
 }
 
 const PokemonTextField = React.memo(({value, fixMode, onChange}: {
@@ -38,9 +43,13 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
                 localName: t(`pokemons.${pokemon.name}`),
                 sleepType: pokemon.sleepType,
                 type: pokemon.type,
+                skill: pokemon.skill,
                 ancestor: pokemon.ancestor,
                 isNonEvolving: pokemon.evolutionCount === -1,
                 isFullyEvolved: pokemon.isFullyEvolved,
+                ing1Name: pokemon.ing1.name,
+                ing2Name: pokemon.ing2.name,
+                ing3Name: pokemon.ing3?.name,
             })),
         [t]);
     let _selectedOption = pokemonOptions.find(x => x.name === value);
