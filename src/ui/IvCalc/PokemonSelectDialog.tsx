@@ -159,6 +159,46 @@ export class PokemonFilterConfig {
         return this.filterEvolve !== "all" ||
             this.filterType !== null;
     }
+
+    /**
+     * Filters Pokémons based on the provided text and this filter config.
+     * @param options The list of Pokémon to be filtered.
+     * @param text The text used for filtering the Pokémon.
+     * @returns The list of Pokémon that match the filter criteria.
+     */
+    filter(options: PokemonOption[], text: string): PokemonOption[] {
+        const normalize = (val: string) => val.toLowerCase().trim()
+            // Hiragana to Katakana (for Japanese)
+            .replace(/[ぁ-ん]/g, (c) => {
+                return String.fromCharCode(c.charCodeAt(0) + 0x60);
+            });
+        const input = normalize(text);
+        let ret = options.filter((option) =>
+            normalize(option.localName).includes(input));
+        if (this.filterType !== null) {
+            ret = ret.filter((option) => this.filterType === option.type);
+        }
+        if (this.filterEvolve === "final") {
+            ret = ret.filter((option) => option.isFullyEvolved)
+        } else if (this.filterEvolve === "non") {
+            ret = ret.filter((option) => option.isNonEvolving)
+        }
+
+        if (ret.length === 0) {
+            // add empty entry
+            ret.push({
+                id: -1,
+                name: '',
+                localName: '',
+                sleepType: 'dozing',
+                type: 'normal',
+                ancestor: null,
+                isFullyEvolved: false,
+                isNonEvolving: false,
+            });
+        }
+        return ret;
+    }
 }
 
 /**
@@ -189,8 +229,6 @@ const PokemonSelectDialog = React.memo(({
     // initialize config
     const config: PokemonDialogConfig = (config_ === null ?
         loadPokemonDialogConfig() : config_);
-    const filterType = config.filter.filterType;
-    const filterEvolve = config.filter.filterEvolve;
     const sortType = config.sort;
     const descending = config.descending;
 
@@ -204,38 +242,8 @@ const PokemonSelectDialog = React.memo(({
         options: PokemonOption[],
         state: FilterOptionsState<PokemonOption>
     ) => {
-        const normalize = (val: string) => val.toLowerCase().trim()
-            // Hiragana to Katakana (for Japanese)
-            .replace(/[ぁ-ん]/g, (c) => {
-                return String.fromCharCode(c.charCodeAt(0) + 0x60);
-            });
-        const input = normalize(state.inputValue);
-        let ret = options.filter((option) =>
-            normalize(option.localName).includes(input));
-        if (filterType !== null) {
-            ret = ret.filter((option) => filterType === option.type);
-        }
-        if (filterEvolve === "final") {
-            ret = ret.filter((option) => option.isFullyEvolved)
-        } else if (filterEvolve === "non") {
-            ret = ret.filter((option) => option.isNonEvolving)
-        }
-
-        if (ret.length === 0) {
-            // add empty entry
-            ret.push({
-                id: -1,
-                name: '',
-                localName: '',
-                sleepType: 'dozing',
-                type: 'normal',
-                ancestor: null,
-                isFullyEvolved: false,
-                isNonEvolving: false,
-            });
-        }
-        return ret;
-    }, [filterType, filterEvolve]);
+        return config.filter.filter(options, state.inputValue);
+    }, [config.filter]);
 
     // Selected handler
     const onAutocompleteChange = useCallback((event: any, newValue: PokemonOption|string|null) => {
