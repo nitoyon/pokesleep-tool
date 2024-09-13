@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { PokemonType, PokemonTypes } from '../../data/pokemons';
+import { IngredientName, IngredientNames, PokemonType, PokemonTypes } from '../../data/pokemons';
+import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from './PokemonIcon';
-import PokemonFilterDialog, { PokemonFilterDialogConfig } from './PokemonFilterDialog';
-import PokemonFilterFooter, { PokemonFilterConfig } from './PokemonFilterFooter';
+import PokemonFilterDialog from './PokemonFilterDialog';
+import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterFooter';
 import { PokemonOption } from './PokemonTextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
@@ -128,11 +129,149 @@ const GroupHeader = styled('div')({
 /**
  * Pokemon select dialog configuration.
  */
-interface PokemonDialogConfig {
+export class PokemonFilterConfig {
     /** Filter type */
     filterType: PokemonType|null;
     /** Filter by evolve */
     filterEvolve: "all"|"non"|"final";
+    /** Fileter by ingredient name. */
+    ingredientName: IngredientName;
+    /** Specify if specified ingredient is A */
+    ingredientA: boolean;
+    /** Specify if specified ingredient is B */
+    ingredientB: boolean;
+    /** Specify if specified ingredient is C */
+    ingredientC: boolean;
+    /** Filter by main skill name. */
+    mainSkillNames: MainSkillName[];
+
+    /** Initialize the instance */
+    constructor(values: Partial<PokemonFilterConfig>) {
+        this.filterType = values.filterType ?? null;
+        this.filterEvolve = values.filterEvolve ?? "all";
+        this.ingredientName = values.ingredientName ?? "unknown";
+        this.ingredientA = values.ingredientA ?? true;
+        this.ingredientB = values.ingredientB ?? true;
+        this.ingredientC = values.ingredientC ?? true;
+        this.mainSkillNames = values.mainSkillNames ?? [];
+    }
+
+    load(json: any) {
+        if (typeof(json) !== "object") {
+            return;
+        }
+        if (typeof(json.filterType) === "string" &&
+            PokemonTypes.includes(json.filterType)) {
+            this.filterType = json.filterType;
+        }
+        if (typeof(json.filterEvolve) === "string" &&
+            ["all", "non", "final"].includes(json.filterEvolve)) {
+            this.filterEvolve = json.filterEvolve;
+        }
+        if (typeof(json.ingredientName) === "string" &&
+            IngredientNames.includes(json.ingredientName)) {
+            this.ingredientName = json.ingredientName;
+        }
+        if (typeof(json.ingredientA) === "boolean") {
+            this.ingredientA = json.ingredientA;
+        }
+        if (typeof(json.ingredientB) === "boolean") {
+            this.ingredientB = json.ingredientB;
+        }
+        if (typeof(json.ingredientC) === "boolean") {
+            this.ingredientC = json.ingredientC;
+        }
+        if (Array.isArray(json.mainSkillNames) &&
+            json.mainSkillNames.every((x: any) => MainSkillNames.includes(x))) {
+            this.mainSkillNames = json.mainSkillNames;
+        }
+    }
+
+    /** Check ON or OFF. */
+    get isFiltered(): boolean {
+        return this.filterEvolve !== "all" ||
+            this.filterType !== null ||
+            this.ingredientName !== 'unknown' ||
+            this.mainSkillNames.length > 0;
+    }
+
+    /** Get initial tab index of filter dialog */
+    get tabIndex(): number {
+        if (this.filterEvolve !== 'all') { return 0; }
+        if (this.ingredientName !== 'unknown') { return 1; }
+        if (this.mainSkillNames.length > 0) { return 2; }
+        return 0;
+    }
+
+    /**
+     * Filters Pokémons based on the provided text and this filter config.
+     * @param options The list of Pokémon to be filtered.
+     * @param text The text used for filtering the Pokémon.
+     * @returns The list of Pokémon that match the filter criteria.
+     */
+    filter(options: PokemonOption[], text: string): PokemonOption[] {
+        // filter by text
+        const normalize = (val: string) => val.toLowerCase().trim()
+            // Hiragana to Katakana (for Japanese)
+            .replace(/[ぁ-ん]/g, (c) => {
+                return String.fromCharCode(c.charCodeAt(0) + 0x60);
+            });
+        const input = normalize(text);
+        let ret = options.filter((option) =>
+            normalize(option.localName).includes(input));
+
+        // filter by type
+        if (this.filterType !== null) {
+            ret = ret.filter((option) => this.filterType === option.type);
+        }
+
+        // filter by evolve
+        if (this.filterEvolve === "final") {
+            ret = ret.filter((option) => option.isFullyEvolved)
+        } else if (this.filterEvolve === "non") {
+            ret = ret.filter((option) => option.isNonEvolving)
+        }
+
+        // filter by ingredient
+        if (this.ingredientName !== 'unknown') {
+            ret = ret.filter((option) =>
+                (this.ingredientA && this.ingredientName === option.ing1Name) ||
+                (this.ingredientB && this.ingredientName === option.ing2Name) ||
+                (this.ingredientC && this.ingredientName === option.ing3Name));
+        }
+
+        // filter by main skill
+        if (this.mainSkillNames.length > 0) {
+            ret = ret.filter((option) => this.mainSkillNames.includes(option.skill));
+        }
+
+        if (ret.length === 0) {
+            // add empty entry
+            ret.push({
+                id: -1,
+                name: '',
+                localName: '',
+                sleepType: 'dozing',
+                type: 'normal',
+                skill: 'Charge Energy S',
+                ancestor: null,
+                isFullyEvolved: false,
+                isNonEvolving: false,
+                ing1Name: 'unknown',
+                ing2Name: 'unknown',
+                ing3Name: undefined,
+            });
+        }
+        return ret;
+    }
+}
+
+/**
+ * Pokemon select dialog configuration.
+ */
+interface PokemonDialogConfig {
+    /** Filter config. */
+    filter: PokemonFilterConfig,
     /** Sort type. */
     sort: "sleeptype"|"name"|"pokedexno"|"type";
     /** Descending (true) or ascending (false). */
@@ -155,8 +294,6 @@ const PokemonSelectDialog = React.memo(({
     // initialize config
     const config: PokemonDialogConfig = (config_ === null ?
         loadPokemonDialogConfig() : config_);
-    const filterType = config.filterType;
-    const filterEvolve = config.filterEvolve;
     const sortType = config.sort;
     const descending = config.descending;
 
@@ -170,38 +307,8 @@ const PokemonSelectDialog = React.memo(({
         options: PokemonOption[],
         state: FilterOptionsState<PokemonOption>
     ) => {
-        const normalize = (val: string) => val.toLowerCase().trim()
-            // Hiragana to Katakana (for Japanese)
-            .replace(/[ぁ-ん]/g, (c) => {
-                return String.fromCharCode(c.charCodeAt(0) + 0x60);
-            });
-        const input = normalize(state.inputValue);
-        let ret = options.filter((option) =>
-            normalize(option.localName).includes(input));
-        if (filterType !== null) {
-            ret = ret.filter((option) => filterType === option.type);
-        }
-        if (filterEvolve === "final") {
-            ret = ret.filter((option) => option.isFullyEvolved)
-        } else if (filterEvolve === "non") {
-            ret = ret.filter((option) => option.isNonEvolving)
-        }
-
-        if (ret.length === 0) {
-            // add empty entry
-            ret.push({
-                id: -1,
-                name: '',
-                localName: '',
-                sleepType: 'dozing',
-                type: 'normal',
-                ancestor: null,
-                isFullyEvolved: false,
-                isNonEvolving: false,
-            });
-        }
-        return ret;
-    }, [filterType, filterEvolve]);
+        return config.filter.filter(options, state.inputValue);
+    }, [config.filter]);
 
     // Selected handler
     const onAutocompleteChange = useCallback((event: any, newValue: PokemonOption|string|null) => {
@@ -273,12 +380,12 @@ const PokemonSelectDialog = React.memo(({
     const onFilterDialogClose = useCallback(() => {
         setFilterOpen(false);
     }, []);
-    const onFilterChange = useCallback((value: PokemonFilterDialogConfig) => {
-        const newConfig = {...config, ...value};
+    const onFilterChange = useCallback((value: PokemonFilterConfig) => {
+        const newConfig = {...config, filter: value};
         setConfig(newConfig);
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
     }, [config]);
-    const onFilterConfigChange = useCallback((value: PokemonFilterConfig) => {
+    const onFilterConfigChange = useCallback((value: PokemonFilterFooterConfig) => {
         const newValue = {...config, descending: value.descending,
             sort: value.sort as "sleeptype"|"name"|"pokedexno"|"type"};
         setConfig(newValue);
@@ -356,13 +463,13 @@ const PokemonSelectDialog = React.memo(({
         <PokemonFilterFooter
             sortTypes={["pokedexno", "name", "sleeptype", "type"]}
             value={{
-                isFiltered: config.filterEvolve !== "all" || config.filterType !== null,
+                isFiltered: config.filter.isFiltered,
                 sort: config.sort, descending: config.descending,
             }}
             onChange={onFilterConfigChange}
             onFilterButtonClick={onFilterButtonClick}/>
         <PokemonFilterDialog open={filterOpen} onClose={onFilterDialogClose}
-            value={config} onChange={onFilterChange}/>
+            value={config.filter} onChange={onFilterChange}/>
     </StyledDialog>;
 });
 
@@ -399,8 +506,7 @@ const type2num = {
  */
 function loadPokemonDialogConfig(): PokemonDialogConfig {
     const ret: PokemonDialogConfig = {
-        filterType: null,
-        filterEvolve: "all",
+        filter: new PokemonFilterConfig({}),
         sort: "pokedexno",
         descending: false,
     };
@@ -413,14 +519,15 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     if (typeof(json) !== "object" || json === null) {
         return ret;
     }
-    if (typeof(json.filterType) === "string" &&
-        PokemonTypes.includes(json.filterType)) {
-        ret.filterType = json.filterType;
+
+    // update from old config
+    if (json.filter === undefined) {
+        json.filter = {
+            filterType: json.filterType,
+            filterEvolve: json.filterEvolve,
+        };
     }
-    if (typeof(json.filterEvolve) === "string" &&
-        ["all", "non", "final"].includes(json.filterEvolve)) {
-        ret.filterEvolve = json.filterEvolve;
-    }
+    ret.filter.load(json.filter);
     if (typeof(json.sort) === "string" &&
         ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
         ret.sort = json.sort;

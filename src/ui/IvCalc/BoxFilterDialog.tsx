@@ -3,8 +3,8 @@ import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
 import { BoxFilterConfig } from './BoxView';
 import { EditSubSkillControl } from './SubSkillControl';
-import IngredientIcon from './IngredientIcon';
-import MainSkillIcon from './MainSkillIcon';
+import IngredientButton from './IngredientButton';
+import MainSkillButton from './MainSkillButton';
 import { IngredientName, IngredientNames, PokemonType, PokemonTypes
 } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
@@ -147,41 +147,6 @@ const StyledTab = styled(Tab)({
     textTransform: 'none',
 });
 
-const IngredientButton = React.memo(({ingredient, checked, onClick}: {
-    ingredient: IngredientName,
-    checked: boolean,
-    onClick: (value: IngredientName) => void,
-}) => {
-    const onIngredientClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        const value = e.currentTarget.value as IngredientName;
-        onClick(value);
-    }, [onClick]);
-    return <StyledIngredientButton
-        key={ingredient} value={ingredient} onClick={onIngredientClick}>
-        <IngredientIcon name={ingredient}/>
-        {checked && <CheckIcon/>}
-    </StyledIngredientButton>;
-});
-
-const StyledIngredientButton = styled(Button)({
-    width: '20%',
-    height: '40px',
-    color: 'white',
-    fontSize: '0.9rem',
-    padding: 0,
-    margin: '0.2rem',
-    borderRadius: '0.5rem',
-    '& > svg.MuiSvgIcon-root': {
-        position: 'absolute',
-        background: '#24d76a',
-        borderRadius: '15px',
-        fontSize: '15px',
-        border: '2px solid white',
-        bottom: '0px',
-        right: '10px',
-    },
-});
-
 const MainSkillTab = React.memo(({value, onChange}: {
     value: MainSkillName[];
     onChange: (value: MainSkillName[]) => void,
@@ -204,55 +169,6 @@ const MainSkillTab = React.memo(({value, onChange}: {
     }}>
         {mainSkillButtons}
     </div>;
-});
-
-const MainSkillButton = React.memo(({mainSkill, checked, onClick}: {
-    mainSkill: MainSkillName,
-    checked: boolean,
-    onClick: (value: MainSkillName) => void,
-}) => {
-    const { t } = useTranslation();
-
-    const onMainSkillClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        const value = e.currentTarget.value as MainSkillName;
-        onClick(value);
-    }, [onClick]);
-    return <StyledMainSkillButton
-        value={mainSkill} onClick={onMainSkillClick}>
-        <div>
-            {!checked && <MainSkillIcon mainSkill={mainSkill}/>}
-            {checked && <CheckIcon/>}
-        </div>
-        {t(`skills.${mainSkill}`)}
-    </StyledMainSkillButton>;
-});
-
-const StyledMainSkillButton = styled(Button)({
-    height: '2.2rem',
-    lineHeight: 1.2,
-    margin: '1%',
-    color: 'black',
-    fontSize: '0.8rem',
-    justifyContent: 'left',
-    alignItems: 'center',
-    textAlign: 'left',
-    padding: 0,
-    textTransform: 'none',
-    '& > div': {
-        width: '24px',
-        '& > svg': {
-            marginRight: '4px',
-        },
-        '& > svg[data-testid="CheckIcon"]': {
-            color: 'white',
-            width: '18px',
-            height: '18px',
-            background: '#24d76a',
-            borderRadius: '5px',
-            fontSize: '15px',
-            border: '2px solid white',
-        },
-    },
 });
 
 const SubSkillTab = React.memo(({value, onChange}: {

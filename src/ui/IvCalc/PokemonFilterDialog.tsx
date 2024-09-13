@@ -1,62 +1,51 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
+import IngredientButton from './IngredientButton';
 import TypeButton from './TypeButton';
-import { PokemonType, PokemonTypes } from '../../data/pokemons';
-import { Button, Dialog, DialogActions,
-    ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { PokemonFilterConfig } from './PokemonSelectDialog';
+import MainSkillButton from './MainSkillButton';
+import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
+import { IngredientName, IngredientNames, PokemonType, PokemonTypes } from '../../data/pokemons';
+import { Button, Dialog, DialogActions, Switch,
+    Tab, Tabs, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-/**
- * Pokemon select dialog configuration.
- */
-export interface PokemonFilterDialogConfig {
-    /** Filter type */
-    filterType: PokemonType|null;
-    /** Filter by evolve */
-    filterEvolve: "all"|"non"|"final";
-}
 
 const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     open: boolean,
-    value: PokemonFilterDialogConfig,
-    onChange: (value: PokemonFilterDialogConfig) => void,
+    value: PokemonFilterConfig,
+    onChange: (value: PokemonFilterConfig) => void,
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
+    const [tabIndex, setTabIndex] = React.useState(value.tabIndex);
+    const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
+        setTabIndex(newValue);
+    }, []);
     const onClearClick = useCallback(() => {
-        onChange({...value, filterType: null, filterEvolve: "all"});
-    }, [value, onChange]);
+        onChange(new PokemonFilterConfig({}));
+    }, [onChange]);
     const onCloseClick = useCallback(() => {
         onClose();
     }, [onClose]);
-    const onTypeClick = useCallback((selected: PokemonType) => {
-        onChange({...value,
-            filterType: value.filterType === selected ? null : selected});
-        onClose();
-    }, [value, onChange, onClose]);
-    const onEvolveChange = useCallback((e: any, val: string|null) => {
-        if (val === null || value.filterEvolve === val) { return; }
-        onChange({...value, filterEvolve: val as "all"|"non"|"final"});
-        onClose();
-    }, [value, onChange, onClose]);
-
-    const buttons: React.ReactElement[] = PokemonTypes.map(type =>
-        <TypeButton key={type} type={type} onClick={onTypeClick}
-            checked={type === value.filterType}/>);
 
     return <StyledPokemonFilterDialog open={open} onClose={onClose}>
-        <div>
-            <h3>{t('type')}</h3>
-            {buttons}
-        </div>
-        <div>
-            <h3>{t('evolve')}</h3>
-            <ToggleButtonGroup value={value.filterEvolve} exclusive
-                onChange={onEvolveChange}>
-                <ToggleButton value="all">{t('all')}</ToggleButton>
-                <ToggleButton value="non">{t('non-evolve')}</ToggleButton>
-                <ToggleButton value="final">{t('final-evoltion')}</ToggleButton>
-            </ToggleButtonGroup>
+        <StyledTabs variant="scrollable" scrollButtons
+            value={tabIndex} onChange={onTabChange}>
+            <StyledTab label={t('type')} value={0}/>
+            <StyledTab label={t('ingredient')} value={1}/>
+            <StyledTab label={t('main skill')} value={2}/>
+        </StyledTabs>
+        
+        <div className="tabContainer">
+            <div className={`tabChild ${tabIndex === 0 ? 'tabChildActive' : ''}`}>
+                <TypeTab value={value} onChange={onChange}/>
+            </div>
+            <div className={`tabChild ${tabIndex === 1 ? 'tabChildActive' : ''}`}>
+                <IngredientTab value={value} onChange={onChange}/>
+            </div>
+            <div className={`tabChild ${tabIndex === 2 ? 'tabChildActive' : ''}`}>
+                <MainSkillTab value={value} onChange={onChange}/>
+            </div>
         </div>
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
@@ -66,20 +55,152 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
 });
 
 const StyledPokemonFilterDialog = styled(Dialog)({
-    'div.MuiPaper-root > div': {
-        margin: '.5rem .5rem 0 .5rem',
-        '& > h3': {
-            margin: '0.5rem 0',
-            fontSize: '1rem',
-        },
-        '& > div': {
-            '& > button:first-of-type': {
-                borderRadius: '1rem 0 0 1rem',
+    'div.MuiPaper-root': {
+        padding: '0 .5rem 0 .5rem',
+        '& > div.tabContainer': {
+            margin: '0.8rem 0 0 0',
+            display: 'grid',
+            '& > div.tabChild': {
+                gridArea: '1 / 1',
+                visibility: 'hidden',
+                '& > section': {
+                    margin: '0 0.8rem',
+                    fontSize: '.9rem',
+                    display: 'flex',
+                    flex: '0 auto',
+                    alignItems: 'center',
+                    maxWidth: '40rem',
+                    '&:first-of-type': {
+                        marginTop: '0.3rem',
+                    },
+                    '& > label': {
+                        marginRight: 'auto',
+                    },
+                },
             },
-            '& > button:last-of-type': {
-                borderRadius: '0 1rem 1rem 0',
+            '& > div.tabChildActive': {
+                visibility: 'visible',
             },
         },
+    },
+});
+
+const StyledTabs = styled(Tabs)({
+    minHeight: '36px',
+});
+const StyledTab = styled(Tab)({
+    textTransform: 'none',
+});
+
+const TypeTab = React.memo(({value, onChange}: {
+    value: PokemonFilterConfig,
+    onChange: (value: PokemonFilterConfig) => void
+}) => {
+    const { t } = useTranslation();
+
+    const onTypeClick = useCallback((selected: PokemonType) => {
+        onChange(new PokemonFilterConfig({...value,
+            filterType: value.filterType === selected ? null : selected}));
+    }, [value, onChange]);
+    const onEvolveChange = useCallback((e: any, val: string|null) => {
+        if (val === null || value.filterEvolve === val) { return; }
+        onChange(new PokemonFilterConfig({...value, filterEvolve: val as "all"|"non"|"final"}));
+    }, [value, onChange]);
+
+    const buttons: React.ReactElement[] = PokemonTypes.map(type =>
+        <TypeButton key={type} type={type} onClick={onTypeClick}
+            checked={type === value.filterType}/>);
+
+    return (<>
+        <div>
+            {buttons}
+        </div>
+        <div>
+            <h4 style={{margin: '1rem 0 0.5rem'}}>{t('evolve')}</h4>
+            <StyledToggleButtonGroup value={value.filterEvolve} exclusive
+                onChange={onEvolveChange}>
+                <ToggleButton value="all">{t('all')}</ToggleButton>
+                <ToggleButton value="non">{t('non-evolve')}</ToggleButton>
+                <ToggleButton value="final">{t('final-evoltion')}</ToggleButton>
+            </StyledToggleButtonGroup>
+        </div>
+    </>);
+});
+
+const IngredientTab = React.memo(({value, onChange}: {
+    value: PokemonFilterConfig,
+    onChange: (value: PokemonFilterConfig) => void
+}) => {
+    const { t } = useTranslation();
+
+    const onIngClick = useCallback((selected: IngredientName) => {
+        const ingredientName = value.ingredientName === selected ? 'unknown' : selected;
+        onChange(new PokemonFilterConfig({...value, ingredientName}));
+    }, [value, onChange]);
+
+    const onIngAClick = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(new PokemonFilterConfig({...value, ingredientA: e.target.checked}));
+    }, [value, onChange]);
+    const onIngBClick = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(new PokemonFilterConfig({...value, ingredientB: e.target.checked}));
+    }, [value, onChange]);
+    const onIngCClick = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(new PokemonFilterConfig({...value, ingredientC: e.target.checked}));
+    }, [value, onChange]);
+
+    const ingButtons: React.ReactElement[] = IngredientNames.map(ing =>
+        <IngredientButton key={ing} ingredient={ing} onClick={onIngClick}
+            checked={value.ingredientName === ing}/>);
+
+    return (<>
+        <div style={{marginBottom: '1rem'}}>
+            {ingButtons}
+        </div>
+        <section>
+            <label>{t('ing-a')}:</label>
+            <Switch checked={value.ingredientA} size="small" onChange={onIngAClick}/>
+        </section>
+        <section>
+            <label>{t('ing-b')}:</label>
+            <Switch checked={value.ingredientB} size="small" onChange={onIngBClick}/>
+        </section>
+        <section>
+        <label>{t('ing-c')}:</label>
+            <Switch checked={value.ingredientC} size="small" onChange={onIngCClick}/>
+        </section>
+    </>);
+});
+
+const MainSkillTab = React.memo(({value, onChange}: {
+    value: PokemonFilterConfig,
+    onChange: (value: PokemonFilterConfig) => void,
+}) => {
+    const onMainSkillClick = useCallback((selected: MainSkillName) => {
+        const mainSkillNames = value.mainSkillNames.includes(selected) ?
+            value.mainSkillNames.filter(x => x !== selected) :
+            [...value.mainSkillNames, selected];
+        onChange(new PokemonFilterConfig({...value, mainSkillNames}));
+    }, [value, onChange]);
+
+    const mainSkillButtons: React.ReactElement[] = MainSkillNames.map(skill =>
+        <MainSkillButton key={skill} mainSkill={skill} onClick={onMainSkillClick}
+            checked={value.mainSkillNames.includes(skill)}/>);
+
+    return <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '0.5rem',
+    }}>
+        {mainSkillButtons}
+    </div>;
+});
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
+    '& > button:first-of-type': {
+        borderRadius: '1rem 0 0 1rem',
+    },
+    '& > button:last-of-type': {
+        borderRadius: '0 1rem 1rem 0',
     },
 });
 

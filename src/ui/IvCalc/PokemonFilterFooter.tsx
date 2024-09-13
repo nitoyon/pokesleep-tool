@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 /**
  * Pokemon select dialog configuration.
  */
-export interface PokemonFilterConfig {
+export interface PokemonFilterFooterConfig {
     /** Filter type */
     isFiltered: boolean;
     /** Sort type. */
@@ -22,9 +22,9 @@ export interface PokemonFilterConfig {
 const PokemonFilterFooter = React.memo(({
     value, sortTypes, onChange, onFilterButtonClick,
 }: {
-    value: PokemonFilterConfig,
+    value: PokemonFilterFooterConfig,
     sortTypes: string[],
-    onChange: (value: PokemonFilterConfig) => void,
+    onChange: (value: PokemonFilterFooterConfig) => void,
     onFilterButtonClick: () => void,
 }) => {
     const { t } = useTranslation();
