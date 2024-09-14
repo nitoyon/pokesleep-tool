@@ -100,13 +100,15 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
                     <Button className="later" onClick={onCloseClick}>{t('later')}</Button>
                 </div>
                 <IconButton onClick={onCloseClick}><CloseIcon/></IconButton>
-                <IPhoneMessageDialog open={iPhoneMessageOpen} onClose={onCloseMessage}/>
+                <IPhoneMessageDialog app={app} open={iPhoneMessageOpen} onClose={onCloseMessage}/>
             </div>
         </Snackbar>
     );
 });
 
 interface IPhoneMessageDialogProps {
+    /** Current application */
+    app: AppType;
     /** Whether dialog is open or not */
     open: boolean;
     /** callback function when dialog is closed */
@@ -114,19 +116,20 @@ interface IPhoneMessageDialogProps {
 }
 
 /// iPhone: How to add to home screen
-const IPhoneMessageDialog = React.memo(({open, onClose}:IPhoneMessageDialogProps) => {
+const IPhoneMessageDialog = React.memo(({app, open, onClose}:IPhoneMessageDialogProps) => {
     const { t, i18n }= useTranslation();
     const [copyCompleted, setCopyCompleted] = useState(false);
 
     const onCopyUrl = useCallback(async () => {
-        let url = "https://nitoyon.github.io/pokesleep-tool/";
+        let url = "https://nitoyon.github.io/pokesleep-tool/" +
+            (app === 'IvCalc' ? 'iv/' : '');
         if (i18n.language !== "en") {
             url += "index." + i18n.language + ".html";
         }
         copyToClipboard(url).then(() => {
             setCopyCompleted(true);
         }).catch(() => {});
-    }, [setCopyCompleted, i18n.language]);
+    }, [app, setCopyCompleted, i18n.language]);
     const onCopyCompletedClose = useCallback(() => {
         setCopyCompleted(false);
     }, [setCopyCompleted]);
