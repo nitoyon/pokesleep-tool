@@ -152,9 +152,11 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     let decendants: PokemonData[] = [];
     if (pokemonIv.pokemon.name !== strength.pokemonIv.pokemon.name) {
-        pokemonIv = strength.pokemonIv;
         decendants = getDecendants(pokemonIv.pokemon);
     }
+
+    // update pokemonIv to the specified level, skill level and pokemon
+    pokemonIv = strength.pokemonIv;
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
