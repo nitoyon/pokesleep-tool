@@ -12,11 +12,13 @@ import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
-import { ButtonBase, Fab, IconButton, ListItemIcon,
+import { Button, ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
@@ -106,6 +108,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
                 sx={{position: 'absolute', top: '-55px', right: '10px'}}>
                 <AddIcon/>
             </Fab>
+            <BoxExportAlert count={items.length} config={sortConfig}
+                dispatch={dispatch} onChange={onSortConfigChange}/>
             <BoxSortConfigFooter parameter={parameter} sortConfig={sortConfig}
                 dispatch={dispatch} onChange={onSortConfigChange}/>
             <div style={{
@@ -253,6 +257,10 @@ export interface BoxSortConfig {
     mainSkill: MainSkillName;
     /** Descending (true) or ascending (false). */
     descending: boolean;
+    /** Box items when last warning was shown. */
+    warnItems: number;
+    /** Date when last warning was shown. */
+    warnDate: string;
 }
 
 /**
@@ -379,6 +387,8 @@ function loadBoxSortConfig(): BoxSortConfig {
         ingredient: "unknown",
         mainSkill: "Energy for Everyone S",
         descending: true,
+        warnItems: 0,
+        warnDate: '',
     };
 
     const settings = localStorage.getItem('PstPokemonBoxParam');
@@ -403,6 +413,13 @@ function loadBoxSortConfig(): BoxSortConfig {
     }
     if (typeof(json.descending) === "boolean") {
         ret.descending = json.descending;
+    }
+    if (typeof(json.warnItems) === "number") {
+        ret.warnItems = json.warnItems;
+    }
+    if (typeof(json.warnDate) === "string" &&
+        json.warnDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        ret.warnDate = json.warnDate;
     }
     return ret;
 }
@@ -561,5 +578,85 @@ function useLongPress(
     }, [mouseStart, touchStart, touchEnd]);
     return ref;
 }
+
+/** Number of days after which the alert message will be shown again. */
+const alertDaysThreshold = 30;
+/**
+ * The threshold for the difference in the number of items in the box since
+ * the last alert was shown. 
+ * This value determines when an alert message will be triggered.
+ */
+const boxCountDiffThreshold = 10;
+
+const BoxExportAlert = React.memo(({count, config, dispatch, onChange}: {
+    count: number,
+    config: BoxSortConfig,
+    dispatch: (action: IvAction) => void,
+    onChange: (value: BoxSortConfig) => void,
+}) => {
+    const { t } = useTranslation();
+    const onClose = React.useCallback(() => {
+        onChange({
+            ...config,
+            // YYYY-MM-DD
+            warnDate: new Date().toLocaleDateString('sv-SE'),
+            warnItems: count,
+        })
+    }, [config, count, onChange]);
+
+    const onExportClick = React.useCallback(() => {
+        dispatch({type: 'export'});
+        onClose();
+    }, [dispatch, onClose]);
+
+    // get time since we displayed the warning message
+    const lastWarningTime = config.warnDate !== '' ?
+        new Date(config.warnDate).getTime() : new Date().getTime();
+    const elapsedTime = new Date().getTime() - lastWarningTime;
+
+    // Whether alertDaysThreshold days elapsed
+    const elapsed = elapsedTime > alertDaysThreshold * 24 * 60 * 60 * 1000;
+
+    // check whether the box items increases too much
+    const boxIncreased = Math.abs(count - config.warnItems) >= boxCountDiffThreshold;
+
+    // return empty element when no need to show message
+    if (!boxIncreased && !elapsed) {
+        return <></>;
+    }
+
+    return <StyledBoxExportAlert>
+        <InfoOutlinedIcon/>
+        <div>
+            {t('export notice')}
+            <Button onClick={onExportClick}>[{t("export")}]</Button>
+        </div>
+        <IconButton onClick={onClose}><CloseIcon/></IconButton>
+    </StyledBoxExportAlert>;
+});
+
+const StyledBoxExportAlert = styled('div')({
+    background: '#e5f6fd',
+    borderTop: '1px solid #d9e9e9',
+    paddingTop: '0.2rem',
+    color: '#014343',
+    display: 'grid',
+    gridTemplateColumns: '26px 1fr 40px',
+    '& > svg': {
+        color: '#0288d1',
+        width: '18px',
+        height: '18px',
+        padding: '4px',
+    },
+    '& > div': {
+        fontSize: '0.8rem',
+        color: '#014480',
+        '& > button': {
+            padding: '0 0 0 0.3rem',
+            minWidth: 0,
+            fontSize: '0.8rem',
+        },
+    },
+});
 
 export default BoxView;
