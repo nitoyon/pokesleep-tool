@@ -233,6 +233,10 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
         return () => clearInterval(id);
     }, []);
 
+    const onBonusClick = React.useCallback(() => {
+        onChange({target: {value: todaysBonus}});
+    }, [onChange, todaysBonus]);
+
     const open = (todaysBonus !== value);
     const bonusVal = todaysBonus === 1 ? t("none") : `×${todaysBonus}`;
 
@@ -246,8 +250,19 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
                 <MenuItem key="3" value={3} dense>×3</MenuItem>
                 <MenuItem key="4" value={4} dense>×4</MenuItem>
         </TextField>
-        <Collapse in={open} style={{fontSize: '0.8rem', padding: '0.2rem 0 0 1rem', textIndent: '-1rem'}}>
-            ⚠️{t('bonus not match', {bonus: bonusVal})}
+        <Collapse in={open} style={{paddingTop: '0.2rem'}}>
+            <Button onClick={onBonusClick}
+                sx={{
+                    padding: '0 0 0 1rem',
+                    margin: 0,
+                    fontSize: '0.8rem',
+                    textIndent: '-1rem',
+                    textTransform: 'none',
+                    lineHeight: 1.2,
+                    textAlign: 'left',
+                }}>
+                ⚠️{t('bonus not match', {bonus: bonusVal})}
+            </Button>
         </Collapse>
     </>);
 });

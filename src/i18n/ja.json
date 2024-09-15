@@ -88,7 +88,7 @@
         "research area": "フィールド",
         "strength": "総エナジー",
         "bonus": "ねむけボーナス",
-        "bonus not match": "今日はねむけボーナス {{bonus}} です。",
+        "bonus not match": "今日のねむけボーナスは {{bonus}} です。",
         "no favorite berries": "好きなきのみなし",
         "area": [
             "ワカクサ本島",
