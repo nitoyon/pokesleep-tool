@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch,
-    ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch
+} from '@mui/material';
 import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
@@ -93,11 +93,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, maxSkillLevel: e.target.checked});
     }, [onChange, value]);
-    const onEventChange = React.useCallback((e: any, val: string|null) => {
-        if (val !== null) {
-            onChange({...value, event: val as "none"|"1st week"|"2nd week"});
-        }
-    }, [onChange, value]);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
     }, [onChange, value]);
@@ -165,15 +160,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
             </section>
         </Collapse>
-        <section className="mt">
-            <label>{t('event name')}:</label>
-            <ToggleButtonGroup size="small" exclusive
-                value={value.event} onChange={onEventChange}>
-                <ToggleButton value="none">{t('none')}</ToggleButton>
-                <ToggleButton value="1st week">{t('1st week')}</ToggleButton>
-                <ToggleButton value="2nd week">{t('2nd week')}</ToggleButton>
-            </ToggleButtonGroup>
-        </section>
         <section className="mt">
             <label>{t('level')}:</label>
             <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>

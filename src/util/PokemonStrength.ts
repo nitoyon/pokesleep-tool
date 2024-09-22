@@ -183,8 +183,7 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        const isEventBoosted = (param.event !== "none" &&
-            rp.pokemon.type === "water");
+        const isEventBoosted = false;
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -277,7 +276,7 @@ class PokemonStrength {
         if (isEventBoosted) {
             const maxSkillLevel = isSkillLevelMax7(mainSkill) ? 7 : 6;
             skillLevel = Math.min(maxSkillLevel,
-                this.iv.skillLevel + (param.event === "1st week" ? 1 : 3));
+                this.iv.skillLevel + 1);
         }
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;
@@ -357,7 +356,6 @@ export function createStrengthParameter(
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
-        event: 'none',
     };
     return { ...defaultParameters, ...param };
 }
@@ -448,10 +446,6 @@ export function loadStrengthParameter(): StrengthParameter {
     if (typeof(json.recipeLevel) === "number" &&
         [1, 10, 20, 30, 40, 50, 55].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
-    }
-    if (typeof(json.event) === "string" &&
-        ["none", "1st week", "2nd week"].includes(json.event)) {
-        ret.event = json.event;
     }
     return ret;
 }
