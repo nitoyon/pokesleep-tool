@@ -12,10 +12,11 @@ import fields from '../../data/fields';
 import { FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChange}: {
+const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, sx, onChange}: {
     sortConfig: BoxSortConfig,
     parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
+    sx: object,
     onChange: (value: BoxSortConfig) => void,
 }) => {
     const { t } = useTranslation();
@@ -82,7 +83,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     ) {
         return <></>;
     }
-    return <StyledBoxHeader>
+    return <StyledBoxHeader style={sx}>
         <div>
             <span>
                 <SelectEx onChange={onLevelChange} value={parameter.level}
@@ -138,30 +139,24 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
 });
 
 const StyledBoxHeader = styled('div')({
+    padding: '.2rem 0 .2rem 0',
+    background: '#f3f5f0',
+    borderTop: '1px solid #ccc',
+    position: 'relative',
+    overflow: 'hidden',
     '& > div': {
-        padding: '.2rem 0 .2rem 1.2rem',
-        background: '#f3f5f0',
-        borderTop: '1px solid #ccc',
-        position: 'relative',
         display: 'flex',
         alignItems: 'stretch',
         gap: '10px',
 
         '& > span': {
-            '& div': {
-                fontSize: '0.8rem',
-                '& > div.MuiSelect-select': {
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                },
+            '& > button': {
+                textWrap: 'nowrap',
             },
             '& span': {
                 fontSize: '0.8rem',
             },
 
-            '&.field > div': {
-                paddingTop: '4px',
-            },
             '&.ing svg': {
                 padding: '0 5px',
                 width: '18px',
