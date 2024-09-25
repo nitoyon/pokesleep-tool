@@ -66,12 +66,16 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
         // prepare field menus
         const ret = fields.map((field) =>
             <MenuItem key={field.index} value={field.index}>
-                <span>{field.emoji}</span>
+                {field.emoji}
                 {t(`area.${field.index}`)}
             </MenuItem>
         );
         ret.unshift(<MenuItem key={-1} value={-1}>
             {t('no favorite berries')}
+        </MenuItem>);
+        ret.push(<MenuItem key={5} value={5}>
+            ⚡️
+            {t('area.5')}
         </MenuItem>);
         return ret;
     }, [t]);
@@ -86,7 +90,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
         <div>
             <span>
                 <SelectEx onChange={onLevelChange} value={parameter.level}
-                    sx={{padding: '0 .5rem', fontSize: '0.8rem', textWrap: 'nowrap'}}>
+                    sx={{padding: '0 .2rem', fontSize: '0.8rem', textWrap: 'nowrap'}}>
                     <MenuItem value={0}>{t('current level')}</MenuItem>
                     <MenuItem value={10}>Lv. 10</MenuItem>
                     <MenuItem value={25}>Lv. 25</MenuItem>
@@ -99,7 +103,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             </span>
             {sortConfig.sort === "berry" && <span className="field">
                 <SelectEx value={parameter.fieldIndex} onChange={onFieldChange}
-                    sx={{padding: '0 .5rem', fontSize: '0.8rem'}}>
+                    sx={{padding: '0 .2rem', fontSize: '0.8rem'}}>
                 {fieldMenus}
                 </SelectEx>
             </span>}
@@ -148,20 +152,16 @@ const StyledBoxHeader = styled('div')({
         gap: '10px',
 
         '& > span': {
-            '& div': {
-                fontSize: '0.8rem',
-                '& > div.MuiSelect-select': {
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                },
+            '& > button': {
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                maxWidth: '10rem',
             },
-            '& span': {
+            '& span': { // for switch
                 fontSize: '0.8rem',
             },
 
-            '&.field > div': {
-                paddingTop: '4px',
-            },
             '&.ing svg': {
                 padding: '0 5px',
                 width: '18px',

@@ -322,6 +322,7 @@ class PokemonStrength {
             case 2: types = ["fire", "rock", "ground"]; break;
             case 3: types = ["ice", "dark", "normal"]; break;
             case 4: types = ["grass", "fighting", "psychic"]; break;
+            case 5: types = ["electric", "ghost", "steel"]; break;
             default: return false;
         }
 
@@ -386,7 +387,7 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.fieldIndex) === "number" &&
         Math.floor(json.fieldIndex) === json.fieldIndex &&
-        json.fieldIndex >= -1 && json.fieldIndex < fields.length) {
+        json.fieldIndex >= -1 && json.fieldIndex < fields.length + 1) { // TODO: Fix later
         ret.fieldIndex = json.fieldIndex;
     }
     if (Array.isArray(json.favoriteType) &&
