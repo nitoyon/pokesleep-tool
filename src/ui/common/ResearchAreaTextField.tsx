@@ -22,15 +22,7 @@ const ResearchAreaTextField = React.memo(({value, showEmpty, onChange}:{
                 {t('no favorite berries')}
             </MenuItem>
         );
-        showFields.push({
-            "index": 5,
-            "name": '',
-            "emoji": "⚡️",
-            "ranks": [],
-            "powers": [],
-            "encounter": undefined,
-        });
-}
+    }
     for (const field of showFields) {
         fieldMenuItems.push(
             <MenuItem key={field.index} value={field.index}>

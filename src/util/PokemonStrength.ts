@@ -387,7 +387,7 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.fieldIndex) === "number" &&
         Math.floor(json.fieldIndex) === json.fieldIndex &&
-        json.fieldIndex >= -1 && json.fieldIndex < fields.length + 1) { // TODO: Fix later
+        json.fieldIndex >= -1 && json.fieldIndex < fields.length) {
         ret.fieldIndex = json.fieldIndex;
     }
     if (Array.isArray(json.favoriteType) &&

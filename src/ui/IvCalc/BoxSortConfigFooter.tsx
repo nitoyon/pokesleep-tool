@@ -73,10 +73,6 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
         ret.unshift(<MenuItem key={-1} value={-1}>
             {t('no favorite berries')}
         </MenuItem>);
-        ret.push(<MenuItem key={5} value={5}>
-            ⚡️
-            {t('area.5')}
-        </MenuItem>);
         return ret;
     }, [t]);
 
