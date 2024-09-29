@@ -48,9 +48,11 @@ const skills = {
     "食材ゲットS": "Ingredient Magnet S",
     "げんきチャージS": "Charge Energy S",
     "エナジーチャージS(ランダム)": "Charge Strength S (Random)",
+    "エナジーチャージS(固定)": "Charge Strength S",
     "エナジーチャージS": "Charge Strength S",
     "エナジーチャージM": "Charge Strength M",
     "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S (Random)",
+    "ゆめのかけらゲットS(固定)": "Dream Shard Magnet S",
     "ゆめのかけらゲットS": "Dream Shard Magnet S",
     "げんきエールS": "Energizing Cheer S",
     "ゆびをふる": "Metronome",
@@ -180,95 +182,43 @@ function updateSPO(json, html) {
 }
 
 async function syncPokemon() {
-    console.log('Retrieving pokemon list');
-
     // read i18n/ja.json
     const pokemonJsonPath = path.join(INIT_CWD, "src/data/pokemon.json");
     const jaJsonPath = path.join(INIT_CWD, "src/i18n/ja.json");
     const jaJson = JSON.parse(fs.readFileSync(jaJsonPath));
     const ja2en = {};
     const en2ja = jaJson.translation.pokemons;
+    const enNames = Object.keys(jaJson.translation.pokemons);
     for (const enname of Object.keys(jaJson.translation.pokemons)) {
         ja2en[jaJson.translation.pokemons[enname]] = enname;
     }
 
-    // Read or initialize pokemon list
-    console.log('Getting pokemon list');
-    const listHtml = await getWikiHtml("ポケモンの一覧");
-    console.log('  downloaded');
-    const pokemonJson = updatePokemonList(listHtml, ja2en);
+    // Update each Pokemon
+    const pokemonJson = [];
+    for (const name of enNames) {
+        const nameJa = en2ja[name];
+        const html = await getWikiHtml(nameJa.replace(" ", ""));
+        pokemonJson.push(getPokemon(html, name, ja2en));
+    }
     fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
 
-    // convert pokemon name (ja -> en), and prepare name2id
-    const nameJa2id = {};
-    for (const pokemon of pokemonJson) {
-        const nameJa = en2ja[pokemon.name];
-        nameJa2id[nameJa] = parseInt(pokemon.id, 10);
+    // Update ancestor name to id
+    const en2id = {};
+    for (const json of pokemonJson) {
+        en2id[json.name] = json.id;
+    }
+    for (const json of pokemonJson) {
+        if (json.ancestor !== null) {
+            json.ancestor = en2id[json.ancestor];
+        }
     }
 
+    // Update ing% skill%
     const rpCsv = await getUrlWithCache(
         'https://docs.google.com/spreadsheets/d/1kBrPl0pdAO8gjOf_NrTgAPseFtqQA27fdfEbMBBeAhs/export?format=csv&gid=1673887151',
         'RP spread sheet', 'rp.cache');
     updatePokemonProbability(pokemonJson, ja2en, rpCsv);
     fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
-
-    // Update each Pokemon
-    for (const pokemon of pokemonJson) {
-        const name = pokemon.name;
-        const nameJa = en2ja[name];
-
-        const html = await getWikiHtml(nameJa.replace(" ", ""));
-        updatePokemon(pokemon, html, nameJa, nameJa2id);
-    }
-    fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
-}
-
-function updatePokemonList(html, ja2en) {
-    const dom = new JSDOM(html);
-
-    // find table
-    const tables = dom.window.document.querySelectorAll('table');
-
-    const table = [...tables].find((t) => {
-        return t.querySelector('th')?.textContent == "画像";
-    });
-    if (table == null) { throw new Error('not found'); }
-
-    const trs = table.querySelectorAll('tbody>tr');
-    const json = [];
-    for (const tr of trs) {
-        const tds = tr.querySelectorAll('td');
-        const id = parseInt(tds[1].textContent, 10);
-        const nameJa = tds[2].firstChild.textContent.replace("(", " (");
-        const sleepTypeJa = tds[3].textContent;
-        const specialityJa = tds[4].textContent;
-        const berryJa = tds[5].querySelector("a").getAttribute("title").replace("きのみ/", "");
-        const skillJa = tds[9].textContent;
-        const fp = parseInt(tds[10].textContent, 10);
-        const frequency = parseInt(tds[11].textContent, 10);
-
-        // validate
-        if (!(sleepTypeJa in sleepTypes)) { throw new Error(`Unknown sleep type: ${typeJa}`); }
-        const sleepType = sleepTypes[sleepTypeJa];
-        if (!(berryJa in berryTypes)) { throw new Error(`Unknown berry: ${berryJa}`); }
-        const type = berryTypes[berryJa];
-        if (!(nameJa in ja2en)) { throw new Error(`Unknown pokemon: ${nameJa}`); }
-        const name = ja2en[nameJa];
-        if (!(specialityJa in specialties)) { throw new Error(`Unknown speciality: ${specialityJa}`); }
-        const speciality = specialties[specialityJa];
-        if (!(skillJa in skills)) { throw new Error(`Unknown skill: ${skillJa}`); }
-        const skill = skills[skillJa];
-
-        json.push({
-            id, name, sleepType, type, speciality, skill, fp, frequency, 
-        });
-    }
-
-    json.sort(function(a, b) {
-        return a.id !== b.id ? a.id - b.id :
-            a.name > b.name ? 1: -1;
-    });
-    return json;
 }
 
 function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
@@ -300,57 +250,102 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
     }
 }
 
-function updatePokemon(json, html, nameJa, nameJa2id) {
+function getPokemon(html, name, nameJa2en) {
     const dom = new JSDOM(html);
-    const name = json.name;
+    let ancestor, evolutionCount, evolutionLeft, isFullyEvolved;
 
     // find evolution
     if (['Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Espeon',
         'Umbreon', 'Leafeon', 'Glaceon', 'Sylveon'].includes(name)) {
-        json.ancestor = 133;
-        json.evolutionCount = (name === 'Eevee' ? 0 : 1);
-        json.evolutionLeft = 1 - json.evolutionCount;
-        json.isFullyEvolved = (json.evolutionCount === 1);
+        ancestor = 'Eevee';
+        evolutionCount = (name === 'Eevee' ? 0 : 1);
+        evolutionLeft = 1 - evolutionCount;
+        isFullyEvolved = (evolutionCount === 1);
     }
     else if (['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].includes(name)) {
-        json.ancestor = 280;
-        json.evolutionCount = ['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].indexOf(name);
-        if (json.evolutionCount === 3) {
-            json.evolutionCount = 2;
+        ancestor = 'Ralts';
+        evolutionCount = ['Ralts', 'Kirlia', 'Gardevoir', 'Gallade'].indexOf(name);
+        if (evolutionCount === 3) {
+            evolutionCount = 2;
         }
-        json.evolutionLeft = 2 - json.evolutionCount;
-        json.isFullyEvolved = (json.evolutionCount === 2);
+        evolutionLeft = 2 - evolutionCount;
+        isFullyEvolved = (evolutionCount === 2);
     }
     else if (['Slowpoke', 'Slowbro', 'Slowking'].includes(name)) {
-        json.ancestor = 79;
-        json.evolutionCount = ['Slowpoke', 'Slowbro', 'Slowking'].indexOf(name);
-        if (json.evolutionCount === 2) {
-            json.evolutionCount = 1;
+        ancestor = 'Slowpoke';
+        evolutionCount = ['Slowpoke', 'Slowbro', 'Slowking'].indexOf(name);
+        if (evolutionCount === 2) {
+            evolutionCount = 1;
         }
-        json.evolutionLeft = 1 - json.evolutionCount;
-        json.isFullyEvolved = (json.evolutionCount === 1);
+        evolutionLeft = 1 - evolutionCount;
+        isFullyEvolved = (evolutionCount === 1);
     }
     else {
         const evolink = dom.window.document.querySelector('h4 a[title="育成/進化"]');
         if (evolink === null) { throw new Error('進化 not found'); }
-        const ancestor = evolink.parentNode.parentNode.querySelector('p>strong>a')?.textContent;
+        ancestor = evolink.parentNode.parentNode.querySelector('p>strong>a')?.textContent;
         // Charmander: [4, 5, 6]
         // Non-evolving: []
         const evoline = [...evolink.parentNode.parentNode.querySelectorAll('p>strong>a')]
-            .map(x => nameJa2id[x.textContent]);
-        json.ancestor = (ancestor === undefined ? null : nameJa2id[ancestor]);
-        json.evolutionCount = evoline.indexOf(json.id);
-        json.evolutionLeft = evoline.length - json.evolutionCount - 1;
-        json.isFullyEvolved = (json.evolutionCount === evoline.length - 1);
+            .map(x => nameJa2en[x.textContent]);
+        ancestor = (ancestor === undefined ? null : nameJa2en[ancestor]);
+        evolutionCount = evoline.indexOf(name);
+        evolutionLeft = evoline.length - evolutionCount - 1;
+        isFullyEvolved = (evolutionCount === evoline.length - 1);
     }
 
-    // find carry limit table
+    // find id
+    const idMatch = dom.window.document.querySelector('ins')
+        ?.textContent?.match(/No\.(\d+)/);
+    if (idMatch === null) { throw new Error('pokemon ID not found'); }
+    const id = parseInt(idMatch[1], 10);
+
+    // find carry limit and main skill
     const tables = dom.window.document.querySelectorAll('table');
     const carryLimitTable = [...tables].find((t) => {
         return t.querySelector('th')?.textContent === "初期最大所持数";
     });
     if (carryLimitTable === null) { throw new Error('carry limit table not found'); }
-    json.carryLimit = parseInt(carryLimitTable.querySelector('td').textContent, 10);
+    let tds = carryLimitTable.querySelectorAll('td');
+    const carryLimit = parseInt(tds[0].textContent, 10);
+    let skillJa = tds[1].textContent.replace(/ /g, "").replace("（", "(").replace("）", ")");
+    if (!(skillJa in skills)) { throw new Error(`Unknown skill: ${skillJa}`); }
+    const skill = skills[skillJa];
+
+    // find speciality
+    const typeTable = [...tables].find((t) => {
+        return t.querySelector('th')?.textContent === 'とくい';
+    });
+    if (typeTable === null) { throw new Error('type table not found'); }
+    tds = typeTable.querySelectorAll('td');
+    const specialityJa = tds[0].textContent;
+    if (!(specialityJa in specialties)) { throw new Error(`Unknown speciality: ${specialityJa}`); }
+    const speciality = specialties[specialityJa];
+
+    // find frequency
+    const frequencyMatch = tds[1]?.textContent?.match(/(\d+)秒/);
+    if (frequencyMatch === null) { throw new Error(`frequency not found: ${tds[1].textContent}`); }
+    const frequency = parseInt(frequencyMatch[1], 10);
+
+    // find type
+    const berryJa = tds[2]?.querySelector('a')?.textContent;
+    if (!(berryJa in berryTypes)) { throw new Error(`Unknown berry: ${berryJa}`); }
+    const type = berryTypes[berryJa];
+
+    // find sleepType
+    const sleepTypeTable = [...tables].find((t) => {
+        return t.querySelector('th')?.textContent === '睡眠タイプ';
+    });
+    if (sleepTypeTable === null) { throw new Error('sleep type table not found'); }
+    tds = sleepTypeTable.querySelectorAll('td');
+    const sleepTypeJa = tds[0]?.textContent;
+    if (!(sleepTypeJa in sleepTypes)) { throw new Error(`Unknown sleep type: ${sleepTypeJa}`); }
+    const sleepType = sleepTypes[sleepTypeJa];
+
+    // find fp
+    const fpMatch = tds[1].textContent.match(/(\d+)ポイント/);
+    if (fpMatch === null) { throw new Error(`fp not found: ${tds[1].textContent}`)}
+    const fp = parseInt(fpMatch[1], 10);
 
     // find ing table
     const ingTable = [...tables].find((t) => {
@@ -360,14 +355,14 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
     const trs = ingTable.querySelectorAll('tbody>tr');
 
     // get ing1
-    let tds = trs[1].querySelectorAll('td');
+    tds = trs[1].querySelectorAll('td');
     let ingJa = tds[4].querySelector('a').textContent;
     let c1 = parseInt(tds[1].textContent.replace("個", ""), 10);
     let c2 = parseInt(tds[2].textContent.replace("個", ""), 10);
     let c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
     if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
     let ing = ingredients[ingJa];
-    json.ing1 = {name: ing, c1, c2, c3};
+    const ing1 = {name: ing, c1, c2, c3};
 
     // get ing2
     tds = trs[2].querySelectorAll('td');
@@ -376,18 +371,25 @@ function updatePokemon(json, html, nameJa, nameJa2id) {
     c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
     if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
     ing = ingredients[ingJa];
-    json.ing2 = {name: ing, c2, c3};
+    const ing2 = {name: ing, c2, c3};
 
     // get ing3
     tds = trs[3].querySelectorAll('td');
     ingJa = tds[4].querySelector('a')?.textContent;
-    if (ingJa === undefined) {
-        return;
+    let ing3 = undefined;
+    if (ingJa !== undefined) {
+        c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
+        if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
+        ing = ingredients[ingJa];
+        ing3 = {name: ing, c3};
     }
-    c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
-    if (!(ingJa in ingredients)) { throw new Error('Unknown ing: ${ingJa}'); }
-    ing = ingredients[ingJa];
-    json.ing3 = {name: ing, c3};
+
+    return {
+        id, name, sleepType, type, speciality, skill, fp, frequency,
+        ingRatio: 0, skillRatio: 0,
+        ancestor, evolutionCount, evolutionLeft, isFullyEvolved,
+        carryLimit, ing1, ing2, ing3,
+    };
 }
 
 async function getWikiHtml(name) {
