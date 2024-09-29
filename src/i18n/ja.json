@@ -113,6 +113,7 @@
         "strength too low": "エナジーが <strength/> 必要です。",
         "strength too much": "エナジーが多すぎます。",
         "next strength to get 1 more pokemon": "2回目睡眠までに <strength2/> エナジーを稼ぐと、2回目のリサーチで <count2/> 体に出会えます (※1回目の睡眠スコアが <score1/> のとき)。",
+        "border is not fixed": "出現ボーダーはまだ未確定です。表示された値より低いスコアやエナジーで、指定された数のポケモンが出現する可能性があります。",
 
         "dozing": "うとうとタイプ",
         "snoozing": "すやすやタイプ",

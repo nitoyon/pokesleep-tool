@@ -122,6 +122,7 @@
         "strength too low": "Snorlax strength should be at least <strength/>.",
         "strength too much": "Too much snorlax strength.",
         "next strength to get 1 more pokemon": "If you gain <strength2/> strength by the second sleep, you will encounter <count2/> Pokémon during the second sleep session (Only when the first sleep score is <score1/>). ",
+        "border is not fixed": "The drowsy power required for the specified number of Pokémon to appear is still under investigation. The specified number of Pokémon might appear with scores or energy lower than the shown values.",
 
         "dozing": "Dozing Type",
         "snoozing": "Snoozing Type",
