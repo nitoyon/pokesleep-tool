@@ -110,7 +110,8 @@ async function syncRanksAndPowers(fieldJson) {
         "シアンの砂浜",
         "トープ洞窟",
         "ウノハナ雪原",
-        "ラピスラズリ湖畔"
+        "ラピスラズリ湖畔",
+        "ゴールド旧発電所"
     ];
     for (let i = 0; i < areaNames.length; i++) {
         const area = "リサーチフィールド/" + areaNames[i];
@@ -125,7 +126,7 @@ function getPowers(html) {
     // find table
     const tables = dom.window.document.querySelectorAll('table');
     const table = [...tables].find((t) => {
-        return t.querySelector('th').textContent == "ポケモン数";
+        return t.querySelector('th')?.textContent == "ポケモン数";
     });
     if (table == null) { throw new Error('not found'); }
 
