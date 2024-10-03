@@ -81,6 +81,7 @@ const ingredients = {
     "おいしいシッポ": "tail",
     "ワカクサ大豆": "soy",
     "ワカクサコーン": "corn",
+    "めざましコーヒー": "coffee",
 };
 
 async function main() {
