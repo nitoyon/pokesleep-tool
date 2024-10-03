@@ -574,6 +574,33 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#977ecf'},
         {x: 0.4, y: 0.4, w: 0.2, h: 0.25, r: 0.1, color: '#f06686'},
     ],
+    // Aron
+    '304': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f3efee'},
+        {x: 0.1, y: 0.37, w: 0.3, h: 0.35, r: 0.2, color: '#464443'},
+        {x: 0.17, y: 0.45, w: 0.2, h: 0.2, r: 0.2, color: '#62d8f4'},
+        {x: 0.6, y: 0.37, w: 0.3, h: 0.35, r: 0.2, color: '#464443'},
+        {x: 0.63, y: 0.45, w: 0.2, h: 0.2, r: 0.2, color: '#62d8f4'},
+        {x: 0.25, y: 0.15, w: 0.14, h: 0.14, r: 0.2, color: '#464443'},
+        {x: 0.61, y: 0.15, w: 0.14, h: 0.14, r: 0.2, color: '#464443'},
+        {x: 0.49, y: 0, w: 0.02, h: 1, color: '#c3c5c3'},
+    ],
+    // Lairon
+    '305': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f3efee'},
+        {x: 0, y: 0.5, w: 1, h: 0.6, color: '#7e7e7e'},
+        {x: 0.1, y: 0.2, w: 0.2, h: 0.2, r: 0.2, color: '#454342'},
+        {x: 0.4, y: 0.2, w: 0.2, h: 0.2, r: 0.2, color: '#454342'},
+        {x: 0.7, y: 0.2, w: 0.2, h: 0.2, r: 0.2, color: '#454342'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#f3efee'},
+    ],
+    // Aggron
+    '306': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#7e7e7e'},
+        {x: 0, y: 0, w: 1, h: 0.3, color: '#f3efee'},
+        {x: 0.6, y: 0.08, w: 0.15, h: 0.15, r: 0.15, color: '#78cad4'},
+        {x: 0, y: 0.7, w: 1, h: 0.1, color: '#f3efee'},
+    ],
     // Gulpin
     '316': [
         {x: 0, y: 0, w: 1, h: 1, color: '#add5a8'},
@@ -632,6 +659,30 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#fafafa'},
         {x: 0, y: 0.45, w: 1, h: 0.1, color: '#fff1d4'},
         {x: 0, y: 0.55, w: 1, h: 0.55, color: '#6dcce8'},
+    ],
+    // Shinx
+    '403': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#9fe3fe'},
+        {x: 0, y: 0.85, w: 0.7, h: 0.08, color: '#ffed62'},
+        {x: 0.7, y: 0, w: 0.4, h: 1, color: '#5e6061'},
+        {x: 0.25, y: 0.3, w: 0.15, h: 0.1, r: 0.1, color: '#fc6575'},
+    ],
+    // Luxio
+    '404': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#5e6061'},
+        {x: 0, y: 0.1, w: 1, h: 0.5, color: '#96e1ff'},
+        {x: 0, y: 0.7, w: 1, h: 0.6, color: '#96e1ff'},
+        {x: 0, y: 0.85, w: 1, h: 0.05, color: '#fbea6a'},
+        {x: 0, y: 0.92, w: 1, h: 0.05, color: '#fbea6a'},
+        {x: 0.25, y: 0.35, w: 0.15, h: 0.1, r: 0.1, color: '#fc6575'},
+        {x: 0.7, y: 0, w: 0.4, h: 1, color: '#5e6061'},
+    ],
+    // Luxray
+    '405': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#5e6061'},
+        {x: 0.1, y: 0.2, w: 0.55, h: 0.45, r: 0.2, color: '#9ce0fe'},
+        {x: 0.3, y: 0.38, w: 0.15, h: 0.1, r: 0.1, color: '#fc6575'},
+        {x: 0.78, y: 0.7, w: 0.2, h: 0.2, r: 0.2, color: '#ffea63'},
     ],
     // Bonsly
     '438': [
@@ -719,6 +770,36 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#efb44e'},
         {x: 0, y: 0.5, w: 1, h: 0.7, r: 0.25, color: '#fefaaa'},
         {x: 0, y: 0, w: 1, h: 0.1, color: '#4b4441'},
+    ],
+    // Grubbin
+    '736': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#eff8fc'},
+        {x: 0.1, y: 0.26, w: 0.7, h: 0.44, r: 0.25, color: '#f3863c'},
+        {x: 0.1, y: 0.5, w: 0.7, h: 0.44, r: 0.25, color: '#9a6a41'},
+        {x: 0.1, y: 0.5, w: 0.7, h: 0.2, color: '#ffed8d'},
+    ],
+    // Charjabug
+    '737': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#a0bb50'},
+        {x: 0.33, y: 0.33, w: 0.33, h: 0.66, color: '#d3d4cb'},
+        {x: 0, y: 0.33, w: 0.34, h: 0.33, color: '#518fc5'},
+        {x: 0.67, y: 0.33, w: 0.33, h: 0.33, color: '#518fc5'},
+        {x: 0.03, y: 0.69, w: 0.27, h: 0.27, r: 0.165, color: '#ffd057'},
+        {x: 0.7, y: 0.69, w: 0.27, h: 0.27, r: 0.165, color: '#ffd057'},
+    ],
+    // Vikavolt
+    '738': [
+        {x: 0, y: 0.15, w: 1, h: 0.2, color: '#a4aab5'},
+        {x: 0.45, y: 0.65, w: 0.1, h: 0.1, color: '#fcae67'},
+        {x: 0.1, y: 0.55, w: 0.8, h: 0.1, color: '#ffff79'},
+        {x: 0.1, y: 0.45, w: 0.8, h: 0.1, color: '#3e6979'},
+        {x: 0.35, y: 0.55, w: 0.1, h: 0.5, color: '#3e6979'},
+        {x: 0.55, y: 0.55, w: 0.1, h: 0.5, color: '#3e6979'},
+        {x: 0.25, y: 0.55, w: 0.1, h: 0.5, color: '#ffff79'},
+        {x: 0.65, y: 0.55, w: 0.1, h: 0.5, color: '#ffff79'},
+        {x: 0.3, y: 0.3, w: 0.4, h: 0.25, color: '#3e6979'},
+        {x: 0, y: 0, w: 0.3, h: 0.35, color: '#3e6979'},
+        {x: 0.7, y: 0, w: 0.3, h: 0.35, color: '#3e6979'},
     ],
     // Stufful
     '759': [
