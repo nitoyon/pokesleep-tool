@@ -3376,6 +3376,102 @@
         }
     },
     {
+        "id": 304,
+        "name": "Aron",
+        "sleepType": "slumbering",
+        "type": "steel",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 5,
+        "frequency": 5700,
+        "ingRatio": 27.3,
+        "skillRatio": 4.6,
+        "ancestor": 304,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "sausage",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "coffee",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 7
+        }
+    },
+    {
+        "id": 305,
+        "name": "Lairon",
+        "sleepType": "slumbering",
+        "type": "steel",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 12,
+        "frequency": 4200,
+        "ingRatio": 27.7,
+        "skillRatio": 4.8,
+        "ancestor": 304,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 13,
+        "ing1": {
+            "name": "sausage",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "coffee",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 7
+        }
+    },
+    {
+        "id": 306,
+        "name": "Aggron",
+        "sleepType": "slumbering",
+        "type": "steel",
+        "speciality": "Ingredients",
+        "skill": "Charge Energy S",
+        "fp": 20,
+        "frequency": 3000,
+        "ingRatio": 28.5,
+        "skillRatio": 5.2,
+        "ancestor": 304,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "sausage",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "coffee",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 7
+        }
+    },
+    {
         "id": 316,
         "name": "Gulpin",
         "sleepType": "dozing",
@@ -3726,6 +3822,103 @@
             "name": "ginger",
             "c3": 4
         }
+    },
+    {
+        "id": 403,
+        "name": "Shinx",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 5,
+        "frequency": 4400,
+        "ingRatio": 18.1,
+        "skillRatio": 1.8,
+        "ancestor": 403,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "tomato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "oil",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "coffee",
+            "c3": 5
+        }
+    },
+    {
+        "id": 404,
+        "name": "Luxio",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 12,
+        "frequency": 3200,
+        "ingRatio": 18.2,
+        "skillRatio": 1.8,
+        "ancestor": 403,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "tomato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "oil",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "coffee",
+            "c3": 5
+        }
+    },
+    {
+        "id": 405,
+        "name": "Luxray",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 20,
+        "frequency": 2400,
+        "ingRatio": 20,
+        "skillRatio": 2.3,
+        "ancestor": 403,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
+        "ing1": {
+            "name": "tomato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "oil",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "coffee",
+            "c3": 5
+        },
+        "ratioNotFixed": true
     },
     {
         "id": 438,
@@ -4193,6 +4386,102 @@
         "ing3": {
             "name": "corn",
             "c3": 2
+        }
+    },
+    {
+        "id": 736,
+        "name": "Grubbin",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRatio": 15.5,
+        "skillRatio": 2.9,
+        "ancestor": 736,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "coffee",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 11
+        }
+    },
+    {
+        "id": 737,
+        "name": "Charjabug",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 12,
+        "frequency": 3300,
+        "ingRatio": 15.4,
+        "skillRatio": 2.8,
+        "ancestor": 736,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 15,
+        "ing1": {
+            "name": "coffee",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 11
+        }
+    },
+    {
+        "id": 738,
+        "name": "Vikavolt",
+        "sleepType": "dozing",
+        "type": "bug",
+        "speciality": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 22,
+        "frequency": 2800,
+        "ingRatio": 19.4,
+        "skillRatio": 5.1,
+        "ancestor": 736,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "coffee",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 11
         }
     },
     {

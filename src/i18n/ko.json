@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add OGPP pokemons": {
+                    "headline": "턱지충이, 꼬링크, 가보리와 그 진화형가 추가되었습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "add OGPP": {
                     "headline": "골드 폐발전소가 연구 지역 목록에 추가되었습니다.",
                     "detail": "이제 골드 폐발전소에서 당신의 포켓몬 힘을 쉽게 시뮬레이션할 수 있습니다."
@@ -519,6 +523,9 @@
             "Vigoroth": "발바로",
             "Slaking": "게을킹",
             "Sableye": "깜까미",
+            "Aron": "가보리",
+            "Lairon": "갱도라",
+            "Aggron": "보스로라",
             "Gulpin": "꼴깍몬",
             "Swalot": "꿀꺽몬",
             "Swablu": "파비코",
@@ -530,6 +537,9 @@
             "Spheal": "대굴레오",
             "Sealeo": "씨레오",
             "Walrein": "씨카이저",
+            "Shinx": "꼬링크",
+            "Luxio": "럭시오",
+            "Luxray": "렌트라",
             "Bonsly": "꼬지지",
             "Mime Jr.": "흉내내",
             "Riolu": "리오르",
@@ -545,6 +555,9 @@
             "Gallade": "엘레이드",
             "Sylveon": "님피아",
             "Dedenne": "데덴네",
+            "Grubbin": "턱지충이",
+            "Charjabug": "전지충이",
+            "Vikavolt": "투구뿌논",
             "Stufful": "포곰곰",
             "Bewear": "이븐곰",
             "Comfey": "큐아링",

@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add OGPP pokemons": {
+                    "headline": "Grubbin, Shinx, Aron, and their evolutions are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "add OGPP": {
                     "headline": "Old Gold Power Plant has been added to research area list.",
                     "detail": "You can now easily simulate your pokemon's strength at Old Gold Power Plant."
@@ -530,6 +534,9 @@
             "Vigoroth": "Vigoroth",
             "Slaking": "Slaking",
             "Sableye": "Sableye",
+            "Aron": "Aron",
+            "Lairon": "Lairon",
+            "Aggron": "Aggron",
             "Gulpin": "Gulpin",
             "Swalot": "Swalot",
             "Swablu": "Swablu",
@@ -541,6 +548,9 @@
             "Spheal": "Spheal",
             "Sealeo": "Sealeo",
             "Walrein": "Walrein",
+            "Shinx": "Shinx",
+            "Luxio": "Luxio",
+            "Luxray": "Luxray",
             "Bonsly": "Bonsly",
             "Mime Jr.": "Mime Jr.",
             "Riolu": "Riolu",
@@ -556,6 +566,9 @@
             "Gallade": "Gallade",
             "Sylveon": "Sylveon",
             "Dedenne": "Dedenne",
+            "Grubbin": "Grubbin",
+            "Charjabug": "Charjabug",
+            "Vikavolt": "Vikavolt",
             "Stufful": "Stufful",
             "Bewear": "Bewear",
             "Comfey": "Comfey",

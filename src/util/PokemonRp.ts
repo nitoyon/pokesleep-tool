@@ -21,6 +21,7 @@ export const ingredientStrength: {[ing in IngredientName]: number} = {
     "tail": 342,
     "soy": 100,
     "corn": 140,
+    "coffee": 153,
     "unknown": 0,
     "unknown1": 0,
     "unknown2": 0,
