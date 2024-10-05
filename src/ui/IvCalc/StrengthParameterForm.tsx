@@ -218,17 +218,18 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             </section>
         </Collapse>
         <section className="mt">
-            <label>{t('recipe range (the number of ingredients)')}:</label>
+            <label>{t('recipe bonus')}:</label>
             <FormControl size="small">
             <Select variant="standard" value={value.recipeBonus.toString()}
                 onChange={onRecipeBonusChange}>
-                <MenuItem value={0}>{t('mixed recipe')}</MenuItem>
-                <MenuItem value={6}>7{t('range separator')}9 {t('ingredients unit')}</MenuItem>
-                <MenuItem value={11}>14{t('range separator')}16 {t('ingredients unit')}</MenuItem>
-                <MenuItem value={17}>22{t('range separator')}26 {t('ingredients unit')}</MenuItem>
-                <MenuItem value={25}>30{t('range separator')}38 {t('ingredients unit')}</MenuItem>
-                <MenuItem value={35}>53{t('range separator')}55 {t('ingredients unit')}</MenuItem>
-                <MenuItem value={48}>62{t('range separator')}77 {t('ingredients unit')}</MenuItem>
+                <MenuItem value={0}>0% <small style={{paddingLeft: '0.3rem'}}>({t('mixed recipe')})</small></MenuItem>
+                <MenuItem value={19}>19% <small style={{paddingLeft: '0.3rem'}}>(7{t('range separator')}16 {t('ingredients unit')})</small></MenuItem>
+                <MenuItem value={20}>20%</MenuItem>
+                <MenuItem value={21}>21% <small style={{paddingLeft: '0.3rem'}}>(22{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
+                <MenuItem value={25}>25% <small style={{paddingLeft: '0.3rem'}}>(30{t('range separator')}38 {t('ingredients unit')})</small></MenuItem>
+                <MenuItem value={35}>35% <small style={{paddingLeft: '0.3rem'}}>(53{t('range separator')}56 {t('ingredients unit')})</small></MenuItem>
+                <MenuItem value={48}>48% <small style={{paddingLeft: '0.3rem'}}>(62{t('range separator')}77 {t('ingredients unit')})</small></MenuItem>
+                <MenuItem value={61}>61% <small style={{paddingLeft: '0.3rem'}}>(87{t('range separator')}100 {t('ingredients unit')})</small></MenuItem>
             </Select></FormControl>
         </section>
         <section>
@@ -242,6 +243,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={40}>40</MenuItem>
                 <MenuItem value={50}>50</MenuItem>
                 <MenuItem value={55}>55</MenuItem>
+                <MenuItem value={60}>60</MenuItem>
             </Select>
         </section>
     </StyledSettingForm>;

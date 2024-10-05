@@ -42,9 +42,9 @@ export interface StrengthParameter extends EnergyParameter {
     recipeBonus: number;
 
     /**
-     * Average recipe level (1 - 55).
+     * Average recipe level (1 - 60).
      */
-    recipeLevel: 1|10|20|30|40|50|55;
+    recipeLevel: 1|10|20|30|40|50|55|60;
 }
 
 /**
@@ -104,6 +104,7 @@ const recipeLevelBonus = {
     40: 96,
     50: 142,
     55: 171,
+    60: 203,
 };
 
 /**
@@ -441,11 +442,13 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.tapFrequencyAsleep = json.tapFrequencyAsleep;
     }
     if (typeof(json.recipeBonus) === "number" &&
-        [0, 6, 11, 17, 25, 35, 48].includes(json.recipeBonus)) {
+        [0, 6, 11, 17, 19, 20, 25, 35, 48, 61].includes(json.recipeBonus)) {
+        if (json.recipeBonus === 6 || json.recipeBonus === 11) { json.recipeBonus = 19; }
+        if (json.recipeBonus === 17) { json.recipeBonus = 21; }
         ret.recipeBonus = json.recipeBonus;
     }
     if (typeof(json.recipeLevel) === "number" &&
-        [1, 10, 20, 30, 40, 50, 55].includes(json.recipeLevel)) {
+        [1, 10, 20, 30, 40, 50, 55, 60].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
     }
     return ret;
