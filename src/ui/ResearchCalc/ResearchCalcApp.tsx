@@ -28,8 +28,8 @@ export default function ResearchCalcApp() {
         if (value.secondSleep !== undefined) {
             setSecondSleep(value.secondSleep);
         }
-        saveConfig({...config, ...value});
-    }, []);
+        saveConfig({fieldIndex, strength, bonus, secondSleep, ...value});
+    }, [fieldIndex, strength, bonus, secondSleep]);
 
     const onChange = useCallback((value: Partial<InputAreaData>) => {
         updateState(value);
