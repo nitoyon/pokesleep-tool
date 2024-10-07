@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { InputArea, InputAreaData } from './InputArea';
-import NotFixedWarning from './NotFixedWarning';
 import GeneralPanel from './GeneralPanel';
 import fields from '../../data/fields';
 
@@ -39,7 +38,6 @@ export default function ResearchCalcApp() {
     return (
         <div className="content">
             <InputArea data={data} onChange={onChange}/>
-            <NotFixedWarning fieldIndex={data.fieldIndex}/>
             <GeneralPanel data={data}/>
         </div>
     );
