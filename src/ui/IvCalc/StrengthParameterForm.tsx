@@ -234,7 +234,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 onChange={onRecipeBonusChange}>
                 <MenuItem value={0}>0% <small style={{paddingLeft: '0.3rem'}}>({t('mixed recipe')})</small></MenuItem>
                 <MenuItem value={19}>19% <small style={{paddingLeft: '0.3rem'}}>(7{t('range separator')}16 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={20}>20%</MenuItem>
+                <MenuItem value={20}>20% <small style={{paddingLeft: '0.3rem'}}>(22{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
                 <MenuItem value={21}>21% <small style={{paddingLeft: '0.3rem'}}>(22{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
                 <MenuItem value={25}>25% <small style={{paddingLeft: '0.3rem'}}>(30{t('range separator')}38 {t('ingredients unit')})</small></MenuItem>
                 <MenuItem value={35}>35% <small style={{paddingLeft: '0.3rem'}}>(53{t('range separator')}56 {t('ingredients unit')})</small></MenuItem>
