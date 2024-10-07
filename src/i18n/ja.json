@@ -206,6 +206,9 @@
         "event name": "スイクン イベント",
         "1st week": "1週目",
         "2nd week": "2週目",
+        "recipe bonus help": "よく作る料理のレシピボーナスを指定してください。基本的には、料理のレシピボーナスは食材数によって変わりますが、一部のレシピは食材数よりも多いボーナス値となっています。詳しいボーナス値は <raenonx>レシピ一覧 (RaenonX)</raenonx> をご覧ください。",
+        "recipe strength help": "この設定値は、食材をエナジー量に換算するために利用します。エナジー換算時には、食材の 8 割がレシピに利用されて、2 割が余剰食材として利用されるものと仮定して計算します。",
+        "recipe bonus list": "https://pks.raenonx.cc/ja/meal",
 
         "sleep score": "睡眠スコア",
         "help efficiency": "おてつだい効率",
