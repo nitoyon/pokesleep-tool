@@ -1,13 +1,15 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, FormControl, MenuItem, Select, SelectChangeEvent, Switch
+import { Button, Collapse, Dialog, DialogActions, DialogContent, FormControl, MenuItem,
+    Select, SelectChangeEvent, Switch, Typography
 } from '@mui/material';
 import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
+import InfoButton from './InfoButton';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { StrengthParameter } from '../../util/PokemonStrength';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 type PeriodType = "1day"|"1week"|"whistle";
 
@@ -43,6 +45,14 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
+    const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
+
+    const onRecipeBonusInfoClick = React.useCallback(() => {
+        setRecipeBonusHelpOpen(true);
+    }, []);
+    const onRecipeBonusHelpClose = React.useCallback(() => {
+        setRecipeBonusHelpOpen(false);
+    }, []);
 
     const onChange = React.useCallback((value: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: {parameter: value}});
@@ -218,7 +228,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             </section>
         </Collapse>
         <section className="mt">
-            <label>{t('recipe bonus')}:</label>
+            <label>{t('recipe bonus')}:<InfoButton onClick={onRecipeBonusInfoClick}/></label>
             <FormControl size="small">
             <Select variant="standard" value={value.recipeBonus.toString()}
                 onChange={onRecipeBonusChange}>
@@ -246,7 +256,30 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={60}>60</MenuItem>
             </Select>
         </section>
+        <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
     </StyledSettingForm>;
+});
+
+const RecipeBonusHelpDialog = React.memo(({open, onClose}: {
+    open: boolean,
+    onClose: () => void,
+}) => {
+    const { t } = useTranslation();
+
+    return <Dialog open={open} onClose={onClose}>
+        <DialogContent>
+            <Typography paragraph>
+                <Trans i18nKey="recipe bonus help"
+                    components={{
+                        raenonx: <a href={t('recipe bonus list')}>raenonx</a>,
+                    }}/>
+            </Typography>
+            <Typography variant="body2">{t('recipe strength help')}</Typography>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </Dialog>;
 });
 
 export default StrengthSettingForm;
