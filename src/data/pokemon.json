@@ -2942,7 +2942,7 @@
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 18,
+        "carryLimit": 16,
         "ing1": {
             "name": "herb",
             "c1": 1,
