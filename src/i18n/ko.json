@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add drifloon and drifblim": {
+                    "headline": "흔들풍손와 둥실라이드의 데이터를 추가했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다.\n힘의 양은 매번 발산된다고 가정하여 계산됩니다."
+                },
                 "add OGPP pokemons": {
                     "headline": "턱지충이, 꼬링크, 가보리와 그 진화형가 추가되었습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
