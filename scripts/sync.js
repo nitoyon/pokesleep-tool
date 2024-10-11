@@ -49,6 +49,7 @@ const skills = {
     "げんきチャージS": "Charge Energy S",
     "エナジーチャージS(ランダム)": "Charge Strength S (Random)",
     "エナジーチャージS(固定)": "Charge Strength S",
+    "たくわえる(エナジーチャージS)": "Charge Strength S (Stockpile)",
     "エナジーチャージS": "Charge Strength S",
     "エナジーチャージM": "Charge Strength M",
     "ゆめのかけらゲットS(ランダム)": "Dream Shard Magnet S (Random)",
