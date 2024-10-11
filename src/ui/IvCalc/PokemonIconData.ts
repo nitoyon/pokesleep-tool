@@ -684,6 +684,23 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.3, y: 0.38, w: 0.15, h: 0.1, r: 0.1, color: '#fc6575'},
         {x: 0.78, y: 0.7, w: 0.2, h: 0.2, r: 0.2, color: '#ffea63'},
     ],
+    // Drifloon
+    '425': [
+        {x: 0.35, y: 0.4, w: 0.05, h: 0.6, color: '#999999'},
+        {x: 0.6, y: 0.4, w: 0.05, h: 0.6, color: '#999999'},
+        {x: 0.15, y: 0.05, w: 0.7, h: 0.7, r: 0.5, color: '#d3bceb'},
+        {x: 0.2, y: 0.93, w: 0.6, h: 0.1, color: '#fff769'},
+        {x: 0.4, y: 0.4, w: 0.2, h: 0.2, r: 0.2, color: '#fff769'},
+        {x: 0.25, y: 0.05, w: 0.5, h: 0.2, r: 0.4, color: '#ffffff'},
+    ],
+    // Drifblim
+    '426': [
+        {x: 0.2, y: 0.4, w: 0.6, h: 0.45, color: '#e6dced'},
+        {x: 0.18, y: 0.85, w: 0.64, h: 0.2, color: '#fff768'},
+        {x: 0.1, y: 0, w: 0.8, h: 0.8, r: 0.5, color: '#8b7caa'},
+        {x: 0.35, y: -0.05, w: 0.3, h: 0.2, r: 0.4, color: '#ffffff'},
+        {x: 0.4, y: 0.4, w: 0.2, h: 0.2, r: 0.2, color: '#fff56a'},
+    ],
     // Bonsly
     '438': [
         {x: 0, y: 0, w: 1, h: 1, color: '#c1907a'},
