@@ -351,6 +351,9 @@ class PokemonRp {
             this._pokemon.skill === "Charge Energy S") {
             return [400, 569, 785, 1083, 1496, 2066, 2656][this.skillLevel - 1];
         }
+        if (this._pokemon.skill === "Charge Strength S (Stockpile)") {
+            return [600, 853, 1177, 1625, 2243, 3099, 3984][this.skillLevel - 1];
+        }
         if (this._pokemon.skill === "Energy for Everyone S") {
             return [1120, 1593, 2197, 3033, 4187, 5785][this.skillLevel - 1];
         }
