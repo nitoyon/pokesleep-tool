@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add drifloon and drifblim": {
+                    "headline": "Drifloon and Drifblim are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values.\nThe strength amount is calculated based on the assumption that it spits up every time."
+                },
                 "add OGPP pokemons": {
                     "headline": "Grubbin, Shinx, Aron, and their evolutions are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -317,6 +321,7 @@
             "Charge Energy S": "Charge Energy S",
             "Charge Strength S": "Charge Strength S",
             "Charge Strength S (Random)": "Charge Strength S (Random)",
+            "Charge Strength S (Stockpile)": "Stockpile (Charge Strength S)",
             "Charge Strength M": "Charge Strength M",
             "Dream Shard Magnet S": "Dream Shard Magnet S",
             "Dream Shard Magnet S (Random)": "Dream Shard Magnet S (Random)",
@@ -554,6 +559,8 @@
             "Shinx": "Shinx",
             "Luxio": "Luxio",
             "Luxray": "Luxray",
+            "Drifloon": "Drifloon",
+            "Drifblim": "Drifblim",
             "Bonsly": "Bonsly",
             "Mime Jr.": "Mime Jr.",
             "Riolu": "Riolu",

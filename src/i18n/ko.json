@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add drifloon and drifblim": {
+                    "headline": "흔들풍손와 둥실라이드의 데이터를 추가했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다.\n힘의 양은 매번 발산된다고 가정하여 계산됩니다."
+                },
                 "add OGPP pokemons": {
                     "headline": "턱지충이, 꼬링크, 가보리와 그 진화형가 추가되었습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
@@ -306,6 +310,7 @@
             "Charge Energy S": "기력 차지S",
             "Charge Strength S": "에너지 차지S",
             "Charge Strength S (Random)": "에너지 차지S (랜덤)",
+            "Charge Strength S (Stockpile)": "비축하기 (에너지 차지S)",
             "Charge Strength M": "에너지 차지M",
             "Dream Shard Magnet S": "꿈의조각 획득S",
             "Dream Shard Magnet S (Random)": "꿈의조각 획득S (랜덤)",
@@ -543,6 +548,8 @@
             "Shinx": "꼬링크",
             "Luxio": "럭시오",
             "Luxray": "렌트라",
+            "Drifloon": "흔들풍손",
+            "Drifblim": "둥실라이드",
             "Bonsly": "꼬지지",
             "Mime Jr.": "흉내내",
             "Riolu": "리오르",

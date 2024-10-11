@@ -3,6 +3,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Charge Energy S" |
     "Charge Strength S" |
     "Charge Strength S (Random)" |
+    "Charge Strength S (Stockpile)" |
     "Charge Strength M" |
     "Dream Shard Magnet S" |
     "Dream Shard Magnet S (Random)" |
@@ -28,6 +29,7 @@ export function isSkillLevelMax7(skill: MainSkillName): boolean {
         skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
         skill === "Charge Strength S (Random)" ||
+        skill === "Charge Strength S (Stockpile)" ||
         skill === "Extra Helpful S" ||
         skill === "Cooking Power-Up S" ||
         skill === "Dream Shard Magnet S" ||
@@ -57,6 +59,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     }
     if (skill === "Charge Strength S") {
         return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1];
+    }
+    if (skill === "Charge Strength S (Stockpile)") {
+        return [600, 853, 1177, 1625, 2243, 3099, 4502][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
         return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1] * 1.25;
