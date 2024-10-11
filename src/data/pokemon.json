@@ -3920,6 +3920,70 @@
         }
     },
     {
+        "id": 425,
+        "name": "Drifloon",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Skills",
+        "skill": "Charge Strength S (Stockpile)",
+        "fp": 5,
+        "frequency": 4800,
+        "ingRatio": 13.7,
+        "skillRatio": 6.9,
+        "ancestor": 425,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "corn",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "oil",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 4
+        }
+    },
+    {
+        "id": 426,
+        "name": "Drifblim",
+        "sleepType": "dozing",
+        "type": "ghost",
+        "speciality": "Skills",
+        "skill": "Charge Strength S (Stockpile)",
+        "fp": 12,
+        "frequency": 2500,
+        "ingRatio": 12.8,
+        "skillRatio": 6.1,
+        "ancestor": 425,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "corn",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "oil",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 4
+        }
+    },
+    {
         "id": 438,
         "name": "Bonsly",
         "sleepType": "slumbering",
