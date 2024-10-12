@@ -297,6 +297,7 @@ class PokemonStrength {
             case "Charge Strength M":
             case "Charge Strength S":
             case "Charge Strength S (Random)":
+            case "Charge Strength S (Stockpile)":
                 const strength = mainSkillValue * (1 + param.fieldBonus / 100);
                 return [strength, strength];
 
