@@ -1,7 +1,8 @@
 import React from 'react';
-import { Autocomplete, TextField } from '@mui/material';
+import { styled } from '@mui/system';
+import { Autocomplete, Paper, Popper, TextField } from '@mui/material';
 
-const maxBonus = 60;
+const maxBonus = 100;
 
 const AreaBonusControl = React.memo(({value, onChange}: {
     value: number,
@@ -57,7 +58,7 @@ const AreaBonusControl = React.memo(({value, onChange}: {
     }, [onChange]);
 
     const options = ["0%", "5%", "10%", "25%", "30%", "35%", "40%", "45%",
-        "50%", "55%", "60%"];
+        "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"];
     const filterOptions = React.useCallback((x: string[]) => x, []);
 
     const valueText = isEmpty ? "" :
@@ -82,8 +83,38 @@ const AreaBonusControl = React.memo(({value, onChange}: {
                         style: {textOverflow: "clip"},
                     }}
                 />}
+                PaperComponent={StyledPopup}
+                PopperComponent={PopperComponent}
             />
     );
+});
+
+const PopperComponent = function (props: any) {
+    return (<Popper {...props} style={{width: '14rem'}} placement='bottom-end' />)
+}
+
+const StyledPopup = styled(Paper)({
+    width: '14rem',
+    '& > ul': {
+        display: 'grid',
+        gridTemplateColumns: '3.5rem 3.5rem 3.5rem 3.5rem',
+        margin: 0,
+        padding: 0,
+        '& > li.MuiAutocomplete-option': {
+            display: 'inline-block',
+            width: '3.5rem',
+            textAlign: 'center',
+            height: '3rem',
+            padding: 0,
+            verticalAlign: 'middle',
+            lineHeight: '2.8rem',
+            borderRight: '1px solid #ccc',
+            borderBottom: '1px solid #ccc',
+        },
+        '& > li.MuiAutocomplete-option:nth-of-type(4n)': {
+            borderRight: 0,
+        },
+    },
 });
 
 export default AreaBonusControl;

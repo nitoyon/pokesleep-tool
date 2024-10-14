@@ -384,7 +384,7 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.fieldBonus) === "number" &&
         Math.floor(json.fieldBonus / 5) === json.fieldBonus / 5 &&
-        json.fieldBonus >= 0 && json.fieldBonus <= 60) {
+        json.fieldBonus >= 0 && json.fieldBonus <= 100) {
         ret.fieldBonus = json.fieldBonus;
     }
     if (typeof(json.fieldIndex) === "number" &&
