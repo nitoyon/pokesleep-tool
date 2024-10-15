@@ -57,7 +57,7 @@ const AreaBonusControl = React.memo(({value, onChange}: {
         }
     }, [onChange]);
 
-    const options = ["0%", "5%", "10%", "25%", "30%", "35%", "40%", "45%",
+    const options = ["0%", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%",
         "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"];
     const filterOptions = React.useCallback((x: string[]) => x, []);
 
@@ -90,14 +90,14 @@ const AreaBonusControl = React.memo(({value, onChange}: {
 });
 
 const PopperComponent = function (props: any) {
-    return (<Popper {...props} style={{width: '14rem'}} placement='bottom-end' />)
+    return (<Popper {...props} style={{width: '17.5rem'}} placement='bottom-end' />)
 }
 
 const StyledPopup = styled(Paper)({
-    width: '14rem',
+    width: '17.5rem',
     '& > ul': {
         display: 'grid',
-        gridTemplateColumns: '3.5rem 3.5rem 3.5rem 3.5rem',
+        gridTemplateColumns: '3.5rem 3.5rem 3.5rem 3.5rem 3.5rem',
         margin: 0,
         padding: 0,
         '& > li.MuiAutocomplete-option': {
@@ -111,7 +111,7 @@ const StyledPopup = styled(Paper)({
             borderRight: '1px solid #ccc',
             borderBottom: '1px solid #ccc',
         },
-        '& > li.MuiAutocomplete-option:nth-of-type(4n)': {
+        '& > li.MuiAutocomplete-option:nth-of-type(5n)': {
             borderRight: 0,
         },
     },
