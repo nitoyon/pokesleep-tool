@@ -350,6 +350,11 @@ function getPokemon(html, name, nameJa2en) {
     if (fpMatch === null) { throw new Error(`fp not found: ${tds[1].textContent}`)}
     const fp = parseInt(fpMatch[1], 10);
 
+    // find exp type
+    const expMatch = tds[2].textContent.match(/(600|900|1080)タイプ/);
+    if (expMatch === null) { throw new Error(`exp type not found: ${tds[2].textContent}`); }
+    const exp = parseInt(expMatch[1], 10);
+
     // find ing table
     const ingTable = [...tables].find((t) => {
         return t.querySelector('th')?.textContent === "食材";
@@ -388,7 +393,7 @@ function getPokemon(html, name, nameJa2en) {
     }
 
     return {
-        id, name, sleepType, type, speciality, skill, fp, frequency,
+        id, name, sleepType, exp, type, speciality, skill, fp, frequency,
         ingRatio: 0, skillRatio: 0,
         ancestor, evolutionCount, evolutionLeft, isFullyEvolved,
         carryLimit, ing1, ing2, ing3,
