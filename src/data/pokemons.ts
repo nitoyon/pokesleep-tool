@@ -2,6 +2,15 @@ import pokemon_ from './pokemon.json';
 import {SleepType} from './fields';
 import { MainSkillName } from '../util/MainSkill';
 
+/** Required exp from level 1 to level 25
+ *
+ * * 1320: Darkrai
+ * * 1080: Raikou, Entei, Suicune
+ * * 900: Larvitar, Dratini
+ * * 600: Other Pokémon
+ */
+export type ExpType = 600|900|1080|1320;;
+
 export interface PokemonData {
     /** Pokemon ID */
     id: number;
@@ -11,6 +20,8 @@ export interface PokemonData {
     form: undefined|'Festivo'|'Holiday'|'Alola';
     /** Sleep type of the pokemon */
     sleepType: SleepType;
+    /** EXP type (600, 900, 1080, 1320) */
+    exp: ExpType;
     /** Type of the pokemon. */
     type: PokemonType;
     /** Specialty of the pokemon. */
