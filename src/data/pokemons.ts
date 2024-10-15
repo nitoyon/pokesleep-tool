@@ -2,6 +2,8 @@ import pokemon_ from './pokemon.json';
 import {SleepType} from './fields';
 import { MainSkillName } from '../util/MainSkill';
 
+export type ExpType = 600|900|1080;
+
 export interface PokemonData {
     /** Pokemon ID */
     id: number;
@@ -9,6 +11,8 @@ export interface PokemonData {
     name: string;
     /** Sleep type of the pokemon */
     sleepType: SleepType;
+    /** EXP type (600, 900, 1080) */
+    exp: ExpType;
     /** Type of the pokemon. */
     type: PokemonType;
     /** Specialty of the pokemon. */
