@@ -94,6 +94,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onGoodCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, isGoodCampTicketSet: e.target.checked});
     }, [onChange, value]);
+    const onEventChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({...value, event: e.target.checked ? "ongoing": "none"});
+    }, [onChange, value]);
     const onLevelChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, level: parseInt(e.target.value, 10) as 0|10|25|30|50|55|60|75|100})
     }, [onChange, value])
@@ -127,7 +130,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
 
     const isNotWhistle = (value.period !== 3);
     return <StyledSettingForm>
-        <section>
+        <section className="mt">
             <label>{t('period')}:</label>
             <Select variant="standard" onChange={onPeriodChange} value={value.period.toString()}>
                 <MenuItem value={24}>{t('1day')}</MenuItem>
@@ -170,6 +173,10 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
             </section>
         </Collapse>
+        <section className="mt">
+            <label>{t('event name')}:</label>
+            <Switch checked={value.event !== 'none'} onChange={onEventChange}/>
+        </section>
         <section className="mt">
             <label>{t('level')}:</label>
             <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>
