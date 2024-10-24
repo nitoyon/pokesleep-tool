@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.1.0": {
+                    "headline": "Updated the data for Houndour, Houndoom, Umbreon, and Pikachu (Halloween).",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "halloween event 2024 simmulation": {
                     "headline": "You can now simulate Halloween event.",
                     "detail": "You can now check the performance of Ghost-type Pokémon during the Halloween event in the [$t(strength2)] tab."
