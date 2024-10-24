@@ -47,6 +47,7 @@ const specialties = {
 const skills = {
     "食材ゲットS": "Ingredient Magnet S",
     "げんきチャージS": "Charge Energy S",
+    "つきのひかり(げんきチャージS)": "Charge Energy S (Moonlight)",
     "エナジーチャージS(ランダム)": "Charge Strength S (Random)",
     "エナジーチャージS(固定)": "Charge Strength S",
     "たくわえる(エナジーチャージS)": "Charge Strength S (Stockpile)",
