@@ -351,6 +351,9 @@ class PokemonRp {
             this._pokemon.skill === "Charge Energy S") {
             return [400, 569, 785, 1083, 1496, 2066, 2656][this.skillLevel - 1];
         }
+        if (this._pokemon.skill === "Charge Energy S (Moonlight)") {
+            return [560, 797, 1099, 1516, 2094, 2892][this.skillLevel - 1];
+        }
         if (this._pokemon.skill === "Charge Strength S (Stockpile)") {
             return [600, 853, 1177, 1625, 2243, 3099, 3984][this.skillLevel - 1];
         }

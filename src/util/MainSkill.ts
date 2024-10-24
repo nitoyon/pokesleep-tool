@@ -1,6 +1,7 @@
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Charge Energy S" |
+    "Charge Energy S (Moonlight)" |
     "Charge Strength S" |
     "Charge Strength S (Random)" |
     "Charge Strength S (Stockpile)" |
@@ -54,7 +55,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     if (skill === "Ingredient Magnet S") {
         return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
     }
-    if (skill === "Charge Energy S") {
+    if (skill === "Charge Energy S" ||
+        skill === "Charge Energy S (Moonlight)"
+    ) {
         return [12, 16, 21, 27, 34, 43][skillLevel - 1];
     }
     if (skill === "Charge Strength S") {
