@@ -314,6 +314,7 @@
         "skills": {
             "Ingredient Magnet S": "식재료 획득S",
             "Charge Energy S": "기력 차지S",
+            "Charge Energy S (Moonlight)": "달빛 (기력 차지S)",
             "Charge Strength S": "에너지 차지S",
             "Charge Strength S (Random)": "에너지 차지S (랜덤)",
             "Charge Strength S (Stockpile)": "비축하기 (에너지 차지S)",
@@ -448,7 +449,7 @@
             "Arbok": "아보크",
             "Pikachu": "피카츄",
             "Pikachu (Festivo)": "피카츄 (축제)",
-            "Pikachu (Halloween)": "피카츄 (할로윈)",
+            "Pikachu (Halloween)": "피카츄 (핼러윈)",
             "Raichu": "라이츄",
             "Clefairy": "삐삐",
             "Clefable": "픽시",

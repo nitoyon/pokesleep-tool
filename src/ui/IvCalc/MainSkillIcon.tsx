@@ -15,6 +15,7 @@ import SavedSearchOutlined from '@mui/icons-material/SavedSearchOutlined';
 const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
     switch (mainSkill) {
         case "Charge Energy S":
+        case "Charge Energy S (Moonlight)":
             return <svg width="20" height="20"><FavoriteBorderIcon sx={{color: "#ff88aa"}}/></svg>;
         case "Energy for Everyone S":
             return <svg width="22" height="22"><VolunteerActivismIcon sx={{color: "#ff88aa"}}/></svg>;

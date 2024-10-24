@@ -289,6 +289,7 @@ class PokemonStrength {
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
         switch (mainSkill) {
             case "Charge Energy S":
+            case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
             case "Dream Shard Magnet S":
