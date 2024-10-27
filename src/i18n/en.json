@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add mimikyu": {
+                    "headline": "Mimikyu is added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.1.0": {
                     "headline": "Updated the data for Houndour, Houndoom, Umbreon, and Pikachu (Halloween).",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -342,7 +346,8 @@
             "Extra Helpful S": "Extra Helpful S",
             "Cooking Power-Up S": "Cooking Power-Up S",
             "Tasty Chance S": "Tasty Chance S",
-            "Helper Boost": "Helper Boost"
+            "Helper Boost": "Helper Boost",
+            "Berry Burst (Disguise)": "Disguise (Berry Burst)"
         },
 
         "subskill": {
@@ -593,6 +598,7 @@
             "Stufful": "Stufful",
             "Bewear": "Bewear",
             "Comfey": "Comfey",
+            "Mimikyu": "Mimikyu",
             "Cramorant": "Cramorant",
             "Sprigatito": "Sprigatito",
             "Floragato": "Floragato",

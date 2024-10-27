@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add mimikyu": {
+                    "headline": "따라큐의 정보를 추가했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "v2.1.0": {
                     "headline": "델빌, 헬가, 블래키, 그리고 피카츄 (핼러윈)의 데이터를 업데이트했습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
@@ -331,7 +335,8 @@
             "Extra Helpful S": "도우미 서포트S",
             "Cooking Power-Up S": "요리 파워 업S",
             "Tasty Chance S": "요리 찬스S",
-            "Helper Boost": "도우미 부스트"
+            "Helper Boost": "도우미 부스트",
+            "Berry Burst (Disguise)": "탈 (나무열매 버스트)"
         },
 
         "subskill": {
@@ -582,6 +587,7 @@
             "Stufful": "포곰곰",
             "Bewear": "이븐곰",
             "Comfey": "큐아링",
+            "Mimikyu": "따라큐",
             "Cramorant": "윽우지",
             "Sprigatito": "나오하",
             "Floragato": "나로테",
