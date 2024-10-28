@@ -99,8 +99,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [4, 5, 6, 7, 8, 10][skillLevel - 1];
     }
     if (skill === "Berry Burst (Disguise)") {
-        // TODO
-        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+        return [8, 10, 15, 17, 19, 21][skillLevel - 1];
     }
     if (skill === "Metronome") {
         // TODO
