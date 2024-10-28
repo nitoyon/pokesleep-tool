@@ -257,7 +257,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param, isEventBoosted);
+                param, berryStrength, isEventBoosted);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -270,8 +270,18 @@ class PokemonStrength {
         };
     }
 
+    /**
+     * Get skill value and skill strength.
+     * @param skillCount Skill count.
+     * @param param Strength paramter.
+     * @param berryStrength Strength per berry.
+     * @param isEventBoosted Whether boosted by the event.
+     * @returns [skillValue, skillStrength].
+     * If skill is 'Dream Shard Magnet S', `skillValue` is the number of Dream Shards.
+     * `skillStrength` is the strength got by the skill.
+     */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        isEventBoosted: boolean
+        berryStrength: number, isEventBoosted: boolean
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
@@ -287,6 +297,7 @@ class PokemonStrength {
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
+        const strengthPerBerry = 100;
         switch (mainSkill) {
             case "Charge Energy S":
             case "Charge Energy S (Moonlight)":
@@ -308,6 +319,14 @@ class PokemonStrength {
 
             case "Helper Boost":
                 return [mainSkillValue, mainSkillValue * strengthPerHelp * 5];
+
+            case "Berry Burst (Disguise)":
+                const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
+                const strengthBurst =  (1 + param.fieldBonus / 100) * (
+                    mainSkillValue * berryStrength * (this.isFavoriteBerry(param) ? 2 : 1) +
+                    4 * strengthPerBerry * extra
+                );
+                return [strengthBurst, strengthBurst];
 
             case "Ingredient Magnet S":
             case "Cooking Power-Up S":

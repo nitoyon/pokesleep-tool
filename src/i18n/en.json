@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add mimikyu": {
+                    "headline": "Mimikyu is added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.1.0": {
                     "headline": "Updated the data for Houndour, Houndoom, Umbreon, and Pikachu (Halloween).",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -293,7 +297,8 @@
             "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
             "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
-            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses)."
+            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
+            "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses)."
         },
 
         "rate subskill and nature": "Rate subskills and nature",
@@ -342,7 +347,9 @@
             "Extra Helpful S": "Extra Helpful S",
             "Cooking Power-Up S": "Cooking Power-Up S",
             "Tasty Chance S": "Tasty Chance S",
-            "Helper Boost": "Helper Boost"
+            "Helper Boost": "Helper Boost",
+            "Berry Burst": "Berry Burst",
+            "Berry Burst (Disguise)": "Disguise (Berry Burst)"
         },
 
         "subskill": {
@@ -593,6 +600,7 @@
             "Stufful": "Stufful",
             "Bewear": "Bewear",
             "Comfey": "Comfey",
+            "Mimikyu": "Mimikyu",
             "Cramorant": "Cramorant",
             "Sprigatito": "Sprigatito",
             "Floragato": "Floragato",

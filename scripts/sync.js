@@ -65,6 +65,7 @@ const skills = {
     "おてつだいブースト(でんき)": "Helper Boost",
     "おてつだいブースト(ほのお)": "Helper Boost",
     "おてつだいブースト(みず)": "Helper Boost",
+    "ばけのかわ(きのみバースト)": "Berry Burst (Disguise)",
 };
 const ingredients = {
     "ふといながねぎ": "leek",
