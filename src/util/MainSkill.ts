@@ -14,7 +14,9 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Extra Helpful S" |
     "Cooking Power-Up S" |
     "Tasty Chance S" |
-    "Helper Boost";
+    "Helper Boost" |
+    "Berry Burst" |
+    "Berry Burst (Disguise)";
 
 export const MainSkillNames: MainSkillName[] = [
     "Charge Strength S", "Charge Strength M",
@@ -23,6 +25,7 @@ export const MainSkillNames: MainSkillName[] = [
     "Cooking Power-Up S", "Tasty Chance S",
     "Extra Helpful S", "Helper Boost",
     "Dream Shard Magnet S", "Metronome",
+    "Berry Burst"
 ];
 
 export function isSkillLevelMax7(skill: MainSkillName): boolean {
@@ -96,6 +99,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     }
     if (skill === "Tasty Chance S") {
         return [4, 5, 6, 7, 8, 10][skillLevel - 1];
+    }
+    if (skill === "Berry Burst (Disguise)") {
+        return [8, 10, 15, 17, 19, 21][skillLevel - 1];
     }
     if (skill === "Metronome") {
         // TODO
