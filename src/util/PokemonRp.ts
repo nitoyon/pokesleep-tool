@@ -364,7 +364,7 @@ class PokemonRp {
             return [2800, 3902, 5273, 6975, 9317, 12438][this.skillLevel - 1];
         }
         if (this._pokemon.skill === "Berry Burst (Disguise)") {
-            return [2800, 3902, 5273, 6975, 9317, 12438][this.skillLevel - 1];
+            return [1400, 1991, 2747, 3791, 5234, 7232][this.skillLevel - 1];
         }
         return [880, 1251, 1726, 2383, 3290, 4546, 5843][this.skillLevel - 1];
     }

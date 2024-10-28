@@ -25,6 +25,7 @@ const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
         case "Charge Strength S":
         case "Charge Strength S (Random)":
         case "Charge Strength S (Stockpile)":
+        case "Berry Burst (Disguise)":
             return <svg width="24" height="24"><LocalFireDepartmentIcon sx={{color: "#ff944b"}}/></svg>;
         case "Dream Shard Magnet S":
         case "Dream Shard Magnet S (Random)":
