@@ -115,7 +115,7 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
             url += 'iv/';
         }
         if (language !== "en") {
-            url += `index.${language}.html`;
+            url += `index.${language.toLowerCase()}.html`;
         }
         const query = document.location.search + document.location.hash;
         window.history.replaceState(null, '', url + query);
