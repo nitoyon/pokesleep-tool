@@ -25,6 +25,8 @@ const theme = createTheme({
         language = "ja";
     } else if (window.navigator.language.match(/ko/) !== null) {
         language = "ko";
+    } else if (window.navigator.language.match(/^zh/) !== null) {
+        language = "zh-CN";
     }
     const config = loadConfig(language);
     config.pwacnt++;

@@ -3,8 +3,9 @@ import { initReactI18next } from "react-i18next";
 import en from './i18n/en.json';
 import ja from './i18n/ja.json';
 import ko from './i18n/ko.json';
+import zhcn from './i18n/zh-CN.json';
 
-const resources = {en,ja,ko};
+const resources = {en,ja,ko, 'zh-CN': zhcn};
 
 i18n
     .use(initReactI18next) // passes i18n down to react-i18next
