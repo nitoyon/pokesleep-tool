@@ -3,36 +3,36 @@
         "ResearchCalc": {
             "title": "研究数计算器 for Pokémon Sleep",
             "short title": "研究数计算器",
-            "description": "使用方法非常简单！只需要输入地图和总能量就可以知道每种睡眠分数出现的宝可梦数量。",
-            "notice detail1": "不要忘记修改好睡眠日期间的 [$t(bonus)] の奖励倍数。",
-            "notice detail2": "勾选 [$t(sleep twice)] 就可以知道、分次睡眠时可以遇到的宝可梦数量的总和。"
+            "description": "使用方法非常简单！只需要输入营地和总能量就可以知道各种睡眠分数时出现的宝可梦数量。",
+            "notice detail1": "不要忘记修改好睡眠日期间的 [$t(bonus)] 的倍数。",
+            "notice detail2": "勾选 [$t(sleep twice)] 就可以知道分次睡眠时可以遇到的宝可梦数量的总和。"
         },
         "IvCalc": {
             "title": "个体值计算器 for Pokémon Sleep",
             "short title": "个体值计算器",
-            "description": "使用方法非常简单！只需要输入宝可梦的等级和技能，就可以知道宝可梦的SP，获得的能量和力量。",
+            "description": "使用方法非常简单！只需要输入宝可梦的等级和技能，就可以知道宝可梦的SP，可以获得的能量和能力。",
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
                 "add mimikyu": {
                     "headline": "更新了谜拟丘的数据。",
-                    "detail": "食材获得几率、技能几率参照了 RP Collection 的数据。"
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
                 },
                 "v2.1.0": {
                     "headline": "更新了戴鲁比、黑鲁加、月亮伊布、皮卡丘 (万圣节)的数据。",
-                    "detail": "食材获得几率、技能几率参照了 RP Collection 的数据。"
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
                 },
                 "halloween event 2024 simmulation": {
                     "headline": "现在可以计算万圣节活动。",
-                    "detail": "在 [$t(strength2)] 标签的计算里，可以确认万圣节活动中幽灵系宝可梦的性能。"
+                    "detail": "在 [$t(strength2)] 标签的计算里，可以确认万圣节活动中幽灵属性宝可梦的能力。"
                 },
                 "add drifloon and drifblim": {
                     "headline": "更新了飘飘球，随风球的数据。",
-                    "detail": "食材获得几率、技能几率参照了 RP Collection 的数据。\n能量是基于一次都没有蓄力的前提下进行计算。"
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。\n能量是基于一次都没有蓄力的前提下进行计算。"
                 },
                 "add OGPP pokemons": {
                     "headline": "更新了强颚鸡母虫，小猫怪，可可多拉及进化型的数据。",
-                    "detail": "食材获得几率、技能几率参照了 RP Collection 的数据。"
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
                 },
                 "add OGPP": {
                     "headline": "更新了黄金旧发电厂到地图一览。",
@@ -40,11 +40,11 @@
                 },
                 "add suicune": {
                     "headline": "更新了水君的数据。",
-                    "detail": "食材获得几率、技能几率参照了 RP Collection 的数据。"
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
                 },
                 "add wooper and quagsire": {
                     "headline": "更新了乌波，沼王的数据。",
-                    "detail": "食材获得几率、技能几率参照了 RP Collection 的数据。"
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
                 },
                 "box filter and sort improvement": {
                     "headline": "大幅升级了盒子的筛选和排序功能。",
@@ -52,7 +52,7 @@
                 },
                 "suicune event simmulation": {
                     "headline": "现在可以计算水君活动。",
-                    "detail": "在 [$t(strength2)] 标签的计算里、可以确认水君活动中水系宝可梦的性能。"
+                    "detail": "在 [$t(strength2)] 标签的计算里、可以确认水君活动中水属性宝可梦的能力。"
                 },
                 "evolution count and ribbon": {
                     "headline": "现在可以确认睡饱饱奖章和进化次数带来的影响。",
@@ -60,7 +60,7 @@
                 },
                 "bank main skill": {
                     "headline": "现在可以计算主技能的积存几率。",
-                    "detail": "在[能量] 标签和 [第二天早上技能] 标签里，可以显示发动2级技能的几率(只适用于技能类型宝可梦)。积存的次数也反映在技能发动次数的计算中。\n同时、在设定项目中追加了 [点击频率 (睡眠中)] 。可以确认夜间不发生「不知不觉中长大」时的能力。"
+                    "detail": "在[能量] 标签和 [第二天早上技能] 标签里，可以显示发动2次技能的几率(只适用于技能类型宝可梦)。积存的次数也反映在技能发动次数的计算中。\n同时、在设定项目中追加了 [点击频率 (睡眠中)] 。可以确认夜间不发生「不知不觉中长大」时的能力。"
                 },
                 "add paldea starter": {
                     "headline": "更新了新叶喵、呆火鳄、润水鸭及进化型的数据。",
@@ -88,9 +88,9 @@
         "settings": "设定",
 
         "change language": "切换语言",
-        "custom icon": "自定义图标",
+        "custom icon": "自定义 图标",
         "custom icon summary": "可以变更宝可梦的图标。",
-        "custom icon placeholder": "自定义图标的 URL",
+        "custom icon placeholder": "自定义 图标的 URL",
         "custom icon details": "通过 @ID1@ ～ @ID4@ 指定图鉴编号。例如，图鉴编号为1的时候，@ID3@.png 会被 001.png 替代。",
         "custom icon details japanese only": "",
         "custom icon invalid url": "必须以 http:// 或 https:// 开头。",
@@ -109,7 +109,7 @@
         "share": "分享",
 
         "details": "详情",
-        "research area": "地图",
+        "research area": "营地",
         "strength": "总能量",
         "bonus": "睡眠奖励",
         "bonus not match": "今天的睡眠奖励为 {{bonus}} 。",
@@ -127,15 +127,15 @@
         "total n pokemon": "合计<n/>只",
         "range separator": "～",
         "hhmm": "{{h}}小时{{m}}分",
-        "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}分{{s}}每秒",
+        "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}分{{s}}秒每次",
         "hour2_zero": "",
         "hour2_other": "{{count}}小时",
         "strength too low": "需要 <strength/> 能量。",
         "strength too much": "能量过多。",
-        "next strength to get 1 more pokemon": "第2次睡眠之前获取 <strength2/> 能量的花、可以在第2次睡眠时调查 <count2/> 只宝可梦 (※第1次睡眠时的睡眠分数为 <score1/> 的时候)。",
+        "next strength to get 1 more pokemon": "第2次睡眠之前获取 <strength2/> 能量的话、可以在第2次研究时遇到 <count2/> 只宝可梦 (※第1次的睡眠分数为 <score1/> 时)。",
         "border is not fixed": "分数线尚未确定。可能会在低于显示的分数或能量出现所指定数量的宝可梦。",
 
-        "dozing": "浅浅入眠梦型",
+        "dozing": "浅浅入梦型",
         "snoozing": "安然入睡型",
         "slumbering": "深深入眠型",
 
@@ -148,30 +148,30 @@
         "how to add to home screen": "添加到主屏幕的方法",
         "open in safari": "在 <safari/> Safari 打开本页面。",
         "copy url": "复制 URL",
-        "push share icon": "点击 Safari 下方的 <share/> 。(如果找不到它，请尝试关闭此弹出窗口并向上滑动。)",
-        "select add to home screen": "在菜单里选择 [<add/> 添加到主屏幕] 。",
+        "push share icon": "点击 Safari 下方的 <share/> 。(如果找不到，请尝试关闭此弹出窗口并向上滑动)",
+        "select add to home screen": "在菜单里选择 [添加到主屏幕 <add/>] 。",
         "copied": "已复制到剪贴板。",
 
         "rp": "SP",
         "strength2": "能量",
         "rating": "个体评价",
 
-        "helps per 5 hours": "5小时的帮手次数",
+        "helps per 5 hours": "5小时的帮助次数",
         "berry rate": "树果几率",
-        "berry strength": "树果能量 (能量值由树果的种类和宝可梦的等级决定)",
-        "berry count": "帮手1次获得树果的数量",
+        "berry strength": "树果能量 (由树果种类和宝可梦的等级决定)",
+        "berry count": "帮忙1次获得树果的数量",
         "bonus factor": "奖励修正值 (性格修正 <nature/> × 副技能修正 <subskill/>)",
         "ingredient rate": "食材几率",
-        "ingredient strength": "食材能量 (1次食材帮手的平均能量）",
+        "ingredient strength": "食材能量 (食材帮忙1次的平均能量）",
         "ingredient factor": "食材修正值 (由宝可梦的等级决定)",
         "skill rate": "技能几率",
-        "skill strength": "技能能量 (由主技能的种类和技能等级决定)",
-        "rp formula": "SP 的计算式使用的是 Mathcode 的 Goobliss, Harold, Jeancory 研究成果。关于计算式的详情、请浏览ポケスリ攻略の <link/> 。",
-        "rp formula doc url": "https://pks.raenonx.cc/zh/docs/view/help/rp-model",
+        "skill strength": "技能 能量 (由主技能的种类和技能等级决定)",
+        "rp formula": "SP 的计算式使用的是 Mathcode 的 Goobliss, Harold, Jeancory 研究成果。关于计算式的详情、请浏览ポケスリ攻略的 <link/> 。",
+        "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "SP计算模型的解说",
-        "rp estimate": "等级 {{level}} 之后为推测值。",
+        "rp estimate": " {{level}} 级之后的SP为推测值。",
         "estimated value": "推测值",
-        "ratio is not fixed": "该宝可梦的食物几率和技能几率尚未确定，因此显示的是临时值。",
+        "ratio is not fixed": "该宝可梦的食材几率和技能几率尚未确定，因此显示的是临时值。",
 
         "box": "盒子",
         "parameter": "参数",
@@ -180,10 +180,10 @@
         "import": "导入",
         "pokemon in the box is edited": "盒子里的宝可梦已被修改。如需反映到盒子中请保存。",
         "box is full": "盒子已经满了。请整理。",
-        "box is empty": "宝可梦稍微被添加。",
+        "box is empty": "尚未添加任何宝可梦。",
         "no pokemon found": "未找到符合条件的宝可梦。",
         "no ingredient": "当前设置为不获取食材。",
-        "no skill": "当前设置为不发生技能。",
+        "no skill": "当前设置为不发动技能。",
 
         "export message1": "盒子里的宝可梦信息被保存在浏览器上，因此不会被同步到其他环境。",
         "export message2": "要将盒子中的宝可梦转移到另一个环境，请在目标环境中导入以下数据。",
@@ -204,9 +204,9 @@
         "1week": "1周",
         "whistle": "帮手哨子",
         "current level": "现在的等级",
-        "calc with evolved": "进化后的宝可梦进行计算",
+        "calc with evolved": "使用进化后的宝可梦计算",
         "calc with evolved (short)": "进化",
-        "calc with max skill level": "最高技能等级进行計算",
+        "calc with max skill level": "根据最高技能等级計算",
         "calc with max skill level (short)": "最高技能等级",
         "area bonus": "营地奖励",
         "favorite berry": "喜欢的树果",
@@ -216,7 +216,7 @@
         "energy": "活力",
         "tap frequency": "点击频率",
         "every minute": "每分钟",
-        "recipe bonus": "菜单奖励",
+        "recipe bonus": "食谱奖励",
         "mixed recipe": "拌拌食谱",
         "average recipe level": "平均食谱等级",
         "event name (short)": "万圣节",
@@ -224,48 +224,48 @@
         "1st week": "第1周",
         "2nd week": "第2周",
         "ongoing": "进行中",
-        "recipe bonus help": "请指定经常做的料理的食谱奖励。基本上，烹饪的食谱奖励根据原料的数量而变化，但有些食谱的奖励值高于原料的数量。详细奖励值请参考 <raenonx>食譜一覽 (RaenonX)</raenonx> 。",
+        "recipe bonus help": "请指定经常做的料理的食谱奖励。基本上，烹饪的食谱奖励根据原料的数量而变化，但有些食谱的奖励值高于食材的数量。详细奖励值请参考 <raenonx>食谱一览 (RaenonX)</raenonx> 。",
         "recipe strength help": "该设定值用于将食材转换为能量。当转化为能量时，假定80%的食材用于食谱中，20%作为剩余食材进行计算。",
         "recipe bonus list": "https://pks.raenonx.cc/zh/meal",
 
         "sleep score": "睡眠分数",
-        "help efficiency": "帮手效率",
+        "help efficiency": "帮忙效率",
         "full inventory while sleeping (short)": "夜间持有溢出",
-        "skill trigger after wake up (short)": "第二天技能",
-        "average help efficiency": "平均帮手效率",
+        "skill trigger after wake up (short)": "第二天早上的技能",
+        "average help efficiency": "平均帮忙效率",
         "awake": "起床中",
         "awake (full inventory)": "起床中 (持有溢出)",
         "asleep": "睡眠中",
         "asleep (full inventory)": "睡眠中 (持有溢出)",
         "full inventory while sleeping": "睡眠中持有溢出",
         "sneaky snacking": "不知不觉长大",
-        "skill trigger after wake up": "第二天早上节能几率",
+        "skill trigger after wake up": "第二天早上技能发动几率",
         "lottery count": "抽选次数",
         "always 81%+": "始终超过81%",
-        "charge energy not implemented": "目前，不考虑活力填充 S 的带来的活力回复。",
+        "charge energy not implemented": "目前不考虑活力填充 S 的带来的活力回复。",
 
         "pokemon": "宝可梦",
         "level": "等级",
-        "name": "名称",
+        "name": "名字",
         "type": "类型",
         "berry": "树果",
         "ingredient": "食材",
         "skill": "技能",
-        "frequency": "帮手间隔",
+        "frequency": "帮忙间隔",
         "carry limit": "持有上限",
         "Main Skill & Sub Skills": "主技能・副技能",
         "additional stats": "能力详情",
         "sleeping time shared": "一起睡觉的时间",
-        "help count": "帮手次数",
-        "time to full inventory": "到所持溢出的时间",
+        "help count": "帮忙次数",
+        "time to full inventory": "到持有溢出的时间",
         "value": "显示值",
         "help count per hour": "1小时 {{n}} 次",
         "probability": "几率",
         "times unit": "次",
         "ingredients unit": "食材",
 
-        "evolved once": "1次进化",
-        "evolved twice": "2次进化",
+        "evolved once": "进化1次",
+        "evolved twice": "进化2次",
         "not evolved": "直接捕获",
 
         "200 hours-": "200小时以下",
@@ -285,11 +285,11 @@
             "Energizing Cheer S": "显示为活力回复量的总和。技能的效果没有换算成合计能量值。",
             "Metronome": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。",
             "Energy for Everyone S": "显示为每只的回复量。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
-            "Extra Helpful S": "显示为技能发动带来的 [帮手次数] 。总能量按照、1次帮手 300 (不含场地奖励) 进行预估。",
+            "Extra Helpful S": "显示为技能发动带来的 [帮助次数] 。总能量按照1次帮助 300 能量 (不含营地奖励) 进行预估。",
             "Cooking Power-Up S": "显示为锅容量的增加量。技能的效果没有换算成合计能量值。",
             "Tasty Chance S": "显示为漂亮成功的几率増加百分比。技能的效果没有换算成合计能量值。",
-            "Helper Boost": "显示为1只宝可梦的帮手次数 (有3只同类型宝可梦的情况) 。总能量按照、1次帮手 300 (不含场地奖励) 进行预估。",
-            "Berry Burst (Disguise)": "假设不会发生漂亮成功。其他的宝可梦获取的每个树果按照 100 能量 (不含场地奖励) 进行预估。"
+            "Helper Boost": "显示为1只宝可梦的帮手次数 (有 3 只同类型宝可梦的情况) 。总能量按照1次帮助 300 (不含营地奖励) 进行预估。",
+            "Berry Burst (Disguise)": "假设不会发生漂亮成功。其他的宝可梦获取的每个树果按照 100 能量 (不含营地奖励) 进行预估。"
         },
 
         "rate subskill and nature": "副技能・性格的评估值",
@@ -303,24 +303,24 @@
         "non-evolve": "不进化",
         "final-evoltion": "最终进化",
         "ing-a": "A 食材 (Lv 30 之前)",
-        "ing-b": "B 食材 (在Lv 30 开放)",
-        "ing-c": "C 食材 (在Lv 60 开放)",
+        "ing-b": "B 食材 (在Lv 30 解锁)",
+        "ing-c": "C 食材 (在Lv 60 解锁)",
         "sleeptype": "睡眠类型",
         "pokedexno": "图鉴编号",
         "main skill": "主技能",
         "sub skills": "副技能",
-        "unlocked only": "只包含已开放",
+        "unlocked only": "只包含已解锁",
         "total": "合计",
         "skill count": "技能次数",
         
-        "select subskill at level xxx": "请选择副技能的<level/>",
+        "select subskill at level xxx": "请选择 <level/> 的副技能",
         
         "about1": "本工具非官方工具，由 <profile>nitoyon</profile> 个人制作开发。",
         "profile": "http://tech.nitoyon.com/ja/about/",
         "x username": "nitoyon",
-        "about2": "改善请求和错误报告请通过X (twitter) の <x>@nitoyon</x> 或者 <github>GitHub</github> 进行联系",
-        "about3": "使用的数据参照了「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」和「<rp>RP collection project</rp>」",
-        "about4": "食材的图标由ちゃんりわ制作",
+        "about2": "改善请求和错误报告请通过X (twitter) <x>@nitoyon</x> 或者 <github>GitHub</github> 进行联系。",
+        "about3": "使用的数据参照了「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」和「<rp>RP collection project</rp>」。",
+        "about4": "食材图标由ちゃんりわさん制作。",
 
         "skills": {
             "Ingredient Magnet S": "食材获取S",
@@ -360,9 +360,9 @@
             "Skill Trigger M": "技能几率提升M",
             "Skill Trigger S": "技能几率提升S",
 
-            "Helping Speed": "帮手速度",
-            "Helping Speed M": "帮手速度M",
-            "Helping Speed S": "帮手速度S",
+            "Helping Speed": "帮忙速度",
+            "Helping Speed M": "帮忙速度M",
+            "Helping Speed S": "帮忙速度S",
 
             "Ingredient Finder": "食材几率提升",
             "Ingredient Finder M": "食材几率提升M",

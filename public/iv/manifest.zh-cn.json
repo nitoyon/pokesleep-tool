@@ -1,7 +1,7 @@
 {
   "short_name": "个体值计算器",
   "name": "个体值计算器 for Pokémon Sleep",
-  "description": "使用方法非常简单！只需要输入宝可梦的等级和技能，就可以知道宝可梦的SP，获得的能量和力量。",
+  "description": "使用方法非常简单！只需要输入宝可梦的等级和技能，就可以知道宝可梦的SP，可以获得的能量和能力。",
   "icons": [
     {
       "src": "favicon.svg",

@@ -1,7 +1,7 @@
 {
   "short_name": "研究数计算器",
   "name": "研究数计算器 for Pokémon Sleep",
-  "description": "使用方法非常简单！只需要输入地图和总能量就可以知道每种睡眠分数出现的宝可梦数量。",
+  "description": "使用方法非常简单！只需要输入营地和总能量就可以知道各种睡眠分数时出现的宝可梦数量。",
   "icons": [
     {
       "src": "favicon.svg",
