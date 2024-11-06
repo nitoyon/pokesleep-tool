@@ -324,7 +324,7 @@ class PokemonStrength {
                 const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
                 const strengthBurst =  (1 + param.fieldBonus / 100) * (
                     mainSkillValue * berryStrength * (this.isFavoriteBerry(param) ? 2 : 1) +
-                    4 * strengthPerBerry * extra
+                    4 * strengthPerBerry * skillCount * extra
                 );
                 return [strengthBurst, strengthBurst];
 
