@@ -184,8 +184,7 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        const isEventBoosted = (param.event !== 'none' &&
-            rp.pokemon.type === 'ghost');
+        const isEventBoosted = false;
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -475,7 +474,7 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.recipeLevel = json.recipeLevel;
     }
     if (typeof(json.event) === "string" &&
-        ["none", "ongoing"].includes(json.event)) {
+        ["none"].includes(json.event)) {
         ret.event = json.event;
     }
     return ret;
