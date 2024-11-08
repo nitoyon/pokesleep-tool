@@ -184,7 +184,7 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        const isEventBoosted = false;
+        const isEventBoosted = (param.event !== 'none' && this.iv.pokemon.type === 'ice');
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -256,7 +256,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param, berryStrength, isEventBoosted);
+                param, berryStrength, isEventBoosted, param.event !== 'none');
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -275,12 +275,14 @@ class PokemonStrength {
      * @param param Strength paramter.
      * @param berryStrength Strength per berry.
      * @param isEventBoosted Whether boosted by the event.
+     * @param isDreamShardBoosted Whether dream shard x2 by the event.
      * @returns [skillValue, skillStrength].
      * If skill is 'Dream Shard Magnet S', `skillValue` is the number of Dream Shards.
      * `skillStrength` is the strength got by the skill.
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        berryStrength: number, isEventBoosted: boolean
+        berryStrength: number, isEventBoosted: boolean,
+        isDreamShardBoosted: boolean
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
@@ -302,9 +304,10 @@ class PokemonStrength {
             case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
+                return [mainSkillValue, 0];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
-                return [mainSkillValue, 0];
+                return [mainSkillValue * (isDreamShardBoosted ? 2 : 1), 0];
 
             case "Charge Strength M":
             case "Charge Strength S":
@@ -474,7 +477,7 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.recipeLevel = json.recipeLevel;
     }
     if (typeof(json.event) === "string" &&
-        ["none"].includes(json.event)) {
+        ["none", "ongoing"].includes(json.event)) {
         ret.event = json.event;
     }
     return ret;

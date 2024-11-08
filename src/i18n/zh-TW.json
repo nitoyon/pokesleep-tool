@@ -14,6 +14,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "holiday 2024": {
+                    "headline": "現在可以計算佳節活動。",
+                    "detail": "在 [$t(strength2)] 選項卡的計算中，可以確認佳節活動中寶可夢的能力。"
+                },
                 "add sneasel": {
                     "headline": "更新了狃拉，瑪狃拉的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
@@ -227,8 +231,8 @@
         "recipe bonus": "食譜獎勵",
         "mixed recipe": "拌拌料理",
         "average recipe level": "平均食譜等級",
-        "event name (short)": "萬聖節",
-        "event name": "萬聖節活動",
+        "event name (short)": "佳節活動",
+        "event name": "佳節活動",
         "1st week": "第1周",
         "2nd week": "第2周",
         "ongoing": "進行中",
