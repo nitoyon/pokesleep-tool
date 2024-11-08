@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "eevee week 2024": {
+                    "headline": "You can now simulate Eevee week.",
+                    "detail": "You can now check the skill performance of Pokémon during the Eevee week in the [$t(strength2)] tab."
+                },
                 "add mimikyu": {
                     "headline": "Mimikyu is added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."

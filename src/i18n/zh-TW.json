@@ -14,6 +14,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "eevee week 2024": {
+                    "headline": "現在可以計算伊布週。",
+                    "detail": "在 [$t(strength2)] 選項卡的計算中，可以確認伊布週中可夢的能力。"
+                },
                 "add mimikyu": {
                     "headline": "更新了謎擬Ｑ的數據。",
                     "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
