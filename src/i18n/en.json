@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "holiday 2024": {
+                    "headline": "You can now simulate Holiday event.",
+                    "detail": "You can now check the performance of Pokémon during the Holiday event in the [$t(strength2)] tab."
+                },
                 "add sneasel": {
                     "headline": "Sneasel and Weavile are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -236,8 +240,8 @@
         "recipe bonus": "Recipe bonus",
         "mixed recipe": "Mixed",
         "average recipe level": "Average recipe level",
-        "event name (short)": "Halloween event",
-        "event name": "Halloween event",
+        "event name (short)": "Holiday event",
+        "event name": "Holiday event",
         "1st week": "1st week",
         "2nd week": "2nd week",
         "ongoing": "Ongoing",

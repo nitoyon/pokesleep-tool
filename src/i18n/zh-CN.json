@@ -14,6 +14,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "holiday 2024": {
+                    "headline": "现在可以计算佳节活动。",
+                    "detail": "在 [$t(strength2)] 标签的计算里，可以确认佳节活动中宝可梦的能力。"
+                },
                 "add sneasel": {
                     "headline": "更新了狃拉，玛狃拉的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
@@ -227,8 +231,8 @@
         "recipe bonus": "食谱奖励",
         "mixed recipe": "拌拌食谱",
         "average recipe level": "平均食谱等级",
-        "event name (short)": "万圣节",
-        "event name": "万圣节活动",
+        "event name (short)": "佳节活动",
+        "event name": "佳节活动",
         "1st week": "第1周",
         "2nd week": "第2周",
         "ongoing": "进行中",

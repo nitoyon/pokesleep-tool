@@ -46,6 +46,7 @@ const StrengthView = React.memo(({state, dispatch}: {
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
+                    <li>{t('event name (short)')}: {t(parameter.event)}</li>
                 </ul>
                 <Button onClick={onEditClick} size="small">{t('edit')}</Button>
             </StrengthParameterPreview>

@@ -14,6 +14,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "holiday 2024": {
+                    "headline": "ホリデーイベントのシミュレーションに対応しました。",
+                    "detail": "[$t(strength2)] タブでの計算において、ホリデー イベント中の性能を確認できるようになりました。"
+                },
                 "add sneasel": {
                     "headline": "ニューラ、マニューラのデータを追加しました。",
                     "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。"
@@ -227,8 +231,8 @@
         "recipe bonus": "レシピボーナス",
         "mixed recipe": "ごちゃまぜ",
         "average recipe level": "平均レシピレベル",
-        "event name (short)": "ハロウィンイベ",
-        "event name": "ハロウィン イベント",
+        "event name (short)": "ホリデーイベ",
+        "event name": "ホリデー イベント",
         "1st week": "1週目",
         "2nd week": "2週目",
         "ongoing": "開催中",
