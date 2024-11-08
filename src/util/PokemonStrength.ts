@@ -184,7 +184,7 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        const isEventBoosted = false;
+        const isEventBoosted = (param.event !== 'none');
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -194,7 +194,7 @@ class PokemonStrength {
         const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
-        const ingEventAdd: number = (isEventBoosted && param.period !== 3 ? 1 : 0);
+        const ingEventAdd: number = 0; //(isEventBoosted && param.period !== 3 ? 1 : 0);
 
         const ing1 = {...rp.ingredient1, strength: 0};
         ing1.count = ingHelpCount * (1 / ingUnlock) * (ing1.count + ingEventAdd);
@@ -256,7 +256,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param, berryStrength, isEventBoosted);
+                param, berryStrength, false);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -474,7 +474,7 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.recipeLevel = json.recipeLevel;
     }
     if (typeof(json.event) === "string" &&
-        ["none"].includes(json.event)) {
+        ["none", "ongoing"].includes(json.event)) {
         ret.event = json.event;
     }
     return ret;
