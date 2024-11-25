@@ -49,7 +49,7 @@ export interface EnergyParameter {
     /**
      * Event option.
      */
-    event: "none"|"ongoing";
+    event: "none";
 }
 
 type EnergyEvent = {
@@ -514,7 +514,7 @@ class Energy {
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
         if (lotteryCount > 0) {
-            const isEventBoosted = (param.event !== 'none');
+            const isEventBoosted = false;
             const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.speciality !== 'Skills') {
