@@ -305,7 +305,11 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     ],
     // Ditto
     '132': [
-        {x: 0, y: 0, w: 1, h: 1, color: '#c0b0ee'},
+        {x: 0, y: 0, w: 1, h: 1, color: '#c8bbf5'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#b6a6ea'},
+        {x: 0.28, y: 0.3, w: 0.06, h: 0.06, r: 0.03, color: '#494447'},
+        {x: 0.58, y: 0.3, w: 0.06, h: 0.06, r: 0.03, color: '#494447'},
+        {x: 0.18, y: 0.45, w: 0.6, h: 0.03, r: 0.03, color: '#494447'},
     ],
     // Eevee
     '133': [
@@ -354,8 +358,18 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     ],
     // Meganium
     '154': [
-        {x: 0, y: 0, w: 1, h: 1, color: '#c2e692'},
-        {x: 0.2, y: 0.35, w: 0.6, h: 0.3, r: 0.25, color: '#e26093'},
+        {x: 0, y: 0, w: 1, h: 1, color: '#d8f1a6'},
+        {x: 0.1, y: 0.23, w: 0.38, h: 0.38, r: 0.2, color: '#fbfff8'},
+        {x: 0.52, y: 0.23, w: 0.38, h: 0.38, r: 0.2, color: '#fbfff8'},
+        {x: 0.1, y: 0.41, w: 0.38, h: 0.38, r: 0.2, color: '#fbfff8'},
+        {x: 0.52, y: 0.41, w: 0.38, h: 0.38, r: 0.2, color: '#fbfff8'},
+        {x: 0.31, y: 0.53, w: 0.38, h: 0.38, r: 0.2, color: '#fbfff8'},
+        {x: 0.14, y: 0.27, w: 0.3, h: 0.3, r: 0.2, color: '#d66f99'},
+        {x: 0.56, y: 0.27, w: 0.3, h: 0.3, r: 0.2, color: '#d66f99'},
+        {x: 0.14, y: 0.45, w: 0.3, h: 0.3, r: 0.2, color: '#d66f99'},
+        {x: 0.56, y: 0.45, w: 0.3, h: 0.3, r: 0.2, color: '#d66f99'},
+        {x: 0.35, y: 0.57, w: 0.3, h: 0.3, r: 0.2, color: '#d66f99'},
+        {x: 0.3, y: 0, w: 0.4, h: 0.62, r: 0.15, color: '#d8f1a6'},
     ],
     // Cyndaquil
     '155': [
