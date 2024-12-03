@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add sneasel": {
+                    "headline": "포푸니와 포푸니라의 데이터를 추가했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "eevee week 2024": {
                     "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
                     "detail": "[$t(strength2)] 탭에서 이브이 위크 중 포켓몬의 성능을 확인할 수 있게 되었습니다."
@@ -537,6 +541,7 @@
             "Wobbuffet": "마자용",
             "Steelix": "강철톤",
             "Heracross": "헤라크로스",
+            "Sneasel": "포푸니",
             "Delibird": "딜리버드",
             "Houndour": "델빌",
             "Houndoom": "헬가",
@@ -580,6 +585,7 @@
             "Toxicroak": "독개굴",
             "Snover": "눈쓰개",
             "Abomasnow": "눈설왕",
+            "Weavile": "포푸니라",
             "Magnezone": "자포코일",
             "Togekiss": "토게키스",
             "Leafeon": "리피아",

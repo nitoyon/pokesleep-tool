@@ -14,6 +14,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add sneasel": {
+                    "headline": "更新了狃拉，玛狃拉的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "eevee week 2024": {
                     "headline": "现在可以计算伊布週。",
                     "detail": "在 [$t(strength2)] 标签的计算里，可以确认伊布週中宝可梦的能力。"
@@ -539,6 +543,7 @@
             "Wobbuffet": "果然翁",
             "Steelix": "大钢蛇",
             "Heracross": "赫拉克罗斯",
+            "Sneasel": "狃拉",
             "Delibird": "信使鸟",
             "Houndour": "戴鲁比",
             "Houndoom": "黑鲁加",
@@ -582,6 +587,7 @@
             "Toxicroak": "毒骷蛙",
             "Snover": "雪笠怪",
             "Abomasnow": "暴雪王",
+            "Weavile": "玛狃拉",
             "Magnezone": "自爆磁怪",
             "Togekiss": "波克基斯",
             "Leafeon": "叶伊布",
