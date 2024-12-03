@@ -14,6 +14,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add sneasel": {
+                    "headline": "ニューラ、マニューラのデータを追加しました。",
+                    "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。"
+                },
                 "eevee week 2024": {
                     "headline": "イーブイ ウィークのシミュレーションに対応しました。",
                     "detail": "[$t(strength2)] タブでの計算において、イーブイ ウィーク中のスキル性能を確認できるようになりました。"
@@ -539,6 +543,7 @@
             "Wobbuffet": "ソーナンス",
             "Steelix": "ハガネール",
             "Heracross": "ヘラクロス",
+            "Sneasel": "ニューラ",
             "Delibird": "デリバード",
             "Houndour": "デルビル",
             "Houndoom": "ヘルガー",
@@ -582,6 +587,7 @@
             "Toxicroak": "ドクロッグ",
             "Snover": "ユキカブリ",
             "Abomasnow": "ユキノオー",
+            "Weavile": "マニューラ",
             "Magnezone": "ジバコイル",
             "Togekiss": "トゲキッス",
             "Leafeon": "リーフィア",

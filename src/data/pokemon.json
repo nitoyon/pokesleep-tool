@@ -2864,6 +2864,38 @@
         }
     },
     {
+        "id": 215,
+        "name": "Sneasel",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Berries",
+        "skill": "Tasty Chance S",
+        "fp": 16,
+        "frequency": 3200,
+        "ingRatio": 25.5,
+        "skillRatio": 1.9,
+        "ancestor": 215,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 4
+        }
+    },
+    {
         "id": 225,
         "name": "Delibird",
         "sleepType": "dozing",
@@ -4230,6 +4262,39 @@
             "name": "mushroom",
             "c3": 5
         }
+    },
+    {
+        "id": 461,
+        "name": "Weavile",
+        "sleepType": "dozing",
+        "type": "dark",
+        "speciality": "Berries",
+        "skill": "Tasty Chance S",
+        "fp": 20,
+        "frequency": 2700,
+        "ingRatio": 25.2,
+        "skillRatio": 1.8,
+        "ancestor": 215,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 21,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "egg",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 4
+        },
+        "ratioNotFixed": true
     },
     {
         "id": 462,

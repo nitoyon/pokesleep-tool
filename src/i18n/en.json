@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add sneasel": {
+                    "headline": "Sneasel and Weavile are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "eevee week 2024": {
                     "headline": "You can now simulate Eevee week.",
                     "detail": "You can now check the skill performance of Pokémon during the Eevee week in the [$t(strength2)] tab."
@@ -548,6 +552,7 @@
             "Wobbuffet": "Wobbuffet",
             "Steelix": "Steelix",
             "Heracross": "Heracross",
+            "Sneasel": "Sneasel",
             "Delibird": "Delibird",
             "Houndour": "Houndour",
             "Houndoom": "Houndoom",
@@ -591,6 +596,7 @@
             "Toxicroak": "Toxicroak",
             "Snover": "Snover",
             "Abomasnow": "Abomasnow",
+            "Weavile": "Weavile",
             "Magnezone": "Magnezone",
             "Togekiss": "Togekiss",
             "Leafeon": "Leafeon",
