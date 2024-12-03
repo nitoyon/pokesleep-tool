@@ -501,8 +501,8 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     '215': [
         {x: 0, y: 0, w: 1, h: 1, color: '#67779d'},
         {x: 0.8, y: -0.2, w: 0.2, h: 0.45, r: 0.2, color: '#d7656b'},
-        {x: 0.42, y: 0.2, w: 0.16, h: 0.25, r: 0.1, color: '#f4dd7b'},
-        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#ffffff'},
+        {x: 0.42, y: 0.3, w: 0.16, h: 0.25, r: 0.1, color: '#f4dd7b'},
+        {x: 0, y: 0.8, w: 1, h: 0.2, color: '#ffffff'},
     ],
     // Delibird
     '225': [
@@ -769,9 +769,9 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     // Weavile
     '461': [
         {x: 0, y: 0, w: 1, h: 1, color: '#64749a'},
-        {x: 0, y: 0, w: 1, h: 0.3, color: '#a73951'},
-        {x: 0.4, y: 0.33, w: 0.2, h: 0.28, r: 0.11, color: '#edc36f'},
-        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#ffffff'},
+        {x: 0, y: 0, w: 1, h: 0.28, color: '#a73951'},
+        {x: 0.4, y: 0.38, w: 0.2, h: 0.28, r: 0.11, color: '#edc36f'},
+        {x: 0, y: 0.8, w: 1, h: 0.2, r: 0.4, color: '#a73951'},
     ],
     // Magnezone
     '462': [
