@@ -4272,7 +4272,7 @@
         "skill": "Tasty Chance S",
         "fp": 20,
         "frequency": 2700,
-        "ingRatio": 25.2,
+        "ingRatio": 25.1,
         "skillRatio": 1.8,
         "ancestor": 215,
         "evolutionCount": 1,
@@ -4293,8 +4293,7 @@
         "ing3": {
             "name": "soy",
             "c3": 4
-        },
-        "ratioNotFixed": true
+        }
     },
     {
         "id": 462,
