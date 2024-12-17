@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "v2.3.0": {
+                    "headline": "v2.3.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "holiday 2024": {
                     "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
