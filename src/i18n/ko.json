@@ -14,6 +14,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "v2.3.0": {
+                    "headline": "v2.3.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "holiday 2024": {
                     "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
@@ -295,6 +299,8 @@
             "Charge Energy S": "회복된 총 에너지 양을 표시합니다. 이 값은 총 강도량에 포함되지 않습니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
             "Energizing Cheer S": "회복된 총 에너지 양을 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
             "Metronome": "효과를 추정하기 어려우므로 스킬 발동 횟수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
+            "Skill Copy (Transform)": "효과를 추정하기 어려우므로 스킬 발동 횟수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
+            "Skill Copy (Mimic)": "효과를 추정하기 어려우므로 스킬 발동 횟수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
             "Energy for Everyone S": "포켓몬 1마리당 회복된 양을 표시합니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
             "Extra Helpful S": "스킬에 의해 활성화된 도움 횟수를 표시합니다. 총 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다.",
             "Cooking Power-Up S": "냄비 용량 증가량을 표시합니다. 스킬의 효과는 총 강도량에 포함되지 않습니다.",
@@ -350,7 +356,10 @@
             "Tasty Chance S": "요리 찬스S",
             "Helper Boost": "도우미 부스트",
             "Berry Burst": "나무열매 버스트",
-            "Berry Burst (Disguise)": "탈 (나무열매 버스트)"
+            "Berry Burst (Disguise)": "탈 (나무열매 버스트)",
+            "Skill Copy": "스킬 복사",
+            "Skill Copy (Transform)": "변신 (스킬 복사)",
+            "Skill Copy (Mimic)": "흉내내기 (스킬 복사)"
         },
 
         "subskill": {

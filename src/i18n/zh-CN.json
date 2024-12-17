@@ -14,6 +14,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "v2.3.0": {
+                    "headline": "已更新 v2.3.0 中进行平衡调整的宝可梦数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "holiday 2024": {
                     "headline": "现在可以计算佳节活动。",
                     "detail": "在 [$t(strength2)] 标签的计算里，可以确认佳节活动中宝可梦的能力。"
@@ -296,6 +300,8 @@
             "Charge Energy S": "显示为活力回复量的总和。技能的效果没有换算成合计能量值。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
             "Energizing Cheer S": "显示为活力回复量的总和。技能的效果没有换算成合计能量值。",
             "Metronome": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。",
+            "Skill Copy (Transform)": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。",
+            "Skill Copy (Mimic)": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。",
             "Energy for Everyone S": "显示为每只的回复量。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
             "Extra Helpful S": "显示为技能发动带来的 [帮助次数] 。总能量按照1次帮助 300 能量 (不含营地奖励) 进行预估。",
             "Cooking Power-Up S": "显示为锅容量的增加量。技能的效果没有换算成合计能量值。",
@@ -352,7 +358,10 @@
             "Tasty Chance S": "料理成功S",
             "Helper Boost": "帮手加速",
             "Berry Burst": "树果剧增",
-            "Berry Burst (Disguise)": "画皮 (树果剧增)"
+            "Berry Burst (Disguise)": "画皮 (树果剧增)",
+            "Skill Copy": "技能复制",
+            "Skill Copy (Transform)": "变身 (技能复制)",
+            "Skill Copy (Mimic)": "模仿 (技能复制)"
         },
 
         "subskill": {
