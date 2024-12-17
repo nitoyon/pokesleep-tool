@@ -16,7 +16,10 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Tasty Chance S" |
     "Helper Boost" |
     "Berry Burst" |
-    "Berry Burst (Disguise)";
+    "Berry Burst (Disguise)" |
+    "Skill Copy" |
+    "Skill Copy (Transform)" |
+    "Skill Copy (Mimic)";
 
 export const MainSkillNames: MainSkillName[] = [
     "Charge Strength S", "Charge Strength M",
@@ -25,7 +28,7 @@ export const MainSkillNames: MainSkillName[] = [
     "Cooking Power-Up S", "Tasty Chance S",
     "Extra Helpful S", "Helper Boost",
     "Dream Shard Magnet S", "Metronome",
-    "Berry Burst"
+    "Berry Burst", "Skill Copy"
 ];
 
 export function isSkillLevelMax7(skill: MainSkillName): boolean {
@@ -37,7 +40,9 @@ export function isSkillLevelMax7(skill: MainSkillName): boolean {
         skill === "Extra Helpful S" ||
         skill === "Cooking Power-Up S" ||
         skill === "Dream Shard Magnet S" ||
-        skill === "Dream Shard Magnet S (Random)";
+        skill === "Dream Shard Magnet S (Random)" ||
+        skill === "Skill Copy (Transform)" ||
+        skill === "Skill Copy (Mimic)";
 }
 
 export function getSkillValue(skill: MainSkillName, skillLevel: number) {
@@ -67,7 +72,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Stockpile)") {
-        return [600, 853, 1177, 1625, 2243, 3099, 4502][skillLevel - 1];
+        return [600, 853, 1177, 1625, 2243, 3099, 3984][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
         return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1] * 1.25;
@@ -107,5 +112,5 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         // TODO
         return [0, 0, 0, 0, 0, 0][skillLevel - 1];
     }
-    return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+    return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
 }    
