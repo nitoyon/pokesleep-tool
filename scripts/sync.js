@@ -66,6 +66,8 @@ const skills = {
     "おてつだいブースト(ほのお)": "Helper Boost",
     "おてつだいブースト(みず)": "Helper Boost",
     "ばけのかわ(きのみバースト)": "Berry Burst (Disguise)",
+    "へんしん(スキルコピー)": "Skill Copy (Transform)",
+    "ものまね(スキルコピー)": "Skill Copy (Mimic)",
 };
 const ingredients = {
     "ふといながねぎ": "leek",
