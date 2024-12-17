@@ -10,6 +10,7 @@ import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivism
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
 import PotIcon from '../Resources/PotIcon';
+import StreamIcon from '@mui/icons-material/Stream';
 import SavedSearchOutlined from '@mui/icons-material/SavedSearchOutlined';
 
 const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
@@ -43,6 +44,10 @@ const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
             return <svg width="20" height="20"><PriorityHighIcon sx={{color: "#ff0000"}}/></svg>;
         case "Metronome":
             return <svg width="22" height="22"><SwipeOutlinedIcon sx={{color: "#999"}}/></svg>;
+        case "Skill Copy":
+        case "Skill Copy (Mimic)":
+        case "Skill Copy (Transform)":
+            return <svg width="22" height="22"><StreamIcon sx={{color: "#999"}}/></svg>;
         default:
             return <>ー</>;
     }

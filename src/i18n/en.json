@@ -305,6 +305,8 @@
             "Charge Energy S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Energizing Cheer S": "Displays the total amount of energy restored. This value is not counted towards the total strength amount.",
             "Metronome": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
+            "Skill Copy (Transform)": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
+            "Skill Copy (Mimic)": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
             "Energy for Everyone S": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
@@ -361,7 +363,10 @@
             "Tasty Chance S": "Tasty Chance S",
             "Helper Boost": "Helper Boost",
             "Berry Burst": "Berry Burst",
-            "Berry Burst (Disguise)": "Disguise (Berry Burst)"
+            "Berry Burst (Disguise)": "Disguise (Berry Burst)",
+            "Skill Copy": "Skill Copy",
+            "Skill Copy (Transform)": "Transform (Skill Copy)",
+            "Skill Copy (Mimic)": "Mimic (Skill Copy)"
         },
 
         "subskill": {

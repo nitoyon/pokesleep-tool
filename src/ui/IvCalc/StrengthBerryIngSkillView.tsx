@@ -329,7 +329,10 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     ) {
         mainSkillValue = formatWithComma(Math.round(result.skillValue));
     }
-    else if (mainSkill === "Metronome") {
+    else if (mainSkill === "Metronome" ||
+        mainSkill === "Skill Copy (Mimic)" ||
+        mainSkill === "Skill Copy (Transform)"
+    ) {
         mainSkillValue = round2(result.skillCount);
     }
     else {
