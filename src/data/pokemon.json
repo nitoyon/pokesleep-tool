@@ -558,7 +558,7 @@
         "evolutionCount": -1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 16,
+        "carryLimit": 20,
         "ing1": {
             "name": "apple",
             "c1": 1,
