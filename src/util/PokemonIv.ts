@@ -218,6 +218,8 @@ class PokemonIv {
                 return 1;
             case 'Festivo':
                 return 2;
+            case 'Alola':
+                return 3;
         }
         return 0;
     }
@@ -231,6 +233,7 @@ class PokemonIv {
         switch (form) {
             case 1: return 'Halloween';
             case 2: return 'Festivo';
+            case 3: return 'Alola';
             default: return '';
         }
     }
