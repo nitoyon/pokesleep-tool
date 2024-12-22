@@ -86,6 +86,7 @@ describe('PokemonIV', () => {
             const iv = new PokemonIv('Pikachu (Halloween)');
             iv.skillLevel = 3;
             expect(iv.serialize()).toBe('kQGBpwj5-38f');
+            expect(iv.form).toBe(1);
 
             const ret = PokemonIv.deserialize('kQGBpwj5-38f');
             compareIv(iv, ret);
