@@ -973,6 +973,27 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0.9, w: 1, h: 0.1, color: '#ffdd6e'},
         {x: 0, y: 0.96, w: 1, h: 0.1, color: '#f87e53'},
     ],
+    // Pawmi
+    '921': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#e9b358'},
+        {x: 0.35, y: 0.5, w: 0.3, h: 0.2, r: 0.2, color: '#fdffe1'},
+        {x: -0.1, y: 0.8, w: 0.3, h: 0.3, r: 0.2, color: '#fdffe1'},
+        {x: 0.8, y: 0.8, w: 0.3, h: 0.3, r: 0.2, color: '#fdffe1'},
+    ],
+    // Pawmo
+    '922': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f4e07f'},
+        {x: 0.36, y: 0.3, w: 0.28, h: 0.18, r: 0.2, color: '#fdffde'},
+        {x: -0.1, y: 0.7, w: 0.3, h: 0.3, r: 0.2, color: '#fdffde'},
+        {x: 0.8, y: 0.7, w: 0.3, h: 0.3, r: 0.2, color: '#fdffde'},
+    ],
+    // Pawmot
+    '923': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ecc24d'},
+        {x: 0.38, y: 0.25, w: 0.24, h: 0.16, r: 0.2, color: '#feffe1'},
+        {x: -0.1, y: 0.65, w: 0.3, h: 0.3, r: 0.2, color: '#feffe1'},
+        {x: 0.8, y: 0.65, w: 0.3, h: 0.3, r: 0.2, color: '#feffe1'},
+    ]
 };
 
 export default pokemonRectData;
