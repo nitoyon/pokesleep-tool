@@ -9,11 +9,13 @@ import PokemonSelectDialog from './PokemonSelectDialog';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
+import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
 
 /** Autocomplete option list */
 export interface PokemonOption {
     id: number;
+    idForm: number;
     name: string;
     localName: string;
     sleepType: SleepType;
@@ -39,6 +41,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
         () => pokemons
             .map((pokemon) => ({
                 id: pokemon.id,
+                idForm: new PokemonIv(pokemon.name).idForm,
                 name: pokemon.name,
                 localName: t(`pokemons.${pokemon.name}`),
                 sleepType: pokemon.sleepType,

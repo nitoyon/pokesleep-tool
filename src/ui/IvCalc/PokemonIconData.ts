@@ -114,9 +114,19 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.3, color: '#ffa76c'},
         {x: 0, y: 0.8, w: 1, h: 0.2, color: '#e48860'},
     ],
+    // Vulpix (Alola)
+    '12325': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ffffff'},
+        {x: 0, y: 0.8, w: 1, h: 0.2, color: '#f1fdff'},
+    ],
     // Ninetales
     '38': [
         {x: 0, y: 0, w: 1, h: 1, color: '#ffffce'},
+    ],
+    // Ninetales (Alola)
+    '12326': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fbffff'},
+        {x: 0, y: 0, w: 1, h: 0.2, color: '#dcfefe'},
     ],
     // Jigglypuff
     '39': [

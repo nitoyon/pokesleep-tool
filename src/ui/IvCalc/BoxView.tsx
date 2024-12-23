@@ -461,7 +461,7 @@ const BoxLargeItem = React.memo(({item, selected, dispatch}: {
             <ButtonBase onClick={clickHandler} className={selected ? 'selected' : ''}
                 ref={longPressRef}>
                 <header><span className="lv">Lv.</span>{item.iv.level}</header>
-                <PokemonIcon id={item.iv.pokemon.id} size={32}/>
+                <PokemonIcon idForm={item.iv.idForm} size={32}/>
                 <footer>{item.filledNickname(t)}</footer>
             </ButtonBase>
             {selected && <IconButton onClick={onMoreIconClick}><MoreIcon/></IconButton>}

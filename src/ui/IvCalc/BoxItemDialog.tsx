@@ -99,7 +99,7 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
     return <>
         <article>
             <RpLabel rp={rp} isEstimated={boxItem.iv.level > 60}/>
-            <div className="icon"><PokemonIcon id={boxItem.iv.pokemon.id} size={80}/></div>
+            <div className="icon"><PokemonIcon idForm={boxItem.iv.idForm} size={80}/></div>
             <div className="nickname">
                 <TextField variant="standard" size="small" value={displayNickName}
                     onChange={onNickNameChange}
