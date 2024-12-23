@@ -14,6 +14,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add holiday 2024 pokemons": {
+                    "headline": "新增了佳節活動的寶可夢數據。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "v2.3.0": {
                     "headline": "已更新 v2.3.0 中進行平衡調整的寶可夢數據。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
