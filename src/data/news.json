@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2024-12-23T14:40:00Z",
+            "id": "add holiday 2024 pokemons"
+        },
+        {
             "date": "2024-12-17T14:40:00Z",
             "id": "v2.3.0"
         },

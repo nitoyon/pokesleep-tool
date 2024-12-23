@@ -250,6 +250,7 @@ export class PokemonFilterConfig {
             // add empty entry
             ret.push({
                 id: -1,
+                idForm: -1,
                 name: '',
                 localName: '',
                 sleepType: 'dozing',
@@ -441,7 +442,7 @@ const PokemonSelectDialog = React.memo(({
             renderGroup={renderGroup}
             renderOption={(props, option) => (
                 <MenuItem key={option.id} {...props}>
-                    <PokemonIcon id={option.id} size={48}/>
+                    <PokemonIcon idForm={option.idForm} size={48}/>
                     <footer>{option.localName}</footer>
                 </MenuItem>
             )}

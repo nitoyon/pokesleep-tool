@@ -205,6 +205,65 @@ class PokemonIv {
     }
 
     /**
+     * Get form number.
+     */
+    get form(): number {
+        const m = this.pokemonName.match(/\(([^)]+)\)$/);
+        if (m === null) {
+            return 0;
+        }
+
+        switch (m[1]) {
+            case 'Halloween':
+                return 1;
+            case 'Festivo':
+                return 2;
+            case 'Alola':
+                return 3;
+        }
+        return 0;
+    }
+
+    /**
+     * Convert form number to string.
+     * @param form    form number
+     * @return        form name
+     */
+    public static formToString(form: number): string {
+        switch (form) {
+            case 1: return 'Halloween';
+            case 2: return 'Festivo';
+            case 3: return 'Alola';
+            default: return '';
+        }
+    }
+
+    /**
+     * ID & form
+     */
+    get idForm(): number {
+        return this.pokemon.id + (this.form << 12);
+    }
+
+    /**
+     * Get pokemon ID from idForm.
+     * @param idForm idForm number.
+     * @returns Pokemon ID.
+     */
+    static getIdByIdForm(idForm: number): number {
+        return idForm & 0xfff;
+    }
+
+    /**
+     * Get form ID from idForm.
+     * @param idForm idForm number.
+     * @returns form ID.
+     */
+    static getFormByIdForm(idForm: number): number {
+        return idForm >> 12;
+    }
+
+    /**
      * Serialize IV data to printable string.
      *
      * Format
@@ -215,7 +274,7 @@ class PokemonIv {
      * * 4bit  : Version (1)
      * * 12bit : Pokedex ID
      *
-     * * 6bit  : Form (0: normal, 1: Halloween, 2: Festivo)
+     * * 6bit  : Form (0: normal, 1: Halloween, 2: Festivo, 3: Alola)
      * * 7bit  : level
      * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
      *
@@ -238,9 +297,7 @@ class PokemonIv {
     serialize(): string {
         const array16 = new Uint16Array(5);
         array16[0] = 1 + (this.pokemon.id << 4);
-        const form = (this.pokemon.name === "Pikachu (Halloween)" ? 1 :
-            this.pokemon.name === "Pikachu (Festivo)" ? 2 : 0);
-        array16[1] = form +
+        array16[1] = this.form +
             (this.level << 6) +
             (IngredientTypes.indexOf(this.ingredient) << 13);
 
@@ -303,16 +360,9 @@ class PokemonIv {
         // get form
         const form = array16[1] & 0x3f;
         if (form !== 0) {
-            if (pokemon.id !== 25) {
-                throw new Error(`Form is not 0 (${form}) for pokemon ${id}`);
-            }
-            pokemon = undefined;
-            if (form === 1) {
-                pokemon = pokemons.find(x => x.name === "Pikachu (Halloween)");
-            }
-            else if (form === 2) {
-                pokemon = pokemons.find(x => x.name === "Pikachu (Festivo)");
-            }
+            const formStr = PokemonIv.formToString(form);
+            const newName = `${pokemon.name} (${formStr})`;
+            pokemon = pokemons.find(x => x.name === newName);
             if (pokemon === undefined) {
                 throw new Error(`Invalid form specified (${form})`);
             }

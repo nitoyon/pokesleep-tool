@@ -86,6 +86,8 @@ describe('PokemonIV', () => {
             const iv = new PokemonIv('Pikachu (Halloween)');
             iv.skillLevel = 3;
             expect(iv.serialize()).toBe('kQGBpwj5-38f');
+            expect(iv.form).toBe(1);
+            expect(iv.idForm).toBe(25 + 0x1000);
 
             const ret = PokemonIv.deserialize('kQGBpwj5-38f');
             compareIv(iv, ret);
@@ -107,6 +109,13 @@ describe('PokemonIV', () => {
 
             const ret = PokemonIv.deserialize('EQCApwD5-3+f');
             compareIv(iv, ret);
+        });
+
+        test('idForm', () => {
+            const iv = new PokemonIv('Vulpix (Alola)');
+            expect(iv.idForm).toBe(37 + 0x3000);
+            expect(PokemonIv.getFormByIdForm(37 + 0x3000)).toBe(3);
+            expect(PokemonIv.getIdByIdForm(37 + 0x3000)).toBe(37);
         });
     });
 

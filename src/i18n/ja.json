@@ -14,6 +14,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add holiday 2024 pokemons": {
+                    "headline": "ホリデーイベントの新ポケモンのデータを追加しました。",
+                    "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。"
+                },
                 "v2.3.0": {
                     "headline": "v2.3.0 でのバランス調整のあったポケモンのデータを更新しました。",
                     "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。"
@@ -488,7 +492,9 @@
             "Clefairy": "ピッピ",
             "Clefable": "ピクシー",
             "Vulpix": "ロコン",
+            "Vulpix (Alola)": "ロコン (アローラ)",
             "Ninetales": "キュウコン",
+            "Ninetales (Alola)": "キュウコン (アローラ)",
             "Jigglypuff": "プリン",
             "Wigglytuff": "プクリン",
             "Diglett": "ディグダ",
@@ -524,6 +530,7 @@
             "Pinsir": "カイロス",
             "Ditto": "メタモン",
             "Eevee": "イーブイ",
+            "Eevee (Festivo)": "イーブイ (ホリデー)",
             "Vaporeon": "シャワーズ",
             "Jolteon": "サンダース",
             "Flareon": "ブースター",
@@ -624,7 +631,10 @@
             "Skeledirge": "ラウドボーン",
             "Quaxly": "クワッス",
             "Quaxwell": "ウェルカモ",
-            "Quaquaval": "ウェーニバル"
+            "Quaquaval": "ウェーニバル",
+            "Pawmi": "パモ",
+            "Pawmo": "パモット",
+            "Pawmot": "パーモット"
         }
     }
 }
