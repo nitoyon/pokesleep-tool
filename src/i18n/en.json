@@ -491,13 +491,15 @@
             "Ekans": "Ekans",
             "Arbok": "Arbok",
             "Pikachu": "Pikachu",
-            "Pikachu (Festivo)": "Pikachu (Festivo)",
+            "Pikachu (Festivo)": "Pikachu (Holiday)",
             "Pikachu (Halloween)": "Pikachu (Halloween)",
             "Raichu": "Raichu",
             "Clefairy": "Clefairy",
             "Clefable": "Clefable",
             "Vulpix": "Vulpix",
+            "Vulpix (Alola)": "Vulpix (Alola)",
             "Ninetales": "Ninetales",
+            "Ninetales (Alola)": "Ninetales (Alola)",
             "Jigglypuff": "Jigglypuff",
             "Wigglytuff": "Wigglytuff",
             "Diglett": "Diglett",
@@ -533,6 +535,7 @@
             "Pinsir": "Pinsir",
             "Ditto": "Ditto",
             "Eevee": "Eevee",
+            "Eevee (Festivo)": "Eevee (Holiday)",
             "Vaporeon": "Vaporeon",
             "Jolteon": "Jolteon",
             "Flareon": "Flareon",
@@ -633,7 +636,10 @@
             "Skeledirge": "Skeledirge",
             "Quaxly": "Quaxly",
             "Quaxwell": "Quaxwell",
-            "Quaquaval": "Quaquaval"
-        }
+            "Quaquaval": "Quaquaval",
+            "Pawmi": "Pawmi",
+            "Pawmo": "Pawmo",
+            "Pawmot": "Pawmot"
+         }
     }
 }

@@ -204,7 +204,9 @@ async function syncPokemon() {
     const pokemonJson = [];
     for (const name of enNames) {
         const nameJa = en2ja[name];
-        const html = await getWikiHtml(nameJa.replace(" ", ""));
+        const html = await getWikiHtml(nameJa
+            .replace(" ", "")
+            .replace("(アローラ)", "(アローラのすがた)"));
         pokemonJson.push(getPokemon(html, name, ja2en));
     }
     fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
@@ -237,9 +239,8 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
         if (confidence !== 'Very good') {
             unknown = true;
         }
-        if (pokemon === 'Pikachu (Holiday)') {
-            pokemon = 'Pikachu (Festivo)';
-        }
+        pokemon = pokemon.replace("Holiday", "Festivo")
+            .replace("Alolan Form", "Alola");
         ingRatio = parseFloat(ingRatio.replace('%', ''));
         skillRatio = parseFloat(skillRatio.replace('%', ''));
         prob[pokemon] = {ingRatio, skillRatio, unknown};

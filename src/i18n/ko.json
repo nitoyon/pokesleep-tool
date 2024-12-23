@@ -486,7 +486,9 @@
             "Clefairy": "삐삐",
             "Clefable": "픽시",
             "Vulpix": "식스테일",
+            "Vulpix (Alola)": "식스테일 (알로라의 모습)",
             "Ninetales": "나인테일",
+            "Ninetales (Alola)": "나인테일 (알로라의 모습)",
             "Jigglypuff": "푸린",
             "Wigglytuff": "푸크린",
             "Diglett": "디그다",
@@ -522,6 +524,7 @@
             "Pinsir": "쁘사이저",
             "Ditto": "메타몽",
             "Eevee": "이브이",
+            "Eevee (Festivo)": "이브이 (축제)",
             "Vaporeon": "샤미드",
             "Jolteon": "쥬피썬더",
             "Flareon": "부스터",
@@ -622,7 +625,10 @@
             "Skeledirge": "라우드본",
             "Quaxly": "꾸왁스",
             "Quaxwell": "아꾸왁",
-            "Quaquaval": "웨이니발"
-        }
+            "Quaquaval": "웨이니발",
+            "Pawmi": "빠모",
+            "Pawmo": "빠모트",
+            "Pawmot": "빠르모트"
+         }
     }
 }
