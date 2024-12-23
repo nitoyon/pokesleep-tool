@@ -1953,8 +1953,7 @@
             "name": "cacao",
             "c2": 1,
             "c3": 2
-        },
-        "ratioNotFixed": true
+        }
     },
     {
         "id": 134,
@@ -5214,8 +5213,7 @@
         "ing3": {
             "name": "egg",
             "c3": 5
-        },
-        "ratioNotFixed": true
+        }
     },
     {
         "id": 923,
@@ -5226,8 +5224,8 @@
         "skill": "Energy for Everyone S",
         "fp": 22,
         "frequency": 2400,
-        "ingRatio": 11.9,
-        "skillRatio": 4.6,
+        "ingRatio": 14.1,
+        "skillRatio": 3.9,
         "ancestor": 921,
         "evolutionCount": 2,
         "evolutionLeft": 0,
