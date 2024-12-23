@@ -488,7 +488,9 @@
             "Clefairy": "ピッピ",
             "Clefable": "ピクシー",
             "Vulpix": "ロコン",
+            "Vulpix (Alola)": "ロコン (アローラ)",
             "Ninetales": "キュウコン",
+            "Ninetales (Alola)": "キュウコン (アローラ)",
             "Jigglypuff": "プリン",
             "Wigglytuff": "プクリン",
             "Diglett": "ディグダ",
@@ -524,6 +526,7 @@
             "Pinsir": "カイロス",
             "Ditto": "メタモン",
             "Eevee": "イーブイ",
+            "Eevee (Festivo)": "イーブイ (ホリデー)",
             "Vaporeon": "シャワーズ",
             "Jolteon": "サンダース",
             "Flareon": "ブースター",
@@ -624,7 +627,10 @@
             "Skeledirge": "ラウドボーン",
             "Quaxly": "クワッス",
             "Quaxwell": "ウェルカモ",
-            "Quaquaval": "ウェーニバル"
+            "Quaquaval": "ウェーニバル",
+            "Pawmi": "パモ",
+            "Pawmo": "パモット",
+            "Pawmot": "パーモット"
         }
     }
 }

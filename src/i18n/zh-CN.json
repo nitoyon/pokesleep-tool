@@ -488,7 +488,9 @@
             "Clefairy": "皮皮",
             "Clefable": "皮可西",
             "Vulpix": "六尾",
+            "Vulpix (Alola)": "六尾 (阿罗拉)",
             "Ninetales": "九尾",
+            "Ninetales (Alola)": "九尾 (阿罗拉)",
             "Jigglypuff": "胖丁",
             "Wigglytuff": "胖可丁",
             "Diglett": "地鼠",
@@ -524,6 +526,7 @@
             "Pinsir": "凯罗斯",
             "Ditto": "百变怪",
             "Eevee": "伊布",
+            "Eevee (Festivo)": "伊布 (佳节)",
             "Vaporeon": "水伊布",
             "Jolteon": "雷伊布",
             "Flareon": "火伊布",
@@ -624,7 +627,10 @@
             "Skeledirge": "骨纹惊声鳄",
             "Quaxly": "润水鸭",
             "Quaxwell": "涌跃鸭",
-            "Quaquaval": "狂欢浪舞鸭"
+            "Quaquaval": "狂欢浪舞鸭",
+            "Pawmi": "布拨",
+            "Pawmo": "布土拨",
+            "Pawmot": "巴布土拨"
         }
     }
 }
