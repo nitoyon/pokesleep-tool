@@ -239,6 +239,31 @@ class PokemonIv {
     }
 
     /**
+     * ID & form
+     */
+    get idForm(): number {
+        return this.pokemon.id + (this.form << 12);
+    }
+
+    /**
+     * Get pokemon ID from idForm.
+     * @param idForm idForm number.
+     * @returns Pokemon ID.
+     */
+    static getIdByIdForm(idForm: number): number {
+        return idForm & 0xfff;
+    }
+
+    /**
+     * Get form ID from idForm.
+     * @param idForm idForm number.
+     * @returns form ID.
+     */
+    static getFormByIdForm(idForm: number): number {
+        return idForm >> 12;
+    }
+
+    /**
      * Serialize IV data to printable string.
      *
      * Format
@@ -249,7 +274,7 @@ class PokemonIv {
      * * 4bit  : Version (1)
      * * 12bit : Pokedex ID
      *
-     * * 6bit  : Form (0: normal, 1: Halloween, 2: Festivo)
+     * * 6bit  : Form (0: normal, 1: Halloween, 2: Festivo, 3: Alola)
      * * 7bit  : level
      * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
      *
