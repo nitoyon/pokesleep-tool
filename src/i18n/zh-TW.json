@@ -14,6 +14,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add holiday 2024 pokemons": {
+                    "headline": "新增了佳節活動的寶可夢數據。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "v2.3.0": {
                     "headline": "已更新 v2.3.0 中進行平衡調整的寶可夢數據。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
@@ -488,7 +492,9 @@
             "Clefairy": "皮皮",
             "Clefable": "皮可西",
             "Vulpix": "六尾",
+            "Vulpix (Alola)": "六尾 (阿罗拉)",
             "Ninetales": "九尾",
+            "Ninetales (Alola)": "九尾 (阿罗拉)",
             "Jigglypuff": "胖丁",
             "Wigglytuff": "胖可丁",
             "Diglett": "地鼠",
@@ -524,6 +530,7 @@
             "Pinsir": "凱羅斯",
             "Ditto": "百變怪",
             "Eevee": "伊布",
+            "Eevee (Festivo)": "伊布 (佳節)",
             "Vaporeon": "水伊布",
             "Jolteon": "雷伊布",
             "Flareon": "火伊布",
@@ -624,7 +631,10 @@
             "Skeledirge": "骨紋驚聲鱷",
             "Quaxly": "潤水鴨",
             "Quaxwell": "湧躍鴨",
-            "Quaquaval": "狂歡浪舞鴨"
-        }
+            "Quaquaval": "狂歡浪舞鴨",
+            "Pawmi": "布撥",
+            "Pawmo": "布土撥",
+            "Pawmot": "巴布土撥"
+         }
     }
 }

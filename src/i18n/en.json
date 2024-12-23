@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add holiday 2024 pokemons": {
+                    "headline": "New Pokémon data for the holiday event has been added.",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.3.0": {
                     "headline": "Updated the data for Pokémon with balance adjustments in v2.3.0.",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -491,13 +495,15 @@
             "Ekans": "Ekans",
             "Arbok": "Arbok",
             "Pikachu": "Pikachu",
-            "Pikachu (Festivo)": "Pikachu (Festivo)",
+            "Pikachu (Festivo)": "Pikachu (Holiday)",
             "Pikachu (Halloween)": "Pikachu (Halloween)",
             "Raichu": "Raichu",
             "Clefairy": "Clefairy",
             "Clefable": "Clefable",
             "Vulpix": "Vulpix",
+            "Vulpix (Alola)": "Vulpix (Alola)",
             "Ninetales": "Ninetales",
+            "Ninetales (Alola)": "Ninetales (Alola)",
             "Jigglypuff": "Jigglypuff",
             "Wigglytuff": "Wigglytuff",
             "Diglett": "Diglett",
@@ -533,6 +539,7 @@
             "Pinsir": "Pinsir",
             "Ditto": "Ditto",
             "Eevee": "Eevee",
+            "Eevee (Festivo)": "Eevee (Holiday)",
             "Vaporeon": "Vaporeon",
             "Jolteon": "Jolteon",
             "Flareon": "Flareon",
@@ -633,7 +640,10 @@
             "Skeledirge": "Skeledirge",
             "Quaxly": "Quaxly",
             "Quaxwell": "Quaxwell",
-            "Quaquaval": "Quaquaval"
-        }
+            "Quaquaval": "Quaquaval",
+            "Pawmi": "Pawmi",
+            "Pawmo": "Pawmo",
+            "Pawmot": "Pawmot"
+         }
     }
 }

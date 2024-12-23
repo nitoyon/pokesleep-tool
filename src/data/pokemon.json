@@ -736,6 +736,38 @@
         }
     },
     {
+        "id": 37,
+        "name": "Vulpix (Alola)",
+        "sleepType": "slumbering",
+        "type": "ice",
+        "speciality": "Berries",
+        "skill": "Extra Helpful S",
+        "fp": 5,
+        "frequency": 5600,
+        "ingRatio": 23,
+        "skillRatio": 2.8,
+        "evolutionCount": -1,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "soy",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 3
+        },
+        "ratioNotFixed": true
+    },
+    {
         "id": 38,
         "name": "Ninetales",
         "sleepType": "snoozing",
@@ -766,6 +798,38 @@
             "name": "potato",
             "c3": 3
         }
+    },
+    {
+        "id": 38,
+        "name": "Ninetales (Alola)",
+        "sleepType": "slumbering",
+        "type": "ice",
+        "speciality": "Berries",
+        "skill": "Extra Helpful S",
+        "fp": 20,
+        "frequency": 2900,
+        "ingRatio": 23.1,
+        "skillRatio": 2.8,
+        "evolutionCount": -1,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "soy",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 3
+        },
+        "ratioNotFixed": true
     },
     {
         "id": 39,
@@ -1862,6 +1926,35 @@
             "name": "sausage",
             "c3": 3
         }
+    },
+    {
+        "id": 133,
+        "name": "Eevee (Festivo)",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "speciality": "Berries",
+        "skill": "Dream Shard Magnet S",
+        "fp": 5,
+        "frequency": 3100,
+        "ingRatio": 15.6,
+        "skillRatio": 3.2,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 20,
+        "ing1": {
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "cacao",
+            "c2": 1,
+            "c3": 2
+        },
+        "ratioNotFixed": true
     },
     {
         "id": 134,
@@ -5058,5 +5151,103 @@
             "name": "oil",
             "c3": 6
         }
+    },
+    {
+        "id": 921,
+        "name": "Pawmi",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRatio": 11.1,
+        "skillRatio": 3.6,
+        "ancestor": 921,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 3,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "egg",
+            "c3": 5
+        }
+    },
+    {
+        "id": 922,
+        "name": "Pawmo",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 12,
+        "frequency": 3300,
+        "ingRatio": 10.9,
+        "skillRatio": 3.6,
+        "ancestor": 921,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 3,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "egg",
+            "c3": 5
+        },
+        "ratioNotFixed": true
+    },
+    {
+        "id": 923,
+        "name": "Pawmot",
+        "sleepType": "snoozing",
+        "type": "electric",
+        "speciality": "Skills",
+        "skill": "Energy for Everyone S",
+        "fp": 22,
+        "frequency": 2400,
+        "ingRatio": 11.9,
+        "skillRatio": 4.6,
+        "ancestor": 921,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "cacao",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 3,
+            "c3": 6
+        },
+        "ing3": {
+            "name": "egg",
+            "c3": 5
+        },
+        "ratioNotFixed": true
     }
 ]
