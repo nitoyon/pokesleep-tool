@@ -16,6 +16,7 @@ import { MainSkillName } from '../../util/MainSkill';
 export interface PokemonOption {
     id: number;
     idForm: number;
+    form?: string;
     name: string;
     localName: string;
     sleepType: SleepType;
@@ -42,6 +43,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
             .map((pokemon) => ({
                 id: pokemon.id,
                 idForm: new PokemonIv(pokemon.name).idForm,
+                form: pokemon.form,
                 name: pokemon.name,
                 localName: t(`pokemons.${pokemon.name}`),
                 sleepType: pokemon.sleepType,
@@ -76,7 +78,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
 
     return (<div>
         {fixMode ? <>{selectedOption.localName}</> :
-        <TextLikeButton onClick={onInputClick} style={{width: '8rem', fontSize: '0.9rem'}}
+        <TextLikeButton onClick={onInputClick} style={{width: '10.2rem', fontSize: '0.9rem'}}
             className={open ? 'focused' : ''}>
             {selectedOption.localName}
         </TextLikeButton>}
@@ -116,7 +118,9 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
     // setup menu item
     const evolveMenuItems = [];
     const pokemonsInEvoLine = pokemons
-        .filter(x => x.ancestor === selectedOption.ancestor)
+        .filter(x => x.ancestor === selectedOption.ancestor &&
+            x.form === selectedOption.form
+        )
         .sort((a, b) => a.id === selectedOption.ancestor ? -1 : a.id - b.id);
     for (const p of pokemonsInEvoLine) {
         evolveMenuItems.push(<MenuItem key={p.id} value={p.name}
