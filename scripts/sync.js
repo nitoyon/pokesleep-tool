@@ -197,7 +197,12 @@ async function syncPokemon() {
     const en2ja = jaJson.translation.pokemons;
     const enNames = Object.keys(jaJson.translation.pokemons);
     for (const enname of Object.keys(jaJson.translation.pokemons)) {
-        ja2en[jaJson.translation.pokemons[enname]] = enname;
+        const nameJa = jaJson.translation.pokemons[enname];
+        const nameJa2 = nameJa
+            .replace(" ", "")
+            .replace("(アローラ)", "(アローラのすがた)");
+        ja2en[nameJa] = enname;
+        ja2en[nameJa2] = enname;
     }
 
     // Update each Pokemon
