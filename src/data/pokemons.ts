@@ -7,6 +7,8 @@ export interface PokemonData {
     id: number;
     /** Pokemon name in English */
     name: string;
+    /** Pokemon form */
+    form: undefined|'Festivo'|'Holiday'|'Alola';
     /** Sleep type of the pokemon */
     sleepType: SleepType;
     /** Type of the pokemon. */

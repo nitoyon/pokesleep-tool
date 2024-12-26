@@ -262,6 +262,10 @@ function getPokemon(html, name, nameJa2en) {
     const dom = new JSDOM(html);
     let ancestor, evolutionCount, evolutionLeft, isFullyEvolved;
 
+    // Get form from name
+    const m = name.match(/\(([^)]+)\)$/);
+    const form = m === null ? null : m[1];
+
     // find evolution
     if (['Eevee', 'Vaporeon', 'Jolteon', 'Flareon', 'Espeon',
         'Umbreon', 'Leafeon', 'Glaceon', 'Sylveon'].includes(name)) {
@@ -392,12 +396,16 @@ function getPokemon(html, name, nameJa2en) {
         ing3 = {name: ing, c3};
     }
 
-    return {
+    const ret = {
         id, name, sleepType, type, speciality, skill, fp, frequency,
         ingRatio: 0, skillRatio: 0,
         ancestor, evolutionCount, evolutionLeft, isFullyEvolved,
         carryLimit, ing1, ing2, ing3,
     };
+    if (form !== null) {
+        ret.form = form;
+    }
+    return ret;
 }
 
 async function getWikiHtml(name) {

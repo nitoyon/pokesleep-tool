@@ -573,7 +573,8 @@
         "ing3": {
             "name": "egg",
             "c3": 3
-        }
+        },
+        "form": "Festivo"
     },
     {
         "id": 25,
@@ -605,7 +606,8 @@
         "ing3": {
             "name": "egg",
             "c3": 3
-        }
+        },
+        "form": "Halloween"
     },
     {
         "id": 26,
@@ -765,6 +767,7 @@
             "name": "potato",
             "c3": 3
         },
+        "form": "Alola",
         "ratioNotFixed": true
     },
     {
@@ -829,6 +832,7 @@
             "name": "potato",
             "c3": 3
         },
+        "form": "Alola",
         "ratioNotFixed": true
     },
     {
@@ -1957,7 +1961,8 @@
         "ing3": {
             "name": "sausage",
             "c3": 3
-        }
+        },
+        "form": "Festivo"
     },
     {
         "id": 134,
