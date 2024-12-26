@@ -1953,6 +1953,10 @@
             "name": "cacao",
             "c2": 1,
             "c3": 2
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 3
         }
     },
     {
@@ -5245,7 +5249,6 @@
         "ing3": {
             "name": "egg",
             "c3": 5
-        },
-        "ratioNotFixed": true
+        }
     }
 ]
