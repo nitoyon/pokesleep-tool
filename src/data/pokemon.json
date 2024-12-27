@@ -768,8 +768,7 @@
             "name": "potato",
             "c3": 3
         },
-        "form": "Alola",
-        "ratioNotFixed": true
+        "form": "Alola"
     },
     {
         "id": 38,
@@ -812,7 +811,7 @@
         "skill": "Extra Helpful S",
         "fp": 20,
         "frequency": 2900,
-        "ingRatio": 23.1,
+        "ingRatio": 23.2,
         "skillRatio": 2.8,
         "ancestor": 37,
         "evolutionCount": 1,
@@ -834,8 +833,7 @@
             "name": "potato",
             "c3": 3
         },
-        "form": "Alola",
-        "ratioNotFixed": true
+        "form": "Alola"
     },
     {
         "id": 39,
