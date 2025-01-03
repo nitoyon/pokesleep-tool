@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  # pushed to master
+  push:
+    branches:
+      - master
+
+  # pull request to master is closed
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - run: npm ci
+    - run: npm run build
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
