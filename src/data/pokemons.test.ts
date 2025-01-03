@@ -46,4 +46,22 @@ describe('getDecendants', () => {
         expect(decendants[0].name).toBe("Gardevoir");
         expect(decendants[1].name).toBe("Gallade");
     });
+
+    test('returns Vulpix (Alola) evolution line', () => {
+        const p = pokemons.find(x => x.name === "Vulpix (Alola)");
+        if (p === undefined) { fail('p should not be undefined'); }
+
+        const decendants = getDecendants(p);
+        expect(decendants.length).toBe(1);
+        expect(decendants[0].name).toBe("Ninetales (Alola)");
+    });
+
+    test('returns Vulpix evolution line', () => {
+        const p = pokemons.find(x => x.name === "Vulpix");
+        if (p === undefined) { fail('p should not be undefined'); }
+
+        const decendants = getDecendants(p);
+        expect(decendants.length).toBe(1);
+        expect(decendants[0].name).toBe("Ninetales");
+    });
 });
