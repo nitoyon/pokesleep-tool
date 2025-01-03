@@ -297,7 +297,6 @@
         "strength of x": "{{x}}的能量",
         "strength detail1": "可以確認寶可夢賺取的能量，食材，技能發動的次數。",
         "strength detail2": "目前的計算邏輯有以下限制。",
-        "strength restriction1": "所持上限數是進化前狀態下捕獲的假設下進行估計的。",
         "strength restriction2": "沒有考慮活力填充S所帶來的活力回復。",
         "strength skill info": {
             "Ingredient Magnet S": "顯示可獲取的食材數量。通過技能獲取的食材沒有換算成合計能量值。",

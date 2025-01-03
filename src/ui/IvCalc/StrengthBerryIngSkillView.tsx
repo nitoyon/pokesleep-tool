@@ -360,7 +360,6 @@ const HelpDialog = React.memo(({open, onClose}: {
             <p style={{marginTop: 0}}>{t('strength detail1')}</p>
             <p>{t('strength detail2')}</p>
             <ul style={{paddingLeft: '1rem'}}>
-                <li>{t('strength restriction1')}</li>
                 <li>{t('strength restriction2')}</li>
             </ul>
         </DialogContent>
