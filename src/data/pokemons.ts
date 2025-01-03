@@ -113,7 +113,7 @@ export function getDecendants(pokemon: PokemonData): PokemonData[] {
     if (pokemon.ancestor !== null) {
         const ret = ancestorId2Decendants.get(pokemon.ancestor);
         if (ret !== undefined) {
-            return ret;
+            return ret.filter(x => x.form === pokemon.form);
         }
     }
     return [];
