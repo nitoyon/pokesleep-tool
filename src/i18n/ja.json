@@ -297,7 +297,6 @@
         "strength of x": "{{x}}のエナジー",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
         "strength detail2": "現時点の計算ロジックには次のような制約があります。",
-        "strength restriction1": "最大所持数は進化前の状態でつかまえた前提で見積もっています。",
         "strength restriction2": "げんきチャージSによるげんき回復は考慮されていません。",
         "strength skill info": {
             "Ingredient Magnet S": "獲得できる食材の数を表示しています。スキルによる食材は、合計エナジー量には換算していません。",

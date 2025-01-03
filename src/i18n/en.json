@@ -306,7 +306,6 @@
         "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",
-        "strength restriction1": "The carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state.",
         "strength restriction2": "Energy recovery via Charge Energy S is not included in the calculations.",
         "strength skill info": {
             "Ingredient Magnet S": "Displays the number of ingredients obtained. This value is not counted towards the total strength amount.",
