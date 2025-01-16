@@ -345,7 +345,7 @@ function getPokemon(html, name, nameJa2en) {
     const frequency = parseInt(frequencyMatch[1], 10);
 
     // find type
-    const berryJa = tds[2]?.querySelector('a')?.textContent;
+    const berryJa = tds[2]?.querySelector('a').getAttribute('title').replace("きのみ/", "");
     if (!(berryJa in berryTypes)) { throw new Error(`Unknown berry: ${berryJa}`); }
     const type = berryTypes[berryJa];
 
