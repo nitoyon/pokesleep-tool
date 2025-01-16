@@ -66,7 +66,6 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "deploy": "npm run build && node scripts/deploy.js",
     "sync": "node scripts/sync.js",
     "test": "node scripts/test.js"
   },
