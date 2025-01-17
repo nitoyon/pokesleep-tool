@@ -1,9 +1,9 @@
 import events_ from './event.json';
 
 /**
- * Represents event data.
+ * Represents drowsy event data.
  */
-export class EventData {
+export class DrowsyEventData {
     /** Event name (English) */
     name: string;
     /** Target date */
@@ -27,7 +27,7 @@ export class EventData {
      * Initialize EventData object.
      * @param data JSON data.
      */
-    constructor(data: JsonEventData) {
+    constructor(data: JsonDrowsyEventData) {
         this.day = new Date(data.day);
         this.name = data.name;
         this.bonus = data.bonus;
@@ -49,7 +49,7 @@ export class EventData {
  * @param overrideEvents Events. If now specified, default events is used. 
  * @returns Bonus value.
  */
-export function getEventBonus(date: Date, overrideEvents?: EventData[]): number {
+export function getDrowsyBonus(date: Date, overrideEvents?: DrowsyEventData[]): number {
     const evts = overrideEvents ?? events;
     for (const event of evts) {
         if (event.isInProgress(date)) {
@@ -59,7 +59,7 @@ export function getEventBonus(date: Date, overrideEvents?: EventData[]): number 
     return 1;
 }
 
-interface JsonEventData {
+interface JsonDrowsyEventData {
     /** Event name */
     name: string;
     /** Start date time (YYYY-MM-DD) */
@@ -68,7 +68,12 @@ interface JsonEventData {
     bonus: number;
 }
 
-const events = (events_ as JsonEventData[])
-    .map(x => new EventData(x));
+interface JsonEventData {
+    "drowsy": JsonDrowsyEventData[];
+}
+
+const events = (events_ as JsonEventData)
+    .drowsy
+    .map(x => new DrowsyEventData(x));
 
 export default events;
