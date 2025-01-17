@@ -127,6 +127,19 @@ export function getActiveHelpBonus(date: Date,
 }
 
 /**
+ * Get event bonus for the given event name and pokemon.
+ * @param name Event name.
+ * @returns Event bonus. `undefined` if not found or not target.
+ */
+export function getEventBonusIfTarget(name: string, pokemon: PokemonData): BonusEffects|undefined {
+    const event = events.bonus.find(x => x.name === name);
+    if (event === undefined) {
+        return undefined;
+    }
+    return event.isTarget(pokemon) ? event.effects : undefined;
+}
+
+/**
  * drowsy data in event.json
  */
 interface JsonDrowsyEventData {
@@ -154,7 +167,7 @@ interface TargetPokemon {
 /**
  * Bonus effects to be triggered.
  */
-interface BonusEffects {
+export interface BonusEffects {
     /** Skill probability bonus */
     skillTrigger: 1 | 1.25 | 1.5,
     /** Boosted main skill level */

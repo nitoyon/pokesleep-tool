@@ -1,3 +1,4 @@
+import { getEventBonusIfTarget } from '../data/events';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 
@@ -49,7 +50,7 @@ export interface EnergyParameter {
     /**
      * Event option.
      */
-    event: "none";
+    event: string;
 }
 
 type EnergyEvent = {
@@ -514,8 +515,8 @@ class Energy {
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
         if (lotteryCount > 0) {
-            const isEventBoosted = false;
-            const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
+            const eventBonus = getEventBonusIfTarget(param.event, this._iv.pokemon);
+            const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.speciality !== 'Skills') {
                 skillProbabilityAfterWakeup.once = 1 - skillNone;

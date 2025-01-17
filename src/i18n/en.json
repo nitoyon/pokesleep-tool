@@ -252,11 +252,12 @@
         "recipe bonus": "Recipe bonus",
         "mixed recipe": "Mixed",
         "average recipe level": "Average recipe level",
-        "event name (short)": "Holiday event",
-        "event name": "Holiday event",
-        "1st week": "1st week",
-        "2nd week": "2nd week",
-        "ongoing": "Ongoing",
+        "event": "Event",
+        "no event": "No event",
+        "events": {
+            "none": "None",
+            "super skill week": "Super Skill Week"
+        },
         "recipe bonus help": "Please specify the recipe bonus for frequently made meals. Recipe bonuse typically depends on the number of ingredients, but some recipes may have higher bonus values. For details, see the <raenonx>Recipes / Dishes (RaenonX)</raenonx>.",
         "recipe strength help": "This value is used to convert ingredients into strength amounts, assuming 80% are used in the recipe and 20% are surplus.",
         "recipe bonus list": "https://pks.raenonx.cc/en/meal",

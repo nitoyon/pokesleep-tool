@@ -1,12 +1,14 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Collapse, Dialog, DialogActions, DialogContent, FormControl, MenuItem,
-    Select, SelectChangeEvent, Switch, Typography
+    Select, SelectChangeEvent, Switch, Typography,
+    ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from './InfoButton';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import { getActiveHelpBonus } from '../../data/events';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 import { StrengthParameter } from '../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
@@ -103,6 +105,11 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, maxSkillLevel: e.target.checked});
     }, [onChange, value]);
+    const onEventChange = React.useCallback((e: any, val: string|null) => {
+        if (val !== null) {
+            onChange({...value, event: val});
+        }
+    }, [onChange, value]);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
     }, [onChange, value]);
@@ -124,6 +131,12 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     while (value.favoriteType.length < 3) {
         value.favoriteType.push('normal');
     }
+
+    const scheduledEvents = getActiveHelpBonus(new Date())
+        .map(x => x.name);
+    const eventToggles = ['none', ...scheduledEvents].map(x =>
+        <ToggleButton value={x} style={{ textTransform: 'none' }}>{t(`events.${x}`)}</ToggleButton>
+    );
 
     const isNotWhistle = (value.period !== 3);
     return <StyledSettingForm>
@@ -170,6 +183,13 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
             </section>
         </Collapse>
+        {scheduledEvents.length > 0 && <section className="mt">
+            <label>{t('event')}:</label>
+            <ToggleButtonGroup size="small" exclusive
+                value={value.event} onChange={onEventChange}>
+                {eventToggles}
+            </ToggleButtonGroup>
+        </section>}
         <section className="mt">
             <label>{t('level')}:</label>
             <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>

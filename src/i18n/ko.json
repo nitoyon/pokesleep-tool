@@ -238,11 +238,12 @@
         "recipe bonus": "레시피 보너스",
         "mixed recipe": "뒤범벅 레시피",
         "average recipe level": "평균 레시피 레벨",
-        "event name (short)": "홀리데이 이벤트",
-        "event name": "홀리데이 이벤트",
-        "1st week": "1주간",
-        "2nd week": "2주간",
-        "ongoing": "진행 중",
+        "event": "이벤트",
+        "no event": "이벤트 없음",
+        "events": {
+            "none": "없음",
+            "super skill week": "연발! 스킬 위크"
+        },
         "recipe bonus help": "자주 만드는 식사의 레시피 보너스를 지정하세요. 레시피 보너스는 일반적으로 재료의 수에 따라 달라지지만, 일부 레시피는 더 높은 보너스 값을 가질 수 있습니다. 자세한 내용은 <raenonx>레시피 정보 (포슬립 위키)</raenonx>을 참조하세요.",
         "recipe strength help": "이 값은 재료를 강도 양으로 변환하는 데 사용되며, 80%가 레시피에 사용되고 20%는 잉여로 간주된다고 가정합니다.",
         "recipe bonus list": "https://pks.raenonx.cc/kr/meal",
