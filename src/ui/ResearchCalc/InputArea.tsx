@@ -1,7 +1,7 @@
 import './InputArea.css';
 import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
-import { getEventBonus } from '../../data/events';
+import { getDrowsyBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
@@ -225,10 +225,10 @@ interface EventBonusProps {
 
 const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     const { t } = useTranslation();
-    const [todaysBonus, setTodaysBonus] = useState(getEventBonus(new Date()));
+    const [todaysBonus, setTodaysBonus] = useState(getDrowsyBonus(new Date()));
     React.useEffect(() => {
         const id = setInterval(function() {
-            setTodaysBonus(getEventBonus(new Date()));
+            setTodaysBonus(getDrowsyBonus(new Date()));
         }, 5000);
         return () => clearInterval(id);
     }, []);

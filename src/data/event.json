@@ -1,32 +1,19 @@
-[
-    {
-        "name": "GSD",
-        "day": "2025-01-13",
-        "bonus": 1.5
-    },
-    {
-        "name": "GSD",
-        "day": "2025-01-14",
-        "bonus": 3
-    },
-    {
-        "name": "GSD",
-        "day": "2025-01-15",
-        "bonus": 1.5
-    },
-    {
-        "name": "New Year",
-        "day": "2025-01-01",
-        "bonus": 3
-    },
-    {
-        "name": "New Year",
-        "day": "2025-01-02",
-        "bonus": 1.5
-    },
-    {
-        "name": "New Year",
-        "day": "2025-01-03",
-        "bonus": 1.5
-    }
-]
+{
+    "drowsy": [
+        {
+            "name": "GSD",
+            "day": "2025-01-13",
+            "bonus": 1.5
+        },
+        {
+            "name": "GSD",
+            "day": "2025-01-14",
+            "bonus": 3
+        },
+        {
+            "name": "GSD",
+            "day": "2025-01-15",
+            "bonus": 1.5
+        }
+    ]
+}
