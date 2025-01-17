@@ -1,4 +1,5 @@
 import events_ from './event.json';
+import { PokemonData, PokemonSpeciality, PokemonType } from './pokemons';
 
 /**
  * Represents drowsy event data.
@@ -44,13 +45,67 @@ export class DrowsyEventData {
 }
 
 /**
+ * Represents bonus event data.
+ */
+export class BonusEventData {
+    /** Event name (English) */
+    name: string;
+    /** Start date */
+    start: Date;
+    /** End date */
+    end: Date;
+    /** Target pokemon */
+    target: TargetPokemon;
+    /** Bonus effects to be triggered */
+    effects: BonusEffects;
+
+    /**
+     * Initialize BonusEventData object.
+     * @param data JSON data.
+     */
+    constructor(data: JsonBonusEventData) {
+        this.name = data.name;
+        this.start = new Date(data.start);
+        this.end = new Date(new Date(data.end).getTime() + 24 * 60 * 60 * 1000);
+        this.target = data.target;
+        this.effects = data.effects;
+    }
+
+    /**
+     * Returns whether the event is finished or not.
+     * @param date Checked date.
+     * @returns In progress or not.
+     */
+    isFinished(date: Date): boolean {
+        return date >= this.end;
+    }
+
+    /**
+     * Determines whether the given Pokémon is a target.
+     * @param pokemon The Pokémon to be tested.
+     * @returns `true` if the Pokémon is a target, otherwise `false`.
+     */
+    isTarget(pokemon: PokemonData): boolean {
+       if (this.target.speciality !== undefined &&
+            pokemon.speciality !== this.target.speciality) {
+            return false;
+        }
+        if (this.target.type !== undefined &&
+            pokemon.type !== this.target.type) {
+            return false;
+        }
+        return true;
+    }
+}
+
+/**
  * 
  * @param date Date to be checked.
- * @param overrideEvents Events. If now specified, default events is used. 
+ * @param overrideEvents Events. If not specified, default events is used. 
  * @returns Bonus value.
  */
 export function getDrowsyBonus(date: Date, overrideEvents?: DrowsyEventData[]): number {
-    const evts = overrideEvents ?? events;
+    const evts = overrideEvents ?? events.drowsy;
     for (const event of evts) {
         if (event.isInProgress(date)) {
             return event.bonus;
@@ -59,6 +114,21 @@ export function getDrowsyBonus(date: Date, overrideEvents?: DrowsyEventData[]): 
     return 1;
 }
 
+/**
+ * Get active help bonus to be held.
+ * @param date Date to be checked.
+ * @param overrideEvents Events. If not specified, default events is used. 
+ * @returns Active events.
+ */
+export function getActiveHelpBonus(date: Date,
+    overrideEvents?: BonusEventData[]): BonusEventData[] {
+    const evts = overrideEvents ?? events.bonus;
+    return evts.filter(x => !x.isFinished(date));
+}
+
+/**
+ * drowsy data in event.json
+ */
 interface JsonDrowsyEventData {
     /** Event name */
     name: string;
@@ -68,12 +138,68 @@ interface JsonDrowsyEventData {
     bonus: number;
 }
 
-interface JsonEventData {
-    "drowsy": JsonDrowsyEventData[];
+/**
+ * Target pokemon for the bonus
+ *
+ * When both properties are specified, both condition should be met.
+ * When neigher property is provided, all pokemon is the target.
+ */
+interface TargetPokemon {
+    /** Speciality of the pokemon */
+    speciality?: PokemonSpeciality;
+    /** Type of the pokemon */
+    type?: PokemonType;
 }
 
-const events = (events_ as JsonEventData)
-    .drowsy
-    .map(x => new DrowsyEventData(x));
+/**
+ * Bonus effects to be triggered.
+ */
+interface BonusEffects {
+    /** Skill probability bonus */
+    skillTrigger: 1 | 1.25 | 1.5,
+    /** Boosted main skill level */
+    skillLevel: 0 | 1 | 3,
+    /** Boosted ingredient count */
+    ingredient: 0 | 1,
+    /** Dream Shard Magnet S bonus */
+    dreamShard: 1 | 2;
+}
+
+/**
+ * bonus data in event.json
+ */
+interface JsonBonusEventData {
+    /** Event name */
+    name: string;
+    /** Start date time (YYYY-MM-DD) */
+    start: string;
+    /** End date time (YYYY-MM-DD) */
+    end: string;
+    /** target pokemons */
+    target: TargetPokemon;
+    /** Effects to be triggered */
+    effects: BonusEffects;
+}
+
+/**
+ * Type for event.json
+ */
+interface JsonEventData {
+    /** Drowsy power event days (GSD etc...) */
+    "drowsy": JsonDrowsyEventData[];
+    /** Bonus event days (Skill% up etc...) */
+    "bonus": JsonBonusEventData[];
+}
+
+class EventData {
+    drowsy: DrowsyEventData[];
+    bonus: BonusEventData[];
+    constructor(data: JsonEventData) {
+        this.drowsy = data.drowsy.map(x => new DrowsyEventData(x));
+        this.bonus = data.bonus.map(x => new BonusEventData(x));
+    }
+}
+
+const events = new EventData(events_ as JsonEventData);
 
 export default events;
