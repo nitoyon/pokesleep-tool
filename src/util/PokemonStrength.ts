@@ -1,4 +1,5 @@
 import pokemons from '../data/pokemons';
+import { BonusEffects, getActiveHelpBonus, getEventBonusIfTarget } from '../data/events';
 import { IngredientName, getDecendants, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields from '../data/fields';
@@ -184,7 +185,7 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        const isEventBoosted = false;
+        let eventBonus = getEventBonusIfTarget(param.event, this.iv.pokemon);
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -194,7 +195,7 @@ class PokemonStrength {
         const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
-        const ingEventAdd: number = (isEventBoosted && param.period !== 3 ? 1 : 0);
+        const ingEventAdd: number = (param.period !== 3 ? eventBonus?.ingredient ?? 0 : 0);
 
         const ing1 = {...rp.ingredient1, strength: 0};
         ing1.count = ingHelpCount * (1 / ingUnlock) * (ing1.count + ingEventAdd);
@@ -242,7 +243,7 @@ class PokemonStrength {
             (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
 
         // calc skill
-        const skillRatio = rp.skillRatio * (isEventBoosted ? 1.5 : 1);
+        const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         if (param.period !== 3 && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
@@ -256,7 +257,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param, berryStrength, isEventBoosted);
+                param, berryStrength, eventBonus);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -274,20 +275,20 @@ class PokemonStrength {
      * @param skillCount Skill count.
      * @param param Strength paramter.
      * @param berryStrength Strength per berry.
-     * @param isEventBoosted Whether boosted by the event.
+     * @param eventBonus Event bonus or undefined.
      * @returns [skillValue, skillStrength].
      * If skill is 'Dream Shard Magnet S', `skillValue` is the number of Dream Shards.
      * `skillStrength` is the strength got by the skill.
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        berryStrength: number, isEventBoosted: boolean
+        berryStrength: number, eventBonus: BonusEffects|undefined
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
-        if (isEventBoosted) {
+        if (eventBonus !== undefined) {
             const maxSkillLevel = isSkillLevelMax7(mainSkill) ? 7 : 6;
             skillLevel = Math.min(maxSkillLevel,
-                this.iv.skillLevel + 1);
+                this.iv.skillLevel + eventBonus.skillLevel);
         }
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;
@@ -302,9 +303,10 @@ class PokemonStrength {
             case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
+                return [mainSkillValue, 0];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
-                return [mainSkillValue, 0];
+                return [mainSkillValue * (eventBonus?.dreamShard ?? 1), 0];
 
             case "Charge Strength M":
             case "Charge Strength S":
@@ -473,8 +475,11 @@ export function loadStrengthParameter(): StrengthParameter {
         [1, 10, 20, 30, 40, 50, 55, 60].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
     }
+
+    const activeEvents = getActiveHelpBonus(new Date())
+        .map(x => x.name);
     if (typeof(json.event) === "string" &&
-        ["none"].includes(json.event)) {
+        ["none", ...activeEvents].includes(json.event)) {
         ret.event = json.event;
     }
     return ret;

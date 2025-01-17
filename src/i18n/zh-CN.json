@@ -243,11 +243,12 @@
         "recipe bonus": "食谱奖励",
         "mixed recipe": "拌拌食谱",
         "average recipe level": "平均食谱等级",
-        "event name (short)": "佳节活动",
-        "event name": "佳节活动",
-        "1st week": "第1周",
-        "2nd week": "第2周",
-        "ongoing": "进行中",
+        "event": "活动",
+        "no event": "没有活动",
+        "events": {
+            "none": "无",
+            "super skill week": "强化发动！技能周"
+        },
         "recipe bonus help": "请指定经常做的料理的食谱奖励。基本上，烹饪的食谱奖励根据原料的数量而变化，但有些食谱的奖励值高于食材的数量。详细奖励值请参考 <raenonx>食谱一览 (RaenonX)</raenonx> 。",
         "recipe strength help": "该设定值用于将食材转换为能量。当转化为能量时，假定80%的食材用于食谱中，20%作为剩余食材进行计算。",
         "recipe bonus list": "https://pks.raenonx.cc/zh/meal",
