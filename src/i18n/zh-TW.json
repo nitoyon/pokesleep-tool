@@ -14,6 +14,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add rufflet": {
+                    "headline": "更新了毛頭小鷹，勇士雄鷹的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "v2.4.0": {
                     "headline": "已更新 v2.4.0 中進行平衡調整的寶可夢數據。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
@@ -315,7 +319,8 @@
             "Cooking Power-Up S": "顯示鍋容量的增加量。技能的效果沒有換算成合計能量值。",
             "Tasty Chance S": "顯示漂亮成功的機率增加百分比。技能的效果沒有換算成合計能量值。",
             "Helper Boost": "顯示1只寶可夢的幫助次數（當有 3 只相同類型的寶可夢時）。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
-            "Berry Burst (Disguise)": "假設不會發生漂亮成功。其他寶可夢獲取的每個樹果以 100 能量（不含營地獎勵）進行計算。"
+            "Berry Burst (Disguise)": "假設不會發生漂亮成功。其他寶可夢獲取的每個樹果以 100 能量（不含營地獎勵）進行計算。",
+            "Berry Burst": "其他寶可夢獲取的每個樹果以 100 能量（不含營地獎勵）進行計算。"
         },
 
         "rate subskill and nature": "副技能/性格的評價值",
@@ -617,6 +622,8 @@
             "Leafeon": "葉伊布",
             "Glaceon": "冰伊布",
             "Gallade": "艾路雷朵",
+            "Rufflet": "毛頭小鷹",
+            "Braviary": "勇士雄鷹",
             "Sylveon": "仙子伊布",
             "Dedenne": "咚咚鼠",
             "Grubbin": "強顎雞母蟲",

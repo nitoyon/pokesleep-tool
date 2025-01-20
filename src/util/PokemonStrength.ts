@@ -322,6 +322,7 @@ class PokemonStrength {
                 return [mainSkillValue, mainSkillValue * strengthPerHelp * 5];
 
             case "Berry Burst (Disguise)":
+            case "Berry Burst":
                 const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
                 const strengthBurst =  (1 + param.fieldBonus / 100) * (
                     mainSkillValue * berryStrength * (this.isFavoriteBerry(param) ? 2 : 1) +

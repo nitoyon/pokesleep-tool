@@ -325,7 +325,7 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     const mainSkill = pokemonIv.pokemon.skill;
     let mainSkillValue: string;
     if (mainSkill.startsWith("Charge Strength") ||
-        mainSkill === "Berry Burst (Disguise)"
+        mainSkill.startsWith("Berry Burst")
     ) {
         mainSkillValue = formatWithComma(Math.round(result.skillValue));
     }

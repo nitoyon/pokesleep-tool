@@ -14,6 +14,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add rufflet": {
+                    "headline": "Rufflet and Braviary are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.4.0": {
                     "headline": "Updated the data for Pokémon with balance adjustments in v2.4.0.",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -324,7 +328,8 @@
             "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
             "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
             "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
-            "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses)."
+            "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
+            "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses)."
         },
 
         "rate subskill and nature": "Rate subskills and nature",
@@ -626,6 +631,8 @@
             "Leafeon": "Leafeon",
             "Glaceon": "Glaceon",
             "Gallade": "Gallade",
+            "Rufflet": "Rufflet",
+            "Braviary": "Braviary",
             "Sylveon": "Sylveon",
             "Dedenne": "Dedenne",
             "Grubbin": "Grubbin",
