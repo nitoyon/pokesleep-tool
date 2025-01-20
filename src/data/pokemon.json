@@ -4582,8 +4582,7 @@
         "ing3": {
             "name": "coffee",
             "c3": 2
-        },
-        "ratioNotFixed": true
+        }
     },
     {
         "id": 628,
@@ -4615,8 +4614,7 @@
         "ing3": {
             "name": "coffee",
             "c3": 2
-        },
-        "ratioNotFixed": true
+        }
     },
     {
         "id": 700,
