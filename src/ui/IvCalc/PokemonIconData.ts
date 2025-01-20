@@ -813,6 +813,25 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.3, color: '#0dba6d'},
         {x: 0.45, y: 0.4, w: 0.1, h: 0.15, r: 0.1, color: '#dd717c'},
     ],
+    // Rufflet
+    '627': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#a09fcd'},
+        {x: 0, y: -0.2, w: 1, h: 1, r: 0.2, color: '#feffe1'},
+        {x: 0.25, y: 0.35, w: 0.5, h: 0.35, r: 0.2, color: '#a09fcd'},
+        {x: 0.35, y: 0.6, w: 0.3, h: 0.2, r: 0.2, color: '#f8ee97'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#f8ee97'}
+    ],
+    // Braviary
+    '628': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#716d8f'},
+        {x: 0, y: 0, w: 0.2, h: 1, color: '#af3745'},
+        {x: 0.8, y: 0, w: 0.2, h: 1, color: '#af3745'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#e4d463'},
+        {x: 0, y: -0.2, w: 1, h: 0.6, r: 0.2, color: '#fffffd'},
+        {x: 0.3, y: 0.3, w: 0.4, h: 0.2, r: 0.1, color: '#f1e067'},
+        {x: 0.3, y: 0.1, w: 0.4, h: 0.2, r: 0.1, color: '#aa3745'},
+        {x: 0.3, y: 0.25, w: 0.4, h: 0.1, color: '#66a0ea'}
+    ],
     // Sylveon
     '700': [
         {x: 0, y: 0, w: 1, h: 1, color: '#ffffff'},
