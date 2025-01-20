@@ -4553,6 +4553,72 @@
         }
     },
     {
+        "id": 627,
+        "name": "Rufflet",
+        "sleepType": "slumbering",
+        "type": "flying",
+        "speciality": "Skills",
+        "skill": "Berry Burst",
+        "fp": 5,
+        "frequency": 3800,
+        "ingRatio": 12.5,
+        "skillRatio": 3.1,
+        "ancestor": 627,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "coffee",
+            "c3": 2
+        },
+        "ratioNotFixed": true
+    },
+    {
+        "id": 628,
+        "name": "Braviary",
+        "sleepType": "slumbering",
+        "type": "flying",
+        "speciality": "Skills",
+        "skill": "Berry Burst",
+        "fp": 12,
+        "frequency": 2400,
+        "ingRatio": 12.1,
+        "skillRatio": 3.2,
+        "ancestor": 627,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "sausage",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "corn",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "coffee",
+            "c3": 2
+        },
+        "ratioNotFixed": true
+    },
+    {
         "id": 700,
         "name": "Sylveon",
         "sleepType": "snoozing",
