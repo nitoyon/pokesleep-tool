@@ -1,6 +1,6 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
-import PokemonRp from '../../util/PokemonRp';
+import PokemonRp, { rpEstimateThreshold } from '../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { createStrengthParameter } from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
@@ -11,8 +11,6 @@ import IngredientIcon from './IngredientIcon';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { styled } from '@mui/system';
 import { Trans, useTranslation } from 'react-i18next';
-
-const rpEstimateThreshold = 61;
 
 const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: number}) => {
     const { t } = useTranslation();
