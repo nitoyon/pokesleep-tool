@@ -1,8 +1,11 @@
 import React from 'react';
+import PokemonIv from '../../util/PokemonIv';
+import { rpEstimateThreshold } from '../../util/PokemonRp';
 import { useTranslation } from 'react-i18next';
 
-const RpLabel = React.memo(({rp, isEstimated}: {rp: number, isEstimated: boolean}) => {
+const RpLabel = React.memo(({rp, iv}: {rp: number, iv: PokemonIv}) => {
     const { t } = useTranslation();
+    const isEstimated = iv.level > rpEstimateThreshold;
 
     return (<div>
         <span style={{

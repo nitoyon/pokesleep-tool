@@ -5,7 +5,7 @@ import RpLabel from './RpLabel';
 import PokemonIcon from './PokemonIcon';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import PokemonIv from '../../util/PokemonIv';
-import PokemonRp, { rpEstimateThreshold } from '../../util/PokemonRp';
+import PokemonRp from '../../util/PokemonRp';
 import { Button, Dialog, DialogActions, TextField }  from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
@@ -98,7 +98,7 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
 
     return <>
         <article>
-            <RpLabel rp={rp} isEstimated={boxItem.iv.level >= rpEstimateThreshold}/>
+            <RpLabel rp={rp} iv={boxItem.iv}/>
             <div className="icon"><PokemonIcon idForm={boxItem.iv.idForm} size={80}/></div>
             <div className="nickname">
                 <TextField variant="standard" size="small" value={displayNickName}

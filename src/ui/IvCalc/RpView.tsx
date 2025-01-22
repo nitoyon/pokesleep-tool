@@ -2,7 +2,7 @@ import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRp, { rpEstimateThreshold } from '../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
-import PokemonStrength, { createStrengthParameter } from '../../util/PokemonStrength';
+import PokemonStrength, { StrengthParameter, createStrengthParameter } from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
 import RpLabel from './RpLabel';
@@ -36,7 +36,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
     const rp = new PokemonRp(pokemonIv);
     const rpResult = rp.calculate();
 
-    const strengthParameter = createStrengthParameter({
+    const strengthParameter: StrengthParameter = createStrengthParameter({
         helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
     });
     const strength = new PokemonStrength(pokemonIv, strengthParameter).calculate();
@@ -46,7 +46,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     return (<>
         <div>
-            <RpLabel rp={rpResult.rp} isEstimated={pokemonIv.level >= rpEstimateThreshold}/>
+            <RpLabel rp={rpResult.rp} iv={pokemonIv}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
                 berryProb={round1(rp.berryRatio * 100)}
