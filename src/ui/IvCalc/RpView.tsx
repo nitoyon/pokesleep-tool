@@ -46,7 +46,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     return (<>
         <div>
-            <RpLabel rp={rpResult.rp} iv={pokemonIv}/>
+            <RpLabel rp={rpResult.rp} iv={pokemonIv} showIcon/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
                 berryProb={round1(rp.berryRatio * 100)}
