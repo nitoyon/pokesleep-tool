@@ -1,19 +1,35 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
+import InfoButton from './InfoButton';
 import { rpEstimateThreshold } from '../../util/PokemonRp';
 import { useTranslation } from 'react-i18next';
 
-const RpLabel = React.memo(({rp, iv}: {rp: number, iv: PokemonIv}) => {
+const RpLabel = React.memo(({rp, iv, showIcon, onClick}: {
+    rp: number,
+    iv: PokemonIv,
+    showIcon?: boolean,
+    onClick?: () => {},
+}) => {
     const { t } = useTranslation();
     const isEstimated = iv.level > rpEstimateThreshold;
 
-    return (<div>
+    const clickHandler = React.useCallback(() => {
+        if (onClick !== undefined) {
+            onClick();
+        }
+    }, []);
+
+    return (<div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'start',
+    }}>
         <span style={{
             color: '#fd775d',
             fontWeight: 'bold',
             paddingRight: '.4rem',
             fontSize: '.8rem',
-            verticalAlign: '15%',
             display: 'inline-block',
             transform: 'scale(1, 0.9)',
         }}>{t('rp')}</span>
@@ -30,9 +46,9 @@ const RpLabel = React.memo(({rp, iv}: {rp: number, iv: PokemonIv}) => {
             fontSize: '0.7rem',
             borderRadius: '0.5rem',
             marginLeft: '.5rem',
-            verticalAlign: '20%',
             padding: '0 0.3rem',
         }}>{t('estimated value')}</span>}
+        {showIcon && <InfoButton onClick={clickHandler}/>}
     </div>);
 });
 
