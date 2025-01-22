@@ -4,6 +4,8 @@ import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 
+export const rpEstimateThreshold = 61;
+
 export const ingredientStrength: {[ing in IngredientName]: number} = {
     "leek": 185,
     "mushroom": 167,
