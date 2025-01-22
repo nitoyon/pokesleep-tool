@@ -1,6 +1,6 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
-import PokemonRp, { rpEstimateThreshold } from '../../util/PokemonRp';
+import PokemonRp, { RpStrengthResult, rpEstimateThreshold } from '../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { StrengthParameter, createStrengthParameter } from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
@@ -34,7 +34,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
     }, [setRpInfoOpen]);
 
     const rp = new PokemonRp(pokemonIv);
-    const rpResult = rp.calculate();
+    const rpResult: RpStrengthResult = rp.calculate();
 
     const strengthParameter: StrengthParameter = createStrengthParameter({
         helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
@@ -66,7 +66,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
             <RpInfoDialog open={rpInfoOpen} onClose={onRpInfoClose}
-                rp={rp} rpType={rpType}/>
+                rp={rp} rpResult={rpResult} rpType={rpType}/>
         </div>
         <RaderChart width={width} height={raderHeight} speciality={pokemon.speciality}
             berry={rpResult.berryRp / 2000}
@@ -137,10 +137,11 @@ const StyledRpDialog = styled(Dialog)({
     '& span.box5': { background: '#ce3fa3' },
 });
 
-const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
+const RpInfoDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     open: boolean,
     onClose: () => void,
     rp: PokemonRp,
+    rpResult: RpStrengthResult,
     rpType: "berry"|"ingredient"|"skill",
 }) => {
     const { t } = useTranslation();
@@ -153,7 +154,7 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
     const param5 = bonus.toString();
     if (rpType === "berry") {
         color = '#24d76a';
-        rpVal = round1(rp.berryRp * bonus);
+        rpVal = round1(rpResult.berryRp);
         param2 = round1(rp.berryRatio * 100) + '%';
         desc2 = t('berry rate');
         param3 = rp.berryStrength.toString();
@@ -163,7 +164,7 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
     }
     else if (rpType === "ingredient") {
         color = '#fab855';
-        rpVal = round1(rp.ingredientRp * bonus);
+        rpVal = round1(rpResult.ingredientRp);
         param2 = round1(rp.ingredientRatio * 100) + '%';
         desc2 = t('ingredient rate');
         param3 = round1(rp.ingredientEnergy);
@@ -173,7 +174,7 @@ const RpInfoDialog = React.memo(({open, onClose, rp, rpType}: {
     }
     else {
         color = '#44a2fd';
-        rpVal = round1(rp.skillRp * bonus);
+        rpVal = round1(rpResult.skillRp);
         param2 = round1(rp.skillRatio * 100) + '%';
         desc2 = t('skill rate');
         param3 = formatWithComma(rp.skillValue);
