@@ -8,7 +8,7 @@ const RpLabel = React.memo(({rp, iv, showIcon, onClick}: {
     rp: number,
     iv: PokemonIv,
     showIcon?: boolean,
-    onClick?: () => {},
+    onClick?: () => void,
 }) => {
     const { t } = useTranslation();
     const isEstimated = iv.level > rpEstimateThreshold;

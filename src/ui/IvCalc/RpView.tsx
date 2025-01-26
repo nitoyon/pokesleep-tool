@@ -14,9 +14,16 @@ import { Trans, useTranslation } from 'react-i18next';
 
 const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: number}) => {
     const { t } = useTranslation();
+    const [rpInfoOpen, setRpInfoOpen] = React.useState(false);
     const [rpValueOpen, setRpValueOpen] = React.useState(false);
     const [rpType, setRpType] = React.useState<"berry"|"ingredient"|"skill">("berry");
 
+    const onRpInfoClick = React.useCallback(() => {
+        setRpInfoOpen(true);
+    }, []);
+    const onRpInfoClose = React.useCallback(() => {
+        setRpInfoOpen(false);
+    }, []);
     const onBerryInfoClick = React.useCallback(() => {
         setRpValueOpen(true);
         setRpType("berry");
@@ -46,7 +53,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     return (<>
         <div>
-            <RpLabel rp={rpResult.rp} iv={pokemonIv} showIcon/>
+            <RpLabel rp={rpResult.rp} iv={pokemonIv} showIcon onClick={onRpInfoClick}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
                 berryProb={round1(rp.berryRatio * 100)}
@@ -65,6 +72,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                 skillProb={round1(rp.skillRatio * 100)}
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
+            <RpInfoDialog open={rpInfoOpen} onClose={onRpInfoClose}/>
             <RpValueDialog open={rpValueOpen} onClose={onRpValueClose}
                 rp={rp} rpResult={rpResult} rpType={rpType}/>
         </div>
@@ -74,6 +82,68 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
             skill={rpResult.skillRp / 2000}/>
     </>);
 });
+
+const RpInfoDialog = React.memo(({open, onClose}: {
+    open: boolean,
+    onClose: () => void,
+}) => {
+    const { t } = useTranslation();
+    return <StyledRpInfoDialog open={open} onClose={onClose}>
+        <article>
+            <h2>{t('rp')}</h2>
+            <p><Trans i18nKey="rp formula" components={{
+                link: <a href={t('rp formula doc url')}>{t('rp formula doc title')}</a>
+            }}/></p>
+            <p>{t('estimated beyond level', {level: rpEstimateThreshold})}</p>
+
+            <h2>{t('strength, ingredients, skill count')}</h2>
+            <p>{t('the amount under the following condition')}</p>
+            <ul>
+                <li>{t('period')}: {t('1day')}</li>
+                <li>{t('favorite berry')}: {t('none')}</li>
+                <li>{t('good camp ticket')}: {t('none')}</li>
+                <li>{t('area bonus')}: 0%</li>
+                <li>{t('helping bonus')}: {t('none')}</li>
+                <li>{t('skills.Energy for Everyone S')}: 18 × 3</li>
+                <li>{t('sleep score')}: 100</li>
+                <li>{t('tap frequency')} ({t('awake')}): {t('every minute')}</li>
+                <li>{t('tap frequency')} ({t('asleep')}): {t('none')}</li>
+            </ul>
+            <p>{t('use strength tab if you want to change these condition')}</p>
+            <p>{t('estimated beyond level', {level: rpEstimateThreshold})}</p>
+        </article>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledRpInfoDialog>;
+});
+
+const StyledRpInfoDialog = styled(Dialog)({
+    '& article': {
+        margin: '1rem 1rem 0 1rem',
+        '& > h2': {
+            fontSize: '1rem',
+            margin: '0.8rem 0 0 0',
+            lineHeight: 1.2,
+            '&:first-of-type': {
+                margin: 0,
+            }
+        },
+        '& > p': {
+            fontSize: '0.8rem',
+            margin: '0.3rem 0',
+        },
+        '& > ul': {
+            margin: '0.5rem 0',
+            padding: '0 0 0 1.5rem',
+            '& > li': {
+                margin: '0.2rem 0',
+                fontSize: '0.8rem',
+            },
+        },
+    }
+});
+
 
 const StyledRpDialog = styled(Dialog)({
     '& header': {

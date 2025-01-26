@@ -184,6 +184,9 @@
         "strength2": "エナジー",
         "rating": "個体評価",
 
+        "strength, ingredients, skill count": "エナジー、食材数、スキル回数",
+        "the amount under the following condition": "次の条件のときの量を表示しています。",
+        "use strength tab if you want to change these condition": "これらの条件を変えたい場合は、[$t(strength2)] タブを利用してください。",
         "helps per 5 hours": "5時間のおてつだい回数",
         "berry rate": "きのみ確率",
         "berry strength": "きのみエナジー (きのみの種類とポケモンのレベルで決まる値)",
