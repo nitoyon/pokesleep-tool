@@ -347,6 +347,7 @@
         "sub skills": "副技能",
         "unlocked only": "只包含已解锁",
         "total": "合计",
+        "total strength": "总能量",
         "skill count": "技能次数",
         
         "select subskill at level xxx": "请选择 <level/> 的副技能",

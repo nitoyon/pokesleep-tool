@@ -347,6 +347,7 @@
         "sub skills": "サブスキル",
         "unlocked only": "解放済みのみ",
         "total": "合計",
+        "total strength": "合計エナジー",
         "skill count": "スキル回数",
 
         "select subskill at level xxx": "<level/> のサブスキルを選択してください",

@@ -76,7 +76,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
         return ret;
     }, [t]);
 
-    if (sortConfig.sort !== "berry" &&
+    if (sortConfig.sort !== "total strength" &&
+        sortConfig.sort !== "berry" &&
         sortConfig.sort !== "ingredient" &&
         sortConfig.sort !== "skill count"
     ) {
@@ -97,7 +98,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     <MenuItem value={100}>Lv. 100</MenuItem>
                 </SelectEx>
             </span>
-            {sortConfig.sort === "berry" && <span className="field">
+            {(sortConfig.sort === "berry" || sortConfig.sort === "total strength") &&
+            <span className="field">
                 <SelectEx value={parameter.fieldIndex} onChange={onFieldChange}
                     sx={{padding: '0 .2rem', fontSize: '0.8rem'}}>
                 {fieldMenus}

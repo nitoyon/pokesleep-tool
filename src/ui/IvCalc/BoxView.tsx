@@ -84,7 +84,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
     const footerSortTypes = React.useMemo(() => 
-        ["level", "name", "pokedexno", "rp", "berry", "ingredient", "skill count"], []);
+        ["level", "name", "pokedexno", "rp", "total strength", "berry", "ingredient", "skill count"], []);
         
     return <>
         <div style={{
@@ -182,6 +182,17 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
             b.id - a.id), ''];
     }
+    else if (sort === "total strength") {
+        const cache: {[id: string]: number} = {};
+        filtered.forEach((item) => {
+            const strength = new PokemonStrength(item.iv, parameter);
+            cache[item.id] = strength.calculate().totalStrength;
+        });
+        return [filtered.sort((a, b) =>
+            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.id - a.id), ''];
+    }
     else if (sort === "berry") {
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
@@ -243,7 +254,7 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
 }
 
 /** Represents the field by which the box are sorted.  */
-export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"berry"|"ingredient"|"skill count";
+export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berry"|"ingredient"|"skill count";
 
 /**
  * Pokemon box sort configuration.
@@ -400,7 +411,7 @@ function loadBoxSortConfig(): BoxSortConfig {
         return ret;
     }
     if (typeof(json.sort) === "string" &&
-        ["level", "name", "pokedexno", "rp", "berry", "ingredient", "skill count"].includes(json.sort)) {
+        ["level", "name", "pokedexno", "rp", "berry", "total strength", "ingredient", "skill count"].includes(json.sort)) {
         ret.sort = json.sort;
     }
     if (typeof(json.ingredient) === "string" &&
