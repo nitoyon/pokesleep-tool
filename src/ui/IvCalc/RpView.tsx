@@ -1,18 +1,18 @@
 import React from 'react';
-import PokemonIv from '../../util/PokemonIv';
 import PokemonRp, { RpStrengthResult, rpEstimateThreshold } from '../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { StrengthParameter, createStrengthParameter } from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
 import RaderChart from './RaderChart';
 import RpLabel from './RpLabel';
+import IvState from './IvState';
 import { Button, Dialog, DialogActions } from '@mui/material';
 import IngredientIcon from './IngredientIcon';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { styled } from '@mui/system';
 import { Trans, useTranslation } from 'react-i18next';
 
-const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: number}) => {
+const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
     const { t } = useTranslation();
     const [rpInfoOpen, setRpInfoOpen] = React.useState(false);
     const [rpValueOpen, setRpValueOpen] = React.useState(false);
@@ -40,6 +40,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
         setRpValueOpen(false);
     }, [setRpValueOpen]);
 
+    const pokemonIv = state.pokemonIv;
     const rp = new PokemonRp(pokemonIv);
     const rpResult: RpStrengthResult = rp.calculate();
 
@@ -50,10 +51,13 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
 
     const pokemon = rp.pokemon;
     const raderHeight = 400;
+    const isError = state.lowerTabIndex === 1 && state.selectedItemId >= 0 &&
+        (state.parameter.level > 0 || state.parameter.fieldIndex >= 0);
 
     return (<>
         <div>
-            <RpLabel rp={rpResult.rp} iv={pokemonIv} showIcon onClick={onRpInfoClick}/>
+            <RpLabel rp={rpResult.rp} iv={pokemonIv} showIcon isError={isError}
+                onClick={onRpInfoClick}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
                 berryProb={round1(rp.berryRatio * 100)}
@@ -72,7 +76,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                 skillProb={round1(rp.skillRatio * 100)}
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
-            <RpInfoDialog open={rpInfoOpen} onClose={onRpInfoClose}/>
+            <RpInfoDialog isError={isError} open={rpInfoOpen} onClose={onRpInfoClose}/>
             <RpValueDialog open={rpValueOpen} onClose={onRpValueClose}
                 rp={rp} rpResult={rpResult} rpType={rpType}/>
         </div>
@@ -83,11 +87,26 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
     </>);
 });
 
-const RpInfoDialog = React.memo(({open, onClose}: {
+const RpInfoDialog = React.memo(({isError, open, onClose}: {
+    isError: boolean,
     open: boolean,
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
+    if (!open) {
+        return <></>;
+    }
+    if (isError) {
+        return <StyledRpInfoDialog open={open} onClose={onClose}>
+            <article>
+                {t('go to strength tab to show the current condition values')}
+            </article>
+            <DialogActions>
+                <Button onClick={onClose}>{t('close')}</Button>
+            </DialogActions>
+        </StyledRpInfoDialog>;
+    }
+
     return <StyledRpInfoDialog open={open} onClose={onClose}>
         <article>
             <h2>{t('rp')}</h2>
@@ -215,6 +234,10 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     rpType: "berry"|"ingredient"|"skill",
 }) => {
     const { t } = useTranslation();
+    if (!open) {
+        return <></>;
+    }
+
     let color = "", rpVal = "", title = t(rpType);
     const param1 = round2(rp.helpCountPer5Hour);
     const desc1 = t('helps per 5 hours');

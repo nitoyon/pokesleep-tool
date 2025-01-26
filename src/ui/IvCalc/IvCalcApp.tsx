@@ -84,7 +84,7 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
-            {state.tabIndex === 0 && <RpView pokemonIv={state.pokemonIv} width={width}/>}
+            {state.tabIndex === 0 && <RpView state={state} width={width}/>}
             {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
             {state.pokemonIv.pokemon.ratioNotFixed && <div style={{
