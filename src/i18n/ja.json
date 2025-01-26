@@ -184,6 +184,10 @@
         "strength2": "エナジー",
         "rating": "個体評価",
 
+        "go to strength tab to show the current condition values": "現在の条件でのエナジー、食材数、スキル回数を表示するには、[$t(strength2)] タブに移動してください。",
+        "strength, ingredients, skill count": "エナジー、食材数、スキル回数",
+        "the amount under the following condition": "次の条件のときの量を表示しています。",
+        "use strength tab if you want to change these condition": "これらの条件を変えたい場合は、[$t(strength2)] タブを利用してください。",
         "helps per 5 hours": "5時間のおてつだい回数",
         "berry rate": "きのみ確率",
         "berry strength": "きのみエナジー (きのみの種類とポケモンのレベルで決まる値)",
@@ -197,7 +201,7 @@
         "rp formula": "SP 計算式は Mathcode の Goobliss, Harold, Jeancory が解明したものを利用しています。計算式についての詳細は、ポケスリ攻略の <link/> をご覧ください。",
         "rp formula doc url": "https://pks.raenonx.cc/ja/docs/view/help/rp-model",
         "rp formula doc title": "SP計算モデルの解説",
-        "rp estimate": "レベル {{level}} 以降の SP は推測値です。",
+        "estimated beyond level": "レベル {{level}} 以降の値は推測値です。",
         "estimated value": "推測値",
         "ratio is not fixed": "このポケモンの食材確率・スキル確率は未確定であるため、暫定の値を表示しています。",
 
@@ -239,6 +243,7 @@
         "area bonus": "フィールドボーナス",
         "favorite berry": "好みきのみ",
         "helping bonus": "おてつだいボーナス",
+        "helping bonus other pokemon": "他ポケモンのおてつだいボーナス",
         "good camp ticket": "いいキャンプチケット",
         "good camp ticket (short)": "キャンチケ",
         "energy": "げんき",
