@@ -197,7 +197,7 @@
         "rp formula": "SP 計算公式使用的是 Mathcode 的 Goobliss、Harold 和 Jeancory 的研究成果。關於計算公式的詳情，請瀏覽ポケスリ攻略的 <link/> 。",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "SP計算模型的解説",
-        "rp estimate": " {{level}} 級以後的SP為推測值",
+        "estimated beyond level": "級別 {{level}} 以後的值是估算值。",
         "estimated value": "推測値",
         "ratio is not fixed": "該寶可夢的食材機率和技能確率尚未確定，因此顯示的是臨時值。",
 

@@ -206,7 +206,7 @@
         "rp formula": "This site is using RP formula elucidated by Goobliss, Harold, Jeancory in the Mathcode server on Discord. For more details about the formula, please read <link/> on Pokémon Sleep Info Wiki.",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
-        "rp estimate": "RP beyond level {{level}} is estimated value.",
+        "estimated beyond level": "The value beyond level {{level}} is estimated.",
         "estimated value": "Estimated",
         "ratio is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
 

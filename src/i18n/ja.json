@@ -197,7 +197,7 @@
         "rp formula": "SP 計算式は Mathcode の Goobliss, Harold, Jeancory が解明したものを利用しています。計算式についての詳細は、ポケスリ攻略の <link/> をご覧ください。",
         "rp formula doc url": "https://pks.raenonx.cc/ja/docs/view/help/rp-model",
         "rp formula doc title": "SP計算モデルの解説",
-        "rp estimate": "レベル {{level}} 以降の SP は推測値です。",
+        "estimated beyond level": "レベル {{level}} 以降の値は推測値です。",
         "estimated value": "推測値",
         "ratio is not fixed": "このポケモンの食材確率・スキル確率は未確定であるため、暫定の値を表示しています。",
 

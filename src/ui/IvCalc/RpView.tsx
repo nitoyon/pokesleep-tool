@@ -216,7 +216,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
             <p><Trans i18nKey="rp formula" components={{
                 link: <a href={t('rp formula doc url')}>{t('rp formula doc title')}</a>
             }}/></p>
-            <p>{t('rp estimate', {level: rpEstimateThreshold})}</p>
+            <p>{t('estimated beyond level', {level: rpEstimateThreshold})}</p>
         </footer>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
