@@ -14,24 +14,24 @@ import { Trans, useTranslation } from 'react-i18next';
 
 const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: number}) => {
     const { t } = useTranslation();
-    const [rpInfoOpen, setRpInfoOpen] = React.useState(false);
+    const [rpValueOpen, setRpValueOpen] = React.useState(false);
     const [rpType, setRpType] = React.useState<"berry"|"ingredient"|"skill">("berry");
 
     const onBerryInfoClick = React.useCallback(() => {
-        setRpInfoOpen(true);
+        setRpValueOpen(true);
         setRpType("berry");
-    }, [setRpInfoOpen]);
+    }, [setRpValueOpen]);
     const onIngInfoClick = React.useCallback(() => {
-        setRpInfoOpen(true);
+        setRpValueOpen(true);
         setRpType("ingredient");
-    }, [setRpInfoOpen]);
+    }, [setRpValueOpen]);
     const onSkillInfoClick = React.useCallback(() => {
-        setRpInfoOpen(true);
+        setRpValueOpen(true);
         setRpType("skill");
-    }, [setRpInfoOpen]);
-    const onRpInfoClose = React.useCallback(() => {
-        setRpInfoOpen(false);
-    }, [setRpInfoOpen]);
+    }, [setRpValueOpen]);
+    const onRpValueClose = React.useCallback(() => {
+        setRpValueOpen(false);
+    }, [setRpValueOpen]);
 
     const rp = new PokemonRp(pokemonIv);
     const rpResult: RpStrengthResult = rp.calculate();
@@ -65,7 +65,7 @@ const RpView = React.memo(({pokemonIv, width}: {pokemonIv: PokemonIv, width: num
                 skillProb={round1(rp.skillRatio * 100)}
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
-            <RpInfoDialog open={rpInfoOpen} onClose={onRpInfoClose}
+            <RpValueDialog open={rpValueOpen} onClose={onRpValueClose}
                 rp={rp} rpResult={rpResult} rpType={rpType}/>
         </div>
         <RaderChart width={width} height={raderHeight} speciality={pokemon.speciality}
@@ -137,7 +137,7 @@ const StyledRpDialog = styled(Dialog)({
     '& span.box5': { background: '#ce3fa3' },
 });
 
-const RpInfoDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
+const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     open: boolean,
     onClose: () => void,
     rp: PokemonRp,
