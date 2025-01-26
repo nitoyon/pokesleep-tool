@@ -184,6 +184,7 @@
         "strength2": "エナジー",
         "rating": "個体評価",
 
+        "go to strength tab to show the current condition values": "現在の条件でのエナジー、食材数、スキル回数を表示するには、[$t(strength2)] タブに移動してください。",
         "strength, ingredients, skill count": "エナジー、食材数、スキル回数",
         "the amount under the following condition": "次の条件のときの量を表示しています。",
         "use strength tab if you want to change these condition": "これらの条件を変えたい場合は、[$t(strength2)] タブを利用してください。",

@@ -179,6 +179,7 @@
         "strength2": "에너지",
         "rating": "개체값 평가",
 
+        "go to strength tab to show the current condition values": "현재 조건에 해당하는 에너지, 재료 수, 스킬 횟수를 표시하려면 [$t(strength2)] 탭으로 이동하세요.",
         "strength, ingredients, skill count": "에너지, 재료 수, 스킬 횟수",
         "the amount under the following condition": "다음 조건에서의 양을 표시하고 있습니다.",
         "use strength tab if you want to change these condition": "이 조건을 변경하려면 [$t(strength2)] 탭을 사용하세요.",

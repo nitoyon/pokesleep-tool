@@ -193,6 +193,7 @@
         "strength2": "Strength",
         "rating": "Rating",
 
+        "go to strength tab to show the current condition values": "Please go to the [$t(strength2)] tab to display the strength, ingredients and skill count corresponding to the current conditions.",
         "strength, ingredients, skill count": "Strength, ingredients and skill count",
         "the amount under the following condition": "We are showing the amount under the following conditions.",
         "use strength tab if you want to change these condition": "If you want to change these conditions, please use the [$t(strength2)] tab.",        "helps per 5 hours": "Helps per 5 hours",

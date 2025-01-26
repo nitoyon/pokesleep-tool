@@ -4,10 +4,11 @@ import InfoButton from './InfoButton';
 import { rpEstimateThreshold } from '../../util/PokemonRp';
 import { useTranslation } from 'react-i18next';
 
-const RpLabel = React.memo(({rp, iv, showIcon, onClick}: {
+const RpLabel = React.memo(({rp, iv, showIcon, isError, onClick}: {
     rp: number,
     iv: PokemonIv,
     showIcon?: boolean,
+    isError?: boolean,
     onClick?: () => void,
 }) => {
     const { t } = useTranslation();
@@ -17,7 +18,7 @@ const RpLabel = React.memo(({rp, iv, showIcon, onClick}: {
         if (onClick !== undefined) {
             onClick();
         }
-    }, []);
+    }, [onClick]);
 
     return (<div style={{
         display: 'flex',
@@ -48,7 +49,7 @@ const RpLabel = React.memo(({rp, iv, showIcon, onClick}: {
             marginLeft: '.5rem',
             padding: '0 0.3rem',
         }}>{t('estimated value')}</span>}
-        {showIcon && <InfoButton onClick={clickHandler}/>}
+        {showIcon && <InfoButton onClick={clickHandler} isError={isError}/>}
     </div>);
 });
 
