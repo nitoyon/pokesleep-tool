@@ -60,7 +60,7 @@ const PokemonFilterFooter = React.memo(({
             onClick={onFilterButtonClick}>
             <SearchIcon style={{paddingRight: '0'}}/>{t(value.isFiltered ? 'on' : 'off')}
         </RoundedButton>
-        <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "8rem", textAlign: 'left'}}
+        <RoundedButton style={{padding: '.2rem .8rem', marginRight: '.5rem', width: "9rem", textAlign: 'left'}}
             onClick={onSortButtonClick} ref={sortMenuAnchorRef}>
             <SortIcon style={{paddingRight: '.4rem'}}/>{t(value.sort)}
         </RoundedButton>
