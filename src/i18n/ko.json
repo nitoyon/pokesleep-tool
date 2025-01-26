@@ -179,6 +179,9 @@
         "strength2": "에너지",
         "rating": "개체값 평가",
 
+        "strength, ingredients, skill count": "에너지, 재료 수, 스킬 횟수",
+        "the amount under the following condition": "다음 조건에서의 양을 표시하고 있습니다.",
+        "use strength tab if you want to change these condition": "이 조건을 변경하려면 [$t(strength2)] 탭을 사용하세요.",
         "helps per 5 hours": "5시간 동안의 도우미 횟수",
         "berry rate": "열매 확률",
         "berry strength": "열매 에너지 (열매 종류와 포켓몬의 레벨로 결정되는 값)",

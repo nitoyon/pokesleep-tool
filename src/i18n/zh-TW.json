@@ -184,6 +184,9 @@
         "strength2": "能量",
         "rating": "個体評價",
 
+        "strength, ingredients, skill count": "能量、食材數、技能次數",
+        "the amount under the following condition": "顯示在以下條件下的數量。",
+        "use strength tab if you want to change these condition": "如果您想更改這些條件，請使用[$t(strength2)] 標籤。",
         "helps per 5 hours": "5小時的幫助次數",
         "berry rate": "樹果機率",
         "berry strength": "樹果能量 (由樹果類型和寶可夢等級決定)",
