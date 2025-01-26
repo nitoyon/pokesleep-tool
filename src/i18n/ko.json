@@ -179,6 +179,10 @@
         "strength2": "에너지",
         "rating": "개체값 평가",
 
+        "go to strength tab to show the current condition values": "현재 조건에 해당하는 에너지, 재료 수, 스킬 횟수를 표시하려면 [$t(strength2)] 탭으로 이동하세요.",
+        "strength, ingredients, skill count": "에너지, 재료 수, 스킬 횟수",
+        "the amount under the following condition": "다음 조건에서의 양을 표시하고 있습니다.",
+        "use strength tab if you want to change these condition": "이 조건을 변경하려면 [$t(strength2)] 탭을 사용하세요.",
         "helps per 5 hours": "5시간 동안의 도우미 횟수",
         "berry rate": "열매 확률",
         "berry strength": "열매 에너지 (열매 종류와 포켓몬의 레벨로 결정되는 값)",
@@ -192,7 +196,7 @@
         "rp formula": "SP 계산식은 Mathcode의 Goobliss, Harold, Jeancory가 연구한 것을 사용합니다. 계산식에 대한 자세한 내용은 포슬립 위키의 문서 <link/>을 참조하세요.",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
-        "rp estimate": "레벨 {{level}} 이후의 SP는 추정치입니다.",
+        "estimated beyond level": "레벨 {{level}} 이후의 값은 추정값입니다.",
         "estimated value": "추정치",
         "ratio is not fixed": "이 포켓몬의 재료 확률과 스킬 확률은 아직 확정되지 않았기 때문에 임시 값을 표시하고 있습니다.",
 
@@ -234,6 +238,7 @@
         "area bonus": "필드 보너스",
         "favorite berry": "선호하는 열매",
         "helping bonus": "도우미 보너스",
+        "helping bonus other pokemon": "다른 포켓몬의 도우미 보너스",
         "good camp ticket": "좋은 캠프 티켓",
         "good camp ticket (short)": "티켓",
         "energy": "기력",

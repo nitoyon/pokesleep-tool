@@ -193,7 +193,10 @@
         "strength2": "Strength",
         "rating": "Rating",
 
-        "helps per 5 hours": "Helps per 5 hours",
+        "go to strength tab to show the current condition values": "Please go to the [$t(strength2)] tab to display the strength, ingredients and skill count corresponding to the current conditions.",
+        "strength, ingredients, skill count": "Strength, ingredients and skill count",
+        "the amount under the following condition": "We are showing the amount under the following conditions.",
+        "use strength tab if you want to change these condition": "If you want to change these conditions, please use the [$t(strength2)] tab.",        "helps per 5 hours": "Helps per 5 hours",
         "berry rate": "Berry rate",
         "berry strength": "Berry strength (determined by the type of berry and the Pokémon level)",
         "berry count": "The amount of Berries per help",
@@ -206,7 +209,7 @@
         "rp formula": "This site is using RP formula elucidated by Goobliss, Harold, Jeancory in the Mathcode server on Discord. For more details about the formula, please read <link/> on Pokémon Sleep Info Wiki.",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "RP Model Breakdown",
-        "rp estimate": "RP beyond level {{level}} is estimated value.",
+        "estimated beyond level": "The value beyond level {{level}} is estimated.",
         "estimated value": "Estimated",
         "ratio is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
 
@@ -248,6 +251,7 @@
         "area bonus": "Area bonus",
         "favorite berry": "Favorite berry",
         "helping bonus": "Helping bonus",
+        "helping bonus other pokemon": "Other Pokémon with helping bonus",
         "good camp ticket": "Good camp ticket",
         "good camp ticket (short)": "Ticket",
         "energy": "Energy",

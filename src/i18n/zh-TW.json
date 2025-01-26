@@ -184,6 +184,10 @@
         "strength2": "能量",
         "rating": "個体評價",
 
+        "go to strength tab to show the current condition values": "要顯示與當前條件對應的能量、食材數、技能次數，請前往[$t(strength2)] 標籤。",
+        "strength, ingredients, skill count": "能量、食材數、技能次數",
+        "the amount under the following condition": "顯示在以下條件下的數量。",
+        "use strength tab if you want to change these condition": "如果您想更改這些條件，請使用[$t(strength2)] 標籤。",
         "helps per 5 hours": "5小時的幫助次數",
         "berry rate": "樹果機率",
         "berry strength": "樹果能量 (由樹果類型和寶可夢等級決定)",
@@ -197,7 +201,7 @@
         "rp formula": "SP 計算公式使用的是 Mathcode 的 Goobliss、Harold 和 Jeancory 的研究成果。關於計算公式的詳情，請瀏覽ポケスリ攻略的 <link/> 。",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",
         "rp formula doc title": "SP計算模型的解説",
-        "rp estimate": " {{level}} 級以後的SP為推測值",
+        "estimated beyond level": "級別 {{level}} 以後的值是估算值。",
         "estimated value": "推測値",
         "ratio is not fixed": "該寶可夢的食材機率和技能確率尚未確定，因此顯示的是臨時值。",
 
@@ -239,6 +243,7 @@
         "area bonus": "營地獎勵",
         "favorite berry": "喜歡的樹果",
         "helping bonus": "幫手獎勵",
+        "helping bonus other pokemon": "其他寶可夢的幫手獎勵",
         "good camp ticket": "好露營券",
         "good camp ticket (short)": "露營券",
         "energy": "活力",
