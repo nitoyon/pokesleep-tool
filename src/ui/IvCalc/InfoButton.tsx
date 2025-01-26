@@ -14,12 +14,12 @@ const StyledIconButton = styled(IconButton)({
             color: '#bbb',
             '&.error': {
                 color: '#ed6c02',
-                animation: 'redglow 0.5s ease-out infinite normal',
+                animation: 'redglow 0.6s ease-out infinite normal',
             },
         },
     },
     '@keyframes redglow': {
-        '0%': {transform: 'scale(1)'},
+        '0%': {transform: 'scale(0.9)'},
         '100%': {transform: 'scale(1.1)'},
     },
 });
