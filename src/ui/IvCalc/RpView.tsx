@@ -103,7 +103,7 @@ const RpInfoDialog = React.memo(({open, onClose}: {
                 <li>{t('favorite berry')}: {t('none')}</li>
                 <li>{t('good camp ticket')}: {t('none')}</li>
                 <li>{t('area bonus')}: 0%</li>
-                <li>{t('helping bonus')}: {t('none')}</li>
+                <li>{t('helping bonus other pokemon')}: {t('none')}</li>
                 <li>{t('skills.Energy for Everyone S')}: 18 × 3</li>
                 <li>{t('sleep score')}: 100</li>
                 <li>{t('tap frequency')} ({t('awake')}): {t('every minute')}</li>
