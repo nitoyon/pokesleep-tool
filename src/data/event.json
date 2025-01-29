@@ -19,8 +19,8 @@
     "bonus": [
         {
             "name": "super skill week",
-            "start": "2025-01-20 4:00",
-            "end": "2025-01-27 4:00",
+            "start": "2025-01-20T04:00:00",
+            "end": "2025-01-27T04:00:00",
             "target": {
                 "speciality": "Skills"
             },
