@@ -330,15 +330,15 @@ function getPokemon(html, name, nameJa2en) {
     if (!(skillJa in skills)) { throw new Error(`Unknown skill: ${skillJa}`); }
     const skill = skills[skillJa];
 
-    // find speciality
+    // find specialty
     const typeTable = [...tables].find((t) => {
         return t.querySelector('th')?.textContent === 'とくい';
     });
     if (typeTable === null) { throw new Error('type table not found'); }
     tds = typeTable.querySelectorAll('td');
-    const specialityJa = tds[0].textContent;
-    if (!(specialityJa in specialties)) { throw new Error(`Unknown speciality: ${specialityJa}`); }
-    const speciality = specialties[specialityJa];
+    const specialtyJa = tds[0].textContent;
+    if (!(specialtyJa in specialties)) { throw new Error(`Unknown specialty: ${specialtyJa}`); }
+    const specialty = specialties[specialtyJa];
 
     // find frequency
     const frequencyMatch = tds[1]?.textContent?.match(/(\d+)秒/);
@@ -403,7 +403,7 @@ function getPokemon(html, name, nameJa2en) {
     }
 
     const ret = {
-        id, name, sleepType, type, speciality, skill, fp, frequency,
+        id, name, sleepType, type, specialty, skill, fp, frequency,
         ingRatio: 0, skillRatio: 0,
         ancestor, evolutionCount, evolutionLeft, isFullyEvolved,
         carryLimit, ing1, ing2, ing3,

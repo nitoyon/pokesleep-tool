@@ -70,7 +70,7 @@ test('BonusEventData', () => {
 
     // target is skill
     evt.target.type = undefined;
-    evt.target.speciality = "Skills";
+    evt.target.specialty = "Skills";
     expect(evt.isTarget(bulbasaur)).toBe(false);
     expect(evt.isTarget(squirtle)).toBe(false);
     expect(evt.isTarget(jigglypuff)).toBe(true);
