@@ -46,7 +46,7 @@ const RatingView = React.memo(({pokemonIv, width}: {
             skillValue={<>{trunc1(result.skillScore)}<span>pt</span></>}
             skillProb={trunc1(result.skillRatio * 100)}
             skillSubValue=""/>
-        <RaderChart width={width} height={raderHeight} speciality={pokemonIv.pokemon.speciality}
+        <RaderChart width={width} height={raderHeight} specialty={pokemonIv.pokemon.specialty}
             berry={result.berryScore / 100}
             ingredient={result.ingScore / 100}
             skill={result.skillScore / 100}/>

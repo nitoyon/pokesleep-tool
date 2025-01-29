@@ -98,7 +98,7 @@ export type EnergyResult = {
         /** Skill triggered once% after wakeup */
         once: number,
         /** Skill triggered twice% after wakeup.
-         * Always 0 if speciality is not skill.
+         * Always 0 if specialty is not skill.
          */
         twice: number,
     },
@@ -518,7 +518,7 @@ class Energy {
             const eventBonus = getEventBonusIfTarget(param.event, this._iv.pokemon);
             const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
-            if (this._iv.pokemon.speciality !== 'Skills') {
+            if (this._iv.pokemon.specialty !== 'Skills') {
                 skillProbabilityAfterWakeup.once = 1 - skillNone;
             }
             else {

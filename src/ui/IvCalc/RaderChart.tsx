@@ -1,5 +1,5 @@
 import React from 'react';
-import { PokemonSpeciality } from '../../data/pokemons';
+import { PokemonSpecialty } from '../../data/pokemons';
 import { useTranslation } from 'react-i18next';
 
 interface RaderChartProps {
@@ -8,17 +8,17 @@ interface RaderChartProps {
     skill: number;
     width: number;
     height: number;
-    speciality: PokemonSpeciality;
+    specialty: PokemonSpecialty;
 };
 
 const RaderChart = React.memo(({
-    berry, ingredient, skill, width, height, speciality}: RaderChartProps) => {
+    berry, ingredient, skill, width, height, specialty}: RaderChartProps) => {
     const padRight = 15;
     const padTop = 130;
     const r = 80;
     const left = Math.min(300, width - padRight - r * 1.732 / 2);
-    const color = speciality === "Berries" ? "#24d76a" :
-        speciality === "Ingredients" ? "#fab855" : "#44a2fd";
+    const color = specialty === "Berries" ? "#24d76a" :
+        specialty === "Ingredients" ? "#fab855" : "#44a2fd";
     return <svg
         width={width} height={height}
         viewBox={`0 0 ${width} ${height}`}
