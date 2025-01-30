@@ -7,7 +7,8 @@ import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterF
 import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
 import { shareIv } from './ShareUtil';
-import { IngredientName, IngredientNames, PokemonType } from '../../data/pokemons';
+import { PokemonSpecialty, IngredientName, IngredientNames, PokemonType
+} from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
 import PokemonRp from '../../util/PokemonRp';
@@ -282,6 +283,8 @@ interface IBoxFilterConfig {
     name: string;
     /** Filter type */
     filterTypes: PokemonType[];
+    /** Filter specialty */
+    filterSpecialty: PokemonSpecialty[];
     /** Filter ingredient */
     ingredientName?: IngredientName;
     /** Include only Pokemon with the ingredientName unlocked */
@@ -304,6 +307,8 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     name: string;
     /** Filter type */
     filterTypes: PokemonType[];
+    /** Filter specialty */
+    filterSpecialty: PokemonSpecialty[];
     /** Filter ingredient */
     ingredientName?: IngredientName;
     /** Include only Pokemon with the ingredientName unlocked */
@@ -321,6 +326,7 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     constructor(values: Partial<IBoxFilterConfig>) {
         this.name = values.name ?? "";
         this.filterTypes = values.filterTypes ?? [];
+        this.filterSpecialty = values.filterSpecialty ?? [];
         this.ingredientName = values.ingredientName;
         this.ingredientUnlockedOnly = values.ingredientUnlockedOnly ?? false;
         this.mainSkillNames = values.mainSkillNames ?? [];
@@ -353,6 +359,10 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         if (this.filterTypes.length !== 0) {
             ret = ret.filter(x => this.filterTypes.includes(x.iv.pokemon.type));
         }
+        if (this.filterSpecialty.length > 0) {
+            ret = ret.filter((x) =>
+                this.filterSpecialty.includes(x.iv.pokemon.specialty));
+        }
         if (this.mainSkillNames.length !== 0) {
             ret = ret.filter(x => this.mainSkillNames
                 .some(n => x.iv.pokemon.skill.startsWith(n)));
@@ -379,6 +389,7 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     get isEmpty(): Boolean {
         return this.name === "" &&
             this.filterTypes.length === 0 &&
+            this.filterSpecialty.length === 0 &&
             this.ingredientName === undefined &&
             this.mainSkillNames.length === 0 &&
             this.subSkillNames.length === 0;
