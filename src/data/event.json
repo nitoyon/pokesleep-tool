@@ -28,7 +28,8 @@
                 "skillTrigger": 1.5,
                 "skillLevel": 3,
                 "ingredient": 0,
-                "dreamShard": 1
+                "dreamShard": 1,
+                "dish": 1
             }
         }
     ]

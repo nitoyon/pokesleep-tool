@@ -31,12 +31,12 @@ test('getActiveHelpBonus', () => {
         new BonusEventData({
             name: '1st week', start: '2024-09-02T04:00:00', end: '2024-09-08T04:00:00',
             target: {type: 'water'},
-            effects: {skillTrigger: 1.5, skillLevel: 1, ingredient: 1, dreamShard: 1},
+            effects: {skillTrigger: 1.5, skillLevel: 1, ingredient: 1, dreamShard: 1, dish: 1},
         }),
         new BonusEventData({
             name: '1st week', start: '2024-09-09T04:00:00', end: '2024-09-15T04:00:00',
             target: {type: 'water'},
-            effects: {skillTrigger: 1.5, skillLevel: 3, ingredient: 1, dreamShard: 1},
+            effects: {skillTrigger: 1.5, skillLevel: 3, ingredient: 1, dreamShard: 1, dish: 1},
         }),
     ];
     expect(getActiveHelpBonus(new Date(2024, 8, 1), evts).length).toBe(2);
@@ -54,7 +54,7 @@ test('BonusEventData', () => {
     const evt = new BonusEventData({
         name: '1st week', start: '2024-09-02 4:00', end: '2024-09-08 4:00',
         target: {type: 'water'},
-        effects: {skillTrigger: 1.5, skillLevel: 1, ingredient: 1, dreamShard: 1},
+        effects: {skillTrigger: 1.5, skillLevel: 1, ingredient: 1, dreamShard: 1, dish: 1},
     });
     const bulbasaur = pokemons.find(x => x.name === 'Bulbasaur');
     const squirtle = pokemons.find(x => x.name === 'Squirtle');
