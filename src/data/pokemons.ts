@@ -63,6 +63,10 @@ export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
     "flying", "psychic", "bug", "rock", "ghost",
     "dragon", "dark", "steel", "fairy"];
 
+export const SpecialtyNames: PokemonSpecialty[] = [
+    "Berries", "Ingredients", "Skills",
+];
+
 export type PokemonSpecialty = "Ingredients" | "Berries" | "Skills";
 
 export const IngredientNames: IngredientName[] = [

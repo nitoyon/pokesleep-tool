@@ -32,8 +32,9 @@ const StyledTypeButton = styled(Button)({
     '& > svg': {
         position: 'absolute',
         background: '#24d76a',
-        borderRadius: '10px',
-        fontSize: '20px',
+        borderRadius: '18px',
+        fontSize: '16px',
+        padding: '1px',
         border: '2px solid white',
         right: '-4px',
         top: '-4px',

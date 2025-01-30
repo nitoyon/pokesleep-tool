@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { SleepType } from '../../data/fields';
-import pokemons, { IngredientName, PokemonType } from '../../data/pokemons';
+import pokemons, { PokemonSpecialty, IngredientName, PokemonType } from '../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
 import TextLikeButton from '../common/TextLikeButton';
@@ -19,6 +19,7 @@ export interface PokemonOption {
     form?: string;
     name: string;
     localName: string;
+    specialty: PokemonSpecialty;
     sleepType: SleepType;
     type: PokemonType;
     skill: MainSkillName,
@@ -46,6 +47,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
                 form: pokemon.form,
                 name: pokemon.name,
                 localName: t(`pokemons.${pokemon.name}`),
+                specialty: pokemon.specialty,
                 sleepType: pokemon.sleepType,
                 type: pokemon.type,
                 skill: pokemon.skill,

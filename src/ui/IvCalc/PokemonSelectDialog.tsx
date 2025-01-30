@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { IngredientName, IngredientNames, PokemonType, PokemonTypes } from '../../data/pokemons';
+import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
+    PokemonType, PokemonTypes } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
@@ -132,6 +133,8 @@ const GroupHeader = styled('div')({
 export class PokemonFilterConfig {
     /** Filter type */
     filterType: PokemonType|null;
+    /** Specialty */
+    filterSpecialty: PokemonSpecialty[];
     /** Filter by evolve */
     filterEvolve: "all"|"non"|"final";
     /** Fileter by ingredient name. */
@@ -148,6 +151,7 @@ export class PokemonFilterConfig {
     /** Initialize the instance */
     constructor(values: Partial<PokemonFilterConfig>) {
         this.filterType = values.filterType ?? null;
+        this.filterSpecialty = values.filterSpecialty ?? [];
         this.filterEvolve = values.filterEvolve ?? "all";
         this.ingredientName = values.ingredientName ?? "unknown";
         this.ingredientA = values.ingredientA ?? true;
@@ -163,6 +167,10 @@ export class PokemonFilterConfig {
         if (typeof(json.filterType) === "string" &&
             PokemonTypes.includes(json.filterType)) {
             this.filterType = json.filterType;
+        }
+        if (Array.isArray(json.filterSpecialty) &&
+            json.filterSpecialty.every((x: any) => SpecialtyNames.includes(x))) {
+            this.filterSpecialty = json.filterSpecialty;
         }
         if (typeof(json.filterEvolve) === "string" &&
             ["all", "non", "final"].includes(json.filterEvolve)) {
@@ -190,6 +198,7 @@ export class PokemonFilterConfig {
     /** Check ON or OFF. */
     get isFiltered(): boolean {
         return this.filterEvolve !== "all" ||
+            this.filterSpecialty.length > 0 ||
             this.filterType !== null ||
             this.ingredientName !== 'unknown' ||
             this.mainSkillNames.length > 0;
@@ -198,6 +207,7 @@ export class PokemonFilterConfig {
     /** Get initial tab index of filter dialog */
     get tabIndex(): number {
         if (this.filterEvolve !== 'all') { return 0; }
+        if (this.filterSpecialty.length > 0) { return 0; }
         if (this.ingredientName !== 'unknown') { return 1; }
         if (this.mainSkillNames.length > 0) { return 2; }
         return 0;
@@ -223,6 +233,11 @@ export class PokemonFilterConfig {
         // filter by type
         if (this.filterType !== null) {
             ret = ret.filter((option) => this.filterType === option.type);
+        }
+
+        if (this.filterSpecialty.length > 0) {
+            ret = ret.filter((option) =>
+                this.filterSpecialty.includes(option.specialty));
         }
 
         // filter by evolve
@@ -253,6 +268,7 @@ export class PokemonFilterConfig {
                 idForm: -1,
                 name: '',
                 localName: '',
+                specialty: 'Berries',
                 sleepType: 'dozing',
                 type: 'normal',
                 skill: 'Charge Energy S',
@@ -388,6 +404,7 @@ const PokemonSelectDialog = React.memo(({
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
     }, [config]);
     const onFilterConfigChange = useCallback((value: PokemonFilterFooterConfig) => {
+        console.log(value);
         const newValue = {...config, descending: value.descending,
             sort: value.sort as "sleeptype"|"name"|"pokedexno"|"type"};
         setConfig(newValue);
