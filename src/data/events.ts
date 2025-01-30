@@ -176,6 +176,8 @@ export interface BonusEffects {
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
     dreamShard: 1 | 2;
+    /** Dishes bonus */
+    dish: 1 | 1.25 | 1.5;
 }
 
 /**
