@@ -282,6 +282,7 @@
         "level": "等级",
         "name": "名字",
         "type": "类型",
+        "specialty": "专长",
         "berry": "树果",
         "ingredient": "食材",
         "skill": "技能",

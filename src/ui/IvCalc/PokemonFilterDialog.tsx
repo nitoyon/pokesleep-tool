@@ -4,8 +4,10 @@ import IngredientButton from './IngredientButton';
 import TypeButton from './TypeButton';
 import { PokemonFilterConfig } from './PokemonSelectDialog';
 import MainSkillButton from './MainSkillButton';
+import SpecialtyButton from './SpecialtyButton';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
-import { IngredientName, IngredientNames, PokemonType, PokemonTypes } from '../../data/pokemons';
+import { SpecialtyNames, PokemonSpecialty, IngredientName, IngredientNames,
+    PokemonType, PokemonTypes } from '../../data/pokemons';
 import { Button, Dialog, DialogActions, Switch,
     Tab, Tabs, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -102,6 +104,14 @@ const TypeTab = React.memo(({value, onChange}: {
         onChange(new PokemonFilterConfig({...value,
             filterType: value.filterType === selected ? null : selected}));
     }, [value, onChange]);
+    const onSpecialtyClick = useCallback((val: PokemonSpecialty) => {
+        onChange(new PokemonFilterConfig({
+            ...value,
+            filterSpecialty: value.filterSpecialty.includes(val) ?
+                value.filterSpecialty.filter(x => x !== val) :
+                [...value.filterSpecialty, val],
+        }))
+    }, [value, onChange]);
     const onEvolveChange = useCallback((e: any, val: string|null) => {
         if (val === null || value.filterEvolve === val) { return; }
         onChange(new PokemonFilterConfig({...value, filterEvolve: val as "all"|"non"|"final"}));
@@ -110,10 +120,18 @@ const TypeTab = React.memo(({value, onChange}: {
     const buttons: React.ReactElement[] = PokemonTypes.map(type =>
         <TypeButton key={type} type={type} onClick={onTypeClick}
             checked={type === value.filterType}/>);
+    const specialtyButtons: React.ReactElement[] = SpecialtyNames.map(specialty =>
+        <SpecialtyButton key={specialty} specialty={specialty} onClick={onSpecialtyClick}
+            checked={value.filterSpecialty.includes(specialty)}/>
+    );
 
     return (<>
         <div>
             {buttons}
+        </div>
+        <div>
+        <h4 style={{margin: '1rem 0 0.5rem'}}>{t('specialty')}</h4>
+            {specialtyButtons}
         </div>
         <div>
             <h4 style={{margin: '1rem 0 0.5rem'}}>{t('evolve')}</h4>
@@ -196,6 +214,10 @@ const MainSkillTab = React.memo(({value, onChange}: {
 });
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
+    '& > button': {
+        textTransform: 'none',
+        lineHeight: 1,
+    },
     '& > button:first-of-type': {
         borderRadius: '1rem 0 0 1rem',
     },

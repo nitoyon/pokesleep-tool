@@ -293,6 +293,7 @@
         "skill": "Skill",
         "name": "Name",
         "type": "Type",
+        "specialty": "Specialty",
         "frequency": "Frequency",
         "carry limit": "Carry limit",
         "Main Skill & Sub Skills": "Main Skill & Sub Skills",
