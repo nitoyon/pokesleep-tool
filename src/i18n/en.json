@@ -335,7 +335,8 @@
             "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
             "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
-            "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses)."
+            "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
+            "unknown": "The main skill has not been determined yet."
         },
 
         "rate subskill and nature": "Rate subskills and nature",
@@ -390,7 +391,8 @@
             "Berry Burst (Disguise)": "Disguise (Berry Burst)",
             "Skill Copy": "Skill Copy",
             "Skill Copy (Transform)": "Transform (Skill Copy)",
-            "Skill Copy (Mimic)": "Mimic (Skill Copy)"
+            "Skill Copy (Mimic)": "Mimic (Skill Copy)",
+            "unknown": "(Unknown)"
         },
 
         "subskill": {
@@ -581,6 +583,7 @@
             "Ampharos": "Ampharos",
             "Sudowoodo": "Sudowoodo",
             "Wooper": "Wooper",
+            "Wooper (Paldea)": "Wooper (Paldea)",
             "Quagsire": "Quagsire",
             "Espeon": "Espeon",
             "Umbreon": "Umbreon",
@@ -661,7 +664,8 @@
             "Quaquaval": "Quaquaval",
             "Pawmi": "Pawmi",
             "Pawmo": "Pawmo",
-            "Pawmot": "Pawmot"
+            "Pawmot": "Pawmot",
+            "Clodsire": "Clodsire"
          }
     }
 }

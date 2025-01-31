@@ -317,7 +317,7 @@ class PokemonRp {
     }
     
     get berryRatio(): number {
-        return 1 - this.ingredientRatio;
+        return this.ingredientRatio > 0 ? 1 - this.ingredientRatio : 0;
     }
 
     get berryCount(): number {

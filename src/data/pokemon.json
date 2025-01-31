@@ -2741,6 +2741,39 @@
         }
     },
     {
+        "id": 194,
+        "name": "Wooper (Paldea)",
+        "sleepType": "dozing",
+        "type": "poison",
+        "specialty": "Ingredients",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 194,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        },
+        "form": "Paldea"
+    },
+    {
         "id": 195,
         "name": "Quagsire",
         "sleepType": "slumbering",
@@ -5319,5 +5352,38 @@
             "name": "egg",
             "c3": 5
         }
+    },
+    {
+        "id": 980,
+        "name": "Clodsire",
+        "sleepType": "dozing",
+        "type": "poison",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 194,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        },
+        "form": "Paldea"
     }
 ]
