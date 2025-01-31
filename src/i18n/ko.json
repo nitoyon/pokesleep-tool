@@ -1,5 +1,6 @@
 {
     "translation": {
+        "langname": "한국어 (Korean)",
         "ResearchCalc": {
             "title": "리서치 계산기 for 포켓몬 슬립",
             "short title": "리서치 계산기",
@@ -100,7 +101,6 @@
                 }
             }
         },
-        "langname": "한국어 (Korean)",
         "num": "{{n, number}}",
         "short num unit": "만",
         "short num unit digits": "4",

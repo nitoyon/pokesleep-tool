@@ -1,5 +1,6 @@
 {
     "translation": {
+        "langname": "日本語 (Japanese)",
         "ResearchCalc": {
             "title": "リサーチ数計算機 for ポケモンスリープ",
             "short title": "リサーチ数計算機",
@@ -104,7 +105,6 @@
                 }
             }
         },
-        "langname": "日本語 (Japanese)",
         "num": "{{n, number}}",
         "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",
