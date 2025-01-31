@@ -282,6 +282,7 @@
         "level": "レベル",
         "name": "名前",
         "type": "タイプ",
+        "specialty": "とくいなもの",
         "berry": "きのみ",
         "ingredient": "食材",
         "skill": "スキル",

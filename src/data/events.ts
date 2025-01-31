@@ -1,5 +1,5 @@
 import events_ from './event.json';
-import { PokemonData, PokemonSpeciality, PokemonType } from './pokemons';
+import { PokemonData, PokemonSpecialty, PokemonType } from './pokemons';
 
 /**
  * Represents drowsy event data.
@@ -86,8 +86,8 @@ export class BonusEventData {
      * @returns `true` if the Pokémon is a target, otherwise `false`.
      */
     isTarget(pokemon: PokemonData): boolean {
-       if (this.target.speciality !== undefined &&
-            pokemon.speciality !== this.target.speciality) {
+       if (this.target.specialty !== undefined &&
+            pokemon.specialty !== this.target.specialty) {
             return false;
         }
         if (this.target.type !== undefined &&
@@ -158,8 +158,8 @@ interface JsonDrowsyEventData {
  * When neigher property is provided, all pokemon is the target.
  */
 interface TargetPokemon {
-    /** Speciality of the pokemon */
-    speciality?: PokemonSpeciality;
+    /** Specialty of the pokemon */
+    specialty?: PokemonSpecialty;
     /** Type of the pokemon */
     type?: PokemonType;
 }

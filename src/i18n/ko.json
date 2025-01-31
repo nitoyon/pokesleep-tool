@@ -277,6 +277,7 @@
         "level": "레벨",
         "name": "이름",
         "type": "타입",
+        "specialty": "특기",
         "berry": "열매",
         "ingredient": "식재료",
         "skill": "스킬",
