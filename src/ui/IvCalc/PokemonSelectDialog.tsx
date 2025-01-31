@@ -404,7 +404,6 @@ const PokemonSelectDialog = React.memo(({
         localStorage.setItem('PstPokemonSelectParam', JSON.stringify(newConfig));
     }, [config]);
     const onFilterConfigChange = useCallback((value: PokemonFilterFooterConfig) => {
-        console.log(value);
         const newValue = {...config, descending: value.descending,
             sort: value.sort as "sleeptype"|"name"|"pokedexno"|"type"};
         setConfig(newValue);
