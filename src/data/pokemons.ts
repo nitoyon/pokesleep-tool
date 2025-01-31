@@ -67,7 +67,7 @@ export const SpecialtyNames: PokemonSpecialty[] = [
     "Berries", "Ingredients", "Skills",
 ];
 
-export type PokemonSpecialty = "Ingredients" | "Berries" | "Skills";
+export type PokemonSpecialty = "Ingredients" | "Berries" | "Skills"|"unknown";
 
 export const IngredientNames: IngredientName[] = [
     "leek", "mushroom", "egg", "potato",

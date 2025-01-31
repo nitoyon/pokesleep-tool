@@ -19,7 +19,8 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Berry Burst (Disguise)" |
     "Skill Copy" |
     "Skill Copy (Transform)" |
-    "Skill Copy (Mimic)";
+    "Skill Copy (Mimic)" |
+    "unknown";
 
 export const MainSkillNames: MainSkillName[] = [
     "Charge Strength S", "Charge Strength M",

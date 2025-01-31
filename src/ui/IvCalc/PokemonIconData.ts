@@ -469,6 +469,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.43, y: 0.85, w: 0.14, h: 0.04, r: 0.025, color: '#0c5a8f'},
         {x: 0.4, y: 0.92, w: 0.2, h: 0.04, r: 0.025, color: '#0c5a8f'},
     ],
+    // Quagsire (Paldea)
+    '16578': [
+        {x: 0.1, y: 0.15, w: 0.8, h: 0.6, r: 0.35, color: '#897771'},
+        {x: 0.3, y: 0.65, w: 0.4, h: 0.4, r: 0.2, color: '#897771'},
+        {x: 0.45, y: 0.78, w: 0.1, h: 0.04, r: 0.025, color: '#493d3a'},
+        {x: 0.43, y: 0.85, w: 0.14, h: 0.04, r: 0.025, color: '#493d3a'},
+        {x: 0.4, y: 0.92, w: 0.2, h: 0.04, r: 0.025, color: '#493d3a'},
+        {x: 0.48, y: 0.74, w: 0.04, h: 0.24, r: 0.025, color: '#493d3a'},
+    ],
     // Quagsire
     '195': [
         {x: 0.1, y: 0, w: 0.8, h: 1, r: 0.3, color: '#95ecff'},
@@ -1022,7 +1031,16 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.38, y: 0.25, w: 0.24, h: 0.16, r: 0.2, color: '#feffe1'},
         {x: -0.1, y: 0.65, w: 0.3, h: 0.3, r: 0.2, color: '#feffe1'},
         {x: 0.8, y: 0.65, w: 0.3, h: 0.3, r: 0.2, color: '#feffe1'},
-    ]
+    ],
+    // Clodsire
+    '980': [
+        {x: 0, y: 0.4, w: 1, h: 0.6, r: 0.4, color: '#5b504e'},
+        {x: 0, y: 0.7, w: 1, h: 0.3, color: '#5b504e'},
+        {x: 0, y: 0.8, w: 1, h: 0.3, color: '#a89592'},
+        {x: 0, y: 0.75, w: 0.33, h: 0.1, r: 0.4, color: '#5b504e'},
+        {x: 0.33, y: 0.75, w: 0.33, h: 0.1, r: 0.4, color: '#a89592'},
+        {x: 0.67, y: 0.75, w: 0.33, h: 0.1, r: 0.4, color: '#5b504e'},
+    ],
 };
 
 export default pokemonRectData;

@@ -109,7 +109,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <div>{t("frequency")}:</div>
             <div>
                 {frequencyToString(rp.frequency, t)}
-                <InfoButton onClick={onFrequencyInfoClick}/>
+                {rp.frequency > 0 && <InfoButton onClick={onFrequencyInfoClick}/>}
                 <FrequencyInfoDialog rp={rp} iv={pokemonIv}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>

@@ -235,7 +235,7 @@ class PokemonStrength {
         const ingredients = ingNames.map(x => ing[x]);
     
         // calc berry
-        const berryRatio = 1 - ingRatio;
+        const berryRatio = (this.iv.pokemon.frequency > 0 ? 1 - ingRatio : 0);
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
         const berryCount = rp.berryCount;
         const berryStrength = rp.berryStrength;

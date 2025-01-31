@@ -327,7 +327,8 @@
             "Tasty Chance S": "显示为漂亮成功的几率増加百分比。技能的效果没有换算成合计能量值。",
             "Helper Boost": "显示为1只宝可梦的帮手次数 (有 3 只同类型宝可梦的情况) 。总能量按照1次帮助 300 (不含营地奖励) 进行预估。",
             "Berry Burst (Disguise)": "假设不会发生漂亮成功。其他的宝可梦获取的每个树果按照 100 能量 (不含营地奖励) 进行预估。",
-            "Berry Burst": "其他的宝可梦获取的每个树果按照 100 能量 (不含营地奖励) 进行预估。"
+            "Berry Burst": "其他的宝可梦获取的每个树果按照 100 能量 (不含营地奖励) 进行预估。",
+            "unknown": "主技能还未确定。"
         },
 
         "rate subskill and nature": "副技能・性格的评估值",
@@ -382,7 +383,8 @@
             "Berry Burst (Disguise)": "画皮 (树果剧增)",
             "Skill Copy": "技能复制",
             "Skill Copy (Transform)": "变身 (技能复制)",
-            "Skill Copy (Mimic)": "模仿 (技能复制)"
+            "Skill Copy (Mimic)": "模仿 (技能复制)",
+            "unknown": "(未知)"
         },
 
         "subskill": {
@@ -573,6 +575,7 @@
             "Ampharos": "电龙",
             "Sudowoodo": "树才怪",
             "Wooper": "乌波",
+            "Wooper (Paldea)": "乌波 (帕底亚)",
             "Quagsire": "沼王",
             "Espeon": "太阳伊布",
             "Umbreon": "月亮伊布",
@@ -653,7 +656,8 @@
             "Quaquaval": "狂欢浪舞鸭",
             "Pawmi": "布拨",
             "Pawmo": "布土拨",
-            "Pawmot": "巴布土拨"
+            "Pawmot": "巴布土拨",
+            "Clodsire": "土王"
         }
     }
 }
