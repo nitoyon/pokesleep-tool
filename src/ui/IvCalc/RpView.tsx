@@ -80,7 +80,7 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
             <RpValueDialog open={rpValueOpen} onClose={onRpValueClose}
                 rp={rp} rpResult={rpResult} rpType={rpType}/>
         </div>
-        <RaderChart width={width} height={raderHeight} speciality={pokemon.speciality}
+        <RaderChart width={width} height={raderHeight} specialty={pokemon.specialty}
             berry={rpResult.berryRp / 2000}
             ingredient={rpResult.ingredientRp / 2000}
             skill={rpResult.skillRp / 2000}/>

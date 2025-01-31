@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import TypeButton from './TypeButton';
+import SpecialtyButton from './SpecialtyButton';
 import { BoxFilterConfig } from './BoxView';
 import { EditSubSkillControl } from './SubSkillControl';
 import IngredientButton from './IngredientButton';
 import MainSkillButton from './MainSkillButton';
-import { IngredientName, IngredientNames, PokemonType, PokemonTypes
+import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
+    PokemonType, PokemonTypes
 } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import SubSkill, { SubSkillType } from '../../util/SubSkill';
@@ -42,6 +44,14 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             [...value.filterTypes, selected];
         onChange(new BoxFilterConfig({...value, filterTypes}));
     }, [value, onChange]);
+    const onSpecialtyClick = useCallback((val: PokemonSpecialty) => {
+        onChange(new BoxFilterConfig({
+            ...value,
+            filterSpecialty: value.filterSpecialty.includes(val) ?
+                value.filterSpecialty.filter(x => x !== val) :
+                [...value.filterSpecialty, val],
+        }));
+    }, [value, onChange]);
     const onIngClick = useCallback((selected: IngredientName) => {
         const ingredientName = value.ingredientName === selected ?
             undefined : selected;
@@ -57,6 +67,10 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
     const typeButtons: React.ReactElement[] = PokemonTypes.map(type =>
         <TypeButton key={type} type={type} onClick={onTypeClick}
             checked={value.filterTypes.includes(type)}/>);
+    const specialtyButtons: React.ReactElement[] = SpecialtyNames.map(specialty =>
+        <SpecialtyButton key={specialty} specialty={specialty} onClick={onSpecialtyClick}
+            checked={value.filterSpecialty.includes(specialty)}/>
+    );
     const ingButtons: React.ReactElement[] = IngredientNames.map(ing =>
         <IngredientButton key={ing} ingredient={ing} onClick={onIngClick}
             checked={value.ingredientName === ing}/>);
@@ -81,6 +95,8 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
         <div className="tabContainer">
             <div className={`tabChild ${tabIndex === 0 ? 'tabChildActive' : ''}`}>
                 {typeButtons}
+                <h4 style={{margin: '1rem 0 0.5rem'}}>{t('specialty')}</h4>
+                {specialtyButtons}
             </div>
             <div className={`tabChild ${tabIndex === 1 ? 'tabChildActive' : ''}`}>
                 {ingButtons}

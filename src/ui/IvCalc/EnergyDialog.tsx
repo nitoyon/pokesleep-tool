@@ -200,7 +200,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                 <section>
                     <label>{t('skill trigger after wake up')}:</label>
                     <div>
-                        {iv.pokemon.speciality !== 'Skills' ?
+                        {iv.pokemon.specialty !== 'Skills' ?
                         <>{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%</> :
                         <>
                             ❶{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%<> </>

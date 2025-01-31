@@ -14,7 +14,7 @@ export interface PokemonData {
     /** Type of the pokemon. */
     type: PokemonType;
     /** Specialty of the pokemon. */
-    speciality: PokemonSpeciality;
+    specialty: PokemonSpecialty;
     /** Skill of the pokemon */
     skill: MainSkillName;
     /** Friend point */
@@ -63,7 +63,11 @@ export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
     "flying", "psychic", "bug", "rock", "ghost",
     "dragon", "dark", "steel", "fairy"];
 
-export type PokemonSpeciality = "Ingredients" | "Berries" | "Skills";
+export const SpecialtyNames: PokemonSpecialty[] = [
+    "Berries", "Ingredients", "Skills",
+];
+
+export type PokemonSpecialty = "Ingredients" | "Berries" | "Skills";
 
 export const IngredientNames: IngredientName[] = [
     "leek", "mushroom", "egg", "potato",

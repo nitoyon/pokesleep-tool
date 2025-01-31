@@ -168,8 +168,8 @@ describe('Energy', () => {
             isAwake: false, isSnacking: true,
         });
 
-        // change pokemon's speciality to Berries
-        iv.pokemon.speciality = "Berries";
+        // change pokemon's specialty to Berries
+        iv.pokemon.specialty = "Berries";
         const energy2 = new Energy(iv);
         const result2 = energy2.calculate(createParam({e4eCount: 0, sleepScore: 90}));
 
