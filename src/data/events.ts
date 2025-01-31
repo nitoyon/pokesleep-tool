@@ -169,15 +169,15 @@ interface TargetPokemon {
  */
 export interface BonusEffects {
     /** Skill probability bonus */
-    skillTrigger: 1 | 1.25 | 1.5,
+    skillTrigger?: 1 | 1.25 | 1.5,
     /** Boosted main skill level */
-    skillLevel: 0 | 1 | 3,
+    skillLevel?: 0 | 1 | 3,
     /** Boosted ingredient count */
-    ingredient: 0 | 1,
+    ingredient?: 0 | 1,
     /** Dream Shard Magnet S bonus */
-    dreamShard: 1 | 2;
+    dreamShard?: 1 | 2;
     /** Dishes bonus */
-    dish: 1 | 1.25 | 1.5;
+    dish?: 1 | 1.25 | 1.5;
 }
 
 /**

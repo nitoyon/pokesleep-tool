@@ -256,6 +256,7 @@
         "no event": "沒有活動",
         "events": {
             "none": "無",
+            "valentine 2025": "情人節2025",
             "super skill week": "強化發動！技能週"
         },
         "recipe bonus help": "請指定經常做的料理的食譜獎勵。基本上，烹飪的食譜獎勵會根據食材的數量而變化，但有些食譜的獎勵值高於食材的數量。詳細獎勵值請參考 <raenonx>食譜一覧（RaenonX）</raenonx>。",

@@ -191,7 +191,7 @@ class PokemonStrength {
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
         const ingStrengthRatio = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
-            (1 + param.fieldBonus / 100);
+            (1 + param.fieldBonus / 100) * (eventBonus?.dish ?? 1);
         const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
@@ -288,7 +288,7 @@ class PokemonStrength {
         if (eventBonus !== undefined) {
             const maxSkillLevel = isSkillLevelMax7(mainSkill) ? 7 : 6;
             skillLevel = Math.min(maxSkillLevel,
-                this.iv.skillLevel + eventBonus.skillLevel);
+                this.iv.skillLevel + (eventBonus.skillLevel ?? 0));
         }
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;

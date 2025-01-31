@@ -18,6 +18,15 @@
     ],
     "bonus": [
         {
+            "name": "valentine 2025",
+            "start": "2025-02-10T04:00:00",
+            "end": "2025-02-17T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
+        {
             "name": "super skill week",
             "start": "2025-01-20T04:00:00",
             "end": "2025-01-27T04:00:00",
@@ -26,10 +35,7 @@
             },
             "effects": {
                 "skillTrigger": 1.5,
-                "skillLevel": 3,
-                "ingredient": 0,
-                "dreamShard": 1,
-                "dish": 1
+                "skillLevel": 3
             }
         }
     ]
