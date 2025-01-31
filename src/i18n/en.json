@@ -264,6 +264,7 @@
         "no event": "No event",
         "events": {
             "none": "None",
+            "valentine 2025": "Valentine's Day 2025",
             "super skill week": "Super Skill Week"
         },
         "recipe bonus help": "Please specify the recipe bonus for frequently made meals. Recipe bonuse typically depends on the number of ingredients, but some recipes may have higher bonus values. For details, see the <raenonx>Recipes / Dishes (RaenonX)</raenonx>.",
