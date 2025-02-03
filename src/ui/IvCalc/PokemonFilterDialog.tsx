@@ -108,8 +108,7 @@ const TypeTab = React.memo(({value, onChange}: {
         onChange(new PokemonFilterConfig({
             ...value,
             filterSpecialty: value.filterSpecialty.includes(val) ?
-                value.filterSpecialty.filter(x => x !== val) :
-                [...value.filterSpecialty, val],
+                [] : [val],
         }))
     }, [value, onChange]);
     const onEvolveChange = useCallback((e: any, val: string|null) => {
