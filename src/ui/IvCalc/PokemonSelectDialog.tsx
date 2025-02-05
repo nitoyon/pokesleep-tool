@@ -385,7 +385,7 @@ const PokemonSelectDialog = React.memo(({
         } else if (sortType === 'pokedexno') {
             headerLabel = t(`generation.${params.group}`);
         }
-        return <li key={params.key}>
+        return <li key={params.group}>
             <GroupHeader className={params.group}>{headerLabel}</GroupHeader>
             <ul style={{padding: 0}}>{params.children}</ul>
         </li>
