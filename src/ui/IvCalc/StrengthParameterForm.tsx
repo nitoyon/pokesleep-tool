@@ -135,7 +135,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const scheduledEvents = getActiveHelpBonus(new Date())
         .map(x => x.name);
     const eventToggles = ['none', ...scheduledEvents].map(x =>
-        <ToggleButton value={x} style={{ textTransform: 'none' }}>{t(`events.${x}`)}</ToggleButton>
+        <ToggleButton key={x} value={x} style={{ textTransform: 'none' }}>{t(`events.${x}`)}</ToggleButton>
     );
 
     const isNotWhistle = (value.period !== 3);
