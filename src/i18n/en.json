@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.5.0": {
+                    "headline": "Updated the data for Absol with balance adjustments in v2.5.0.",
+                    "detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
+                },
                 "add rufflet": {
                     "headline": "Rufflet and Braviary are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
