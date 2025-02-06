@@ -378,6 +378,7 @@
             "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
+            "not triggered": "The main skill is not triggered in this setting.",
             "unknown": "The main skill has not been determined yet."
         },
 
