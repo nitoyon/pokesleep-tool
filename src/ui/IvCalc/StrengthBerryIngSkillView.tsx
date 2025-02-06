@@ -44,14 +44,24 @@ const StyledBerryIngSkillStrengthView = styled('div')({
             borderLeft: 0,
         },
         '& > h3': {
-            width: 'calc(100% - 2rem)',
+            width: 'calc(100% - 1rem)',
             fontSize: '.8rem',
             fontWeight: 400,
             textAlign: 'center',
             color: 'white',
             borderRadius: '.8rem',
             verticalAlign: '20%',
-            margin: '.3rem 0 .1rem 1rem',
+            margin: '.3rem 0 .1rem 0.5rem',
+            '& > button': {
+                position: 'absolute',
+                top: '0.45rem',
+                right: '0.7rem',
+                '& > svg': {
+                    color: '#f0f0f0',
+                    width: '16px',
+                    height: '16px',
+                },
+            },
         },
         '& > article': {
             display: 'flex',
@@ -232,7 +242,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         <section>
-            <h3 style={{background: '#44a2fd'}}>{t('skill')}</h3>
+            <h3 style={{background: '#44a2fd'}}>{t('skill')}
+                <InfoButton onClick={onSkillHelpClick}/>
+            </h3>
             <article><div>{mainSkillTitle}</div></article>
             <footer>
                 <div>{round1(result.skillRatio * 100)}%</div>
@@ -262,7 +274,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
-            skill={pokemonIv.pokemon.skill}/>
+            strength={strength}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
             iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;
@@ -342,9 +354,6 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     return <>
         <MainSkillIcon mainSkill={mainSkill}/>
         <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-        {!mainSkill.startsWith("Charge Strength") &&
-        !mainSkill.startsWith("Dream Shard") &&
-        <InfoButton onClick={onInfoClick}/>}
     </>;
 }
 
@@ -369,14 +378,22 @@ const HelpDialog = React.memo(({open, onClose}: {
     </Dialog>;
 });
 
-const SkillHelpDialog = React.memo(({open, onClose, skill}: {
+const SkillHelpDialog = React.memo(({open, onClose, strength}: {
     open: boolean,
     onClose: () => void,
-    skill: MainSkillName,
+    strength: PokemonStrength,
 }) => {
     const { t } = useTranslation();
 
-    let text = t(`strength skill info.${skill}`)
+    const settings = strength.parameter;
+    let text: string = "";
+    if (settings.period === 3 || settings.tapFrequency === 'none') {
+        text = t('strength skill info.not triggered');
+    }
+    else {
+        const skill = strength.pokemonIv.pokemon.skill;
+        text = t(`strength skill info.${skill}`)
+    }
     return <Dialog open={open} onClose={onClose}>
         <DialogContent style={{fontSize: '0.95rem'}}>
             {text}
