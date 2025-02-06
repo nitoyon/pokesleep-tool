@@ -130,6 +130,11 @@ class PokemonStrength {
         return this.iv;
     }
 
+    /** Get the StrengthParameter to be used. */
+    get parameter(): StrengthParameter {
+        return this.param;
+    }
+
     /**
      * Update PokemonIv as specified by param.
      * @param pokemonIv    The PokmeonIv object to be modified.

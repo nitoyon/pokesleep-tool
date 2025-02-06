@@ -2,7 +2,6 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
-import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../util/PokemonStrength';
 import { StrengthParameter } from '../../util/PokemonStrength';
@@ -44,14 +43,24 @@ const StyledBerryIngSkillStrengthView = styled('div')({
             borderLeft: 0,
         },
         '& > h3': {
-            width: 'calc(100% - 2rem)',
+            width: 'calc(100% - 1rem)',
             fontSize: '.8rem',
             fontWeight: 400,
             textAlign: 'center',
             color: 'white',
             borderRadius: '.8rem',
             verticalAlign: '20%',
-            margin: '.3rem 0 .1rem 1rem',
+            margin: '.3rem 0 .1rem 0.5rem',
+            '& > button': {
+                position: 'absolute',
+                top: '0.45rem',
+                right: '0.7rem',
+                '& > svg': {
+                    color: '#f0f0f0',
+                    width: '16px',
+                    height: '16px',
+                },
+            },
         },
         '& > article': {
             display: 'flex',
@@ -144,7 +153,6 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [helpOpen, setHelpOpen] = React.useState(false);
     const [decendantId, setDecendantId] = React.useState(0);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
-    const [skillHelpId, setSkillHelpId] = React.useState(0);
 
     const isWhistle = (settings.period === 3);
     const strength = new PokemonStrength(pokemonIv, {
@@ -165,14 +173,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
-        setSkillHelpId(0);
     }, []);
     const onSkillHelpClose = React.useCallback(() => {
         setSkillHelpOpen(false);
-    }, []);
-    const onSkillHelp2Click = React.useCallback(() => {
-        setSkillHelpOpen(true);
-        setSkillHelpId(1);
     }, []);
     const onEfficiencyInfoClick = React.useCallback(() => {
         dispatch({type: "openEnergyDialog"});
@@ -189,7 +192,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     // skill value
     const mainSkillArticle = getMainSkillArticle(pokemonIv, result, settings,
-        t, onSkillHelpClick, onSkillHelp2Click);
+        t, onSkillHelpClick);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -242,7 +245,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         <section>
-            <h3 style={{background: '#44a2fd'}}>{t('skill')}</h3>
+            <h3 style={{background: '#44a2fd'}}>{t('skill')}
+                <InfoButton onClick={onSkillHelpClick}/>
+            </h3>
             {mainSkillArticle}
             <footer>
                 <div>{round1(result.skillRatio * 100)}%</div>
@@ -272,7 +277,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
-            id={skillHelpId} skill={pokemonIv.pokemon.skill}/>
+            strength={strength}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
             iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;
@@ -327,7 +332,7 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
-    onInfoClick: () => void, onInfo2Click: () => void): React.ReactNode {
+    onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
     }
@@ -357,9 +362,6 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     const skill1 = <>
         <MainSkillIcon mainSkill={mainSkill}/>
         <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-        {!mainSkill.startsWith("Charge Strength") &&
-        !mainSkill.startsWith("Dream Shard") &&
-        <InfoButton onClick={onInfoClick}/>}
     </>;
 
     let skill2 = <></>;
@@ -368,7 +370,6 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
             <br/>
             <MainSkillIcon mainSkill={"Charge Strength S"}/>
             <span>{mainSkillValue2}</span>
-            <InfoButton onClick={onInfo2Click}/>
         </>;
     }
     return <article className={mainSkillValue2 !== "" ? "skill2" : ""}>
@@ -400,17 +401,24 @@ const HelpDialog = React.memo(({open, onClose}: {
     </Dialog>;
 });
 
-const SkillHelpDialog = React.memo(({open, onClose, skill, id}: {
+const SkillHelpDialog = React.memo(({open, onClose, strength}: {
     open: boolean,
     onClose: () => void,
-    skill: MainSkillName,
-    id: number
+    strength: PokemonStrength,
 }) => {
     const { t } = useTranslation();
 
-    let text = t(`strength skill info.${skill}` + (id === 1 ? '2' : ''))
+    const settings = strength.parameter;
+    let text: string = "";
+    if (settings.period === 3 || settings.tapFrequency === 'none') {
+        text = t('strength skill info.not triggered');
+    }
+    else {
+        const skill = strength.pokemonIv.pokemon.skill.replace(" (Random)", "");
+        text = t(`strength skill info.${skill}`)
+    }
     return <Dialog open={open} onClose={onClose}>
-        <DialogContent style={{fontSize: '0.95rem'}}>
+        <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>
             {text}
         </DialogContent>
         <DialogActions>
