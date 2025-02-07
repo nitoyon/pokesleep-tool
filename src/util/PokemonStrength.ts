@@ -58,6 +58,11 @@ export interface StrengthResult {
     /** Total strength (berry + ingredient + skill) */
     totalStrength: number;
 
+    /** Normal help count (not sneaky snacking) */
+    notFullHelpCount: number;
+    /** Sneaky snacking help count */
+    fullHelpCount: number;
+
     /** Berry ratio */
     berryRatio: number;
     /** Berry help count */
@@ -249,7 +254,7 @@ class PokemonStrength {
         const berryCount = rp.berryCount;
         const berryStrength = rp.berryStrength;
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
+            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry() ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
@@ -272,7 +277,7 @@ class PokemonStrength {
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
 
         return {
-            energy, totalStrength,
+            energy, totalStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength,
@@ -306,7 +311,7 @@ class PokemonStrength {
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
-        const berryWithFav = berryStrength * (this.isFavoriteBerry(param) ? 2 : 1);
+        const berryWithFav = berryStrength * (this.isFavoriteBerry() ? 2 : 1);
         const strengthPerBerry = 100;
         switch (mainSkill) {
             case "Charge Energy S":
@@ -358,8 +363,9 @@ class PokemonStrength {
         }
     }
 
-    isFavoriteBerry(param: StrengthParameter): boolean {
+    isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
+        const param = this.param;
         switch (param.fieldIndex) {
             case 0: types = param.favoriteType; break;
             case 1: types = ["water", "flying", "fairy"]; break;
