@@ -58,12 +58,19 @@ export interface StrengthResult {
     /** Total strength (berry + ingredient + skill) */
     totalStrength: number;
 
+    /** Normal help count (not sneaky snacking) */
+    notFullHelpCount: number;
+    /** Sneaky snacking help count */
+    fullHelpCount: number;
+
     /** Berry ratio */
     berryRatio: number;
     /** Berry help count */
     berryHelpCount: number;
     /** Berry count per help */
     berryCount: number;
+    /** Strength per 1 berry (area bonus not included) */
+    berryRawStrength: number;
     /** Strength per 1 berry (area bonus included) */
     berryStrength: number;
     /** Total strength gained by berry */
@@ -248,9 +255,10 @@ class PokemonStrength {
         const berryRatio = (this.iv.pokemon.frequency > 0 ? 1 - ingRatio : 0);
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
         const berryCount = rp.berryCount;
-        const berryStrength = Math.ceil(rp.berryStrength * (1 + param.fieldBonus / 100));
+        const berryRawStrength = rp.berryStrength;
+        const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (this.isFavoriteBerry(param) ? 2 : 1);
+            (this.isFavoriteBerry() ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio * (targetEventBonus?.skillTrigger ?? 1);
@@ -273,9 +281,9 @@ class PokemonStrength {
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
 
         return {
-            energy, totalStrength,
+            energy, totalStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
-            berryRatio, berryHelpCount, berryCount, berryStrength, berryTotalStrength,
+            berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength,
         };
     }
@@ -308,8 +316,8 @@ class PokemonStrength {
             mainSkillFactor = this.iv.nature.energyRecoveryFactor;
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
-        const strengthPerHelp = Math.ceil(300 * (1 + param.fieldBonus / 100));
-        const berryWithFav = berryStrength * (this.isFavoriteBerry(param) ? 2 : 1);
+        const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
+        const berryWithFav = berryStrength * (this.isFavoriteBerry() ? 2 : 1);
         const strengthPerBerry = Math.ceil(100 * (1 + param.fieldBonus / 100));
         switch (mainSkill) {
             case "Charge Energy S":
@@ -366,8 +374,9 @@ class PokemonStrength {
         }
     }
 
-    isFavoriteBerry(param: StrengthParameter): boolean {
+    isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
+        const param = this.param;
         switch (param.fieldIndex) {
             case 0: types = param.favoriteType; break;
             case 1: types = ["water", "flying", "fairy"]; break;
