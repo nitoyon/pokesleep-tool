@@ -152,6 +152,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const { t } = useTranslation();
     const [helpOpen, setHelpOpen] = React.useState(false);
     const [decendantId, setDecendantId] = React.useState(0);
+    const [berryHelpOpen, setBerryHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
     const isWhistle = (settings.period === 3);
@@ -171,6 +172,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     // update pokemonIv to the specified level, skill level and pokemon
     pokemonIv = strength.pokemonIv;
 
+    const onBerryHelpClick = React.useCallback(() => {
+        setBerryHelpOpen(true);
+    }, []);
+    const onBerryHelpClose = React.useCallback(() => {
+        setBerryHelpOpen(false);
+    }, []);
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
     }, []);
@@ -224,7 +231,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </span>}
         </h2>
         <section>
-            <h3 style={{background: '#24d76a'}}>{t('berry')}</h3>
+            <h3 style={{background: '#24d76a'}}>{t('berry')}
+                <InfoButton onClick={onBerryHelpClick}/>
+            </h3>
             <article>
                 <div>
                     <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
@@ -276,6 +285,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
+        <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
+            strength={strength} result={result}/>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
             strength={strength}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
@@ -399,6 +410,137 @@ const HelpDialog = React.memo(({open, onClose}: {
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
     </Dialog>;
+});
+
+const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
+    open: boolean,
+    onClose: () => void,
+    strength: PokemonStrength,
+    result: StrengthResult,
+}) => {
+    const { t } = useTranslation();
+    if (!open) {
+        return <></>;
+    }
+
+    const param = strength.parameter;
+    const berryStrength = result.berryStrength * (strength.isFavoriteBerry() ? 2 : 1);
+    return <StyledInfoDialog open={open} onClose={onClose}>
+        <header>
+            <h1>
+                <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
+                {formatWithComma(Math.round(result.berryTotalStrength))}
+            </h1>
+            <h2>
+                <span className="box box1">{berryStrength}</span><> × </>
+                <span className="box box2">{result.berryCount}</span><> × </>
+                <span className="box box3">{round1(result.berryHelpCount)}</span>
+            </h2>
+        </header>
+        <article>
+            <div><span className="box box1">{berryStrength}</span></div>
+            <span>
+                {t('actual berry strength')}<br/>
+                <span className="box box4">{result.berryRawStrength}</span><> × </>
+                (1 + <span className="box box5">{param.fieldBonus}%</span>)<> × </>
+                <span className="box box6">{strength.isFavoriteBerry() ? 2 : 1}</span>
+                <ul className="detail">
+                    <li>
+                        <span className="box box4">{result.berryRawStrength}</span>: {t('berry strength')}
+                    </li>
+                    <li>
+                        <span className="box box5">{param.fieldBonus}%</span>: {t('area bonus')}
+                    </li>
+                    <li>
+                        <span className="box box6">{strength.isFavoriteBerry() ? 2 : 1}</span>: {t('favorite berry')}
+                    </li>
+                </ul>
+            </span>
+            <div><span className="box box2">{result.berryCount}</span></div>
+            <span>{t('berry count')}</span>
+            <div><span className="box box3">{round1(result.berryHelpCount)}</span></div>
+            <span>{t('berry help count')}</span>
+            <ul>
+                <li>
+                    <strong>{round1(result.notFullHelpCount * result.berryRatio)}</strong>{t('times unit')}: {t('berry picking count')}
+                    <footer>
+                        {round1(result.notFullHelpCount)}
+                        <small> ({t('normal help count')})</small>
+                        <> × </>
+                        {round1(result.berryRatio * 100)}%
+                        <small> ({t('berry rate')})</small>
+                    </footer>
+                </li>
+                <li>
+                    <strong>{round1(result.fullHelpCount)}</strong>{t('times unit')}: {t('sneaky snacking')}
+                </li>
+            </ul>
+        </article>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledInfoDialog>;
+});
+
+const StyledInfoDialog = styled(Dialog)({
+    '& header': {
+        margin: '1rem',
+        '& > h1': {
+            fontSize: '1.4rem',
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+        },
+        '& > h2': {
+            display: 'inline-block',
+            fontWeight: 'normal',
+            fontSize: '0.9rem',
+            margin: '0.3rem 0 0 0.5rem',
+            lineHeight: '1.9',
+        },
+    },
+
+    '& article': {
+        margin: '1rem .5rem 0 .5rem',
+        display: 'grid',
+        gridGap: '.5rem',
+        rowGap: '.8rem',
+        gridTemplateColumns: 'max-content 1fr',
+        fontSize: '0.9rem',
+        '& > div': {
+            textAlign: 'right',
+        },
+        '& > span > ul.detail': {
+            margin: '0.5rem 0 0 1rem',
+            padding: 0,
+            fontSize: '0.8rem',
+            '& span.box': {
+                padding: '0 0.3rem',
+            },
+        },
+        '& > ul': {
+            margin: 0,
+            marginTop: '-0.2rem',
+            paddingLeft: '1.5rem',
+            gridColumn: 'span 2',
+            '& > li > footer': {
+                fontSize: '0.8rem',
+            }
+        },
+    },
+    '& span.box': {
+        borderRadius: '.3rem',
+        padding: '.1rem .4rem',
+        margin: '0',
+        color: 'white',
+        textAlign: 'center',
+    },
+    '& span.box1': { background: '#1ebee1' },
+    '& span.box2': { background: '#27c18e' },
+    '& span.box3': { background: '#e7c300' },
+    '& span.box4': { background: '#ce5052' },
+    '& span.box5': { background: '#ce3fa3' },
+    '& span.box6': { background: '#ff8822' },
 });
 
 const SkillHelpDialog = React.memo(({open, onClose, strength}: {
