@@ -58,6 +58,11 @@ export interface StrengthResult {
     /** Total strength (berry + ingredient + skill) */
     totalStrength: number;
 
+    /** Normal help count (not sneaky snacking) */
+    notFullHelpCount: number;
+    /** Sneaky snacking help count */
+    fullHelpCount: number;
+
     /** Berry ratio */
     berryRatio: number;
     /** Berry help count */
@@ -247,7 +252,7 @@ class PokemonStrength {
         const berryCount = rp.berryCount;
         const berryStrength = rp.berryStrength;
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
+            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry() ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
@@ -270,7 +275,7 @@ class PokemonStrength {
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
 
         return {
-            energy, totalStrength,
+            energy, totalStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength,
@@ -332,7 +337,7 @@ class PokemonStrength {
             case "Berry Burst":
                 const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
                 const strengthBurst =  (1 + param.fieldBonus / 100) * (
-                    mainSkillValue * berryStrength * (this.isFavoriteBerry(param) ? 2 : 1) +
+                    mainSkillValue * berryStrength * (this.isFavoriteBerry() ? 2 : 1) +
                     4 * strengthPerBerry * skillCount * extra
                 );
                 return [strengthBurst, strengthBurst];
@@ -346,8 +351,9 @@ class PokemonStrength {
         }
     }
 
-    isFavoriteBerry(param: StrengthParameter): boolean {
+    isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
+        const param = this.param;
         switch (param.fieldIndex) {
             case 0: types = param.favoriteType; break;
             case 1: types = ["water", "flying", "fairy"]; break;
