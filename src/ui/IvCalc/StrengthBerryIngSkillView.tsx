@@ -2,7 +2,6 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
-import { MainSkillName } from '../../util/MainSkill';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../util/PokemonStrength';
 import { StrengthParameter } from '../../util/PokemonStrength';
@@ -149,6 +148,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const { t } = useTranslation();
     const [helpOpen, setHelpOpen] = React.useState(false);
     const [decendantId, setDecendantId] = React.useState(0);
+    const [berryHelpOpen, setBerryHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
     const isWhistle = (settings.period === 3);
@@ -168,6 +168,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     // update pokemonIv to the specified level, skill level and pokemon
     pokemonIv = strength.pokemonIv;
 
+    const onBerryHelpClick = React.useCallback(() => {
+        setBerryHelpOpen(true);
+    }, []);
+    const onBerryHelpClose = React.useCallback(() => {
+        setBerryHelpOpen(false);
+    }, []);
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
     }, []);
@@ -188,8 +194,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const ingArticle = getIngArticle(result, settings, t);
 
     // skill value
-    const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
-        t, onSkillHelpClick);
+    const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -221,7 +226,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </span>}
         </h2>
         <section>
-            <h3 style={{background: '#24d76a'}}>{t('berry')}</h3>
+            <h3 style={{background: '#24d76a'}}>{t('berry')}
+                <InfoButton onClick={onBerryHelpClick}/>
+            </h3>
             <article>
                 <div>
                     <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
@@ -273,6 +280,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
+        <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
+            strength={strength} result={result}/>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
             strength={strength}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
@@ -328,8 +337,7 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 }
 
 function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
-    settings: StrengthParameter, t: typeof i18next.t,
-    onInfoClick: () => void): React.ReactNode {
+    settings: StrengthParameter): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
     }
@@ -378,6 +386,116 @@ const HelpDialog = React.memo(({open, onClose}: {
     </Dialog>;
 });
 
+const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
+    open: boolean,
+    onClose: () => void,
+    strength: PokemonStrength,
+    result: StrengthResult,
+}) => {
+    const { t } = useTranslation();
+    if (!open) {
+        return <></>;
+    }
+
+    const param = strength.parameter;
+    return <StyledInfoDialog open={open} onClose={onClose}>
+        <header>
+            <h1>
+                <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
+                {formatWithComma(Math.round(result.berryTotalStrength))}
+            </h1>
+            <h2>
+                <span className="box box1">{result.berryStrength}</span><> × </>
+                <span className="box box2">{result.berryCount}</span><> × </>
+                <span className="box box3">{round1(result.berryHelpCount)}</span><> × (1+</>
+                <span className="box box4">{param.fieldBonus}%</span><>) × </>
+                <span className="box box5">{strength.isFavoriteBerry() ? 2 : 1}</span>
+            </h2>
+        </header>
+        <article>
+            <div><span className="box box1">{result.berryStrength}</span></div>
+            <span>{t('berry strength')}</span>
+            <div><span className="box box2">{result.berryCount}</span></div>
+            <span>{t('berry count')}</span>
+            <div><span className="box box3">{round1(result.berryHelpCount)}</span></div>
+            <span>{t('berry help count')}
+                <ul>
+                    <li>
+                        {t('berry picking count')}: <strong>{round1(result.notFullHelpCount * result.berryRatio)}</strong>{t('times unit')}
+                        <footer>
+                            {round1(result.notFullHelpCount)}
+                            <small> ({t('normal help count')})</small>
+                            <> × </>
+                            {round1(result.berryRatio * 100)}%
+                            <small> ({t('berry rate')})</small>
+                        </footer>
+                    </li>
+                    <li>
+                        {t('sneaky snacking')}: <strong>{round1(result.fullHelpCount)}</strong>{t('times unit')}
+                    </li>
+                </ul>
+            </span>
+            <div><span className="box box4">{strength.parameter.fieldBonus}%</span></div>
+            <span>{t('area bonus')}</span>
+            <div><span className="box box5">{strength.isFavoriteBerry() ? 2 : 1}</span></div>
+            <span>{t('favorite berry')}</span>
+        </article>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledInfoDialog>;
+});
+
+const StyledInfoDialog = styled(Dialog)({
+    '& header': {
+        margin: '1rem',
+        '& > h1': {
+            fontSize: '1.4rem',
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+        },
+        '& > h2': {
+            display: 'inline-block',
+            fontWeight: 'normal',
+            fontSize: '0.9rem',
+            margin: '0.3rem 0 0 0.5rem',
+            lineHeight: '1.9',
+        },
+    },
+
+    '& article': {
+        margin: '1rem .5rem 0 .5rem',
+        display: 'grid',
+        gridGap: '.5rem',
+        rowGap: '.8rem',
+        gridTemplateColumns: 'max-content 1fr',
+        fontSize: '0.9rem',
+        '& > div': {
+            textAlign: 'right',
+        },
+        '& > span > ul': {
+            margin: '0.2rem 0 0.2rem -1.5rem',
+            paddingLeft: 0,
+            '& > li > footer': {
+                fontSize: '0.8rem',
+            }
+        },
+    },
+    '& span.box': {
+        borderRadius: '.3rem',
+        padding: '.1rem .4rem',
+        margin: '0',
+        color: 'white',
+        textAlign: 'center',
+    },
+    '& span.box1': { background: '#1ebee1' },
+    '& span.box2': { background: '#27c18e' },
+    '& span.box3': { background: '#e7c300' },
+    '& span.box4': { background: '#ce5052' },
+    '& span.box5': { background: '#ce3fa3' },
+});
+
 const SkillHelpDialog = React.memo(({open, onClose, strength}: {
     open: boolean,
     onClose: () => void,
@@ -392,7 +510,12 @@ const SkillHelpDialog = React.memo(({open, onClose, strength}: {
     }
     else {
         const skill = strength.pokemonIv.pokemon.skill;
-        text = t(`strength skill info.${skill}`)
+        if (skill.startsWith("Charge Strength") ||
+            skill.startsWith("Dream Shard")) {
+            text = 'The value you can obtain is displayed.';
+        } else {
+            text = t(`strength skill info.${skill}`)
+        }
     }
     return <Dialog open={open} onClose={onClose}>
         <DialogContent style={{fontSize: '0.95rem'}}>
