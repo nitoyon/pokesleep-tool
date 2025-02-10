@@ -2746,30 +2746,30 @@
         "sleepType": "dozing",
         "type": "poison",
         "specialty": "Ingredients",
-        "skill": "unknown",
+        "skill": "Charge Energy S",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 6400,
+        "ingRatio": 20.9,
+        "skillRatio": 5.6,
         "ancestor": 194,
         "evolutionCount": 0,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 9,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "cacao",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "coffee",
+            "c2": 4,
+            "c3": 7
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "potato",
+            "c3": 9
         },
         "form": "Paldea"
     },
@@ -5358,31 +5358,31 @@
         "name": "Clodsire",
         "sleepType": "dozing",
         "type": "poison",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Charge Energy S",
         "fp": 12,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3500,
+        "ingRatio": 20.8,
+        "skillRatio": 5.5,
         "ancestor": 194,
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 20,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "cacao",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "coffee",
+            "c2": 4,
+            "c3": 7
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "potato",
+            "c3": 9
         },
         "form": "Paldea"
     }
