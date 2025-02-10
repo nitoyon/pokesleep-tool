@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add clodsire": {
+                    "headline": "更新了乌波 (帕底亚)，土王的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "v2.5.0": {
                     "headline": "已更新 v2.5.0 中进行平衡调整的阿勃梭鲁数据。",
                     "detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
