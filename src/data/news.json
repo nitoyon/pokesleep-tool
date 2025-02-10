@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2025-02-10T07:22:00Z",
+            "id": "add clodsire"
+        },
+        {
             "date": "2025-02-06T09:45:00Z",
             "id": "v2.5.0"
         },

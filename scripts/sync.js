@@ -201,7 +201,8 @@ async function syncPokemon() {
         const nameJa = jaJson.translation.pokemons[enname];
         const nameJa2 = nameJa
             .replace(" ", "")
-            .replace("(アローラ)", "(アローラのすがた)");
+            .replace("(アローラ)", "(アローラのすがた)")
+            .replace("(パルデア)", "(パルデアのすがた)");
         ja2en[nameJa] = enname;
         ja2en[nameJa2] = enname;
     }
@@ -212,7 +213,8 @@ async function syncPokemon() {
         const nameJa = en2ja[name];
         const html = await getWikiHtml(nameJa
             .replace(" ", "")
-            .replace("(アローラ)", "(アローラのすがた)"));
+            .replace("(アローラ)", "(アローラのすがた)")
+            .replace("(パルデア)", "(パルデアのすがた)"));
         pokemonJson.push(getPokemon(html, name, ja2en));
     }
     fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
@@ -410,6 +412,9 @@ function getPokemon(html, name, nameJa2en) {
     };
     if (form !== null) {
         ret.form = form;
+    }
+    if (name === 'Clodsire') {
+        ret.form = "Paldea";
     }
     return ret;
 }
