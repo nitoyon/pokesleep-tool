@@ -1,18 +1,23 @@
 {
     "drowsy": [
         {
-            "name": "GSD",
-            "day": "2025-02-11",
+            "name": "PokemonDay",
+            "day": "2025-02-26",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2025-02-12",
-            "bonus": 2.5
+            "day": "2025-03-13",
+            "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2025-02-13",
+            "day": "2025-03-14",
+            "bonus": 2
+        },
+        {
+            "name": "GSD",
+            "day": "2025-03-15",
             "bonus": 1.5
         }
     ],
