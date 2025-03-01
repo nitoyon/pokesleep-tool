@@ -5,22 +5,23 @@ import { Button } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
 
-const TypeButton = React.memo(({type, checked, onClick}: {
-    type: PokemonType,
-    checked: boolean,
-    onClick: (value: PokemonType) => void,
-}) => {
+const TypeButton = React.memo(
+    React.forwardRef<HTMLButtonElement, {
+        type: PokemonType,
+        checked: boolean,
+        onClick: (value: PokemonType) => void,
+    }>(({type, checked, onClick}, ref) => {
     const { t } = useTranslation();
     const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         const value = e.currentTarget.value as PokemonType;
         onClick(value);
     }, [onClick]);
-    return <StyledTypeButton
+    return <StyledTypeButton ref={ref}
             key={type} className={type} value={type} onClick={onTypeClick}>
             {t(`types.${type}`)}
             {checked && <CheckIcon/>}
         </StyledTypeButton>;
-});
+}));
 
 const StyledTypeButton = styled(Button)({
     width: '5rem',
