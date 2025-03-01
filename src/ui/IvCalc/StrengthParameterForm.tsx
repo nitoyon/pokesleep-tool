@@ -8,8 +8,9 @@ import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from './InfoButton';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import TypeSelect from './TypeSelect';
 import { getActiveHelpBonus } from '../../data/events';
-import { PokemonType, PokemonTypes } from '../../data/pokemons';
+import { PokemonType } from '../../data/pokemons';
 import { StrengthParameter } from '../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -29,6 +30,9 @@ const StyledSettingForm = styled('div')({
         },
         '& > label': {
             marginRight: 'auto',
+        },
+        '& > span > button': {
+            marginRight: 0,
         },
         '& > div > button': {
             fontSize: '0.8rem',
@@ -66,25 +70,25 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onFieldChange = React.useCallback((fieldIndex: number) => {
         onChange({...value, fieldIndex});
     }, [onChange, value]);
-    const onFavoriteBerryChange1 = React.useCallback((e: SelectChangeEvent<PokemonType>) => {
+    const onFavoriteBerryChange1 = React.useCallback((type: PokemonType) => {
         const favoriteType = [value.favoriteType[0] ?? "normal",
             value.favoriteType[1] ?? "normal",
             value.favoriteType[2] ?? "normal"];
-        favoriteType[0] = e.target.value as PokemonType;
+        favoriteType[0] = type;
         onChange({...value, favoriteType});
     }, [onChange, value]);
-    const onFavoriteBerryChange2 = React.useCallback((e: SelectChangeEvent<PokemonType>) => {
+    const onFavoriteBerryChange2 = React.useCallback((type: PokemonType) => {
         const favoriteType = [value.favoriteType[0] ?? "normal",
             value.favoriteType[1] ?? "normal",
             value.favoriteType[2] ?? "normal"];
-        favoriteType[1] = e.target.value as PokemonType;
+        favoriteType[1] = type;
         onChange({...value, favoriteType});
     }, [onChange, value]);
-    const onFavoriteBerryChange3 = React.useCallback((e: SelectChangeEvent<PokemonType>) => {
+    const onFavoriteBerryChange3 = React.useCallback((type: PokemonType) => {
         const favoriteType = [value.favoriteType[0] ?? "normal",
             value.favoriteType[1] ?? "normal",
             value.favoriteType[2] ?? "normal"];
-        favoriteType[2] = e.target.value as PokemonType;
+        favoriteType[2] = type;
         onChange({...value, favoriteType});
     }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
@@ -126,12 +130,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         onChange({...value, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
     }, [onChange, value]);
 
-    const typeMenus = PokemonTypes.map((x: PokemonType) =>
-        <MenuItem key={x} value={x}>{t(`types.${x}`)}</MenuItem>);
-    while (value.favoriteType.length < 3) {
-        value.favoriteType.push('normal');
-    }
-
     const scheduledEvents = getActiveHelpBonus(new Date())
         .map(x => x.name);
     const eventToggles = ['none', ...scheduledEvents].map(x =>
@@ -157,18 +155,12 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <section>
                 <label>{t('favorite berry')}:</label>
                 <span>
-                    <Select variant="standard" size="small" value={value.favoriteType[0]}
-                        onChange={onFavoriteBerryChange1}>
-                        {typeMenus}
-                    </Select><> </>
-                    <Select variant="standard" size="small" value={value.favoriteType[1]}
-                        onChange={onFavoriteBerryChange2}>
-                        {typeMenus}
-                    </Select><> </>
-                    <Select variant="standard" size="small" value={value.favoriteType[2]}
-                        onChange={onFavoriteBerryChange3}>
-                        {typeMenus}
-                    </Select>
+                    <TypeSelect type={value.favoriteType[0]}
+                        onChange={onFavoriteBerryChange1}/>
+                    <TypeSelect type={value.favoriteType[1]}
+                        onChange={onFavoriteBerryChange2}/>
+                    <TypeSelect type={value.favoriteType[2]}
+                        onChange={onFavoriteBerryChange3}/>
                 </span>
             </section>
         </Collapse>
