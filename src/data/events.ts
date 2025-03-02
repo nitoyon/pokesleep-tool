@@ -55,9 +55,9 @@ export class BonusEventData {
     /** End date */
     end: Date;
     /** Target pokemon */
-    target: TargetPokemon;
+    target: Partial<TargetPokemon>;
     /** Bonus effects to be triggered */
-    effects: BonusEffects;
+    effects: Partial<BonusEffects>;
 
     /**
      * Initialize BonusEventData object.
@@ -131,7 +131,7 @@ export function getActiveHelpBonus(date: Date,
  * @param name Event name.
  * @returns Event bonus. `undefined` if not found or not target.
  */
-export function getEventBonusIfTarget(name: string, pokemon: PokemonData): BonusEffects|undefined {
+export function getEventBonusIfTarget(name: string, pokemon: PokemonData): Partial<BonusEffects>|undefined {
     const event = events.bonus.find(x => x.name === name);
     if (event === undefined) {
         return undefined;
@@ -159,9 +159,9 @@ interface JsonDrowsyEventData {
  */
 interface TargetPokemon {
     /** Specialty of the pokemon */
-    specialty?: PokemonSpecialty;
+    specialty: PokemonSpecialty;
     /** Type of the pokemon */
-    type?: PokemonType;
+    type: PokemonType;
 }
 
 /**
@@ -169,15 +169,15 @@ interface TargetPokemon {
  */
 export interface BonusEffects {
     /** Skill probability bonus */
-    skillTrigger?: 1 | 1.25 | 1.5,
+    skillTrigger: 1 | 1.25 | 1.5,
     /** Boosted main skill level */
-    skillLevel?: 0 | 1 | 3,
+    skillLevel: 0 | 1 | 3,
     /** Boosted ingredient count */
-    ingredient?: 0 | 1,
+    ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
-    dreamShard?: 1 | 2;
+    dreamShard: 1 | 2;
     /** Dishes bonus */
-    dish?: 1 | 1.25 | 1.5;
+    dish: 1 | 1.25 | 1.5;
 }
 
 /**
@@ -191,9 +191,9 @@ interface JsonBonusEventData {
     /** End date time (YYYY-MM-DD) */
     end: string;
     /** target pokemons */
-    target: TargetPokemon;
+    target: Partial<TargetPokemon>;
     /** Effects to be triggered */
-    effects: BonusEffects;
+    effects: Partial<BonusEffects>;
 }
 
 /**

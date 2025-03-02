@@ -281,7 +281,7 @@ class PokemonStrength {
      * `skillStrength` is the strength got by the skill.
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        berryStrength: number, eventBonus: BonusEffects|undefined
+        berryStrength: number, eventBonus: Partial<BonusEffects>|undefined
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
