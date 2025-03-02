@@ -272,6 +272,8 @@
         "no event": "No event",
         "events": {
             "none": "None",
+            "advanced": "Advanced",
+            "custom": "Custom",
             "valentine 2025": "Valentine's Day 2025",
             "super skill week": "Super Skill Week"
         },

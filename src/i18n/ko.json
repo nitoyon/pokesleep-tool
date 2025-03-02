@@ -259,6 +259,8 @@
         "no event": "이벤트 없음",
         "events": {
             "none": "없음",
+            "advanced": "고급 설정",
+            "custom": "맞춤 설정",
             "valentine 2025": "밸런타인 2025",
             "super skill week": "연발! 스킬 위크"
         },

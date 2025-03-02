@@ -264,6 +264,8 @@
         "no event": "没有活动",
         "events": {
             "none": "无",
+            "advanced": "详细设置",
+            "custom": "自定义设置",
             "valentine 2025": "情人节2025",
             "super skill week": "强化发动！技能周"
         },

@@ -185,7 +185,8 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        let eventBonus = getEventBonusIfTarget(param.event, this.iv.pokemon);
+        let eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+            this.iv.pokemon);
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -383,6 +384,16 @@ export function createStrengthParameter(
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
+        customEventBonus: {
+            target: {},
+            effects: {
+                skillTrigger: 1,
+                skillLevel: 0,
+                ingredient: 0,
+                dreamShard: 1,
+                dish: 1,
+            }
+        },
     };
     return { ...defaultParameters, ...param };
 }
