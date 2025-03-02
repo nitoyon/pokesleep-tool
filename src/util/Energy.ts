@@ -1,6 +1,7 @@
 import { getEventBonusIfTarget } from '../data/events';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
+import { HelpEventBonus } from '../data/events';
 
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
@@ -51,6 +52,11 @@ export interface EnergyParameter {
      * Event option.
      */
     event: string;
+
+    /**
+     * Custom event bonus.
+     */
+    customEventBonus: HelpEventBonus;
 }
 
 type EnergyEvent = {
@@ -515,7 +521,8 @@ class Energy {
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
         if (lotteryCount > 0) {
-            const eventBonus = getEventBonusIfTarget(param.event, this._iv.pokemon);
+            const eventBonus = getEventBonusIfTarget(param.event,
+                param.customEventBonus, this._iv.pokemon);
             const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills') {

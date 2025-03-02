@@ -132,7 +132,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
 
     const scheduledEvents = getActiveHelpBonus(new Date())
         .map(x => x.name);
-    const eventToggles = ['none', ...scheduledEvents].map(x =>
+    const eventToggles = ['none', ...scheduledEvents, 'advanced'].map(x =>
         <ToggleButton key={x} value={x} style={{ textTransform: 'none' }}>{t(`events.${x}`)}</ToggleButton>
     );
 
@@ -175,13 +175,13 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
             </section>
         </Collapse>
-        {scheduledEvents.length > 0 && <section className="mt">
+        <section className="mt">
             <label>{t('event')}:</label>
             <ToggleButtonGroup size="small" exclusive
                 value={value.event} onChange={onEventChange}>
                 {eventToggles}
             </ToggleButtonGroup>
-        </section>}
+        </section>
         <section className="mt">
             <label>{t('level')}:</label>
             <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>

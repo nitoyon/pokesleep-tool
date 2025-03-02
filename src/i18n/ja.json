@@ -264,6 +264,8 @@
         "no event": "イベントなし",
         "events": {
             "none": "なし",
+            "advanced": "詳細設定",
+            "custom": "カスタム設定",
             "valentine 2025": "バレンタイン2025",
             "super skill week": "連発！スキルウィーク"
         },

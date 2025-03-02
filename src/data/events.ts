@@ -1,5 +1,7 @@
 import events_ from './event.json';
-import { PokemonData, PokemonSpecialty, PokemonType } from './pokemons';
+import { PokemonData, PokemonSpecialty, PokemonType, PokemonTypes,
+    SpecialtyNames
+ } from './pokemons';
 
 /**
  * Represents drowsy event data.
@@ -57,7 +59,7 @@ export class BonusEventData {
     /** Target pokemon */
     target: Partial<TargetPokemon>;
     /** Bonus effects to be triggered */
-    effects: Partial<BonusEffects>;
+    effects: BonusEffects;
 
     /**
      * Initialize BonusEventData object.
@@ -68,7 +70,7 @@ export class BonusEventData {
         this.start = new Date(data.start);
         this.end = new Date(new Date(data.end).getTime() + 24 * 60 * 60 * 1000);
         this.target = data.target;
-        this.effects = data.effects;
+        this.effects = fillBonusEffects(data.effects);
     }
 
     /**
@@ -86,16 +88,31 @@ export class BonusEventData {
      * @returns `true` if the Pokémon is a target, otherwise `false`.
      */
     isTarget(pokemon: PokemonData): boolean {
-       if (this.target.specialty !== undefined &&
+       if (this.target?.specialty !== undefined &&
             pokemon.specialty !== this.target.specialty) {
             return false;
         }
-        if (this.target.type !== undefined &&
+        if (this.target?.type !== undefined &&
             pokemon.type !== this.target.type) {
             return false;
         }
         return true;
     }
+}
+
+/**
+ * Returns the bonus effects with the default values filled in.
+ * @param data Partial BonusEffects object.
+ * @returns Filled BonusEffects object.
+ */
+function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
+    return {
+        skillTrigger: data.skillTrigger ?? 1,
+        skillLevel: data.skillLevel ?? 0,
+        ingredient: data.ingredient ?? 0,
+        dreamShard: data.dreamShard ?? 1,
+        dish: data.dish ?? 1,
+    };
 }
 
 /**
@@ -131,8 +148,21 @@ export function getActiveHelpBonus(date: Date,
  * @param name Event name.
  * @returns Event bonus. `undefined` if not found or not target.
  */
-export function getEventBonusIfTarget(name: string, pokemon: PokemonData): Partial<BonusEffects>|undefined {
-    const event = events.bonus.find(x => x.name === name);
+export function getEventBonusIfTarget(name: string, custom: HelpEventBonus,
+    pokemon: PokemonData): Partial<BonusEffects>|undefined {
+    let event: BonusEventData|undefined = undefined;
+    if (name !== "custom") {
+        event = events.bonus.find(x => x.name === name);
+    }
+    else {
+        event = new BonusEventData({
+            name: "custom",
+            start: "2000-01-01",
+            end: "2100-01-01",
+            target: custom.target,
+            effects: custom.effects,
+        });
+    }
     if (event === undefined) {
         return undefined;
     }
@@ -181,6 +211,14 @@ export interface BonusEffects {
 }
 
 /**
+ * Help event bonus
+ */
+export interface HelpEventBonus {
+    target: Partial<TargetPokemon>;
+    effects: BonusEffects;
+}
+
+/**
  * bonus data in event.json
  */
 interface JsonBonusEventData {
@@ -213,8 +251,53 @@ class EventData {
         this.drowsy = data.drowsy.map(x => new DrowsyEventData(x));
         this.bonus = data.bonus.map(x => new BonusEventData(x));
     }
+
+    getBonusByName(name: string): BonusEventData|undefined {
+        return this.bonus.find(x => x.name === name);
+    }
 }
 
 const events = new EventData(events_ as JsonEventData);
+
+/**
+ * Load help event bonus data from JSON.
+ * @param data Loaded JSON data.
+ * @returns Loaded HelpEventBonus object.
+ */
+export function loadHelpEventBonus(data: any): HelpEventBonus {
+    const ret: HelpEventBonus = {
+        target: {},
+        effects: fillBonusEffects({}),
+    };
+    if (typeof(data.target) === "object") {
+        if (typeof(data.target.speciality) === "string" &&
+        SpecialtyNames.includes(data.target.speciality)) {
+            ret.target.specialty = data.speciality as PokemonSpecialty;
+        }
+        if (typeof(data.target.type) === "string" &&
+            PokemonTypes.includes(data.target.type)) {
+            ret.target.type = data.type as PokemonType;
+        }
+    }
+    if (typeof(data.effects) === "object") {
+        if (typeof(data.effects.skillLevel) === "number" &&
+            [0, 1, 3].includes(data.effects.skillLevel)) {
+            ret.effects.skillLevel = data.effects.skillLevel;
+        }
+        if (typeof(data.effects.ingredient) === "number" &&
+            [0, 1].includes(data.effects.ingredient)) {
+            ret.effects.ingredient = data.effects.ingredient;
+        }
+        if (typeof(data.effects.dreamShard) === "number" &&
+            [1, 2].includes(data.effects.dreamShard)) {
+            ret.effects.dreamShard = data.effects.dreamShard;
+        }
+        if (typeof(data.effects.dish) === "number" &&
+            [1, 1.25, 1.5].includes(data.effects.dish)) {
+            ret.effects.dish = data.effects.dish;
+        }
+    }
+    return ret;
+}
 
 export default events;

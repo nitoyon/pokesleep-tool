@@ -264,6 +264,8 @@
         "no event": "沒有活動",
         "events": {
             "none": "無",
+            "advanced": "詳細設定",
+            "custom": "自訂設定",
             "valentine 2025": "情人節2025",
             "super skill week": "強化發動！技能週"
         },
