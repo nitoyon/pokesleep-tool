@@ -24,17 +24,17 @@ const StyledSettingForm = styled('div')({
         fontSize: '.9rem',
         display: 'flex',
         flex: '0 auto',
-        alignItems: 'center',
         '&.mt': {
             marginTop: '1rem',
         },
         '& > label': {
             marginRight: 'auto',
+            marginTop: 0,
         },
         '& > span > button': {
             marginRight: 0,
         },
-        '& > div > button': {
+        '& > div button': {
             fontSize: '0.8rem',
             padding: '0.5rem 0.2rem',
             lineHeight: 1.1,
@@ -177,10 +177,15 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </Collapse>
         <section className="mt">
             <label>{t('event')}:</label>
-            <ToggleButtonGroup size="small" exclusive
-                value={value.event} onChange={onEventChange}>
-                {eventToggles}
-            </ToggleButtonGroup>
+            <div>
+                <ToggleButtonGroup size="small" exclusive
+                    value={value.event} onChange={onEventChange}>
+                    {eventToggles}
+                </ToggleButtonGroup>
+                <Collapse in={value.event === "advanced"}>
+                    <Button>設定</Button>
+                </Collapse>
+            </div>
         </section>
         <section className="mt">
             <label>{t('level')}:</label>

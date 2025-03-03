@@ -3,6 +3,7 @@ import { BonusEffects, getActiveHelpBonus, getEventBonusIfTarget } from '../data
 import { IngredientName, getDecendants, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields from '../data/fields';
+import { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
@@ -491,8 +492,12 @@ export function loadStrengthParameter(): StrengthParameter {
     const activeEvents = getActiveHelpBonus(new Date())
         .map(x => x.name);
     if (typeof(json.event) === "string" &&
-        ["none", ...activeEvents].includes(json.event)) {
+        ["none", "advanced", ...activeEvents].includes(json.event)) {
         ret.event = json.event;
+    }
+
+    if (typeof(json.customEventBonus) === "object") {
+        ret.customEventBonus = loadHelpEventBonus(json.customEventBonus);
     }
     return ret;
 }
