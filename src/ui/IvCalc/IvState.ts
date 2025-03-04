@@ -3,7 +3,7 @@ import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
 import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
 
 export type IvAction = {
-    type: "add"|"unselect"|"export"|"exportClose"|"import"|"importClose"|
+    type: "add"|"export"|"exportClose"|"import"|"importClose"|
         "deleteAll" | "deleteAllClose" | "saveItem"|"restoreItem"|
         "editDialogClose"|"closeAlert"|"openEnergyDialog"|"closeEnergyDialog";
 }|{
@@ -53,6 +53,7 @@ type IvStateCache = {
     tabIndex: number;
     lowerTabIndex: number;
     iv: string;
+    selectedIv: string;
 };
 
 /**
@@ -68,6 +69,17 @@ export function getInitialIvState(): IvState {
         }
         catch { }
     }
+    let selectedItemId = -1;
+    if (cache.selectedIv !== "") {
+        try {
+            const selectedIv = PokemonIv.deserialize(cache.selectedIv);
+            const selectedIndex = initialBox.items.findIndex(x => x.iv.isEqual(selectedIv));
+            if (selectedIndex >= 0) {
+                selectedItemId = initialBox.items[selectedIndex].id;
+            }
+        }
+        catch { }
+    }
 
     const ret: IvState = {
         tabIndex: cache.tabIndex,
@@ -75,7 +87,7 @@ export function getInitialIvState(): IvState {
         pokemonIv: iv,
         parameter: loadStrengthParameter(),
         box: initialBox,
-        selectedItemId: -1,
+        selectedItemId,
         energyDialogOpen: false,
         boxItemDialogOpen: false,
         boxItemDialogKey: "",
@@ -103,7 +115,7 @@ export function getInitialIvState(): IvState {
  * @returns Loaded IvStateCache.
  */
 function loadInitialIvStateCache(): IvStateCache {
-    const ret: IvStateCache = {tabIndex: 0, lowerTabIndex: 0, iv: ""};
+    const ret: IvStateCache = {tabIndex: 0, lowerTabIndex: 0, iv: "", selectedIv: ""};
 
     const settings = localStorage.getItem('PstIvState');
     if (settings === null) {
@@ -124,6 +136,9 @@ function loadInitialIvStateCache(): IvStateCache {
     if (typeof(json.iv) === "string") {
         ret.iv = json.iv;
     }
+    if (typeof(json.selectedIv) === "string") {
+        ret.selectedIv = json.selectedIv;
+    }
     return ret;
 }
 
@@ -132,10 +147,12 @@ function loadInitialIvStateCache(): IvStateCache {
  * @param state IvState.
  */
 function saveIvStateCache(state: IvState) {
+    const selectedItem = state.box.getById(state.selectedItemId);
     const cache: IvStateCache = {
         tabIndex: state.tabIndex,
         lowerTabIndex: state.lowerTabIndex,
         iv: state.pokemonIv.serialize(),
+        selectedIv: selectedItem === null ? "" : selectedItem.iv.serialize(),
     };
     localStorage.setItem("PstIvState", JSON.stringify(cache));
 }
@@ -219,7 +236,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     }
     if (type === "restoreItem") {
         if (selectedItem !== null) {
-            return {...getStateWhenPokemonIvChange(state, selectedItem.iv)};
+            const newValue = {...getStateWhenPokemonIvChange(state, selectedItem.iv)};
+            saveIvStateCache(newValue);
+            return newValue;
         }
         return state;
     }
@@ -228,7 +247,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         const box = new PokemonBox(state.box.items);
         box.set(state.selectedItemId, state.pokemonIv, nickName);
         box.save();
-        return {...state, box};
+        const newState = {...state, box};
+        saveIvStateCache(newState);
+        return newState;
     }
 
     if (type === "editDialogClose") {
@@ -246,7 +267,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         }
         box.save();
         const s = getStateWhenPokemonIvChange(state, value.iv);
-        return {...s, box, selectedItemId};
+        const newState = {...s, box, selectedItemId};
+        saveIvStateCache(newState);
+        return newState;
     }
 
     if (type === "showAlert") {
@@ -266,7 +289,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     if (item === null) { return state; }
     if (type === "select") {
         const s = getStateWhenPokemonIvChange(state, item.iv);
-        return {...s, selectedItemId: id};
+        const newState = {...s, selectedItemId: id};
+        saveIvStateCache(newState);
+        return newState;
     }
     else if (type === "edit") {
         return {...state,
