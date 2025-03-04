@@ -47,14 +47,32 @@ type IvState = {
 };
 
 /**
+ * IvState saved to localStorage.
+ */
+type IvStateCache = {
+    tabIndex: number;
+    lowerTabIndex: number;
+    iv: string;
+};
+
+/**
  * Get initial IvState object.
  * @returns Initial IvState.
  */
 export function getInitialIvState(): IvState {
+    const cache = loadInitialIvStateCache();
+    let iv = new PokemonIv("Venusaur");
+    if (cache.iv !== "") {
+        try {
+            iv = PokemonIv.deserialize(cache.iv);
+        }
+        catch { }
+    }
+
     const ret: IvState = {
-        tabIndex: 0,
-        lowerTabIndex: 0,
-        pokemonIv: new PokemonIv("Venusaur"),
+        tabIndex: cache.tabIndex,
+        lowerTabIndex: cache.lowerTabIndex,
+        pokemonIv: iv,
         parameter: loadStrengthParameter(),
         box: initialBox,
         selectedItemId: -1,
@@ -80,6 +98,48 @@ export function getInitialIvState(): IvState {
     return ret;
 }
 
+/**
+ * Load IvStateCache from localStorage.
+ * @returns Loaded IvStateCache.
+ */
+function loadInitialIvStateCache(): IvStateCache {
+    const ret: IvStateCache = {tabIndex: 0, lowerTabIndex: 0, iv: ""};
+
+    const settings = localStorage.getItem('PstIvState');
+    if (settings === null) {
+        return ret;
+    }
+    const json = JSON.parse(settings);
+    if (typeof(json) !== "object" || json === null) {
+        return ret;
+    }
+    if (typeof(json.tabIndex) === "number" &&
+        json.tabIndex >= 0 && json.tabIndex <= 2) {
+        ret.tabIndex = json.tabIndex;
+    }
+    if (typeof(json.lowerTabIndex) === "number" &&
+        json.lowerTabIndex >= 0 && json.lowerTabIndex <= 2) {
+        ret.lowerTabIndex = json.lowerTabIndex;
+    }
+    if (typeof(json.iv) === "string") {
+        ret.iv = json.iv;
+    }
+    return ret;
+}
+
+/**
+ * Save IvState to localStorage.
+ * @param state IvState.
+ */
+function saveIvStateCache(state: IvState) {
+    const cache: IvStateCache = {
+        tabIndex: state.tabIndex,
+        lowerTabIndex: state.lowerTabIndex,
+        iv: state.pokemonIv.serialize(),
+    };
+    localStorage.setItem("PstIvState", JSON.stringify(cache));
+}
+
 export function ivStateReducer(state: IvState, action: IvAction): IvState {
     const type = action.type;
     const selectedItem = state.box.getById(state.selectedItemId);
@@ -89,10 +149,14 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         if (value !== 1 && lowerTabIndex === 2) {
             lowerTabIndex = 0;
         }
-        return {...state, tabIndex: value, lowerTabIndex};
+        const newState = {...state, tabIndex: value, lowerTabIndex};
+        saveIvStateCache(newState);
+        return newState;
     }
     if (type === "changeLowerTab") {
-        return {...state, lowerTabIndex: action.payload.index};
+        const newState = {...state, lowerTabIndex: action.payload.index};
+        saveIvStateCache(newState);
+        return newState;
     }
     if (type === "changeParameter") {
         const value = action.payload.parameter;
@@ -116,7 +180,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         };
     }
     if (type === "updateIv") {
-        return getStateWhenPokemonIvChange(state, action.payload.iv);
+        const newState = getStateWhenPokemonIvChange(state, action.payload.iv);
+        saveIvStateCache(newState);
+        return newState;
     }
     if (type === "addThis") {
         if (!state.box.canAdd) {
