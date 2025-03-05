@@ -105,7 +105,7 @@ export class BonusEventData {
  * @param data Partial BonusEffects object.
  * @returns Filled BonusEffects object.
  */
-function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
+export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
     return {
         skillTrigger: data.skillTrigger ?? 1,
         skillLevel: data.skillLevel ?? 0,
@@ -187,7 +187,7 @@ interface JsonDrowsyEventData {
  * When both properties are specified, both condition should be met.
  * When neigher property is provided, all pokemon is the target.
  */
-interface TargetPokemon {
+export interface TargetPokemon {
     /** Specialty of the pokemon */
     specialty: PokemonSpecialty;
     /** Type of the pokemon */

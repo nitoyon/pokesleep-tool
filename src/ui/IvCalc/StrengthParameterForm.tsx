@@ -8,6 +8,7 @@ import { IvAction } from './IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from './InfoButton';
 import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import EventConfigDialog from './EventConfigDialog';
 import TypeSelect from './TypeSelect';
 import { getActiveHelpBonus } from '../../data/events';
 import { PokemonType } from '../../data/pokemons';
@@ -52,6 +53,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
 }) => {
     const { t } = useTranslation();
     const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
+    const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
 
     const onRecipeBonusInfoClick = React.useCallback(() => {
         setRecipeBonusHelpOpen(true);
@@ -110,10 +112,20 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         onChange({...value, maxSkillLevel: e.target.checked});
     }, [onChange, value]);
     const onEventChange = React.useCallback((e: any, val: string|null) => {
-        if (val !== null) {
-            onChange({...value, event: val});
+        if (val === null) {
+            return;
         }
+        if (value.event === "none" && val === "advanced") {
+            val = "custom";
+        }
+        onChange({...value, event: val});
     }, [onChange, value]);
+    const onEventDetailClick = React.useCallback(() => {
+        setEventDetailOpen(true);
+    }, []);
+    const onEventDetailClose = React.useCallback(() => {
+        setEventDetailOpen(false);
+    }, []);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequency: e.target.value as "always"|"none"});
     }, [onChange, value]);
@@ -135,6 +147,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const eventToggles = ['none', ...scheduledEvents, 'advanced'].map(x =>
         <ToggleButton key={x} value={x} style={{ textTransform: 'none' }}>{t(`events.${x}`)}</ToggleButton>
     );
+    const eventName = ['none', ...scheduledEvents]
+        .includes(value.event) ? value.event : 'advanced';
 
     const isNotWhistle = (value.period !== 3);
     return <StyledSettingForm>
@@ -177,13 +191,13 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </Collapse>
         <section className="mt">
             <label>{t('event')}:</label>
-            <div>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                 <ToggleButtonGroup size="small" exclusive
-                    value={value.event} onChange={onEventChange}>
+                    value={eventName} onChange={onEventChange}>
                     {eventToggles}
                 </ToggleButtonGroup>
-                <Collapse in={value.event === "advanced"}>
-                    <Button>設定</Button>
+                <Collapse in={eventName === "advanced"}>
+                    <Button onClick={onEventDetailClick}>{t('configure event details')}</Button>
                 </Collapse>
             </div>
         </section>
@@ -274,6 +288,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             </Select>
         </section>
         <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
+        <EventConfigDialog open={eventDetailOpen} onClose={onEventDetailClose}
+            value={value} onChange={onChange}/>
     </StyledSettingForm>;
 });
 
