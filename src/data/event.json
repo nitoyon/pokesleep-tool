@@ -42,6 +42,197 @@
                 "skillTrigger": 1.5,
                 "skillLevel": 3
             }
+        },
+        {
+            "name": "new year 2025 2nd week",
+            "start": "2025-01-06T04:00:00",
+            "end": "2025-01-13T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.25
+            }
+        },
+        {
+            "name": "new year 2025 1st week",
+            "start": "2024-12-30T04:00:00",
+            "end": "2025-01-06T04:00:00",
+            "target": {},
+            "effects": {
+                "skillTrigger": 1.25,
+                "skillLevel": 1
+            }
+        },
+        {
+            "name": "holiday 2024",
+            "start": "2024-12-23T04:00:00",
+            "end": "2024-12-30T04:00:00",
+            "target": {
+                "type": "ice"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5,
+                "skillLevel": 1,
+                "dreamShard": 2
+            }
+        },
+        {
+            "name": "eevee week 2024",
+            "start": "2024-11-18T04:00:00",
+            "end": "2024-11-25T04:00:00",
+            "target": {},
+            "effects": {
+                "skillTrigger": 1.5
+            }
+        },
+        {
+            "name": "halloween 2024",
+            "start": "2024-10-28T04:00:00",
+            "end": "2024-11-04T04:00:00",
+            "target": {
+                "type": "ghost"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5,
+                "skillLevel": 1
+            }
+        },
+        {
+            "name": "sleep style discovery week",
+            "start": "2024-09-23T04:00:00",
+            "end": "2024-09-30T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.25
+            }
+        },
+        {
+            "name": "suicune research 2nd week",
+            "start": "2024-09-09T04:00:00",
+            "end": "2024-09-16T04:00:00",
+            "target": {
+                "type": "water"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5,
+                "skillLevel": 3
+            }
+        },
+        {
+            "name": "suicune research 1st week",
+            "start": "2024-09-02T04:00:00",
+            "end": "2024-09-09T04:00:00",
+            "target": {
+                "type": "water"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5,
+                "skillLevel": 1
+            }
+        },
+        {
+            "name": "first anniversary fest 2nd week",
+            "start": "2024-07-22T04:00:00",
+            "end": "2024-07-29T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
+        {
+            "name": "first anniversary fest 1st week",
+            "start": "2024-07-15T04:00:00",
+            "end": "2024-07-22T04:00:00",
+            "target": {},
+            "effects": {
+                "skillTrigger": 1.5
+            }
+        },
+        {
+            "name": "summer festival",
+            "start": "2024-06-17T04:00:00",
+            "end": "2024-06-24T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
+        {
+            "name": "entei research 2nd week",
+            "start": "2024-05-27T04:00:00",
+            "end": "2024-06-03T04:00:00",
+            "target": {
+                "type": "fire"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5,
+                "skillLevel": 3
+            }
+        },
+        {
+            "name": "entei research 1st week",
+            "start": "2024-05-20T04:00:00",
+            "end": "2024-05-27T04:00:00",
+            "target": {
+                "type": "fire"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5,
+                "skillLevel": 1
+            }
+        },
+        {
+            "name": "flower festival",
+            "start": "2024-04-22T04:00:00",
+            "end": "2024-04-29T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
+        {
+            "name": "raikou research",
+            "start": "2024-03-25T04:00:00",
+            "end": "2024-04-08T04:00:00",
+            "target": {
+                "type": "electric"
+            },
+            "effects": {
+                "ingredient": 1,
+                "skillTrigger": 1.5
+            }
+        },
+        {
+            "name": "valentine 2024",
+            "start": "2024-02-12T04:00:00",
+            "end": "2024-02-19T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
+        {
+            "name": "holiday 2023",
+            "start": "2023-12-18T04:00:00",
+            "end": "2023-12-25T04:00:00",
+            "target": {},
+            "effects": {
+                "dreamShard": 2
+            }
+        },
+        {
+            "name": "eevee week 2023",
+            "start": "2023-11-20T04:00:00",
+            "end": "2023-11-27T04:00:00",
+            "target": {},
+            "effects": {
+                "skillTrigger": 1.5
+            }
         }
     ]
 }
