@@ -3,6 +3,7 @@ import { BonusEffects, getActiveHelpBonus, getEventBonusIfTarget } from '../data
 import { IngredientName, getDecendants, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields from '../data/fields';
+import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
@@ -185,7 +186,8 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        let eventBonus = getEventBonusIfTarget(param.event, this.iv.pokemon);
+        let eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+            this.iv.pokemon);
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
@@ -281,7 +283,7 @@ class PokemonStrength {
      * `skillStrength` is the strength got by the skill.
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        berryStrength: number, eventBonus: BonusEffects|undefined
+        berryStrength: number, eventBonus: Partial<BonusEffects>|undefined
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
@@ -383,6 +385,16 @@ export function createStrengthParameter(
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
+        customEventBonus: {
+            target: {},
+            effects: {
+                skillTrigger: 1,
+                skillLevel: 0,
+                ingredient: 0,
+                dreamShard: 1,
+                dish: 1,
+            }
+        },
     };
     return { ...defaultParameters, ...param };
 }
@@ -477,11 +489,14 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.recipeLevel = json.recipeLevel;
     }
 
-    const activeEvents = getActiveHelpBonus(new Date())
-        .map(x => x.name);
+    const eventNames = events.bonus.map(x => x.name);
     if (typeof(json.event) === "string" &&
-        ["none", ...activeEvents].includes(json.event)) {
+        ["none", "custom", ...eventNames].includes(json.event)) {
         ret.event = json.event;
+    }
+
+    if (typeof(json.customEventBonus) === "object") {
+        ret.customEventBonus = loadHelpEventBonus(json.customEventBonus);
     }
     return ret;
 }

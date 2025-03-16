@@ -36,7 +36,7 @@ const StrengthView = React.memo(({state, dispatch}: {
     const period = (parameter.period === 24 ? '1day' :
         parameter.period === 168 ? '1week' : 'whistle');
 
-    const isEventScheduled = getActiveHelpBonus(new Date()).length > 0;
+    const isEventScheduled = getActiveHelpBonus(new Date()).length > 0 || parameter.event !== 'none';
 
     return (<div>
         <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}
@@ -49,7 +49,9 @@ const StrengthView = React.memo(({state, dispatch}: {
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
-                    {isEventScheduled && <li>{parameter.event === 'none' ? t('no event') : t('events.' + parameter.event)}</li>}
+                    {isEventScheduled && <li>{parameter.event === 'none' ? t('no event') :
+                        parameter.event === 'advanced' ? t('event') + ': ' + t('events.advanced') :
+                        t('events.' + parameter.event)}</li>}
                 </ul>
                 <Button onClick={onEditClick} size="small">{t('edit')}</Button>
             </StrengthParameterPreview>
