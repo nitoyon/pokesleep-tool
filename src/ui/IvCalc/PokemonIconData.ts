@@ -822,6 +822,20 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.3, color: '#0dba6d'},
         {x: 0.45, y: 0.4, w: 0.1, h: 0.15, r: 0.1, color: '#dd717c'},
     ],
+    // Munna
+    '517': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f5dde3'},
+        {x: 0.15, y: 0.5, w: 0.2, h: 0.25, r: 0.2, color: '#e595ad'},
+        {x: 0.7, y: 0.1, w: 0.4, h: 0.4, r: 0.4, color: '#b28cca'},
+        {x: 0.8, y: 0.2, w: 0.2, h: 0.2, r: 0.4, color: '#e596ad'},
+    ],
+    // Musharna
+    '518': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f5dcdc'},
+        {x: 0.65, y: 0, w: 0.5, h: 1, color: '#9483cb'},
+        {x: 0.65, y: 0.8, w: 0.5, h: 0.3, color: '#e696ab'},
+        {x: 0, y: 0, w: 0.15, h: 1, color: '#e698ad'},
+    ],
     // Rufflet
     '627': [
         {x: 0, y: 0, w: 1, h: 1, color: '#a09fcd'},
