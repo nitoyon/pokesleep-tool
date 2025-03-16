@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, Dialog, DialogActions, DialogContent, FormControl, MenuItem,
-    Select, SelectChangeEvent, Switch, Typography,
+import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent, FormControl, MenuItem,
+    Select, SelectChangeEvent, Snackbar, Switch, Typography,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import { IvAction } from './IvState';
@@ -12,7 +12,7 @@ import EventConfigDialog from './EventConfigDialog';
 import TypeSelect from './TypeSelect';
 import { getActiveHelpBonus } from '../../data/events';
 import { PokemonType } from '../../data/pokemons';
-import { StrengthParameter } from '../../util/PokemonStrength';
+import { createStrengthParameter, StrengthParameter } from '../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
 type PeriodType = "1day"|"1week"|"whistle";
@@ -54,6 +54,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const { t } = useTranslation();
     const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
     const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
+    const [initializeConfirmOpen, setInitializeConfirmOpen] = React.useState(false);
 
     const onRecipeBonusInfoClick = React.useCallback(() => {
         setRecipeBonusHelpOpen(true);
@@ -141,6 +142,12 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onRecipeLevelChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
     }, [onChange, value]);
+    const onInitializeClick = React.useCallback(() => {
+        setInitializeConfirmOpen(true);
+    }, []);
+    const onInitializeConfirmClose = React.useCallback(() => {
+        setInitializeConfirmOpen(false);
+    }, []);
 
     const scheduledEvents = getActiveHelpBonus(new Date())
         .map(x => x.name);
@@ -287,6 +294,11 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={60}>60</MenuItem>
             </Select>
         </section>
+        <section className="mt">
+            <Button onClick={onInitializeClick} variant="outlined">{t('initialize all parameters')}</Button>
+        </section>
+        <InitializeConfirmDialog open={initializeConfirmOpen} onClose={onInitializeConfirmClose}
+            dispatch={dispatch}/>
         <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
         <EventConfigDialog open={eventDetailOpen} onClose={onEventDetailClose}
             value={value} onChange={onChange}/>
@@ -313,6 +325,42 @@ const RecipeBonusHelpDialog = React.memo(({open, onClose}: {
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
     </Dialog>;
+});
+
+const InitializeConfirmDialog = React.memo(({ dispatch, open, onClose }: {
+    dispatch: React.Dispatch<IvAction>,
+    open: boolean,
+    onClose: () => void }
+) => {
+    const [snackBarVisible, setSnackBarVisible] = React.useState(false);
+    const { t } = useTranslation();
+
+    const onInitialize = React.useCallback(() => {
+        dispatch({type: "changeParameter", payload: {
+            parameter: createStrengthParameter({}),
+        }});
+        setSnackBarVisible(true);
+        onClose();
+    }, [dispatch, onClose]);
+    const onSnackbarClose = React.useCallback(() => {
+        setSnackBarVisible(false);
+    }, []);
+
+    return (<>
+        <Dialog open={open} onClose={onClose}>
+            <DialogTitle>{t('initialize all parameters')}</DialogTitle>
+            <DialogContent>
+                <p style={{ fontSize: "0.9rem", margin: 0 }}>{t("initialize all parameters message")}</p>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onInitialize} color="error">{t("initialize")}</Button>
+                <Button onClick={onClose}>{t("cancel")}</Button>
+            </DialogActions>
+        </Dialog>
+        <Snackbar open={snackBarVisible}
+            autoHideDuration={2000} onClose={onSnackbarClose}
+            message={t("initialized all parameters")}/>
+    </>);
 });
 
 export default StrengthSettingForm;

@@ -143,6 +143,7 @@
         "duplicate": "複製",
         "delete": "刪除",
         "share": "分享",
+        "initialize": "初始化",
 
         "details": "詳細",
         "research area": "營地",
@@ -264,6 +265,9 @@
         "event": "活動",
         "no event": "沒有活動",
         "configure event details": "活動詳細設定",
+        "initialize all parameters": "參數初始化",
+        "initialize all parameters message": "是否要初始化所有參數？初始化參數後，能量值將與 [SP] 標籤相同。",
+        "initialized all parameters": "已初始化所有參數。",
         "events": {
             "none": "無",
             "advanced": "詳細設定",

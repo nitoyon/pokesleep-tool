@@ -143,6 +143,7 @@
         "duplicate": "Duplicate",
         "delete": "Delete",
         "share": "Share",
+        "initialize": "Initialize",
 
         "details": "Details",
         "research area": "Research area",
@@ -271,6 +272,10 @@
         "average recipe level": "Average recipe level",
         "event": "Event",
         "no event": "No event",
+        "configure event details": "Configure event details",
+        "initialize all parameters": "Initialize all parameter",
+        "initialize all parameters message": "Do you want to initialize all parameters? Initializing the parameters will set the strength to the same as in the [RP] tab.",
+        "initialized all parameters": "All parameters have been initialized.",
         "events": {
             "none": "None",
             "advanced": "Advanced",

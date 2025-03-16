@@ -1,5 +1,5 @@
 import pokemons from '../data/pokemons';
-import { BonusEffects, getActiveHelpBonus, getEventBonusIfTarget } from '../data/events';
+import { BonusEffects, getEventBonusIfTarget } from '../data/events';
 import { IngredientName, getDecendants, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields from '../data/fields';

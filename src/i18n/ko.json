@@ -138,6 +138,7 @@
         "duplicate": "복제",
         "delete": "삭제",
         "share": "공유",
+        "initialize": "초기화",
 
         "details": "세부사항",
         "research area": "필드",
@@ -259,6 +260,9 @@
         "event": "이벤트",
         "no event": "이벤트 없음",
         "configure event details": "이벤트 상세 설정",
+        "initialize all parameters": "모든 매개변수 초기화",
+        "initialize all parameters message": "모든 매개변수를 초기화하시겠습니까? 매개변수를 초기화하면 [SP] 탭과 동일한 에너지 수준이 됩니다.",
+        "initialized all parameters": "모든 매개변수가 초기화되었습니다.",
         "events": {
             "none": "없음",
             "advanced": "고급 설정",
