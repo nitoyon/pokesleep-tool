@@ -353,7 +353,7 @@ const InitializeConfirmDialog = React.memo(({ dispatch, open, onClose }: {
                 <p style={{ fontSize: "0.9rem", margin: 0 }}>{t("initialize all parameters message")}</p>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onInitialize} color="error">{t("initialize")}</Button>
+                <Button onClick={onInitialize} color="error">{t("reset")}</Button>
                 <Button onClick={onClose}>{t("cancel")}</Button>
             </DialogActions>
         </Dialog>

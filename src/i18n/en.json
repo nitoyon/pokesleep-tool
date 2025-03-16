@@ -143,7 +143,6 @@
         "duplicate": "Duplicate",
         "delete": "Delete",
         "share": "Share",
-        "initialize": "Initialize",
 
         "details": "Details",
         "research area": "Research area",
@@ -273,9 +272,9 @@
         "event": "Event",
         "no event": "No event",
         "configure event details": "Configure event details",
-        "initialize all parameters": "Initialize all parameter",
-        "initialize all parameters message": "Do you want to initialize all parameters? Initializing the parameters will set the strength to the same as in the [RP] tab.",
-        "initialized all parameters": "All parameters have been initialized.",
+        "initialize all parameters": "Restore default parameters",
+        "initialize all parameters message": "Do you want to restore all parameters? Doing so will set the strength to the same value as in the [RP] tab.",
+        "initialized all parameters": "All parameters have been restored.",
         "events": {
             "none": "None",
             "advanced": "Advanced",
