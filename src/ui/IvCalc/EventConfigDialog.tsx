@@ -59,7 +59,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
     }, [type, specialty, value, onChange]);
     const onTypeChange = React.useCallback((type: PokemonType) => {
         setType(type);
-        onChange({...value, customEventBonus: {
+        onChange({...value, event: "custom", customEventBonus: {
             ...value.customEventBonus,
             target: { type },
         }});
