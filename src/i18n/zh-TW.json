@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add munna": {
+                    "headline": "更新了食夢夢，夢夢蝕的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "add clodsire": {
                     "headline": "更新了烏波 (帕底亞)，土王的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
