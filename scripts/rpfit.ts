@@ -26,13 +26,17 @@ type I18nDict = {
     [key: string]: string;
 };
 
-function parseTsv(text: string): CsvData[] {
-    const ret: CsvData[] = [];
+function parseTsv(text: string): Record<string, CsvData[]> {
+    const ret: Record<string, CsvData[]> = {};
     const lines = text.split(/\r?\n/g);
     for (const line of lines) {
         const parts = line.split(/\t/g);
-        ret.push({
-            name: fixName(parts[0]),
+        const name = fixName(parts[0]);
+        if (typeof(ret[name]) === "undefined") {
+            ret[name] = [];
+        }
+        ret[name].push({
+            name,
             level: parseInt(parts[1], 10),
             rp: parseInt(parts[2], 10),
             nature: new Nature(fixNatures(parts[3])),
@@ -133,6 +137,10 @@ function fixNatures(nature: string): string {
 // Read from stdin
 const fs = require('fs');
 const tsv = fs.readFileSync(0).toString();
+console.log("read done");
 
 const data = parseTsv(tsv);
-fit(data);
+for (const name of Object.keys(data)) {
+    console.log(`Calculating ${name}...`);
+    fit(data[name]);
+}
