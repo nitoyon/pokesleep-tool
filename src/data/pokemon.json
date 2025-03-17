@@ -4591,30 +4591,30 @@
         "sleepType": "snoozing",
         "type": "psychic",
         "specialty": "Berries",
-        "skill": "unknown",
+        "skill": "Dream Shard Magnet S (Random)",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 5700,
+        "ingRatio": 19.7,
+        "skillRatio": 4.3,
         "ancestor": 517,
         "evolutionCount": 0,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 12,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "honey",
+            "c2": 2,
+            "c3": 3
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "cacao",
+            "c3": 2
         }
     },
     {
@@ -4623,30 +4623,30 @@
         "sleepType": "snoozing",
         "type": "psychic",
         "specialty": "Berries",
-        "skill": "unknown",
-        "fp": 12,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "skill": "Dream Shard Magnet S (Random)",
+        "fp": 20,
+        "frequency": 2800,
+        "ingRatio": 18.8,
+        "skillRatio": 4.1,
         "ancestor": 517,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 0,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 24,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "honey",
+            "c2": 2,
+            "c3": 3
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "cacao",
+            "c3": 2
         }
     },
     {

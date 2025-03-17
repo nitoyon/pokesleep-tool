@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add munna": {
+                    "headline": "Munna and Musharna are added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "add clodsire": {
                     "headline": "Wooper (Paldea) and Clodsire are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
