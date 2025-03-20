@@ -68,7 +68,7 @@ export class BonusEventData {
     constructor(data: JsonBonusEventData) {
         this.name = data.name;
         this.start = new Date(data.start);
-        this.end = new Date(new Date(data.end).getTime() + 24 * 60 * 60 * 1000);
+        this.end = new Date(data.end);
         this.target = data.target;
         this.effects = fillBonusEffects(data.effects);
     }
