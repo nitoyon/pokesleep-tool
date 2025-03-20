@@ -31,6 +31,7 @@ const StyledSettingForm = styled('div')({
         '& > label': {
             marginRight: 'auto',
             marginTop: 0,
+            textWrap: 'nowrap',
         },
         '& > span > button': {
             marginRight: 0,
@@ -116,7 +117,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         if (val === null) {
             return;
         }
-        if (value.event === "none" && val === "advanced") {
+        if (val === "advanced") {
             val = "custom";
         }
         onChange({...value, event: val});
@@ -150,10 +151,19 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     }, []);
 
     const scheduledEvents = getActiveHelpBonus(new Date())
-        .map(x => x.name);
-    const eventToggles = ['none', ...scheduledEvents, 'advanced'].map(x =>
-        <ToggleButton key={x} value={x} style={{ textTransform: 'none' }}>{t(`events.${x}`)}</ToggleButton>
-    );
+        .map(x => x.name)
+        .reverse();
+    let prevEventName = "";
+    const eventToggles = ['none', ...scheduledEvents, 'advanced'].map(x => {
+        let curEventName = t(`events.${x}`);
+        if (prevEventName.replace(/\(.*/, '') === curEventName.replace(/\(.*/, '')) {
+            curEventName = curEventName
+                .replace(/.*\(/, '')
+                .replace(')', '');
+        }
+        prevEventName = curEventName;
+        return <ToggleButton key={x} value={x} style={{ textTransform: 'none' }}>{curEventName}</ToggleButton>
+    });
     const eventName = ['none', ...scheduledEvents]
         .includes(value.event) ? value.event : 'advanced';
 
