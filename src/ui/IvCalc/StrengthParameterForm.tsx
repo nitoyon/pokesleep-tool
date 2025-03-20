@@ -36,8 +36,8 @@ const StyledSettingForm = styled('div')({
         '& > span > button': {
             marginRight: 0,
         },
-        '& > div button': {
-            fontSize: '0.8rem',
+        '& div.MuiToggleButtonGroup-root > button': {
+            fontSize: '0.75rem',
             padding: '0.5rem 0.2rem',
             lineHeight: 1.1,
             maxWidth: '7rem',
@@ -45,7 +45,7 @@ const StyledSettingForm = styled('div')({
     },
     '& > button': {
         marginLeft: '-.4rem',
-    }
+    },
 });
 
 const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {

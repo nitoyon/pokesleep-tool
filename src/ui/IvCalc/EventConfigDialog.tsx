@@ -264,6 +264,9 @@ const StyledEventConfigDialog = styled(Dialog)({
                 },
             },
         },
+        '& .MuiSelect-select': {
+            fontSize: '0.8rem',
+        },
         '& > article': {
             background: '#eee',
             padding: '0.5rem',
