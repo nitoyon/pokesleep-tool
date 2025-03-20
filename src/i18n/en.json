@@ -153,6 +153,8 @@
         "strength": "Snorlax strength",
         "bonus": "Event bonus",
         "bonus not match": "Today's event bonus is {{bonus}}.",
+        "warning: no cresselia bonus": "1.0 if you don't have a Cresselia on your team.",
+        "warning: cresselia bonus": "1.2 if you have a Cresselia on your team.",
         "no favorite berries": "No favorite berries",
         "area": [
             "Greengrass Isle",
