@@ -148,8 +148,6 @@
         "strength": "총 에너지",
         "bonus": "졸음 파워 보너스",
         "bonus not match": "오늘의 졸음 파워 보너스는 {{bonus}}입니다.",
-        "warning: no cresselia bonus": "크레세리아를 팀에 편성하지 않으면 1.0배입니다",
-        "warning: cresselia bonus": "크레세리아를 팀에 편성하면 1.2배입니다",
         "no favorite berries": "좋아하는 딸기 없음",
         "area": [
             "연둣빛 본섬",

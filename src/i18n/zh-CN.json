@@ -153,8 +153,6 @@
         "strength": "总能量",
         "bonus": "睡眠奖励",
         "bonus not match": "今天的睡眠奖励为 {{bonus}} 。",
-        "warning: no cresselia bonus": "若未将克雷色利亚编入队伍，则为1.0倍。",
-        "warning: cresselia bonus": "若将克雷色利亚编入队伍，则为1.2倍。",
         "no favorite berries": "没有喜欢的树果",
         "area": [
             "萌绿之岛",

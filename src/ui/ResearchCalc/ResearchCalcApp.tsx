@@ -67,7 +67,7 @@ export function loadConfig(): InputAreaData {
         config.strength = json.strength;
     }
     if (typeof(json.bonus) === "number" &&
-        [1, 1.2, 1.5, 2, 2.5, 3, 4].includes(json.bonus)) {
+        [1, 1.5, 2, 2.5, 3, 4].includes(json.bonus)) {
         config.bonus = json.bonus;
     }
     if (typeof(json.secondSleep) === "boolean") {

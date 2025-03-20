@@ -153,8 +153,6 @@
         "strength": "総エナジー",
         "bonus": "ねむけボーナス",
         "bonus not match": "今日のねむけボーナスは {{bonus}} です。",
-        "warning: no cresselia bonus": "クレセリアをチームに編成していない場合は1.0倍です",
-        "warning: cresselia bonus": "クレセリアをチームに編成している場合は1.2倍です",
         "no favorite berries": "好きなきのみなし",
         "area": [
             "ワカクサ本島",
