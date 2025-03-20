@@ -230,10 +230,10 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     const inCresseliaEvent = new Date('2025-03-31T04:00:00') <= now && now <= new Date('2025-04-14T04:00:00');
     React.useEffect(() => {
         const id = setInterval(function() {
-            setTodaysBonus(getDrowsyBonus(now));
+            setTodaysBonus(getDrowsyBonus(new Date()));
         }, 5000);
         return () => clearInterval(id);
-    }, [now]);
+    }, []);
 
     const onBonusClick = React.useCallback(() => {
         if (inCresseliaEvent) {
