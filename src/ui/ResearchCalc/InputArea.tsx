@@ -226,8 +226,6 @@ interface EventBonusProps {
 const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     const { t } = useTranslation();
     const [todaysBonus, setTodaysBonus] = useState(getDrowsyBonus(new Date()));
-    const now = new Date();
-    const inCresseliaEvent = new Date('2025-03-31T04:00:00') <= now && now <= new Date('2025-04-14T04:00:00');
     React.useEffect(() => {
         const id = setInterval(function() {
             setTodaysBonus(getDrowsyBonus(new Date()));
@@ -236,29 +234,16 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     }, []);
 
     const onBonusClick = React.useCallback(() => {
-        if (inCresseliaEvent) {
-            onChange({target: {value: value === 1.2 ? 1 : 1.2}});
-            return;
-        }
         onChange({target: {value: todaysBonus}});
-    }, [onChange, todaysBonus, inCresseliaEvent, value]);
+    }, [onChange, todaysBonus]);
 
-    let open = (todaysBonus !== value);
+    const open = (todaysBonus !== value);
     const bonusVal = todaysBonus === 1 ? t("none") : `×${todaysBonus}`;
-    let warnMessage = t('bonus not match', {bonus: bonusVal});
-
-    // Cresselia vs. Darkrai event
-    if (inCresseliaEvent) {
-        open = true;
-        warnMessage = value === 1.2 ?
-            t('warning: no cresselia bonus') : t('warning: cresselia bonus');
-    }
 
     return (<>
         <TextField variant="standard" size="small" select
                 value={value} onChange={onChange}>
                 <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
-                <MenuItem key="1.2" value={1.2} dense>×1.2</MenuItem>
                 <MenuItem key="1.5" value={1.5} dense>×1.5</MenuItem>
                 <MenuItem key="2" value={2} dense>×2</MenuItem>
                 <MenuItem key="2.5" value={2.5} dense>×2.5</MenuItem>
@@ -276,7 +261,7 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
                     lineHeight: 1.2,
                     textAlign: 'left',
                 }}>
-                ⚠️{warnMessage}
+                ⚠️{t('bonus not match', {bonus: bonusVal})}
             </Button>
         </Collapse>
     </>);
