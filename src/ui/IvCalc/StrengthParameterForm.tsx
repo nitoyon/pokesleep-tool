@@ -40,6 +40,7 @@ const StyledSettingForm = styled('div')({
             fontSize: '0.8rem',
             padding: '0.5rem 0.2rem',
             lineHeight: 1.1,
+            maxWidth: '7rem',
         },
     },
     '& > button': {
