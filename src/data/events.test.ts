@@ -40,10 +40,10 @@ test('getActiveHelpBonus', () => {
         }),
     ];
     expect(getActiveHelpBonus(new Date(2024, 8, 1), evts).length).toBe(2);
-    expect(getActiveHelpBonus(new Date(2024, 8, 9, 3, 59, 0), evts).length).toBe(2);
-    expect(getActiveHelpBonus(new Date(2024, 8, 9, 4, 0, 0), evts).length).toBe(1);
-    expect(getActiveHelpBonus(new Date(2024, 8, 16, 3, 59, 0), evts).length).toBe(1);
-    expect(getActiveHelpBonus(new Date(2024, 8, 16, 4, 0, 0), evts).length).toBe(0);
+    expect(getActiveHelpBonus(new Date(2024, 8, 8, 3, 59, 0), evts).length).toBe(2);
+    expect(getActiveHelpBonus(new Date(2024, 8, 8, 4, 0, 0), evts).length).toBe(1);
+    expect(getActiveHelpBonus(new Date(2024, 8, 15, 3, 59, 0), evts).length).toBe(1);
+    expect(getActiveHelpBonus(new Date(2024, 8, 15, 4, 0, 0), evts).length).toBe(0);
 
     expect(getActiveHelpBonus(new Date(2024, 8, 5), evts).length).toBe(2);
     expect(getActiveHelpBonus(new Date(2024, 8, 5), evts)[0].effects.skillLevel).toBe(1);
