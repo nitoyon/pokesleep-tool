@@ -31,6 +31,7 @@ export function loadConfig(): InputAreaData {
         fieldIndex: 0,
         strength: 73120,
         bonus: 1,
+        isCresseliaInTeam: false,
         secondSleep: false,
     };
 
@@ -52,6 +53,9 @@ export function loadConfig(): InputAreaData {
     if (typeof(json.bonus) === "number" &&
         [1, 1.5, 2, 2.5, 3, 4].includes(json.bonus)) {
         config.bonus = json.bonus;
+    }
+    if (typeof(json.isCresseliaInTeam) === "boolean") {
+        config.isCresseliaInTeam = json.isCresseliaInTeam;
     }
     if (typeof(json.secondSleep) === "boolean") {
         config.secondSleep = json.secondSleep;

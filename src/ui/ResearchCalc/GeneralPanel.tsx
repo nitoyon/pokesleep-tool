@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import { InputAreaData } from './InputArea';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import PreviewScore, {getScoreRange} from './PreviewScore';
+import { isInCresseliaEvent } from '../../data/events';
 
-export default function GeneralPanel({data}: {data: InputAreaData}) {
+export default function GeneralPanel({data: _data}: {data: InputAreaData}) {
     const [isBetterSecondSleepDialogOpen, setBetterSecondSleepOpen] = useState(false);
     const onBetterSecondSleepDialogClose = () => {
         setBetterSecondSleepOpen(false);
     };
+
+    const data = {..._data};
+    if (isInCresseliaEvent() && data.isCresseliaInTeam) {
+        data.bonus *= 1.2;
+    }
 
     const [betterSecondSleepData, setBetterSecondSleepData] = useState<BetterSecondSleepData>({
         first: {count: 0, score: 0, strength: 0},
