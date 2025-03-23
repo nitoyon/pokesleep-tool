@@ -3,33 +3,16 @@ import { InputArea, InputAreaData } from './InputArea';
 import GeneralPanel from './GeneralPanel';
 import fields from '../../data/fields';
 
-const config = loadConfig();
+const defaultData = loadConfig();
 
 export default function ResearchCalcApp() {
-    const [fieldIndex, setFieldIndex] = useState(config.fieldIndex);
-    const [strength, setStrength] = useState(config.strength);
-    const [bonus, setBonus] = useState(config.bonus);
-    const [secondSleep, setSecondSleep] = useState(config.secondSleep);
-
-    const data:InputAreaData = {
-        fieldIndex, strength, bonus, secondSleep,
-    };
+    const [data, setData] = useState(defaultData);
 
     const updateState = useCallback((value: Partial<InputAreaData>) => {
-        if (value.fieldIndex !== undefined) {
-            setFieldIndex(value.fieldIndex);
-        }
-        if (value.strength !== undefined) {
-            setStrength(value.strength);
-        }
-        if (value.bonus !== undefined) {
-            setBonus(value.bonus);
-        }
-        if (value.secondSleep !== undefined) {
-            setSecondSleep(value.secondSleep);
-        }
-        saveConfig({fieldIndex, strength, bonus, secondSleep, ...value});
-    }, [fieldIndex, strength, bonus, secondSleep]);
+        const newData = {...data, ...value};
+        setData(newData);
+        saveConfig(newData);
+    }, [data]);
 
     const onChange = useCallback((value: Partial<InputAreaData>) => {
         updateState(value);
@@ -48,6 +31,7 @@ export function loadConfig(): InputAreaData {
         fieldIndex: 0,
         strength: 73120,
         bonus: 1,
+        isCresseliaInTeam: false,
         secondSleep: false,
     };
 
@@ -69,6 +53,9 @@ export function loadConfig(): InputAreaData {
     if (typeof(json.bonus) === "number" &&
         [1, 1.5, 2, 2.5, 3, 4].includes(json.bonus)) {
         config.bonus = json.bonus;
+    }
+    if (typeof(json.isCresseliaInTeam) === "boolean") {
+        config.isCresseliaInTeam = json.isCresseliaInTeam;
     }
     if (typeof(json.secondSleep) === "boolean") {
         config.secondSleep = json.secondSleep;
