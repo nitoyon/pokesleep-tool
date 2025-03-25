@@ -3,8 +3,11 @@ import { styled } from '@mui/system';
 import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
-import PokemonStrength, { StrengthResult } from '../../util/PokemonStrength';
+import PokemonStrength, { IngredientStrength, StrengthResult,
+    recipeLevelBonus
+} from '../../util/PokemonStrength';
 import { StrengthParameter } from '../../util/PokemonStrength';
+import { ingredientStrength } from '../../util/PokemonRp';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Select, SelectChangeEvent, MenuItem } from '@mui/material';
@@ -14,6 +17,7 @@ import InfoButton from './InfoButton';
 import { IvAction } from './IvState';
 import EnergyDialog from './EnergyDialog';
 import IngredientIcon from './IngredientIcon';
+import IngredientCountIcon from './IngredientCountIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -153,6 +157,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [helpOpen, setHelpOpen] = React.useState(false);
     const [decendantId, setDecendantId] = React.useState(0);
     const [berryHelpOpen, setBerryHelpOpen] = React.useState(false);
+    const [ingHelpOpen, setIngHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
     const isWhistle = (settings.period === 3);
@@ -177,6 +182,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     }, []);
     const onBerryHelpClose = React.useCallback(() => {
         setBerryHelpOpen(false);
+    }, []);
+    const onIngHelpClick = React.useCallback(() => {
+        setIngHelpOpen(true);
+    }, []);
+    const onIngHelpClose = React.useCallback(() => {
+        setIngHelpOpen(false);
     }, []);
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
@@ -246,7 +257,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         <section>
-            <h3 style={{background: '#fab855'}}>{t('ingredient')}</h3>
+            <h3 style={{background: '#fab855'}}>{t('ingredient')}
+                <InfoButton onClick={onIngHelpClick}/>
+            </h3>
             {ingArticle}
             <footer>
                 <div>{round1(result.ingRatio * 100)}%</div>
@@ -286,6 +299,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
+            strength={strength} result={result}/>
+        <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
             strength={strength} result={result}/>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
             strength={strength}/>
@@ -471,6 +486,135 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     </StyledInfoDialog>;
 });
 
+const IngHelpDialog = React.memo(({open, strength, result, onClose}: {
+    open: boolean,
+    strength: PokemonStrength,
+    result: StrengthResult,
+    onClose: () => void,
+}) => {
+    const { t } = useTranslation();
+    if (!open) {
+        return <></>;
+    }
+
+    const ingSlot = strength.pokemonIv.level < 30 ? 1 :
+        strength.pokemonIv.level < 60 ? 2 : 3;
+    const ings = [[result.ing1]];
+    if (ingSlot > 1) {
+        if (ings[0][0].name === result.ing2.name) {
+            ings[0].push(result.ing2);
+        }
+        else {
+            ings.push([result.ing2]);
+        }
+    }
+    if (ingSlot > 2 && result.ing3 !== undefined) {
+        if (ings[0][0].name === result.ing3.name) {
+            ings[0].push(result.ing3);
+        }
+        else if (ings.length > 1 && ings[1][0].name === result.ing3.name) {
+            ings[1].push(result.ing3);
+        }
+        else {
+            ings.push([result.ing3]);
+        }
+    }
+
+    const param = strength.parameter;
+    const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
+        (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
+    const recipeRatio = ingInRecipeStrengthRatio * 0.8 + 0.2;
+
+    return <StyledInfoDialog open={open} onClose={onClose}>
+        <header className="grid">
+            {getIngDetail(strength, result, recipeRatio, ingSlot, ings[0], t)}
+            {ings.length > 1 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[1], t)}
+            {ings.length > 2 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[2], t)}
+        </header>
+        <article>
+            <div><span className="box box3">{round2(result.ingHelpCount)}</span></div>
+            <span>{t('ing help count')}</span>
+            <footer>
+                {round1(result.notFullHelpCount)}
+                <small> ({t('normal help count')})</small>
+                <> × </>
+                {round1(result.ingRatio * 100)}%
+                <small> ({t('ingredient rate')})</small>
+            </footer>
+            <div><span className="box box1">{round1(ings[0].reduce((p, c) => p + c.count, 0))}</span></div>
+            <span>{t('ing count')}</span>
+            <div><span className="box box2">{ingredientStrength[ings[0][0].name]}</span></div>
+            <span>{t('strength per ing')}</span>
+            <div><span className="box box5">{round2(recipeRatio)}</span></div>
+            <span>{t('recipe multiplier')}</span>
+            <footer>
+                <>(</>
+                {round2(param.recipeBonus === 0 ? 1 : 1 + param.recipeBonus / 100)}
+                <small> ({t('recipe bonus')})</small>
+                <> × </>
+                {round2(1 + recipeLevelBonus[param.recipeLevel] / 100)}
+                <small>({t('average recipe level')})</small>
+                <>) × 0.8 + 0.2</>
+            </footer>
+            <div><span className="box box4">{param.fieldBonus}%</span></div>
+            <span>{t('area bonus')}</span>
+            {param.customEventBonus.effects.dish !== 1 && <>
+                <div><span className="box box6">{param.customEventBonus.effects.dish}</span></div>
+                <span>{t('event bonus')}</span>
+            </>}
+        </article>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledInfoDialog>;
+});
+
+function getIngDetail(strength: PokemonStrength, result: StrengthResult,
+    recipeRatio: number, ingSlot: number,
+    ing: IngredientStrength[], t: typeof i18next.t): React.ReactNode {
+    if (strength.parameter.tapFrequency === 'none') {
+        return <article>ー</article>;
+    }
+
+    const count = ing.reduce((p, c) => p + c.count, 0);
+    const ingName = ing[0].name;
+    const param = strength.parameter;
+    return <>
+        <span>
+            <IngredientIcon name={ing[0].name}/>
+            {round1(count)}
+        </span>
+        <div>
+            <span className="box box3">{round2(result.ingHelpCount)}</span><> × </>
+            {ing.length > 1 ? '(' : ''}
+            {ing.map((ing, i) => <span key={i}>
+                {i === 0 ? '' : ' + '}
+                <IngredientCountIcon count={ing.helpCount} name={ingName}/>
+                {ingSlot > 1 ? ` / ${ingSlot}` : ''}
+            </span>)}
+            {ing.length > 1 ? ')' : ''}
+        </div>
+        <span>
+            <LocalFireDepartmentIcon sx={{color: "#ff944b"}} className="strength"/>
+            {shortenNumber(t, ing.reduce((p, c) => p + c.strength, 0))}
+        </span>
+        <div style={{marginBottom: '0.5rem'}}>
+            <span className="box box1">{round1(count)}</span><> × </>
+            <span className="box box2">{ingredientStrength[ingName]}</span><> × </>
+            <span className="box box5">{round2(recipeRatio)}</span><> × </>
+            <span>
+                <>(1+</>
+                <span className="box box4">{param.fieldBonus}%</span>
+                <>)</>
+            </span>
+            {param.customEventBonus.effects.dish !== 1 && <>
+                <> × </>
+                <span className="box box6">{param.customEventBonus.effects.dish}</span>
+            </>}
+        </div>
+    </>;
+}
+
 const StyledInfoDialog = styled(Dialog)({
     '& header': {
         margin: '1rem',
@@ -488,9 +632,54 @@ const StyledInfoDialog = styled(Dialog)({
             lineHeight: '1.9',
         },
     },
+    '& header.grid': {
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+        gridGap: '0.2rem 0.5rem',
+        alignItems: 'start',
+        marginBottom: '0.5rem',
+        '& > span': {
+            display: 'flex',
+            alignItems: 'center',
+            fontSize: '0.9rem',
+            fontWeight: 'bold',
+            '& > svg': {
+                width: '15px',
+                height: '15px',
+                paddingRight: '1px',
+            },
+            '& > svg.strength': {
+                width: '20px',
+                height: '20px',
+                paddingRight: 0,
+            },
+        },
+        '& > div': {
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            fontSize: '0.8rem',
+            gap: '0.1rem',
+            '& > span.box': {
+                padding: '0.1rem 0.2rem',
+            },
+            '& > span > span.MuiBadge-root': {
+                marginRight: 0,
+                '& > svg': {
+                    paddingTop: '3px',
+                    width: '15px',
+                    height: '15px',
+                },
+                '& > .MuiBadge-badge': {
+                    top: '18px',
+                    right: '10px',
+                },
+            },
+        },
+    },
 
     '& article': {
-        margin: '1rem .5rem 0 .5rem',
+        margin: '0.5rem .5rem 0 .5rem',
         display: 'grid',
         gridGap: '.5rem',
         rowGap: '.8rem',
@@ -508,6 +697,15 @@ const StyledInfoDialog = styled(Dialog)({
                 fontSize: '0.8rem',
             }
         },
+        '& > footer': {
+            margin: '-0.3rem 0 0 1.5rem',
+            fontSize: '0.8rem',
+            gridColumn: 'span 2',
+        },
+        '& > span > footer': {
+            margin: '0.2rem 0 0 -1.5rem',
+            fontSize: '0.8rem',
+        },
     },
     '& span.box': {
         borderRadius: '.3rem',
@@ -521,6 +719,7 @@ const StyledInfoDialog = styled(Dialog)({
     '& span.box3': { background: '#e7c300' },
     '& span.box4': { background: '#ce5052' },
     '& span.box5': { background: '#ce3fa3' },
+    '& span.box6': { background: '#ff8822' },
 });
 
 const SkillHelpDialog = React.memo(({open, onClose, strength}: {
