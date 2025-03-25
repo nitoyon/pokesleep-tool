@@ -50,6 +50,18 @@ export interface StrengthParameter extends EnergyParameter {
 }
 
 /**
+ * Respresents the result of ingredient strength calculation.
+ */
+export interface IngredientStrength {
+    /** Ingredient name. */
+    name: IngredientName;
+    /** Ingredient count. */
+    count: number;
+    /** Ingredient strength. */
+    strength: number;
+}
+
+/**
  * Represents the result of strength calculation.
  */
 export interface StrengthResult {
@@ -83,13 +95,13 @@ export interface StrengthResult {
     /** Ingredient strength */
     ingStrength: number;
     /** Ing1 name and count */
-    ing1: {name: IngredientName, count: number, strength: number};
+    ing1: IngredientStrength;
     /** Ing2 name and count */
-    ing2: {name: IngredientName, count: number, strength: number};
+    ing2: IngredientStrength;
     /** Ing3 name and count */
-    ing3: {name: IngredientName, count: number, strength: number}|undefined;
+    ing3: IngredientStrength|undefined;
     /** Ing1 ~ Ing3 name, count, strength summary */
-    ingredients: {name: IngredientName, count: number, strength: number}[];
+    ingredients: IngredientStrength[];
 
     /** Skill ratio */
     skillRatio: number;
@@ -229,7 +241,7 @@ class PokemonStrength {
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
-        const ing: {[name: string]: {name: IngredientName, count: number, strength: number}} = {};
+        const ing: {[name: string]: IngredientStrength} = {};
         const ingNames: IngredientName[] = [];
         ing[ing1.name] = {name: ing1.name, count: ing1.count, strength: ing1.strength};
         ingNames.push(ing1.name);
