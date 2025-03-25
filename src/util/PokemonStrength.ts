@@ -119,7 +119,7 @@ export interface StrengthResult {
 }
 
 /** Recipe level bonus table  */
-const recipeLevelBonus = {
+export const recipeLevelBonus = {
     1: 0,
     10: 18,
     20: 35,
