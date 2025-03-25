@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import { round1, round2, formatWithComma } from '../../util/NumberUtil';
-import PokemonStrength, { StrengthResult } from '../../util/PokemonStrength';
+import PokemonStrength, { IngredientStrength, StrengthResult } from '../../util/PokemonStrength';
 import { StrengthParameter } from '../../util/PokemonStrength';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
@@ -149,6 +149,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [helpOpen, setHelpOpen] = React.useState(false);
     const [decendantId, setDecendantId] = React.useState(0);
     const [berryHelpOpen, setBerryHelpOpen] = React.useState(false);
+    const [ingHelpOpen, setIngHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
     const isWhistle = (settings.period === 3);
@@ -173,6 +174,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     }, []);
     const onBerryHelpClose = React.useCallback(() => {
         setBerryHelpOpen(false);
+    }, []);
+    const onIngHelpClick = React.useCallback(() => {
+        setIngHelpOpen(true);
+    }, []);
+    const onIngHelpClose = React.useCallback(() => {
+        setIngHelpOpen(false);
     }, []);
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
@@ -241,7 +248,9 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         <section>
-            <h3 style={{background: '#fab855'}}>{t('ingredient')}</h3>
+            <h3 style={{background: '#fab855'}}>{t('ingredient')}
+                <InfoButton onClick={onIngHelpClick}/>
+            </h3>
             {ingArticle}
             <footer>
                 <div>{round1(result.ingRatio * 100)}%</div>
@@ -281,6 +290,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
+            strength={strength} result={result}/>
+        <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
             strength={strength} result={result}/>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
             strength={strength}/>
@@ -446,6 +457,88 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     </StyledInfoDialog>;
 });
 
+const IngHelpDialog = React.memo(({open, onClose, strength, result}: {
+    open: boolean,
+    onClose: () => void,
+    strength: PokemonStrength,
+    result: StrengthResult,
+}) => {
+    const { t } = useTranslation();
+    if (!open) {
+        return <></>;
+    }
+
+    const ingSlot = strength.pokemonIv.level < 30 ? 1 :
+        strength.pokemonIv.level < 60 ? 2 : 3;
+    const ings = [[result.ing1]];
+    if (ingSlot > 1) {
+        if (ings[0][0].name === result.ing2.name) {
+            ings[0].push(result.ing2);
+        }
+        else {
+            ings.push([result.ing2]);
+        }
+    }
+    if (ingSlot > 2 && result.ing3 !== undefined) {
+        if (ings[0][0].name === result.ing3.name) {
+            ings[0].push(result.ing3);
+        }
+        else if (ings.length > 1 && ings[1][0].name === result.ing3.name) {
+            ings[1].push(result.ing3);
+        }
+        else {
+            ings.push([result.ing3]);
+        }
+    }
+
+    return <StyledInfoDialog open={open} onClose={onClose}>
+        <header>
+            {getIngDetail(strength, result, ingSlot, ings[0])}
+            {ings.length > 1 && getIngDetail(strength, result, ingSlot, ings[1])}
+            {ings.length > 2 && getIngDetail(strength, result, ingSlot, ings[2])}
+        </header>
+        <article>
+            <div><span className="box box3">{round1(result.ingHelpCount)}</span></div>
+            <span>{t('ing help count')}
+                <footer>
+                    {round1(result.notFullHelpCount)}
+                    <small> ({t('normal help count')})</small>
+                    <> × </>
+                    {round1(result.ingRatio * 100)}%
+                    <small> ({t('ingredient rate')})</small>
+                </footer>
+            </span>
+        </article>
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledInfoDialog>;
+});
+
+function getIngDetail(strength: PokemonStrength, result: StrengthResult, ingSlot: number,
+    ing: IngredientStrength[]): React.ReactNode {
+    if (strength.parameter.tapFrequency === 'none') {
+        return <article>ー</article>;
+    }
+
+    return <>
+        <h1>
+            <IngredientIcon name={ing[0].name}/>
+            {round1(ing.reduce((p, c) => p + c.count, 0))}
+        </h1>
+        <h2>
+            <span className="box box3">{round1(result.ingHelpCount)}</span><> × </>
+            {ing.length > 1 ? '(' : ''}
+            {ing.map((ing, i) => <span key={i}>
+                {i === 0 ? '' : ' + '}
+                {ing.helpCount}
+                {ingSlot > 1 ? ` / ${ingSlot}` : ''}
+            </span>)}
+            {ing.length > 1 ? ')' : ''}
+        </h2>
+    </>;
+}
+
 const StyledInfoDialog = styled(Dialog)({
     '& header': {
         margin: '1rem',
@@ -480,6 +573,10 @@ const StyledInfoDialog = styled(Dialog)({
             '& > li > footer': {
                 fontSize: '0.8rem',
             }
+        },
+        '& > span > footer': {
+            margin: '0.2rem 0 0.2rem -1.5rem',
+            fontSize: '0.8rem',
         },
     },
     '& span.box': {
