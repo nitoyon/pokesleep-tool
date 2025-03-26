@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "v2.6.0": {
+                    "headline": "v2.6.0中的平衡調整已應用。",
+                    "detail": "幫手速度▼▼的修正值已從1.1更改為1.075。"
+                },
                 "add munna": {
                     "headline": "更新了食夢夢，夢夢蝕的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
