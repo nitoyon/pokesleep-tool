@@ -87,7 +87,7 @@ class Nature {
     }
     get speedOfHelpFactor(): number {
         return this.isSpeedOfHelpUp ? 0.9 : this.isSpeedOfHelpDown ?
-            1.1 : 1;
+            1.075 : 1;
     }
     get mainSkillChanceFactor(): number {
         return this.isMainSkillChanceUp ? 1.2 : this.isMainSkillChanceDown ?

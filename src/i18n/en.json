@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.6.0": {
+                    "headline": "Balance adjustments in v2.6.0 have been applied.",
+                    "detail": "Speed of Help ▼▼ modifiers has been changed from 1.1 to 1.075."
+                },
                 "add munna": {
                     "headline": "Munna and Musharna are added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
