@@ -11,6 +11,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Energizing Cheer S" |
     "Metronome" |
     "Energy for Everyone S" |
+    "Energy for Everyone S (Lunar Blessing)" |
     "Extra Helpful S" |
     "Cooking Power-Up S" |
     "Tasty Chance S" |

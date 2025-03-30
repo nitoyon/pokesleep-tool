@@ -305,6 +305,7 @@ class PokemonStrength {
             case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
+            case "Energy for Everyone S (Lunar Blessing)":
                 return [mainSkillValue, 0];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":

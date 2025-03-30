@@ -822,6 +822,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.3, color: '#0dba6d'},
         {x: 0.45, y: 0.4, w: 0.1, h: 0.15, r: 0.1, color: '#dd717c'},
     ],
+    // Cresselia
+    '488': [
+        {x: 0, y: 0, w: 0.4, h: 1, color: '#f6e592'},
+        {x: 0.1, y: 0.1, w: 0.15, h: 0.2, r: 0.2, color: '#d67cd2'},
+        {x: 0.4, y: 0.3, w: 0.6, h: 0.8, color: '#9ac0f1'},
+        {x: 0.4, y: 0, w: 0.6, h: 0.1, color: '#fdf8fe'},
+        {x: 0.4, y: 0.1, w: 0.6, h: 0.1, color: '#edb7e4'},
+        {x: 0.4, y: 0.2, w: 0.6, h: 0.1, color: '#ce7bc4'}
+    ],
     // Munna
     '517': [
         {x: 0, y: 0, w: 1, h: 1, color: '#f5dde3'},

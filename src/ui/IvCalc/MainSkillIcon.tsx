@@ -19,6 +19,7 @@ const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
         case "Charge Energy S (Moonlight)":
             return <svg width="20" height="20"><FavoriteBorderIcon sx={{color: "#ff88aa"}}/></svg>;
         case "Energy for Everyone S":
+        case "Energy for Everyone S (Lunar Blessing)":
             return <svg width="22" height="22"><VolunteerActivismIcon sx={{color: "#ff88aa"}}/></svg>;
         case "Energizing Cheer S":
             return <svg width="22" height="22"><VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/></svg>;
