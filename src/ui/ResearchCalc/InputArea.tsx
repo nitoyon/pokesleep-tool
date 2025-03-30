@@ -115,6 +115,9 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         setIsScoreTableDialogOpen(false);
     }, [setIsScoreTableDialogOpen]);
 
+    const actualBonus = (isInCresseliaEvent() && data.isCresseliaInTeam ?
+        Math.max(data.bonus, 1.2) : data.bonus);
+
     return (<><form className="main">
         <div>{t("research area")}:</div>
         <div>
@@ -144,7 +147,8 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <div>
                 <EventBonusTextField value={data.bonus} onChange={onBonusChange}/>
             </div>
-            <CresseliaInTeamCheckbox value={data.isCresseliaInTeam} onChange={onCresseliaInTeamChange}/>
+            <CresseliaInTeamCheckbox value={data.isCresseliaInTeam} onChange={onCresseliaInTeamChange}
+                bonus={data.bonus}/>
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </form>
@@ -152,7 +156,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
     </div>
     <ScoreTableDialog open={isScoreTableDialogOpen}
-        onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
+        onClose={onScoreTableDialogClose} bonus={actualBonus} strength={strength}/>
     </>);
 }
 
@@ -275,7 +279,8 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
     </>);
 });
 
-const CresseliaInTeamCheckbox = React.memo(({value, onChange}: {
+const CresseliaInTeamCheckbox = React.memo(({bonus, value, onChange}: {
+    bonus: number,
     value: boolean,
     onChange: (value: boolean) => void,
 }) => {
@@ -298,7 +303,7 @@ const CresseliaInTeamCheckbox = React.memo(({value, onChange}: {
         return () => clearInterval(interval);
     });
 
-    return (<Collapse in={open}>
+    return (<Collapse in={open && bonus === 1}>
         <FormControlLabel sx={{marginRight: 0}}
             control={<Checkbox checked={value} onChange={handler}/>}
             label={t('cresselia on your team')} />

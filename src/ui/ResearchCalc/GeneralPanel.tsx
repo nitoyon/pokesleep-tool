@@ -12,7 +12,7 @@ export default function GeneralPanel({data: _data}: {data: InputAreaData}) {
 
     const data = {..._data};
     if (isInCresseliaEvent() && data.isCresseliaInTeam) {
-        data.bonus *= 1.2;
+        data.bonus = Math.max(data.bonus, 1.2);
     }
 
     const [betterSecondSleepData, setBetterSecondSleepData] = useState<BetterSecondSleepData>({
