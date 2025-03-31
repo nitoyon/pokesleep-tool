@@ -369,7 +369,8 @@ class PokemonRp {
             return [2800, 3902, 5273, 6975, 9317, 12438][this.skillLevel - 1];
         }
         if (this._pokemon.skill === "Berry Burst (Disguise)" ||
-            this._pokemon.skill === "Berry Burst"
+            this._pokemon.skill === "Berry Burst" ||
+            this._pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
         ) {
             return [1400, 1991, 2747, 3791, 5234, 7232][this.skillLevel - 1];
         }
