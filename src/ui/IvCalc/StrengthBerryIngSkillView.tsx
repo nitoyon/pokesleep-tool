@@ -140,6 +140,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [helpOpen, setHelpOpen] = React.useState(false);
     const [decendantId, setDecendantId] = React.useState(0);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
+    const [skillHelpId, setSkillHelpId] = React.useState(0);
 
     const isWhistle = (settings.period === 3);
     const strength = new PokemonStrength(pokemonIv, {
@@ -160,9 +161,14 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     const onSkillHelpClick = React.useCallback(() => {
         setSkillHelpOpen(true);
+        setSkillHelpId(0);
     }, []);
     const onSkillHelpClose = React.useCallback(() => {
         setSkillHelpOpen(false);
+    }, []);
+    const onSkillHelp2Click = React.useCallback(() => {
+        setSkillHelpOpen(true);
+        setSkillHelpId(1);
     }, []);
     const onEfficiencyInfoClick = React.useCallback(() => {
         dispatch({type: "openEnergyDialog"});
@@ -179,7 +185,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     // skill value
     const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
-        t, onSkillHelpClick);
+        t, onSkillHelpClick, onSkillHelp2Click);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -262,7 +268,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
-            skill={pokemonIv.pokemon.skill}/>
+            id={skillHelpId} skill={pokemonIv.pokemon.skill}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
             iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;
@@ -317,13 +323,14 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
 
 function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
-    onInfoClick: () => void): React.ReactNode {
+    onInfoClick: () => void, onInfo2Click: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
             return <>ー</>;
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
     let mainSkillValue: string;
+    let mainSkillValue2: string = "";
     if (mainSkill.startsWith("Charge Strength") ||
         mainSkill.startsWith("Berry Burst")
     ) {
@@ -335,6 +342,10 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
     ) {
         mainSkillValue = round2(result.skillCount);
     }
+    else if (mainSkill === "Energy for Everyone S (Lunar Blessing)") {
+        mainSkillValue = round1(result.skillValue);
+        mainSkillValue2 = formatWithComma(Math.round(result.skillStrength));
+    }
     else {
         mainSkillValue = round1(result.skillValue);
     }
@@ -345,6 +356,13 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
         {!mainSkill.startsWith("Charge Strength") &&
         !mainSkill.startsWith("Dream Shard") &&
         <InfoButton onClick={onInfoClick}/>}
+        {mainSkill === "Energy for Everyone S (Lunar Blessing)" &&
+        <>
+        <br/>
+        <MainSkillIcon mainSkill={"Charge Strength S"}/>
+        <span>{mainSkillValue2}</span>
+        <InfoButton onClick={onInfo2Click}/>
+        </>}
     </>;
 }
 
@@ -369,14 +387,15 @@ const HelpDialog = React.memo(({open, onClose}: {
     </Dialog>;
 });
 
-const SkillHelpDialog = React.memo(({open, onClose, skill}: {
+const SkillHelpDialog = React.memo(({open, onClose, skill, id}: {
     open: boolean,
     onClose: () => void,
     skill: MainSkillName,
+    id: number
 }) => {
     const { t } = useTranslation();
 
-    let text = t(`strength skill info.${skill}`)
+    let text = t(`strength skill info.${skill}` + (id === 1 ? '2' : ''))
     return <Dialog open={open} onClose={onClose}>
         <DialogContent style={{fontSize: '0.95rem'}}>
             {text}
