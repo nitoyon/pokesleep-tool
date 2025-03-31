@@ -7,6 +7,7 @@ import Nature from '../src/util/Nature';
 import PokemonIv from '../src/util/PokemonIv';
 import PokemonRp from '../src/util/PokemonRp';
 import SubSkill, { SubSkillType } from '../src/util/SubSkill';
+import { IngredientName } from '../src/data/pokemons';
 
 type CsvData = {
     name: string;
@@ -15,6 +16,8 @@ type CsvData = {
     nature: Nature;
     skillLevel: number;
     subSkill1: SubSkill;
+    subSkill2: SubSkill;
+    ing2: IngredientName;
 };
 
 type RateInfo = {
@@ -42,9 +45,34 @@ function parseTsv(text: string): Record<string, CsvData[]> {
             nature: new Nature(fixNatures(parts[3])),
             skillLevel: parseInt(parts[4], 10),
             subSkill1: new SubSkill(parts[5] as SubSkillType),
+            subSkill2: new SubSkill(parts[6] as SubSkillType),
+            ing2: convertIngName(parts[7]),
         });
     }
     return ret;
+}
+
+function convertIngName(val: string): IngredientName {
+    switch (val) {
+        case "Large Leek": return "leek";
+        case "Tasty Mushroom": return "mushroom";
+        case "Fancy Egg": return "egg";
+        case "Soft Potato": return "potato";
+        case "Fancy Apple": return "apple";
+        case "Fiery Herb": return "herb";
+        case "Bean Sausage": return "sausage";
+        case "Moomoo Milk": return "milk";
+        case "Honey": return "honey";
+        case "Pure Oil": return "oil";
+        case "Warming Ginger": return "ginger";
+        case "Snoozy Tomato": return "tomato";
+        case "Soothing Cacao": return "cacao";
+        case "Slowpoke Tail": return "tail";
+        case "Greengrass Soybeans": return "soy";
+        case "Greengrass Corn": return "corn";
+        case "Rousing Coffee": return "coffee";
+        default: return "unknown";
+    }
 }
 
 function fit(data: CsvData[]) {
@@ -61,6 +89,14 @@ function fit(data: CsvData[]) {
         iv.nature = datum.nature;
         iv.skillLevel = datum.skillLevel;
         iv.subSkills.set(10, datum.subSkill1);
+        iv.subSkills.set(25, datum.subSkill2);
+        if (iv.level >= 30) {
+            if (datum.ing2 === "unknown") {
+                console.error("unknown ing");
+                continue;
+            }
+            iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
+        }
         candidates = candidates.filter(x => {
             iv.pokemon.skillRatio = x.skill;
             iv.pokemon.ingRatio = x.ing;

@@ -299,14 +299,22 @@ class PokemonStrength {
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
+        const berryWithFav = berryStrength * (this.isFavoriteBerry(param) ? 2 : 1);
         const strengthPerBerry = 100;
         switch (mainSkill) {
             case "Charge Energy S":
             case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
-            case "Energy for Everyone S (Lunar Blessing)":
                 return [mainSkillValue, 0];
+            case "Energy for Everyone S (Lunar Blessing)":
+                // asume same type species
+                const selfCount = [7, 12, 17, 19, 24, 29][skillLevel - 1];
+                const fromMember = [1, 1, 1, 2, 2, 2][skillLevel - 1];
+                const skillStrength = (1 + param.fieldBonus / 100) * (
+                    selfCount * berryWithFav + fromMember * strengthPerBerry
+                ) * skillCount;
+                return [mainSkillValue, skillStrength];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
                 return [mainSkillValue * (eventBonus?.dreamShard ?? 1), 0];
@@ -328,7 +336,7 @@ class PokemonStrength {
             case "Berry Burst":
                 const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
                 const strengthBurst =  (1 + param.fieldBonus / 100) * (
-                    mainSkillValue * berryStrength * (this.isFavoriteBerry(param) ? 2 : 1) +
+                    mainSkillValue * berryWithFav +
                     4 * strengthPerBerry * skillCount * extra
                 );
                 return [strengthBurst, strengthBurst];

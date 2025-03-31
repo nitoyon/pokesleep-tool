@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add cresselia": {
+                    "headline": "Cresselia has been added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.6.0": {
                     "headline": "Balance adjustments in v2.6.0 have been applied.",
                     "detail": "Speed of Help ▼▼ modifiers has been changed from 1.1 to 1.075."
@@ -377,10 +381,11 @@
             "Skill Copy (Mimic)": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
             "Energy for Everyone S": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Energy for Everyone S (Lunar Blessing)": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
+            "Energy for Everyone S (Lunar Blessing)2": "The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
             "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
-            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
+            "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "unknown": "The main skill has not been determined yet."

@@ -4593,28 +4593,28 @@
         "specialty": "Skills",
         "skill": "Energy for Everyone S (Lunar Blessing)",
         "fp": 30,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 2300,
+        "ingRatio": 23.9,
+        "skillRatio": 4.1,
         "ancestor": null,
         "evolutionCount": 0,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 22,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "ginger",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "cacao",
+            "c2": 2,
+            "c3": 3
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "tomato",
+            "c3": 4
         }
     },
     {

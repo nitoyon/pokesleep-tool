@@ -91,6 +91,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     if (skill === "Energy for Everyone S") {
         return [5, 7, 9, 11, 15, 18][skillLevel - 1];
     }
+    if (skill === "Energy for Everyone S (Lunar Blessing)") {
+        return [3, 4, 5, 7, 9, 11][skillLevel - 1];
+    }
     if (skill === "Extra Helpful S") {
         return [5, 6, 7, 8, 9, 10, 11][skillLevel - 1];
     }
