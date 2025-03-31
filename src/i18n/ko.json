@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add cresselia": {
+                    "headline": "크레세리아의 데이터를 추가했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "v2.6.0": {
                     "headline": "v2.6.0에서 밸런스 조정이 적용되었습니다.",
                     "detail": "도우미 ▼▼ 보정 값을 1.1에서 1.075로 변경했습니다."
