@@ -381,7 +381,7 @@
             "Skill Copy (Mimic)": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
             "Energy for Everyone S": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Energy for Everyone S (Lunar Blessing)": "Displays the amount restored per Pokémon. To estimate the impact on the strength amount, change the value of [$t(energy)].",
-            "Energy for Everyone S (Lunar Blessing)2": "The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
+            "Energy for Everyone S (Lunar Blessing)2": "It is assumed that there are 2 Pokémon of the same type. The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "Displays the pot room you get. The effect of skills is not counted towards the total strength amount.",
             "Tasty Chance S": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
