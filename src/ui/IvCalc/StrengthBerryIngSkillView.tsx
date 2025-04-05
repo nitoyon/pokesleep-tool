@@ -184,7 +184,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const ingArticle = getIngArticle(result, settings, t);
 
     // skill value
-    const mainSkillTitle = getMainSkillTitle(pokemonIv, result, settings,
+    const mainSkillArticle = getMainSkillArticle(pokemonIv, result, settings,
         t, onSkillHelpClick, onSkillHelp2Click);
 
     const onHelpClick = React.useCallback(() => {
@@ -239,7 +239,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
         </section>
         <section>
             <h3 style={{background: '#44a2fd'}}>{t('skill')}</h3>
-            <article><div>{mainSkillTitle}</div></article>
+            {mainSkillArticle}
             <footer>
                 <div>{round1(result.skillRatio * 100)}%</div>
                 <div>{round2(result.skillCount)}{t('times unit')}</div>
@@ -321,7 +321,7 @@ function shortenNumber(t: typeof i18next.t, n: number): string {
     throw new Error('unknown short num digits: ' + digits);
 }
 
-function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
+function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void, onInfo2Click: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
@@ -350,20 +350,29 @@ function getMainSkillTitle(pokemonIv: PokemonIv, result: StrengthResult,
         mainSkillValue = round1(result.skillValue);
     }
 
-    return <>
+    const skill1 = <>
         <MainSkillIcon mainSkill={mainSkill}/>
         <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
         {!mainSkill.startsWith("Charge Strength") &&
         !mainSkill.startsWith("Dream Shard") &&
         <InfoButton onClick={onInfoClick}/>}
-        {mainSkill === "Energy for Everyone S (Lunar Blessing)" &&
-        <>
-        <br/>
-        <MainSkillIcon mainSkill={"Charge Strength S"}/>
-        <span>{mainSkillValue2}</span>
-        <InfoButton onClick={onInfo2Click}/>
-        </>}
     </>;
+
+    let skill2 = <></>;
+    if (mainSkillValue2 !== "") {
+        skill2 = <>
+            <br/>
+            <MainSkillIcon mainSkill={"Charge Strength S"}/>
+            <span>{mainSkillValue2}</span>
+            <InfoButton onClick={onInfo2Click}/>
+        </>;
+    }
+    return <article>
+        <div>
+            {skill1}
+            {skill2}
+        </div>
+    </article>;
 }
 
 const HelpDialog = React.memo(({open, onClose}: {
