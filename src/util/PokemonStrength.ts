@@ -312,7 +312,7 @@ class PokemonStrength {
                 const selfCount = [7, 12, 17, 19, 24, 29][skillLevel - 1];
                 const fromMember = [1, 1, 1, 2, 2, 2][skillLevel - 1];
                 const skillStrength = (1 + param.fieldBonus / 100) * (
-                    selfCount * berryWithFav + fromMember * strengthPerBerry
+                    selfCount * berryWithFav + fromMember * strengthPerBerry * 4
                 ) * skillCount;
                 return [mainSkillValue, skillStrength];
             case "Dream Shard Magnet S":
