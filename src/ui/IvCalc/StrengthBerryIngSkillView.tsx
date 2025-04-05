@@ -98,6 +98,10 @@ const StyledBerryIngSkillStrengthView = styled('div')({
                 fontSize: '0.8em',
                 lineHeight: '50%',
             },
+            '&.skill2': {
+                lineHeight: '50%',
+                fontSize: '0.8rem',
+            },
         },
         '& > footer': {
             fontSize: '0.7rem',
@@ -367,7 +371,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
             <InfoButton onClick={onInfo2Click}/>
         </>;
     }
-    return <article>
+    return <article className={mainSkillValue2 !== "" ? "skill2" : ""}>
         <div>
             {skill1}
             {skill2}
