@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add darkrai": {
+                    "headline": "Darkrai has been added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "add cresselia": {
                     "headline": "Cresselia has been added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
