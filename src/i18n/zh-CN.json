@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add darkrai": {
+                    "headline": "更新了达克莱伊的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "add cresselia": {
                     "headline": "更新了克雷色利亚的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
@@ -422,6 +426,7 @@
             "Charge Strength S (Random)": "能量填充S (随机)",
             "Charge Strength S (Stockpile)": "蓄力 (能量填充S)",
             "Charge Strength M": "能量填充M",
+            "Charge Strength M (Bad Dreams)": "梦魇 (能量填充M)",
             "Dream Shard Magnet S": "梦之碎片获取S",
             "Dream Shard Magnet S (Random)": "梦之碎片获取S (随机)",
             "Energizing Cheer S": "活力疗愈S",
@@ -686,6 +691,8 @@
             "Leafeon": "叶伊布",
             "Glaceon": "冰伊布",
             "Gallade": "艾路雷朵",
+            "Cresselia": "克雷色利亚",
+            "Darkrai": "达克莱伊",
             "Munna": "食梦梦",
             "Musharna": "梦梦蚀",
             "Rufflet": "毛头小鹰",

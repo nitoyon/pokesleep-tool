@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add darkrai": {
+                    "headline": "Darkrai has been added!!!",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "add cresselia": {
                     "headline": "Cresselia has been added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
@@ -430,6 +434,7 @@
             "Charge Strength S (Random)": "Charge Strength S (Random)",
             "Charge Strength S (Stockpile)": "Stockpile (Charge Strength S)",
             "Charge Strength M": "Charge Strength M",
+            "Charge Strength M (Bad Dreams)": "Bad Dreams (Charge Strength M)",
             "Dream Shard Magnet S": "Dream Shard Magnet S",
             "Dream Shard Magnet S (Random)": "Dream Shard Magnet S (Random)",
             "Energizing Cheer S": "Energizing Cheer S",
@@ -695,6 +700,7 @@
             "Glaceon": "Glaceon",
             "Gallade": "Gallade",
             "Cresselia": "Cresselia",
+            "Darkrai": "Darkrai",
             "Munna": "Munna",
             "Musharna": "Musharna",
             "Rufflet": "Rufflet",

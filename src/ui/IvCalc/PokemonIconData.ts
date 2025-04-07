@@ -831,6 +831,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.4, y: 0.1, w: 0.6, h: 0.1, color: '#edb7e4'},
         {x: 0.4, y: 0.2, w: 0.6, h: 0.1, color: '#ce7bc4'}
     ],
+    // Darkrai
+    '491': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#656661'},
+        {x: 0.25, y: 0.1, w: 0.5, h: 0.5, r: 0.3, color: '#bf354f'},
+        {x: 0.36, y: 0.18, w: 0.28, h: 0.26, r: 0.3, color: '#656661'},
+        {x: 0.35, y: 0.35, w: 0.3, h: 0.3, r: 0.2, color: '#bf354f'},
+        {x: 0.4, y: -0.2, w: 0.2, h: 0.5, r: 0.1, color: '#f3f3f3'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#42413f'}
+    ],
     // Munna
     '517': [
         {x: 0, y: 0, w: 1, h: 1, color: '#f5dde3'},
