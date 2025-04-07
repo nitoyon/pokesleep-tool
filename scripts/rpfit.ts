@@ -15,8 +15,8 @@ type CsvData = {
     rp: number;
     nature: Nature;
     skillLevel: number;
-    subSkill1: SubSkill;
-    subSkill2: SubSkill;
+    subSkill1: SubSkill|null;
+    subSkill2: SubSkill|null;
     ing2: IngredientName;
 };
 
@@ -34,6 +34,9 @@ function parseTsv(text: string): Record<string, CsvData[]> {
     const lines = text.split(/\r?\n/g);
     for (const line of lines) {
         const parts = line.split(/\t/g);
+        while (parts.length < 8) {
+            parts.push("");
+        }
         const name = fixName(parts[0]);
         if (typeof(ret[name]) === "undefined") {
             ret[name] = [];
@@ -44,8 +47,8 @@ function parseTsv(text: string): Record<string, CsvData[]> {
             rp: parseInt(parts[2], 10),
             nature: new Nature(fixNatures(parts[3])),
             skillLevel: parseInt(parts[4], 10),
-            subSkill1: new SubSkill(parts[5] as SubSkillType),
-            subSkill2: new SubSkill(parts[6] as SubSkillType),
+            subSkill1: parts[5] === "" || parts[5] === "-" ? null : new SubSkill(parts[5] as SubSkillType),
+            subSkill2: parts[6] === "" || parts[6] === "-" ? null : new SubSkill(parts[6] as SubSkillType),
             ing2: convertIngName(parts[7]),
         });
     }
@@ -163,6 +166,7 @@ function fixNatures(nature: string): string {
         "慢吞吞": "Mild",
         "馬虎": "Rash",
         "冷靜": "Quiet",
+        "Neutral": "Serious",
     };
     if (nature in natureI18n) {
         return natureI18n[nature];
