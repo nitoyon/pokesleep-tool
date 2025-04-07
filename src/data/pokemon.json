@@ -4618,6 +4618,39 @@
         }
     },
     {
+        "id": 491,
+        "name": "Darkrai",
+        "sleepType": "dozing",
+        "type": "dark",
+        "specialty": "All",
+        "skill": "Charge Strength M (Bad Dreams)",
+        "fp": 30,
+        "frequency": 2900,
+        "ingRatio": 19.2,
+        "skillRatio": 2.3,
+        "ancestor": null,
+        "evolutionCount": 0,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 28,
+        "ing1": {
+            "name": "sausage",
+            "c1": 2,
+            "c2": 2,
+            "c3": 2
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        },
+        "ratioNotFixed": true
+    },
+    {
         "id": 517,
         "name": "Munna",
         "sleepType": "snoozing",
