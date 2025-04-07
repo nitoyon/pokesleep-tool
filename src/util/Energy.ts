@@ -525,7 +525,9 @@ class Energy {
                 param.customEventBonus, this._iv.pokemon);
             const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
-            if (this._iv.pokemon.specialty !== 'Skills') {
+            if (this._iv.pokemon.specialty !== 'Skills' &&
+                this._iv.pokemon.specialty !== 'All'
+            ) {
                 skillProbabilityAfterWakeup.once = 1 - skillNone;
             }
             else {

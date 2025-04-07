@@ -18,7 +18,8 @@ const RaderChart = React.memo(({
     const r = 80;
     const left = Math.min(300, width - padRight - r * 1.732 / 2);
     const color = specialty === "Berries" ? "#24d76a" :
-        specialty === "Ingredients" ? "#fab855" : "#44a2fd";
+        specialty === "Ingredients" ? "#fab855" :
+        specialty === "Skills" ? "#44a2fd" : "#e28197";
     return <svg
         width={width} height={height}
         viewBox={`0 0 ${width} ${height}`}

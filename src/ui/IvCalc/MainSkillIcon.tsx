@@ -24,6 +24,7 @@ const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
         case "Energizing Cheer S":
             return <svg width="22" height="22"><VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/></svg>;
         case "Charge Strength M":
+        case "Charge Strength M (Bad Dreams)":
         case "Charge Strength S":
         case "Charge Strength S (Random)":
         case "Charge Strength S (Stockpile)":

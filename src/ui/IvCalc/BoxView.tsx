@@ -361,6 +361,7 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         }
         if (this.filterSpecialty.length > 0) {
             ret = ret.filter((x) =>
+                x.iv.pokemon.specialty === "All" ||
                 this.filterSpecialty.includes(x.iv.pokemon.specialty));
         }
         if (this.mainSkillNames.length !== 0) {

@@ -237,6 +237,7 @@ export class PokemonFilterConfig {
 
         if (this.filterSpecialty.length > 0) {
             ret = ret.filter((option) =>
+                option.specialty === "All" ||
                 this.filterSpecialty.includes(option.specialty));
         }
 

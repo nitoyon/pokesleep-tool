@@ -321,7 +321,8 @@ class PokemonRp {
     }
 
     get berryCount(): number {
-        return (this._pokemon.specialty === "Berries" ? 2 : 1) +
+        const defaultTwoBerry = (this._pokemon.specialty === "Berries" || this._pokemon.specialty === "All");
+        return (defaultTwoBerry ? 2 : 1) +
             (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
     }
 
@@ -373,6 +374,9 @@ class PokemonRp {
             this._pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
         ) {
             return [1400, 1991, 2747, 3791, 5234, 7232][this.skillLevel - 1];
+        }
+        if (this._pokemon.skill === "Charge Strength M (Bad Dreams)") {
+            return [2400, 3313, 4643, 6441, 8864, 11878][this.skillLevel - 1];
         }
         return [880, 1251, 1726, 2383, 3290, 4546, 5843][this.skillLevel - 1];
     }
