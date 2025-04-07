@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add darkrai": {
+                    "headline": "更新了达克莱伊的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "add cresselia": {
                     "headline": "更新了克雷色利亚的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"

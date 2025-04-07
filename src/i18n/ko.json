@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add darkrai": {
+                    "headline": "다크라이의 데이터를 추가했습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                },
                 "add cresselia": {
                     "headline": "크레세리아의 데이터를 추가했습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
