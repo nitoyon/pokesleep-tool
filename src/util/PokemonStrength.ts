@@ -320,6 +320,7 @@ class PokemonStrength {
                 return [mainSkillValue * (eventBonus?.dreamShard ?? 1), 0];
 
             case "Charge Strength M":
+            case "Charge Strength M (Bad Dreams)":
             case "Charge Strength S":
             case "Charge Strength S (Random)":
             case "Charge Strength S (Stockpile)":
