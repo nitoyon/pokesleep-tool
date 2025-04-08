@@ -4636,8 +4636,8 @@
         "ing1": {
             "name": "sausage",
             "c1": 2,
-            "c2": 2,
-            "c3": 2
+            "c2": 0,
+            "c3": 0
         },
         "ing2": {
             "name": "unknown2",

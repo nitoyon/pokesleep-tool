@@ -249,19 +249,26 @@ class PokemonRp {
     get ingredientEnergy(): number {
         const ing1 = this.ingredient1;
         const e1 = ingredientStrength[ing1.name] * ing1.count;
+        let count = 1;
         if (this.level < 30) {
             return e1;
         }
 
         const ing2 = this.ingredient2;
         const e2 = ingredientStrength[ing2.name] * ing2.count;
+        if (e2 > 0) {
+            count++;
+        }
         if (this.level < 60) {
-            return Math.floor((e1 + e2) / 2);
+            return Math.floor((e1 + e2) / count);
         }
 
         const ing3 = this.ingredient3;
         const e3 = ingredientStrength[ing3.name] * ing3.count;
-        return Math.floor((e1 + e2 + e3) / 3);
+        if (e3 > 0) {
+            count++;
+        }
+        return Math.floor((e1 + e2 + e3) / count);
     }
 
     get ingredient1() {

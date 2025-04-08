@@ -196,7 +196,9 @@ class PokemonStrength {
             (1 + param.fieldBonus / 100) * (eventBonus?.dish ?? 1);
         const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
-        const ingUnlock = level < 30 ? 1 : level < 60 ? 2 : 3;
+        const ingUnlock = 1 +
+            (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
+            (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
         const ingEventAdd: number = (param.period !== 3 ? eventBonus?.ingredient ?? 0 : 0);
 
         const ing1 = {...rp.ingredient1, strength: 0};
