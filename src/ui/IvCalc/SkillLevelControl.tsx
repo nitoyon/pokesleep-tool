@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { PokemonData } from '../../data/pokemons';
-import { isSkillLevelMax7 } from '../../util/MainSkill';
+import { getMaxSkillLevel } from '../../util/MainSkill';
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +11,7 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
     onChange: (value: number) => void,
 }) => {
     const { t } = useTranslation();
-    const maxLevel = isSkillLevelMax7(pokemon.skill) ? 7 : 6;
+    const maxLevel = getMaxSkillLevel(pokemon.skill);
 
     // prepare menus
     const options = [];
