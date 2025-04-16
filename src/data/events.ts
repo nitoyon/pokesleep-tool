@@ -205,7 +205,7 @@ export interface BonusEffects {
     /** Boosted ingredient count */
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
-    dreamShard: 1 | 2;
+    dreamShard: 1 | 1.5 | 2;
     /** Dishes bonus */
     dish: 1 | 1.25 | 1.5;
 }
@@ -289,7 +289,7 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
             ret.effects.ingredient = data.effects.ingredient;
         }
         if (typeof(data.effects.dreamShard) === "number" &&
-            [1, 2].includes(data.effects.dreamShard)) {
+            [1, 1.5, 2].includes(data.effects.dreamShard)) {
             ret.effects.dreamShard = data.effects.dreamShard;
         }
         if (typeof(data.effects.dish) === "number" &&

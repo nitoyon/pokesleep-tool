@@ -115,7 +115,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             ...value.customEventBonus,
             effects: {
                 ...value.customEventBonus.effects,
-                dreamShard: val as 1|2,
+                dreamShard: val as 1|1.5|2,
             },
         }});
     }, [value, onChange]);
@@ -215,6 +215,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
                         value={value.customEventBonus.effects.dreamShard} onChange={onDreamShardChange}>
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.5}>×1.5</ToggleButton>
                         <ToggleButton value={2}>×2</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
