@@ -1,7 +1,7 @@
 import Nature from './Nature';
 import pokemons, { IngredientName, PokemonData } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
-import { isSkillLevelMax7 } from './MainSkill';
+import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 
@@ -134,10 +134,9 @@ class PokemonIv {
      * Normalize current state.
      */
     normalize() {
-        this.skillLevel = Math.min(7, Math.max(this.skillLevel, 1));
-        if (this.skillLevel === 7 && !isSkillLevelMax7(this.pokemon.skill)) {
-            this.skillLevel = 6;
-        }
+        const maxSkillLevel = getMaxSkillLevel(this.pokemon.skill);
+        this.skillLevel = Math.min(maxSkillLevel, Math.max(this.skillLevel, 1));
+
         if (this.pokemon.evolutionCount >= 0) {
             this.evolvedCount = Math.min(this.pokemon.evolutionCount,
                 Math.max(this.evolvedCount, 0)) as 0|1|2;
@@ -397,7 +396,7 @@ class PokemonIv {
 
         // skill level
         ret.skillLevel = ((array16[2] >> 2) & 0x7) + 1;
-        if (ret.skillLevel > (isSkillLevelMax7(pokemon.skill) ? 7 : 6)) {
+        if (ret.skillLevel > getMaxSkillLevel(pokemon.skill)) {
             throw new Error(`Too large skill level ${ret.skillLevel} for ${pokemon.name}`);
         }
 
