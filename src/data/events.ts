@@ -270,19 +270,23 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
         effects: fillBonusEffects({}),
     };
     if (typeof(data.target) === "object") {
-        if (typeof(data.target.speciality) === "string" &&
-        SpecialtyNames.includes(data.target.speciality)) {
-            ret.target.specialty = data.speciality as PokemonSpecialty;
+        if (typeof(data.target.specialty) === "string" &&
+            SpecialtyNames.includes(data.target.specialty)) {
+            ret.target.specialty = data.target.specialty as PokemonSpecialty;
         }
         if (typeof(data.target.type) === "string" &&
             PokemonTypes.includes(data.target.type)) {
-            ret.target.type = data.type as PokemonType;
+            ret.target.type = data.target.type as PokemonType;
         }
     }
     if (typeof(data.effects) === "object") {
         if (typeof(data.effects.skillLevel) === "number" &&
             [0, 1, 3].includes(data.effects.skillLevel)) {
             ret.effects.skillLevel = data.effects.skillLevel;
+        }
+        if (typeof(data.effects.skillTrigger) === "number" &&
+            [1, 1.25, 1.5].includes(data.effects.skillTrigger)) {
+            ret.effects.skillTrigger = data.effects.skillTrigger;
         }
         if (typeof(data.effects.ingredient) === "number" &&
             [0, 1].includes(data.effects.ingredient)) {
