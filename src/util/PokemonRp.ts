@@ -385,7 +385,7 @@ class PokemonRp {
         if (this._pokemon.skill === "Charge Strength M (Bad Dreams)") {
             return [2400, 3313, 4643, 6441, 8864, 11878][this.skillLevel - 1];
         }
-        return [880, 1251, 1726, 2383, 3290, 4546, 5843][this.skillLevel - 1];
+        return [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303][this.skillLevel - 1];
     }
 }
 
