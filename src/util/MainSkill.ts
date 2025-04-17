@@ -35,6 +35,10 @@ export const MainSkillNames: MainSkillName[] = [
 ];
 
 export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
+    if (skill === "Dream Shard Magnet S" ||
+        skill === "Dream Shard Magnet S (Random)") {
+        return 8;
+    }
     if (skill === "Ingredient Magnet S" ||
         skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
@@ -42,8 +46,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
         skill === "Charge Strength S (Stockpile)" ||
         skill === "Extra Helpful S" ||
         skill === "Cooking Power-Up S" ||
-        skill === "Dream Shard Magnet S" ||
-        skill === "Dream Shard Magnet S (Random)" ||
+        skill === "Metronome" ||
         skill === "Skill Copy (Transform)" ||
         skill === "Skill Copy (Mimic)") {
         return 7;
@@ -103,10 +106,10 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [3, 4, 5, 6, 7, 8][skillLevel - 1];
     }
     if (skill === "Dream Shard Magnet S") {
-        return [240, 340, 480, 670, 920, 1260, 1800][skillLevel - 1];
+        return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
     }
     if (skill === "Dream Shard Magnet S (Random)") {
-        return [240, 340, 480, 670, 920, 1260, 1800][skillLevel - 1] * 1.25;
+        return [240, 340, 480, 670, 920, 1260, 1800, 2300][skillLevel - 1] * 1.25;
     }
     if (skill === "Tasty Chance S") {
         return [4, 5, 6, 7, 8, 10][skillLevel - 1];
