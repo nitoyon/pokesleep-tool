@@ -145,7 +145,7 @@ class PokemonStrength {
         // change skill level if `maxSkillLevel` is specified
         if (settings.maxSkillLevel) {
             pokemonIv = pokemonIv.clone();
-            pokemonIv.skillLevel = 7;
+            pokemonIv.skillLevel = 10;
             pokemonIv.normalize();
         }
 
