@@ -7,7 +7,7 @@ import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
-import { getSkillValue, isSkillLevelMax7 } from './MainSkill';
+import { getSkillValue, getMaxSkillLevel } from './MainSkill';
 
 /**
  * Represents the parameter of PokemonStrength.calc.
@@ -145,7 +145,7 @@ class PokemonStrength {
         // change skill level if `maxSkillLevel` is specified
         if (settings.maxSkillLevel) {
             pokemonIv = pokemonIv.clone();
-            pokemonIv.skillLevel = 7;
+            pokemonIv.skillLevel = 10;
             pokemonIv.normalize();
         }
 
@@ -290,7 +290,7 @@ class PokemonStrength {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
         if (eventBonus !== undefined) {
-            const maxSkillLevel = isSkillLevelMax7(mainSkill) ? 7 : 6;
+            const maxSkillLevel = getMaxSkillLevel(mainSkill);
             skillLevel = Math.min(maxSkillLevel,
                 this.iv.skillLevel + (eventBonus.skillLevel ?? 0));
         }

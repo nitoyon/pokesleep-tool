@@ -34,18 +34,24 @@ export const MainSkillNames: MainSkillName[] = [
     "Berry Burst", "Skill Copy"
 ];
 
-export function isSkillLevelMax7(skill: MainSkillName): boolean {
-    return skill === "Ingredient Magnet S" ||
+export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
+    if (skill === "Dream Shard Magnet S" ||
+        skill === "Dream Shard Magnet S (Random)") {
+        return 8;
+    }
+    if (skill === "Ingredient Magnet S" ||
         skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
         skill === "Charge Strength S (Random)" ||
         skill === "Charge Strength S (Stockpile)" ||
         skill === "Extra Helpful S" ||
         skill === "Cooking Power-Up S" ||
-        skill === "Dream Shard Magnet S" ||
-        skill === "Dream Shard Magnet S (Random)" ||
+        skill === "Metronome" ||
         skill === "Skill Copy (Transform)" ||
-        skill === "Skill Copy (Mimic)";
+        skill === "Skill Copy (Mimic)") {
+        return 7;
+    }
+    return 6;
 }
 
 export function getSkillValue(skill: MainSkillName, skillLevel: number) {
@@ -53,14 +59,8 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     if (skillLevel !== Math.floor(skillLevel)) {
         throw new Error(`invalid skill level: ${skillLevel}`);
     }
-    if (isSkillLevelMax7(skill)) {
-        if (skillLevel < 0 || skillLevel >= 8) {
-            throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
-        }
-    } else {
-        if (skillLevel < 0 || skillLevel >= 7) {
-            throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
-        }
+    if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
+        throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
     }
 
     if (skill === "Ingredient Magnet S") {
@@ -106,10 +106,10 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [3, 4, 5, 6, 7, 8][skillLevel - 1];
     }
     if (skill === "Dream Shard Magnet S") {
-        return [240, 340, 480, 670, 920, 1260, 1800][skillLevel - 1];
+        return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
     }
     if (skill === "Dream Shard Magnet S (Random)") {
-        return [240, 340, 480, 670, 920, 1260, 1800][skillLevel - 1] * 1.25;
+        return [240, 340, 480, 670, 920, 1260, 1800, 2300][skillLevel - 1] * 1.25;
     }
     if (skill === "Tasty Chance S") {
         return [4, 5, 6, 7, 8, 10][skillLevel - 1];

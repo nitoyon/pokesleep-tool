@@ -4,7 +4,7 @@ import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 
-export const rpEstimateThreshold = 61;
+export const rpEstimateThreshold = 65;
 
 export const ingredientStrength: {[ing in IngredientName]: number} = {
     "leek": 185,
@@ -298,7 +298,7 @@ class PokemonRp {
             1.168,1.180,1.192,1.205,1.218,1.231,1.245,1.259,1.274,1.288,1.303,
             1.319,1.335,1.351,1.368,1.385,1.402,1.420,1.439,1.457,1.477,1.496,
             1.517,1.537,1.558,1.580,1.602,1.625,1.648,1.671,1.696,1.720,1.745,
-            1.771,1.798,1.824,1.852,1.880];
+            1.771,1.798,1.824,1.852,1.880,1.927,1.975,2.024,2.075,2.127];
         if (this.level - 1 < table.length) {
             return table[this.level - 1];
         }
@@ -385,7 +385,7 @@ class PokemonRp {
         if (this._pokemon.skill === "Charge Strength M (Bad Dreams)") {
             return [2400, 3313, 4643, 6441, 8864, 11878][this.skillLevel - 1];
         }
-        return [880, 1251, 1726, 2383, 3290, 4546, 5843][this.skillLevel - 1];
+        return [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303][this.skillLevel - 1];
     }
 }
 

@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2025-04-19T06:00:00Z",
+            "id": "v2.7.0"
+        },
+        {
             "date": "2025-04-07T11:08:00Z",
             "id": "add darkrai"
         },
