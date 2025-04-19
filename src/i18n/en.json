@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.7.0": {
+                    "headline": "Support for version 2.7.0 has been added.",
+                    "detail": "Added support for SP calculation up to level 65, as well as skill level cap unlocks."
+                },
                 "add darkrai": {
                     "headline": "Darkrai has been added!!!",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
