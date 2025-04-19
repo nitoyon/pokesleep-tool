@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "v2.7.0": {
+                    "headline": "已新增支援版本 2.7.0。",
+                    "detail": "已支援至等級 65 的 SP 計算，並開放技能等級上限。"
+                },
                 "add darkrai": {
                     "headline": "更新了達克萊伊的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"

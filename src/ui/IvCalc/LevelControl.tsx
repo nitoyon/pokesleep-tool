@@ -76,7 +76,7 @@ const LevelControl = React.memo(({value, onChange}: {
         onChange(value + 1);
     }, [value, onChange]);
 
-    const options = ["10", "25", "30", "50", "55", "60", "75", "100"];
+    const options = ["10", "25", "30", "50", "60", "65", "75", "100"];
     const filterOptions = React.useCallback((x: string[]) => x, []);
 
     const valueText = isEmpty ? "" : value.toString();
