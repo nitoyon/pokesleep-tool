@@ -304,10 +304,4 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
     return ret;
 }
 
-export function isInCresseliaEvent() {
-    const now = new Date();
-    return new Date('2025-03-31T04:00:00') <= now &&
-        now <= new Date('2025-04-14T04:00:00');
-}
-
 export default events;
