@@ -1772,6 +1772,38 @@
         }
     },
     {
+        "id": 113,
+        "name": "Chansey",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 16,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 440,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 115,
         "name": "Kangaskhan",
         "sleepType": "snoozing",
@@ -3126,6 +3158,38 @@
         }
     },
     {
+        "id": 242,
+        "name": "Blissey",
+        "sleepType": "snoozing",
+        "type": "normal",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 20,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 440,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 243,
         "name": "Raikou",
         "sleepType": "snoozing",
@@ -4211,6 +4275,38 @@
         "ing3": {
             "name": "leek",
             "c3": 4
+        }
+    },
+    {
+        "id": 440,
+        "name": "Happiny",
+        "sleepType": "slumbering",
+        "type": "normal",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 440,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
         }
     },
     {

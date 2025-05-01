@@ -295,6 +295,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.5, color: '#f2f2f2'},
         {x: 0.2, y: 0.6, w: 0.6, h: 0.8, r: 0.2, color: '#f2ebd0'},
     ],
+    // Chansey
+    '113': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#f9d9ef'},
+        {x: 0, y: 0.8, w: 1, h: 0.3, color: '#e79fb8'},
+        {x: 0.3, y: 0.54, w: 0.4, h: 0.16, r: 0.08, color: '#ffffff'},
+        {x: 0.3, y: 0.65, w: 0.4, h: 0.1, color: '#ffffff'},
+        {x: 0.3, y: 0.7, w: 0.4, h: 0.1, color: '#db89a2'},
+        {x: 0.3, y: 0.75, w: 0.4, h: 0.16, r: 0.08, color: '#db89a2'},
+    ],
     // Kangaskhan
     '115': [
         {x: 0, y: 0, w: 1, h: 1, color: '#be8f6a'},
@@ -541,6 +550,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0.7, w: 1, h: 0.3, color: '#d7d0c6'},
         {x: 0, y: 0.5, w: 1, h: 0.2, color: '#eb8c53'},
     ],
+    // Blissey
+    '242': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ffc9df'},
+        {x: 0, y: 0.6, w: 1, h: 0.35, color: '#ffffff'},
+        {x: 0.3, y: 0.54, w: 0.4, h: 0.16, r: 0.1, color: '#ffffff'},
+        {x: 0.3, y: 0.65, w: 0.4, h: 0.14, color: '#ffffff'},
+        {x: 0.3, y: 0.74, w: 0.4, h: 0.1, color: '#ffc9df'},
+        {x: 0.3, y: 0.75, w: 0.4, h: 0.16, r: 0.1, color: '#ffc9df'},
+    ],
     // Raikou
     '243': [
         {x: 0, y: 0, w: 1, h: 1, color: '#fae04a'},
@@ -751,6 +769,13 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#ffe0ee'},
         {x: 0, y: 0, w: 1, h: 0.35, color: '#4479ab'},
         {x: 0.4, y: 0.6, w: 0.2, h: 0.2, r: 0.1, color: '#f97b95'},
+    ],
+    // Happiny
+    '440': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ffdee4'},
+        {x: 0, y: 0.6, w: 1, h: 0.1, color: '#ffffff'},
+        {x: 0.3, y: 0.45, w: 0.4, h: 0.3, r: 0.2, color: '#ffffff'},
+        {x: 0, y: 0.7, w: 1, h: 0.3, color: '#e593a6'},
     ],
     // Riolu
     '447': [
