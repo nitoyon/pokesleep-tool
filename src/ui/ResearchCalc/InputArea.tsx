@@ -1,7 +1,7 @@
 import './InputArea.css';
 import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
-import { getDrowsyBonus, isInCresseliaEvent } from '../../data/events';
+import { getDrowsyBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
@@ -29,9 +29,6 @@ interface InputAreaData {
 
     /** event bonus (multiplier) */
     bonus: number;
-
-    /** cresselia event or not */
-    isCresseliaInTeam: boolean;
 
     /** whether to do two sleep sessions in one day */
     secondSleep: boolean;
@@ -98,10 +95,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({bonus});
     }, [onchange]);
 
-    const onCresseliaInTeamChange = useCallback((isCresseliaInTeam: boolean) => {
-        onchange?.({isCresseliaInTeam});
-    }, [onchange]);
-
     const onSecondSleepChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const secondSleep = e.target.checked;
         onchange?.({secondSleep});
@@ -114,9 +107,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const onScoreTableDialogClose = useCallback(() => {
         setIsScoreTableDialogOpen(false);
     }, [setIsScoreTableDialogOpen]);
-
-    const actualBonus = (isInCresseliaEvent() && data.isCresseliaInTeam ?
-        Math.max(data.bonus, 1.2) : data.bonus);
 
     return (<><form className="main">
         <div>{t("research area")}:</div>
@@ -147,8 +137,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <div>
                 <EventBonusTextField value={data.bonus} onChange={onBonusChange}/>
             </div>
-            <CresseliaInTeamCheckbox value={data.isCresseliaInTeam} onChange={onCresseliaInTeamChange}
-                bonus={data.bonus}/>
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </form>
@@ -156,7 +144,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
     </div>
     <ScoreTableDialog open={isScoreTableDialogOpen}
-        onClose={onScoreTableDialogClose} bonus={actualBonus} strength={strength}/>
+        onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
     </>);
 }
 
@@ -277,38 +265,6 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
             </Button>
         </Collapse>
     </>);
-});
-
-const CresseliaInTeamCheckbox = React.memo(({bonus, value, onChange}: {
-    bonus: number,
-    value: boolean,
-    onChange: (value: boolean) => void,
-}) => {
-    const { t } = useTranslation();
-    const [open, setOpen] = React.useState(isInCresseliaEvent());
-    const handler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.checked);
-    }, [onChange]);
-
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            const val = isInCresseliaEvent();
-            if (val !== open) {
-                setOpen(val);
-                if (!val) {
-                    onChange(false);
-                }
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    });
-
-    return (<Collapse in={open && bonus === 1}>
-        <FormControlLabel sx={{marginRight: 0}}
-            control={<Checkbox checked={value} onChange={handler}/>}
-            label={t('cresselia on your team')} />
-    </Collapse>
-    );
 });
 
 interface SecondSleepCheckboxProps {
