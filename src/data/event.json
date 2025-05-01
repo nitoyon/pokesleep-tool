@@ -2,21 +2,30 @@
     "drowsy": [
         {
             "name": "GSD",
-            "day": "2025-04-12",
+            "day": "2025-05-12",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2025-04-13",
-            "bonus": 2
+            "day": "2025-05-13",
+            "bonus": 3
         },
         {
             "name": "GSD",
-            "day": "2025-04-14",
+            "day": "2025-05-14",
             "bonus": 1.5
         }
     ],
     "bonus": [
+        {
+            "name": "spring festival 2025",
+            "start": "2025-05-05T04:00:00",
+            "end": "2025-05-12T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
         {
             "name": "dream shard week 1",
             "start": "2025-04-21T04:00:00",
