@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add happiny": {
+                    "headline": "Happiny, Chansey and Blissey has been added.",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.7.0": {
                     "headline": "Support for version 2.7.0 has been added.",
                     "detail": "Added support for RP calculation up to level 65, as well as skill level cap unlocks."

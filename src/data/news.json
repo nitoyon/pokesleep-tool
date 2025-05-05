@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2025-05-05T12:00:00Z",
+            "id": "add happiny"
+        },
+        {
             "date": "2025-04-19T06:00:00Z",
             "id": "v2.7.0"
         },
