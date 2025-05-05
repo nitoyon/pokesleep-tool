@@ -1776,31 +1776,31 @@
         "name": "Chansey",
         "sleepType": "snoozing",
         "type": "normal",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Energy for Everyone S",
         "fp": 16,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3300,
+        "ingRatio": 23.6,
+        "skillRatio": 2.3,
         "ancestor": 440,
         "evolutionCount": 1,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 15,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "egg",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "potato",
+            "c2": 4,
+            "c3": 7
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "honey",
+            "c3": 8
         }
     },
     {
@@ -3162,31 +3162,31 @@
         "name": "Blissey",
         "sleepType": "snoozing",
         "type": "normal",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Energy for Everyone S",
         "fp": 20,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3100,
+        "ingRatio": 23.8,
+        "skillRatio": 2.3,
         "ancestor": 440,
         "evolutionCount": 2,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 21,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "egg",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "potato",
+            "c2": 4,
+            "c3": 7
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "honey",
+            "c3": 8
         }
     },
     {
@@ -4282,31 +4282,31 @@
         "name": "Happiny",
         "sleepType": "slumbering",
         "type": "normal",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Energy for Everyone S",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 5400,
+        "ingRatio": 21,
+        "skillRatio": 1.3,
         "ancestor": 440,
         "evolutionCount": 0,
         "evolutionLeft": 2,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 7,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "egg",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "potato",
+            "c2": 4,
+            "c3": 7
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "honey",
+            "c3": 8
         }
     },
     {
