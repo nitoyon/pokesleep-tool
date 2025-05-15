@@ -64,7 +64,7 @@ export interface StrengthResult {
     berryHelpCount: number;
     /** Berry count per help */
     berryCount: number;
-    /** Strength per 1 berry */
+    /** Strength per 1 berry (area bonus included) */
     berryStrength: number;
     /** Total strength gained by berry */
     berryTotalStrength: number;
@@ -248,9 +248,9 @@ class PokemonStrength {
         const berryRatio = (this.iv.pokemon.frequency > 0 ? 1 - ingRatio : 0);
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
         const berryCount = rp.berryCount;
-        const berryStrength = rp.berryStrength;
+        const berryStrength = Math.ceil(rp.berryStrength * (1 + param.fieldBonus / 100));
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
+            (this.isFavoriteBerry(param) ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio * (targetEventBonus?.skillTrigger ?? 1);
@@ -284,7 +284,7 @@ class PokemonStrength {
      * Get skill value and skill strength.
      * @param skillCount Skill count.
      * @param param Strength paramter.
-     * @param berryStrength Strength per berry.
+     * @param berryStrength Strength per berry (area bonus included).
      * @param eventBonus Event bonus for all pokemon or undefined.
      * @param targetEventBonus Event bonus for specified pokemon or undefined.
      * @returns [skillValue, skillStrength].
@@ -308,9 +308,9 @@ class PokemonStrength {
             mainSkillFactor = this.iv.nature.energyRecoveryFactor;
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
-        const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
+        const strengthPerHelp = Math.ceil(300 * (1 + param.fieldBonus / 100));
         const berryWithFav = berryStrength * (this.isFavoriteBerry(param) ? 2 : 1);
-        const strengthPerBerry = 100;
+        const strengthPerBerry = Math.ceil(100 * (1 + param.fieldBonus / 100));
         switch (mainSkill) {
             case "Charge Energy S":
             case "Charge Energy S (Moonlight)":
@@ -321,7 +321,7 @@ class PokemonStrength {
                 // asume same type species
                 const selfCount = [7, 12, 17, 19, 24, 29][skillLevel - 1];
                 const fromMember = [1, 1, 1, 2, 2, 2][skillLevel - 1];
-                const skillStrength = (1 + param.fieldBonus / 100) * (
+                const skillStrength = (
                     selfCount * berryWithFav + fromMember * strengthPerBerry * 4
                 ) * skillCount;
                 return [mainSkillValue, skillStrength];
@@ -346,7 +346,7 @@ class PokemonStrength {
             case "Berry Burst (Disguise)":
             case "Berry Burst":
                 const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
-                const strengthBurst =  (1 + param.fieldBonus / 100) * (
+                const strengthBurst =  (
                     mainSkillValue * berryWithFav +
                     4 * strengthPerBerry * skillCount * extra
                 );
