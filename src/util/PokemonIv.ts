@@ -18,6 +18,9 @@ class PokemonIv {
     nature: Nature;
     evolvedCount: 0|1|2;
     ribbon: 0|1|2|3|4;
+    mythIng1: IngredientName;
+    mythIng2: IngredientName;
+    mythIng3: IngredientName;
 
     /** Initialize new instance. */
     constructor(pokemonName: string) {
@@ -36,6 +39,17 @@ class PokemonIv {
         this.nature = new Nature("Serious");
         this.evolvedCount = Math.max(pokemon.evolutionCount, 0) as 0|1|2;
         this.ribbon = 0;
+        this.mythIng1 = this.mythIng2 = this.mythIng3 = "unknown";
+
+        // Darkrai
+        if (this.isMythical) {
+            this.mythIng1 = "sausage";
+        }
+    }
+
+    /** Returns true if the Pokémon is mythical. */
+    get isMythical(): boolean {
+        return this.pokemon.mythIng !== undefined;
     }
 
     /** Get active sub-skills list. */
@@ -65,6 +79,9 @@ class PokemonIv {
         ret.subSkills = this.subSkills.clone();
         ret.nature = this.nature;
         ret.ribbon = this.ribbon;
+        ret.mythIng1 = this.mythIng1;
+        ret.mythIng2 = this.mythIng2;
+        ret.mythIng3 = this.mythIng3;
         ret.normalize();
         return ret;
     }
@@ -111,6 +128,21 @@ class PokemonIv {
      * @returns Ingredients.
      */
     getIngredients(unlockedOnly: boolean): IngredientName[] {
+        if (this.isMythical) {
+            const mythRet = [this.mythIng1];
+            if (!unlockedOnly || this.level >= 30) {
+                if (this.mythIng2 !== "unknown" && mythRet[0] !== this.mythIng2) {
+                    mythRet.push(this.mythIng2);
+                }
+            }
+            if (!unlockedOnly || this.level >= 60) {
+                if (this.mythIng3 !== "unknown" && mythRet.includes(this.mythIng3)) {
+                    mythRet.push(this.mythIng3);
+                }
+            }
+            return mythRet;
+        }
+
         const ret: IngredientName[] = [this.pokemon.ing1.name];
 
         if (!unlockedOnly || this.level >= 30) {
@@ -152,14 +184,22 @@ class PokemonIv {
      * @returns Whether two IV is equal or not.
      */
     isEqual(iv: PokemonIv): boolean {
-        return (this.pokemonName === iv.pokemonName &&
+        const isEqual = this.pokemonName === iv.pokemonName &&
             this.level === iv.level &&
             this.skillLevel === iv.skillLevel &&
-            this.ingredient === iv.ingredient &&
             this.subSkills.isEqual(iv.subSkills) &&
             this.nature.name === iv.nature.name &&
             this.evolvedCount === iv.evolvedCount &&
-            this.ribbon === iv.ribbon);
+            this.ribbon === iv.ribbon;
+
+        if (this.isMythical) {
+            return (isEqual &&
+                this.mythIng1 === iv.mythIng1 &&
+                this.mythIng2 === iv.mythIng2 &&
+                this.mythIng3 === iv.mythIng3);
+        } else {
+            return (isEqual && this.ingredient === iv.ingredient);
+        }
     }
 
     /**
@@ -271,7 +311,7 @@ class PokemonIv {
      * Format
      * ------
      *
-     * First, serialize IV data to following bit array (69bit).
+     * First, serialize IV data to following bit array (72bit or 90bit).
      *
      * * 4bit  : Version (1)
      * * 12bit : Pokedex ID
@@ -293,12 +333,20 @@ class PokemonIv {
      *
      * * 5bit  : Sub-skill Lv100
      * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
+     * * 8bit  : reserved
+     *
+     * * 10bit : Ingredient for mythical pokemon
+     *           (0: unknown, 1: apple, 2: herb, 3: sausage, 4: milk,
+     *            5: honey, 6, soy, 7: corn, 8: coffee)
+     *           1st ingredient: value % 9
+     *           2nd ingredient: Math.floor(value / 9)
+     *           3rd ingredient: Math.floor(value / 81)
      *
      * Second, convert bit array using BASE64, and replace '/' to '-',
      * and remove trailing 'AA=='
      */
     serialize(): string {
-        const array16 = new Uint16Array(5);
+        const array16 = new Uint16Array(6);
         array16[0] = 1 + (this.pokemon.id << 4);
         array16[1] = this.form +
             (this.level << 6) +
@@ -318,6 +366,14 @@ class PokemonIv {
         array16[4] = (this.subSkills.lv100 === null ? 31 : this.subSkills.lv100.index) +
             (this.ribbon << 5);
 
+        if (this.pokemon.mythIng !== undefined) {
+            const ing1 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng1) + 1;
+            const ing2 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng2) + 1;
+            const ing3 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng3) + 1;
+            const n = this.pokemon.mythIng.length + 1; // 1 is unknown
+            array16[5] = ing1 + ing2 * n + ing3 * n * n;
+        }
+
         const array8 = new Uint8Array(array16.buffer);
         let bin = "";
         for (let i = 0; i < array8.length; i++) {
@@ -325,7 +381,8 @@ class PokemonIv {
         }
         return btoa(bin)
             .replace(/\//g, '-')
-            .substring(0, 12); // strip tailing "AA=="
+            // strip tailing "AAAA" if not mythical pokemon
+            .substring(0, this.isMythical ? 16 : 12);
     }
 
     /**
@@ -335,10 +392,13 @@ class PokemonIv {
      */
     static deserialize(value: string): PokemonIv {
         // validate, and convert to BASE64 string
-        if (value.length !== 12) {
+        if (value.length === 12) {
+            value = value.replace(/-/g, '/') + "AAAA";
+        } else if (value.length === 16) {
+            value = value.replace(/-/g, '/');
+        } else {
             throw new Error(`Invalid length ${value.length}`);
         }
-        value = value.replace(/-/g, '/') + "AA==";
 
         // decode BASE64 to Uint16Array
         const bin = atob(value);
@@ -427,6 +487,18 @@ class PokemonIv {
         if (ret.ribbon >= 5) {
             throw new Error(`Invalid ribbon (${ret.ribbon})`);
         }
+
+        // mythical ingredients
+        if (ret.pokemon.mythIng !== undefined) {
+            const n = ret.pokemon.mythIng.length + 1; // 1 is unknown
+            const ing1 = (array16[5] % n) - 1;
+            const ing2 = (Math.floor(array16[5] / n) % n) - 1;
+            const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
+            ret.mythIng1 = ing1 < 0 ? "sausage" : ret.pokemon.mythIng[ing1].name;
+            ret.mythIng2 = ing2 < 0 ? "unknown" : ret.pokemon.mythIng[ing2].name;
+            ret.mythIng3 = ing3 < 0 ? "unknown" : ret.pokemon.mythIng[ing3].name;
+        }
+
         return ret;
     }
 }
