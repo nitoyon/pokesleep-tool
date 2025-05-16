@@ -30,6 +30,11 @@ const IngredientCountIcon = React.memo(({name, count}: {
     name: IngredientName,
     count: number,
 }) => {
+    if (name === "unknown") {
+        return <span style={{padding: '0 0.7rem 0 0.2rem'}}>
+            <IngredientIcon name={name}/>
+        </span>;
+    }
     return <IngredientBadge badgeContent={"×"+count}>
         <IngredientIcon name={name}/>
     </IngredientBadge>;
