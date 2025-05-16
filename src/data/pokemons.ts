@@ -52,6 +52,7 @@ export interface PokemonData {
         name: IngredientName,
         c3: number;
     } | undefined;
+    mythIng: MythIngredient[] | undefined;
 }
 
 export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
@@ -78,6 +79,18 @@ export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn" | "coffee" |
     "unknown" | "unknown1" | "unknown2" | "unknown3";
+
+/** Ingredient for mythical pokemon */
+export type MythIngredient = {
+    /** Ingredient name */
+    name: IngredientName;
+    /** First ingredient count */
+    c1: number;
+    /** Second ingredient count */
+    c2: number;
+    /** Third ingredient count */
+    c3: number;
+}
 
 const pokemons = pokemon_ as PokemonData[];
 
