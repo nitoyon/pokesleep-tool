@@ -176,6 +176,10 @@ class PokemonIv {
         if (this.ingredient.endsWith('C') && this.pokemon.ing3 === undefined) {
             this.ingredient = this.ingredient.replace('C', 'A') as IngredientType;
         }
+
+        if (this.isMythical && this.mythIng1 === "unknown") {
+            this.mythIng1 = "sausage";
+        }
     }
 
     /**

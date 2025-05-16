@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
+import SelectEx from '../common/SelectEx';
 import { IngredientType } from '../../util/PokemonRp';
 import PokemonIv from '../../util/PokemonIv';
-import { PokemonData } from '../../data/pokemons';
+import { IngredientName, PokemonData } from '../../data/pokemons';
 import { TextField, MenuItem } from '@mui/material';
 import IngredientCountIcon from './IngredientCountIcon';
 
@@ -23,8 +24,27 @@ const IngredientTextField = React.memo(({iv, onChange}: {
         value.ingredient = e.target.value as IngredientType;
         onChange(value);
     }, [iv, onChange]);
+    const onChange1 = useCallback((ing: string) => {
+        const value = iv.clone();
+        value.mythIng1 = ing as IngredientName;
+        onChange(value);
+    }, [iv, onChange]);
+    const onChange2 = useCallback((ing: string) => {
+        const value = iv.clone();
+        value.mythIng2 = ing as IngredientName;
+        onChange(value);
+    }, [iv, onChange]);
+    const onChange3 = useCallback((ing: string) => {
+        const value = iv.clone();
+        value.mythIng3 = ing as IngredientName;
+        onChange(value);
+    }, [iv, onChange]);
 
-    return NormalIngredientTextField(iv, _onChange);
+    if (iv.isMythical) {
+        return MythicalIngredientTextField(iv, onChange1, onChange2, onChange3);
+    } else {
+        return NormalIngredientTextField(iv, _onChange);
+    }
 });
 
 /** Ingredient text field for normal pokemon */
@@ -74,5 +94,65 @@ const PokemonIngredient = React.memo(({pokemon, value}: {
         name={ing3.name}/>
     return <>{icon1}{icon2}{icon3}</>;
 });
+
+/** Ingredient text field for normal pokemon */
+function MythicalIngredientTextField(iv: PokemonIv, onChange1: (e: any) => void,
+    onChange2: (e: any) => void,
+    onChange3: (e: any) => void) {
+    if (iv.pokemon.mythIng === undefined) {
+        return <></>;
+    }
+
+    const ing1Menus = [];
+    const ing2Menus = [];
+    const ing3Menus = [];
+    for (const ing of iv.pokemon.mythIng) {
+        ing1Menus.push(<MenuItem key={ing.name} value={ing.name}>
+            <IngredientCountIcon count={ing.c1} name={ing.name}/>
+        </MenuItem>);
+        ing2Menus.push(<MenuItem key={ing.name} value={ing.name}>
+            <IngredientCountIcon count={ing.c2} name={ing.name}/>
+        </MenuItem>);
+        ing3Menus.push(<MenuItem key={ing.name} value={ing.name}>
+            <IngredientCountIcon count={ing.c3} name={ing.name}/>
+        </MenuItem>);
+    }
+    ing2Menus.push(<MenuItem key="unknown" value="unknown">
+            <IngredientCountIcon count={0} name="unknown"/>
+        </MenuItem>);
+    ing3Menus.push(<MenuItem key="unknown" value="unknown">
+            <IngredientCountIcon count={0} name="unknown"/>
+        </MenuItem>);
+
+    return <div style={{
+        display: 'flex',
+        gap: '0.5rem',
+    }}>
+        <SelectEx value={iv.mythIng1}
+            sx={{paddingBottom: '0.4rem'}}
+            menuSx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+            }} onChange={onChange1}>
+            {ing1Menus}
+        </SelectEx>
+        <SelectEx value={iv.mythIng2}
+            sx={{paddingBottom: '0.4rem'}}
+            menuSx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+            }} onChange={onChange2}>
+            {ing2Menus}
+        </SelectEx>
+        <SelectEx value={iv.mythIng3}
+            sx={{paddingBottom: '0.4rem'}}
+            menuSx={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+            }} onChange={onChange3}>
+            {ing3Menus}
+        </SelectEx>
+    </div>;
+}
 
 export default IngredientTextField;
