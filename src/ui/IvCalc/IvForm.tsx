@@ -5,7 +5,7 @@ import { Button, Dialog, DialogActions,
 import Nature from '../../util/Nature';
 import PokemonIv from '../../util/PokemonIv';
 import { AmountOfSleep } from '../../util/TimeUtil';
-import PokemonRp, { IngredientType } from '../../util/PokemonRp';
+import PokemonRp from '../../util/PokemonRp';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
@@ -56,11 +56,6 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         const iv = pokemonIv.changeLevel(level);
         onChange(iv);
     }, [pokemonIv, onChange]);
-    const onIngredientChange = React.useCallback((value: IngredientType) => {
-        const iv = pokemonIv.clone();
-        iv.ingredient = value;
-        onChange(iv);
-    }, [pokemonIv, onChange]);
     const onEvolvedCountChange = React.useCallback((value: 0|1|2) => {
         const iv = pokemonIv.clone();
         iv.evolvedCount = value;
@@ -104,8 +99,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <div>{t("level")}:</div>
             <LevelControl value={pokemonIv.level} onChange={onLevelChange}/>
             <div>{t("ingredient")}:</div>
-            <IngredientTextField pokemon={rp.pokemon}
-                value={pokemonIv.ingredient} onChange={onIngredientChange}/>
+            <IngredientTextField iv={pokemonIv} onChange={onChange}/>
             <div>{t("frequency")}:</div>
             <div>
                 {frequencyToString(rp.frequency, t)}

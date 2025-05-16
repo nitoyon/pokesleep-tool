@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { IngredientType } from '../../util/PokemonRp';
+import PokemonIv from '../../util/PokemonIv';
 import { PokemonData } from '../../data/pokemons';
 import { TextField, MenuItem } from '@mui/material';
 import IngredientCountIcon from './IngredientCountIcon';
@@ -13,31 +14,37 @@ const BorderedMenuItem = styled(MenuItem)({
     },
 });
 
-const IngredientTextField = React.memo(({pokemon, value, onChange}: {
-    pokemon: PokemonData,
-    value: IngredientType,
-    onChange: (value: IngredientType) => void,    
+const IngredientTextField = React.memo(({iv, onChange}: {
+    iv: PokemonIv,
+    onChange: (value: PokemonIv) => void,
 }) => {
     const _onChange = useCallback((e: any) => {
-        onChange(e.target.value as IngredientType);
-    }, [onChange]);
+        const value = iv.clone();
+        value.ingredient = e.target.value as IngredientType;
+        onChange(value);
+    }, [iv, onChange]);
 
+    return NormalIngredientTextField(iv, _onChange);
+});
+
+/** Ingredient text field for normal pokemon */
+function NormalIngredientTextField(iv: PokemonIv, _onChange: (e: any) => void) {
     // prepare menus
     const options = [];
     const values: IngredientType[] = ["AAA", "AAB", "ABA", "ABB"];
-    if (pokemon.ing3 !== undefined) {
+    if (iv.pokemon.ing3 !== undefined) {
         values.splice(2, 0, "AAC");
         values.push("ABC");
     }
     for (const value of values) {
         options.push(<BorderedMenuItem key={value} value={value} dense>
-            <PokemonIngredient pokemon={pokemon} value={value}/>
+            <PokemonIngredient pokemon={iv.pokemon} value={value}/>
         </BorderedMenuItem>);
     }
 
     return (
         <TextField variant="standard" size="small" select
-            value={value}
+            value={iv.ingredient}
             SelectProps={{ MenuProps: {
                 anchorOrigin: { vertical: "bottom", horizontal: "left" },
                 transformOrigin: { vertical: "top", horizontal: "left" },
@@ -46,7 +53,7 @@ const IngredientTextField = React.memo(({pokemon, value, onChange}: {
             {options}
         </TextField>
     );
-});
+}
 
 const PokemonIngredient = React.memo(({pokemon, value}: {
     pokemon: PokemonData,
