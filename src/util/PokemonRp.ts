@@ -88,12 +88,20 @@ class PokemonRp {
     /** Ribbon level */
     ribbon: 0|1|2|3|4;
 
+    mythIng1: IngredientName|undefined;
+    mythIng2: IngredientName|undefined;
+    mythIng3: IngredientName|undefined;
+
     get pokemonName(): string {
         return this._pokemonName;
     }
 
     get pokemon(): PokemonData {
         return this._pokemon;
+    }
+
+    get isMythical(): boolean {
+        return this._pokemon.mythIng !== undefined;;
     }
 
     constructor(pokemonIv: PokemonIv) {
@@ -106,6 +114,9 @@ class PokemonRp {
         this.subSkills = pokemonIv.subSkills;
         this.nature = pokemonIv.nature;
         this.ribbon = pokemonIv.ribbon;
+        this.mythIng1 = pokemonIv.mythIng1;
+        this.mythIng2 = pokemonIv.mythIng2;
+        this.mythIng3 = pokemonIv.mythIng3;
     }
 
     calculate(): RpStrengthResult {
@@ -272,19 +283,40 @@ class PokemonRp {
     }
 
     get ingredient1() {
+        if (this._pokemon.mythIng !== undefined) {
+            return {
+                name: this.mythIng1 ?? "unknown",
+                count: this._pokemon.mythIng.find(x => x.name === this.mythIng1)?.c1 ?? 0,
+            };
+        }
+
         return {
-            name: this._pokemon.ing1.name,
+            name: this._pokemon.ing1.name ?? "unknown",
             count: this._pokemon.ing1.c1,
         };
     }
 
     get ingredient2() {
+        if (this._pokemon.mythIng !== undefined) {
+            return {
+                name: this.mythIng2 ?? "unknown",
+                count: this._pokemon.mythIng.find(x => x.name === this.mythIng2)?.c2 ?? 0,
+            };
+        }
+
         const ing2 = this.ingredient.charAt(1) === 'A' ?
             this._pokemon.ing1 : this._pokemon.ing2;
         return { name: ing2.name, count: ing2.c2 };
     }
 
     get ingredient3() {
+        if (this._pokemon.mythIng !== undefined) {
+            return {
+                name: this.mythIng3 ?? "unknown",
+                count: this._pokemon.mythIng.find(x => x.name === this.mythIng3)?.c3 ?? 0,
+            };
+        }
+
         const ing3 = this.ingredient.charAt(2) === 'A' ? this._pokemon.ing1 :
             this.ingredient.charAt(2) === 'B' ?
             this._pokemon.ing2 : this._pokemon.ing3;
