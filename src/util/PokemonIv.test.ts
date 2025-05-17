@@ -117,6 +117,50 @@ describe('PokemonIV', () => {
             expect(PokemonIv.getFormByIdForm(37 + 0x3000)).toBe(3);
             expect(PokemonIv.getIdByIdForm(37 + 0x3000)).toBe(37);
         });
+
+        test('import old darkrai', () => {
+            const ret = PokemonIv.deserialize("sR4ApwT5-38f");
+            expect(ret.pokemon.name).toBe("Darkrai");
+            expect(ret.mythIng1).toBe("sausage");
+            expect(ret.mythIng2).toBe("unknown");
+            expect(ret.mythIng3).toBe("unknown");
+        });
+
+        test('mythical ingredients (coffee/apple/unknown)', () => {
+            const iv = new PokemonIv('Darkrai');
+            iv.mythIng1 = "coffee";
+            iv.mythIng2 = "apple";
+            iv.mythIng3 = "unknown";
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.mythIng1).toBe("coffee");
+            expect(ret.mythIng2).toBe("apple");
+            expect(ret.mythIng3).toBe("unknown");
+        });
+
+        test('mythical ingredients (coffee/apple/soy)', () => {
+            const iv = new PokemonIv('Darkrai');
+            iv.mythIng1 = "coffee";
+            iv.mythIng2 = "apple";
+            iv.mythIng3 = "soy";
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.mythIng1).toBe("coffee");
+            expect(ret.mythIng2).toBe("apple");
+            expect(ret.mythIng3).toBe("soy");
+        });
+
+        test('mythical ingredients (coffee/coffee/coffee)', () => {
+            const iv = new PokemonIv('Darkrai');
+            iv.mythIng1 = "coffee";
+            iv.mythIng2 = "coffee";
+            iv.mythIng3 = "coffee";
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.mythIng1).toBe("coffee");
+            expect(ret.mythIng2).toBe("coffee");
+            expect(ret.mythIng3).toBe("coffee");
+        });
     });
 
     function compareIv(iv1: PokemonIv, iv2: PokemonIv) {
