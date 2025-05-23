@@ -393,6 +393,7 @@
             "Helper Boost": "포켓몬 1마리당 도움 횟수 (같은 유형의 포켓몬이 3마리일 때)를 표시합니다. 강도량에 미치는 영향은 도움 1회당 100 (필드 보너스 없음)으로 추정됩니다.",
             "Berry Burst (Disguise)": "큰 성공이 발생하지 않을 것으로 가정합니다. 다른 포켓몬은 1개의 열매당 100의 힘을 얻는 것으로 추정됩니다 (지역 보너스 없이).",
             "Berry Burst": "다른 포켓몬은 1개의 열매당 100의 힘을 얻는 것으로 추정됩니다 (지역 보너스 없이).",
+            "Ingredient Draw S (Super Luck)": "메인 스킬은 아직 확정되지 않았습니다.",
             "unknown": "메인 스킬은 아직 확정되지 않았습니다."
         },
 
@@ -450,6 +451,8 @@
             "Skill Copy": "스킬 복사",
             "Skill Copy (Transform)": "변신 (스킬 복사)",
             "Skill Copy (Mimic)": "흉내내기 (스킬 복사)",
+            "Ingredient Draw S": "식재료 셀렉트S",
+            "Ingredient Draw S (Super Luck)": "대운 (식재료 셀렉트S)",
             "unknown": "(알 수 없음)"
         },
 
@@ -646,6 +649,7 @@
             "Quagsire": "누오",
             "Espeon": "에브이",
             "Umbreon": "블래키",
+            "Murkrow": "니로우",
             "Slowking": "야도킹",
             "Wobbuffet": "마자용",
             "Steelix": "강철톤",
@@ -687,6 +691,7 @@
             "Luxray": "렌트라",
             "Drifloon": "흔들풍손",
             "Drifblim": "둥실라이드",
+            "Honchkrow": "돈크로우",
             "Bonsly": "꼬지지",
             "Mime Jr.": "흉내내",
             "Happiny": "핑복",
