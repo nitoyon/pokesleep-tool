@@ -502,6 +502,14 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#5b6365'},
         {x: 0, y: 0.1, w: 1, h: 0.1, color: '#f2da66'},
     ],
+    // Murkrow
+    '198': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#4f6389'},
+        {x: 0.2, y: 0.3, w: 0.4, h: 0.2, r: 0.3, color: '#f6ed8e'},
+        {x: 0.85, y: 0.6, w: 0.2, h: 0.1, r: 0.05, color: '#c64635'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#f6ec8b'},
+        {x: 0, y: 0.96, w: 1, h: 0.2, color: '#fefefe'},
+    ],
     // Slowking
     '199': [
         {x: 0, y: 0, w: 1, h: 1, color: '#f6c2d5'},
@@ -758,6 +766,16 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.1, y: 0, w: 0.8, h: 0.8, r: 0.5, color: '#8b7caa'},
         {x: 0.35, y: -0.05, w: 0.3, h: 0.2, r: 0.4, color: '#ffffff'},
         {x: 0.4, y: 0.4, w: 0.2, h: 0.2, r: 0.2, color: '#fff56a'},
+    ],
+    // Honchkrow
+    '430': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#50658e'},
+        {x: 0.15, y: 0.1, w: 0.5, h: 0.57, r: 0.4, color: '#fefefe'},
+        {x: 0.2, y: 0.2, w: 0.3, h: 0.2, r: 0.1, color: '#f8f094'},
+        {x: 0.75, y: 0.55, w: 0.3, h: 0.3, r: 0.3, color: '#c03d43'},
+        {x: 0, y: 0, w: 1, h: 0.18, color: '#50658e'},
+        {x: 0, y: 0.8, w: 1, h: 0.3, color: '#7f8285'},
+        {x: 0, y: 0.95, w: 1, h: 0.2, color: '#fefefe'},
     ],
     // Bonsly
     '438': [

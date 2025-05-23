@@ -398,6 +398,7 @@
             "Helper Boost": "显示为1只宝可梦的帮手次数 (有 3 只同类型宝可梦的情况) 。总能量按照1次帮助 100 (不含营地奖励) 进行预估。",
             "Berry Burst (Disguise)": "假设不会发生漂亮成功。其他的宝可梦获取的每个树果按照 100 能量 (不含营地奖励) 进行预估。",
             "Berry Burst": "其他的宝可梦获取的每个树果按照 100 能量 (不含营地奖励) 进行预估。",
+            "Ingredient Draw S (Super Luck)": "主技能还未确定。",
             "unknown": "主技能还未确定。"
         },
 
@@ -456,6 +457,8 @@
             "Skill Copy": "技能复制",
             "Skill Copy (Transform)": "变身 (技能复制)",
             "Skill Copy (Mimic)": "模仿 (技能复制)",
+            "Ingredient Draw S": "食材精选S",
+            "Ingredient Draw S (Super Luck)": "超幸运 (食材精选S)",
             "unknown": "(未知)"
         },
 
@@ -652,6 +655,7 @@
             "Quagsire": "沼王",
             "Espeon": "太阳伊布",
             "Umbreon": "月亮伊布",
+            "Murkrow": "黑暗鸦",
             "Slowking": "呆呆王",
             "Wobbuffet": "果然翁",
             "Steelix": "大钢蛇",
@@ -693,6 +697,7 @@
             "Luxray": "伦琴猫",
             "Drifloon": "飘飘球",
             "Drifblim": "随风球",
+            "Honchkrow": "乌鸦头头",
             "Bonsly": "盆才怪",
             "Mime Jr.": "魔尼尼",
             "Happiny": "小福蛋",

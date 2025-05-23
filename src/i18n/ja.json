@@ -398,6 +398,7 @@
             "Helper Boost": "1体あたりの [おてつだい回数] (同タイプのポケモン 3 体のとき) を表示してます。エナジー量への影響は、1おてつだいあたり 100 (フィールドボーナスなしのとき) として見積もっています。",
             "Berry Burst (Disguise)": "大成功は起きないものと仮定しています。他のポケモンは 1 きのみあたり 100 エナジー (フィールドボーナスなしのとき) として見積もっています。",
             "Berry Burst": "他のポケモンは 1 きのみあたり 100 エナジー (フィールドボーナスなしのとき) として見積もっています。",
+            "Ingredient Draw S (Super Luck)": "メインスキルはまだ判明していません。",
             "unknown": "メインスキルはまだ判明していません。"
         },
 
@@ -456,6 +457,8 @@
             "Skill Copy": "スキルコピー",
             "Skill Copy (Transform)": "へんしん (スキルコピー)",
             "Skill Copy (Mimic)": "ものまね (スキルコピー)",
+            "Ingredient Draw S": "食材セレクトS",
+            "Ingredient Draw S (Super Luck)": "きょううん (食材セレクトS)",
             "unknown": "(不明)"
         },
 
@@ -652,6 +655,7 @@
             "Quagsire": "ヌオー",
             "Espeon": "エーフィ",
             "Umbreon": "ブラッキー",
+            "Murkrow": "ヤミカラス",
             "Slowking": "ヤドキング",
             "Wobbuffet": "ソーナンス",
             "Steelix": "ハガネール",
@@ -693,6 +697,7 @@
             "Luxray": "レントラー",
             "Drifloon": "フワンテ",
             "Drifblim": "フワライド",
+            "Honchkrow": "ドンカラス",
             "Bonsly": "ウソハチ",
             "Mime Jr.": "マネネ",
             "Happiny": "ピンプク",

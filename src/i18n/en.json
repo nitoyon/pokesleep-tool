@@ -406,6 +406,7 @@
             "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
+            "Ingredient Draw S (Super Luck)": "The main skill has not been determined yet.",
             "unknown": "The main skill has not been determined yet."
         },
 
@@ -464,6 +465,8 @@
             "Skill Copy": "Skill Copy",
             "Skill Copy (Transform)": "Transform (Skill Copy)",
             "Skill Copy (Mimic)": "Mimic (Skill Copy)",
+            "Ingredient Draw S": "Ingredient Draw S",
+            "Ingredient Draw S (Super Luck)": "Super Luck (Ingredient Draw S)",
             "unknown": "(Unknown)"
         },
 
@@ -660,6 +663,7 @@
             "Quagsire": "Quagsire",
             "Espeon": "Espeon",
             "Umbreon": "Umbreon",
+            "Murkrow": "Murkrow",
             "Slowking": "Slowking",
             "Wobbuffet": "Wobbuffet",
             "Steelix": "Steelix",
@@ -701,6 +705,7 @@
             "Luxray": "Luxray",
             "Drifloon": "Drifloon",
             "Drifblim": "Drifblim",
+            "Honchkrow": "Honchkrow",
             "Bonsly": "Bonsly",
             "Mime Jr.": "Mime Jr.",
             "Happiny": "Happiny",
