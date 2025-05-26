@@ -33,6 +33,9 @@ function parseTsv(text: string): Record<string, CsvData[]> {
     const ret: Record<string, CsvData[]> = {};
     const lines = text.split(/\r?\n/g);
     for (const line of lines) {
+        if (line.trim() === "") {
+            continue;
+        }
         const parts = line.split(/\t/g);
         while (parts.length < 8) {
             parts.push("");
