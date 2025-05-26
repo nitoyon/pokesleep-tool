@@ -22,6 +22,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Skill Copy" |
     "Skill Copy (Transform)" |
     "Skill Copy (Mimic)" |
+    "Ingredient Draw S" |
     "Ingredient Draw S (Super Luck)" |
     "unknown";
 
@@ -32,7 +33,7 @@ export const MainSkillNames: MainSkillName[] = [
     "Cooking Power-Up S", "Tasty Chance S",
     "Extra Helpful S", "Helper Boost",
     "Dream Shard Magnet S", "Metronome",
-    "Berry Burst", "Skill Copy"
+    "Berry Burst", "Skill Copy", "Ingredient Draw S",
 ];
 
 export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
