@@ -22,6 +22,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Skill Copy" |
     "Skill Copy (Transform)" |
     "Skill Copy (Mimic)" |
+    "Ingredient Draw S (Super Luck)" |
     "unknown";
 
 export const MainSkillNames: MainSkillName[] = [
@@ -48,7 +49,8 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
         skill === "Cooking Power-Up S" ||
         skill === "Metronome" ||
         skill === "Skill Copy (Transform)" ||
-        skill === "Skill Copy (Mimic)") {
+        skill === "Skill Copy (Mimic)" ||
+        skill === "Ingredient Draw S (Super Luck)") {
         return 7;
     }
     return 6;
@@ -119,6 +121,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     }
     if (skill === "Berry Burst") {
         return [11, 14, 21, 24, 27, 30][skillLevel - 1];
+    }
+    if (skill === "Ingredient Draw S (Super Luck)") {
+        return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
     }
     if (skill === "Metronome") {
         // TODO
