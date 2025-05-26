@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add murkrow": {
+                    "headline": "Murkrow and Honchkrow has been added.",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "darkrai ing": {
                     "headline": "It is now possible to change Darkrai's ingredients.",
                     "detail": "The count of the third ingredient is an estimate and may not be accurate."
