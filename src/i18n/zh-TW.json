@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add murkrow": {
+                    "headline": "更新了$t(pokemons.Murkrow), $t(pokemons.Honchkrow)的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "darkrai ing": {
                     "headline": "可以更改$t(pokemons.Darkrai)的材料了。",
                     "detail": "第三個材料的數量是估算值，因此可能不準確。"
