@@ -11,7 +11,7 @@ class PokemonBox {
      * Get max entry count.
      */
     static get maxEntryCount(): number {
-        return 200;
+        return 300;
     }
 
     /**
