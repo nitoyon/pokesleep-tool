@@ -331,6 +331,7 @@
         },
         "target": "目标",
         "dish": "料理",
+        "energy from dish": "料理恢复的活力",
         "recipe bonus help": "请指定经常做的料理的食谱奖励。基本上，烹饪的食谱奖励根据原料的数量而变化，但有些食谱的奖励值高于食材的数量。详细奖励值请参考 <raenonx>食谱一览 (RaenonX)</raenonx> 。",
         "recipe strength help": "该设定值用于将食材转换为能量。当转化为能量时，假定80%的食材用于食谱中，20%作为剩余食材进行计算。",
         "recipe bonus list": "https://pks.raenonx.cc/zh/meal",
