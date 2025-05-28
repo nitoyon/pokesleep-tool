@@ -111,7 +111,10 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         skillLevel: data.skillLevel ?? 0,
         ingredient: data.ingredient ?? 0,
         dreamShard: data.dreamShard ?? 1,
+        ingredientMagnet: data.ingredientMagnet ?? 1,
+        ingredientDraw: data.ingredientDraw ?? 1,
         dish: data.dish ?? 1,
+        energyFromDish: data.energyFromDish ?? 0,
     };
 }
 
@@ -206,8 +209,14 @@ export interface BonusEffects {
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
     dreamShard: 1 | 1.5 | 2;
+    /** Ingredient Magnet S bonus */
+    ingredientMagnet: 1 | 1.5;
+    /** Ingredient Magnet S bonus */
+    ingredientDraw: 1 | 1.5;
     /** Dishes bonus */
     dish: 1 | 1.25 | 1.5;
+    /** Energy recovery bonus by dish */
+    energyFromDish: 0 | 5;
 }
 
 /**
@@ -296,9 +305,21 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
             [1, 1.5, 2].includes(data.effects.dreamShard)) {
             ret.effects.dreamShard = data.effects.dreamShard;
         }
+        if (typeof(data.effects.ingredientMagnet) === "number" &&
+            [1, 1.5].includes(data.effects.ingredientMagnet)) {
+            ret.effects.ingredientMagnet = data.effects.ingredientMagnet;
+        }
+        if (typeof(data.effects.ingredientDraw) === "number" &&
+            [1, 1.5].includes(data.effects.ingredientDraw)) {
+            ret.effects.ingredientDraw = data.effects.ingredientDraw;
+        }
         if (typeof(data.effects.dish) === "number" &&
             [1, 1.25, 1.5].includes(data.effects.dish)) {
             ret.effects.dish = data.effects.dish;
+        }
+        if (typeof(data.effects.energyFromDish) === "number" &&
+            [0, 5].includes(data.effects.energyFromDish)) {
+            ret.effects.energyFromDish = data.effects.energyFromDish;
         }
     }
     return ret;

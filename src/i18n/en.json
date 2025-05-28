@@ -339,6 +339,7 @@
         },
         "target": "Target",
         "dish": "Dish",
+        "energy from dish": "Energy recovery from dishes",
         "recipe bonus help": "Please specify the recipe bonus for frequently made meals. Recipe bonuse typically depends on the number of ingredients, but some recipes may have higher bonus values. For details, see the <raenonx>Recipes / Dishes (RaenonX)</raenonx>.",
         "recipe strength help": "This value is used to convert ingredients into strength amounts, assuming 80% are used in the recipe and 20% are surplus.",
         "recipe bonus list": "https://pks.raenonx.cc/en/meal",
