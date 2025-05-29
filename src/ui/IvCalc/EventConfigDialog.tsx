@@ -245,6 +245,8 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                     </ToggleButtonGroup>
                 </div>
             </section>
+        </article>
+        <article className="transparent">
             <section>
                 <label>{t('skills.Dream Shard Magnet S')}:</label>
                 <div>
@@ -335,16 +337,21 @@ const StyledEventConfigDialog = styled(Dialog)({
             fontSize: '0.8rem',
         },
         '& > article': {
-            background: '#eee',
+            background: '#f0f0f0',
             padding: '0.5rem',
             borderRadius: '0.9rem',
             '& button.MuiToggleButtonGroup-grouped': {
+                padding: '0.2rem 0.4rem',
                 background: 'transparent',
             },
             '& button.MuiToggleButtonGroup-grouped.Mui-selected': {
                 background: 'rgba(0, 0, 0, 0.08)',
             },
-        }
+        },
+        '& > article.transparent': {
+            marginTop: 0,
+            background: 'transparent',
+        },
     },
 });
 
