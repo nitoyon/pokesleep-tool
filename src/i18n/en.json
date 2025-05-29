@@ -412,7 +412,7 @@
             "Helper Boost": "Displays the number of usual help per Pokémon (when there are 3 Pokémon of the same type). The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
-            "Ingredient Draw S (Super Luck)": "The main skill has not been determined yet.",
+            "Ingredient Draw S (Super Luck)": "Displays the number of ingredients obtained. This value is not counted towards the total strength amount.",
             "unknown": "The main skill has not been determined yet."
         },
 
