@@ -119,6 +119,30 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
+    const onIngredientMagnetChange = React.useCallback((e: any, val: number|null) => {
+        if (val === null) {
+            return;
+        }
+        onChange({...value, event: "custom", customEventBonus: {
+            ...value.customEventBonus,
+            effects: {
+                ...value.customEventBonus.effects,
+                ingredientMagnet: val as 1|1.5,
+            },
+        }});
+    }, [value, onChange]);
+    const onIngredientDrawChange = React.useCallback((e: any, val: number|null) => {
+        if (val === null) {
+            return;
+        }
+        onChange({...value, event: "custom", customEventBonus: {
+            ...value.customEventBonus,
+            effects: {
+                ...value.customEventBonus.effects,
+                ingredientDraw: val as 1|1.5,
+            },
+        }});
+    }, [value, onChange]);
     const onDishChange = React.useCallback((e: any, val: number|null) => {
         if (val === null) {
             return;
@@ -128,6 +152,18 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             effects: {
                 ...value.customEventBonus.effects,
                 dish: val as 1|1.25|1.5,
+            },
+        }});
+    }, [value, onChange]);
+    const onEnergyFromDishChange = React.useCallback((e: any, val: number|null) => {
+        if (val === null) {
+            return;
+        }
+        onChange({...value, event: "custom", customEventBonus: {
+            ...value.customEventBonus,
+            effects: {
+                ...value.customEventBonus.effects,
+                energyFromDish: val as 0|5,
             },
         }});
     }, [value, onChange]);
@@ -209,6 +245,8 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                     </ToggleButtonGroup>
                 </div>
             </section>
+        </article>
+        <article className="transparent">
             <section>
                 <label>{t('skills.Dream Shard Magnet S')}:</label>
                 <div>
@@ -221,6 +259,26 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                 </div>
             </section>
             <section>
+                <label>{t('skills.Ingredient Magnet S')}:</label>
+                <div>
+                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
+                        value={value.customEventBonus.effects.ingredientMagnet} onChange={onIngredientMagnetChange}>
+                        <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.5}>×1.5</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </section>
+            <section>
+                <label>{t('skills.Ingredient Draw S')}:</label>
+                <div>
+                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
+                        value={value.customEventBonus.effects.ingredientDraw} onChange={onIngredientDrawChange}>
+                        <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.5}>×1.5</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </section>
+            <section>
                 <label>{t('dish')}:</label>
                 <div>
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
@@ -228,6 +286,16 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
                         <ToggleButton value={1.25}>×1.25</ToggleButton>
                         <ToggleButton value={1.5}>×1.5</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </section>
+            <section>
+                <label>{t('energy from dish')}:</label>
+                <div>
+                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
+                        value={value.customEventBonus.effects.energyFromDish} onChange={onEnergyFromDishChange}>
+                        <ToggleButton value={0}>{t('none')}</ToggleButton>
+                        <ToggleButton value={5}>+5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>
@@ -269,16 +337,21 @@ const StyledEventConfigDialog = styled(Dialog)({
             fontSize: '0.8rem',
         },
         '& > article': {
-            background: '#eee',
+            background: '#f0f0f0',
             padding: '0.5rem',
             borderRadius: '0.9rem',
             '& button.MuiToggleButtonGroup-grouped': {
+                padding: '0.2rem 0.4rem',
                 background: 'transparent',
             },
             '& button.MuiToggleButtonGroup-grouped.Mui-selected': {
                 background: 'rgba(0, 0, 0, 0.08)',
             },
-        }
+        },
+        '& > article.transparent': {
+            marginTop: 0,
+            background: 'transparent',
+        },
     },
 });
 

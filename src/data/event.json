@@ -2,21 +2,37 @@
     "drowsy": [
         {
             "name": "GSD",
-            "day": "2025-05-12",
+            "day": "2025-06-10",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2025-05-13",
-            "bonus": 3
+            "day": "2025-06-11",
+            "memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
+            "bonus": 2.5
         },
         {
             "name": "GSD",
-            "day": "2025-05-14",
+            "day": "2025-06-12",
             "bonus": 1.5
         }
     ],
     "bonus": [
+        {
+            "name": "packed portion cooking week 1",
+            "start": "2025-06-09T04:00:00",
+            "end": "2025-06-16T04:00:00",
+            "target": {
+                "specialty": "Ingredients"
+            },
+            "effects": {
+                "ingredient": 1,
+                "ingredientMagnet": 1.5,
+                "ingredientDraw": 1.5,
+                "dish": 1.5,
+                "energyFromDish": 5
+            }
+        },
         {
             "name": "spring festival 2025",
             "start": "2025-05-05T04:00:00",
