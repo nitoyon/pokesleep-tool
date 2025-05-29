@@ -1,5 +1,5 @@
 import pokemons from '../data/pokemons';
-import { BonusEffects, getEventBonusIfTarget } from '../data/events';
+import { BonusEffects, getEventBonus, getEventBonusIfTarget } from '../data/events';
 import { IngredientName, getDecendants, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields from '../data/fields';
@@ -186,7 +186,8 @@ class PokemonStrength {
         const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
             countRatio;
         const fullHelpCount = energy.helpCount.asleepFull * countRatio;
-        let eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+        const eventBonus = getEventBonus(param.event, param.customEventBonus);
+        const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
             this.iv.pokemon);
 
         // calc ingredient
@@ -199,7 +200,7 @@ class PokemonStrength {
         const ingUnlock = 1 +
             (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
             (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
-        const ingEventAdd: number = (param.period !== 3 ? eventBonus?.ingredient ?? 0 : 0);
+        const ingEventAdd: number = (param.period !== 3 ? targetEventBonus?.ingredient ?? 0 : 0);
 
         const ing1 = {...rp.ingredient1, strength: 0};
         ing1.count = ingHelpCount * (1 / ingUnlock) * (ing1.count + ingEventAdd);
@@ -247,7 +248,7 @@ class PokemonStrength {
             (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
 
         // calc skill
-        const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
+        const skillRatio = rp.skillRatio * (targetEventBonus?.skillTrigger ?? 1);
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         if (param.period !== 3 && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
@@ -345,6 +346,10 @@ class PokemonStrength {
                 return [strengthBurst, strengthBurst];
 
             case "Ingredient Magnet S":
+                return [mainSkillValue * (eventBonus?.ingredientMagnet ?? 1), 0];
+            case "Ingredient Draw S":
+            case "Ingredient Draw S (Super Luck)":
+                return [mainSkillValue * (eventBonus?.ingredientDraw ?? 1), 0];
             case "Cooking Power-Up S":
             case "Tasty Chance S":
             case "Metronome":
@@ -404,7 +409,10 @@ export function createStrengthParameter(
                 skillLevel: 0,
                 ingredient: 0,
                 dreamShard: 1,
+                ingredientMagnet: 1,
+                ingredientDraw: 1,
                 dish: 1,
+                energyFromDish: 0,
             }
         },
     };

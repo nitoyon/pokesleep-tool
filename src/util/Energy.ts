@@ -1,4 +1,4 @@
-import { getEventBonusIfTarget } from '../data/events';
+import { getEventBonus, getEventBonusIfTarget } from '../data/events';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 import { HelpEventBonus } from '../data/events';
@@ -162,15 +162,16 @@ class Energy {
         }
         else {
             events = this.createEvents(param.e4eCount, sleepTime);
+            const effects = getEventBonus(param.event, param.customEventBonus);
 
             // 1st calculation to know the initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
-                sleepRecovery);
+                sleepRecovery, effects?.energyFromDish ?? 0);
             const initialEnergy = events[events.length - 1].energyAfter;
 
             // 2nd calculation using initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
-                initialEnergy);
+                initialEnergy, effects?.energyFromDish ?? 0);
             this.addEmptyEvent(events);
 
             // calculate efficiency
@@ -242,9 +243,10 @@ class Energy {
      * @param myRestoreEnergy The amount of energy to be restored by e4e.
      * @param sleepRecovery Energy recovery by sleep.
      * @param initialEnergy Energy value after waking up.
+     * @param energyFromDishBonus: Energy recovery bonus by dish.
      */
     calculateEnergyForEvents(events: EnergyEvent[], myRestoreEnergy: number,
-        sleepRecovery: number, initialEnergy=100
+        sleepRecovery: number, initialEnergy: number, energyFromDishBonus: number
     ) {
         events[0].energyAfter = initialEnergy;
         for (let i = 1; i < events.length; i++) {
@@ -256,7 +258,7 @@ class Energy {
             curEvent.energyAfter = curEvent.energyBefore;
             if (curEvent.type === 'cook') {
                 curEvent.energyAfter +=
-                    this.getEnergyRecoveryForCook(curEvent.energyBefore);
+                    this.getEnergyRecoveryForCook(curEvent.energyBefore) + energyFromDishBonus;
             }
             else if (curEvent.type === 'e4e') {
                 curEvent.energyAfter = Math.min(150, curEvent.energyAfter + myRestoreEnergy);
@@ -521,8 +523,8 @@ class Energy {
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
         if (lotteryCount > 0) {
-            const eventBonus = getEventBonusIfTarget(param.event,
-                param.customEventBonus, this._iv.pokemon);
+            const eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+                this._iv.pokemon);
             const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills' &&
