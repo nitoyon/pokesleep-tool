@@ -90,14 +90,6 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
     </div>);
 });
 
-const StyledEvolveButton = styled(IconButton)({
-    color: '#6c9',
-    fontSize: '0.9rem',
-    '&:disabled': {
-        color: '#999',
-    }
-});
-
 /**
  * Click this button to switch to other pokemon in same evolutionary line
  */
@@ -145,12 +137,7 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
     const open = Boolean(evolveButtonEl);
     return <>
         <StyledEvolveButton size="small" onClick={onEvolveClick}
-            disabled={!hasEvolutionaryLine}
-            style={{
-                boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
-                marginLeft: '.5rem',
-                border: '1px solid #ccc',
-            }}>
+            disabled={!hasEvolutionaryLine}>
             <AccountTreeIcon fontSize="inherit"/>
         </StyledEvolveButton>
         <Menu open={open} anchorEl={evolveButtonEl}
@@ -166,6 +153,17 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
             {evolveMenuItems}
         </Menu>
     </>;
+});
+
+const StyledEvolveButton = styled(IconButton)({
+    color: '#6c9',
+    fontSize: '0.9rem',
+    boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
+    marginLeft: '.5rem',
+    border: '1px solid #ccc',
+    '&:disabled': {
+        color: '#999',
+    }
 });
 
 export default PokemonTextField;
