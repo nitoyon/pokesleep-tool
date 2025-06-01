@@ -8,6 +8,7 @@ import TextLikeButton from '../common/TextLikeButton';
 import PokemonSelectDialog from './PokemonSelectDialog';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';
+import CandyIcon from '../Resources/CandyIcon';
 import { useTranslation } from 'react-i18next';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
@@ -85,6 +86,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
             {selectedOption.localName}
         </TextLikeButton>}
         <EvolveButton selectedOption={selectedOption} onChange={onChange}/>
+        <CandyButton/>
         <PokemonSelectDialog open={open} onClose={onCloseDialog} onChange={changeHandler}
             pokemonOptions={pokemonOptions} selectedValue={selectedOption}/>
     </div>);
@@ -159,10 +161,30 @@ const StyledEvolveButton = styled(IconButton)({
     color: '#6c9',
     fontSize: '0.9rem',
     boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
-    marginLeft: '.5rem',
+    marginLeft: '.4rem',
     border: '1px solid #ccc',
     '&:disabled': {
         color: '#999',
+    }
+});
+
+/**
+ * Click this button to show candy dialog
+ */
+const CandyButton = React.memo(() => {
+    return <StyledCandyButton size="small">
+        <CandyIcon/>
+    </StyledCandyButton>;
+});
+
+const StyledCandyButton = styled(IconButton)({
+    fontSize: '0.9rem',
+    boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
+    marginLeft: '.2rem',
+    border: '1px solid #ccc',
+    '& > svg': {
+        width: '14px',
+        height: '14px',
     }
 });
 
