@@ -368,6 +368,7 @@
         "sleeping time shared": "一起睡覺的時間",
         "help count": "幫忙次數",
         "time to full inventory": "到持有溢出的時間",
+        "ingredient bonus from event": "來自活動的食材加成",
         "value": "顯示值",
         "help count per hour": "每小時 {{n}} 次",
         "probability": "機率",

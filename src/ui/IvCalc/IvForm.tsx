@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Dialog, DialogActions,
+import { Button, Collapse, Dialog, DialogActions,
     Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Nature from '../../util/Nature';
 import PokemonIv from '../../util/PokemonIv';
@@ -142,7 +142,7 @@ const StyledFrequencyDialog = styled(Dialog)({
     },
     '& section': {
         margin: '0.5rem 1rem 0 1rem',
-        '& > div': {
+        '& div.line': {
             fontSize: '.9rem',
             display: 'flex',
             flex: '0 auto',
@@ -156,10 +156,10 @@ const StyledFrequencyDialog = styled(Dialog)({
                     padding: '2px 7px',
                 },
             },
-            '& > button.MuiToggleButton-root': {
-                lineHeight: 1.3,
-                height: '3rem',
-            },
+        },
+        '& div.value button.MuiToggleButton-root': {
+            lineHeight: 1.3,
+            textTransform: 'none',
         },
     },
 });
@@ -173,16 +173,22 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     const { t } = useTranslation();
     const [helpingBonus, setHelpingBonus] = React.useState(0);
     const [campTicket, setCampTicket] = React.useState(false);
+    const [ingBonus, setIngBonus] = React.useState<0|1>(0);
     const [value, setValue] = React.useState<"frequency"|"count"|"full">("frequency");
 
     const onHelpingBonusChange = React.useCallback((e: any, value: string|null) => {
         if (value !== null) {
             setHelpingBonus(parseInt(value, 10));
         }
-    }, [setHelpingBonus]);
+    }, []);
     const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setCampTicket(e.target.checked);
-    }, [setCampTicket]);
+    }, []);
+    const onIngBonusChange = React.useCallback((e: any, value: string|null) => {
+        if (value !== null) {
+            setIngBonus(parseInt(value, 10) as 0|1);
+        }
+    }, []);
     const onValueChange = React.useCallback((e: any, value: string|null) => {
         if (value === null) {
             return;
@@ -213,7 +219,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                 return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
             case "full":
                 const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
-                const mins = carryLimit / rp.getBagUsagePerHelp(0) * baseFreq * rate / 60;
+                const mins = carryLimit / rp.getBagUsagePerHelp(ingBonus) * baseFreq * rate / 60;
                 return new AmountOfSleep(mins).toString(t);
         }
         return "";
@@ -237,7 +243,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
             <span>{val0}</span>
         </article>
         <section>
-            <div>
+            <div className="line">
                 <label>{t('helping bonus')}:</label>
                 <ToggleButtonGroup size="small" exclusive
                     value={helpingBonus} onChange={onHelpingBonusChange}>
@@ -249,19 +255,31 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                     <ToggleButton value={5}>5</ToggleButton>
                 </ToggleButtonGroup>
             </div>
-            <div>
+            <div className="line">
                 <label>{t('good camp ticket')}:</label>
                 <Switch checked={campTicket} onChange={onCampTicketChange}/>
             </div>
-            <div>
+            <Collapse in={value === "full"}>
+                <div className="line">
+                    <label>{t('ingredient bonus from event')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={ingBonus} onChange={onIngBonusChange}>
+                        <ToggleButton value={0}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1}>+1</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </Collapse>
+            <div className="line">
                 <label>{t('value')}:</label>
             </div>
-            <ToggleButtonGroup exclusive size="small" value={value}
-                onChange={onValueChange}>
-                <ToggleButton value="frequency">{t('frequency')}</ToggleButton>
-                <ToggleButton value="count">{t('help count')}</ToggleButton>
-                <ToggleButton value="full">{t('time to full inventory')}</ToggleButton>
-            </ToggleButtonGroup>
+            <div className="value">
+                <ToggleButtonGroup exclusive size="small" value={value}
+                    onChange={onValueChange}>
+                    <ToggleButton value="frequency">{t('frequency')}</ToggleButton>
+                    <ToggleButton value="count">{t('help count')}</ToggleButton>
+                    <ToggleButton value="full">{t('time to full inventory')}</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
         </section>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>

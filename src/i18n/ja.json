@@ -368,6 +368,7 @@
         "sleeping time shared": "一緒に眠った時間",
         "help count": "おてつだい回数",
         "time to full inventory": "所持あふれまでの時間",
+        "ingredient bonus from event": "イベントでの食材追加",
         "value": "表示する値",
         "help count per hour": "1時間に {{n}} 回",
         "probability": "確率",

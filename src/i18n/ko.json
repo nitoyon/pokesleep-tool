@@ -363,6 +363,7 @@
         "sleeping time shared": "함께 잠든 시간",
         "help count": "도움 횟수",
         "time to full inventory": "소지 초과까지의 시간",
+        "ingredient bonus from event": "이벤트로 인한 재료 보너스",
         "value": "값",
         "help count per hour": "1시간에 {{n}} 회",
         "probability": "확률",
