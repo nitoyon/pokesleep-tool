@@ -441,7 +441,9 @@ class Energy {
         const rp = new PokemonRp(this._iv);
         const baseFreq = rp.frequencyWithHelpingBonus(helpBonusCount) /
             (isGoodCampTicketSet ? 1.2 : 1);
-        const bagUsagePerHelp = rp.bagUsagePerHelp;
+        const eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+            this._iv.pokemon);
+        const bagUsagePerHelp = rp.getBagUsagePerHelp(eventBonus?.ingredient ?? 0);
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;
