@@ -91,6 +91,14 @@ const LevelControl = React.memo(({value, onChange}: {
                 renderInput={(params) => <TextField {...params}
                     variant="standard" type="number"
                     inputRef={inputRef}
+                    sx={{
+                        '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+                            WebkitAppearance: 'none',
+                        },
+                        '& input[type=number]': {
+                            MozAppearance: 'textfield',
+                        },
+                    }}
                     inputProps={{
                         ...params.inputProps,
                         min: 1,
