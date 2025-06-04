@@ -24,6 +24,42 @@ const LevelControl = React.memo(({value, onChange}: {
     value: number,
     onChange: (value: number) => void,
 }) => {
+    const _onChange = React.useCallback((e: any) => {
+        if (e === null) {
+            return;
+        }
+
+        // fix iOS bug on MUI slider
+        // https://github.com/mui/material-ui/issues/31869
+        if (isIOS && e.type === 'mousedown') {
+            return;
+        }
+
+        const value = e.target.value;
+        onChange(value);
+    }, [onChange]);
+
+    const onLevelDownClick = React.useCallback(() => {
+        onChange(value - 1);
+    }, [value, onChange]);
+    const onLevelUpClick = React.useCallback(() => {
+        onChange(value + 1);
+    }, [value, onChange]);
+
+    return (<LevelControlContainer>
+            <LevelInput value={value} onChange={onChange}/>
+            <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
+            <UnselectableSlider min={0} max={100} size="small" style={{userSelect: "none"}}
+                value={value} onChange={_onChange}/>
+            <ArrowButton label="▶" disabled={value === 100} onClick={onLevelUpClick}/>
+        </LevelControlContainer>
+    );
+});
+
+const LevelInput = React.memo(({value, onChange}: {
+    value: number,
+    onChange: (value: number) => void,
+}) => {
     // Whether TextField is empty or not
     const [isEmpty, setIsEmpty] = React.useState(false);
     const inputRef = React.useRef<HTMLInputElement|null>(null);
@@ -33,12 +69,6 @@ const LevelControl = React.memo(({value, onChange}: {
             return;
         }
         const rawText = e.target.value;
-
-        // fix iOS bug on MUI slider
-        // https://github.com/mui/material-ui/issues/31869
-        if (isIOS && e.type === 'mousedown') {
-            return;
-        }
 
         // Update isEmpty state
         if (typeof(rawText) === "string" && rawText.trim() === "") {
@@ -69,19 +99,11 @@ const LevelControl = React.memo(({value, onChange}: {
         }
     }, [onChange]);
 
-    const onLevelDownClick = React.useCallback(() => {
-        onChange(value - 1);
-    }, [value, onChange]);
-    const onLevelUpClick = React.useCallback(() => {
-        onChange(value + 1);
-    }, [value, onChange]);
-
     const options = ["10", "25", "30", "50", "60", "65", "75", "100"];
     const filterOptions = React.useCallback((x: string[]) => x, []);
 
     const valueText = isEmpty ? "" : value.toString();
-    return (<LevelControlContainer>
-            <Autocomplete size="small" options={options}
+    return (<Autocomplete size="small" options={options}
                 freeSolo disableClearable
                 value={valueText} sx={{width: '3rem'}}
                 onBlur={_onChange}
@@ -109,11 +131,6 @@ const LevelControl = React.memo(({value, onChange}: {
                 />}
                 PaperComponent={StyledPopup}
             />
-            <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <UnselectableSlider min={0} max={100} size="small" style={{userSelect: "none"}}
-                value={value} onChange={_onChange}/>
-            <ArrowButton label="▶" disabled={value === 100} onClick={onLevelUpClick}/>
-        </LevelControlContainer>
     );
 });
 
