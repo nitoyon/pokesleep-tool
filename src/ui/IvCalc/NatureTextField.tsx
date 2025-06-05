@@ -133,13 +133,13 @@ const StyledNatureElement = styled('div')({
     }
 });
 
-const StyledNatureUpEffect = styled('span')({
+export const StyledNatureUpEffect = styled('span')({
     '&::after': {
         content: '" ▲▲"',
         color: '#ff6666',
     }
 });
-const StyledNatureDownEffect = styled('span')({
+export const StyledNatureDownEffect = styled('span')({
     '&::after': {
         content: '" ▼▼"',
         color: '#6666ff',

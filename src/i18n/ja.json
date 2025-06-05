@@ -389,6 +389,16 @@
         "1000 hours+": "1000～2000時間",
         "2000 hours+": "2000時間以上",
 
+        "exp to go1": "あと EXP",
+        "exp to go2": "",
+        "required exp": "必要 EXP",
+        "candy": "アメ",
+        "dream shard": "ゆめのかけら",
+        "nature": "せいかく",
+        "candy boost": "アメブースト",
+        "mini candy boost": "ミニ",
+        "normal candy boost": "無制限",
+
         "strength of x": "{{x}}のエナジー",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
         "strength detail2": "現時点の計算ロジックには次のような制約があります。",
