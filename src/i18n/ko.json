@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "v2.9.0": {
+                    "headline": "v2.9.0에서 밸런스 조정이 적용되었습니다.",
+                    "detail": "$t(pokemons.Butterfree), $t(pokemons.Dodrio), $t(pokemons.Altaria)의 데이터를 업데이트했습니다."
+                },
                 "add murkrow": {
                     "headline": "$t(pokemons.Murkrow), $t(pokemons.Honchkrow)가 추가되었습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
