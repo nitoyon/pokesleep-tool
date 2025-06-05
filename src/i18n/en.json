@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.9.0": {
+                    "headline": "Updated the data for Pokémon with balance adjustments in v2.9.0.",
+                    "detail": "Frequency of Butterfree, Dodrio, and Altaria has been updated."
+                },
                 "add murkrow": {
                     "headline": "Murkrow and Honchkrow has been added.",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
