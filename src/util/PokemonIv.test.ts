@@ -17,12 +17,10 @@ describe('PokemonIV', () => {
         test('evolved pokemon (normal)', () => {
             const iv = new PokemonIv('Bulbasaur');
             expect(iv.skillLevel).toBe(1);
-            expect(iv.evolvedCount).toBe(0);
             iv.skillLevel = 2;
 
             const iv2 = iv.clone('Venusaur');
             expect(iv2.skillLevel).toBe(4);
-            expect(iv2.evolvedCount).toBe(2);
         });
 
         test('evolved pokemon (max skill level 7)', () => {
@@ -37,11 +35,9 @@ describe('PokemonIV', () => {
         test('reverse evolve underflow', () => {
             const iv = new PokemonIv('Venusaur');
             iv.skillLevel = 2;
-            iv.evolvedCount = 1;
 
             const iv2 = iv.clone('Bulbasaur');
             expect(iv2.skillLevel).toBe(1);
-            expect(iv2.evolvedCount).toBe(0);
         });
     });
 
@@ -90,15 +86,6 @@ describe('PokemonIV', () => {
             expect(iv.idForm).toBe(25 + 0x1000);
 
             const ret = PokemonIv.deserialize('kQGBpwj5-38f');
-            compareIv(iv, ret);
-        });
-
-        test('evolvedCount', () => {
-            const iv = new PokemonIv('Venusaur');
-            iv.evolvedCount = 0;
-            expect(iv.serialize()).toBe('MQCApwr5-38f');
-
-            const ret = PokemonIv.deserialize('MQCApwr5-38f');
             compareIv(iv, ret);
         });
 
@@ -174,7 +161,6 @@ describe('PokemonIV', () => {
         expect(iv2.subSkills.lv50?.name).toBe(iv1.subSkills.lv50?.name);
         expect(iv2.subSkills.lv75?.name).toBe(iv1.subSkills.lv75?.name);
         expect(iv2.subSkills.lv100?.name).toBe(iv1.subSkills.lv100?.name);
-        expect(iv2.evolvedCount).toBe(iv1.evolvedCount);
         expect(iv2.ribbon).toBe(iv1.ribbon);
     }
 });
