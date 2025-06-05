@@ -16,7 +16,6 @@ class PokemonIv {
     ingredient: IngredientType;
     subSkills: SubSkillList;
     nature: Nature;
-    evolvedCount: 0|1|2;
     ribbon: 0|1|2|3|4;
     mythIng1: IngredientName;
     mythIng2: IngredientName;
@@ -37,7 +36,6 @@ class PokemonIv {
         this.ingredient = pokemon.ing3 !== undefined ? "ABC" : "ABB";
         this.subSkills = new SubSkillList();
         this.nature = new Nature("Serious");
-        this.evolvedCount = Math.max(pokemon.evolutionCount, 0) as 0|1|2;
         this.ribbon = 0;
         this.mythIng1 = this.mythIng2 = this.mythIng3 = "unknown";
 
@@ -67,12 +65,10 @@ class PokemonIv {
         ret.level = this.level;
 
         ret.skillLevel = this.skillLevel;
-        ret.evolvedCount = this.evolvedCount;
         if (this.pokemon.id !== ret.pokemon.id) {
             const diff = Math.max(0, ret.pokemon.evolutionCount) -
                 Math.max(0, this.pokemon.evolutionCount);
             ret.skillLevel += diff;
-            ret.evolvedCount += diff;
         }
 
         ret.ingredient = this.ingredient;
@@ -169,10 +165,6 @@ class PokemonIv {
         const maxSkillLevel = getMaxSkillLevel(this.pokemon.skill);
         this.skillLevel = Math.min(maxSkillLevel, Math.max(this.skillLevel, 1));
 
-        if (this.pokemon.evolutionCount >= 0) {
-            this.evolvedCount = Math.min(this.pokemon.evolutionCount,
-                Math.max(this.evolvedCount, 0)) as 0|1|2;
-        }
         if (this.ingredient.endsWith('C') && this.pokemon.ing3 === undefined) {
             this.ingredient = this.ingredient.replace('C', 'A') as IngredientType;
         }
@@ -193,7 +185,6 @@ class PokemonIv {
             this.skillLevel === iv.skillLevel &&
             this.subSkills.isEqual(iv.subSkills) &&
             this.nature.name === iv.nature.name &&
-            this.evolvedCount === iv.evolvedCount &&
             this.ribbon === iv.ribbon;
 
         if (this.isMythical) {
@@ -229,7 +220,7 @@ class PokemonIv {
      */
     get carryLimit(): number {
         return this.pokemon.carryLimit +
-            5 * Math.max(0, this.evolvedCount) +
+            5 * Math.max(0, this.pokemon.evolutionCount) +
             this.ribbonCarryLimit +
             this.subSkills.getActiveSubSkills(this.level).reduce((p, c) => p + c.inventory, 0) * 6;
     }
@@ -325,7 +316,7 @@ class PokemonIv {
      * * 7bit  : level
      * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
      *
-     * * 2bit  : Evolved count (0: max, 1: max - 1, 2: max - 2)
+     * * 2bit  : reserved
      * * 4bit  : Skill level (0: Lv1, 1: Lv2, ..., 7: Lv8)
      * * 5bit  : Nature index, index of Nature.allNatureNames (0-24)
      * * 5bit  : Sub-skill Lv10 (index of SubSkill.subSkillNames (0-16), unknown: 31)
@@ -356,11 +347,7 @@ class PokemonIv {
             (this.level << 6) +
             (IngredientTypes.indexOf(this.ingredient) << 13);
 
-        let evo = 0;
-        if (this.pokemon.evolutionCount >= 0) {
-            evo = this.pokemon.evolutionCount - this.evolvedCount;
-        }
-        array16[2] = evo +
+        array16[2] =
             ((this.skillLevel - 1) << 2) +
             (Nature.allNatures.findIndex(x => x.name === this.nature.name) << 6) +
             ((this.subSkills.lv10 === null ? 31 : this.subSkills.lv10.index) << 11);
@@ -448,15 +435,6 @@ class PokemonIv {
             throw new Error(`Invalid ing value (${ing})`);
         }
         ret.ingredient = IngredientTypes[ing];
-
-        // evolved count
-        const evo = (array16[2] & 3);
-        if (ret.pokemon.evolutionCount >= 0) {
-            if (ret.pokemon.evolutionCount < evo) {
-                throw new Error(`Too large evo ${evo} for ${pokemon.name}`);
-            }
-            ret.evolvedCount = (ret.pokemon.evolutionCount - evo) as 0|1|2;
-        }
 
         // skill level
         ret.skillLevel = ((array16[2] >> 2) & 0x7) + 1;

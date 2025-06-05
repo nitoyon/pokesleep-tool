@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "v2.9.0": {
+                    "headline": "v2.9.0中的平衡调整已应用。",
+                    "detail": "已更新 $t(pokemons.Butterfree), $t(pokemons.Dodrio), $t(pokemons.Altaria) 的资料。"
+                },
                 "add murkrow": {
                     "headline": "更新了$t(pokemons.Murkrow), $t(pokemons.Honchkrow)的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"

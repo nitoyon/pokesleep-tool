@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2025-06-05T08:15:00Z",
+            "id": "v2.9.0"
+        },
+        {
             "date": "2025-05-26T08:10:00Z",
             "id": "add murkrow"
         },
