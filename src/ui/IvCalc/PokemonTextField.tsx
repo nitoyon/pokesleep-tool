@@ -41,6 +41,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
 }) => {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
+    const [candyOpen, setCandyOpen] = React.useState(false);
     const pokemonOptions: PokemonOption[] = React.useMemo(
         () => pokemons
             .map((pokemon) => ({
