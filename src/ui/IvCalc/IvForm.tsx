@@ -83,13 +83,17 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         setFrequencyDialogOpen(false);
     }, [setFrequencyDialogOpen]);
 
+    const onCandyClick = React.useCallback(() => {
+        alert('on candy click');
+    }, []);
+
     const rp = new PokemonRp(pokemonIv);
 
     return <StyledInputForm>
         <div className="table">
             <div>{t("pokemon")}:</div>
             <PokemonTextField value={pokemonIv.pokemonName} fixMode={fixMode}
-                onChange={onPokemonNameChange}/>
+                onChange={onPokemonNameChange} onCandyClick={onCandyClick}/>
             <div>{t("level")}:</div>
             <LevelControl value={pokemonIv.level} onChange={onLevelChange}/>
             <div>{t("ingredient")}:</div>

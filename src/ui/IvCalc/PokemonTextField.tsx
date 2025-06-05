@@ -32,11 +32,12 @@ export interface PokemonOption {
     ing3Name?: IngredientName;
 }
 
-const PokemonTextField = React.memo(({value, fixMode, onChange}: {
+const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
     value: string,
     /** Fix evolutionary line or not */
     fixMode?: boolean,
     onChange: (value: string) => void,
+    onCandyClick: () => void,
 }) => {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
@@ -86,7 +87,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
             {selectedOption.localName}
         </TextLikeButton>}
         <EvolveButton selectedOption={selectedOption} onChange={onChange}/>
-        <CandyButton/>
+        <CandyButton onClick={onCandyClick}/>
         <PokemonSelectDialog open={open} onClose={onCloseDialog} onChange={changeHandler}
             pokemonOptions={pokemonOptions} selectedValue={selectedOption}/>
     </div>);
@@ -171,8 +172,8 @@ const StyledEvolveButton = styled(IconButton)({
 /**
  * Click this button to show candy dialog
  */
-const CandyButton = React.memo(() => {
-    return <StyledCandyButton size="small">
+const CandyButton = React.memo(({onClick}: {onClick: () => void}) => {
+    return <StyledCandyButton size="small" onClick={onClick}>
         <CandyIcon/>
     </StyledCandyButton>;
 });
