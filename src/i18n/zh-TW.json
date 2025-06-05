@@ -389,6 +389,16 @@
         "1000 hours+": "1000～2000小時",
         "2000 hours+": "超過2000小時",
 
+        "exp to go1": "還需",
+        "exp to go2": "EXP",
+        "required exp": "所需 EXP",
+        "candy": "糖果",
+        "dream shard": "夢之碎片",
+        "nature": "性格",
+        "candy boost": "糖果增强",
+        "mini candy boost": "迷你",
+        "normal candy boost": "无限制",
+
         "strength of x": "{{x}}的能量",
         "strength detail1": "可以確認寶可夢賺取的能量，食材，技能發動的次數。",
         "strength detail2": "目前的計算邏輯有以下限制。",

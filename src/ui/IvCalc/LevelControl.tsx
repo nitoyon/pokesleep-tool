@@ -58,7 +58,7 @@ const LevelControl = React.memo(({hideInput, max, value, onChange}: {
     );
 });
 
-const LevelInput = React.memo(({value, onChange}: {
+export const LevelInput = React.memo(({value, onChange}: {
     value: number,
     onChange: (value: number) => void,
 }) => {
