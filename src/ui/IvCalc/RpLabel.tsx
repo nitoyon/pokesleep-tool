@@ -1,7 +1,7 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import InfoButton from './InfoButton';
-import { rpEstimateThreshold } from '../../util/PokemonRp';
+import { maxLevel } from '../../util/PokemonRp';
 import { useTranslation } from 'react-i18next';
 
 const RpLabel = React.memo(({rp, iv, showIcon, isError, onClick}: {
@@ -12,7 +12,7 @@ const RpLabel = React.memo(({rp, iv, showIcon, isError, onClick}: {
     onClick?: () => void,
 }) => {
     const { t } = useTranslation();
-    const isEstimated = iv.level > rpEstimateThreshold;
+    const isEstimated = iv.level > maxLevel;
 
     const clickHandler = React.useCallback(() => {
         if (onClick !== undefined) {
