@@ -1,5 +1,5 @@
 import React from 'react';
-import PokemonRp, { RpStrengthResult, rpEstimateThreshold } from '../../util/PokemonRp';
+import PokemonRp, { RpStrengthResult, maxLevel } from '../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { StrengthParameter, createStrengthParameter } from '../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
@@ -113,7 +113,7 @@ const RpInfoDialog = React.memo(({isError, open, onClose}: {
             <p><Trans i18nKey="rp formula" components={{
                 link: <a href={t('rp formula doc url')}>{t('rp formula doc title')}</a>
             }}/></p>
-            <p>{t('estimated beyond level', {level: rpEstimateThreshold})}</p>
+            <p>{t('estimated beyond level', {level: maxLevel})}</p>
 
             <h2>{t('strength, ingredients, skill count')}</h2>
             <p>{t('the amount under the following condition')}</p>
@@ -129,7 +129,7 @@ const RpInfoDialog = React.memo(({isError, open, onClose}: {
                 <li>{t('tap frequency')} ({t('asleep')}): {t('none')}</li>
             </ul>
             <p>{t('use strength tab if you want to change these condition')}</p>
-            <p>{t('estimated beyond level', {level: rpEstimateThreshold})}</p>
+            <p>{t('estimated beyond level', {level: maxLevel})}</p>
         </article>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
@@ -309,7 +309,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
             <p><Trans i18nKey="rp formula" components={{
                 link: <a href={t('rp formula doc url')}>{t('rp formula doc title')}</a>
             }}/></p>
-            <p>{t('estimated beyond level', {level: rpEstimateThreshold})}</p>
+            <p>{t('estimated beyond level', {level: maxLevel})}</p>
         </footer>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
