@@ -125,7 +125,9 @@ class PokemonRp {
         const ingredientRp = this.ingredientRp;
         const berryRp = this.berryRp;
         const skillRp = this.skillRp;
-        const rp = Math.round((ingredientRp + berryRp + skillRp) * bonus);
+
+        // Handling floating-point errors (* 100 and / 100)
+        const rp = Math.round((ingredientRp * 100 + berryRp * 100 + skillRp * 100) * bonus / 100);
 
         return {
             rp, frequency,
@@ -136,9 +138,10 @@ class PokemonRp {
     }
 
     get Rp(): number {
+        // Handling floating-point errors (* 100 and / 100)
         return Math.round(
-            (this.ingredientRp + this.berryRp + this.skillRp) *
-            this.bonus);
+            (this.ingredientRp * 100 + this.berryRp * 100 + this.skillRp * 100) *
+            this.bonus / 100);
     }
 
     get activeSubSkills(): SubSkill[] {

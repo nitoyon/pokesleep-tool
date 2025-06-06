@@ -67,5 +67,21 @@ describe('PokemonRP', () => {
             expect(rp.helpCountPer5Hour).toBe(8);
             expect(rp.Rp).toBe(2443);
         });
+
+        test('Blastoise Lv60 (floating-point error)', () => {
+            const iv = new PokemonIv('Blastoise');
+            iv.level = 60;
+            iv.ingredient = "AAA";
+            iv.subSkills = new SubSkillList([
+                new SubSkill('Helping Speed M'),
+                new SubSkill('Sleep EXP Bonus'),
+                new SubSkill('Ingredient Finder M'),
+            ]);
+            iv.nature = new Nature('Serious');
+            iv.skillLevel = 3;
+            const rp = new PokemonRp(iv);
+
+            expect(rp.Rp).toBe(4545);
+        });
     });
 });
