@@ -3638,6 +3638,38 @@
         }
     },
     {
+        "id": 303,
+        "name": "Mawile",
+        "sleepType": "slumbering",
+        "type": "steel",
+        "specialty": "unknown",
+        "skill": "Ingredient Draw S (Hyper Cutter)",
+        "fp": 16,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": 0,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 304,
         "name": "Aron",
         "sleepType": "slumbering",
