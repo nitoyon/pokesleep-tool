@@ -86,6 +86,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
             return;
         }
 
+        setIsEmpty(false);
         setExpGot(e.target.value);
     }, []);
 
@@ -359,7 +360,6 @@ const LevelSelector = React.memo(({ value, onChange }: {
         setOpen(true);
     }, []);
     const onClose = React.useCallback(() => {
-        console.log("onClose");
         setOpen(false);
     }, []);
     const onButtonClick = React.useCallback((num: number) => {
