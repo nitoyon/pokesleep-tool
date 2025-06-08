@@ -29,6 +29,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
     const { t } = useTranslation();
     const [currentLevel, setCurrentLevel] = React.useState(iv.level);
     const [expGot, setExpGot] = React.useState(0);
+    const [isEmpty, setIsEmpty] = React.useState(false);
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
     const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [expFactor, setExpFactor] = React.useState(0);
@@ -88,6 +89,30 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
         setExpGot(e.target.value);
     }, []);
 
+    const onExpLeftChange = React.useCallback((e: any) => {
+        if (e === null) {
+            return;
+        }
+        const rawText = e.target.value;
+
+        // Update isEmpty state
+        if (typeof(rawText) === "string" && rawText.trim() === "") {
+            setIsEmpty(true);
+            setExpGot(0);
+            return;
+        }
+
+        let value = parseInt(rawText, 10);
+        if (isNaN(value) || value < 0) {
+            value = 0;
+        }
+        if (value > maxExpLeft) {
+            value = maxExpLeft;
+        }
+        setIsEmpty(false);
+        setExpGot(maxExpLeft - value);
+    }, [maxExpLeft]);
+
     const onCanyBoostChange = React.useCallback((e: any, value: BoostEvent) => {
         if (value === null) {
             return;
@@ -105,6 +130,8 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
     const result: CalcExpAndCandyResult =
         calcExpAndCandy(iv2, expGot, targetLevel, candyBoost);
 
+    const valueText = isEmpty ? "" : maxExpLeft - expGot;
+
     return (<>
         <StyledDialog open={open} onClose={onClose}>
             <article>
@@ -120,9 +147,13 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
                         <div className="expLeft">
                             <StyledSlider value={expGot}
                                 min={0} max={maxExpLeft - 1} onChange={onExpSliderChange}/>
-                            <Input value={maxExpLeft - expGot} type="number" size="small"
+                            <Input value={valueText} type="number" size="small"
                                 startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
                                 endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
+                                onChange={onExpLeftChange}
+                                inputProps={{
+                                    inputMode: "numeric",
+                                }}
                                 sx={{
                                     '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
                                         WebkitAppearance: 'none',
@@ -303,14 +334,13 @@ const StyledSlider = styled(Slider)({
     },
     padding: 0,
     '& .MuiSlider-thumb': {
-        width: 14,
-        height: 13,
+        width: '14px',
+        height: '13px',
         '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-            boxShadow: `0px 0px 0px 6px ${'rgb(121 208 155 / 30%)'}`,
+            boxShadow: 'inherit',
         },
-        '&:after': {
-            width: 20,
-            height: 19,
+        '&::before': {
+            display: 'none',
         },
     },
     '& .MuiSlider-rail': {
@@ -361,21 +391,22 @@ const LevelSelector = React.memo(({ value, onChange }: {
 
 const LevelSelectorPopup = styled('div')({
     width: '10rem',
-    padding: '1rem',
+    padding: '.3rem .7rem',
     '& > div.buttons': {
-        paddingTop: '1rem',
+        paddingTop: '.4rem',
         marginLeft: '-0.2rem',
         display: 'flex',
         flexWrap: 'wrap',
-        gap: '0.5rem',
+        gap: '0.3rem 0.5rem',
         '& > button': {
             color: '#79d073',
             fontWeight: 'bold',
+            fontSize: '0.8rem',
             padding: 0,
-            width: '2rem',
-            height: '2rem',
-            minWidth: '2rem',
-            minHeight: '2rem',
+            width: '1.5rem',
+            height: '1.5rem',
+            minWidth: '1.5rem',
+            minHeight: '1.5rem',
             borderRadius: '50%',
             border: '1.5px solid #79d073',
         },
