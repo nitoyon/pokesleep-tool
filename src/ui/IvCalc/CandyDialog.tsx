@@ -20,8 +20,9 @@ import { useTranslation } from 'react-i18next';
 const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
-const CandyDialog = React.memo(({ iv, open, onClose }: {
+const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
     iv: PokemonIv,
+    dstLevel?: number,
     open: boolean,
     onClose: () => void }
 ) => {
@@ -29,7 +30,7 @@ const CandyDialog = React.memo(({ iv, open, onClose }: {
     const [currentLevel, setCurrentLevel] = React.useState(iv.level);
     const [expGot, setExpGot] = React.useState(0);
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
-    const [targetLevel, setTargetLevel] = React.useState(65);
+    const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [expFactor, setExpFactor] = React.useState(0);
     const [candyBoost, setCandyBoost] = React.useState<BoostEvent>("none");
     const [shouldRender, setShouldRender] = React.useState(false);
@@ -41,11 +42,26 @@ const CandyDialog = React.memo(({ iv, open, onClose }: {
             setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
             setExpFactor(iv.nature.expGainsFactor);
             setShouldRender(true);
+
+            let level = 0;
+            if (dstLevel !== undefined) {
+                level = Math.min(dstLevel, maxLevel);
+            }
+            else if (iv.pokemon.specialty === "Berries") {
+                level = 65;
+            }
+            else if (iv.pokemon.specialty === "Ingredients") {
+                level = 60;
+            }
+            else {
+                level = 50;
+            }
+            setTargetLevel(Math.max(level, iv.level));
         }
         else {
             setShouldRender(false);
         }
-    }, [iv, open]);
+    }, [iv, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((e: any) => {
         const value = parseInt(e.target.value, 10);
