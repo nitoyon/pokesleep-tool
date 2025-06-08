@@ -20,7 +20,9 @@ const UnselectableSlider = styled(Slider)({
 const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
-const LevelControl = React.memo(({value, onChange}: {
+const LevelControl = React.memo(({hideInput, max, value, onChange}: {
+    hideInput?: boolean,
+    max: number,
     value: number,
     onChange: (value: number) => void,
 }) => {
@@ -47,11 +49,11 @@ const LevelControl = React.memo(({value, onChange}: {
     }, [value, onChange]);
 
     return (<LevelControlContainer>
-            <LevelInput value={value} onChange={onChange}/>
+            {!hideInput && <LevelInput value={value} onChange={onChange}/>}
             <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <UnselectableSlider min={0} max={100} size="small" style={{userSelect: "none"}}
+            <UnselectableSlider min={0} max={max} size="small" style={{userSelect: "none"}}
                 value={value} onChange={_onChange}/>
-            <ArrowButton label="▶" disabled={value === 100} onClick={onLevelUpClick}/>
+            <ArrowButton label="▶" disabled={value === max} onClick={onLevelUpClick}/>
         </LevelControlContainer>
     );
 });
