@@ -41,6 +41,7 @@ const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
         case "Ingredient Magnet S":
         case "Ingredient Draw S":
         case "Ingredient Draw S (Super Luck)":
+        case "Ingredient Draw S (Hyper Cutter)":
             return <svg width="20" height="20"><IngredientsIcon/></svg>;
         case "Cooking Power-Up S":
             return <svg width="20" height="20" fill="#886666"><PotIcon/></svg>;

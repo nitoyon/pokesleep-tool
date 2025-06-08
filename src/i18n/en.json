@@ -418,6 +418,7 @@
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",
             "Ingredient Draw S (Super Luck)": "Displays the number of ingredients obtained. This value is not counted towards the total strength amount.",
+            "Ingredient Draw S (Hyper Cutter)": "Displays the number of ingredients obtained. Ingredients acquired additionally are not considered. This value is not counted towards the total strength amount.",
             "unknown": "The main skill has not been determined yet."
         },
 
@@ -478,6 +479,7 @@
             "Skill Copy (Mimic)": "Mimic (Skill Copy)",
             "Ingredient Draw S": "Ingredient Draw S",
             "Ingredient Draw S (Super Luck)": "Super Luck (Ingredient Draw S)",
+            "Ingredient Draw S (Hyper Cutter)": "Hyper Cutter (Ingredient Draw S)",
             "unknown": "(Unknown)"
         },
 
@@ -697,6 +699,7 @@
             "Vigoroth": "Vigoroth",
             "Slaking": "Slaking",
             "Sableye": "Sableye",
+            "Mawile": "Mawile",
             "Aron": "Aron",
             "Lairon": "Lairon",
             "Aggron": "Aggron",

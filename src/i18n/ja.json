@@ -410,6 +410,7 @@
             "Berry Burst (Disguise)": "大成功は起きないものと仮定しています。他のポケモンは 1 きのみあたり 100 エナジー (フィールドボーナスなしのとき) として見積もっています。",
             "Berry Burst": "他のポケモンは 1 きのみあたり 100 エナジー (フィールドボーナスなしのとき) として見積もっています。",
             "Ingredient Draw S (Super Luck)": "獲得できる食材の数を表示しています。スキルによる食材は、合計エナジー量には換算していません。",
+            "Ingredient Draw S (Hyper Cutter)": "獲得できる食材の数を表示しています。追加で取得する食材は考慮されていません。スキルによる食材は、合計エナジー量には換算していません。",
             "unknown": "メインスキルはまだ判明していません。"
         },
 
@@ -470,6 +471,7 @@
             "Skill Copy (Mimic)": "ものまね (スキルコピー)",
             "Ingredient Draw S": "食材セレクトS",
             "Ingredient Draw S (Super Luck)": "きょううん (食材セレクトS)",
+            "Ingredient Draw S (Hyper Cutter)": "かいりきバサミ (食材セレクトS)",
             "unknown": "(不明)"
         },
 
@@ -689,6 +691,7 @@
             "Vigoroth": "ヤルキモノ",
             "Slaking": "ケッキング",
             "Sableye": "ヤミラミ",
+            "Mawile": "クチート",
             "Aron": "ココドラ",
             "Lairon": "コドラ",
             "Aggron": "ボスゴドラ",

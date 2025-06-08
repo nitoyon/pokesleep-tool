@@ -640,6 +640,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#977ecf'},
         {x: 0.4, y: 0.4, w: 0.2, h: 0.25, r: 0.1, color: '#f06686'},
     ],
+    // Mawile
+    '303': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#464348'},
+        {x: 0, y: 0, w: 1, h: 0.3, color: '#585b65'},
+        {x: -0.1, y: 0.25, w: 0.7, h: 0.9, r: 0.05, color: '#fbf7b1'},
+        {x: 0.8, y: 0.4, w: 0.13, h: 0.13, r: 0.1, color: '#ffffff'},
+        {x: 0.82, y: 0.64, w: 0.1, h: 0.1, r: 0.1, color: '#ffffff'},
+        {x: 0.83, y: 0.85, w: 0.08, h: 0.08, r: 0.1, color: '#ffffff'},
+    ],
     // Aron
     '304': [
         {x: 0, y: 0, w: 1, h: 1, color: '#f3efee'},
