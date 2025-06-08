@@ -8,6 +8,7 @@ import TextLikeButton from '../common/TextLikeButton';
 import PokemonSelectDialog from './PokemonSelectDialog';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';
+import CandyIcon from '../Resources/CandyIcon';
 import { useTranslation } from 'react-i18next';
 import PokemonIv from '../../util/PokemonIv';
 import { MainSkillName } from '../../util/MainSkill';
@@ -31,11 +32,12 @@ export interface PokemonOption {
     ing3Name?: IngredientName;
 }
 
-const PokemonTextField = React.memo(({value, fixMode, onChange}: {
+const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
     value: string,
     /** Fix evolutionary line or not */
     fixMode?: boolean,
     onChange: (value: string) => void,
+    onCandyClick: () => void,
 }) => {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
@@ -85,17 +87,10 @@ const PokemonTextField = React.memo(({value, fixMode, onChange}: {
             {selectedOption.localName}
         </TextLikeButton>}
         <EvolveButton selectedOption={selectedOption} onChange={onChange}/>
+        <CandyButton onClick={onCandyClick}/>
         <PokemonSelectDialog open={open} onClose={onCloseDialog} onChange={changeHandler}
             pokemonOptions={pokemonOptions} selectedValue={selectedOption}/>
     </div>);
-});
-
-const StyledEvolveButton = styled(IconButton)({
-    color: '#6c9',
-    fontSize: '0.9rem',
-    '&:disabled': {
-        color: '#999',
-    }
 });
 
 /**
@@ -145,12 +140,7 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
     const open = Boolean(evolveButtonEl);
     return <>
         <StyledEvolveButton size="small" onClick={onEvolveClick}
-            disabled={!hasEvolutionaryLine}
-            style={{
-                boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
-                marginLeft: '.5rem',
-                border: '1px solid #ccc',
-            }}>
+            disabled={!hasEvolutionaryLine}>
             <AccountTreeIcon fontSize="inherit"/>
         </StyledEvolveButton>
         <Menu open={open} anchorEl={evolveButtonEl}
@@ -166,6 +156,37 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
             {evolveMenuItems}
         </Menu>
     </>;
+});
+
+const StyledEvolveButton = styled(IconButton)({
+    color: '#6c9',
+    fontSize: '0.9rem',
+    boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
+    marginLeft: '.4rem',
+    border: '1px solid #ccc',
+    '&:disabled': {
+        color: '#999',
+    }
+});
+
+/**
+ * Click this button to show candy dialog
+ */
+const CandyButton = React.memo(({onClick}: {onClick: () => void}) => {
+    return <StyledCandyButton size="small" onClick={onClick}>
+        <CandyIcon/>
+    </StyledCandyButton>;
+});
+
+const StyledCandyButton = styled(IconButton)({
+    fontSize: '0.9rem',
+    boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
+    marginLeft: '.2rem',
+    border: '1px solid #ccc',
+    '& > svg': {
+        width: '14px',
+        height: '14px',
+    }
 });
 
 export default PokemonTextField;

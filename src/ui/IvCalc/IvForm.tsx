@@ -6,6 +6,7 @@ import Nature from '../../util/Nature';
 import PokemonIv from '../../util/PokemonIv';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import PokemonRp from '../../util/PokemonRp';
+import CandyDialog from './CandyDialog';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
@@ -82,6 +83,16 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
     const onFrequencyDialogClose = React.useCallback(() => {
         setFrequencyDialogOpen(false);
     }, [setFrequencyDialogOpen]);
+    const [candyDialogOpen, setCandyDialogOpen] = React.useState(false);
+
+    // Candy dialog handler
+    const onCandyClick = React.useCallback(() => {
+        setCandyDialogOpen(true);
+    }, []);
+    const onCloseCandyDialog = React.useCallback(() => {
+        setCandyDialogOpen(false);
+    }, []);
+
 
     const rp = new PokemonRp(pokemonIv);
 
@@ -89,9 +100,9 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
         <div className="table">
             <div>{t("pokemon")}:</div>
             <PokemonTextField value={pokemonIv.pokemonName} fixMode={fixMode}
-                onChange={onPokemonNameChange}/>
+                onChange={onPokemonNameChange} onCandyClick={onCandyClick}/>
             <div>{t("level")}:</div>
-            <LevelControl value={pokemonIv.level} onChange={onLevelChange}/>
+            <LevelControl max={100} value={pokemonIv.level} onChange={onLevelChange}/>
             <div>{t("ingredient")}:</div>
             <IngredientTextField iv={pokemonIv} onChange={onChange}/>
             <div>{t("frequency")}:</div>
@@ -113,6 +124,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <span style={{paddingRight: '0.7rem'}}>{t("sleeping time shared")}:</span>
             <SleepingTimeControl value={pokemonIv.ribbon} onChange={onRibbonChange}/>
         </div>
+        <CandyDialog iv={pokemonIv} open={candyDialogOpen} onClose={onCloseCandyDialog}/>
     </StyledInputForm>;
 });
 

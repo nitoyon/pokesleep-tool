@@ -397,6 +397,16 @@
         "1000 hours+": "1000-2000 hours",
         "2000 hours+": "2000 hours or more",
 
+        "exp to go1": "",
+        "exp to go2": "EXP to go",
+        "required exp": "Required EXP",
+        "candy": "Candy",
+        "dream shard": "Dream shard",
+        "nature": "Nature",
+        "candy boost": "Candy boost",
+        "mini candy boost": "Mini",
+        "normal candy boost": "Unlimited",
+
         "strength of x": "Strength of {{x}}",
         "strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",

@@ -6,15 +6,18 @@ import { IvAction } from './IvState';
 import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
+import CandyDialog from './CandyDialog';
 import { shareIv } from './ShareUtil';
 import { PokemonSpecialty, IngredientName, IngredientNames, PokemonType
 } from '../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
 import { SubSkillType } from '../../util/SubSkill';
+import PokemonIv from '../../util/PokemonIv';
 import PokemonRp from '../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
 import { Button, ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
+import CandyIcon from '../Resources/CandyIcon';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
@@ -36,6 +39,8 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
     const [sortConfig, setSortConfig] = React.useState(loadBoxSortConfig());
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
+    const [candyOpen, setCandyOpen] = React.useState(false);
+    const [candyIv, setCandyIv] = React.useState(new PokemonIv('Bulbasaur'));
 
     const onAddClick = React.useCallback(() => {
         dispatch({type: "add"});
@@ -62,6 +67,13 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         boxFilterConfig = value;
         setFilterConfig(boxFilterConfig);
     }, []);
+    const onCandyClick = React.useCallback((item: PokemonBoxItem) => {
+        setCandyIv(item.iv);
+        setCandyOpen(true);
+    }, []);
+    const onCandyDialogClose = React.useCallback(() => {
+        setCandyOpen(false);
+    }, []);
 
     // filter
     const filtered = React.useMemo(() => filterConfig.filter(items, t),
@@ -74,7 +86,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
 
     let elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
-            dispatch={dispatch}/>));
+            dispatch={dispatch} onCandyClick={onCandyClick}/>));
     if (!sortConfig.descending) {
         elms = [...elms].reverse();
     }
@@ -86,7 +98,7 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
     }), [filterConfig, sortConfig]);
     const footerSortTypes = React.useMemo(() => 
         ["level", "name", "pokedexno", "rp", "total strength", "berry", "ingredient", "skill count"], []);
-        
+
     return <>
         <div style={{
             display: 'flex',
@@ -127,6 +139,9 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         </div>
         <BoxFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={filterConfig} onChange={onFilterChange}/>
+        <CandyDialog iv={candyIv} open={candyOpen}
+            dstLevel={parameter.level === 0 ? undefined : parameter.level}
+            onClose={onCandyDialogClose}/>
     </>;
 });
 
@@ -447,10 +462,11 @@ function loadBoxSortConfig(): BoxSortConfig {
     return ret;
 }
 
-const BoxLargeItem = React.memo(({item, selected, dispatch}: {
+const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
     item: PokemonBoxItem,
     selected: boolean,
     dispatch: (action: IvAction) => void,
+    onCandyClick: (item: PokemonBoxItem) => void,
 }) => {
     const { t } = useTranslation();
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
@@ -478,6 +494,10 @@ const BoxLargeItem = React.memo(({item, selected, dispatch}: {
         setMoreMenuAnchor(null);
         shareIv(item.iv, dispatch, t);
     }, [dispatch, item.iv, t]);
+    const onCandyClickHandler = React.useCallback(() => {
+        setMoreMenuAnchor(null);
+        onCandyClick(item);
+    }, [item, onCandyClick]);
 
     return (
         <StyledBoxLargeItem>
@@ -494,6 +514,10 @@ const BoxLargeItem = React.memo(({item, selected, dispatch}: {
                     <MenuItem onClick={() => onMenuClick("edit")}>
                         <ListItemIcon><EditNoteOutlinedIcon/></ListItemIcon>
                         {t('edit')}
+                    </MenuItem>
+                    <MenuItem onClick={onCandyClickHandler}>
+                        <ListItemIcon sx={{minWidth: '24px'}}><CandyIcon color="#888"/></ListItemIcon>
+                        {t('candy')}
                     </MenuItem>
                     <MenuItem onClick={onShareClick}>
                         <ListItemIcon><IosShareIcon/></ListItemIcon>
