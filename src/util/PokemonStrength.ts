@@ -349,6 +349,7 @@ class PokemonStrength {
                 return [mainSkillValue * (eventBonus?.ingredientMagnet ?? 1), 0];
             case "Ingredient Draw S":
             case "Ingredient Draw S (Super Luck)":
+            case "Ingredient Draw S (Hyper Cutter)":
                 return [mainSkillValue * (eventBonus?.ingredientDraw ?? 1), 0];
             case "Cooking Power-Up S":
             case "Tasty Chance S":
