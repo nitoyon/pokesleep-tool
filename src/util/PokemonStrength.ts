@@ -207,12 +207,12 @@ class PokemonStrength {
         ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRatio;
 
         const ing2 = {...rp.ingredient2, strength: 0};
-        ing2.count = level < 30 ? 0 :
+        ing2.count = level < 30 || ing2.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * (ing2.count + ingEventAdd);
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRatio;
         let ing3 = undefined;
         ing3 = {...rp.ingredient3, strength: 0};
-        ing3.count = level < 60 ? 0 :
+        ing3.count = level < 60 || ing3.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * (ing3.count + ingEventAdd);
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;

@@ -89,7 +89,9 @@ export class BonusEventData {
      */
     isTarget(pokemon: PokemonData): boolean {
        if (this.target?.specialty !== undefined &&
-            pokemon.specialty !== this.target.specialty) {
+            pokemon.specialty !== this.target.specialty &&
+            pokemon.specialty !== "All"
+        ) {
             return false;
         }
         if (this.target?.type !== undefined &&
