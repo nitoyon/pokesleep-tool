@@ -51,7 +51,7 @@ const LevelControl = React.memo(({hideInput, max, value, onChange}: {
     return (<LevelControlContainer>
             {!hideInput && <LevelInput value={value} onChange={onChange}/>}
             <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <UnselectableSlider min={0} max={max} size="small" style={{userSelect: "none"}}
+            <UnselectableSlider min={1} max={max} size="small" style={{userSelect: "none"}}
                 value={value} onChange={_onChange}/>
             <ArrowButton label="▶" disabled={value === max} onClick={onLevelUpClick}/>
         </LevelControlContainer>
