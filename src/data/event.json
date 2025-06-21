@@ -2,22 +2,31 @@
     "drowsy": [
         {
             "name": "GSD",
-            "day": "2025-06-10",
+            "day": "2025-07-10",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2025-06-11",
+            "day": "2025-07-11",
             "memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
-            "bonus": 2.5
+            "bonus": 2
         },
         {
             "name": "GSD",
-            "day": "2025-06-12",
+            "day": "2025-07-12",
             "bonus": 1.5
         }
     ],
     "bonus": [
+        {
+            "name": "summer festival 2025",
+            "start": "2025-06-23T04:00:00",
+            "end": "2025-06-30T04:00:00",
+            "target": {},
+            "effects": {
+                "dish": 1.5
+            }
+        },
         {
             "name": "packed portion cooking week 1",
             "start": "2025-06-09T04:00:00",
