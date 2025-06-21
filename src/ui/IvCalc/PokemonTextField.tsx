@@ -182,6 +182,9 @@ const StyledCandyButton = styled(IconButton)({
     fontSize: '0.9rem',
     boxShadow: '0 1px 3px 1px rgba(128, 128, 128, 0.2)',
     marginLeft: '.2rem',
+    '@media (min-width: 390px)': {
+        marginLeft: '.5rem',
+    },
     border: '1px solid #ccc',
     '& > svg': {
         width: '14px',
