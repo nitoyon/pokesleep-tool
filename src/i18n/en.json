@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add farfetch'd": {
+                    "headline": "Farfetch'd has been added.",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "add mawile & candy calc": {
                     "headline": "Mawile has been added. A candy calculator feature has also been added.",
                     "detail": "The ingredient% and skill% are based on RP Collection values.\nA candy calculator feature can be used by tapping the candy button to the right of the Pokémon’s name, or by selecting [Candy] from the ︙ menu at the top right of a Pokémon in your box."

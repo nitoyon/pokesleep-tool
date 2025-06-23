@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add farfetch'd": {
+                    "headline": "更新了$t(pokemons.Farfetch'd)的数据。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "add mawile & candy calc": {
                     "headline": "更新了$t(pokemons.Mawile)的数据。另外，新增了糖果計算功能。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。\n糖果計算功能可以透過點擊寶可夢名字右側的糖果圖示，或是在盒子中的寶可夢右上角點選︙後選擇 [糖果] 來使用。"
