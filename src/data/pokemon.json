@@ -1577,31 +1577,31 @@
         "sleepType": "slumbering",
         "exp": 600,
         "type": "flying",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
         "fp": 16,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3000,
+        "ingRatio": 16,
+        "skillRatio": 4.3,
         "ancestor": null,
         "evolutionCount": 0,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 18,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "leek",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "sausage",
+            "c2": 8,
+            "c3": 13
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "ginger",
+            "c3": 12
         }
     },
     {
