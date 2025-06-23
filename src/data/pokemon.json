@@ -1572,6 +1572,39 @@
         }
     },
     {
+        "id": 83,
+        "name": "Farfetch'd",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "flying",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 16,
+        "frequency": 3000,
+        "ingRatio": 16,
+        "skillRatio": 4.3,
+        "ancestor": null,
+        "evolutionCount": 0,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 18,
+        "ing1": {
+            "name": "leek",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "sausage",
+            "c2": 8,
+            "c3": 13
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 12
+        }
+    },
+    {
         "id": 84,
         "name": "Doduo",
         "sleepType": "slumbering",
