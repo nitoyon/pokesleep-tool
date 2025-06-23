@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add farfetch'd": {
+                    "headline": "$t(pokemons.Farfetch'd)의 식재료를 변경할 수 있게 되었습니다.",
+                    "detail": "세 번째 재료의 개수는 추정치이므로 정확하지 않을 수 있습니다."
+                },
                 "add mawile & candy calc": {
                     "headline": "$t(pokemons.Mawile)가 추가되었습니다. 또한, 사탕 계산 기능을 추가했습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다. 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
