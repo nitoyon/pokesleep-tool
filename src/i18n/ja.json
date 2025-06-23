@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add farfetch'd": {
+                    "headline": "カモネギのデータを追加しました。",
+                    "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。"
+                },
                 "add mawile & candy calc": {
                     "headline": "クチートのデータを追加しました。また、アメ計算機能を追加しました。",
                     "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。\nアメ計算機能は、ポケモン名の右にあるアメマークを押すか、ボックスにいるポケモンの右上の︙から [アメ] を選択すると使えます。"
@@ -639,6 +643,7 @@
             "Slowbro": "ヤドラン",
             "Magnemite": "コイル",
             "Magneton": "レアコイル",
+            "Farfetch'd": "カモネギ",
             "Doduo": "ドードー",
             "Dodrio": "ドードリオ",
             "Gastly": "ゴース",

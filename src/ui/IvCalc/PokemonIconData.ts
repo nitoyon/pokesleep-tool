@@ -253,6 +253,15 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 0.15, h: 0.5, color: '#7dbeee'},
         {x: 0, y: 0.5, w: 0.15, h: 0.5, color: '#e46658'},
     ],
+    // Farfetch'd
+    '83': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#bea399'},
+        {x: 0.22, y: 0.3, w: 0.35, h: 0.2, r: 0.2, color: '#f7e984'},
+        {x: 0.1, y: 0.6, w: 0.6, h: 0.8, r: 0.3, color: '#fdfdd0'},
+        {x: 0.85, y: 0, w: 0.2, h: 0.35, color: '#4b742f'},
+        {x: 0.85, y: 0.35, w: 0.2, h: 0.15, color: '#afdc63'},
+        {x: 0.85, y: 0.5, w: 0.2, h: 0.7, color: '#ffffff'},
+    ],
     // Doduo
     '84': [
         {x: 0, y: 0, w: 1, h: 1, color: '#d6a070'},
