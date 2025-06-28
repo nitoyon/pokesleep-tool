@@ -396,6 +396,12 @@ class PokemonRp {
             4);
     }
 
+    /**
+     * Get skill value used in RP calculation.
+     *
+     * Actual value is implemented in `getSkillValue` function in
+     * PokemonStrength.ts.
+     */
     get skillValue(): number {
         if (this._pokemon.skill === "Charge Strength S" ||
             this._pokemon.skill === "Charge Strength S (Random)" ||
