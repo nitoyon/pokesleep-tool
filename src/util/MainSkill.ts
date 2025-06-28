@@ -77,13 +77,13 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [12, 16, 21, 27, 34, 43][skillLevel - 1];
     }
     if (skill === "Charge Strength S") {
-        return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1];
+        return [400, 569, 785, 1083, 1496, 2066, 3002][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Stockpile)") {
         return [600, 853, 1177, 1625, 2243, 3099, 3984][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
-        return [400, 569, 765, 1083, 1496, 2066, 3002][skillLevel - 1] * 1.25;
+        return [500, 711.5, 981.5, 1354, 1870, 2582.5, 3752.5][skillLevel - 1];
     }
     if (skill === "Charge Strength M") {
         return [880, 1251, 1726, 2383, 3290, 4546, 6409][skillLevel - 1];
@@ -114,7 +114,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
     }
     if (skill === "Dream Shard Magnet S (Random)") {
-        return [240, 340, 480, 670, 920, 1260, 1800, 2300][skillLevel - 1] * 1.25;
+        return [300, 425, 600, 837.5, 1150, 1575, 2250, 2875][skillLevel - 1];
     }
     if (skill === "Tasty Chance S") {
         return [4, 5, 6, 7, 8, 10][skillLevel - 1];
