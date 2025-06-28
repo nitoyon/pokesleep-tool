@@ -341,9 +341,7 @@ class PokemonStrength {
             mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientDraw ?? 1));
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
-        console.log("main skill", mainSkillBase);
             mainSkillBase *= (eventBonus?.dreamShard ?? 1);
-        console.log("main skill", mainSkillBase, (eventBonus?.dreamShard ?? 1));
         }
 
         let mainSkillFactor = 1;
