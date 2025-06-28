@@ -3,17 +3,20 @@ import { styled } from '@mui/system';
 import { getEventBonus } from '../../data/events';
 import { getDecendants, PokemonData } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
+import Nature from '../../util/Nature';
 import { round1, round2, formatNice, formatWithComma } from '../../util/NumberUtil';
 import PokemonStrength, { IngredientStrength, StrengthResult,
     recipeLevelBonus
 } from '../../util/PokemonStrength';
 import { StrengthParameter } from '../../util/PokemonStrength';
 import { ingredientStrength } from '../../util/PokemonRp';
+import { getSkillRandomRange as getSkillRange, getSkillValue, MainSkillName } from '../../util/MainSkill';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     FormControl,
     Select, SelectChangeEvent, Typography, MenuItem } from '@mui/material';
 import MainSkillIcon from './MainSkillIcon';
+import { StyledNatureUpEffect, StyledNatureDownEffect } from './NatureTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import InfoButton from './InfoButton';
 import { IvAction } from './IvState';
@@ -305,7 +308,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
         <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
             dispatch={dispatch} strength={strength} result={result}/>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
-            strength={strength}/>
+            strength={strength} result={result}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
             iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;
@@ -651,6 +654,223 @@ function getIngDetail(strength: PokemonStrength, result: StrengthResult,
     </>;
 }
 
+const SkillHelpDialog = React.memo(({open, onClose, strength, result}: {
+    open: boolean,
+    onClose: () => void,
+    strength: PokemonStrength,
+    result: StrengthResult,
+}) => {
+    const { t } = useTranslation();
+
+    const settings = strength.parameter;
+    if (settings.period === 3 || settings.tapFrequency === 'none') {
+        return (
+            <Dialog open={open} onClose={onClose}>
+                <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>
+                    {t('strength skill info.not triggered')}
+                </DialogContent>
+
+                <DialogActions>
+                    <Button onClick={onClose}>{t('close')}</Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+    const iv = strength.pokemonIv;
+    const skill = iv.pokemon.skill.replace(" (Random)", "");
+    const skillValue = Math.round(result.skillValue / result.skillCount);
+    const footnote = t(`strength skill info.${skill}`);
+    const [skillValueText, skillValueFooter] = getSkillValueText(strength, t);
+    return <StyledInfoDialog open={open} onClose={onClose}>
+        <header>
+            <h1>
+                <MainSkillIcon mainSkill={iv.pokemon.skill}/>
+                {formatNice(result.skillValue, t)}
+            </h1>
+            <h2>
+                <span className="box box1">{skillValue}</span><> × </>
+                <span className="box box2">{round2(result.skillCount)}</span>
+            </h2>
+        </header>
+        <article>
+            <div><span className="box box1">{skillValue}</span></div>
+            <span>{skillValueText}</span>
+            {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
+            <div><span className="box box2">{round2(result.skillCount)}</span></div>
+            <span>{t('skill count')}</span>
+            <footer>
+                {round1(result.notFullHelpCount)}
+                <small> ({t('normal help count')})</small>
+                <> × </>
+                {round1(result.skillRatio * 100)}%
+                <small> ({t('skill rate')})</small>
+            </footer>
+        </article>
+        {footnote !== "" && <div className="footnote">{footnote}</div>}
+        <DialogActions>
+            <Button onClick={onClose}>{t('close')}</Button>
+        </DialogActions>
+    </StyledInfoDialog>;
+});
+
+function getSkillValueText(strength: PokemonStrength, t: typeof i18next.t):
+[React.ReactNode, React.ReactNode]{
+    const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
+
+    if (skill.startsWith('Charge Energy')) {
+        return getChargeEnergyValueText(strength, t);
+    }
+    if (skill.startsWith('Charge Strength')) {
+        return getChargeStrengthValueText(strength, t);
+    }
+    if (skill.startsWith('Dream Shard Magnet')) {
+        return getDreamShardMagnetValueText(strength, t);
+    }
+    if (skill === 'Energizing Cheer S') {
+        return getEnergyRecoveryValueText(strength, t,
+            t('nature effect.Energy recovery'));
+    }
+    if (skill.startsWith('Energy for Everyone S')) {
+        return getEnergyRecoveryValueText(strength, t,
+            t('e4e per pokemon'));
+    }
+    return [null, null];
+}
+
+function getChargeEnergyValueText(strength: PokemonStrength, t: typeof i18next.t):
+[React.ReactNode, React.ReactNode] {
+    const iv = strength.pokemonIv;
+    const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
+    const level: number = strength.pokemonIv.skillLevel;
+
+    const text = t('value per skill', { value: t('nature effect.Energy recovery')});
+    const val = getSkillValue(skill, level);
+    return [<>
+        {text}<br/>
+        <span className="box box4">{val}</span>
+        <> × </>
+        <span className="box box5">{iv.nature.energyRecoveryFactor}</span>
+        <ul className="detail">
+            <li>
+                <span className="box box4">{val}</span>
+                <>: {t('base value', { value: t('nature effect.Energy recovery')})}</>
+            </li>
+            <li>
+                <span className="box box5">{iv.nature.energyRecoveryFactor}</span>
+                <>: {t('nature factor')}</>
+                {iv.nature.energyRecoveryFactor > 1 &&
+                <small> (<StyledNatureUpEffect>{t('nature effect.Energy recovery')}</StyledNatureUpEffect>)</small>}
+                {iv.nature.energyRecoveryFactor < 1 &&
+                <small> (<StyledNatureDownEffect>{t('nature effect.Energy recovery')}</StyledNatureDownEffect>)</small>}
+            </li>
+        </ul>
+    </>, null];
+}
+
+function getChargeStrengthValueText(strength: PokemonStrength, t: typeof i18next.t):
+[React.ReactNode, React.ReactNode] {
+    const param = strength.parameter;
+    const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
+    const level: number = strength.pokemonIv.skillLevel;
+
+    const text = t('value per skill', { value: t('strength2')});
+    let detail: React.ReactNode = null;
+    if (skill === 'Charge Strength S (Random)') {
+        const [min, max] = getSkillRange(skill, level);
+        detail = <small> ({t('range average', { min: formatWithComma(min), max: formatWithComma(max)})})</small>;
+    }
+    else if (skill === 'Charge Strength S (Stockpile)') {
+        const [min, max] = getSkillRange(skill, level);
+        detail = <small> ({t('range expected', { min: formatWithComma(min), max: formatWithComma(max) })})</small>;
+    }
+    const val = getSkillValue(skill, level);
+    return [<>
+        {text}<br/>
+        <span className="box box4">{val}</span>
+        <> × (1 + </>
+        <span className="box box5">{param.fieldBonus}%</span>
+        <>)</>
+        <ul className="detail">
+            <li>
+                <span className="box box4">{val}</span>
+                <>: {t('base value', { value: t('strength2')})}</>
+                {detail}
+            </li>
+            <li>
+                <span className="box box5">{param.fieldBonus}%</span>
+                <>: {t('area bonus')}</>
+            </li>
+        </ul>
+    </>, null];
+}
+
+function getDreamShardMagnetValueText(strength: PokemonStrength, t: typeof i18next.t):
+[React.ReactNode, React.ReactNode] {
+    const param = strength.parameter;
+    const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
+    const level: number = strength.pokemonIv.skillLevel;
+
+    const shardBonus = getEventBonus(param.event, param.customEventBonus)?.dreamShard ?? 1;
+    const text = t('value per skill', { value: t('dream shard')});
+    if (skill === 'Dream Shard Magnet S') {
+        if (shardBonus === 1) {
+            return [text, null];
+        }
+        else {
+            const val = getSkillValue(skill, level);
+            return [text, <>
+                <>
+                    {val} × {shardBonus}
+                    <small> ({t('event bonus')})</small>
+                </>
+            </>];
+        }
+    }
+    else if (skill === 'Dream Shard Magnet S (Random)') {
+        const [min, max] = getSkillRange(skill, level);
+        if (shardBonus === 1) {
+            return [text, <>{t('range average', { min, max})}</>];
+        }
+        else {
+            const val = getSkillValue(skill, level);
+            return [text,
+                <>
+                    {val}
+                    <small> ({t('range average', { min, max})})</small>
+                    <> × </>
+                    {shardBonus}
+                    <small> ({t('event bonus')})</small>
+                </>];
+        }
+    }
+
+    return [null, null];
+}
+
+function getEnergyRecoveryValueText(strength: PokemonStrength, t: typeof i18next.t,
+    valueText: string
+):
+[React.ReactNode, React.ReactNode] {
+    const text = t('value per skill', { value: valueText});
+    const val = getSkillValue(strength.pokemonIv.pokemon.skill,
+        strength.pokemonIv.skillLevel);
+    return [<>
+        {text}<br/>
+        <ul className="detail">
+            <li>
+                <StyledNatureUpEffect>{t('nature effect.Energy recovery')}</StyledNatureUpEffect>
+                <>: </>
+                {Math.floor(val * new Nature("Bold").energyRecoveryFactor)}
+            </li>
+            <li>
+                <StyledNatureDownEffect>{t('nature effect.Energy recovery')}</StyledNatureDownEffect>
+                <>: </>
+                {Math.floor(val * new Nature("Hasty").energyRecoveryFactor)}
+            </li>
+        </ul>
+    </>, null];
+}
+
 const StyledInfoDialog = styled(Dialog)({
     '& > div.MuiDialog-container > div.MuiPaper-root': {
         // extend dialog width
@@ -776,6 +996,12 @@ const StyledInfoDialog = styled(Dialog)({
                 fontSize: '0.8rem',
             },
         },
+        '& > div.footnote': {
+            margin: '2rem 1rem 0 1rem',
+            fontSize: '0.7rem',
+            whiteSpace: 'pre-wrap',
+            color: '#999',
+        },
         '& > section': {
             margin: '0.2rem 0.5rem',
             fontSize: '.9rem',
@@ -821,32 +1047,6 @@ const RecipeBonusHelpDialog = React.memo(({open, onClose}: {
                     }}/>
             </Typography>
             <Typography variant="body2">{t('recipe strength help')}</Typography>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </Dialog>;
-});
-
-const SkillHelpDialog = React.memo(({open, onClose, strength}: {
-    open: boolean,
-    onClose: () => void,
-    strength: PokemonStrength,
-}) => {
-    const { t } = useTranslation();
-
-    const settings = strength.parameter;
-    let text: string = "";
-    if (settings.period === 3 || settings.tapFrequency === 'none') {
-        text = t('strength skill info.not triggered');
-    }
-    else {
-        const skill = strength.pokemonIv.pokemon.skill.replace(" (Random)", "");
-        text = t(`strength skill info.${skill}`)
-    }
-    return <Dialog open={open} onClose={onClose}>
-        <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>
-            {text}
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
