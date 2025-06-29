@@ -340,25 +340,10 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
-    let mainSkillValue: string;
+    const mainSkillValue: string = formatNice(result.skillValue, t);
     let mainSkillValue2: string = "";
-    if (mainSkill.startsWith("Charge Strength") ||
-        mainSkill.startsWith("Berry Burst")
-    ) {
-        mainSkillValue = formatWithComma(Math.round(result.skillValue));
-    }
-    else if (mainSkill === "Metronome" ||
-        mainSkill === "Skill Copy (Mimic)" ||
-        mainSkill === "Skill Copy (Transform)"
-    ) {
-        mainSkillValue = round2(result.skillValue);
-    }
-    else if (mainSkill === "Energy for Everyone S (Lunar Blessing)") {
-        mainSkillValue = round1(result.skillValue);
-        mainSkillValue2 = formatWithComma(Math.round(result.skillStrength));
-    }
-    else {
-        mainSkillValue = round1(result.skillValue);
+    if (mainSkill === "Energy for Everyone S (Lunar Blessing)") {
+        mainSkillValue2 = formatNice(result.skillStrength, t);
     }
 
     const skill1 = <>
