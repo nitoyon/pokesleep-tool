@@ -1,3 +1,5 @@
+import i18next from 'i18next'
+
 export function round1(n: number) {
     n = Math.round(n * 10);
     const f = (n % 10).toString();
@@ -29,4 +31,25 @@ export function formatWithComma(n: number): string {
     parts.push(n.toString());
     parts.reverse();
     return parts.join(",");
+}
+
+export function formatNice(n: number, t: typeof i18next.t): string {
+    if (n < 10) {
+        return round2(n);
+    }
+    if (n < 1000) {
+        return round1(n);
+    } else if (n < 100000) {
+        return formatWithComma(Math.round(n));
+    }
+
+    // Shorten number: 100000 -> 100K or 10万 according to locale
+    const digits = t('short num unit digits');
+    if (digits === "4") {
+        return (n / 10000).toFixed(1).toString() + t('short num unit');
+    }
+    if (digits === "3") {
+        return (n / 1000).toFixed(0).toString() + t('short num unit');
+    }
+    throw new Error('unknown short num digits: ' + digits);
 }
