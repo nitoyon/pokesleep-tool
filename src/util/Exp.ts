@@ -71,18 +71,17 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     // cal exp
     const exp = calcExp(srcLevel, dstLevel, iv) - expGot;
 
-    // cal candy
-    const expPerCandy = calcExpFromCandy(1, iv.nature, boost);
-    const candy = Math.ceil(exp / expPerCandy);
-
     // calc dream shards
     let shards = 0;
+    let candy = 0;
     let carry = expGot;
     const shardRate = (boost === "none" ? 1 : boost === "mini" ? 4 : 5);
     for (let i = srcLevel; i < dstLevel; i++) {
         const requiredExp = calcExp(i, i + 1, iv) - carry;
+        const expPerCandy = calcExpFromCandy(i, iv.nature, boost);
         const requiredCandy = Math.ceil(requiredExp / expPerCandy);
         shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
+        candy += Math.ceil(requiredExp / expPerCandy);
         carry = expPerCandy * requiredCandy - requiredExp;
     }
 
