@@ -1,4 +1,5 @@
 import { ExpType } from '../data/pokemons';
+import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import { maxLevel } from './PokemonRp';
 
@@ -71,8 +72,7 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     const exp = calcExp(srcLevel, dstLevel, iv) - expGot;
 
     // cal candy
-    const expPerCandy = (iv.nature.isExpGainsUp ? 30 :
-        iv.nature.isExpGainsDown ? 21 : 25) * (boost !== "none" ? 2 : 1);
+    const expPerCandy = calcExpFromCandy(1, iv.nature, boost);
     const candy = Math.ceil(exp / expPerCandy);
 
     // calc dream shards
@@ -87,6 +87,18 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     }
 
     return { exp, candy, shards };
+}
+
+/**
+ * Calculate the EXP gained from candy.
+ * @param level - Current level.
+ * @param nature - The Pokémon's nature.
+ * @param boost The boost event type, which can be "none", "mini", or "unlimited".
+ * @return EXP.
+ */
+function calcExpFromCandy(level: number, nature: Nature, boost: BoostEvent): number {
+    return (nature.isExpGainsUp ? 30 :
+        nature.isExpGainsDown ? 21 : 25) * (boost !== "none" ? 2 : 1);
 }
 
 /**
