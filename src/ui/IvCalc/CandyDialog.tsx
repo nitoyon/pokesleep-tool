@@ -12,8 +12,8 @@ import PopperMenu from '../common/PopperMenu';
 import TextLikeButton from '../common/TextLikeButton';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
-import { Button, Dialog, DialogActions, Input, InputAdornment, 
-    MenuItem, Select, Slider, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, Collapse, Dialog, DialogActions, Input, InputAdornment, 
+    MenuItem, Select, Slider, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
 
@@ -34,6 +34,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
     const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [expFactor, setExpFactor] = React.useState(0);
     const [candyBoost, setCandyBoost] = React.useState<BoostEvent>("none");
+    const [isV210, setIsV210] = React.useState(false);
     const [shouldRender, setShouldRender] = React.useState(false);
 
     React.useEffect(() => {
@@ -121,6 +122,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
         setCandyBoost(value);
     }, []);
 
+    const onIsV210Change = React.useCallback((e: any) => {
+        setIsV210(e.target.checked);
+    }, []);
+
     if (!shouldRender) {
         return null;
     }
@@ -129,7 +134,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
     iv2.nature = expFactor === 1 ? new Nature('Timid') :
         expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed'); 
     const result: CalcExpAndCandyResult =
-        calcExpAndCandy(iv2, expGot, targetLevel, candyBoost);
+        calcExpAndCandy(iv2, expGot, targetLevel, candyBoost, isV210);
 
     const valueText = isEmpty ? "" : maxExpLeft - expGot;
 
@@ -182,12 +187,38 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
                 <div className="candyResult">
                     <section>
                         <label>{t('candy')}:</label>
-                        <div><CandyIcon/>{formatWithComma(result.candy)}</div>
+                        <div><CandyIcon/>{formatWithComma(result.candy)}
+                            {isV210 && currentLevel < 30 && expFactor !== 0 && <>
+                                <br/>
+                                <span style={{
+                                    border: '1px solid red',
+                                    background: '#ffeeee',
+                                    color: 'red',
+                                    fontSize: '0.6rem',
+                                    borderRadius: '0.5rem',
+                                    marginLeft: '.5rem',
+                                    padding: '0 0.3rem',
+                                }}>{t('estimated value')}</span>
+                            </>}
+                        </div>
                     </section>
                     <section>
                         <label>{t('dream shard')}:</label>
-                        <div><DreamShardIcon/>{formatWithComma(result.shards)}</div>
-                    </section>
+                        <div><DreamShardIcon/>{formatWithComma(result.shards)}
+                            {isV210 && currentLevel < 30 && expFactor !== 0 && <>
+                                <br/>
+                                <span style={{
+                                    border: '1px solid red',
+                                    background: '#ffeeee',
+                                    color: 'red',
+                                    fontSize: '0.6rem',
+                                    borderRadius: '0.5rem',
+                                    marginLeft: '.5rem',
+                                    padding: '0 0.3rem',
+                                }}>{t('estimated value')}</span>
+                            </>}
+                    </div>
+                </section>
                     <section>
                         <label>{t('nature')}:</label>
                         <Select variant="standard" onChange={onExpFactorChange} value={expFactor}
@@ -206,6 +237,12 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
                             <ToggleButton value="unlimited">{t('normal candy boost')}</ToggleButton>
                         </ToggleButtonGroup>
                     </section>
+                    <Collapse in={currentLevel < 30}>
+                        <section>
+                            <label>v2.10.0:</label>
+                            <Switch checked={isV210} onChange={onIsV210Change}/>
+                        </section>
+                    </Collapse>
                 </div>
             </article>
             <DialogActions>
