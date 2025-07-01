@@ -55,7 +55,7 @@ export type CalcExpAndCandyResult = {
  * @returns An object containing the required experience, candy, and dream shards.
  */
 export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
-    dstLevel: number, boost: BoostEvent): CalcExpAndCandyResult {
+    dstLevel: number, boost: BoostEvent, isV210: boolean=true): CalcExpAndCandyResult {
     const srcLevel = iv.level;
     if (srcLevel < 0 || srcLevel > maxLevel ||
         dstLevel < 0 || dstLevel > maxLevel ||
@@ -78,7 +78,7 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     const shardRate = (boost === "none" ? 1 : boost === "mini" ? 4 : 5);
     for (let i = srcLevel; i < dstLevel; i++) {
         const requiredExp = calcExp(i, i + 1, iv) - carry;
-        const expPerCandy = calcExpFromCandy(i, iv.nature, boost);
+        const expPerCandy = calcExpFromCandy(isV210 ? i : 30, iv.nature, boost);
         const requiredCandy = Math.ceil(requiredExp / expPerCandy);
         shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
         candy += Math.ceil(requiredExp / expPerCandy);
@@ -96,8 +96,17 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
  * @return EXP.
  */
 function calcExpFromCandy(level: number, nature: Nature, boost: BoostEvent): number {
+    const boostFactor = (boost !== "none" ? 2 : 1);
+    if (level < 25) {
+        return (nature.isExpGainsUp ? 42 :
+            nature.isExpGainsDown ? 29 : 35) * boostFactor;
+    }
+    if (level < 30) {
+        return (nature.isExpGainsUp ? 36 :
+            nature.isExpGainsDown ? 25 : 30) * boostFactor;
+    }
     return (nature.isExpGainsUp ? 30 :
-        nature.isExpGainsDown ? 21 : 25) * (boost !== "none" ? 2 : 1);
+        nature.isExpGainsDown ? 21 : 25) * boostFactor;
 }
 
 /**
@@ -109,6 +118,11 @@ function calcExpFromCandy(level: number, nature: Nature, boost: BoostEvent): num
  */
 export function calcExp(level1: number, level2: number, iv: PokemonIv): number {
     const ratio = expTypeRate[iv.pokemon.exp];
+    if (level1 < 0 || level1 > maxLevel ||
+        level2 < 0 || level2 > maxLevel) {
+        return 0;
+    }
+
     return Math.round(totalExpToTheLevel[level2] * ratio) -
         Math.round(totalExpToTheLevel[level1] * ratio);
 }
