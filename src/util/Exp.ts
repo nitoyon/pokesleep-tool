@@ -1,4 +1,5 @@
 import { ExpType } from '../data/pokemons';
+import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import { maxLevel } from './PokemonRp';
 
@@ -54,7 +55,7 @@ export type CalcExpAndCandyResult = {
  * @returns An object containing the required experience, candy, and dream shards.
  */
 export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
-    dstLevel: number, boost: BoostEvent): CalcExpAndCandyResult {
+    dstLevel: number, boost: BoostEvent, isV210: boolean=true): CalcExpAndCandyResult {
     const srcLevel = iv.level;
     if (srcLevel < 0 || srcLevel > maxLevel ||
         dstLevel < 0 || dstLevel > maxLevel ||
@@ -70,23 +71,42 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     // cal exp
     const exp = calcExp(srcLevel, dstLevel, iv) - expGot;
 
-    // cal candy
-    const expPerCandy = (iv.nature.isExpGainsUp ? 30 :
-        iv.nature.isExpGainsDown ? 21 : 25) * (boost !== "none" ? 2 : 1);
-    const candy = Math.ceil(exp / expPerCandy);
-
     // calc dream shards
     let shards = 0;
+    let candy = 0;
     let carry = expGot;
     const shardRate = (boost === "none" ? 1 : boost === "mini" ? 4 : 5);
     for (let i = srcLevel; i < dstLevel; i++) {
         const requiredExp = calcExp(i, i + 1, iv) - carry;
+        const expPerCandy = calcExpFromCandy(isV210 ? i : 30, iv.nature, boost);
         const requiredCandy = Math.ceil(requiredExp / expPerCandy);
         shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
+        candy += Math.ceil(requiredExp / expPerCandy);
         carry = expPerCandy * requiredCandy - requiredExp;
     }
 
     return { exp, candy, shards };
+}
+
+/**
+ * Calculate the EXP gained from candy.
+ * @param level - Current level.
+ * @param nature - The Pokémon's nature.
+ * @param boost The boost event type, which can be "none", "mini", or "unlimited".
+ * @return EXP.
+ */
+function calcExpFromCandy(level: number, nature: Nature, boost: BoostEvent): number {
+    const boostFactor = (boost !== "none" ? 2 : 1);
+    if (level < 25) {
+        return (nature.isExpGainsUp ? 42 :
+            nature.isExpGainsDown ? 29 : 35) * boostFactor;
+    }
+    if (level < 30) {
+        return (nature.isExpGainsUp ? 36 :
+            nature.isExpGainsDown ? 25 : 30) * boostFactor;
+    }
+    return (nature.isExpGainsUp ? 30 :
+        nature.isExpGainsDown ? 21 : 25) * boostFactor;
 }
 
 /**
@@ -98,6 +118,11 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
  */
 export function calcExp(level1: number, level2: number, iv: PokemonIv): number {
     const ratio = expTypeRate[iv.pokemon.exp];
+    if (level1 < 0 || level1 > maxLevel ||
+        level2 < 0 || level2 > maxLevel) {
+        return 0;
+    }
+
     return Math.round(totalExpToTheLevel[level2] * ratio) -
         Math.round(totalExpToTheLevel[level1] * ratio);
 }
