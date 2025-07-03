@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "v2.10.0": {
+                    "headline": "v2.10.0 的平衡调整已反映在糖果计算功能中。",
+                    "detail": "在糖果计算功能中，30级以下宝可梦的糖果使用量已减少。"
+                },
                 "add farfetch'd": {
                     "headline": "更新了$t(pokemons.Farfetch'd)的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"

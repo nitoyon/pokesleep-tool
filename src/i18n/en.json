@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.10.0": {
+                    "headline": "Balance adjustments in v2.10.0 have been reflected in the Candy Calculator feature.",
+                    "detail": "In the Candy Calculator feature, the candy usage for Pokémon below level 30 has been reduced."
+                },
                 "add farfetch'd": {
                     "headline": "Farfetch'd has been added.",
                     "detail": "The ingredient% and skill% are based on RP Collection values."

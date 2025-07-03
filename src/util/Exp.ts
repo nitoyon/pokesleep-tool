@@ -98,11 +98,11 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
 function calcExpFromCandy(level: number, nature: Nature, boost: BoostEvent): number {
     const boostFactor = (boost !== "none" ? 2 : 1);
     if (level < 25) {
-        return (nature.isExpGainsUp ? 42 :
+        return (nature.isExpGainsUp ? 41 :
             nature.isExpGainsDown ? 29 : 35) * boostFactor;
     }
     if (level < 30) {
-        return (nature.isExpGainsUp ? 36 :
+        return (nature.isExpGainsUp ? 35 :
             nature.isExpGainsDown ? 25 : 30) * boostFactor;
     }
     return (nature.isExpGainsUp ? 30 :

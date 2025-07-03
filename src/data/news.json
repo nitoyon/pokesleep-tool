@@ -2,6 +2,10 @@
     "ResearchCalc": [],
     "IvCalc": [
         {
+            "date": "2025-07-03T08:30:00Z",
+            "id": "v2.10.0"
+        },
+        {
             "date": "2025-06-23T10:50:00Z",
             "id": "add farfetch'd"
         },
