@@ -55,7 +55,7 @@ export type CalcExpAndCandyResult = {
  * @returns An object containing the required experience, candy, and dream shards.
  */
 export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
-    dstLevel: number, boost: BoostEvent, isV210: boolean=true): CalcExpAndCandyResult {
+    dstLevel: number, boost: BoostEvent): CalcExpAndCandyResult {
     const srcLevel = iv.level;
     if (srcLevel < 0 || srcLevel > maxLevel ||
         dstLevel < 0 || dstLevel > maxLevel ||
@@ -78,7 +78,7 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     const shardRate = (boost === "none" ? 1 : boost === "mini" ? 4 : 5);
     for (let i = srcLevel; i < dstLevel; i++) {
         const requiredExp = calcExp(i, i + 1, iv) - carry;
-        const expPerCandy = calcExpFromCandy(isV210 ? i : 30, iv.nature, boost);
+        const expPerCandy = calcExpFromCandy(i, iv.nature, boost);
         const requiredCandy = Math.ceil(requiredExp / expPerCandy);
         shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
         candy += Math.ceil(requiredExp / expPerCandy);
