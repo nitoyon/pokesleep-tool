@@ -10,8 +10,8 @@ describe('Exp', () => {
         expect(iv.nature.isExpGainsUp).toBe(true);
 
         const res = calcExpAndCandy(iv, 0, 30, "none");
-        expect(res.candy).toBe(262);
-        expect(res.shards).toBe(21821);
+        expect(res.candy).toBe(269);
+        expect(res.shards).toBe(22421);
     });
 
     test('level 10->50 (EXP up)', () => {
@@ -21,8 +21,8 @@ describe('Exp', () => {
         expect(iv.nature.isExpGainsUp).toBe(true);
 
         const res = calcExpAndCandy(iv, 0, 50, "none");
-        expect(res.candy).toBe(862);
-        expect(res.shards).toBe(141401);
+        expect(res.candy).toBe(869);
+        expect(res.shards).toBe(142044);
     });
 
     test('level 12->30 (EXP down)', () => {

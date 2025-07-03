@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "v2.10.0": {
+                    "headline": "v2.10.0 的平衡調整已反映在糖果計算功能中。",
+                    "detail": "在糖果計算功能中，等級 30 以下的寶可夢所需的糖果數量已減少。"
+                },
                 "add farfetch'd": {
                     "headline": "更新了$t(pokemons.Farfetch'd)的数据。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
