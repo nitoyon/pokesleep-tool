@@ -331,7 +331,21 @@ class PokemonStrength {
             skillLevel = Math.min(maxSkillLevel,
                 this.iv.skillLevel + (targetEventBonus.skillLevel ?? 0));
         }
-        const mainSkillBase = getSkillValue(mainSkill, skillLevel);
+
+        let mainSkillBase = getSkillValue(mainSkill, skillLevel);
+        if (mainSkill === "Ingredient Magnet S") {
+            // This event bonus is floored.
+            // (ref) https://pbs.twimg.com/media/GtEYoG3bEAACPG6?format=jpg&name=large
+            mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientMagnet ?? 1));
+        }
+        if (mainSkill.startsWith("Ingredient Draw S")) {
+            // This event bonus is floored(?)
+            mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientDraw ?? 1));
+        }
+        if (mainSkill.startsWith("Dream Shard Magnet S")) {
+            mainSkillBase *= (eventBonus?.dreamShard ?? 1);
+        }
+
         let mainSkillFactor = 1;
         if (mainSkill === "Charge Energy S") {
             mainSkillFactor = this.iv.nature.energyRecoveryFactor;
@@ -356,7 +370,7 @@ class PokemonStrength {
                 return [mainSkillValue, skillStrength];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
-                return [mainSkillValue * (eventBonus?.dreamShard ?? 1), 0];
+                return [mainSkillValue, 0];
 
             case "Charge Strength M":
             case "Charge Strength M (Bad Dreams)":
@@ -382,11 +396,9 @@ class PokemonStrength {
                 return [strengthBurst, strengthBurst];
 
             case "Ingredient Magnet S":
-                return [mainSkillValue * (eventBonus?.ingredientMagnet ?? 1), 0];
             case "Ingredient Draw S":
             case "Ingredient Draw S (Super Luck)":
             case "Ingredient Draw S (Hyper Cutter)":
-                return [mainSkillValue * (eventBonus?.ingredientDraw ?? 1), 0];
             case "Cooking Power-Up S":
             case "Tasty Chance S":
                 return [mainSkillValue, 0];
