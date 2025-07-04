@@ -262,7 +262,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param, berryStrength, eventBonus);
+                param, berryStrength, eventBonus, targetEventBonus);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
@@ -280,20 +280,22 @@ class PokemonStrength {
      * @param skillCount Skill count.
      * @param param Strength paramter.
      * @param berryStrength Strength per berry.
-     * @param eventBonus Event bonus or undefined.
+     * @param eventBonus Event bonus for all pokemon or undefined.
+     * @param targetEventBonus Event bonus for specified pokemon or undefined.
      * @returns [skillValue, skillStrength].
      * If skill is 'Dream Shard Magnet S', `skillValue` is the number of Dream Shards.
      * `skillStrength` is the strength got by the skill.
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        berryStrength: number, eventBonus: Partial<BonusEffects>|undefined
+        berryStrength: number, eventBonus: Partial<BonusEffects>|undefined,
+        targetEventBonus: Partial<BonusEffects>|undefined
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
         let skillLevel = this.iv.skillLevel;
-        if (eventBonus !== undefined) {
+        if (targetEventBonus !== undefined) {
             const maxSkillLevel = getMaxSkillLevel(mainSkill);
             skillLevel = Math.min(maxSkillLevel,
-                this.iv.skillLevel + (eventBonus.skillLevel ?? 0));
+                this.iv.skillLevel + (targetEventBonus.skillLevel ?? 0));
         }
         const mainSkillBase = getSkillValue(mainSkill, skillLevel);
         let mainSkillFactor = 1;
