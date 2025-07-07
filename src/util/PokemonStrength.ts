@@ -112,6 +112,8 @@ export interface StrengthResult {
     /**
      * Skill value got from the skillCount skill occurance
      * If skill is 'Dream Shard Magnet S', this value is the number of Dream Shards.
+     * If skill is 'Metronome' or 'Skill Copy', this value is equal to the skillCount.
+     * If skill is 'Ingredient Magnet S', this value is the number of ingredients.
      */
     skillValue: number;
     /** Strength got from the skillCount skill occurance */
@@ -387,7 +389,13 @@ class PokemonStrength {
                 return [mainSkillValue * (eventBonus?.ingredientDraw ?? 1), 0];
             case "Cooking Power-Up S":
             case "Tasty Chance S":
+                return [mainSkillValue, 0];
             case "Metronome":
+            case "Skill Copy":
+            case "Skill Copy (Transform)":
+            case "Skill Copy (Mimic)":
+                // returns skillCount as skillValue.
+                return [skillCount, 0];
             default:
                 return [mainSkillValue, 0];
         }
