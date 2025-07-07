@@ -130,9 +130,8 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     ) {
         return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
     }
-    if (skill === "Metronome") {
-        // TODO
-        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
-    }
+
+    // Return 0 for 'Metronome' or 'Skill Copy' since
+    // their value depends on the copied skill.
     return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
 }    

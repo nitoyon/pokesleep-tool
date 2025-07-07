@@ -351,7 +351,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
         mainSkill === "Skill Copy (Mimic)" ||
         mainSkill === "Skill Copy (Transform)"
     ) {
-        mainSkillValue = round2(result.skillCount);
+        mainSkillValue = round2(result.skillValue);
     }
     else if (mainSkill === "Energy for Everyone S (Lunar Blessing)") {
         mainSkillValue = round1(result.skillValue);
