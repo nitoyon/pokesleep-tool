@@ -5,15 +5,16 @@ import { Button } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { useTranslation } from 'react-i18next';
 
-const SpecialtyButton = React.memo(({specialty, checked, onClick}: {
+const SpecialtyButton = React.memo(({specialty, checked, disabled, onClick}: {
     specialty: PokemonSpecialty,
-    checked: boolean,
-    onClick: (value: PokemonSpecialty) => void,
+    checked?: boolean,
+    disabled?: boolean,
+    onClick?: (value: PokemonSpecialty) => void,
 }) => {
     const { t } = useTranslation();
     const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         const value = e.currentTarget.value as PokemonSpecialty;
-        onClick(value);
+        onClick?.(value);
     }, [onClick]);
 
     let spec: string = "";
@@ -23,12 +24,33 @@ const SpecialtyButton = React.memo(({specialty, checked, onClick}: {
         case "Skills": spec = "skill"; break;
     }
 
+    if (disabled === true) {
+        return <StyledDisabledButton
+            key={specialty} className={spec}>
+            {t(spec)}
+        </StyledDisabledButton>;
+    }
+
     return <StyledSpecialtyButton
             key={specialty} className={`${spec} ${checked ? 'checked' : ''}`} value={specialty}
             onClick={onTypeClick}>
             {t(spec)}
             {checked && <CheckIcon/>}
         </StyledSpecialtyButton>;
+});
+
+const StyledDisabledButton = styled("span")({
+    display: 'inline-block',
+    width: '4rem',
+    fontSize: '.6rem',
+    padding: '.1rem 0',
+    textAlign: 'center',
+    color: 'white',
+    borderRadius: '.6rem',
+    verticalAlign: '20%',
+    '&.berry': { backgroundColor: '#24d76a' },
+    '&.ingredient': { backgroundColor: '#fab855' },
+    '&.skill': { backgroundColor: '#44a2fd' },
 });
 
 const StyledSpecialtyButton = styled(Button)({
