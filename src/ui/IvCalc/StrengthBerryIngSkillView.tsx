@@ -341,7 +341,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
     if (settings.period === 3 || settings.tapFrequency === 'none') {
-            return <>ー</>;
+            return <article>ー</article>;
     }
 
     const mainSkill = pokemonIv.pokemon.skill;
