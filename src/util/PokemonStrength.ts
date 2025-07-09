@@ -50,6 +50,20 @@ export interface StrengthParameter extends EnergyParameter {
 }
 
 /**
+ * Respresents the result of ingredient strength calculation.
+ */
+export interface IngredientStrength {
+    /** Ingredient name. */
+    name: IngredientName;
+    /** Ingredient count. */
+    count: number;
+    /** Ingredient count by single help */
+    helpCount: number;
+    /** Ingredient strength. */
+    strength: number;
+}
+
+/**
  * Represents the result of strength calculation.
  */
 export interface StrengthResult {
@@ -58,13 +72,20 @@ export interface StrengthResult {
     /** Total strength (berry + ingredient + skill) */
     totalStrength: number;
 
+    /** Normal help count (not sneaky snacking) */
+    notFullHelpCount: number;
+    /** Sneaky snacking help count */
+    fullHelpCount: number;
+
     /** Berry ratio */
     berryRatio: number;
     /** Berry help count */
     berryHelpCount: number;
     /** Berry count per help */
     berryCount: number;
-    /** Strength per 1 berry */
+    /** Strength per 1 berry (area bonus not included) */
+    berryRawStrength: number;
+    /** Strength per 1 berry (area bonus included) */
     berryStrength: number;
     /** Total strength gained by berry */
     berryTotalStrength: number;
@@ -76,13 +97,13 @@ export interface StrengthResult {
     /** Ingredient strength */
     ingStrength: number;
     /** Ing1 name and count */
-    ing1: {name: IngredientName, count: number, strength: number};
+    ing1: IngredientStrength;
     /** Ing2 name and count */
-    ing2: {name: IngredientName, count: number, strength: number};
+    ing2: IngredientStrength;
     /** Ing3 name and count */
-    ing3: {name: IngredientName, count: number, strength: number}|undefined;
+    ing3: IngredientStrength|undefined;
     /** Ing1 ~ Ing3 name, count, strength summary */
-    ingredients: {name: IngredientName, count: number, strength: number}[];
+    ingredients: IngredientStrength[];
 
     /** Skill ratio */
     skillRatio: number;
@@ -91,6 +112,8 @@ export interface StrengthResult {
     /**
      * Skill value got from the skillCount skill occurance
      * If skill is 'Dream Shard Magnet S', this value is the number of Dream Shards.
+     * If skill is 'Metronome' or 'Skill Copy', this value is equal to the skillCount.
+     * If skill is 'Ingredient Magnet S', this value is the number of ingredients.
      */
     skillValue: number;
     /** Strength got from the skillCount skill occurance */
@@ -98,7 +121,7 @@ export interface StrengthResult {
 }
 
 /** Recipe level bonus table  */
-const recipeLevelBonus = {
+export const recipeLevelBonus = {
     1: 0,
     10: 18,
     20: 35,
@@ -128,6 +151,11 @@ class PokemonStrength {
     /** Get the PokemonIv to be calculated. */
     get pokemonIv(): PokemonIv {
         return this.iv;
+    }
+
+    /** Get the StrengthParameter to be used. */
+    get parameter(): StrengthParameter {
+        return this.param;
     }
 
     /**
@@ -202,39 +230,44 @@ class PokemonStrength {
             (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
         const ingEventAdd: number = (param.period !== 3 ? targetEventBonus?.ingredient ?? 0 : 0);
 
-        const ing1 = {...rp.ingredient1, strength: 0};
-        ing1.count = ingHelpCount * (1 / ingUnlock) * (ing1.count + ingEventAdd);
+        const ing1: IngredientStrength = {...rp.ingredient1, strength: 0,
+            helpCount: rp.ingredient1.count + ingEventAdd};
+        ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.helpCount;
         ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRatio;
 
-        const ing2 = {...rp.ingredient2, strength: 0};
+        const ing2 = {...rp.ingredient2, strength: 0,
+            helpCount: rp.ingredient2.count + ingEventAdd};
         ing2.count = level < 30 || ing2.count === 0 ? 0 :
-            ingHelpCount * (1 / ingUnlock) * (ing2.count + ingEventAdd);
+            ingHelpCount * (1 / ingUnlock) * ing2.helpCount;
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRatio;
         let ing3 = undefined;
-        ing3 = {...rp.ingredient3, strength: 0};
+        ing3 = {...rp.ingredient3, strength: 0,
+            helpCount: rp.ingredient3.count + ingEventAdd};
         ing3.count = level < 60 || ing3.count === 0 ? 0 :
-            ingHelpCount * (1 / ingUnlock) * (ing3.count + ingEventAdd);
+            ingHelpCount * (1 / ingUnlock) * ing3.helpCount;
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
-        const ing: {[name: string]: {name: IngredientName, count: number, strength: number}} = {};
+        const ing: {[name: string]: IngredientStrength} = {};
         const ingNames: IngredientName[] = [];
-        ing[ing1.name] = {name: ing1.name, count: ing1.count, strength: ing1.strength};
+        ing[ing1.name] = {...ing1};
         ingNames.push(ing1.name);
         if (ing2.count > 0) {
             if (!(ing2.name in ing)) {
-                ing[ing2.name] = {name: ing2.name, count: 0, strength: 0};
+                ing[ing2.name] = {name: ing2.name, count: 0, helpCount: 0, strength: 0};
                 ingNames.push(ing2.name);
             }
             ing[ing2.name].count += ing2.count;
+            ing[ing2.name].helpCount += ing2.helpCount;
             ing[ing2.name].strength += ing2.strength;
         }
         if (ing3 !== undefined && ing3.count > 0) {
             if (!(ing3.name in ing)) {
-                ing[ing3.name] = {name: ing3.name, count: 0, strength: 0};
+                ing[ing3.name] = {name: ing3.name, count: 0, helpCount: 0, strength: 0};
                 ingNames.push(ing3.name);
             }
             ing[ing3.name].count += ing3.count;
+            ing[ing3.name].helpCount += ing3.helpCount;
             ing[ing3.name].strength += ing3.strength;
         }
         const ingredients = ingNames.map(x => ing[x]);
@@ -243,9 +276,10 @@ class PokemonStrength {
         const berryRatio = (this.iv.pokemon.frequency > 0 ? 1 - ingRatio : 0);
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
         const berryCount = rp.berryCount;
-        const berryStrength = rp.berryStrength;
+        const berryRawStrength = rp.berryStrength;
+        const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (1 + param.fieldBonus / 100) * (this.isFavoriteBerry(param) ? 2 : 1);
+            (this.isFavoriteBerry() ? 2 : 1);
 
         // calc skill
         const skillRatio = rp.skillRatio * (targetEventBonus?.skillTrigger ?? 1);
@@ -268,9 +302,9 @@ class PokemonStrength {
         const totalStrength = ingStrength + berryTotalStrength + skillStrength;
 
         return {
-            energy, totalStrength,
+            energy, totalStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
-            berryRatio, berryHelpCount, berryCount, berryStrength, berryTotalStrength,
+            berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength,
         };
     }
@@ -279,7 +313,7 @@ class PokemonStrength {
      * Get skill value and skill strength.
      * @param skillCount Skill count.
      * @param param Strength paramter.
-     * @param berryStrength Strength per berry.
+     * @param berryStrength Strength per berry (area bonus included).
      * @param eventBonus Event bonus for all pokemon or undefined.
      * @param targetEventBonus Event bonus for specified pokemon or undefined.
      * @returns [skillValue, skillStrength].
@@ -297,15 +331,29 @@ class PokemonStrength {
             skillLevel = Math.min(maxSkillLevel,
                 this.iv.skillLevel + (targetEventBonus.skillLevel ?? 0));
         }
-        const mainSkillBase = getSkillValue(mainSkill, skillLevel);
+
+        let mainSkillBase = getSkillValue(mainSkill, skillLevel);
+        if (mainSkill === "Ingredient Magnet S") {
+            // This event bonus is floored.
+            // (ref) https://pbs.twimg.com/media/GtEYoG3bEAACPG6?format=jpg&name=large
+            mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientMagnet ?? 1));
+        }
+        if (mainSkill.startsWith("Ingredient Draw S")) {
+            // This event bonus is floored(?)
+            mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientDraw ?? 1));
+        }
+        if (mainSkill.startsWith("Dream Shard Magnet S")) {
+            mainSkillBase *= (eventBonus?.dreamShard ?? 1);
+        }
+
         let mainSkillFactor = 1;
         if (mainSkill === "Charge Energy S") {
             mainSkillFactor = this.iv.nature.energyRecoveryFactor;
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
-        const berryWithFav = berryStrength * (this.isFavoriteBerry(param) ? 2 : 1);
-        const strengthPerBerry = 100;
+        const berryWithFav = berryStrength * (this.isFavoriteBerry() ? 2 : 1);
+        const strengthPerBerry = Math.ceil(100 * (1 + param.fieldBonus / 100));
         switch (mainSkill) {
             case "Charge Energy S":
             case "Charge Energy S (Moonlight)":
@@ -316,13 +364,13 @@ class PokemonStrength {
                 // asume same type species
                 const selfCount = [7, 12, 17, 19, 24, 29][skillLevel - 1];
                 const fromMember = [1, 1, 1, 2, 2, 2][skillLevel - 1];
-                const skillStrength = (1 + param.fieldBonus / 100) * (
+                const skillStrength = (
                     selfCount * berryWithFav + fromMember * strengthPerBerry * 4
                 ) * skillCount;
                 return [mainSkillValue, skillStrength];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
-                return [mainSkillValue * (eventBonus?.dreamShard ?? 1), 0];
+                return [mainSkillValue, 0];
 
             case "Charge Strength M":
             case "Charge Strength M (Bad Dreams)":
@@ -341,28 +389,33 @@ class PokemonStrength {
             case "Berry Burst (Disguise)":
             case "Berry Burst":
                 const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
-                const strengthBurst =  (1 + param.fieldBonus / 100) * (
+                const strengthBurst =  (
                     mainSkillValue * berryWithFav +
                     4 * strengthPerBerry * skillCount * extra
                 );
                 return [strengthBurst, strengthBurst];
 
             case "Ingredient Magnet S":
-                return [mainSkillValue * (eventBonus?.ingredientMagnet ?? 1), 0];
             case "Ingredient Draw S":
             case "Ingredient Draw S (Super Luck)":
             case "Ingredient Draw S (Hyper Cutter)":
-                return [mainSkillValue * (eventBonus?.ingredientDraw ?? 1), 0];
             case "Cooking Power-Up S":
             case "Tasty Chance S":
+                return [mainSkillValue, 0];
             case "Metronome":
+            case "Skill Copy":
+            case "Skill Copy (Transform)":
+            case "Skill Copy (Mimic)":
+                // returns skillCount as skillValue.
+                return [skillCount, 0];
             default:
                 return [mainSkillValue, 0];
         }
     }
 
-    isFavoriteBerry(param: StrengthParameter): boolean {
+    isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
+        const param = this.param;
         switch (param.fieldIndex) {
             case 0: types = param.favoriteType; break;
             case 1: types = ["water", "flying", "fairy"]; break;

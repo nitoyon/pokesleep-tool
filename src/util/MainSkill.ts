@@ -80,7 +80,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
         return [400, 569, 785, 1083, 1496, 2066, 3002][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Stockpile)") {
-        return [600, 853, 1177, 1625, 2243, 3099, 3984][skillLevel - 1];
+        return [623.96, 887.03, 1224.08, 1690.11, 2232.54, 3222.7, 4681.77][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
         return [500, 711.5, 981.5, 1354, 1870, 2582.5, 3752.5][skillLevel - 1];
@@ -130,9 +130,54 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     ) {
         return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
     }
-    if (skill === "Metronome") {
-        // TODO
-        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
-    }
+
+    // Return 0 for 'Metronome' or 'Skill Copy' since
+    // their value depends on the copied skill.
     return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
 }    
+
+/**
+ * Returns the minimum and maximum value of the skill.
+ * @param skill Main skill name.
+ * @param skillLevel Main skill level.
+ * @returns A tuple of the minimum and maximum value of the skill.
+ */
+export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [number, number] {
+    switch (skill) {
+        case "Charge Strength S (Random)":
+            switch (skillLevel) {
+                case 1: return [200, 800];
+                case 2: return [285, 1138];
+                case 3: return [393, 1570];
+                case 4: return [542, 2166];
+                case 5: return [748, 2992];
+                case 6: return [1033, 4132];
+                case 7: return [1501, 6004];
+            }
+            break;
+        case "Charge Strength S (Stockpile)":
+            switch (skillLevel) {
+                case 1: return [600, 10980];
+                case 2: return [853, 15610];
+                case 3: return [1177, 21540];
+                case 4: return [1625, 29740];
+                case 5: return [2243, 41047];
+                case 6: return [3099, 56712];
+                case 7: return [4502, 82386];
+            }
+            break;
+        case "Dream Shard Magnet S (Random)":
+            switch (skillLevel) {
+                case 1: return [120, 480];
+                case 2: return [170, 680];
+                case 3: return [240, 960];
+                case 4: return [335, 1340];
+                case 5: return [460, 1840];
+                case 6: return [630, 2520];
+                case 7: return [900, 3600];
+                case 8: return [1150, 4600];
+            }
+            break;
+    }
+    return [0, 0];
+}
