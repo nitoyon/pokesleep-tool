@@ -170,12 +170,6 @@ class PokemonStrength {
         if (settings.level !== 0) {
             pokemonIv = pokemonIv.changeLevel(settings.level);
         }
-        // change skill level if `maxSkillLevel` is specified
-        if (settings.maxSkillLevel) {
-            pokemonIv = pokemonIv.clone();
-            pokemonIv.skillLevel = 10;
-            pokemonIv.normalize();
-        }
 
         // evolve the pokemon if `evolved` is specified
         if (!settings.evolved) {
@@ -325,12 +319,7 @@ class PokemonStrength {
         targetEventBonus: Partial<BonusEffects>|undefined
     ): [number, number] {
         const mainSkill = this.iv.pokemon.skill;
-        let skillLevel = this.iv.skillLevel;
-        if (targetEventBonus !== undefined) {
-            const maxSkillLevel = getMaxSkillLevel(mainSkill);
-            skillLevel = Math.min(maxSkillLevel,
-                this.iv.skillLevel + (targetEventBonus.skillLevel ?? 0));
-        }
+        const skillLevel = this.getSkillLevel();
 
         let mainSkillBase = getSkillValue(mainSkill, skillLevel);
         if (mainSkill === "Ingredient Magnet S") {
@@ -412,6 +401,27 @@ class PokemonStrength {
                 return [mainSkillValue, 0];
         }
     }
+
+    /**
+     * Calculates the current skill level based on the event bonus and parameters.
+     * @returns Current skill level.
+     */
+    getSkillLevel(): number {
+        let skillLevel = this.iv.skillLevel;
+        const param = this.param;
+        const maxSkillLevel = getMaxSkillLevel(this.iv.pokemon.skill);
+        const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+            this.iv.pokemon);
+        if (targetEventBonus !== undefined) {
+            skillLevel = Math.min(maxSkillLevel,
+                this.iv.skillLevel + (targetEventBonus.skillLevel ?? 0));
+        }
+        if (param.maxSkillLevel) {
+            skillLevel = maxSkillLevel;
+        }
+        return skillLevel;
+    }
+
 
     isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
