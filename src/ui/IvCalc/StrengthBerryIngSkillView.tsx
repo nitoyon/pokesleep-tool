@@ -763,13 +763,9 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         </ToggleButton>
     ));
 
-    let skillLevel = iv.skillLevel;
+    const skillLevel = strength.getSkillLevel();
     const eventBonus = getEventBonusIfTarget(settings.event,
         settings.customEventBonus, iv.pokemon);
-    if (eventBonus !== undefined) {
-        skillLevel = Math.min(maxSkillLevel,
-            iv.skillLevel + (eventBonus.skillLevel ?? 0));
-    }
     const [skillValueText, skillValueFooter] = getSkillValueText(strength,
         skillLevel, t);
 
@@ -815,9 +811,10 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </FormControl>
             </section>
         }
-        {!isCountOnly && (eventBonus?.skillLevel ?? 0) > 0 && skillLevel !== iv.skillLevel &&
+        {!isCountOnly && ((eventBonus?.skillLevel ?? 0) > 0 || settings.maxSkillLevel) &&
+        skillLevel !== iv.skillLevel &&
                 <div className="skillLevelNotice">
-                    <Trans i18nKey="skill level bonus affected"
+                    <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
                         components={{ level: <strong>{skillLevel}</strong>}}/>
                 </div>
         }
