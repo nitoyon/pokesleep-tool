@@ -763,13 +763,9 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         </ToggleButton>
     ));
 
-    let skillLevel = iv.skillLevel;
+    const skillLevel = strength.getSkillLevel();
     const eventBonus = getEventBonusIfTarget(settings.event,
         settings.customEventBonus, iv.pokemon);
-    if (eventBonus !== undefined) {
-        skillLevel = Math.min(maxSkillLevel,
-            iv.skillLevel + (eventBonus.skillLevel ?? 0));
-    }
     const [skillValueText, skillValueFooter] = getSkillValueText(strength,
         skillLevel, t);
 
