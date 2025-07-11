@@ -811,9 +811,10 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </FormControl>
             </section>
         }
-        {!isCountOnly && (eventBonus?.skillLevel ?? 0) > 0 && skillLevel !== iv.skillLevel &&
+        {!isCountOnly && ((eventBonus?.skillLevel ?? 0) > 0 || settings.maxSkillLevel) &&
+        skillLevel !== iv.skillLevel &&
                 <div className="skillLevelNotice">
-                    <Trans i18nKey="skill level bonus affected"
+                    <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
                         components={{ level: <strong>{skillLevel}</strong>}}/>
                 </div>
         }
