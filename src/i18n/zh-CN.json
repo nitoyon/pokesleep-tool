@@ -485,6 +485,8 @@
         "ing-c": "C 食材 (在Lv 60 解锁)",
         "sleeptype": "睡眠类型",
         "pokedexno": "图鉴编号",
+        "arrival": "登场",
+        "initial pokemon": "初期宝可梦",
         "main skill": "主技能",
         "sub skills": "副技能",
         "unlocked only": "只包含已解锁",

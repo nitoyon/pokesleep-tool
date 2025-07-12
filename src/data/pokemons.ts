@@ -16,6 +16,8 @@ export interface PokemonData {
     id: number;
     /** Pokemon name in English */
     name: string;
+    /** Arrival date of the Pokémon */
+    arrival: string;
     /** Pokemon form */
     form: undefined|'Festivo'|'Holiday'|'Alola';
     /** Sleep type of the pokemon */

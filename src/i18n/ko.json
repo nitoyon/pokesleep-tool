@@ -478,6 +478,8 @@
         "ing-c": "식재료 C (레벨 60에서 추가)",
         "sleeptype": "수면 타입",
         "pokedexno": "도감 번호",
+        "arrival": "등장",
+        "initial pokemon": "초기 포켓몬",
         "main skill": "메인 스킬",
         "sub skills": "서브 스킬",
         "unlocked only": "오직 잠금 해제됨",

@@ -485,6 +485,8 @@
         "ing-c": "C 食材 (Lv 60 で追加)",
         "sleeptype": "睡眠タイプ",
         "pokedexno": "図鑑番号",
+        "arrival": "登場順",
+        "initial pokemon": "初期ポケモン",
         "main skill": "メインスキル",
         "sub skills": "サブスキル",
         "unlocked only": "解放済みのみ",

@@ -20,6 +20,7 @@ export interface PokemonOption {
     form?: string;
     name: string;
     localName: string;
+    arrival: string;
     specialty: PokemonSpecialty;
     sleepType: SleepType;
     type: PokemonType;
@@ -49,6 +50,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
                 form: pokemon.form,
                 name: pokemon.name,
                 localName: t(`pokemons.${pokemon.name}`),
+                arrival: pokemon.arrival,
                 specialty: pokemon.specialty,
                 sleepType: pokemon.sleepType,
                 type: pokemon.type,

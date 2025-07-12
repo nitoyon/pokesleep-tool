@@ -485,6 +485,8 @@
         "ing-c": "C 食材 (Lv 60 開放)",
         "sleeptype": "睡眠類型",
         "pokedexno": "圖鑒編號",
+        "arrival": "登場",
+        "initial pokemon": "初期寶可夢",
         "main skill": "主技能",
         "sub skills": "副技能",
         "unlocked only": "只包含已開放",
