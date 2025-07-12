@@ -750,7 +750,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
 
     const iv = strength.pokemonIv;
     const skill = iv.pokemon.skill.replace(" (Random)", "");
-    const skillValue = Math.round(result.skillValue / result.skillCount);
+    const skillValue = result.skillCount === 0 ? 0 :
+        Math.round(result.skillValue / result.skillCount);
     const footnote = t(`strength skill info.${skill}`);
     const skillName = iv.pokemon.skill;
     const isCountOnly = skillName === "Metronome" ||
@@ -836,7 +837,7 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
     if (skill.startsWith('Charge Strength')) {
         return getChargeStrengthValueText(strength, skillLevel, t);
     }
-    if (skill === 'Ingredient Magnet S' ||
+    if (skill.startsWith('Ingredient Magnet S') ||
         skill.startsWith("Ingredient Draw S")
     ) {
         return getIngredientGetValueText(strength, skillLevel, t);
@@ -852,7 +853,7 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
         return getEnergyRecoveryValueText(strength, skillLevel, t,
             t('e4e per pokemon'));
     }
-    if (skill === 'Cooking Power-Up S') {
+    if (skill.startsWith('Cooking Power-Up S')) {
         return getNormalSkillValueText(t, t('pot size power up'));
     }
     if (skill === 'Tasty Chance S') {
