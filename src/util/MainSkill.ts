@@ -1,5 +1,6 @@
 
 export type MainSkillName = "Ingredient Magnet S" |
+    "Ingredient Magnet S (Plus)" |
     "Charge Energy S" |
     "Charge Energy S (Moonlight)" |
     "Charge Strength S" |
@@ -15,6 +16,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Energy for Everyone S (Lunar Blessing)" |
     "Extra Helpful S" |
     "Cooking Power-Up S" |
+    "Cooking Power-Up S (Minus)" |
     "Tasty Chance S" |
     "Helper Boost" |
     "Berry Burst" |
@@ -43,12 +45,14 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
         return 8;
     }
     if (skill === "Ingredient Magnet S" ||
+        skill === "Ingredient Magnet S (Plus)" ||
         skill === "Charge Strength M" ||
         skill === "Charge Strength S" ||
         skill === "Charge Strength S (Random)" ||
         skill === "Charge Strength S (Stockpile)" ||
         skill === "Extra Helpful S" ||
         skill === "Cooking Power-Up S" ||
+        skill === "Cooking Power-Up S (Minus)" ||
         skill === "Metronome" ||
         skill === "Skill Copy (Transform)" ||
         skill === "Skill Copy (Mimic)" ||

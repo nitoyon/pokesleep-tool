@@ -3555,6 +3555,303 @@
         }
     },
     {
+        "id": 252,
+        "name": "Treecko",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "grass",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 252,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 253,
+        "name": "Grovyle",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "grass",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 252,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 254,
+        "name": "Sceptile",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "grass",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 20,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 252,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 255,
+        "name": "Torchic",
+        "sleepType": "snoozing",
+        "exp": 600,
+        "type": "fire",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 255,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 256,
+        "name": "Combusken",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "fighting",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 255,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 257,
+        "name": "Blaziken",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "fighting",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 20,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 255,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 258,
+        "name": "Mudkip",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "water",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 258,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 259,
+        "name": "Marshtomp",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "ground",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 258,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 260,
+        "name": "Swampert",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "ground",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 20,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 258,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 280,
         "name": "Ralts",
         "sleepType": "snoozing",
@@ -3915,6 +4212,72 @@
         "ing3": {
             "name": "soy",
             "c3": 7
+        }
+    },
+    {
+        "id": 311,
+        "name": "Plusle",
+        "sleepType": "snoozing",
+        "exp": 600,
+        "type": "electric",
+        "specialty": "unknown",
+        "skill": "Ingredient Magnet S (Plus)",
+        "fp": 16,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 312,
+        "name": "Minun",
+        "sleepType": "snoozing",
+        "exp": 600,
+        "type": "electric",
+        "specialty": "unknown",
+        "skill": "Cooking Power-Up S (Minus)",
+        "fp": 16,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
         }
     },
     {

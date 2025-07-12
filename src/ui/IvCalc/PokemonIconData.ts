@@ -609,6 +609,78 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#c2dba1'},
         {x: 0, y: 0.8, w: 1, h: 0.2, color: '#788bb7'},
     ],
+    // Treecko
+    '252': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#d3f18e'},
+        {x: 0.15, y: 0.5, w: 0.3, h: 0.4, r: 0.3, color: '#dc5c58'},
+        {x: 0.6, y: 0, w: 0.4, h: 1, color: '#6fa473'},
+    ],
+    // Grovyle
+    '253': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#aaea92'},
+        {x: 0.15, y: 0.4, w: 0.3, h: 0.45, r: 0.3, color: '#df6b7a'},
+        {x: 0.8, y: 0, w: 0.3, h: 1, color: '#6d9459'},
+    ],
+    // Sceptile
+    '254': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#a7e68f'},
+        {x: -0.1, y: 0.7, w: 0.4, h: 0.1, r: 0.05, color: '#df6c7a'},
+        {x: 0.4, y: 0.7, w: 0.6, h: 0.1, r: 0.05, color: '#6c925a'},
+        {x: 0.5, y: 0.55, w: 0.1, h: 0.4, r: 0.05, color: '#6c925a'},
+        {x: 0.675, y: 0.55, w: 0.1, h: 0.4, r: 0.05, color: '#6c925a'},
+        {x: 0.85, y: 0.55, w: 0.1, h: 0.4, r: 0.05, color: '#6c925a'},
+        {x: 0.28, y: 0.5, w: 0.15, h: 0.15, r: 0.15, color: '#f9e088'},
+        {x: 0.24, y: 0.31, w: 0.15, h: 0.15, r: 0.15, color: '#f9e088'},
+        {x: 0.20, y: 0.12, w: 0.15, h: 0.15, r: 0.15, color: '#f9e088'},
+    ],
+    // Torchic 
+    '255': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#e9ae5c'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#f6e96e'},
+        {x: 0.25, y: 0.4, w: 0.5, h: 0.35, r: 0.3, color: '#faf29c'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#f0e17c'},
+    ],
+    // Combusken
+    '256': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#faf587'},
+        {x: 0, y: 0.55, w: 1, h: 0.3, color: '#e6a363'},
+        {x: 0, y: 0.85, w: 1, h: 0.2, color: '#bcb5b0'},
+        {x: 0, y: 0, w: 1, h: 0.15, color: '#e4a264'},
+        {x: 0, y: 0.95, w: 1, h: 0.05, color: '#ffffff'},
+        {x: 0.4, y: 0.3, w: 0.2, h: 0.08, r: 0.3, color: '#e5a363'},
+    ],
+    // Blaziken
+    '257': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fcf7cd'},
+        {x: 0, y: 0.5, w: 1, h: 0.4, color: '#dd6762'},
+        {x: 0, y: 0.8, w: 1, h: 0.2, color: '#f4e370'},
+    ],
+    // Mudkip
+    '258': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#86cff3'},
+        {x: -0.1, y: 0.3, w: 0.25, h: 0.3, r: 0.05, color: '#e7a565'},
+        {x: 0.8, y: 0.3, w: 0.25, h: 0.3, r: 0.05, color: '#e7a565'},
+        {x: 0.2, y: 0.6, w: 0.6, h: 0.6, r: 0.3, color: '#c0e4f4'},
+    ],
+    // Marshtomp
+    '259': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#a0f0f2'},
+        {x: 0, y: 0.66, w: 1, h: 0.6, color: '#d8fafa'},
+        {x: 0, y: 0.1, w: 0.15, h: 1, color: '#e9b05c'},
+        {x: 0.85, y: 0.1, w: 0.15, h: 1, color: '#e9b05c'},
+        {x: 0, y: 0, w: 1, h: 0.2, color: '#647986'},
+    ],
+    // Swampert
+    '260': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#85cef3'},
+        {x: 0.2, y: 0.55, w: 0.6, h: 0.8, r: 0.3, color: '#f0f5fc'},
+        {x: 0, y: 0, w: 0.15, h: 0.35, r: 0.1, color: '#e9b05c'},
+        {x: 0.85, y: 0, w: 0.15, h: 0.35, r: 0.1, color: '#e9b05c'},
+        {x: 0.04, y: 0.7, w: 0.12, h: 0.22, r: 0.1, color: '#e9b05c'},
+        {x: 0.85, y: 0.7, w: 0.12, h: 0.22, r: 0.1, color: '#e9b05c'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#667b89'},
+        {x: 0, y: 0.95, w: 1, h: 0.1, color: '#667b89'},
+    ],
     // Ralts
     '280': [
         {x: 0, y: 0, w: 1, h: 1, color: '#b6d7af'},
@@ -684,6 +756,24 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.3, color: '#f3efee'},
         {x: 0.6, y: 0.08, w: 0.15, h: 0.15, r: 0.15, color: '#78cad4'},
         {x: 0, y: 0.7, w: 1, h: 0.1, color: '#f3efee'},
+    ],
+    // Plusle
+    '311': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fdfecc'},
+        {x: -0.08, y: 0.5, w: 0.3, h: 0.3, r: 0.3, color: '#e07278'},
+        {x: 0.78, y: 0.5, w: 0.3, h: 0.3, r: 0.3, color: '#e07278'},
+        {x: -0.03, y: 0.624, w: 0.2, h: 0.06, color: '#fdfecc'},
+        {x: 0.04, y: 0.56, w: 0.06, h: 0.18, color: '#fdfecc'},
+        {x: 0.83, y: 0.624, w: 0.2, h: 0.06, color: '#fdfecc'},
+        {x: 0.89, y: 0.56, w: 0.06, h: 0.18, color: '#fdfecc'},
+    ],
+    // Minun
+    '312': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fdfecb'},
+        {x: -0.08, y: 0.5, w: 0.3, h: 0.3, r: 0.3, color: '#97ddfb'},
+        {x: 0.78, y: 0.5, w: 0.3, h: 0.3, r: 0.3, color: '#97ddfb'},
+        {x: -0.03, y: 0.624, w: 0.2, h: 0.06, color: '#fdfecb'},
+        {x: 0.83, y: 0.624, w: 0.2, h: 0.06, color: '#fdfecb'},
     ],
     // Gulpin
     '316': [
