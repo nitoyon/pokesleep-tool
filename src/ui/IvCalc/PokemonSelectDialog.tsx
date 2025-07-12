@@ -12,6 +12,8 @@ import { PokemonOption } from './PokemonTextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
+const releaseDate = '2023-07-17';
+
 const StyledDialog = styled(Dialog)({
     '& > div.MuiDialog-container > div.MuiPaper-root': {
         // extend dialog width
@@ -269,6 +271,7 @@ export class PokemonFilterConfig {
                 idForm: -1,
                 name: '',
                 localName: '',
+                arrival: releaseDate,
                 specialty: 'Berries',
                 sleepType: 'dozing',
                 type: 'normal',
@@ -292,7 +295,7 @@ interface PokemonDialogConfig {
     /** Filter config. */
     filter: PokemonFilterConfig,
     /** Sort type. */
-    sort: "sleeptype"|"name"|"pokedexno"|"type";
+    sort: "sleeptype"|"name"|"pokedexno"|"type"|"arrival";
     /** Descending (true) or ascending (false). */
     descending: boolean;
 }
@@ -373,6 +376,9 @@ const PokemonSelectDialog = React.memo(({
                     "Paldea");
             case 'type':
                 return option.type;
+            case 'arrival':
+                return option.arrival === releaseDate ? 'initial pokemon' :
+                    option.arrival.substring(0, 4);
             default: return '';
         }
     }, [sortType]);
@@ -385,6 +391,10 @@ const PokemonSelectDialog = React.memo(({
             headerLabel = t(`types.${params.group}`);
         } else if (sortType === 'pokedexno') {
             headerLabel = t(`generation.${params.group}`);
+        } else if (sortType === 'arrival') {
+            if (params.group === 'initial pokemon') {
+                headerLabel = t('initial pokemon');
+            }
         }
         return <li key={params.group}>
             <GroupHeader className={params.group}>{headerLabel}</GroupHeader>
@@ -435,6 +445,14 @@ const PokemonSelectDialog = React.memo(({
                 return (at === bt ? a.id - b.id : at - bt);
             });
             break;
+        case 'arrival':
+            options = pokemonOptions.sort((a, b) => {
+                if (a.arrival !== b.arrival) {
+                    return a.arrival > b.arrival ? 1 : -1;
+                }
+                return (a.id - b.id) * (descending ? -1 : 1);
+            });
+            break;
         default:
             throw new Error('invalid sort type');
     }
@@ -480,7 +498,7 @@ const PokemonSelectDialog = React.memo(({
             onClose={onAutocompleteClose}
             onChange={onAutocompleteChange}/>
         <PokemonFilterFooter
-            sortTypes={["pokedexno", "name", "sleeptype", "type"]}
+            sortTypes={["pokedexno", "name", "sleeptype", "type", "arrival"]}
             value={{
                 isFiltered: config.filter.isFiltered,
                 sort: config.sort, descending: config.descending,
@@ -548,7 +566,7 @@ function loadPokemonDialogConfig(): PokemonDialogConfig {
     }
     ret.filter.load(json.filter);
     if (typeof(json.sort) === "string" &&
-        ["sleeptype", "name", "pokedexno", "type"].includes(json.sort)) {
+        ["sleeptype", "name", "pokedexno", "type", "arrival"].includes(json.sort)) {
         ret.sort = json.sort;
     }
     if (typeof(json.descending) === "boolean") {
