@@ -205,9 +205,11 @@ class PokemonStrength {
         const level = rp.level;
         const countRatio = param.period / 24;
         const energy = new Energy(this.iv).calculate(param);
-        const notFullHelpCount = (energy.helpCount.awake + energy.helpCount.asleepNotFull) *
-            countRatio;
-        const fullHelpCount = energy.helpCount.asleepFull * countRatio;
+        const notFullHelpCount = param.tapFrequency === 'none' ? 0 :
+            (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRatio;
+        const fullHelpCount = param.tapFrequency === 'none' ?
+            (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRatio :
+            energy.helpCount.asleepFull * countRatio;
         const eventBonus = getEventBonus(param.event, param.customEventBonus);
         const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
             this.iv.pokemon);
@@ -217,7 +219,7 @@ class PokemonStrength {
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
         const ingStrengthRatio = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
             (1 + param.fieldBonus / 100) * (eventBonus?.dish ?? 1);
-        const ingRatio = param.tapFrequency === 'none' ? 0 : rp.ingredientRatio;
+        const ingRatio = rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = 1 +
             (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
