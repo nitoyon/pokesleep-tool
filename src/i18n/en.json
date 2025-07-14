@@ -16,7 +16,7 @@
             "notice detail2": "",
             "news": {
                 "add hoenn": {
-                    "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle) and $t(pokemons.Minun) has been added.",
+                    "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle) and $t(pokemons.Minun) have been added.",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
                 },
                 "v2.10.0": {
