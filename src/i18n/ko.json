@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add hoenn": {
+                    "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle), 그리고 $t(pokemons.Minun)의 데이터가 추가되었습니다.",
+                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다. 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
+                },
                 "v2.10.0": {
                     "headline": "v2.10.0의 밸런스 조정이 사탕 계산 기능에 반영되었습니다.",
                     "detail": "사탕 계산 기능에서 레벨 30 이하 포켓몬의 사탕 사용량이 감소했습니다."
@@ -437,7 +441,7 @@
         "strength restriction2": "기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
         "strength skill info": {
             "Ingredient Magnet S": "이 값은 총 강도량에 포함되지 않습니다.",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)",
+            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) 자신 외에 '플러스'나 '마이너스' 특성을 가진 포켓몬이 팀에 있는 경우는 고려하지 않습니다.",
             "Charge Energy S": "이 값은 총 강도량에 포함되지 않습니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
             "Charge Strength S": "",
             "Charge Strength S (Stockpile)": "$t(base strength)의 기대값은 RaenonX의 집계 결과 (토해내기 확률: 26.5%)를 바탕으로 계산되었습니다.",
@@ -450,7 +454,7 @@
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)\n같은 타입의 포켓몬 2마리일 것으로 가정합니다. 강도량에 미치는 영향은 도움 1회당 100 (필드 보너스 없음)으로 추정됩니다.",
             "Extra Helpful S": "스킬에 의해 활성화된 도움 횟수를 표시합니다. 총 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다.",
             "Cooking Power-Up S": "스킬의 효과는 총 강도량에 포함되지 않습니다.",
-            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)",
+            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S) 자신 외에 '플러스'나 '마이너스' 특성을 가진 포켓몬이 팀에 있는 경우는 고려하지 않습니다.",
             "Helper Boost": "같은 타입의 포켓몬 3마리를 가정하고 있습니다. 강도량에 미치는 영향은 도움 1회당 100 (필드 보너스 없음)으로 추정됩니다.",
             "Berry Burst (Disguise)": "큰 성공이 발생하지 않을 것으로 가정합니다. $t(strength skill info.Berry Burst)",
             "Berry Burst": "다른 포켓몬은 1개의 열매당 100의 힘을 얻는 것으로 추정됩니다 (지역 보너스 없이).",

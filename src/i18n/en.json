@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add hoenn": {
+                    "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle) and $t(pokemons.Minun) has been added.",
+                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                },
                 "v2.10.0": {
                     "headline": "Balance adjustments in v2.10.0 have been reflected in the Candy Calculator feature.",
                     "detail": "In the Candy Calculator feature, the candy usage for Pokémon below level 30 has been reduced."
@@ -450,7 +454,7 @@
         "strength restriction2": "Energy recovery via Charge Energy S is not included in the calculations.",
         "strength skill info": {
             "Ingredient Magnet S": "This value is not counted towards the total strength amount.",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)",
+            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) It doesn't consider whether there are other Pokémon on the team with the Plus or Minus skill.",
             "Charge Energy S": "This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",
@@ -464,7 +468,7 @@
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)\nIt is assumed that there are 2 Pokémon of the same type. The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "The effect of skills is not counted towards the total strength amount.",
-            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)",
+            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)  It doesn't consider whether there are other Pokémon on the team with the Plus or Minus skill.",
             "Helper Boost": "It is assumed that there are 3 Pokémon of the same type. The impact on the strength amount is estimated at 100 per usual help (without area bonuses).",
             "Berry Burst (Disguise)": "It is assumed that a great success will not occur. $t(strength skill info.Berry Burst)",
             "Berry Burst": "Other Pokémon are estimated to gain 100 strength per berry (without area bonuses).",

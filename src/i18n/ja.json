@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add hoenn": {
+                    "headline": "$t(pokemons.Treecko)、$t(pokemons.Torchic)、$t(pokemons.Mudkip)、$t(pokemons.Plusle)、$t(pokemons.Minun)たちのデータを追加しました。",
+                    "detail": "食材確率・スキル確率については、RP Collection の情報を参照しています。"
+                },
                 "v2.10.0": {
                     "headline": "v2.10.0 でのバランス調整をアメ計算機能に反映しました。",
                     "detail": "アメ計算機能において、Lv30 以下のポケモンのアメ使用量が減っています。"
@@ -442,7 +446,7 @@
         "strength restriction2": "げんきチャージSによるげんき回復は考慮されていません。",
         "strength skill info": {
             "Ingredient Magnet S": "スキルによる食材は、合計エナジー量には換算していません。",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)",
+            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合については考慮していません。",
             "Charge Energy S": "スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",
@@ -456,7 +460,7 @@
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)\n同タイプのポケモン 2 体と仮定します。エナジー量への影響は、他のポケモンは 1 きのみあたり 100 エナジー (フィールドボーナスなしのとき) として見積もっています。",
             "Extra Helpful S": "スキルによって発動する [おてつだい回数] を表示してます。合計エナジー量へは、1おてつだいあたり 300 (フィールドボーナスなしのとき) として計算しています。",
             "Cooking Power-Up S": "スキルの効果は、合計エナジー量には換算していません。",
-            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)",
+            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合については考慮していません。",
             "Helper Boost": "同タイプのポケモン 3 体と仮定しています。エナジー量への影響は、1おてつだいあたり 100 (フィールドボーナスなしのとき) として見積もっています。",
             "Berry Burst (Disguise)": "大成功は起きないものと仮定しています。$t(strength skill info.Berry Burst)",
             "Berry Burst": "他のポケモンは 1 きのみあたり 100 エナジー (フィールドボーナスなしのとき) として見積もっています。",
