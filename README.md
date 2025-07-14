@@ -1,12 +1,9 @@
-# Research Calc for Pokémon Sleep
+# Calc Tools for Pokémon Sleep
 
-https://nitoyon.github.io/pokesleep-tool/
+- [IV Calc](https://nitoyon.github.io/pokesleep-tool/iv/)
+- [Research Calc](https://nitoyon.github.io/pokesleep-tool/)
 
-Using this tool is easy!
-Simply enter your Research Area and Snorlax strength.
-You can know how many Pokémon will appear for each sleep score.
-
-Feel free to contribute!
+Feel free to [contribute](CONTRIBUTING.md)!
 
 ## How to build
 
@@ -34,9 +31,9 @@ Your app is ready to be deployed!
 
 Run `npm run build -- --no-minimize` to read the unminified JavaScript source code.
 
-### `npm run sync`
+### `npm test`
 
-Syncs area data from wiki.
+Runs unit tests.
 
 ## License
 
