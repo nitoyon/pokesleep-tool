@@ -1,5 +1,5 @@
 import React from 'react';
-import PokemonBox from '../../util/PokemonBox';
+import PokemonBox from '../../../util/PokemonBox';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 

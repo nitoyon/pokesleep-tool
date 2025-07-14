@@ -1,8 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import IvState, { IvAction } from './IvState';
+import IvState, { IvAction } from '../IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
-import { getActiveHelpBonus } from '../../data/events';
+import { getActiveHelpBonus } from '../../../data/events';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 

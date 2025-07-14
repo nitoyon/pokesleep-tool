@@ -1,23 +1,23 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { PokemonBoxItem } from '../../util/PokemonBox';
-import PokemonIcon from './PokemonIcon';
-import { IvAction } from './IvState';
-import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterFooter';
+import { PokemonBoxItem } from '../../../util/PokemonBox';
+import PokemonIcon from '../PokemonIcon';
+import { IvAction } from '../IvState';
+import PokemonFilterFooter, { PokemonFilterFooterConfig } from '../PokemonFilterFooter';
 import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
-import CandyDialog from './CandyDialog';
-import { shareIv } from './ShareUtil';
+import CandyDialog from '../CandyDialog';
+import { shareIv } from '../ShareUtil';
 import { PokemonSpecialty, IngredientName, IngredientNames, PokemonType
-} from '../../data/pokemons';
-import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
-import { SubSkillType } from '../../util/SubSkill';
-import PokemonIv from '../../util/PokemonIv';
-import PokemonRp from '../../util/PokemonRp';
-import PokemonStrength, { StrengthParameter } from '../../util/PokemonStrength';
+} from '../../../data/pokemons';
+import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
+import { SubSkillType } from '../../../util/SubSkill';
+import PokemonIv from '../../../util/PokemonIv';
+import PokemonRp from '../../../util/PokemonRp';
+import PokemonStrength, { StrengthParameter } from '../../../util/PokemonStrength';
 import { Button, ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
-import CandyIcon from '../Resources/CandyIcon';
+import CandyIcon from '../../Resources/CandyIcon';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';

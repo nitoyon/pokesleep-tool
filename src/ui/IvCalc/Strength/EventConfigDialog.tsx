@@ -2,11 +2,11 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Collapse, Dialog, DialogActions, MenuItem, TextField,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
-import SpecialtyButton from './SpecialtyButton';
-import TypeSelect from './TypeSelect';
-import { PokemonSpecialty, PokemonType } from '../../data/pokemons';
-import events, { fillBonusEffects, TargetPokemon } from '../../data/events';
-import { StrengthParameter } from '../../util/PokemonStrength';
+import SpecialtyButton from '../SpecialtyButton';
+import TypeSelect from '../TypeSelect';
+import { PokemonSpecialty, PokemonType } from '../../../data/pokemons';
+import events, { fillBonusEffects, TargetPokemon } from '../../../data/events';
+import { StrengthParameter } from '../../../util/PokemonStrength';
 import { useTranslation } from 'react-i18next';
 
 const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {

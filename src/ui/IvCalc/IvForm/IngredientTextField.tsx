@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import SelectEx from '../common/SelectEx';
-import { IngredientType } from '../../util/PokemonRp';
-import PokemonIv from '../../util/PokemonIv';
-import { IngredientName, PokemonData } from '../../data/pokemons';
+import SelectEx from '../../common/SelectEx';
+import { IngredientType } from '../../../util/PokemonRp';
+import PokemonIv from '../../../util/PokemonIv';
+import { IngredientName, PokemonData } from '../../../data/pokemons';
 import { TextField, MenuItem } from '@mui/material';
-import IngredientCountIcon from './IngredientCountIcon';
+import IngredientCountIcon from '../IngredientCountIcon';
 
 const BorderedMenuItem = styled(MenuItem)({
     borderTop: '1px dashed #ddd',

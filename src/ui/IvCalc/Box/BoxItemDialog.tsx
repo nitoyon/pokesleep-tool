@@ -1,11 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import IvForm from './IvForm';
-import RpLabel from './RpLabel';
-import PokemonIcon from './PokemonIcon';
-import { PokemonBoxItem } from '../../util/PokemonBox';
-import PokemonIv from '../../util/PokemonIv';
-import PokemonRp from '../../util/PokemonRp';
+import IvForm from '../IvForm/IvForm';
+import RpLabel from '../RpLabel';
+import PokemonIcon from '../PokemonIcon';
+import { PokemonBoxItem } from '../../../util/PokemonBox';
+import PokemonIv from '../../../util/PokemonIv';
+import PokemonRp from '../../../util/PokemonRp';
 import { Button, Dialog, DialogActions, TextField }  from '@mui/material';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';

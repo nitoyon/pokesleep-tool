@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
-    PokemonType, PokemonTypes } from '../../data/pokemons';
-import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
+    PokemonType, PokemonTypes } from '../../../data/pokemons';
+import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
-import PokemonIcon from './PokemonIcon';
+import PokemonIcon from '../PokemonIcon';
 import PokemonFilterDialog from './PokemonFilterDialog';
-import PokemonFilterFooter, { PokemonFilterFooterConfig } from './PokemonFilterFooter';
+import PokemonFilterFooter, { PokemonFilterFooterConfig } from '../PokemonFilterFooter';
 import { PokemonOption } from './PokemonTextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';

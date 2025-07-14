@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import SubSkill, { SubSkillType } from '../../util/SubSkill';
-import SubSkillList from '../../util/SubSkillList';
+import SubSkill, { SubSkillType } from '../../../util/SubSkill';
+import SubSkillList from '../../../util/SubSkillList';
 import { Badge, Button, ButtonBase, Dialog, DialogActions } from '@mui/material';
 import { useTranslation, Trans } from 'react-i18next';
 

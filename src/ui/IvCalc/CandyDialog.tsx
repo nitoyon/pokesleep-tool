@@ -5,8 +5,8 @@ import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../
 import Nature from '../../util/Nature';
 import { formatWithComma } from '../../util/NumberUtil';
 import { maxLevel } from '../../util/PokemonRp';
-import LevelControl from './LevelControl';
-import { StyledNatureUpEffect, StyledNatureDownEffect } from './NatureTextField';
+import LevelControl from './IvForm/LevelControl';
+import { StyledNatureUpEffect, StyledNatureDownEffect } from './IvForm/NatureTextField';
 import PokemonIcon from './PokemonIcon';
 import PopperMenu from '../common/PopperMenu';
 import TextLikeButton from '../common/TextLikeButton';

@@ -1,30 +1,30 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { getEventBonus, getEventBonusIfTarget } from '../../data/events';
-import { getDecendants, PokemonData } from '../../data/pokemons';
-import PokemonIv from '../../util/PokemonIv';
-import Nature from '../../util/Nature';
-import { round1, round2, formatNice, formatWithComma } from '../../util/NumberUtil';
+import { getEventBonus, getEventBonusIfTarget } from '../../../data/events';
+import { getDecendants, PokemonData } from '../../../data/pokemons';
+import PokemonIv from '../../../util/PokemonIv';
+import Nature from '../../../util/Nature';
+import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { IngredientStrength, StrengthResult,
     recipeLevelBonus
-} from '../../util/PokemonStrength';
-import { StrengthParameter } from '../../util/PokemonStrength';
-import { ingredientStrength } from '../../util/PokemonRp';
+} from '../../../util/PokemonStrength';
+import { StrengthParameter } from '../../../util/PokemonStrength';
+import { ingredientStrength } from '../../../util/PokemonRp';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
-    MainSkillName } from '../../util/MainSkill';
-import { AmountOfSleep } from '../../util/TimeUtil';
+    MainSkillName } from '../../../util/MainSkill';
+import { AmountOfSleep } from '../../../util/TimeUtil';
 import { Button, Dialog, DialogActions, DialogContent,
     FormControl, Select, SelectChangeEvent, ToggleButtonGroup, ToggleButton,
     Typography, MenuItem } from '@mui/material';
-import MainSkillIcon from './MainSkillIcon';
-import { StyledNatureUpEffect, StyledNatureDownEffect } from './NatureTextField';
+import MainSkillIcon from '../MainSkillIcon';
+import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import InfoButton from './InfoButton';
-import { IvAction } from './IvState';
+import InfoButton from '../InfoButton';
+import { IvAction } from '../IvState';
 import EnergyDialog from './EnergyDialog';
-import IngredientIcon from './IngredientIcon';
-import IngredientCountIcon from './IngredientCountIcon';
-import SpecialtyButton from './SpecialtyButton';
+import IngredientIcon from '../IngredientIcon';
+import IngredientCountIcon from '../IngredientCountIcon';
+import SpecialtyButton from '../SpecialtyButton';
 import { useTranslation, Trans } from 'react-i18next';
 import i18next from 'i18next'
 

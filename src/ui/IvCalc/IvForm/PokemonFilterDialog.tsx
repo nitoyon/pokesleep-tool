@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import IngredientButton from './IngredientButton';
-import TypeButton from './TypeButton';
+import IngredientButton from '../IngredientButton';
+import TypeButton from '../TypeButton';
 import { PokemonFilterConfig } from './PokemonSelectDialog';
-import MainSkillButton from './MainSkillButton';
-import SpecialtyButton from './SpecialtyButton';
-import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
+import MainSkillButton from '../MainSkillButton';
+import SpecialtyButton from '../SpecialtyButton';
+import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { SpecialtyNames, PokemonSpecialty, IngredientName, IngredientNames,
-    PokemonType, PokemonTypes } from '../../data/pokemons';
+    PokemonType, PokemonTypes } from '../../../data/pokemons';
 import { Button, Dialog, DialogActions, Switch,
     Tab, Tabs, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useTranslation } from 'react-i18next';

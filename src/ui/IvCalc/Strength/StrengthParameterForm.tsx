@@ -4,15 +4,15 @@ import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent, Fo
     Select, SelectChangeEvent, Snackbar, Switch, Typography,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
-import { IvAction } from './IvState';
+import { IvAction } from '../IvState';
 import AreaBonusControl from './AreaBonusControl';
-import InfoButton from './InfoButton';
-import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import InfoButton from '../InfoButton';
+import ResearchAreaTextField from '../../common/ResearchAreaTextField';
 import EventConfigDialog from './EventConfigDialog';
-import TypeSelect from './TypeSelect';
-import { getActiveHelpBonus } from '../../data/events';
-import { PokemonType } from '../../data/pokemons';
-import { createStrengthParameter, StrengthParameter } from '../../util/PokemonStrength';
+import TypeSelect from '../TypeSelect';
+import { getActiveHelpBonus } from '../../../data/events';
+import { PokemonType } from '../../../data/pokemons';
+import { createStrengthParameter, StrengthParameter } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
 type PeriodType = "1day"|"1week"|"whistle";

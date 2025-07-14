@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import TypeButton from './TypeButton';
-import SpecialtyButton from './SpecialtyButton';
+import TypeButton from '../TypeButton';
+import SpecialtyButton from '../SpecialtyButton';
 import { BoxFilterConfig } from './BoxView';
-import { EditSubSkillControl } from './SubSkillControl';
-import IngredientButton from './IngredientButton';
-import MainSkillButton from './MainSkillButton';
+import { EditSubSkillControl } from '../IvForm/SubSkillControl';
+import IngredientButton from '../IngredientButton';
+import MainSkillButton from '../MainSkillButton';
 import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
     PokemonType, PokemonTypes
-} from '../../data/pokemons';
-import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
-import SubSkill, { SubSkillType } from '../../util/SubSkill';
+} from '../../../data/pokemons';
+import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
+import SubSkill, { SubSkillType } from '../../../util/SubSkill';
 import { Button, Dialog, DialogActions, InputAdornment, Switch,
     Tab, Tabs, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
