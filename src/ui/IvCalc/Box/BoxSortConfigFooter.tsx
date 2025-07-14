@@ -1,14 +1,14 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { IvAction } from './IvState';
+import { IvAction } from '../IvState';
 import { BoxSortConfig } from './BoxView';
-import IngredientIcon from './IngredientIcon';
-import MainSkillIcon from './MainSkillIcon';
-import SelectEx from '../common/SelectEx';
-import { StrengthParameter } from '../../util/PokemonStrength';
-import { MainSkillName, MainSkillNames } from '../../util/MainSkill';
-import { IngredientName, IngredientNames } from '../../data/pokemons';
-import fields from '../../data/fields';
+import IngredientIcon from '../IngredientIcon';
+import MainSkillIcon from '../MainSkillIcon';
+import SelectEx from '../../common/SelectEx';
+import { StrengthParameter } from '../../../util/PokemonStrength';
+import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
+import { IngredientName, IngredientNames } from '../../../data/pokemons';
+import fields from '../../../data/fields';
 import { FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Autocomplete, Paper, Slider, TextField } from '@mui/material';
-import ArrowButton from '../common/ArrowButton';
+import ArrowButton from '../../common/ArrowButton';
 
 const LevelControlContainer = styled('div')({
     display: 'flex',

@@ -1,11 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { IvAction } from './IvState';
-import EnergyIcon from '../Resources/EnergyIcon';
-import PokemonIv from '../../util/PokemonIv';
-import { StrengthParameter } from '../../util/PokemonStrength';
-import { AmountOfSleep } from '../../util/TimeUtil';
-import { EnergyResult } from '../../util/Energy';
+import { IvAction } from '../IvState';
+import EnergyIcon from '../../Resources/EnergyIcon';
+import PokemonIv from '../../../util/PokemonIv';
+import { StrengthParameter } from '../../../util/PokemonStrength';
+import { AmountOfSleep } from '../../../util/TimeUtil';
+import { EnergyResult } from '../../../util/Energy';
 import { Collapse, Button, Dialog, DialogActions, MenuItem, Popper,
     Select, SelectChangeEvent, Switch, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';

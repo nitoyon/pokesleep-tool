@@ -1,6 +1,6 @@
 import React from 'react';
-import PokemonBox from '../../util/PokemonBox';
-import { copyToClipboard } from '../../util/Clipboard';
+import PokemonBox from '../../../util/PokemonBox';
+import { copyToClipboard } from '../../../util/Clipboard';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar,
     TextField }  from '@mui/material';
 import { useTranslation } from 'react-i18next';

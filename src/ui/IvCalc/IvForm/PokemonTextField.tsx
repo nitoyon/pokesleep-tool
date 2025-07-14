@@ -1,17 +1,17 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { SleepType } from '../../data/fields';
-import pokemons, { PokemonSpecialty, IngredientName, PokemonType } from '../../data/pokemons';
+import { SleepType } from '../../../data/fields';
+import pokemons, { PokemonSpecialty, IngredientName, PokemonType } from '../../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
-import TextLikeButton from '../common/TextLikeButton';
+import TextLikeButton from '../../common/TextLikeButton';
 import PokemonSelectDialog from './PokemonSelectDialog';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CheckIcon from '@mui/icons-material/Check';
-import CandyIcon from '../Resources/CandyIcon';
+import CandyIcon from '../../Resources/CandyIcon';
 import { useTranslation } from 'react-i18next';
-import PokemonIv from '../../util/PokemonIv';
-import { MainSkillName } from '../../util/MainSkill';
+import PokemonIv from '../../../util/PokemonIv';
+import { MainSkillName } from '../../../util/MainSkill';
 
 /** Autocomplete option list */
 export interface PokemonOption {

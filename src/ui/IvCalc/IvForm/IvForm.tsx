@@ -2,20 +2,20 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Collapse, Dialog, DialogActions,
     Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import Nature from '../../util/Nature';
-import PokemonIv from '../../util/PokemonIv';
-import { AmountOfSleep } from '../../util/TimeUtil';
-import PokemonRp from '../../util/PokemonRp';
-import CandyDialog from './CandyDialog';
+import Nature from '../../../util/Nature';
+import PokemonIv from '../../../util/PokemonIv';
+import { AmountOfSleep } from '../../../util/TimeUtil';
+import PokemonRp from '../../../util/PokemonRp';
+import CandyDialog from '../CandyDialog';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
 import SkillLevelControl from './SkillLevelControl';
-import InfoButton from './InfoButton';
+import InfoButton from '../InfoButton';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
 import SleepingTimeControl from './SleepingTimeControl';
-import EnergyIcon from '../Resources/EnergyIcon';
+import EnergyIcon from '../../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
