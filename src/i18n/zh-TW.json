@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add hoenn": {
+                    "headline": "已新增$t(pokemons.Treecko)、$t(pokemons.Torchic)、$t(pokemons.Mudkip)、$t(pokemons.Plusle)與$t(pokemons.Minun)的資料。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "v2.10.0": {
                     "headline": "v2.10.0 的平衡調整已反映在糖果計算功能中。",
                     "detail": "在糖果計算功能中，等級 30 以下的寶可夢所需的糖果數量已減少。"
@@ -442,7 +446,7 @@
         "strength restriction2": "沒有考慮活力填充S所帶來的活力回復。",
         "strength skill info": {
             "Ingredient Magnet S": "通過技能獲取的食材沒有換算成合計能量值。",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)",
+            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)不會考慮隊伍中是否有除了自己以外擁有「正電」或「負電」特性的寶可夢。",
             "Charge Energy S": "技能的效果沒有換算成合計能量值。如需估計對能量的影響，請嘗試變更 [$t(energy)] 的值並進行確認。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",
@@ -456,7 +460,7 @@
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)\n假設有 2 只相同類型的寶可夢時。能量總量以每次幫助 100（不含營地獎勵）進行計算。",
             "Extra Helpful S": "顯示技能發動帶來的 [幫助次數] 。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
             "Cooking Power-Up S": "技能的效果沒有換算成合計能量值。",
-            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)",
+            "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)不會考慮隊伍中是否有除了自己以外擁有「正電」或「負電」特性的寶可夢。",
             "Helper Boost": "假定為同類型的3隻寶可夢。能量總量以每次幫助 100（不含營地獎勵）進行計算。",
             "Berry Burst (Disguise)": "假設不會發生漂亮成功。$t(strength skill info.Berry Burst)",
             "Berry Burst": "其他寶可夢獲取的每個樹果以 100 能量（不含營地獎勵）進行計算。",

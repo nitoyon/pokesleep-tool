@@ -75,6 +75,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     if (skill === "Ingredient Magnet S") {
         return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
     }
+    if (skill === "Ingredient Magnet S (Plus)") {
+        return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
+    }
     if (skill === "Charge Energy S" ||
         skill === "Charge Energy S (Moonlight)"
     ) {
@@ -97,6 +100,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     }
     if (skill === "Cooking Power-Up S") {
         return [7, 10, 12, 17, 22, 27, 31][skillLevel - 1];
+    }
+    if (skill === "Cooking Power-Up S (Minus)") {
+        return [5, 7, 9, 12, 16, 20, 24][skillLevel - 1];
     }
     if (skill === "Energizing Cheer S") {
         return [14, 17, 23, 29, 38, 51][skillLevel - 1];
