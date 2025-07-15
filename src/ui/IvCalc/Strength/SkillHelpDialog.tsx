@@ -320,6 +320,11 @@ function getEnergyRecoveryValueText(strength: PokemonStrength,
                 {Math.floor(val * new Nature("Bold").energyRecoveryFactor)}
             </li>
             <li>
+                {t('nature effect.Energy recovery')}
+                <> ーー: </>
+                {val}
+            </li>
+            <li>
                 <StyledNatureDownEffect>{t('nature effect.Energy recovery')}</StyledNatureDownEffect>
                 <>: </>
                 {Math.floor(val * new Nature("Hasty").energyRecoveryFactor)}
