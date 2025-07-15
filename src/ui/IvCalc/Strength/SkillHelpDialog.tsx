@@ -80,9 +80,9 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
                 <span className="box box2">{round2(result.skillCount)}</span>
             </h2>}
-            {skill === "Energy for Everyone S (Lunar Blessing)" && <h1>
-                <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                {formatNice(result.skillStrength, t)}
+            {result.skillValue2 !== 0 && <h1>
+                <MainSkillIcon mainSkill={skillName} second/>
+                {formatNice(result.skillStrength2, t)}
             </h1>}
         </header>
         <article>

@@ -340,10 +340,8 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
 
     const mainSkill = pokemonIv.pokemon.skill;
     const mainSkillValue: string = formatNice(result.skillValue, t);
-    let mainSkillValue2: string = "";
-    if (mainSkill === "Energy for Everyone S (Lunar Blessing)") {
-        mainSkillValue2 = formatNice(result.skillStrength, t);
-    }
+    const mainSkillValue2: string = result.skillValue2 === 0 ? "" :
+        formatNice(result.skillValue2, t);
 
     const skill1 = <>
         <MainSkillIcon mainSkill={mainSkill}/>
@@ -354,7 +352,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     if (mainSkillValue2 !== "") {
         skill2 = <>
             <br/>
-            <MainSkillIcon mainSkill={"Charge Strength S"}/>
+            <MainSkillIcon mainSkill={mainSkill} second/>
             <span>{mainSkillValue2}</span>
         </>;
     }
@@ -385,7 +383,7 @@ const HelpDialog = React.memo(({result, open, onClose}: {
                 <SpecialtyButton disabled specialty="Ingredients"/>
                 <div>{formatWithComma(Math.round(result.ingStrength))}</div>
                 <SpecialtyButton disabled specialty="Skills"/>
-                <div>{formatWithComma(Math.round(result.skillStrength))}</div>
+                <div>{formatWithComma(Math.round(result.skillStrength + result.skillStrength2))}</div>
             </div>
             <p style={{marginTop: 0}}>{t('strength detail1')}</p>
             <p>{t('strength detail2')}</p>
