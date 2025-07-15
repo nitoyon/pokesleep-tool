@@ -7,7 +7,7 @@ import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
-import { getSkillValue, getMaxSkillLevel } from './MainSkill';
+import { getSkillValue, getSkillSubValue, getMaxSkillLevel } from './MainSkill';
 
 /**
  * Represents the parameter of PokemonStrength.calc.
@@ -333,7 +333,7 @@ class PokemonStrength {
         const skillLevel = this.getSkillLevel();
 
         let mainSkillBase = getSkillValue(mainSkill, skillLevel);
-        if (mainSkill === "Ingredient Magnet S") {
+        if (mainSkill.startsWith("Ingredient Magnet S")) {
             // This event bonus is floored.
             // (ref) https://pbs.twimg.com/media/GtEYoG3bEAACPG6?format=jpg&name=large
             mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientMagnet ?? 1));
@@ -394,6 +394,11 @@ class PokemonStrength {
                     4 * strengthPerBerry * skillCount * extra
                 );
                 return [strengthBurst, strengthBurst, 0, 0];
+
+            case "Ingredient Magnet S (Plus)":
+                let ingCount = getSkillSubValue(mainSkill, skillLevel);
+                ingCount = Math.floor(ingCount * (eventBonus?.ingredientMagnet ?? 1));
+                return [mainSkillValue, 0, ingCount * skillCount, 0];
 
             case "Ingredient Magnet S":
             case "Ingredient Draw S":
