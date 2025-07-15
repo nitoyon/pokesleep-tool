@@ -114,8 +114,12 @@ const StyledBerryIngSkillStrengthView = styled('div')({
                 lineHeight: '50%',
             },
             '&.skill2': {
-                lineHeight: '50%',
+                lineHeight: '1.6',
                 fontSize: '0.8rem',
+                '& > div > svg': {
+                    width: '16px',
+                    height: '16px',
+                },
             },
         },
         '& > footer': {
@@ -354,7 +358,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
         skill2 = <>
             <br/>
             <MainSkillIcon mainSkill={mainSkill} second/>
-            <span>{mainSkillValue2}</span>
+            <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue2}</span>
         </>;
     }
     return <article className={mainSkillValue2 !== "" ? "skill2" : ""}>
@@ -439,7 +443,10 @@ export const StyledInfoDialog = styled(Dialog)({
 
     '& .MuiPaper-root': {
         '& > header': {
-            margin: '0.5rem',
+            margin: '0.5rem 0.5rem 0 0.5rem',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gridGap: '.8rem',
             '& > h1': {
                 fontSize: '1.4rem',
                 margin: 0,
@@ -464,8 +471,8 @@ export const StyledInfoDialog = styled(Dialog)({
                 fontSize: '0.8rem',
             }
         },
-        '& > header > div.grid': {
-            marginLeft: '0.8rem',
+        '& > div.grid': {
+            margin: '0 0 1rem 1.5rem',
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
             gridGap: '0.7rem 0.5rem',
@@ -506,22 +513,22 @@ export const StyledInfoDialog = styled(Dialog)({
                     },
                 },
             },
-        },
-        '& > header > div.grid.ings1, & > header > div.grid.ings2': {
-            fontSize: '0.9rem',
-            '& > div': {
-                fontSize: '0.8rem',
+            '&.ings1, &.ings2': {
+                fontSize: '0.9rem',
+                '& > div': {
+                    fontSize: '0.8rem',
+                },
             },
-        },
-        '& > header > div.grid.ings3': {
-            fontSize: '0.8rem',
-            '& > div': {
-                fontSize: '0.7rem',
+            '&.ings3': {
+                fontSize: '0.8rem',
+                '& > div': {
+                    fontSize: '0.7rem',
+                },
             },
         },
 
         '& > article': {
-            margin: '1rem .5rem 0 .5rem',
+            margin: '0.5rem .5rem 0 .5rem',
             display: 'grid',
             gridGap: '.5rem',
             rowGap: '.8rem',
