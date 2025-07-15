@@ -13,14 +13,22 @@ import PotIcon from '../Resources/PotIcon';
 import StreamIcon from '@mui/icons-material/Stream';
 import SavedSearchOutlined from '@mui/icons-material/SavedSearchOutlined';
 
-const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
+const MainSkillIcon = React.memo(({mainSkill, second}: {
+    mainSkill: MainSkillName,
+    second?: boolean,
+}) => {
     switch (mainSkill) {
         case "Charge Energy S":
         case "Charge Energy S (Moonlight)":
             return <svg width="20" height="20"><FavoriteBorderIcon sx={{color: "#ff88aa"}}/></svg>;
         case "Energy for Everyone S":
-        case "Energy for Everyone S (Lunar Blessing)":
             return <svg width="22" height="22"><VolunteerActivismIcon sx={{color: "#ff88aa"}}/></svg>;
+        case "Energy for Everyone S (Lunar Blessing)":
+            if (second !== true) {
+                return <svg width="22" height="22"><VolunteerActivismIcon sx={{color: "#ff88aa"}}/></svg>;
+            } else {
+                return <svg width="24" height="24"><LocalFireDepartmentIcon sx={{color: "#ff944b"}}/></svg>;
+            }
         case "Energizing Cheer S":
             return <svg width="22" height="22"><VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/></svg>;
         case "Charge Strength M":

@@ -111,13 +111,22 @@ export interface StrengthResult {
     skillCount: number;
     /**
      * Skill value got from the skillCount skill occurance
-     * If skill is 'Dream Shard Magnet S', this value is the number of Dream Shards.
-     * If skill is 'Metronome' or 'Skill Copy', this value is equal to the skillCount.
-     * If skill is 'Ingredient Magnet S', this value is the number of ingredients.
+     * If the skill is 'Dream Shard Magnet S', this value represents the number of Dream Shards.
+     * If the skill is 'Metronome' or 'Skill Copy', this value is equal to the skillCount.
+     * If the skill is 'Ingredient Magnet S', this value represents the number of ingredients.
      */
     skillValue: number;
     /** Strength got from the skillCount skill occurance */
     skillStrength: number;
+    /**
+     * Skill value got from the second skill effect.
+     * If the skill is 'Dream Shard Magnet S', this value represents
+     * the strength provided by the skill.
+     * For other skills, this value is 0.
+     */
+    skillValue2: number;
+    /** Strength got from the second skill effect */
+    skillStrength2: number;
 }
 
 /** Recipe level bonus table  */
@@ -280,6 +289,7 @@ class PokemonStrength {
         // calc skill
         const skillRatio = rp.skillRatio * (targetEventBonus?.skillTrigger ?? 1);
         let skillCount = 0, skillValue = 0, skillStrength = 0;
+        let skillValue2 = 0, skillStrength2 = 0;
         if (param.period !== 3 && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
@@ -291,17 +301,18 @@ class PokemonStrength {
                     energy.skillProbabilityAfterWakeup.twice * 2;
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
-            [skillValue, skillStrength] = this.getSkillValueAndStrength(skillCount,
-                param, berryStrength, eventBonus, targetEventBonus);
+            [skillValue, skillStrength, skillValue2, skillStrength2] =
+                this.getSkillValueAndStrength(skillCount,
+                    param, berryStrength, eventBonus, targetEventBonus);
         }
 
-        const totalStrength = ingStrength + berryTotalStrength + skillStrength;
+        const totalStrength = ingStrength + berryTotalStrength + skillStrength + skillStrength2;
 
         return {
             energy, totalStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
-            skillRatio, skillCount, skillValue, skillStrength,
+            skillRatio, skillCount, skillValue, skillStrength, skillValue2, skillStrength2,
         };
     }
 
@@ -312,14 +323,12 @@ class PokemonStrength {
      * @param berryStrength Strength per berry (area bonus included).
      * @param eventBonus Event bonus for all pokemon or undefined.
      * @param targetEventBonus Event bonus for specified pokemon or undefined.
-     * @returns [skillValue, skillStrength].
-     * If skill is 'Dream Shard Magnet S', `skillValue` is the number of Dream Shards.
-     * `skillStrength` is the strength got by the skill.
+     * @returns [skillValue, skillStrength, skillValue2, skillStrength2].
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
         berryStrength: number, eventBonus: Partial<BonusEffects>|undefined,
         targetEventBonus: Partial<BonusEffects>|undefined
-    ): [number, number] {
+    ): [number, number, number, number] {
         const mainSkill = this.iv.pokemon.skill;
         const skillLevel = this.getSkillLevel();
 
@@ -350,18 +359,18 @@ class PokemonStrength {
             case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
-                return [mainSkillValue, 0];
+                return [mainSkillValue, 0, 0, 0];
             case "Energy for Everyone S (Lunar Blessing)":
                 // asume same type species
                 const selfCount = [7, 12, 17, 19, 24, 29][skillLevel - 1];
                 const fromMember = [1, 1, 1, 2, 2, 2][skillLevel - 1];
-                const skillStrength = (
+                const skillStrength2 = (
                     selfCount * berryWithFav + fromMember * strengthPerBerry * 4
                 ) * skillCount;
-                return [mainSkillValue, skillStrength];
+                return [mainSkillValue, 0, skillStrength2, skillStrength2];
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
-                return [mainSkillValue, 0];
+                return [mainSkillValue, 0, 0, 0];
 
             case "Charge Strength M":
             case "Charge Strength M (Bad Dreams)":
@@ -369,13 +378,13 @@ class PokemonStrength {
             case "Charge Strength S (Random)":
             case "Charge Strength S (Stockpile)":
                 const strength = mainSkillValue * (1 + param.fieldBonus / 100);
-                return [strength, strength];
+                return [strength, strength, 0, 0];
 
             case "Extra Helpful S":
-                return [mainSkillValue, mainSkillValue * strengthPerHelp];
+                return [mainSkillValue, mainSkillValue * strengthPerHelp, 0, 0];
 
             case "Helper Boost":
-                return [mainSkillValue, mainSkillValue * strengthPerHelp * 5];
+                return [mainSkillValue, mainSkillValue * strengthPerHelp * 5, 0, 0];
 
             case "Berry Burst (Disguise)":
             case "Berry Burst":
@@ -384,7 +393,7 @@ class PokemonStrength {
                     mainSkillValue * berryWithFav +
                     4 * strengthPerBerry * skillCount * extra
                 );
-                return [strengthBurst, strengthBurst];
+                return [strengthBurst, strengthBurst, 0, 0];
 
             case "Ingredient Magnet S":
             case "Ingredient Draw S":
@@ -392,15 +401,15 @@ class PokemonStrength {
             case "Ingredient Draw S (Hyper Cutter)":
             case "Cooking Power-Up S":
             case "Tasty Chance S":
-                return [mainSkillValue, 0];
+                return [mainSkillValue, 0, 0, 0];
             case "Metronome":
             case "Skill Copy":
             case "Skill Copy (Transform)":
             case "Skill Copy (Mimic)":
                 // returns skillCount as skillValue.
-                return [skillCount, 0];
+                return [skillCount, 0, 0, 0];
             default:
-                return [mainSkillValue, 0];
+                return [mainSkillValue, 0, 0, 0];
         }
     }
 
