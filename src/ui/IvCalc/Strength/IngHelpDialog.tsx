@@ -48,7 +48,6 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     }
 
     const param = strength.parameter;
-    console.log(param);
     if (param.tapFrequency === 'none') {
         return (
             <Dialog open={open} onClose={onClose}>
