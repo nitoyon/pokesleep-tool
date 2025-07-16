@@ -7,7 +7,6 @@ import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
 import { Button, Dialog, DialogActions, DialogContent,
     FormControl, ToggleButtonGroup, ToggleButton } from '@mui/material';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import MainSkillIcon from '../MainSkillIcon';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import { IvAction } from '../IvState';
