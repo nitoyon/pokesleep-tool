@@ -516,7 +516,7 @@ const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
                         {t('edit')}
                     </MenuItem>
                     <MenuItem onClick={onCandyClickHandler}>
-                        <ListItemIcon sx={{minWidth: '24px'}}><CandyIcon color="#888"/></ListItemIcon>
+                        <ListItemIcon sx={{minWidth: '24px'}}><CandyIcon sx={{color: '#888'}}/></ListItemIcon>
                         {t('candy')}
                     </MenuItem>
                     <MenuItem onClick={onShareClick}>

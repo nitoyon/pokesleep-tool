@@ -182,7 +182,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
                 <div className="candyResult">
                     <section>
                         <label>{t('candy')}:</label>
-                        <div><CandyIcon/>{formatWithComma(result.candy)}</div>
+                        <div><CandyIcon sx={{color: '#e7ba67'}}/>{formatWithComma(result.candy)}</div>
                     </section>
                     <section>
                         <label>{t('dream shard')}:</label>

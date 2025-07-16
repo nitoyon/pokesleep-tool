@@ -63,7 +63,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     return 6;
 }
 
-export function getSkillValue(skill: MainSkillName, skillLevel: number) {
+export function getSkillValue(skill: MainSkillName, skillLevel: number): number {
     // verification
     if (skillLevel !== Math.floor(skillLevel)) {
         throw new Error(`invalid skill level: ${skillLevel}`);
@@ -144,7 +144,28 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number) {
     // Return 0 for 'Metronome' or 'Skill Copy' since
     // their value depends on the copied skill.
     return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
-}    
+}
+
+export function getSkillSubValue(skill: MainSkillName, skillLevel: number): number {
+    // verification
+    if (skillLevel !== Math.floor(skillLevel)) {
+        throw new Error(`invalid skill level: ${skillLevel}`);
+    }
+    if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
+        throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
+    }
+
+    if (skill === "Ingredient Magnet S (Plus)") {
+        // Get additional ingredient count
+        return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
+    }
+    if (skill === "Cooking Power-Up S (Minus)") {
+        // Get additional energy restore
+        return [8, 10, 13, 17, 23, 30, 35][skillLevel - 1];
+    }
+    throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
+}
+
 
 /**
  * Returns the minimum and maximum value of the skill.

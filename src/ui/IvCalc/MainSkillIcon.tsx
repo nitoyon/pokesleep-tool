@@ -7,22 +7,31 @@ import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
+import CoffeeIcon from '../Resources/CoffeeIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
 import PotIcon from '../Resources/PotIcon';
 import StreamIcon from '@mui/icons-material/Stream';
 import SavedSearchOutlined from '@mui/icons-material/SavedSearchOutlined';
 
-const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
+const MainSkillIcon = React.memo(({mainSkill, second}: {
+    mainSkill: MainSkillName,
+    second?: boolean,
+}) => {
     switch (mainSkill) {
         case "Charge Energy S":
         case "Charge Energy S (Moonlight)":
-            return <svg width="20" height="20"><FavoriteBorderIcon sx={{color: "#ff88aa"}}/></svg>;
+            return <FavoriteBorderIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
         case "Energy for Everyone S":
+            return <VolunteerActivismIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
         case "Energy for Everyone S (Lunar Blessing)":
-            return <svg width="22" height="22"><VolunteerActivismIcon sx={{color: "#ff88aa"}}/></svg>;
+            if (second !== true) {
+                return <VolunteerActivismIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
+            } else {
+                return <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>;
+            }
         case "Energizing Cheer S":
-            return <svg width="22" height="22"><VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}}/></svg>;
+            return <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
         case "Charge Strength M":
         case "Charge Strength M (Bad Dreams)":
         case "Charge Strength S":
@@ -30,31 +39,41 @@ const MainSkillIcon = React.memo(({mainSkill}: {mainSkill: MainSkillName}) => {
         case "Charge Strength S (Stockpile)":
         case "Berry Burst":
         case "Berry Burst (Disguise)":
-                return <svg width="24" height="24"><LocalFireDepartmentIcon sx={{color: "#ff944b"}}/></svg>;
+                return <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>;
         case "Dream Shard Magnet S":
         case "Dream Shard Magnet S (Random)":
-            return <svg width="20" height="20"><DreamShardIcon/></svg>;
+            return <DreamShardIcon/>;
         case "Extra Helpful S":
-            return <svg width="20" height="20"><SearchIcon sx={{color: "#66cc66"}}/></svg>;
+            return <SearchIcon sx={{color: "#66cc66"}} fontSize="small"/>;
         case "Helper Boost":
-            return <svg width="20" height="20"><SavedSearchOutlined sx={{color: "#66cc66"}}/></svg>;
-        case "Ingredient Magnet S":
+            return <SavedSearchOutlined sx={{color: "#66cc66"}} fontSize="small"/>;
         case "Ingredient Magnet S (Plus)":
+            if (second !== true) {
+                return <IngredientsIcon fontSize="small"/>;
+            } else {
+                return <CoffeeIcon fontSize="small"/>;
+            }
+        case "Ingredient Magnet S":
         case "Ingredient Draw S":
         case "Ingredient Draw S (Super Luck)":
         case "Ingredient Draw S (Hyper Cutter)":
-            return <svg width="20" height="20"><IngredientsIcon/></svg>;
+            return <IngredientsIcon fontSize="small"/>;
         case "Cooking Power-Up S":
+            return <PotIcon sx={{color: "#886666"}} fontSize="small"/>;
         case "Cooking Power-Up S (Minus)":
-            return <svg width="20" height="20" fill="#886666"><PotIcon/></svg>;
+            if (second !== true) {
+                return <PotIcon sx={{color: "#886666"}} fontSize="small"/>;
+            } else {
+                return <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
+            }
         case "Tasty Chance S":
-            return <svg width="20" height="20"><PriorityHighIcon sx={{color: "#ff0000"}}/></svg>;
+            return <PriorityHighIcon sx={{color: "#ff0000"}} fontSize="small"/>;
         case "Metronome":
-            return <svg width="22" height="22"><SwipeOutlinedIcon sx={{color: "#999"}}/></svg>;
+            return <SwipeOutlinedIcon sx={{color: "#999"}} fontSize="small"/>;
         case "Skill Copy":
         case "Skill Copy (Mimic)":
         case "Skill Copy (Transform)":
-            return <svg width="22" height="22"><StreamIcon sx={{color: "#999"}}/></svg>;
+            return <StreamIcon sx={{color: "#999"}} fontSize="small"/>;
         default:
             return <>ー</>;
     }

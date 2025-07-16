@@ -48,7 +48,6 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     }
 
     const param = strength.parameter;
-    console.log(param);
     if (param.tapFrequency === 'none') {
         return (
             <Dialog open={open} onClose={onClose}>
@@ -103,12 +102,12 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
                 {formatWithComma(Math.round(result.ingStrength))}
             </h1>
-            <div className={`grid ings${ings.length}`}>
-                {getIngDetail(strength, result, recipeRatio, ingSlot, ings[0], t)}
-                {ings.length > 1 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[1], t)}
-                {ings.length > 2 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[2], t)}
-            </div>
         </header>
+        <div className={`grid ings${ings.length}`}>
+            {getIngDetail(strength, result, recipeRatio, ingSlot, ings[0], t)}
+            {ings.length > 1 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[1], t)}
+            {ings.length > 2 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[2], t)}
+        </div>
         <article>
             <div><span className="box box3">{round2(result.ingHelpCount)}</span></div>
             <span>{t('ing help count')}</span>
