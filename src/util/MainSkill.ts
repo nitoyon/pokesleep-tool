@@ -159,6 +159,10 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number): numb
         // Get additional ingredient count
         return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
     }
+    if (skill === "Cooking Power-Up S (Minus)") {
+        // Get additional energy restore
+        return [8, 10, 13, 17, 23, 30, 35][skillLevel - 1];
+    }
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
 

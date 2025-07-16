@@ -4,7 +4,7 @@ import Nature from '../../../util/Nature';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
-    MainSkillName } from '../../../util/MainSkill';
+    getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
 import { Button, Dialog, DialogActions, DialogContent,
     FormControl, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -166,11 +166,13 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
         return getDreamShardMagnetValueText(strength, skillLevel, t);
     }
     if (skill === 'Energizing Cheer S') {
-        return getEnergyRecoveryValueText(strength, skillLevel, t,
+        const val = getSkillValue(skill, skillLevel);
+        return getEnergyRecoveryValueText(val, skillLevel, t,
             t('nature effect.Energy recovery'));
     }
     if (skill.startsWith('Energy for Everyone S')) {
-        return getEnergyRecoveryValueText(strength, skillLevel, t,
+        const val = getSkillValue(skill, skillLevel);
+        return getEnergyRecoveryValueText(val, skillLevel, t,
             t('e4e per pokemon'));
     }
     if (skill.startsWith('Cooking Power-Up S')) {
@@ -198,6 +200,11 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
 
     if (skill === 'Ingredient Magnet S (Plus)') {
         return getNormalSkillValueText(t, t('additional ingredients'));
+    }
+    if (skill === 'Cooking Power-Up S (Minus)') {
+        const val = getSkillSubValue(skill, skillLevel);
+        return getEnergyRecoveryValueText(val, skillLevel, t,
+            t('nature effect.Energy recovery'));
     }
     if (skill === 'Energy for Everyone S (Lunar Blessing)') {
         return getNormalSkillValueText(t, t('berry strength per berry burst'));
@@ -339,29 +346,28 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
     return [null, null];
 }
 
-function getEnergyRecoveryValueText(strength: PokemonStrength,
+function getEnergyRecoveryValueText(value: number,
     skillLevel: number, t: typeof i18next.t, valueText: string
 ):
 [React.ReactNode, React.ReactNode] {
     const text = t('value per skill', { value: valueText});
-    const val = getSkillValue(strength.pokemonIv.pokemon.skill, skillLevel);
     return [<>
         {text}<br/>
         <ul className="detail">
             <li>
                 <StyledNatureUpEffect>{t('nature effect.Energy recovery')}</StyledNatureUpEffect>
                 <>: </>
-                {Math.floor(val * new Nature("Bold").energyRecoveryFactor)}
+                {Math.floor(value * new Nature("Bold").energyRecoveryFactor)}
             </li>
             <li>
                 {t('nature effect.Energy recovery')}
                 <> ーー: </>
-                {val}
+                {value}
             </li>
             <li>
                 <StyledNatureDownEffect>{t('nature effect.Energy recovery')}</StyledNatureDownEffect>
                 <>: </>
-                {Math.floor(val * new Nature("Hasty").energyRecoveryFactor)}
+                {Math.floor(value * new Nature("Hasty").energyRecoveryFactor)}
             </li>
         </ul>
     </>, null];

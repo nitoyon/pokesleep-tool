@@ -59,8 +59,13 @@ const MainSkillIcon = React.memo(({mainSkill, second}: {
         case "Ingredient Draw S (Hyper Cutter)":
             return <IngredientsIcon fontSize="small"/>;
         case "Cooking Power-Up S":
-        case "Cooking Power-Up S (Minus)":
             return <PotIcon sx={{color: "#886666"}} fontSize="small"/>;
+        case "Cooking Power-Up S (Minus)":
+            if (second !== true) {
+                return <PotIcon sx={{color: "#886666"}} fontSize="small"/>;
+            } else {
+                return <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
+            }
         case "Tasty Chance S":
             return <PriorityHighIcon sx={{color: "#ff0000"}} fontSize="small"/>;
         case "Metronome":

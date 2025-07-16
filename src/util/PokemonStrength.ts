@@ -400,6 +400,10 @@ class PokemonStrength {
                 ingCount = Math.floor(ingCount * (eventBonus?.ingredientMagnet ?? 1));
                 return [mainSkillValue, 0, ingCount * skillCount, 0];
 
+            case "Cooking Power-Up S (Minus)":
+                const energy = getSkillSubValue(mainSkill, skillLevel);
+                return [mainSkillValue, 0, energy * skillCount, 0];
+
             case "Ingredient Magnet S":
             case "Ingredient Draw S":
             case "Ingredient Draw S (Super Luck)":
