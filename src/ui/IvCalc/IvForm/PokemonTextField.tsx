@@ -176,7 +176,7 @@ const StyledEvolveButton = styled(IconButton)({
  */
 const CandyButton = React.memo(({onClick}: {onClick: () => void}) => {
     return <StyledCandyButton size="small" onClick={onClick}>
-        <CandyIcon/>
+        <CandyIcon sx={{color: '#e7ba67'}}/>
     </StyledCandyButton>;
 });
 
