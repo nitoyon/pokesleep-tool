@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 import React from 'react';
+import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
-const IngredientsIcon = React.memo(() => {
+const IngredientsIcon = React.memo((props: SvgIconProps) => {
     return (
-            <svg viewBox="0 0 200 200">
+            <SvgIcon {...props} viewBox="0 0 200 200">
                 <g transform="scale(0.6)">
                     <g transform="translate(30, 0)">
                         <path d="M139.8,194.7s5-.3,9.2-3.4c4-3,6.3-6.8,6.3-10.3,0-3.5,0-92.4,0-92.4,0,0-.2-7.5-2.4-12.5-3.8-8.4-17.3-37.6-17.6-40.8-.2-2.3-.3-7,.2-7.2,5.5-1.2,12.9-4.6,10.8-12.7-2.3-8.7-10.7-7.9-10.7-7.9h-71.1s-8.4-.8-10.7,7.9,5.3,11.6,10.8,12.7c.5.2.4,4.9.2,7.2-.3,3.3-13.8,32.4-17.6,40.8-2.3,5-2.4,12.5-2.4,12.5v92.4c0,3.5,2.3,7.3,6.3,10.3,4.2,3.1,9.2,3.4,9.2,3.4h79.6Z" fill="#fcfcfc" strokeWidth="0"/>
@@ -52,7 +53,7 @@ const IngredientsIcon = React.memo(() => {
                         <path d="M106.4,5.2l7.7,5.4c-3,6.4-9.5,13.5-12.7,39,0,0-4-16.4-2.7-27s7.8-17.4,7.8-17.4Z" fill="#8c5144" stroke="#333" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6"/>
                     </g>
                 </g>
-            </svg>
+            </SvgIcon>
     );
 });
 

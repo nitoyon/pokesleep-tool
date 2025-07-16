@@ -95,7 +95,7 @@ const StyledBerryIngSkillStrengthView = styled('div')({
                 gridTemplateColumns: 'auto auto',
                 '& > span.ing': {
                     textAlign: 'right',
-                    '& > svg': { width: '0.8em', height: '0.8em', paddingRight: '0.1rem'},
+                    '& > svg': { width: '0.6em', height: '0.6em', paddingRight: '0.1rem'},
                     '& > span': { fontSize: '0.8em'},
                 },
                 '& > span.strength': {
@@ -109,6 +109,7 @@ const StyledBerryIngSkillStrengthView = styled('div')({
                 lineHeight: '50%',
             },
             '&.ing3': {
+                '& > span.ing > svg': { width: '0.4em', height: '0.4em' },
                 fontSize: '0.8em',
                 lineHeight: '50%',
             },
