@@ -73,7 +73,7 @@ checkBrowsers(paths.appPath, isInteractive)
     // run on a different port. `choosePort()` Promise resolves to the next free port.
     return choosePort(HOST, DEFAULT_PORT);
   })
-  .then(port => {
+  .then(async (port) => {
     if (port == null) {
       // We have not found a port.
       return;
@@ -113,35 +113,36 @@ checkBrowsers(paths.appPath, isInteractive)
       port,
     };
     const devServer = new WebpackDevServer(serverConfig, compiler);
+
     // Launch WebpackDevServer.
-    devServer.startCallback(() => {
-      if (isInteractive) {
-        clearConsole();
-      }
+    await devServer.start();
 
-      if (env.raw.FAST_REFRESH && semver.lt(react.version, '16.10.0')) {
-        console.log(
-          chalk.yellow(
-            `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
-          )
-        );
-      }
+    if (isInteractive) {
+      clearConsole();
+    }
 
-      console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
-    });
+    if (env.raw.FAST_REFRESH && semver.lt(react.version, '16.10.0')) {
+      console.log(
+        chalk.yellow(
+          `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
+        )
+      );
+    }
+
+    console.log(chalk.cyan('Starting the development server...\n'));
+    openBrowser(urls.localUrlForBrowser);
 
     ['SIGINT', 'SIGTERM'].forEach(function (sig) {
-      process.on(sig, function () {
-        devServer.close();
+      process.on(sig, async function () {
+        await devServer.close();
         process.exit();
       });
     });
 
     if (process.env.CI !== 'true') {
       // Gracefully exit when stdin ends
-      process.stdin.on('end', function () {
-        devServer.close();
+      process.stdin.on('end', async function () {
+        await devServer.close();
         process.exit();
       });
     }
