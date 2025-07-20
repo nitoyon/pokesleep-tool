@@ -3,6 +3,7 @@ import Nature from './Nature';
 describe('Nature', () => {
     test('works fine when Bold is given', () => {
         const n = new Nature("Bold");
+        expect(n.isNeautral).toBe(false);
         expect(n.isEnergyRecoveryUp).toBe(true);
         expect(n.isExpGainsUp).toBe(false);
         expect(n.isSpeedOfHelpDown).toBe(true);
@@ -16,6 +17,7 @@ describe('Nature', () => {
 
     test('works fine when Bashful is given', () => {
         const n = new Nature("Bashful");
+        expect(n.isNeautral).toBe(true);
         expect(n.isEnergyRecoveryUp).toBe(false);
         expect(n.isExpGainsUp).toBe(false);
         expect(n.isSpeedOfHelpDown).toBe(false);
