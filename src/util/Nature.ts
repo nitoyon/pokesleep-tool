@@ -49,6 +49,9 @@ class Nature {
 
     private static allNaturesCache: Nature[] = [];
 
+    private static neautralNatures: NoCorrectionNatureType[] =
+        ["Bashful", "Hardy", "Docile", "Quirky", "Serious"];
+
     private static energyRecoveryUpNatures: EnergyRecoveryUpNatureType[] =
         ["Bold", "Impish", "Lax", "Relaxed"];
     private static expGainsUpNatures: ExpGainsUpNatureType[] =
@@ -140,6 +143,9 @@ class Nature {
         return "No effect";
     } 
 
+    get isNeautral() {
+        return (Nature.neautralNatures as any[]).includes(this.value);
+    }
     get isEnergyRecoveryUp() {
         return (Nature.energyRecoveryUpNatures as any[]).includes(this.value);
     }
