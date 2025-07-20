@@ -6,11 +6,13 @@ import { BoxFilterConfig } from './BoxView';
 import { EditSubSkillControl } from '../IvForm/SubSkillControl';
 import IngredientButton from '../IngredientButton';
 import MainSkillButton from '../MainSkillButton';
+import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
     PokemonType, PokemonTypes
 } from '../../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import SubSkill, { SubSkillType } from '../../../util/SubSkill';
+import { NatureEffect } from '../../../util/Nature';
 import { Button, Dialog, DialogActions, InputAdornment, Switch,
     Tab, Tabs, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
@@ -91,6 +93,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             <StyledTab label={t('ingredient')} value={1}/>
             <StyledTab label={t('main skill')} value={2}/>
             <StyledTab label={t('sub skills')} value={3}/>
+            <StyledTab label={t('nature')} value={4}/>
         </StyledTabs>
         <div className="tabContainer">
             <div className={`tabChild ${tabIndex === 0 ? 'tabChildActive' : ''}`}>
@@ -112,6 +115,9 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             </div>
             <div className={`tabChild ${tabIndex === 3 ? 'tabChildActive' : ''}`}>
                 <SubSkillTab value={value} onChange={onChange}/>
+            </div>
+            <div className={`tabChild ${tabIndex === 4 ? 'tabChildActive' : ''}`}>
+                <NatureTab value={value} onChange={onChange}/>
             </div>
         </div>
         <DialogActions>
@@ -160,7 +166,7 @@ const StyledTabs = styled(Tabs)({
 const StyledTab = styled(Tab)({
     minHeight: '36px',
     minWidth: '0',
-    padding: '6px 8px',
+    padding: '6px clamp(6px, 1vw, 8px)',
     textTransform: 'none',
 });
 
@@ -225,6 +231,135 @@ const SubSkillTab = React.memo(({value, onChange}: {
                 onChange={onSubSkillAndChange}/>
         </section>
     </>;
+});
+
+const NatureTab = React.memo(({value, onChange}: {
+    value: BoxFilterConfig,
+    onChange: (value: BoxFilterConfig) => void,
+}) => {
+    const onNoEffectClick = useCallback((selected: NatureEffect) => {
+        onChange(new BoxFilterConfig({
+            ...value,
+            neutralNature: !value.neutralNature,
+            upNature: "No effect",
+            downNature: "No effect",
+        }));
+    }, [value, onChange]);
+    const onUpEffectClick = useCallback((selected: NatureEffect) => {
+        let downNature: NatureEffect = value.downNature;
+        if (downNature === selected) {
+            downNature = "No effect";
+        }
+        onChange(new BoxFilterConfig({
+            ...value,
+            neutralNature: false,
+            upNature: selected === value.upNature ? "No effect" : selected,
+            downNature,
+        }));
+    }, [value, onChange]);
+    const onDownEffectClick = useCallback((selected: NatureEffect) => {
+        let upNature: NatureEffect = value.upNature;
+        if (upNature === selected) {
+            upNature = "No effect";
+        }
+        onChange(new BoxFilterConfig({
+            ...value,
+            neutralNature: false,
+            upNature,
+            downNature: selected === value.downNature ? "No effect" : selected,
+        }));
+    }, [value, onChange]);
+
+    return <>
+        <div style={{marginTop: '0.4rem'}}>
+            <NatureButton label="No effect" onClick={onNoEffectClick}
+                checked={value.neutralNature}/>
+        </div>
+        <StyledNatureContainer>
+            <NatureButton label="Speed of help" up
+                checked={value.upNature === "Speed of help"}
+                onClick={onUpEffectClick}/>
+            <NatureButton label="Main skill chance" up
+                checked={value.upNature === "Main skill chance"}
+                onClick={onUpEffectClick}/>
+            <NatureButton label="Ingredient finding" up
+                checked={value.upNature === "Ingredient finding"}
+                onClick={onUpEffectClick}/>
+            <NatureButton label="EXP gains" up
+                checked={value.upNature === "EXP gains"}
+                onClick={onUpEffectClick}/>
+            <NatureButton label="Energy recovery" up
+                checked={value.upNature === "Energy recovery"}
+                onClick={onUpEffectClick}/>
+        </StyledNatureContainer>
+        <StyledNatureContainer>
+            <NatureButton label="Speed of help" down
+                checked={value.downNature === "Speed of help"}
+                onClick={onDownEffectClick}/>
+            <NatureButton label="Main skill chance" down
+                checked={value.downNature === "Main skill chance"}
+                onClick={onDownEffectClick}/>
+            <NatureButton label="Ingredient finding" down
+                checked={value.downNature === "Ingredient finding"}
+                onClick={onDownEffectClick}/>
+            <NatureButton label="EXP gains" down
+                checked={value.downNature === "EXP gains"}
+                onClick={onDownEffectClick}/>
+            <NatureButton label="Energy recovery" down
+                checked={value.downNature === "Energy recovery"}
+                onClick={onDownEffectClick}/>
+        </StyledNatureContainer>
+    </>;
+});
+
+const StyledNatureContainer = styled('div')({
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    marginTop: '1rem',
+});
+
+const NatureButton = React.memo(({label, checked, up, down, onClick}: {
+    label: NatureEffect,
+    checked: boolean,
+    up?: boolean,
+    down?: boolean,
+    onClick: (value: NatureEffect) => void,
+}) => {
+    const { t } = useTranslation();
+    const onClickHandler = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        const value = e.currentTarget.value as NatureEffect;
+        onClick(value);
+    }, [onClick]);
+
+    return <StyledNatureButton
+        key={label} value={label} onClick={onClickHandler}>
+        {up === true ?
+            <StyledNatureUpEffect>{t(`nature effect.${label}`)}</StyledNatureUpEffect> :
+        down === true ?
+            <StyledNatureDownEffect>{t(`nature effect.${label}`)}</StyledNatureDownEffect> :
+            t(`nature effect.${label}`)}
+        {checked && <CheckIcon/>}
+    </StyledNatureButton>;
+});
+
+const StyledNatureButton = styled(Button)({
+    color: 'black',
+    textAlign: 'left',
+    fontSize: 'clamp(0.65rem, calc(2vw), 0.8rem)',
+    textTransform: 'none',
+    borderRadius: '0.5rem',
+    border: '1px solid #ccc',
+    margin: '2px',
+    '& > svg.MuiSvgIcon-root[data-testid="CheckIcon"]': {
+        position: 'absolute',
+        background: '#24d76a',
+        borderRadius: '15px',
+        fontSize: '15px',
+        color: 'white',
+        border: '1px solid white',
+        bottom: '1px',
+        right: '10px',
+    },
 });
 
 export default BoxFilterDialog;
