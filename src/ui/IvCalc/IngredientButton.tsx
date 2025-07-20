@@ -29,7 +29,7 @@ const StyledIngredientButton = styled(Button)({
     padding: 0,
     margin: '0.2rem',
     borderRadius: '0.5rem',
-    '& > svg.MuiSvgIcon-root': {
+    '& > svg.MuiSvgIcon-root[data-testid="CheckIcon"]': {
         position: 'absolute',
         background: '#24d76a',
         borderRadius: '15px',
