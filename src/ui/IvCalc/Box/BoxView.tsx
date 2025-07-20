@@ -12,6 +12,7 @@ import { PokemonSpecialty, IngredientName, IngredientNames, PokemonType
 } from '../../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { SubSkillType } from '../../../util/SubSkill';
+import { NatureEffect } from '../../../util/Nature';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonRp from '../../../util/PokemonRp';
 import PokemonStrength, { StrengthParameter } from '../../../util/PokemonStrength';
@@ -312,6 +313,12 @@ interface IBoxFilterConfig {
     subSkillUnlockedOnly: boolean;
     /** Include only Pokemon with the subSkillName unlocked */
     subSkillAnd: boolean;
+    /** Include only Pokemon with a neutral nature */
+    neutralNature: boolean;
+    /** Nature effect that is increased (set to 'No effect' if unspecified) */
+    upNature: NatureEffect;
+    /** Nature effect that is decreased (set to 'No effect' if unspecified) */
+    downNature: NatureEffect;
 }
 
 /**
@@ -336,6 +343,12 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     subSkillUnlockedOnly: boolean;
     /** Include only Pokemon with the subSkillName unlocked */
     subSkillAnd: boolean;
+    /** Include only Pokemon with a neutral nature */
+    neutralNature: boolean;
+    /** Nature effect that is increased (set to 'No effect' if unspecified) */
+    upNature: NatureEffect;
+    /** Nature effect that is decreased (set to 'No effect' if unspecified) */
+    downNature: NatureEffect;
 
     /** Initialize the instance */
     constructor(values: Partial<IBoxFilterConfig>) {
@@ -348,6 +361,9 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         this.subSkillNames = values.subSkillNames ?? [];
         this.subSkillUnlockedOnly = values.subSkillUnlockedOnly ?? true;
         this.subSkillAnd = values.subSkillAnd ?? true;
+        this.neutralNature = values.neutralNature ?? false;
+        this.upNature = values.upNature ?? "No effect";
+        this.downNature = values.downNature ?? "No effect";
     }
 
     /**
@@ -398,6 +414,15 @@ export class BoxFilterConfig implements IBoxFilterConfig {
                 }
             });
         }
+        if (this.neutralNature) {
+            ret = ret.filter(x => x.iv.nature.isNeautral);
+        }
+        if (this.upNature !== "No effect") {
+            ret = ret.filter(x => x.iv.nature.upEffect === this.upNature);
+        }
+        if (this.downNature !== "No effect") {
+            ret = ret.filter(x => x.iv.nature.downEffect === this.downNature);
+        }
         return ret;
     }
 
@@ -408,7 +433,10 @@ export class BoxFilterConfig implements IBoxFilterConfig {
             this.filterSpecialty.length === 0 &&
             this.ingredientName === undefined &&
             this.mainSkillNames.length === 0 &&
-            this.subSkillNames.length === 0;
+            this.subSkillNames.length === 0 &&
+            this.neutralNature === false &&
+            this.upNature === "No effect" &&
+            this.downNature === "No effect";
     }
 }
 
