@@ -111,7 +111,7 @@ const StyledEditSubSkillContainer = styled('div')({
     '& div.subskill_list25': {
         margin: '.8rem 0',
         display: 'grid',
-        gridTemplateColumns: '1fr 2.5rem 2.5rem 2.5rem',
+        gridTemplateColumns: 'max-content 2.5rem 2.5rem 2.5rem',
         gridGap: '.3rem',
         '& header': {
             textAlign: 'right',
@@ -244,23 +244,19 @@ export const EditSubSkillControl = React.memo(({subSkill2Badge, onClick}: {
             <header>{t('subskill.Skill Level Up')}</header>
             {createButton("Skill Level Up M", "M")}
             {createButton("Skill Level Up S", "S")}
-        </div>
-        <div className="subskill_list25">
+            <span></span>
             <header>{t('subskill.Skill Trigger')}</header>
             {createButton("Skill Trigger M", "M")}
             {createButton("Skill Trigger S", "S")}
-        </div>
-        <div className="subskill_list25">
+            <span></span>
             <header>{t('subskill.Helping Speed')}</header>
             {createButton("Helping Speed M", "M")}
             {createButton("Helping Speed S", "S")}
-        </div>
-        <div className="subskill_list25">
+            <span></span>
             <header>{t('subskill.Ingredient Finder')}</header>
             {createButton("Ingredient Finder M", "M")}
             {createButton("Ingredient Finder S", "S")}
-        </div>
-        <div className="subskill_list25">
+            <span></span>
             <header>{t('subskill.Inventory Up')}</header>
             {createButton("Inventory Up L", "L")}
             {createButton("Inventory Up M", "M")}

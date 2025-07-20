@@ -123,6 +123,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 
 const StyledPokemonFilterDialog = styled(Dialog)({
     'div.MuiPaper-root': {
+        maxWidth: '480px',
         '& > div': {
             margin: '.5rem .5rem 0 .5rem',
         },
@@ -213,7 +214,7 @@ const SubSkillTab = React.memo(({value, onChange}: {
     return <>
         <EditSubSkillControl subSkill2Badge={subSkill2Badge}
             onClick={onClick}/>
-        <section>
+        <section style={{marginTop: '2rem'}}>
             <label>{t('unlocked only')}:</label>
             <Switch checked={value.subSkillUnlockedOnly} size="small"
                 onChange={onSubSkillUnlockedOnlyChange}/>
