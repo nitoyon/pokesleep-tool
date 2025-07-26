@@ -40,7 +40,7 @@ interface DrowsyPowerRange {
 const fields = fields_ as FieldData[];
 
 // add sentinel
-export const MAX_STRENGTH = 9999999;
+export const MAX_STRENGTH = 30000000;
 for (const field of fields) {
     field.ranks.push(MAX_STRENGTH + 1);
 }
