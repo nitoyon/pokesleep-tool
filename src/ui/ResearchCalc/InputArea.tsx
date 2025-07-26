@@ -256,6 +256,10 @@ const StyledRankTextField = styled(TextField)({
 const StyledRankMenuItem = styled(MenuItem)({
     '& > span.rank_ball': {
         fontSize: '1rem',
+        '&.rank_ball_basic': { color: '#ff0000' },
+        '&.rank_ball_great': { color: '#0000ff' },
+        '&.rank_ball_ultra': { color: '#000000' },
+        '&.rank_ball_master': { color: '#cc00cc' },
     },
     '& > span.rank_number': {
         fontSize: '1rem',

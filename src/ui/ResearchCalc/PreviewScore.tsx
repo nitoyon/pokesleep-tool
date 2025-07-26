@@ -273,7 +273,11 @@ const StyledPreviewScore = styled('div')({
         color: '#666',
         '&::before': {
             content: "'\\26a0\\fe0f'",
-        }
+        },
+        '& .rank_ball_basic': { color: '#ff0000' },
+        '& .rank_ball_great': { color: '#0000ff' },
+        '& .rank_ball_ultra': { color: '#000000' },
+        '& .rank_ball_master': { color: '#cc00cc' },
     }
 });
 
