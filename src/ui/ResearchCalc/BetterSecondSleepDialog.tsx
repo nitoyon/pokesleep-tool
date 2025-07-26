@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import SleepScore from '../SleepScore';
+import SleepScore from './SleepScore';
 import {getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
 import { useTranslation, Trans } from 'react-i18next';
 
