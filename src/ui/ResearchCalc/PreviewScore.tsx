@@ -5,7 +5,7 @@ import { InputAreaData } from './InputArea'
 import Rank from '../../util/Rank';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { PokemonCount, getPokemonCount } from '../../util/PokemonCount';
-import SleepScore from '../SleepScore'
+import SleepScore from './SleepScore'
 import fields from '../../data/fields';
 import { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
