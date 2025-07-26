@@ -1,4 +1,4 @@
-import './InputArea.css';
+import { styled } from '@mui/system';
 import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import { getDrowsyBonus } from '../../data/events';
@@ -108,7 +108,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         setIsScoreTableDialogOpen(false);
     }, [setIsScoreTableDialogOpen]);
 
-    return (<><form className="main">
+    return (<><StyledForm>
         <div>{t("research area")}:</div>
         <div>
             <ResearchAreaTextField
@@ -116,7 +116,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         </div>
         <div>{t("strength")}:</div>
         <div>
-            <div className="strength_first_line">
+            <div>
                 <RankTextField field={field}
                     value={rank.index} onChange={onRankChange}/>
                 <StrengthTextField
@@ -139,7 +139,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             </div>
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
-    </form>
+    </StyledForm>
     <div style={{textAlign: 'right'}}>
         <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
     </div>
@@ -147,6 +147,60 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
     </>);
 }
+
+const StyledForm = styled('div')({
+    marginTop: '.8rem',
+    display: 'grid',
+    gap: '0.8rem 1.2rem',
+    gridTemplateColumns: 'fit-content(200px) 1fr',
+
+    '& form.main div[role="combobox"]': {
+        paddingBottom: '2px',
+    },
+
+    '& span.field_icon': {
+        paddingRight: '.2rem',
+    },
+
+    '& div.strength_second_line': {
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: '.2rem',
+        userSelect: 'none',
+    },
+
+    '& .MuiInput-input:focus': {
+        background: 'inherit',
+    },
+
+    '& span.strength_progress': {
+        width: 'calc(100% - 4rem)',
+        margin: '0 1rem',
+
+        '& .MuiSlider-track': {
+            color: '#f7ac33',
+            height: '.5rem',
+        },
+        '& .MuiSlider-rail': {
+            color: '#999999',
+            height: '.5rem',
+        },
+        '& .MuiSlider-thumb': {
+            color: '#f7ac33',
+            width: '.9rem',
+            height: '.9rem',
+            '&::after': {
+                width: '1rem',
+                height: '1rem',
+            },
+            '&.Mui-active, &:hover, &.Mui-focusVisible': {
+                boxShadow: '0px 0px 0px 6px rgba(235,219,102,0.4)',
+            },
+        },
+    },
+/*
+*/
+});
 
 interface RankTextFieldProps {
     field: FieldData;
@@ -165,15 +219,15 @@ const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) =
         const rankNumber = Rank.rankIndexToRankNumber(i);
         const strength = field.ranks[i];
         rankMenuItems.push(
-            <MenuItem key={i} value={i} dense selected={selected}>
+            <StyledRankMenuItem key={i} value={i} dense selected={selected}>
                 <span className={"rank_ball rank_ball_" + rankType}>◓</span>
                 <span className="rank_number">{rankNumber}</span>
                 <span className="strength">{t("num", {n: strength})}{t("range separator")}</span>
-            </MenuItem>);
+            </StyledRankMenuItem>);
     }
 
     return (
-        <TextField className="rank" variant="standard" size="small" select
+        <StyledRankTextField className="rank" variant="standard" size="small" select
             value={value}
             SelectProps={{ MenuProps: {
                 sx: { height: "400px" },
@@ -182,8 +236,38 @@ const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) =
             }}}
             onChange={onChange}>
             {rankMenuItems}
-        </TextField>
+        </StyledRankTextField>
     );
+});
+
+const StyledRankTextField = styled(TextField)({
+    width: '4rem',
+    marginRight: '1rem',
+
+    '& span.rank_number': {
+        paddingLeft: '.2rem',
+    },
+
+    '& span.strength': {
+        display: 'none',
+    },
+});
+
+const StyledRankMenuItem = styled(MenuItem)({
+    '& > span.rank_ball': {
+        fontSize: '1rem',
+    },
+    '& > span.rank_number': {
+        fontSize: '1rem',
+        paddingLeft: '.2rem',
+    },
+
+    '& > span.strength': {
+        paddingLeft: '1.2rem',
+        color: '#999',
+        fontSize: '.9rem',
+        fontWeight: 'normal',
+    },
 });
 
 interface StrengthTextFieldProps {
@@ -208,7 +292,7 @@ const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) 
         value.toString() : t("num", {n: value});
 
     return (
-        <TextField className="strength" variant="standard" size="small" type="tel"
+        <StyledStrengthTextField variant="standard" size="small" type="tel"
             value={strengthValue}
             onChange={onChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
             InputProps={{
@@ -216,6 +300,15 @@ const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) 
                 startAdornment: StrengthAdornment,
             }}/>
     );
+});
+
+const StyledStrengthTextField = styled(TextField)({
+    width: 'calc(100% - 5rem)',
+    '& input': {
+        fontWeight: 800,
+        fontSize: '1rem',
+        paddingBottom: '2px',
+    },
 });
 
 interface EventBonusProps {
