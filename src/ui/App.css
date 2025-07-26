@@ -42,10 +42,6 @@ div.score_box {
     width: 4rem;
 }
 
-div.preview {
-    margin-bottom: 10rem;
-}
-
 div.preview_count {
     padding: .7rem 0;
     border-bottom: 3px dotted #ddd;
