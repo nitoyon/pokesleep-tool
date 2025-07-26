@@ -1,10 +1,10 @@
 import React from 'react';
+import { styled } from '@mui/system';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import SleepScore from '../SleepScore';
+import SleepScore from './SleepScore';
 import {getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
 import { useTranslation, Trans } from 'react-i18next';
-import './BetterSecondSleepDialog.css';
 
 interface BetterSecondSleepDialogProps {
     /** Whether dialog is open or not */
@@ -34,6 +34,10 @@ interface BetterSecondSleepEntry {
 export default function BetterSecondSleepDialog({open, onClose, data}: BetterSecondSleepDialogProps) {
     const { t } = useTranslation();
 
+    if (!open) {
+        return <></>;
+    }
+
     const details = [];
     for (let i = 0; i < 2; i++) {
         const entry = [data.first, data.second][i];
@@ -58,7 +62,7 @@ export default function BetterSecondSleepDialog({open, onClose, data}: BetterSec
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogContent dividers className="better_dialog">
+            <StyledContent dividers className="better_dialog">
                 <Trans i18nKey="next strength to get 1 more pokemon"
                     components={{
                         count2: <strong>{data.second.count}</strong>,
@@ -69,10 +73,48 @@ export default function BetterSecondSleepDialog({open, onClose, data}: BetterSec
                 <div>{details[0]}</div>
                 <h3>{t("second sleep")}</h3>
                 <div>{details[1]}</div>
-            </DialogContent>
+            </StyledContent>
             <DialogActions>
                 <Button onClick={onClose}>{t('close')}</Button>
             </DialogActions>
         </Dialog>
     );
 }
+
+const StyledContent = styled(DialogContent)({
+    '& > h3': {
+        marginBottom: '.2rem',
+        fontSize: '1.1rem',
+    },
+
+    '& div.better_preview': {
+        padding: '0 .5rem',
+        display: 'grid',
+        gridTemplateColumns: '2.5rem auto',
+        gap: '.5rem .3rem',
+        alignItems: 'center',
+
+        '& > div.ball': {
+            color: '#ff6347',
+            textAlign: 'center',
+            alignItems: 'center',
+            fontSize: '1.3rem',
+        },
+
+        '& > span.ball_value': {
+            fontSize: '1.3rem',
+        },
+
+        '& > span.strength': {
+            color: '#ff944b',
+            textAlign: 'center',
+            '& > svg': {
+                transform: 'scale(1.2)',
+            },
+        },
+
+        '& > span.strength_value': {
+            fontSize: '1.2rem',
+        },
+    },
+});

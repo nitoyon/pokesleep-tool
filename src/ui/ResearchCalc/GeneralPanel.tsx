@@ -19,7 +19,7 @@ export default function GeneralPanel({data}: {data: InputAreaData}) {
     }
 
     return (
-        <div className="preview">
+        <div style={{marginBottom: '10rem'}}>
             <PreviewScore count={4} data={data} ranges={getScoreRange(4, data)}
                 onSecondSleepDetailClick={onSecondSleepDetailClick}/>
             <PreviewScore count={5} data={data} ranges={getScoreRange(5, data)}

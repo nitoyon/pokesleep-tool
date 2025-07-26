@@ -19,7 +19,7 @@ export default function ResearchCalcApp() {
     }, [updateState]);
 
     return (
-        <div className="content">
+        <div style={{margin: '0 .5rem'}}>
             <InputArea data={data} onChange={onChange}/>
             <GeneralPanel data={data}/>
         </div>
