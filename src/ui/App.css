@@ -22,23 +22,6 @@ body > div.base-Popper-root {
     z-index: 2147483647 !important;
 }
 
-div.appbar {
-    background: #665500;
-    color: white;
-    padding: .2rem .5rem;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-}
-@media all and (display-mode: standalone) {
-    div.appbar {
-        background: #002244;
-    }
-}
-div.appbar div.title {
-    flex-grow: 1;
-}
-
 div.content {
     margin: 0 .5rem;
 }

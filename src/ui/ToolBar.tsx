@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { styled } from '@mui/system';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
 import SettingsDialog from './Dialog/SettingsDialog';
@@ -62,7 +63,7 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
     };
 
     return (
-        <div className="appbar">
+        <StyledAppBar>
             <div className="title">{t(`${app}.title`)}</div>
             <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
                 <MoreIcon />
@@ -96,6 +97,22 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
             <SettingsDialog open={isLanguageDialogOpen} app={app}
                 onAppConfigChange={onAppConfigChange}
                 onClose={onLanguageDialogClose}/>
-        </div>
+        </StyledAppBar>
     );
 }
+
+const StyledAppBar = styled('div')({
+    background: '#665500',
+    color: 'white',
+    padding: '.2rem .5rem',
+    fontSize: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+
+    '@media all and (display-mode: standalone)': {
+        background: '#002244',
+    },
+    '& > div.title': {
+        flexGrow: 1,
+    },
+});
