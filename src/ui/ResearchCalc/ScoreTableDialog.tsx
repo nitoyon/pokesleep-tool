@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Dialog, DialogActions, DialogTitle,
     ToggleButtonGroup, ToggleButton } from '@mui/material';
-import SleepScore from '../SleepScore';
+import SleepScore from './SleepScore';
 import {getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
 import { useTranslation } from 'react-i18next';
 

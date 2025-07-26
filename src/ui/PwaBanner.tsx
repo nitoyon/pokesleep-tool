@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { styled } from '@mui/system';
 import ResearchCalcIcon from './Resources/ResearchCalcIcon';
 import IvCalcIcon from './Resources/IvCalcIcon';
 import SafariIcon from './Resources/SafariIcon';
@@ -64,7 +65,7 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
 
     // [Add to home screen] button click handler
     const onAddToHomeScreen = useCallback(() => {
-        if (defferedPrompt !== undefined) {
+        /*if (defferedPrompt !== undefined) {
             // Android or Google Chrome (PC)
             setOpen(false);
             defferedPrompt.prompt();
@@ -74,7 +75,8 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
         } else {
             // iPhone
             setIPhoneMessageOpen(true);
-        }
+        }*/
+       setIPhoneMessageOpen(true);
     }, [setOpen]);
 
     // Close button click handler
@@ -89,7 +91,7 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
     }, [setIPhoneMessageOpen]);
 
     return (
-        <Snackbar open={open} className="pwa_banner">
+        <StyledPwaBanner open={open}>
             <div className="pwa_banner_container">
                 {app === "ResearchCalc" ? <ResearchCalcIcon/> : <IvCalcIcon/>}
                 <div className="pwa_banner_body">
@@ -102,8 +104,54 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
                 <IconButton onClick={onCloseClick}><CloseIcon/></IconButton>
                 <IPhoneMessageDialog app={app} open={iPhoneMessageOpen} onClose={onCloseMessage}/>
             </div>
-        </Snackbar>
+        </StyledPwaBanner>
     );
+});
+
+const StyledPwaBanner = styled(Snackbar)({
+    background: 'white',
+    borderRadius: '1rem 1rem 0 0',
+    boxShadow: '0 -.2rem .4rem #ccc',
+    padding: '.5rem',
+    bottom: 0,
+    zIndex: 1000,
+
+    '& > div.pwa_banner_container': {
+        display: 'flex',
+
+        '& > svg': {
+            alignItems: 'flex-start',
+            paddingTop: '.5rem',
+            paddingRight: '6px',
+            width: '24px',
+            flexShrink: 0,
+        },
+
+        '& > div.pwa_banner_body': {
+            flexGrow: 1,
+            paddingTop: '.5rem',
+            '& > p': {
+                margin: '0 0 .5rem 0',
+            },
+
+            '& > button': {
+                fontSize: '.8rem',
+
+                '&.add': {
+                    borderRadius: '1rem',
+                    background: '#24da6d',
+                },
+                '&.later': {
+                    color: 'black',
+                },
+            },
+        },
+
+        '& > button.MuiIconButton-root': {
+            marginRight: 'auto',
+            alignSelf: 'start',
+        },
+    },
 });
 
 interface IPhoneMessageDialogProps {
@@ -134,7 +182,7 @@ const IPhoneMessageDialog = React.memo(({app, open, onClose}:IPhoneMessageDialog
         setCopyCompleted(false);
     }, [setCopyCompleted]);
 
-    return <Dialog open={open} onClose={onClose} className="ios_pwa">
+    return <StyledIosPwaDialog open={open} onClose={onClose}>
         <DialogTitle>{t("how to add to home screen")}</DialogTitle>
         <IconButton onClick={onClose} className="close_button">
             <CloseIcon/>
@@ -161,7 +209,56 @@ const IPhoneMessageDialog = React.memo(({app, open, onClose}:IPhoneMessageDialog
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
-    </Dialog>;
+    </StyledIosPwaDialog>;
+});
+
+const StyledIosPwaDialog = styled(Dialog)({
+    '& div.MuiDialogContent-root': {
+        padding: '1rem',
+        '& > ol': {
+            margin: 0,
+            paddingLeft: '1.6rem',
+            listStyleType: 'none',
+
+            '& > li': {
+                counterIncrement: 'step-counter',
+                position: 'relative',
+                paddingBottom: '.6rem',
+
+                '&::before': {
+                    content: 'counter(step-counter)',
+                    position: 'absolute',
+                    left: '-1.8rem',
+                    top: '.6rem',
+                    backgroundColor: '#24da6d',
+                    color: 'white',
+                    borderRadius: '1rem',
+                    width: '18px',
+                    height: '18px',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    lineHeight: 1.5,
+                },
+
+                '& button': {
+                    padding: 0,
+                    paddingTop: '.2rem',
+                },
+
+                '& > svg': {
+                    position: 'relative',
+                    top: '.4rem',
+                },
+            },
+        }
+    },
+
+    '& button.close_button': {
+        position: 'absolute',
+        right: '8px',
+        top: '12px',
+    },
 });
 
 export default PwaBanner;
