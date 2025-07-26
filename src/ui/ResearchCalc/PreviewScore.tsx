@@ -1,4 +1,5 @@
 import React from 'react';
+import { styled } from '@mui/system';
 import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { InputAreaData } from './InputArea'
@@ -79,20 +80,20 @@ export default function PreviewScore(props:PreviewScoreProps) {
     const firstElement = renderRange(range, props.data, t);
     if (!range.canGet || range.tooMuch) {
         return (
-            <div className="preview_count">
+            <StyledPreviewScore>
                 <div className="preview_warning">
                     {firstElement}
                 </div>
-            </div>
+            </StyledPreviewScore>
         )
     }
     if (ranges.secondSleep == null) {
         return (
-            <div className="preview_count">
+            <StyledPreviewScore>
                 <div className="preview_grid">
                     {firstElement}
                 </div>
-            </div>
+            </StyledPreviewScore>
         )
     }
     const secondElement = renderRange(ranges.secondSleep, props.data, t);
@@ -132,7 +133,7 @@ export default function PreviewScore(props:PreviewScoreProps) {
             </div>;
     }
     return (
-        <div className="preview_count">
+        <StyledPreviewScore>
             <div className="sum-tooltip">
                 <Trans i18nKey="total n pokemon"
                     components={{
@@ -144,9 +145,137 @@ export default function PreviewScore(props:PreviewScoreProps) {
                 {secondElement}
             </div>
             {nextElement}
-        </div>
+        </StyledPreviewScore>
     )
 }
+
+const StyledPreviewScore = styled('div')({
+    padding: '.7rem 0',
+    borderBottom: '3px dotted #ddd',
+
+    '& > .preview_grid': {
+        display: 'grid',
+        width: '100%',
+        gridTemplateColumns: '4.5rem max-content 1.5rem max-content',
+        rowGap: '.5rem',
+
+        '& > .count_box': {
+            width: '5rem',
+        },
+    },
+
+    '& > .preview_warning': {
+        display: 'grid',
+        width: '100%',
+        gridTemplateColumns: '4.5rem 1fr',
+    },
+
+    '& div.count': {
+        '& > span.ball': {
+            color: '#ff6347',
+            fontSize: '1.2rem',
+        },
+        '& > span.multiply': {
+            color: '#666',
+            fontSize: '1.2rem',
+        },
+        '& > span.value': {
+            color: '#e6a83a',
+            fontSize: '1.4rem',
+        },
+    },
+    '& div.power': {
+        color: '#aaaaaa',
+        fontSize: '.7rem',
+        marginTop: '-.2rem',
+        whiteSpace: 'nowrap',
+    },
+
+    '& div.start, div.end': {
+        paddingTop: '.3rem',
+        '& > div.sleep_time': {
+            display: 'flex',
+            alignItems: 'flex-start',
+            '& > div.time': {
+                fontSize: '.9rem',
+                fontWeight: 700,
+                marginLeft: '.3rem',
+                marginTop: '0rem',
+
+                '& > div.time_power': {
+                    color: '#aaaaaa',
+                    fontSize: '.8rem',
+                    fontWeight: 500,
+                    marginTop: '-.2rem',
+                }
+            },
+        }
+    },
+    '& div.score_separator': {
+        padding: '.3rem .2rem',
+        textAlign: 'center',
+    },
+
+    '& > .sum-tooltip': {
+        display: 'inline-block',
+        position: 'relative',
+        border: '3px solid #ffffff',
+        backgroundColor: '#f7ac33',
+        color: 'white',
+        fontSize: '.9rem',
+        borderRadius: '.5rem',
+        padding: '.1rem .5rem',
+        boxShadow: '0 0 .1rem #999',
+        marginBottom: '.2rem',
+
+        '&::before': {
+            content: "''",
+            position: 'absolute',
+            display: 'block',
+            width: '0px',
+            left: '50%',
+            bottom: 0,
+            border: '10px solid transparent',
+            borderBottom: 0,
+            borderTop: '10px solid #f7ac33',
+            transform: 'translate(-50%, calc(100% - .1rem))',
+        },
+
+        '& > strong': {
+            fontSize: '1rem',
+            fontWeight: 700,
+        },
+    },
+
+    '& div.meet1more': {
+        color: '#888',
+        fontSize: '.95rem',
+        marginTop: '.8rem',
+        display: 'flex',
+        gap: '.5rem',
+
+        '& > svg': {
+            color: '#bbb',
+            paddingTop: '.2rem',
+        },
+        '& strong': {
+            fontSize: '1rem',
+        },
+        '& button': {
+            padding: 0,
+            minWidth: '2rem',
+        },
+    },
+
+    '& div.warning': {
+        paddingLeft: '2.2rem',
+        textIndent: '-1.2rem',
+        color: '#666',
+        '&::before': {
+            content: "'\\26a0\\fe0f'",
+        }
+    }
+});
 
 function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
     const countElement = (
