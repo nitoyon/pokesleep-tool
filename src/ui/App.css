@@ -22,10 +22,6 @@ body > div.base-Popper-root {
     z-index: 2147483647 !important;
 }
 
-div.content {
-    margin: 0 .5rem;
-}
-
 .rank_ball_basic { color: #ff0000; }
 .rank_ball_great { color: #0000ff; }
 .rank_ball_ultra { color: #000000; }
