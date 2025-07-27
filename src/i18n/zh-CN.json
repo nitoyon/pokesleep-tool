@@ -212,11 +212,13 @@
             "琥褐溪谷",
             "萌绿之岛EX"
         ],
+        "main": "主",
         "none": "无",
         "cresselia on your team": "队伍中有克雷色利亚",
         "sleep twice": "分次睡眠",
         "total n pokemon": "合计<n/>只",
         "range separator": "～",
+        "text separator": "，",
         "hhmm": "{{h}}小时{{m}}分",
         "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}分{{s}}秒每次",
         "hour2_zero": "",

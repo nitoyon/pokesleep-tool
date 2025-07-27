@@ -207,11 +207,13 @@
             "앰버 골짜기",
             "연둣빛 본섬 EX"
         ],
+        "main": "메인",
         "none": "없음",
         "cresselia on your team": "크레세리아를 편성하다",
         "sleep twice": "분할 수면하기",
         "total n pokemon": "총 <n/>체",
         "range separator": "~",
+        "text separator": ", ",
         "hhmm": "{{h}}시간 {{m}}분",
         "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}분 {{s}}초 마다",
         "hour2_zero": "",

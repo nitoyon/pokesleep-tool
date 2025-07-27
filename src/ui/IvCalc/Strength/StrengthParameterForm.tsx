@@ -10,6 +10,7 @@ import InfoButton from '../InfoButton';
 import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
 import TypeSelect from '../TypeSelect';
+import { isExpertField } from '../../../data/fields';
 import { getActiveHelpBonus } from '../../../data/events';
 import { PokemonType } from '../../../data/pokemons';
 import { createStrengthParameter, StrengthParameter } from '../../../util/PokemonStrength';
@@ -183,7 +184,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <ResearchAreaSelect value={value.fieldIndex}
                 onChange={onFieldChange}/>
         </section>
-        <Collapse in={value.fieldIndex === 0}>
+        <Collapse in={value.fieldIndex === 0 || isExpertField(value.fieldIndex)}>
             <section>
                 <label>{t('favorite berry')}:</label>
                 <span>
