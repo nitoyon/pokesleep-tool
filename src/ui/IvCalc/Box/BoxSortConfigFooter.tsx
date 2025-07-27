@@ -4,11 +4,11 @@ import { IvAction } from '../IvState';
 import { BoxSortConfig } from './BoxView';
 import IngredientIcon from '../IngredientIcon';
 import MainSkillIcon from '../MainSkillIcon';
+import ResearchAreaSelect from '../Strength/ResearchAreaSelect';
 import SelectEx from '../../common/SelectEx';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { IngredientName, IngredientNames } from '../../../data/pokemons';
-import fields from '../../../data/fields';
 import { FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -26,8 +26,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     const onLevelChange = React.useCallback((value: string) => {
         onParameterChange({...parameter, level: parseInt(value, 10) as 0|10|25|30|50|55|60|75|100})
     }, [onParameterChange, parameter])
-    const onFieldChange = React.useCallback((value: string) => {
-        onParameterChange({...parameter, fieldIndex: parseInt(value, 10)});
+    const onFieldChange = React.useCallback((value: number) => {
+        onParameterChange({...parameter, fieldIndex: value});
     }, [onParameterChange, parameter]);
     const onIngredientChange = React.useCallback((value: string) => {
         onChange({
@@ -62,20 +62,6 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             </SkillMenuItem>);
     }, [t]);
 
-    const fieldMenus = React.useMemo(() => {
-        // prepare field menus
-        const ret = fields.map((field) =>
-            <MenuItem key={field.index} value={field.index}>
-                {field.emoji}
-                {t(`area.${field.index}`)}
-            </MenuItem>
-        );
-        ret.unshift(<MenuItem key={-1} value={-1}>
-            {t('no favorite berries')}
-        </MenuItem>);
-        return ret;
-    }, [t]);
-
     if (sortConfig.sort !== "total strength" &&
         sortConfig.sort !== "berry" &&
         sortConfig.sort !== "ingredient" &&
@@ -101,10 +87,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             </span>
             {(sortConfig.sort === "berry" || sortConfig.sort === "total strength") &&
             <span className="field">
-                <SelectEx value={parameter.fieldIndex} onChange={onFieldChange}
-                    sx={{padding: '0 .2rem', fontSize: '0.8rem'}}>
-                {fieldMenus}
-                </SelectEx>
+                <ResearchAreaSelect value={parameter.fieldIndex} onChange={onFieldChange}
+                    fontSize="0.8rem"/>
             </span>}
             {sortConfig.sort === "ingredient" && <span className="ing">
                 <SelectEx onChange={onIngredientChange}

@@ -7,7 +7,7 @@ import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent, Fo
 import { IvAction } from '../IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from '../InfoButton';
-import ResearchAreaTextField from '../../common/ResearchAreaTextField';
+import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
 import TypeSelect from '../TypeSelect';
 import { getActiveHelpBonus } from '../../../data/events';
@@ -180,7 +180,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <section>
             <label>{t('research area')}:</label>
-            <ResearchAreaTextField value={value.fieldIndex} showEmpty
+            <ResearchAreaSelect value={value.fieldIndex}
                 onChange={onFieldChange}/>
         </section>
         <Collapse in={value.fieldIndex === 0}>
