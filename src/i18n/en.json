@@ -212,6 +212,7 @@
             "Amber Canyon",
             "Greengrass Isle (Expert)"
         ],
+        "amber assumption": "The favorite berry in $t(area.6) is assumed to be 'Dragon', 'Bug', and 'Poison'.",
         "main": "Main",
         "none": "None",
         "cresselia on your team": "Sleep with Cresselia",

@@ -207,6 +207,7 @@
             "앰버 골짜기",
             "연둣빛 본섬 EX"
         ],
+        "amber assumption": "$t(area.6)의 $t(favorite berry)는 「$t(types.dragon)・$t(types.bug)・$t(types.poison)」이라고 가정하고 계산하고 있습니다.",
         "main": "메인",
         "none": "없음",
         "cresselia on your team": "크레세리아를 편성하다",

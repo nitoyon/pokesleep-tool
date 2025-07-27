@@ -212,6 +212,7 @@
             "琥褐溪谷",
             "萌綠之島EX"
         ],
+        "amber assumption": "以$t(area.6)的$t(favorite berry)為「$t(types.dragon)・$t(types.bug)・$t(types.poison)」進行假設計算。",
         "main": "主",
         "none": "無",
         "cresselia on your team": "隊伍中有克雷色利亞",
