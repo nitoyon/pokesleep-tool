@@ -212,6 +212,7 @@
             "アンバー渓谷",
             "ワカクサ本島 EX"
         ],
+        "amber assumption": "$t(area.6)の$t(favorite berry)は「$t(types.dragon)・$t(types.bug)・$t(types.poison)」と想定して計算しています。",
         "main": "メイン",
         "none": "なし",
         "cresselia on your team": "クレセリアを編成",
