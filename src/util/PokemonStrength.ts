@@ -453,6 +453,8 @@ class PokemonStrength {
             case 3: types = ["ice", "dark", "normal"]; break;
             case 4: types = ["grass", "fighting", "psychic"]; break;
             case 5: types = ["electric", "ghost", "steel"]; break;
+            case 6: types = ["dragon", "poison", "bug"]; break;
+            case 7: types = param.favoriteType; break;
             default: return false;
         }
 
