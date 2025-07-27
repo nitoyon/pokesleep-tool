@@ -2,6 +2,7 @@
     {
         "index": 0,
         "emoji": "🌱",
+        "expert": false,
         "ranks": [
             0,
             3118,
@@ -51,6 +52,7 @@
     {
         "index": 1,
         "emoji": "🏝️",
+        "expert": false,
         "ranks": [
             0,
             4822,
@@ -95,27 +97,12 @@
             7162381,
             13488264,
             30491710
-        ],
-        "encounter": [
-            {
-                "pokemon": "Chikorita",
-                "type": "dozing",
-                "range": [
-                    {
-                        "start": 598000,
-                        "end": 1557999
-                    },
-                    {
-                        "start": 3082000,
-                        "end": 3115999
-                    }
-                ]
-            }
         ]
     },
     {
         "index": 2,
         "emoji": "⛰️",
+        "expert": false,
         "ranks": [
             0,
             6885,
@@ -165,6 +152,7 @@
     {
         "index": 3,
         "emoji": "⛄",
+        "expert": false,
         "ranks": [
             0,
             10486,
@@ -214,6 +202,7 @@
     {
         "index": 4,
         "emoji": "🚢",
+        "expert": false,
         "ranks": [
             0,
             12938,
@@ -263,6 +252,7 @@
     {
         "index": 5,
         "emoji": "⚡️",
+        "expert": false,
         "ranks": [
             0,
             20142,
@@ -308,5 +298,19 @@
             49918886,
             97395900
         ]
+    },
+    {
+        "index": 6,
+        "emoji": "🏜️",
+        "expert": false,
+        "ranks": [],
+        "powers": []
+    },
+    {
+        "index": 7,
+        "emoji": "🌱",
+        "expert": true,
+        "ranks": [],
+        "powers": []
     }
 ]

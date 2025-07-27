@@ -7,6 +7,8 @@ export interface FieldData {
     name: string;
     /** field emoji */
     emoji: string;
+    /** Whether the field is expert mode or not */
+    expert: boolean;
     /** required power to reach the rank */
     ranks: number[];
     /** required power to meet (n + 3) pokemons  */
@@ -43,6 +45,14 @@ const fields = fields_ as FieldData[];
 export const MAX_STRENGTH = 30000000;
 for (const field of fields) {
     field.ranks.push(MAX_STRENGTH + 1);
+}
+
+export function isExpertField(index: number): boolean {
+    const field = fields[index];
+    if (!field) {
+        throw new Error(`Field with index ${index} does not exist.`);
+    }
+    return field.expert;
 }
 
 export default fields;
