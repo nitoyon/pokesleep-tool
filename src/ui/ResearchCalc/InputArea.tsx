@@ -7,7 +7,7 @@ import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
 import ArrowButton from '../common/ArrowButton';
-import ResearchAreaTextField from '../common/ResearchAreaTextField';
+import ResearchAreaTextField from './ResearchAreaTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useTranslation } from 'react-i18next';
