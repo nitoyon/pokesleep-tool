@@ -214,6 +214,8 @@
         ],
         "amber assumption": "The favorite berry in $t(area.6) is assumed to be 'Dragon', 'Bug', and 'Poison'.",
         "main": "Main",
+        "main favorite berry": "Main berry",
+        "sub favorite berries": "Sub berries",
         "none": "None",
         "cresselia on your team": "Sleep with Cresselia",
         "sleep twice": "Sleep twice a day",

@@ -162,8 +162,13 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <ResearchAreaSelect value={value.fieldIndex} fontSize="0.9rem"
                 onChange={onFieldChange}/>
         </section>
-        <Collapse in={value.fieldIndex === 0 || isExpertField(value.fieldIndex)}>
+        <Collapse in={value.fieldIndex === 0}>
             <FavoriteBerrySelect value={value} onChange={onChange}/>
+        </Collapse>
+        <Collapse in={isExpertField(value.fieldIndex)}>
+            <div style={{padding: '0 0 0.7rem 1rem'}}>
+                <FavoriteBerrySelect value={value} onChange={onChange}/>
+            </div>
         </Collapse>
         <section>
             <label>{t('area bonus')}:</label>
