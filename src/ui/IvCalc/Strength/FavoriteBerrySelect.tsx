@@ -35,11 +35,11 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
     return <section>
         <label>{t('favorite berry')}:</label>
         <span>
-            <TypeSelect type={value.favoriteType[0]}
+            <TypeSelect type={value.favoriteType[0]} size="small"
                 onChange={onFavoriteBerryChange1}/>
-            <TypeSelect type={value.favoriteType[1]}
+            <TypeSelect type={value.favoriteType[1]} size="small"
                 onChange={onFavoriteBerryChange2}/>
-            <TypeSelect type={value.favoriteType[2]}
+            <TypeSelect type={value.favoriteType[2]} size="small"
                 onChange={onFavoriteBerryChange3}/>
         </span>
     </section>;
