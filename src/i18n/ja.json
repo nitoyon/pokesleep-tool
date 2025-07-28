@@ -214,6 +214,8 @@
         ],
         "amber assumption": "$t(area.6)の$t(favorite berry)は「$t(types.dragon)・$t(types.bug)・$t(types.poison)」と想定して計算しています。",
         "main": "メイン",
+        "main favorite berry": "メインきのみ",
+        "sub favorite berries": "サブきのみ",
         "none": "なし",
         "cresselia on your team": "クレセリアを編成",
         "sleep twice": "分割睡眠する",
