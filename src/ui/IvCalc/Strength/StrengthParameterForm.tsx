@@ -7,12 +7,11 @@ import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent, Fo
 import { IvAction } from '../IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from '../InfoButton';
+import FavoriteBerrySelect from './FavoriteBerrySelect';
 import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
-import TypeSelect from '../TypeSelect';
 import { isExpertField } from '../../../data/fields';
 import { getActiveHelpBonus } from '../../../data/events';
-import { PokemonType } from '../../../data/pokemons';
 import { createStrengthParameter, StrengthParameter } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -75,27 +74,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     }, [onChange, value]);
     const onFieldChange = React.useCallback((fieldIndex: number) => {
         onChange({...value, fieldIndex});
-    }, [onChange, value]);
-    const onFavoriteBerryChange1 = React.useCallback((type: PokemonType) => {
-        const favoriteType = [value.favoriteType[0] ?? "normal",
-            value.favoriteType[1] ?? "normal",
-            value.favoriteType[2] ?? "normal"];
-        favoriteType[0] = type;
-        onChange({...value, favoriteType});
-    }, [onChange, value]);
-    const onFavoriteBerryChange2 = React.useCallback((type: PokemonType) => {
-        const favoriteType = [value.favoriteType[0] ?? "normal",
-            value.favoriteType[1] ?? "normal",
-            value.favoriteType[2] ?? "normal"];
-        favoriteType[1] = type;
-        onChange({...value, favoriteType});
-    }, [onChange, value]);
-    const onFavoriteBerryChange3 = React.useCallback((type: PokemonType) => {
-        const favoriteType = [value.favoriteType[0] ?? "normal",
-            value.favoriteType[1] ?? "normal",
-            value.favoriteType[2] ?? "normal"];
-        favoriteType[2] = type;
-        onChange({...value, favoriteType});
     }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
         onChange({...value, fieldBonus});
@@ -181,21 +159,11 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <section>
             <label>{t('research area')}:</label>
-            <ResearchAreaSelect value={value.fieldIndex}
+            <ResearchAreaSelect value={value.fieldIndex} fontSize="0.9rem"
                 onChange={onFieldChange}/>
         </section>
         <Collapse in={value.fieldIndex === 0 || isExpertField(value.fieldIndex)}>
-            <section>
-                <label>{t('favorite berry')}:</label>
-                <span>
-                    <TypeSelect type={value.favoriteType[0]}
-                        onChange={onFavoriteBerryChange1}/>
-                    <TypeSelect type={value.favoriteType[1]}
-                        onChange={onFavoriteBerryChange2}/>
-                    <TypeSelect type={value.favoriteType[2]}
-                        onChange={onFavoriteBerryChange3}/>
-                </span>
-            </section>
+            <FavoriteBerrySelect value={value} onChange={onChange}/>
         </Collapse>
         <section>
             <label>{t('area bonus')}:</label>
