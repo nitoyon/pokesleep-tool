@@ -131,15 +131,15 @@ const StyledBoxHeader = styled('div')({
         borderTop: '1px solid #ccc',
         position: 'relative',
         display: 'flex',
+        flexWrap: 'wrap',
         alignItems: 'stretch',
-        gap: '10px',
+        gap: '0 10px',
 
         '& > span': {
             '& > button': {
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
-                maxWidth: '10rem',
             },
             '& span': { // for switch
                 fontSize: '0.8rem',
