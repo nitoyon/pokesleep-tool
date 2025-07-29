@@ -125,6 +125,8 @@ export type EnergyResult = {
          */
         twice: number,
     },
+    /** Carry limit */
+    carryLimit: number,
     /** Help count */
     helpCount: {
         /** Help count while awake */
@@ -203,13 +205,13 @@ class Energy {
             .filter(x => !x.isAwake));
 
         // calculate Sneaky Snacking
-        const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
+        const {carryLimit, timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
-            timeToFullInventory, helpCount, skillProbabilityAfterWakeup,
+            timeToFullInventory, carryLimit, helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep: sleep },
         };
     }
@@ -423,6 +425,7 @@ class Energy {
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
         param: EnergyParameter):
     {
+        carryLimit: number,
         timeToFullInventory: number,
         skillProbabilityAfterWakeup: {
             once: number,
@@ -436,6 +439,7 @@ class Energy {
     } {
         if (this._iv.pokemon.frequency === 0) {
             return {
+                carryLimit: this._iv.pokemon.carryLimit,
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
@@ -568,7 +572,7 @@ class Energy {
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
         }
-        return {timeToFullInventory, skillProbabilityAfterWakeup,
+        return {carryLimit, timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { awake, asleepNotFull, asleepFull }
         };
     }
