@@ -48,6 +48,9 @@ for (const field of fields) {
 }
 
 export function isExpertField(index: number): boolean {
+    if (index < 0) {
+        return false;
+    }
     const field = fields[index];
     if (!field) {
         throw new Error(`Field with index ${index} does not exist.`);
