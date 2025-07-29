@@ -36,6 +36,9 @@ const StyledSettingForm = styled('div')({
         '& > span > button': {
             marginRight: 0,
         },
+        '& > .MuiInput-underline': {
+            fontSize: '0.9rem',
+        },
         '& div.MuiToggleButtonGroup-root > button': {
             fontSize: '0.75rem',
             padding: '0.5rem 0.2rem',
