@@ -14,7 +14,7 @@ const paramBase = {
     isGoodCampTicketSet: false,
 };
 function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
-    return Object.assign({}, paramBase, obj) as EnergyParameter;
+    return Object.assign({fieldIndex: 0}, paramBase, obj) as EnergyParameter;
 }
 
 describe('Energy', () => {

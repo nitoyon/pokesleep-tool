@@ -5,7 +5,8 @@ import TypeButton from './TypeButton';
 import PopperMenu from '../common/PopperMenu';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 
-const TypeSelect = React.memo(({type, onChange}: {
+const TypeSelect = React.memo(({size, type, onChange}: {
+    size?: 'small' | 'medium' | 'large',
     type: PokemonType,
     onChange: (value: PokemonType) => void,
 }) => {
@@ -23,21 +24,19 @@ const TypeSelect = React.memo(({type, onChange}: {
     }, []);
 
     const menuItems = PokemonTypes.map(t =>
-        <TypeButton key={t} type={t} onClick={onSelect} checked={t === type}/>);
+        <TypeButton key={t} type={t} size={size} onClick={onSelect} checked={t === type}/>);
 
     return <>
-        <TypeButton ref={anchorRef} type={type} onClick={onButtonClick} checked={false}/>
+        <TypeButton ref={anchorRef} type={type} size={size} onClick={onButtonClick} checked={false}/>
         <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}>
-            <StyledMenuList>
+            <MenuList style={{
+                padding: 0,
+                width: size === 'small' ? '15rem' : '16.2rem',
+            }}>
                 {menuItems}
-            </StyledMenuList>
+            </MenuList>
         </PopperMenu>
     </>;
-});
-
-const StyledMenuList = styled(MenuList)({
-    padding: 0,
-    width: '16.2rem',
 });
 
 export default TypeSelect;

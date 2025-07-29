@@ -1,4 +1,6 @@
 import { getEventBonus, getEventBonusIfTarget } from '../data/events';
+import { isExpertField } from '../data/fields';
+import { PokemonType } from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 import { HelpEventBonus } from '../data/events';
@@ -7,6 +9,12 @@ import { HelpEventBonus } from '../data/events';
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
 export interface EnergyParameter {
+    /** Index of the current research area */
+    fieldIndex: number;
+
+    /** Snorlax's favorite berry on Greengrass Isle */
+    favoriteType: PokemonType[];
+
     /**
      * Energy restored by 'energy for all' main skill.
      */
@@ -47,6 +55,15 @@ export interface EnergyParameter {
 
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
+
+    /** Helping speed bonus for the main berry in Expert Mode */
+    mainBerryHelpingSpeedBonus: number;
+
+    /** Carry limit bonus for the main berry in Expert Mode */
+    mainBerryCarryLimitBonus: number;
+
+    /** Helping speed penalty for non-favorite berries in Expert Mode */
+    nonFavoriteBerryHelpingSpeedPenalty: number;
 
     /**
      * Event option.
@@ -108,6 +125,8 @@ export type EnergyResult = {
          */
         twice: number,
     },
+    /** Carry limit */
+    carryLimit: number,
     /** Help count */
     helpCount: {
         /** Help count while awake */
@@ -186,13 +205,13 @@ class Energy {
             .filter(x => !x.isAwake));
 
         // calculate Sneaky Snacking
-        const {timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
+        const {carryLimit, timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
-            timeToFullInventory, helpCount, skillProbabilityAfterWakeup,
+            timeToFullInventory, carryLimit, helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep: sleep },
         };
     }
@@ -406,6 +425,7 @@ class Energy {
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
         param: EnergyParameter):
     {
+        carryLimit: number,
         timeToFullInventory: number,
         skillProbabilityAfterWakeup: {
             once: number,
@@ -419,6 +439,7 @@ class Energy {
     } {
         if (this._iv.pokemon.frequency === 0) {
             return {
+                carryLimit: this._iv.pokemon.carryLimit,
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
@@ -434,13 +455,23 @@ class Energy {
         const alwaysSnacking = param.tapFrequency === "none";
         const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
 
-        // get carry limit (assumes that we evolved this pokemon from the beginning)
-        const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1));
+        // check if the field is expert mode
+        const isExpertMode = isExpertField(param.fieldIndex);
+        const isMainBerry = isExpertMode &&
+            (param.favoriteType[0] === this._iv.pokemon.type);
+        const isNonFavoriteBerry = isExpertMode &&
+            !param.favoriteType.includes(this._iv.pokemon.type);
+
+        // get carry limit
+        const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1) *
+            (isMainBerry ? 1 + param.mainBerryCarryLimitBonus / 100 : 1));
 
         // calculate the number of berries and ings per help
         const rp = new PokemonRp(this._iv);
         const baseFreq = rp.frequencyWithHelpingBonus(helpBonusCount) /
-            (isGoodCampTicketSet ? 1.2 : 1);
+            (isGoodCampTicketSet ? 1.2 : 1) /
+            (isMainBerry ? 1 + param.mainBerryHelpingSpeedBonus / 100 : 1) /
+            (isNonFavoriteBerry ? 1 - param.nonFavoriteBerryHelpingSpeedPenalty / 100 : 1);
         const eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
             this._iv.pokemon);
         const bagUsagePerHelp = rp.getBagUsagePerHelp(eventBonus?.ingredient ?? 0);
@@ -541,7 +572,7 @@ class Energy {
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
         }
-        return {timeToFullInventory, skillProbabilityAfterWakeup,
+        return {carryLimit, timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { awake, asleepNotFull, asleepFull }
         };
     }

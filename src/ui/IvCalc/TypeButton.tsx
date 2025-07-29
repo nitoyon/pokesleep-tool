@@ -7,16 +7,17 @@ import { useTranslation } from 'react-i18next';
 
 const TypeButton = React.memo(
     React.forwardRef<HTMLButtonElement, {
+        size?: 'small' | 'medium' | 'large',
         type: PokemonType,
         checked: boolean,
         onClick: (value: PokemonType) => void,
-    }>(({type, checked, onClick}, ref) => {
+    }>(({size, type, checked, onClick}, ref) => {
     const { t } = useTranslation();
     const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         const value = e.currentTarget.value as PokemonType;
         onClick(value);
     }, [onClick]);
-    return <StyledTypeButton ref={ref}
+    return <StyledTypeButton ref={ref} size={size ?? 'medium'}
             key={type} className={type} value={type} onClick={onTypeClick}>
             {t(`types.${type}`)}
             {checked && <CheckIcon/>}
@@ -30,6 +31,10 @@ const StyledTypeButton = styled(Button)({
     padding: 0,
     margin: '0.2rem',
     borderRadius: '0.5rem',
+    '&.MuiButton-sizeSmall': {
+        width: '4.6rem',
+        fontSize: '0.8rem',
+    },
     '& > svg': {
         position: 'absolute',
         background: '#24d76a',

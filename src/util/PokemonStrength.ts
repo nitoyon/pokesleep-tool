@@ -23,12 +23,6 @@ export interface StrengthParameter extends EnergyParameter {
     /** Field bonus */
     fieldBonus: number;
 
-    /** Index of the current research area */
-    fieldIndex: number;
-
-    /** Snorlax's favorite berry on Greengrass Isle */
-    favoriteType: PokemonType[];
-
     /** Pokemon level (0: current level, Others: specified level) */
     level: 0|10|25|30|50|55|60|75|100;
 
@@ -453,6 +447,8 @@ class PokemonStrength {
             case 3: types = ["ice", "dark", "normal"]; break;
             case 4: types = ["grass", "fighting", "psychic"]; break;
             case 5: types = ["electric", "ghost", "steel"]; break;
+            case 6: types = ["dragon", "poison", "bug"]; break;
+            case 7: types = param.favoriteType; break;
             default: return false;
         }
 
@@ -480,6 +476,9 @@ export function createStrengthParameter(
         isEnergyAlwaysFull: false,
         sleepScore: 100,
         isGoodCampTicketSet: false,
+        mainBerryHelpingSpeedBonus: 10,
+        mainBerryCarryLimitBonus: 10,
+        nonFavoriteBerryHelpingSpeedPenalty: 10,
         event: 'none',
         level: 0,
         evolved: false,
@@ -546,6 +545,21 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.isGoodCampTicketSet) === "boolean") {
         ret.isGoodCampTicketSet = json.isGoodCampTicketSet;
+    }
+    if (typeof(json.mainBerryHelpingSpeedBonus) === "number" &&
+        json.mainBerryHelpingSpeedBonus > 0 &&
+        json.mainBerryHelpingSpeedBonus <= 100) {
+        ret.mainBerryHelpingSpeedBonus = json.mainBerryHelpingSpeedBonus;
+    }
+    if (typeof(json.mainBerryCarryLimitBonus) === "number" &&
+        json.mainBerryCarryLimitBonus > 0 &&
+        json.mainBerryCarryLimitBonus <= 100) {
+        ret.mainBerryCarryLimitBonus = json.mainBerryCarryLimitBonus;
+    }
+    if (typeof(json.nonFavoriteBerryHelpingSpeedPenalty) === "number" &&
+        json.nonFavoriteBerryHelpingSpeedPenalty > 0 &&
+        json.nonFavoriteBerryHelpingSpeedPenalty <= 100) {
+        ret.nonFavoriteBerryHelpingSpeedPenalty = json.nonFavoriteBerryHelpingSpeedPenalty;
     }
     if (typeof(json.level) === "number" &&
         [0, 10, 25, 30, 50, 55, 60, 75, 100].includes(json.level)) {
