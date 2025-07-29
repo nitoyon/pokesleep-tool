@@ -7,11 +7,11 @@ import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent, Fo
 import { IvAction } from '../IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from '../InfoButton';
-import ResearchAreaTextField from '../../common/ResearchAreaTextField';
+import FavoriteBerrySelect from './FavoriteBerrySelect';
+import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
-import TypeSelect from '../TypeSelect';
+import { isExpertField } from '../../../data/fields';
 import { getActiveHelpBonus } from '../../../data/events';
-import { PokemonType } from '../../../data/pokemons';
 import { createStrengthParameter, StrengthParameter } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -35,6 +35,9 @@ const StyledSettingForm = styled('div')({
         },
         '& > span > button': {
             marginRight: 0,
+        },
+        '& > .MuiInput-underline': {
+            fontSize: '0.9rem',
         },
         '& div.MuiToggleButtonGroup-root > button': {
             fontSize: '0.75rem',
@@ -71,30 +74,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
 
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
-    }, [onChange, value]);
-    const onFieldChange = React.useCallback((fieldIndex: number) => {
-        onChange({...value, fieldIndex});
-    }, [onChange, value]);
-    const onFavoriteBerryChange1 = React.useCallback((type: PokemonType) => {
-        const favoriteType = [value.favoriteType[0] ?? "normal",
-            value.favoriteType[1] ?? "normal",
-            value.favoriteType[2] ?? "normal"];
-        favoriteType[0] = type;
-        onChange({...value, favoriteType});
-    }, [onChange, value]);
-    const onFavoriteBerryChange2 = React.useCallback((type: PokemonType) => {
-        const favoriteType = [value.favoriteType[0] ?? "normal",
-            value.favoriteType[1] ?? "normal",
-            value.favoriteType[2] ?? "normal"];
-        favoriteType[1] = type;
-        onChange({...value, favoriteType});
-    }, [onChange, value]);
-    const onFavoriteBerryChange3 = React.useCallback((type: PokemonType) => {
-        const favoriteType = [value.favoriteType[0] ?? "normal",
-            value.favoriteType[1] ?? "normal",
-            value.favoriteType[2] ?? "normal"];
-        favoriteType[2] = type;
-        onChange({...value, favoriteType});
     }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
         onChange({...value, fieldBonus});
@@ -180,21 +159,16 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <section>
             <label>{t('research area')}:</label>
-            <ResearchAreaTextField value={value.fieldIndex} showEmpty
-                onChange={onFieldChange}/>
+            <ResearchAreaSelect value={value} fontSize="0.9rem"
+                onChange={onChange}/>
         </section>
         <Collapse in={value.fieldIndex === 0}>
-            <section>
-                <label>{t('favorite berry')}:</label>
-                <span>
-                    <TypeSelect type={value.favoriteType[0]}
-                        onChange={onFavoriteBerryChange1}/>
-                    <TypeSelect type={value.favoriteType[1]}
-                        onChange={onFavoriteBerryChange2}/>
-                    <TypeSelect type={value.favoriteType[2]}
-                        onChange={onFavoriteBerryChange3}/>
-                </span>
-            </section>
+            <FavoriteBerrySelect value={value} onChange={onChange}/>
+        </Collapse>
+        <Collapse in={isExpertField(value.fieldIndex)}>
+            <div style={{padding: '0 0 0.7rem 1rem'}}>
+                <FavoriteBerrySelect value={value} onChange={onChange}/>
+            </div>
         </Collapse>
         <section>
             <label>{t('area bonus')}:</label>

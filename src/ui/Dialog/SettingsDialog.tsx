@@ -1,4 +1,5 @@
 import React from 'react';
+import MessageDialog from './MessageDialog';
 import { Button, Dialog, DialogActions, DialogContent,
     TextField, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { AppConfig, AppConfigContext, AppType } from '../App';
@@ -88,11 +89,7 @@ export default function SettingsDialog({open, app, onAppConfigChange, onClose}: 
             </DialogActions>
         </Dialog>
 
-        <Dialog open={alertOpen} onClose={onAlertClose}>
-            <DialogContent>{t('custom icon invalid message')}</DialogContent>
-            <DialogActions>
-                <Button onClick={onAlertClose} autoFocus>{t('close')}</Button>
-            </DialogActions>
-        </Dialog>
+        <MessageDialog open={alertOpen} onClose={onAlertClose}
+            message={t('custom icon invalid message')}/>
     </>);
 }
