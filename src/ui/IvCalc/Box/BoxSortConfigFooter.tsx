@@ -26,9 +26,6 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     const onLevelChange = React.useCallback((value: string) => {
         onParameterChange({...parameter, level: parseInt(value, 10) as 0|10|25|30|50|55|60|75|100})
     }, [onParameterChange, parameter])
-    const onFieldChange = React.useCallback((value: number) => {
-        onParameterChange({...parameter, fieldIndex: value});
-    }, [onParameterChange, parameter]);
     const onIngredientChange = React.useCallback((value: string) => {
         onChange({
             ...sortConfig, ingredient: value as IngredientName,
@@ -87,8 +84,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             </span>
             {(sortConfig.sort === "berry" || sortConfig.sort === "total strength") &&
             <span className="field">
-                <ResearchAreaSelect value={parameter.fieldIndex} onChange={onFieldChange}
-                    fontSize="0.8rem"/>
+                <ResearchAreaSelect value={parameter} onChange={onParameterChange}
+                    fontSize="0.8rem" showConfigButton/>
             </span>}
             {sortConfig.sort === "ingredient" && <span className="ing">
                 <SelectEx onChange={onIngredientChange}

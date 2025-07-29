@@ -72,9 +72,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
     }, [onChange, value]);
-    const onFieldChange = React.useCallback((fieldIndex: number) => {
-        onChange({...value, fieldIndex});
-    }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
         onChange({...value, fieldBonus});
     }, [onChange, value]);
@@ -159,8 +156,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <section>
             <label>{t('research area')}:</label>
-            <ResearchAreaSelect value={value.fieldIndex} fontSize="0.9rem"
-                onChange={onFieldChange}/>
+            <ResearchAreaSelect value={value} fontSize="0.9rem"
+                onChange={onChange}/>
         </section>
         <Collapse in={value.fieldIndex === 0}>
             <FavoriteBerrySelect value={value} onChange={onChange}/>
