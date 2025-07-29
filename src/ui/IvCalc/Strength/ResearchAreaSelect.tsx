@@ -2,20 +2,23 @@ import React from 'react';
 import fields from '../../../data/fields';
 import MessageDialog from '../../Dialog/MessageDialog';
 import SelectEx from '../../common/SelectEx';
+import { StrengthParameter } from '../../../util/PokemonStrength';
 import { IconButton, MenuItem } from '@mui/material';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import { useTranslation } from 'react-i18next';
 
-const ResearchAreaSelect = React.memo(({value, fontSize, onChange}:{
-    value: number;
+const ResearchAreaSelect = React.memo(({showConfigButton, value, fontSize, onChange}:{
+    showConfigButton?: boolean,
+    value: StrengthParameter,
     fontSize?: string;
-    onChange: (value: number) => void;
+    onChange: (value: StrengthParameter) => void;
 }) => {
     const { t } = useTranslation();
     const [warningOpen, setWarningOpen] = React.useState(false);
-    const onChangeHandler = React.useCallback((fieldIndex: string) => {
-        onChange(parseInt(fieldIndex, 10));
-    }, [onChange]);
+    const onChangeHandler = React.useCallback((val: string) => {
+        const fieldIndex = parseInt(val, 10);
+        onChange({...value, fieldIndex});
+    }, [onChange, value]);
     const onWarningClick = React.useCallback(() => {
         setWarningOpen(true);
     }, []);
@@ -41,10 +44,10 @@ const ResearchAreaSelect = React.memo(({value, fontSize, onChange}:{
         );
     }
 
-    const showAlert = value === 6;
+    const showAlert = value.fieldIndex === 6;
 
     return (<>
-        <SelectEx value={value} onChange={onChangeHandler}
+        <SelectEx value={value.fieldIndex} onChange={onChangeHandler}
             sx={{padding: '0 .2rem', fontSize: fontSize ?? '1rem'}}>
             {fieldMenuItems}
         </SelectEx>
