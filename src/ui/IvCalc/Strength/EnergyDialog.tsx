@@ -82,8 +82,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     }
 
     const hasRecoveryBonus = iv.hasEnergyRecoveryBonusInActiveSubSkills;
-    const carryLimit = Math.ceil(iv.carryLimit *
-        (parameter.isGoodCampTicketSet ? 1.2 : 1));
+    const carryLimit = energy.carryLimit;
 
     return <StyledEnergyDialog open={open} onClose={onClose}>
         <EnergyChart width={width} result={energy}/>
