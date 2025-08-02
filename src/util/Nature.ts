@@ -74,6 +74,17 @@ class Nature {
     private static ingredientFindingDownNatures: IngredientFindingDownNatureType[] =
         ["Impish", "Jolly", "Adamant", "Careful"];
 
+    private static ampedNatures: NatureType[] =
+        [
+            "Hardy", "Docile", "Quirky", "Lax", "Impish", "Hasty", "Naive",
+            "Jolly", "Brave", "Naughty", "Adamant", "Sassy", "Rash",
+        ];
+    private static lowKeyNatures: NatureType[] =
+        [
+            "Bashful", "Serious", "Relaxed", "Bold", "Timid", "Lonely",
+            "Gentle", "Calm", "Careful", "Mild", "Quiet", "Modest",
+        ];
+
     constructor(nature: string) {
         if (!(Nature.allNatureNames as any[]).includes(nature)) {
             throw new Error(`Invalid nature specified: ${nature}`);
@@ -175,6 +186,12 @@ class Nature {
     }
     get isExpGainsDown() {
         return (Nature.expGainsDownNatures as any[]).includes(this.value);
+    }
+    get isAmped() {
+        return (Nature.ampedNatures as any[]).includes(this.value);
+    }
+    get isLowKey() {
+        return (Nature.lowKeyNatures as any[]).includes(this.value);
     }
 
     static get allNatures(): Nature[] {
