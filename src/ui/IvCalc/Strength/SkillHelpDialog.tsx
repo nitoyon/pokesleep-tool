@@ -5,7 +5,7 @@ import { round1, round2, formatNice, formatWithComma } from '../../../util/Numbe
 import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
-import { Button, Dialog, DialogActions, DialogContent,
+import { Button, Collapse, Dialog, DialogActions, DialogContent,
     FormControl, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import MainSkillIcon from '../MainSkillIcon';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
@@ -131,13 +131,14 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </FormControl>
             </section>
         }
-        {!isCountOnly && ((eventBonus?.skillLevel ?? 0) > 0 || settings.maxSkillLevel) &&
-        skillLevel !== iv.skillLevel &&
-                <div className="skillLevelNotice">
-                    <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
-                        components={{ level: <strong>{skillLevel}</strong>}}/>
-                </div>
-        }
+        <Collapse in={!isCountOnly &&
+            ((eventBonus?.skillLevel ?? 0) > 0 || settings.maxSkillLevel) &&
+            skillLevel !== iv.skillLevel}>
+            <div className="skillLevelNotice">
+                <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
+                    components={{ level: <strong>{skillLevel}</strong>}}/>
+            </div>
+        </Collapse>
         {footnote !== "" && <div className="footnote">{footnote}</div>}
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
