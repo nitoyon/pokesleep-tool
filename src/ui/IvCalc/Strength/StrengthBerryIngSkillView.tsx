@@ -588,7 +588,7 @@ export const StyledInfoDialog = styled(Dialog)({
                 padding: '0 0.5rem',
             },
         },
-        '& > div.skillLevelNotice': {
+        '& div.skillLevelNotice': {
             fontSize: '0.7rem',
             color: '#999',
             margin: '0.2rem 0.5rem 0 2rem',
