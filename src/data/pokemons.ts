@@ -112,11 +112,14 @@ const ancestorId2Decendants = new Map<number, PokemonData[]>();
 /**
  * Gets the descendants of the specified Pokémon.
  * @param {Pokemon} pokemon - The Pokémon for which to get the descendants.
+ * @param {boolean} [includeNonFinal=false] - Whether to include non-final evolutions.
  * @returns {Array} An array of descendants of the specified Pokémon.
  */
-export function getDecendants(pokemon: PokemonData): PokemonData[] {
+export function getDecendants(pokemon: PokemonData,
+    includeNonFinal: boolean = false
+): PokemonData[] {
     if (ancestorId2Decendants.size === 0) {
-        // get ancestor of the lineage
+        // initialize ancestorId2Decendants
         const ancestorId2evoCount = new Map<number, number>();
         for (const pokemon of pokemons) {
             const ancestor = pokemon.ancestor ?? 0;
@@ -133,20 +136,23 @@ export function getDecendants(pokemon: PokemonData): PokemonData[] {
             }
         }
 
-        for (const [ancestorId, count] of ancestorId2evoCount) {
+        for (const [ancestorId] of ancestorId2evoCount) {
             ancestorId2Decendants.set(ancestorId, pokemons
-                .filter(x => x.ancestor === ancestorId &&
-                    x.evolutionCount === count));
+                .filter(x => x.ancestor === ancestorId));
         }
     }
 
-    if (pokemon.ancestor !== null) {
-        const ret = ancestorId2Decendants.get(pokemon.ancestor);
-        if (ret !== undefined) {
-            return ret.filter(x => x.form === pokemon.form);
-        }
+    if (pokemon.ancestor === null) {
+        return [];
     }
-    return [];
+    const ret = ancestorId2Decendants.get(pokemon.ancestor);
+    if (ret === undefined) {
+        return [];
+    }
+    return ret
+        .filter(x => x.form === pokemon.form)
+        .filter(x => includeNonFinal || x.evolutionLeft === 0)
+        .sort((a, b) => a.id === pokemon.ancestor ? -1 : a.id - b.id);
 }
 
 export default pokemons;
