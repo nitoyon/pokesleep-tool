@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { SleepType } from '../../../data/fields';
-import pokemons, { PokemonSpecialty, IngredientName, PokemonType } from '../../../data/pokemons';
+import pokemons, { IngredientName, PokemonType, PokemonData } from '../../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
 import TextLikeButton from '../../common/TextLikeButton';
@@ -11,21 +10,12 @@ import CheckIcon from '@mui/icons-material/Check';
 import CandyIcon from '../../Resources/CandyIcon';
 import { useTranslation } from 'react-i18next';
 import PokemonIv from '../../../util/PokemonIv';
-import { MainSkillName } from '../../../util/MainSkill';
 
 /** Autocomplete option list */
-export interface PokemonOption {
-    id: number;
+export interface PokemonOption extends PokemonData {
     idForm: number;
-    form?: string;
-    name: string;
     localName: string;
-    arrival: string;
-    specialty: PokemonSpecialty;
-    sleepType: SleepType;
     type: PokemonType;
-    skill: MainSkillName,
-    ancestor: number|null;
     isNonEvolving: boolean;
     isFullyEvolved: boolean;
     ing1Name: IngredientName;
@@ -45,17 +35,9 @@ const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
     const pokemonOptions: PokemonOption[] = React.useMemo(
         () => pokemons
             .map((pokemon) => ({
-                id: pokemon.id,
+                ...pokemon,
                 idForm: new PokemonIv(pokemon.name).idForm,
-                form: pokemon.form,
-                name: pokemon.name,
                 localName: t(`pokemons.${pokemon.name}`),
-                arrival: pokemon.arrival,
-                specialty: pokemon.specialty,
-                sleepType: pokemon.sleepType,
-                type: pokemon.type,
-                skill: pokemon.skill,
-                ancestor: pokemon.ancestor,
                 isNonEvolving: pokemon.evolutionCount === -1,
                 isFullyEvolved: pokemon.isFullyEvolved,
                 ing1Name: pokemon.ing1.name,
