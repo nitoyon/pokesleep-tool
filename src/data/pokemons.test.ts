@@ -98,4 +98,25 @@ describe('getDecendants', () => {
         expect(decendants.length).toBe(1);
         expect(decendants[0].name).toBe("Ninetales");
     });
+
+    test('returns Toxel evolution line', () => {
+        const p = pokemons.find(x => x.name === "Toxel");
+        if (p === undefined) { fail('p should not be undefined'); }
+
+        const decendants = getDecendants(p);
+        expect(decendants.length).toBe(2);
+        expect(decendants[0].name).toBe("Toxtricity (Amped)");
+        expect(decendants[1].name).toBe("Toxtricity (Low Key)");
+    });
+
+    test('returns Toxel evolution line (non-final)', () => {
+        const p = pokemons.find(x => x.name === "Toxel");
+        if (p === undefined) { fail('p should not be undefined'); }
+
+        const decendants = getDecendants(p, true);
+        expect(decendants.length).toBe(3);
+        expect(decendants[0].name).toBe("Toxel");
+        expect(decendants[1].name).toBe("Toxtricity (Amped)");
+        expect(decendants[2].name).toBe("Toxtricity (Low Key)");
+    });
 });

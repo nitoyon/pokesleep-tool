@@ -109,6 +109,8 @@ const pokemons = pokemon_ as PokemonData[];
 
 const ancestorId2Decendants = new Map<number, PokemonData[]>();
 
+const toxelId = 848;
+
 /**
  * Gets the descendants of the specified Pokémon.
  * @param {Pokemon} pokemon - The Pokémon for which to get the descendants.
@@ -149,6 +151,13 @@ export function getDecendants(pokemon: PokemonData,
     if (ret === undefined) {
         return [];
     }
+
+    // Toxel is a special case (form changes when it evolves)
+    if (pokemon.ancestor === toxelId) {
+        return ret
+            .filter(x => includeNonFinal || x.evolutionLeft === 0);
+    }
+
     return ret
         .filter(x => x.form === pokemon.form)
         .filter(x => includeNonFinal || x.evolutionLeft === 0)
