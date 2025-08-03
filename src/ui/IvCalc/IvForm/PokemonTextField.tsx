@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import pokemons, { IngredientName, PokemonType, PokemonData } from '../../../data/pokemons';
+import pokemons, { IngredientName, getDecendants,
+    PokemonType, PokemonData } from '../../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
 import TextLikeButton from '../../common/TextLikeButton';
@@ -98,11 +99,7 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
 
     // setup menu item
     const evolveMenuItems = [];
-    const pokemonsInEvoLine = pokemons
-        .filter(x => x.ancestor === selectedOption.ancestor &&
-            x.form === selectedOption.form
-        )
-        .sort((a, b) => a.id === selectedOption.ancestor ? -1 : a.id - b.id);
+    const pokemonsInEvoLine = getDecendants(selectedOption, true);
     for (const p of pokemonsInEvoLine) {
         evolveMenuItems.push(<MenuItem key={p.id} value={p.name}
             onClick={onEvolveMenuItemClick}>
@@ -113,7 +110,7 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
 
     // button click handler
     const onEvolveClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
-        setEvolveButtonEl(event.currentTarget);        
+        setEvolveButtonEl(event.currentTarget);
     }, [setEvolveButtonEl]);
 
     // menu close handler
