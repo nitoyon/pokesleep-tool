@@ -256,6 +256,10 @@ class PokemonIv {
                 return 3;
             case 'Paldea':
                 return 4;
+            case 'Amped':
+                return 5;
+            case 'Low Key':
+                return 6;
         }
         return 0;
     }
@@ -271,6 +275,8 @@ class PokemonIv {
             case 2: return 'Festivo';
             case 3: return 'Alola';
             case 4: return 'Paldea';
+            case 5: return 'Amped';
+            case 6: return 'Low Key';
             default: return '';
         }
     }
@@ -312,7 +318,7 @@ class PokemonIv {
      * * 12bit : Pokedex ID
      *
      * * 6bit  : Form (0: normal, 1: Halloween, 2: Festivo, 3: Alola,
-     *           4: Paldea)
+     *           4: Paldea, 5: Amped, 6: Low-Key)
      * * 7bit  : level
      * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
      *

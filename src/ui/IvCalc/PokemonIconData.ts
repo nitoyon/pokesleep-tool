@@ -1110,6 +1110,40 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.3, y: 0.2, w: 0.4, h: 0.15, r: 0.2, color: '#ffea63'},
         {x: 0, y: 0.9, w: 1, h: 0.1, color: '#5f6f73'},
     ],
+    // Toxel
+    '848': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#a370d3'},
+        {x: 0, y: 0.8, w: 1, h: 0.3, color: '#d7c4f8'},
+        {x: -0.1, y: 0.85, w: 0.3, h: 0.3, r: 0.2, color: '#a370d3'},
+        {x: 0.8, y: 0.85, w: 0.3, h: 0.3, r: 0.2, color: '#a370d3'},
+        {x: 0, y: 0.45, w: 1, h: 0.2, color: '#f6f6f6'},
+        {x: 0.4, y: -0.08, w: 0.2, h: 0.3, r: 0.2, color: '#f6f6f6'}
+    ],
+    // Toxtricity (Amped)
+    '21329': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#8d6eb9'},
+        {x: 0, y: 0.3, w: 1, h: 0.4, color: '#fcfc7b'},
+        {x: 0, y: 0.7, w: 1, h: 0.15, color: '#b593e5'},
+        {x: 0.4, y: -0.1, w: 0.2, h: 0.3, r: 0.1, color: '#faf398'},
+        {x: 0.4, y: 0.35, w: 0.08, h: 0.2, r: 0.1, color: '#b593e5'},
+        {x: 0.52, y: 0.35, w: 0.08, h: 0.2, r: 0.1, color: '#b593e5'},
+        {x: 0.26, y: 0.32, w: 0.08, h: 0.2, r: 0.1, color: '#b593e5'},
+        {x: 0.66, y: 0.32, w: 0.08, h: 0.2, r: 0.1, color: '#b593e5'},
+        {x: 0.32, y: 0.52, w: 0.08, h: 0.16, r: 0.1, color: '#b593e5'},
+        {x: 0.59, y: 0.52, w: 0.08, h: 0.16, r: 0.1, color: '#b593e5'}
+    ],
+    // Toxtricity (Low Key)
+    '25425': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#8566b2'},
+        {x: 0, y: 0.3, w: 1, h: 0.4, color: '#ade9fc'},
+        {x: 0, y: 0.7, w: 1, h: 0.15, color: '#ad8bde'},
+        {x: -0.1, y: -0.1, w: 0.4, h: 0.23, r: 0.05, color: '#d4faf9'},
+        {x: 0.7, y: -0.1, w: 0.4, h: 0.23, r: 0.05, color: '#d4faf9'},
+        {x: 0.4, y: 0.35, w: 0.08, h: 0.2, r: 0.1, color: '#ad8bde'},
+        {x: 0.52, y: 0.35, w: 0.08, h: 0.2, r: 0.1, color: '#ad8bde'},
+        {x: 0.26, y: 0.32, w: 0.08, h: 0.2, r: 0.1, color: '#ad8bde'},
+        {x: 0.66, y: 0.32, w: 0.08, h: 0.2, r: 0.1, color: '#ad8bde'}
+    ],
     // Sprigatito
     '906': [
         {x: 0, y: 0, w: 1, h: 1, color: '#fcffe0'},

@@ -19,7 +19,7 @@ export interface PokemonData {
     /** Arrival date of the Pokémon */
     arrival: string;
     /** Pokemon form */
-    form: undefined|'Festivo'|'Holiday'|'Alola';
+    form: undefined|'Festivo'|'Holiday'|'Alola'|'Paldea'|'Amped'|'Low Key';
     /** Sleep type of the pokemon */
     sleepType: SleepType;
     /** EXP type (600, 900, 1080, 1320) */
