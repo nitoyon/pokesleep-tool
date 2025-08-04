@@ -99,7 +99,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
     return <StyledInputForm>
         <div className="table">
             <div>{t("pokemon")}:</div>
-            <PokemonTextField value={pokemonIv.pokemonName} fixMode={fixMode}
+            <PokemonTextField iv={pokemonIv} fixMode={fixMode}
                 onChange={onPokemonNameChange} onCandyClick={onCandyClick}/>
             <div>{t("level")}:</div>
             <LevelControl max={100} value={pokemonIv.level} onChange={onLevelChange}/>
