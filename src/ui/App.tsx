@@ -2,10 +2,19 @@ import './App.css';
 import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
 import IvCalcApp from './IvCalc/IvCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material';
 import ToolBar from './ToolBar';
 import NewsInfo from './NewsInfo';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
+
+const defaultTheme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"M PLUS 1p"`,
+        }
+    }
+});
 
 /** Global configuration. */
 export interface AppConfig {
@@ -47,7 +56,7 @@ export default function App({config}: {config:AppConfig}) {
         setAppConfig(appConfig);
     }, [appConfig, setAppConfig]);
 
-    return (
+    return (<ThemeProvider theme={defaultTheme}>
         <AppConfigContext.Provider value={appConfig}>
             <ToolBar app={curApp} onAppChange={onAppChange}
                 onAppConfigChange={onAppConfigChange}/>
@@ -56,7 +65,7 @@ export default function App({config}: {config:AppConfig}) {
             {curApp === "IvCalc" && <IvCalcApp/>}
             <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </AppConfigContext.Provider>
-    );
+    </ThemeProvider>);
 }
 
 /**
