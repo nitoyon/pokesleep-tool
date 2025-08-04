@@ -2,10 +2,35 @@ import './App.css';
 import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
 import IvCalcApp from './IvCalc/IvCalcApp';
 import React, { useCallback, useEffect, useState } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material';
 import ToolBar from './ToolBar';
 import NewsInfo from './NewsInfo';
 import PwaNotify from './PwaBanner';
 import { useTranslation } from 'react-i18next'
+
+const defaultTheme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"M PLUS 1p"`,
+        }
+    }
+});
+
+const tcTheme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"Noto Sans TC"`,
+        }
+    }
+});
+
+const scTheme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"Noto Sans SC"`,
+        }
+    }
+});
 
 /** Global configuration. */
 export interface AppConfig {
@@ -47,7 +72,15 @@ export default function App({config}: {config:AppConfig}) {
         setAppConfig(appConfig);
     }, [appConfig, setAppConfig]);
 
-    return (
+    // Set theme based on language
+    let theme = defaultTheme;
+    if (language === "zh-TW") {
+        theme = tcTheme;
+    } else if (language === "zh-CN") {
+        theme = scTheme;
+    }
+
+    return (<ThemeProvider theme={theme}>
         <AppConfigContext.Provider value={appConfig}>
             <ToolBar app={curApp} onAppChange={onAppChange}
                 onAppConfigChange={onAppConfigChange}/>
@@ -56,7 +89,7 @@ export default function App({config}: {config:AppConfig}) {
             {curApp === "IvCalc" && <IvCalcApp/>}
             <PwaNotify app={curApp} pwaCount={config.pwacnt} onClose={onPwaBannerClose}/>
         </AppConfigContext.Provider>
-    );
+    </ThemeProvider>);
 }
 
 /**
@@ -107,6 +140,20 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
         const description = document.querySelector<HTMLMetaElement>("meta[name='description']");
         if (description !== null) {
             description.content = t(`${currentApp}.description`);
+        }
+        const html = document.querySelector<HTMLHtmlElement>("html");
+        if (html !== null) {
+            html.lang = language.toLowerCase();
+        }
+        const webFont = document.querySelector<HTMLLinkElement>("link[rel='stylesheet'][href*='https']");
+        if (webFont !== null) {
+            if (language === "zh-TW") {
+                webFont.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap";
+            } else if (language === "zh-CN") {
+                webFont.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap";
+            } else {
+                webFont.href = "https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap";
+            }
         }
 
         // update URL
