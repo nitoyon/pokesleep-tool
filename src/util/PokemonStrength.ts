@@ -1,6 +1,6 @@
 import pokemons from '../data/pokemons';
 import { BonusEffects, getEventBonus, getEventBonusIfTarget } from '../data/events';
-import { IngredientName, getDecendants, PokemonType, PokemonTypes
+import { IngredientName, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
@@ -180,7 +180,7 @@ class PokemonStrength {
         }
 
         // Change pokemon
-        const decendants = getDecendants(pokemonIv.pokemon);
+        const decendants = pokemonIv.decendants;
         if (decendants.length === 0) {
             return pokemonIv;
         }

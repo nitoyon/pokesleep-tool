@@ -6042,37 +6042,107 @@
         }
     },
     {
-        "id": 906,
-        "name": "Sprigatito",
-        "arrival": "2024-07-15",
-        "sleepType": "dozing",
+        "id": 848,
+        "name": "Toxel",
+        "arrival": "2025-08-11",
+        "sleepType": "slumbering",
         "exp": 600,
-        "type": "grass",
-        "specialty": "Ingredients",
-        "skill": "Cooking Power-Up S",
+        "type": "poison",
+        "specialty": "unknown",
+        "skill": "unknown",
         "fp": 5,
-        "frequency": 4600,
-        "ingRatio": 20.8,
-        "skillRatio": 2.3,
-        "ancestor": 906,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 848,
         "evolutionCount": 0,
-        "evolutionLeft": 2,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 10,
+        "carryLimit": 0,
         "ing1": {
-            "name": "potato",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
         },
         "ing2": {
-            "name": "milk",
-            "c2": 6,
-            "c3": 9
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
         },
         "ing3": {
-            "name": "ginger",
-            "c3": 8
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 849,
+        "name": "Toxtricity (Amped)",
+        "form": "Amped",
+        "arrival": "2025-08-11",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "poison",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 848,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 849,
+        "name": "Toxtricity (Low Key)",
+        "form": "Low Key",
+        "arrival": "2025-08-11",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "poison",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 848,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
         }
     },
     {

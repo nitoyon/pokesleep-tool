@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
+import pokemons, { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
     PokemonType, PokemonTypes } from '../../../data/pokemons';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
@@ -267,6 +267,7 @@ export class PokemonFilterConfig {
         if (ret.length === 0) {
             // add empty entry
             ret.push({
+                ...pokemons[0],
                 id: -1,
                 idForm: -1,
                 name: '',
