@@ -1,16 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App, {loadConfig, saveConfig} from './ui/App';
-import { ThemeProvider, createTheme } from '@mui/material';
 import i18n from './i18n';
-
-const theme = createTheme({
-    typography: {
-        allVariants: {
-            fontFamily: `"M PLUS 1p"`,
-        }
-    }
-});
 
 (function() {
     // add error handler
@@ -43,9 +34,7 @@ const theme = createTheme({
     const root = ReactDOM.createRoot(elm);
     root.render(
         <React.StrictMode>
-            <ThemeProvider theme={theme}>
-                <App config={config}/>
-            </ThemeProvider>
+            <App config={config}/>
         </React.StrictMode>
     );
 
