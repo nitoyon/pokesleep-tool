@@ -111,6 +111,8 @@ const ancestorId2Decendants = new Map<number, PokemonData[]>();
 
 export const toxelId = 848;
 
+export const toxtricityId = 849;
+
 /**
  * Gets the descendants of the specified Pokémon.
  *
