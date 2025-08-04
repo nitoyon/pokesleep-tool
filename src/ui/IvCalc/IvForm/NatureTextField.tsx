@@ -1,15 +1,18 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import Nature, { NatureEffect } from '../../../util/Nature';
+import { toxtricityId } from '../../../data/pokemons';
+import PokemonIv from '../../../util/PokemonIv';
 import { MenuList, MenuItem } from '@mui/material';
 import PopperMenu from '../../common/PopperMenu';
 import TextLikeButton from '../../common/TextLikeButton';
 import { useTranslation } from 'react-i18next';
 
-const NatureTextField = React.memo(({value, onChange}: {
-    value: Nature,
+const NatureTextField = React.memo(({iv, onChange}: {
+    iv: PokemonIv,
     onChange: (value: Nature) => void,
 }) => {
+    const value = iv.nature;
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
   
@@ -35,12 +38,13 @@ const NatureTextField = React.memo(({value, onChange}: {
                 className={open ? "focused" : ""}>
                 <NatureElement value={value}/>
             </TextLikeButton>
-            <NatureEditPopper open={open} anchorRef={anchorRef}
+            <NatureEditPopper iv={iv} open={open} anchorRef={anchorRef}
                 onClose={onClose} onChange={onChange}/>
     </>;
 });
 
-const NatureEditPopper = React.memo(({open, anchorRef, onClose, onChange}: {
+const NatureEditPopper = React.memo(({iv, open, anchorRef, onClose, onChange}: {
+    iv: PokemonIv,
     open: boolean,
     anchorRef: React.RefObject<HTMLButtonElement>,
     onClose: () => void,
@@ -50,10 +54,29 @@ const NatureEditPopper = React.memo(({open, anchorRef, onClose, onChange}: {
     const [step, setStep] = React.useState<1|2>(1);
     const [upEffect, setUpEffect] = React.useState<NatureEffect|null>(null);
 
+    const allNatures = React.useMemo(() =>
+        Nature.allNatures
+            .filter(x => iv.pokemon.id !== toxtricityId ||
+                (iv.pokemon.form === "Amped" && x.isAmped) ||
+                (iv.pokemon.form === "Low Key" && x.isLowKey)
+            )
+    , [iv.pokemon.id, iv.pokemon.form]);
+
     const onUpEffectChange = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
-        setUpEffect(event.currentTarget.getAttribute('value') as NatureEffect);
+        const val = event.currentTarget.getAttribute('value') as NatureEffect;
+
+        // If there is only one nature with the selected upEffect,
+        // select it and close the menu. (Toxtricity only)
+        const candidates = allNatures.filter(x => x.upEffect === val);
+        if (candidates.length === 1) {
+            onChange(new Nature(candidates[0].name));
+            onClose();
+            return;
+        }
+
+        setUpEffect(val);
         setStep(2);
-    }, [setStep]);
+    }, [allNatures, onChange, onClose]);
 
     const onNatureClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         const name = event.currentTarget.getAttribute('value');
@@ -76,7 +99,7 @@ const NatureEditPopper = React.memo(({open, anchorRef, onClose, onChange}: {
         "Ingredient finding", "EXP gains", "Energy recovery"];
     if (step === 1) {
         for (const upEffect of upEffects) {
-            const natureElms = sortNatureByLocalName(Nature.allNatures
+            const natureElms = sortNatureByLocalName(allNatures
                 .filter(x => x.upEffect === upEffect))
                 .map(x => <span key={x.name}>{t(`natures.${x.name}`)}</span>);
             const upElm = (upEffect === "No effect" ?
@@ -92,12 +115,12 @@ const NatureEditPopper = React.memo(({open, anchorRef, onClose, onChange}: {
         }
     }
     if (step === 2) {
-        const natures = sortNatureByLocalName(Nature.allNatures
+        const natures = sortNatureByLocalName(allNatures
                 .filter(x => x.upEffect === upEffect));
         menuItems = natures.map(x => <MenuItem key={x.name}
             value={x.name} onClick={onNatureClick}>
             <NatureElement value={x}/>
-        </MenuItem>);        
+        </MenuItem>);
     }
 
     React.useEffect(() => {
