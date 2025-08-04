@@ -16,6 +16,22 @@ const defaultTheme = createTheme({
     }
 });
 
+const tcTheme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"Noto Sans TC"`,
+        }
+    }
+});
+
+const scTheme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"Noto Sans SC"`,
+        }
+    }
+});
+
 /** Global configuration. */
 export interface AppConfig {
     /** Custom icon URL */
@@ -56,7 +72,15 @@ export default function App({config}: {config:AppConfig}) {
         setAppConfig(appConfig);
     }, [appConfig, setAppConfig]);
 
-    return (<ThemeProvider theme={defaultTheme}>
+    // Set theme based on language
+    let theme = defaultTheme;
+    if (language === "zh-TW") {
+        theme = tcTheme;
+    } else if (language === "zh-CN") {
+        theme = scTheme;
+    }
+
+    return (<ThemeProvider theme={theme}>
         <AppConfigContext.Provider value={appConfig}>
             <ToolBar app={curApp} onAppChange={onAppChange}
                 onAppConfigChange={onAppConfigChange}/>
@@ -116,6 +140,20 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
         const description = document.querySelector<HTMLMetaElement>("meta[name='description']");
         if (description !== null) {
             description.content = t(`${currentApp}.description`);
+        }
+        const html = document.querySelector<HTMLHtmlElement>("html");
+        if (html !== null) {
+            html.lang = language.toLowerCase();
+        }
+        const webFont = document.querySelector<HTMLLinkElement>("link[rel='stylesheet'][href*='https']");
+        if (webFont !== null) {
+            if (language === "zh-TW") {
+                webFont.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap";
+            } else if (language === "zh-CN") {
+                webFont.href = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap";
+            } else {
+                webFont.href = "https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap";
+            }
         }
 
         // update URL
