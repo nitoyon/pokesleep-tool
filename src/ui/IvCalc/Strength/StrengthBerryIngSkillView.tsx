@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { getDecendants, PokemonData } from '../../../data/pokemons';
+import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
@@ -177,7 +177,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
     let decendants: PokemonData[] = [];
     if (pokemonIv.pokemon.name !== strength.pokemonIv.pokemon.name) {
-        decendants = getDecendants(pokemonIv.pokemon);
+        decendants = pokemonIv.decendants;
     }
 
     // update pokemonIv to the specified level, skill level and pokemon
