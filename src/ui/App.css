@@ -4,10 +4,19 @@ html, body {
     padding: 0;
 }
 
+html {
+    font-family: 'M PLUS 1p', sans-serif;
+}
+
+html[lang='zh-cn'] {
+    font-family: 'Noto Sans CN', sans-serif;
+}
+
+html[lang='zh-tw'] {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
 body {
-    font-family: 'M PLUS 1p', 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
