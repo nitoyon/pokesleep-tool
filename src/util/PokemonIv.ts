@@ -421,7 +421,7 @@ class PokemonIv {
         const form = array16[1] & 0x3f;
         if (form !== 0) {
             const formStr = PokemonIv.formToString(form);
-            const newName = `${pokemon.name} (${formStr})`;
+            const newName = `${pokemon.name.replace(/ \(.+/, '')} (${formStr})`;
             pokemon = pokemons.find(x => x.name === newName);
             if (pokemon === undefined) {
                 throw new Error(`Invalid form specified (${form})`);

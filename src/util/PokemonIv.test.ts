@@ -148,10 +148,27 @@ describe('PokemonIV', () => {
             expect(ret.mythIng2).toBe("coffee");
             expect(ret.mythIng3).toBe("coffee");
         });
+
+        test('Toxtricity (Amped)', () => {
+            const iv = new PokemonIv('Toxtricity (Amped)');
+            expect(iv.serialize()).toBe('ETWFp0T4-38f');
+
+            const ret = PokemonIv.deserialize('ETWFp0T4-38f');
+            compareIv(iv, ret);
+        });
+
+        test('Toxtricity (Low Key)', () => {
+            const iv = new PokemonIv('Toxtricity (Low Key)');
+            expect(iv.serialize()).toBe('ETWGpwT5-38f');
+
+            const ret = PokemonIv.deserialize('ETWGpwT5-38f');
+            compareIv(iv, ret);
+        });
     });
 
     function compareIv(iv1: PokemonIv, iv2: PokemonIv) {
         expect(iv2.pokemon.name).toBe(iv1.pokemon.name);
+        expect(iv2.idForm).toBe(iv1.idForm);
         expect(iv2.level).toBe(iv1.level);
         expect(iv2.ingredient).toBe(iv1.ingredient);
         expect(iv2.nature.name).toBe(iv1.nature.name);
