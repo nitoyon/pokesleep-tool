@@ -1,5 +1,6 @@
 import Nature from './Nature';
-import pokemons, { IngredientName, PokemonData } from '../data/pokemons';
+import pokemons, { getDecendants, IngredientName,
+    PokemonData, toxelId } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
 import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
@@ -195,6 +196,41 @@ class PokemonIv {
         } else {
             return (isEqual && this.ingredient === iv.ingredient);
         }
+    }
+
+    /**
+     * Get descendants of this Pokémon.
+     * @returns Descendants of this Pokémon.
+     */
+    get decendants(): PokemonData[] {
+        return this.getDecendants(false);
+    }
+
+    /**
+     * Get all descendants of this Pokémon, including non-final evolutions.
+     * @returns All descendants of this Pokémon.
+     */
+    get allDecendants(): PokemonData[] {
+        return this.getDecendants(true);
+    }
+
+    /**
+     * Internal method to descendants and allDecendants property.
+     * @param {boolean} [includeNonFinal] - Whether to include non-final evolutions.
+     * @return Descendants of this Pokémon.
+     */
+    private getDecendants(includeNonFinal: boolean): PokemonData[] {
+        const ret = getDecendants(this.pokemon, includeNonFinal);
+
+        // if the Pokémon is Toxel, filter by form
+        if (this.pokemon.ancestor === toxelId) {
+            return ret
+                .filter(x => x.id === toxelId ||
+                    (x.form === "Amped" && this.nature.isAmped) ||
+                    (x.form === "Low Key" && this.nature.isLowKey));
+        }
+
+        return ret;
     }
 
     /**

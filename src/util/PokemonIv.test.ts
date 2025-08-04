@@ -52,6 +52,36 @@ describe('PokemonIV', () => {
         expect(iv.changeLevel(25).skillLevel).toBe(4);
     });
 
+    describe('decendants', () => {
+        test('Bulbasaur', () => {
+            const iv = new PokemonIv('Bulbasaur');
+
+            const allDecendants = iv.allDecendants;
+            expect(allDecendants.length).toBe(3);
+            expect(allDecendants[0].name).toBe('Bulbasaur');
+            expect(allDecendants[1].name).toBe('Ivysaur');
+            expect(allDecendants[2].name).toBe('Venusaur');
+
+            const decendants = iv.decendants;
+            expect(decendants.length).toBe(1);
+            expect(decendants[0].name).toBe('Venusaur');
+        });
+
+        test('Toxel', () => {
+            const iv = new PokemonIv('Toxel');
+
+            iv.nature = new Nature("Docile");
+            const ampedDecendants = iv.decendants;
+            expect(ampedDecendants.length).toBe(1);
+            expect(ampedDecendants[0].name).toBe('Toxtricity (Amped)');
+
+            iv.nature = new Nature("Serious");
+            const lowDecendants = iv.decendants;
+            expect(lowDecendants.length).toBe(1);
+            expect(lowDecendants[0].name).toBe('Toxtricity (Low Key)');
+        });
+    });
+
     describe('serialize', () => {
         test('empty Bulbasaur', () => {
             const iv = new PokemonIv('Bulbasaur');
