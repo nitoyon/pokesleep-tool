@@ -39,6 +39,22 @@ describe('PokemonIV', () => {
             const iv2 = iv.clone('Bulbasaur');
             expect(iv2.skillLevel).toBe(1);
         });
+
+        test('evolved to toxtricity (Amped)', () => {
+            const iv = new PokemonIv('Toxel');
+            iv.nature = new Nature("Relaxed")
+
+            const iv2 = iv.clone('Toxtricity (Amped)');
+            expect(iv2.nature.name).toBe("Impish");
+        });
+
+        test('evolved to toxtricity (Low Key)', () => {
+            const iv = new PokemonIv('Toxel');
+            iv.nature = new Nature("Impish")
+
+            const iv2 = iv.clone('Toxtricity (Low Key)');
+            expect(iv2.nature.name).toBe("Bold");
+        });
     });
 
     test('changeLevel', () => {

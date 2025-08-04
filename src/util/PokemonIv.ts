@@ -1,6 +1,6 @@
 import Nature from './Nature';
 import pokemons, { getDecendants, IngredientName,
-    PokemonData, toxelId } from '../data/pokemons';
+    PokemonData, toxelId, toxtricityId } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
 import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
@@ -36,7 +36,8 @@ class PokemonIv {
         this.skillLevel = Math.max(pokemon.evolutionCount + 1, 1);
         this.ingredient = pokemon.ing3 !== undefined ? "ABC" : "ABB";
         this.subSkills = new SubSkillList();
-        this.nature = new Nature("Serious");
+        this.nature = new Nature(pokemonName === "Toxtricity (Amped)" ?
+            "Hardy" : "Serious");
         this.ribbon = 0;
         this.mythIng1 = this.mythIng2 = this.mythIng3 = "unknown";
 
@@ -172,6 +173,25 @@ class PokemonIv {
 
         if (this.isMythical && this.mythIng1 === "unknown") {
             this.mythIng1 = "sausage";
+        }
+
+        if (this.pokemon.id === toxtricityId) {
+            if (this.pokemon.form === "Amped" &&
+                this.nature.isLowKey
+            ) {
+                this.nature = Nature.allNatures
+                    .filter(x => x.isAmped)
+                    .filter(x => x.upEffect === this.nature.upEffect)[0] ??
+                    new Nature("Hardy");
+            }
+            else if (this.pokemon.form === "Low Key" &&
+                this.nature.isAmped
+            ) {
+                this.nature = Nature.allNatures
+                    .filter(x => x.isLowKey)
+                    .filter(x => x.upEffect === this.nature.upEffect)[0] ??
+                    new Nature("Serious");
+            }
         }
     }
 
