@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
-import pokemons, { IngredientName, getDecendants,
+import pokemons, { IngredientName,
     PokemonType, PokemonData } from '../../../data/pokemons';
 import { Icon, IconButton, ListItemIcon,
     Menu, MenuItem } from '@mui/material';
@@ -24,13 +24,15 @@ export interface PokemonOption extends PokemonData {
     ing3Name?: IngredientName;
 }
 
-const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
-    value: string,
+const PokemonTextField = React.memo(({iv, fixMode, onChange, onCandyClick}: {
+    iv: PokemonIv,
     /** Fix evolutionary line or not */
     fixMode?: boolean,
     onChange: (value: string) => void,
     onCandyClick: () => void,
 }) => {
+    const value = iv.pokemon.name;
+
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
     const pokemonOptions: PokemonOption[] = React.useMemo(
@@ -71,7 +73,7 @@ const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
             className={open ? 'focused' : ''}>
             {selectedOption.localName}
         </TextLikeButton>}
-        <EvolveButton selectedOption={selectedOption} onChange={onChange}/>
+        <EvolveButton iv={iv} onChange={onChange}/>
         <CandyButton onClick={onCandyClick}/>
         <PokemonSelectDialog open={open} onClose={onCloseDialog} onChange={changeHandler}
             pokemonOptions={pokemonOptions} selectedValue={selectedOption}/>
@@ -81,13 +83,13 @@ const PokemonTextField = React.memo(({value, fixMode, onChange, onCandyClick}: {
 /**
  * Click this button to switch to other pokemon in same evolutionary line
  */
-const EvolveButton = React.memo(({selectedOption, onChange}: {
-    selectedOption: PokemonOption,
+const EvolveButton = React.memo(({iv, onChange}: {
+    iv: PokemonIv,
     onChange: (name: string) => void,
 }) => {
     const { t } = useTranslation();
     const [evolveButtonEl, setEvolveButtonEl] = React.useState<null|HTMLElement>(null);
-    const hasEvolutionaryLine = Boolean(selectedOption.ancestor !== null);
+    const hasEvolutionaryLine = Boolean(iv.pokemon.ancestor !== null);
 
     // menu item click handler
     const onEvolveMenuItemClick = React.useCallback((e: React.MouseEvent) => {
@@ -99,11 +101,11 @@ const EvolveButton = React.memo(({selectedOption, onChange}: {
 
     // setup menu item
     const evolveMenuItems = [];
-    const pokemonsInEvoLine = getDecendants(selectedOption, true);
+    const pokemonsInEvoLine = iv.allDecendants;
     for (const p of pokemonsInEvoLine) {
-        evolveMenuItems.push(<MenuItem key={p.id} value={p.name}
+        evolveMenuItems.push(<MenuItem key={p.name} value={p.name}
             onClick={onEvolveMenuItemClick}>
-            <ListItemIcon>{p.id === selectedOption.id ? <CheckIcon/> : <Icon/>}</ListItemIcon>
+            <ListItemIcon>{p.name === iv.pokemon.name ? <CheckIcon/> : <Icon/>}</ListItemIcon>
             {t(`pokemons.${p.name}`)}
         </MenuItem>);
     }
