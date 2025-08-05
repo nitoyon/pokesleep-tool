@@ -6146,6 +6146,40 @@
         }
     },
     {
+        "id": 906,
+        "name": "Sprigatito",
+        "arrival": "2024-07-15",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "grass",
+        "specialty": "Ingredients",
+        "skill": "Cooking Power-Up S",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRatio": 20.8,
+        "skillRatio": 2.3,
+        "ancestor": 906,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "milk",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "ginger",
+            "c3": 8
+        }
+    },
+    {
         "id": 907,
         "name": "Floragato",
         "arrival": "2024-07-15",
