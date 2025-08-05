@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "sprigatito bug": {
+                    "headline": "錯誤回報：$t(pokemons.Sprigatito) 可能已從盒子中消失，麻煩您確認一下。",
+                    "detail": "在 8 月 4 日至 6 日之間，如果您有重新開啟工具的話，盒子中的 $t(pokemons.Sprigatito) 資料可能會遺失。造成您的不便，我們深感抱歉。"
+                },
                 "add hoenn": {
                     "headline": "已新增$t(pokemons.Treecko)、$t(pokemons.Torchic)、$t(pokemons.Mudkip)、$t(pokemons.Plusle)與$t(pokemons.Minun)的資料。",
                     "detail": "食材几率、技能几率参照了 RP Collection 的数据。"

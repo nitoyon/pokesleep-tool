@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "sprigatito bug": {
+                    "headline": "버그 보고: $t(pokemons.Sprigatito)가 박스에서 사라졌을 가능성이 있습니다. 번거로우시겠지만 확인 부탁드립니다.",
+                    "detail": "8월 4일부터 6일 사이에 도구를 새로 열었을 경우, 박스 내의 $t(pokemons.Sprigatito) 데이터가 사라지는 문제가 있었습니다. 불편을 드려 죄송합니다."
+                },
                 "add hoenn": {
                     "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle), 그리고 $t(pokemons.Minun)의 데이터가 추가되었습니다.",
                     "detail": "재료%와 기술%은 RP Collection 값에 기반합니다. 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."

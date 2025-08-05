@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "sprigatito bug": {
+                    "headline": "Bug Report: $t(pokemons.Sprigatito) may have disappeared from your box. We apologize for the trouble and kindly ask you to verify.",
+                    "detail": "Between August 4 and 6, if you reloaded this tool, there was an issue where $t(pokemons.Sprigatito) data may have been lost from your box. We sincerely apologize for the inconvenience."
+                },
                 "add hoenn": {
                     "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle) and $t(pokemons.Minun) have been added.",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
