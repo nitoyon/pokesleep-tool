@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.11.0": {
+                    "headline": "Updated the data with balance adjustments in version 2.11.0",
+                    "detail": "Data for $t(pokemons.Dugtrio), $t(pokemons.Marowak) and $t(skills.Extra Helpful S) have been updated."
+                },
                 "sprigatito bug": {
                     "headline": "Bug Report: $t(pokemons.Sprigatito) may have disappeared from your box. We apologize for the trouble and kindly ask you to verify.",
                     "detail": "Between August 4 and 6, if you reloaded this tool, there was an issue where $t(pokemons.Sprigatito) data may have been lost from your box. We sincerely apologize for the inconvenience."
