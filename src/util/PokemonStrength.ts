@@ -547,17 +547,17 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.isGoodCampTicketSet = json.isGoodCampTicketSet;
     }
     if (typeof(json.mainBerryHelpingSpeedBonus) === "number" &&
-        json.mainBerryHelpingSpeedBonus > 0 &&
+        json.mainBerryHelpingSpeedBonus >= 0 &&
         json.mainBerryHelpingSpeedBonus <= 100) {
         ret.mainBerryHelpingSpeedBonus = json.mainBerryHelpingSpeedBonus;
     }
     if (typeof(json.mainBerryCarryLimitBonus) === "number" &&
-        json.mainBerryCarryLimitBonus > 0 &&
+        json.mainBerryCarryLimitBonus >= 0 &&
         json.mainBerryCarryLimitBonus <= 100) {
         ret.mainBerryCarryLimitBonus = json.mainBerryCarryLimitBonus;
     }
     if (typeof(json.nonFavoriteBerryHelpingSpeedPenalty) === "number" &&
-        json.nonFavoriteBerryHelpingSpeedPenalty > 0 &&
+        json.nonFavoriteBerryHelpingSpeedPenalty >= 0 &&
         json.nonFavoriteBerryHelpingSpeedPenalty <= 100) {
         ret.nonFavoriteBerryHelpingSpeedPenalty = json.nonFavoriteBerryHelpingSpeedPenalty;
     }

@@ -48,7 +48,7 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
         const mainBerrySpeed = [];
         const mainBerryCarryLimit = [];
         const nonFavBerrySpeed = [];
-        for (let i = 1; i <= 30; i++) {
+        for (let i = 0; i <= 30; i++) {
             mainBerrySpeed.push(
                 <MenuItem key={i} value={i} dense>
                     {i}%
