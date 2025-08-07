@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "v2.11.0": {
+                    "headline": "v2.11.0 でのバランス調整に対応しました。",
+                    "detail": "$t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S)のデータを更新しました。"
+                },
                 "sprigatito bug": {
                     "headline": "バグ報告: $t(pokemons.Sprigatito)がボックスから消えている可能性があります。お手数ですがご確認ください。",
                     "detail": "8月4日～6日の間にツールを新規に開いた場合、ボックス内から$t(pokemons.Sprigatito)のデータが消えてしまう状態になっていました。ご迷惑をおかけしてしまい、申し訳ございません。"

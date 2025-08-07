@@ -114,7 +114,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number): number 
         return [3, 4, 5, 7, 9, 11][skillLevel - 1];
     }
     if (skill === "Extra Helpful S") {
-        return [5, 6, 7, 8, 9, 10, 11][skillLevel - 1];
+        return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
     }
     if (skill === "Helper Boost") {
         // Assume that 3 same type pokemon exists in the party

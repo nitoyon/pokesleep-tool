@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "v2.11.0": {
+                    "headline": "已对应 v2.11.0 的平衡性调整。",
+                    "detail": "已更新 $t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S) 的数据。"
+                },
                 "sprigatito bug": {
                     "headline": "错误报告：$t(pokemons.Sprigatito) 可能已从盒子中消失，麻烦您确认一下。",
                     "detail": "在 8 月 4 日至 6 日期间，如果您重新打开了工具，盒子中的 $t(pokemons.Sprigatito) 数据可能会丢失。对此给您带来的不便，我们深表歉意。"

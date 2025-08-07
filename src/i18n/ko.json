@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "v2.11.0": {
+                    "headline": "v2.11.0의 밸런스 조정에 대응하였습니다.",
+                    "detail": "$t(pokemons.Dugtrio), $t(pokemons.Marowak), $t(skills.Extra Helpful S)의 데이터를 업데이트하였습니다."
+                },
                 "sprigatito bug": {
                     "headline": "버그 보고: $t(pokemons.Sprigatito)가 박스에서 사라졌을 가능성이 있습니다. 번거로우시겠지만 확인 부탁드립니다.",
                     "detail": "8월 4일부터 6일 사이에 도구를 새로 열었을 경우, 박스 내의 $t(pokemons.Sprigatito) 데이터가 사라지는 문제가 있었습니다. 불편을 드려 죄송합니다."
