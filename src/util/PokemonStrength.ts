@@ -281,7 +281,7 @@ class PokemonStrength {
             (this.isFavoriteBerry() ? 2 : 1);
 
         // calc skill
-        const skillRatio = rp.skillRatio * (targetEventBonus?.skillTrigger ?? 1);
+        const skillRatio = energy.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         let skillValue2 = 0, skillStrength2 = 0;
         if (param.period !== 3 && param.tapFrequency !== 'none') {
