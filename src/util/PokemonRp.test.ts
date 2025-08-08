@@ -83,5 +83,20 @@ describe('PokemonRP', () => {
 
             expect(rp.Rp).toBe(4545);
         });
+
+        test('Absol Lv41 (floating-point error)', () => {
+            const iv = new PokemonIv('Absol');
+            iv.level = 41;
+            iv.ingredient = "ABA";
+            iv.subSkills = new SubSkillList([
+                new SubSkill('Inventory Up M'),
+                new SubSkill('Ingredient Finder M'),
+            ]);
+            iv.nature = new Nature('Adamant');
+            iv.skillLevel = 1;
+            const rp = new PokemonRp(iv);
+
+            expect(rp.Rp).toBe(1865);
+        });
     });
 });

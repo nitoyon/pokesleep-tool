@@ -127,7 +127,11 @@ class PokemonRp {
         const skillRp = this.skillRp;
 
         // Handling floating-point errors (* 100 and / 100)
-        const rp = Math.round((ingredientRp * 100 + berryRp * 100 + skillRp * 100) * bonus / 100);
+        const rp = Math.round((
+            multiplyBy100(ingredientRp) +
+            multiplyBy100(berryRp) +
+            multiplyBy100(skillRp)
+        ) * multiplyBy100(bonus) / 10000);
 
         return {
             rp, frequency,
@@ -139,9 +143,11 @@ class PokemonRp {
 
     get Rp(): number {
         // Handling floating-point errors (* 100 and / 100)
-        return Math.round(
-            (this.ingredientRp * 100 + this.berryRp * 100 + this.skillRp * 100) *
-            this.bonus / 100);
+        return Math.round((
+            multiplyBy100(this.ingredientRp) +
+            multiplyBy100(this.berryRp) +
+            multiplyBy100(this.skillRp)
+        ) * multiplyBy100(this.bonus) / 10000);
     }
 
     get activeSubSkills(): SubSkill[] {
@@ -443,6 +449,21 @@ export function trunc(v: number, n: number) {
     //      (v*N).toFixed(3) -> 510.000
     const d = parseFloat((v * N).toFixed(6));
     return Math.floor(d) / N;
+}
+
+/**
+ * Multiplies a number by 100 with precision handling.
+ *
+ * In JavaScript, multiplying floating-point numbers can result in
+ * imprecise values.
+ * For example, 1.3 * 100 may return 129.99999999999997 instead of 130.
+ * This function ensures a precise result by rounding to 6 decimal places.
+ *
+ * @param n - The number to be multiplied.
+ * @returns The result of n multiplied by 100, rounded to 6 decimal places.
+ */
+function multiplyBy100(n: number): number {
+    return parseFloat((n * 100).toFixed(6));
 }
 
 export default PokemonRp;
