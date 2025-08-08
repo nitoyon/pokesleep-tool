@@ -1,7 +1,7 @@
 import React from 'react';
 import PokemonIv from '../../util/PokemonIv';
 import PokemonRating from '../../util/PokemonRating';
-import BerryIngSkillView from './BerryIngSkillView';
+import BerryIngSkillView from './Rp/BerryIngSkillView';
 import InfoButton from './InfoButton';
 import RaderChart from './RaderChart';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
