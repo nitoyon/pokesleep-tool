@@ -279,7 +279,7 @@ class PokemonStrength {
         const berryRawStrength = rp.berryStrength;
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            (this.isFavoriteBerry() ? 2 : 1);
+            (this.isFavoriteBerry ? 2 : 1);
 
         // calc skill
         const skillRatio = energy.skillRatio;
@@ -347,7 +347,7 @@ class PokemonStrength {
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
-        const berryWithFav = berryStrength * (this.isFavoriteBerry() ? 2 : 1);
+        const berryWithFav = berryStrength * (this.isFavoriteBerry ? 2 : 1);
         const strengthPerBerry = Math.ceil(100 * (1 + param.fieldBonus / 100));
         switch (mainSkill) {
             case "Charge Energy S":
@@ -438,7 +438,11 @@ class PokemonStrength {
     }
 
 
-    isFavoriteBerry(): boolean {
+    /**
+     * Returns whether the Pokémon's berry is a favorite
+     * for the current field.
+     */
+    get isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
         const param = this.param;
         switch (param.fieldIndex) {
