@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import IvForm from '../IvForm/IvForm';
-import RpLabel from '../RpLabel';
+import RpLabel from '../Rp/RpLabel';
 import PokemonIcon from '../PokemonIcon';
 import { PokemonBoxItem } from '../../../util/PokemonBox';
 import PokemonIv from '../../../util/PokemonIv';

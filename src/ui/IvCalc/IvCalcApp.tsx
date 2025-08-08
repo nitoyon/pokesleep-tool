@@ -8,7 +8,7 @@ import LowerTabHeader from './LowerTabHeader';
 import BoxView from './Box/BoxView';
 import IvForm from './IvForm/IvForm';
 import StrengthSettingForm from './Strength/StrengthParameterForm';
-import RpView from './RpView';
+import RpView from './Rp/RpView';
 import StrengthView from './Strength/StrengthView';
 import RatingView from './RatingView';
 import BoxItemDialog from './Box/BoxItemDialog';

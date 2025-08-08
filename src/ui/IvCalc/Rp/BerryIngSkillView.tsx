@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoButton from './InfoButton';
+import InfoButton from '../InfoButton';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
@@ -81,9 +81,6 @@ const Unit = styled('div')({
         '& > svg': {
             verticalAlign: 'baseline',
             paddingLeft: '.5rem',
-            width: '.8rem',
-            height: '.8rem',
-            paddingRight: '0.2rem',
             '&:first-of-type': {
                 paddingLeft: 0,
             },
@@ -93,6 +90,11 @@ const Unit = styled('div')({
                 verticalAlign: 'top',
                 paddingRight: 0,
             },
+        },
+        '&.ings > svg.MuiSvgIcon-root': {
+            width: '.8rem',
+            height: '.8rem',
+            paddingRight: '0.2rem',
         },
     },
 });
@@ -121,7 +123,7 @@ const BerryIngSkillView = React.memo((props: ViewInput) => {
                 <InfoButton onClick={props.onIngredientInfoClick}/>}
             </header>
             <footer>{t('probability')}: {props.ingredientProb}%</footer>
-            <footer>{props.ingredientSubValue}</footer>
+            <footer className="ings">{props.ingredientSubValue}</footer>
 
             <header>
                 <span style={{background: '#44a2fd'}}>{t('skill')}</span>
