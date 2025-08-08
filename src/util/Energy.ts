@@ -127,6 +127,8 @@ export type EnergyResult = {
     },
     /** Carry limit */
     carryLimit: number,
+    /** Skill ratio */
+    skillRatio: number,
     /** Help count */
     helpCount: {
         /** Help count while awake */
@@ -205,13 +207,15 @@ class Energy {
             .filter(x => !x.isAwake));
 
         // calculate Sneaky Snacking
-        const {carryLimit, timeToFullInventory, helpCount, skillProbabilityAfterWakeup } =
+        const {carryLimit, skillRatio, timeToFullInventory,
+            helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
-            timeToFullInventory, carryLimit, helpCount, skillProbabilityAfterWakeup,
+            timeToFullInventory, carryLimit, skillRatio,
+            helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep: sleep },
         };
     }
@@ -426,6 +430,7 @@ class Energy {
         param: EnergyParameter):
     {
         carryLimit: number,
+        skillRatio: number,
         timeToFullInventory: number,
         skillProbabilityAfterWakeup: {
             once: number,
@@ -440,6 +445,7 @@ class Energy {
         if (this._iv.pokemon.frequency === 0) {
             return {
                 carryLimit: this._iv.pokemon.carryLimit,
+                skillRatio: 0,
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
@@ -555,10 +561,11 @@ class Energy {
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
+        let skillRatio = rp.skillRatio;
         if (lotteryCount > 0) {
             const eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
                 this._iv.pokemon);
-            const skillRatio = rp.skillRatio * (eventBonus?.skillTrigger ?? 1);
+            skillRatio *= eventBonus?.skillTrigger ?? 1;
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills' &&
                 this._iv.pokemon.specialty !== 'All'
@@ -572,7 +579,8 @@ class Energy {
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
         }
-        return {carryLimit, timeToFullInventory, skillProbabilityAfterWakeup,
+        return {carryLimit, skillRatio,
+            timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { awake, asleepNotFull, asleepFull }
         };
     }
