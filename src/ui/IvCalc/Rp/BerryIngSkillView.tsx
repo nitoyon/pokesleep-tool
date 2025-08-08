@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoButton from './InfoButton';
+import InfoButton from '../InfoButton';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
