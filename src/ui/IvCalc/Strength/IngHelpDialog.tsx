@@ -167,6 +167,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                 <MenuItem value={50}>50</MenuItem>
                 <MenuItem value={55}>55</MenuItem>
                 <MenuItem value={60}>60</MenuItem>
+                <MenuItem value={65}>65</MenuItem>
             </Select>
         </section>
         <DialogActions>

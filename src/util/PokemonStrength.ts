@@ -133,6 +133,7 @@ export const recipeLevelBonus = {
     50: 142,
     55: 171,
     60: 203,
+    65: 234,
 };
 
 /**
