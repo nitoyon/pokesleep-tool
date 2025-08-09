@@ -1,4 +1,4 @@
-import { getEventBonus, getEventBonusIfTarget } from '../data/events';
+import { BonusEffects, emptyBonusEffects } from '../data/events';
 import { isExpertField } from '../data/fields';
 import { PokemonType } from '../data/pokemons';
 import PokemonIv from './PokemonIv';
@@ -160,7 +160,15 @@ class Energy {
         this._iv = iv;
     }
 
-    calculate(param: EnergyParameter): EnergyResult {
+    /**
+     * Calculate energy efficiency, help count, and return an EnergyResult.
+     * @param param Parameters for energy calculation.
+     * @param bonus Bonus effects for the Pokémon and StrengthParameter.
+     * @returns Calculation result (EnergyResult).
+     */
+    calculate(param: EnergyParameter,
+        bonus: Readonly<BonusEffects> = emptyBonusEffects
+    ): EnergyResult {
         const sleepMinutes = param.sleepScore * 510 / 100;
         const recoveryFactor = this._iv.nature.energyRecoveryFactor;
         const sleepRecovery = Math.min(100, Math.round(sleepMinutes / 510 * 100) * recoveryFactor *
@@ -183,16 +191,15 @@ class Energy {
         }
         else {
             events = this.createEvents(param.e4eCount, sleepTime);
-            const effects = getEventBonus(param.event, param.customEventBonus);
 
             // 1st calculation to know the initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
-                sleepRecovery, effects?.energyFromDish ?? 0);
+                sleepRecovery, bonus.energyFromDish);
             const initialEnergy = events[events.length - 1].energyAfter;
 
             // 2nd calculation using initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
-                initialEnergy, effects?.energyFromDish ?? 0);
+                initialEnergy, bonus.energyFromDish);
             this.addEmptyEvent(events);
 
             // calculate efficiency
@@ -209,7 +216,7 @@ class Energy {
         // calculate Sneaky Snacking
         const {carryLimit, skillRatio, timeToFullInventory,
             helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, param);
+            this.calculateSneakySnacking(events, efficiencies, param, bonus);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
@@ -423,11 +430,12 @@ class Energy {
      * Calculate sneaky snacking and returns help count while sleeping.
      * @param events Events.
      * @param efficiencies Efficiencies.
-     * @param param EnergyParameter.
+     * @param param Parameters for energy calculation.
+     * @param bonus Bonus effects for the Pokémon and StrengthParameter.
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        param: EnergyParameter):
+        param: EnergyParameter, bonus: BonusEffects):
     {
         carryLimit: number,
         skillRatio: number,
@@ -478,9 +486,7 @@ class Energy {
             (isGoodCampTicketSet ? 1.2 : 1) /
             (isMainBerry ? 1 + param.mainBerryHelpingSpeedBonus / 100 : 1) /
             (isNonFavoriteBerry ? 1 - param.nonFavoriteBerryHelpingSpeedPenalty / 100 : 1);
-        const eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
-            this._iv.pokemon);
-        const bagUsagePerHelp = rp.getBagUsagePerHelp(eventBonus?.ingredient ?? 0);
+        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.ingredient);
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;
@@ -563,9 +569,7 @@ class Energy {
         const lotteryCount = Math.ceil(asleepNotFull);
         let skillRatio = rp.skillRatio;
         if (lotteryCount > 0) {
-            const eventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
-                this._iv.pokemon);
-            skillRatio *= eventBonus?.skillTrigger ?? 1;
+            skillRatio *= bonus.skillTrigger;
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills' &&
                 this._iv.pokemon.specialty !== 'All'
