@@ -214,21 +214,19 @@ class PokemonStrength {
         const fullHelpCount = param.tapFrequency === 'none' ?
             (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRatio :
             energy.helpCount.asleepFull * countRatio;
-        const eventBonus = getEventBonus(param.event, param.customEventBonus);
-        const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
-            this.iv.pokemon);
+        const bonus = this.bonusEffects;
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
         const ingStrengthRatio = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
-            (1 + param.fieldBonus / 100) * (eventBonus?.dish ?? 1);
+            (1 + param.fieldBonus / 100) * bonus.dish;
         const ingRatio = rp.ingredientRatio;
         const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = 1 +
             (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
             (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
-        const ingEventAdd: number = (param.period !== 3 ? targetEventBonus?.ingredient ?? 0 : 0);
+        const ingEventAdd: number = (param.period !== 3 ? bonus.ingredient : 0);
 
         const ing1: IngredientStrength = {...rp.ingredient1, strength: 0,
             helpCount: rp.ingredient1.count + ingEventAdd};
@@ -298,7 +296,7 @@ class PokemonStrength {
             }
             [skillValue, skillStrength, skillValue2, skillStrength2] =
                 this.getSkillValueAndStrength(skillCount,
-                    param, berryStrength, eventBonus, targetEventBonus);
+                    param, berryStrength, bonus);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength + skillStrength2;
@@ -316,13 +314,11 @@ class PokemonStrength {
      * @param skillCount Skill count.
      * @param param Strength paramter.
      * @param berryStrength Strength per berry (area bonus included).
-     * @param eventBonus Event bonus for all pokemon or undefined.
-     * @param targetEventBonus Event bonus for specified pokemon or undefined.
+     * @param bonus BonusEffects for this pokemon and StrengthParameter.
      * @returns [skillValue, skillStrength, skillValue2, skillStrength2].
      */
     getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
-        berryStrength: number, eventBonus: Partial<BonusEffects>|undefined,
-        targetEventBonus: Partial<BonusEffects>|undefined
+        berryStrength: number, bonus: BonusEffects
     ): [number, number, number, number] {
         const mainSkill = this.iv.pokemon.skill;
         const skillLevel = this.getSkillLevel();
@@ -331,14 +327,14 @@ class PokemonStrength {
         if (mainSkill.startsWith("Ingredient Magnet S")) {
             // This event bonus is floored.
             // (ref) https://pbs.twimg.com/media/GtEYoG3bEAACPG6?format=jpg&name=large
-            mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientMagnet ?? 1));
+            mainSkillBase = Math.floor(mainSkillBase * bonus.ingredientMagnet);
         }
         if (mainSkill.startsWith("Ingredient Draw S")) {
             // This event bonus is floored(?)
-            mainSkillBase = Math.floor(mainSkillBase * (eventBonus?.ingredientDraw ?? 1));
+            mainSkillBase = Math.floor(mainSkillBase * bonus.ingredientDraw);
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
-            mainSkillBase *= (eventBonus?.dreamShard ?? 1);
+            mainSkillBase *= bonus.dreamShard;
         }
 
         let mainSkillFactor = 1;
@@ -392,7 +388,7 @@ class PokemonStrength {
 
             case "Ingredient Magnet S (Plus)":
                 let ingCount = getSkillSubValue(mainSkill, skillLevel);
-                ingCount = Math.floor(ingCount * (eventBonus?.ingredientMagnet ?? 1));
+                ingCount = Math.floor(ingCount * bonus.ingredientMagnet);
                 return [mainSkillValue, 0, ingCount * skillCount, 0];
 
             case "Cooking Power-Up S (Minus)":
@@ -422,19 +418,36 @@ class PokemonStrength {
      * @returns Current skill level.
      */
     getSkillLevel(): number {
-        let skillLevel = this.iv.skillLevel;
         const param = this.param;
         const maxSkillLevel = getMaxSkillLevel(this.iv.pokemon.skill);
-        const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
-            this.iv.pokemon);
-        if (targetEventBonus !== undefined) {
-            skillLevel = Math.min(maxSkillLevel,
-                this.iv.skillLevel + (targetEventBonus.skillLevel ?? 0));
-        }
+        const bonus = this.bonusEffects;
+        let skillLevel = Math.min(maxSkillLevel,
+            this.iv.skillLevel + bonus.skillLevel);
         if (param.maxSkillLevel) {
             skillLevel = maxSkillLevel;
         }
         return skillLevel;
+    }
+
+    /**
+     * Gets the BonusEffects for the current PokemonIv and StrengthParameter.
+     */
+    get bonusEffects(): BonusEffects {
+        const param = this.param;
+        const eventBonus = getEventBonus(param.event, param.customEventBonus);
+        const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
+            this.iv.pokemon);
+        
+        return {
+            skillTrigger: targetEventBonus?.skillTrigger ?? 1,
+            skillLevel: targetEventBonus?.skillLevel ?? 0,
+            ingredient: targetEventBonus?.ingredient ?? 0,
+            dreamShard: eventBonus?.dreamShard ?? 1,
+            ingredientMagnet: eventBonus?.ingredientMagnet ?? 1,
+            ingredientDraw: eventBonus?.ingredientDraw ?? 1,
+            dish: eventBonus?.dish ?? 1,
+            energyFromDish: eventBonus?.energyFromDish ?? 0,
+        } as BonusEffects;
     }
 
     /**
