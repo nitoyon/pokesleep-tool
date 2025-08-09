@@ -208,13 +208,13 @@ class PokemonStrength {
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
         const countRatio = param.period / 24;
-        const energy = new Energy(this.iv).calculate(param);
+        const bonus = this.bonusEffects;
+        const energy = new Energy(this.iv).calculate(param, bonus);
         const notFullHelpCount = param.tapFrequency === 'none' ? 0 :
             (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRatio;
         const fullHelpCount = param.tapFrequency === 'none' ?
             (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRatio :
             energy.helpCount.asleepFull * countRatio;
-        const bonus = this.bonusEffects;
 
         // calc ingredient
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :

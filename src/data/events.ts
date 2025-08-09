@@ -243,6 +243,20 @@ export interface BonusEffects {
 }
 
 /**
+ * BonusEffects with no active bonuses (default values).
+ */
+export const emptyBonusEffects: Readonly<BonusEffects> = {
+    skillTrigger: 1,
+    skillLevel: 0,
+    ingredient: 0,
+    dreamShard: 1,
+    ingredientMagnet: 1,
+    ingredientDraw: 1,
+    dish: 1,
+    energyFromDish: 0,
+};
+
+/**
  * Help event bonus
  */
 export interface HelpEventBonus {
