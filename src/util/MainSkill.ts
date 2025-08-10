@@ -124,7 +124,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
     if (skill === "Charge Energy S" ||
         skill === "Charge Energy S (Moonlight)"
     ) {
-        return [12, 16, 21, 27, 34, 43][skillLevel - 1];
+        return [12, 16.2, 21.2, 26.6, 33.6, 43.4][skillLevel - 1];
     }
     if (skill === "Charge Strength S") {
         return [400, 569, 785, 1083, 1496, 2066, 3002][skillLevel - 1];
