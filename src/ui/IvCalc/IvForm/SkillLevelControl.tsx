@@ -1,10 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import SelectEx from '../../common/SelectEx';
+import SkillDetailDialog from './SkillDetailDialog';
 import {
     getMaxSkillLevel, MainSkillName, VersatileCandidates,
 } from '../../../util/MainSkill';
 import PokemonIv from '../../../util/PokemonIv';
+import InfoButton from '../InfoButton';
 import { MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -13,6 +15,14 @@ const SkillLevelControl = React.memo(({value, onChange}: {
     onChange: (value: PokemonIv) => void,
 }) => {
     const { t } = useTranslation();
+    const [infoOpen, setInfoOpen] = React.useState(false);
+    const onInfoClick = React.useCallback(() => {
+        setInfoOpen(true);
+    }, []);
+    const onInfoClose = React.useCallback(() => {
+        setInfoOpen(false);
+    }, []);
+
     const pokemon = value.pokemon;
     const maxLevel = getMaxSkillLevel(pokemon.skill);
 
@@ -68,6 +78,9 @@ const SkillLevelControl = React.memo(({value, onChange}: {
         <SelectEx value={value.skillLevel} onChange={onSkillLevelChange} sx={{padding: '0 8px'}}>
             {levelOptions}
         </SelectEx>
+        <InfoButton onClick={onInfoClick}/>
+        <SkillDetailDialog value={value}
+            open={infoOpen} onClose={onInfoClose}/>
     </StyledSkillLevel>;
 });
 

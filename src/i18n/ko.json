@@ -416,6 +416,8 @@
         "value per skill": "스킬 1회당 {{value}}",
         "e4e per pokemon": "포켓몬 1마리당 회복량",
         "base value": "기본 {{value}}",
+        "expected value": "{{value}} 기댓값",
+        "range value": "{{value}} 범위",
         "base strength": "기본 에너지",
         "range average": "{{min}}～{{max}}의 평균값",
         "range expected": "{{min}}～{{max}}의 기대값",
@@ -431,6 +433,8 @@
         "ingredient obtain rate": "식재료 획득 확률",
         "expected dream shard": "$t(dream shard) 기댓값",
         "expected berry juice": "나무열매 주스 획득 기댓값",
+        "own": "자신",
+        "teammates": "기타",
         "other team member": "다른 팀원",
         "max skill level affected": "[$t(calc with max skill level)] 가 활성화되어 있어 스킬 레벨 <level/>로 계산됩니다.",
         "skill level bonus affected": "<bonus/>에 따라 스킬 레벨 <level/>로 계산됩니다.",
@@ -732,131 +736,195 @@
         "skills": {
             "Ingredient Magnet S": {
                 "name": "식재료 획득S",
-                "strength": "스킬로 획득한 식재료는 잉여 식재료로 간주됩니다."
+                "strength": "스킬로 획득한 식재료는 잉여 식재료로 간주됩니다.",
+                "desc": "무작위로 식재료를 획득합니다.",
+                "detail": "이미 발견한 식재료 중에서 3종류를 균등하게 획득합니다."
             },
             "Ingredient Magnet S (Plus)": {
                 "name": "플러스 (식재료 획득S)",
-                "strength": "$t(skills.Ingredient Magnet S.strength) 팀에 메인 스킬이 「플러스」나 「마이너스」인 포켓몬이 1마리 이상 있을 경우에만 추가 식재료를 획득할 수 있습니다."
+                "strength": "$t(skills.Ingredient Magnet S.strength) 팀에 메인 스킬이 「플러스」나 「마이너스」인 포켓몬이 1마리 이상 있을 경우에만 추가 식재료를 획득할 수 있습니다.",
+                "desc": "$t(skills.Ingredient Magnet S.desc) 팀에 자신 이외에 플러스 또는 마이너스를 가진 포켓몬이 있으면 추가로 1번 슬롯 식재료를 획득합니다.",
+                "detail": "무작위로 획득하는 식재료는 $t(skills.Ingredient Magnet S.detail)"
             },
             "Ingredient Magnet S (Present)": {
                 "name": "프레젠트 (식재료 획득S)",
-                "strength": "$t(skills.Ingredient Magnet S.strength) $t(candy)를 획득할 확률은 RaenonX의 집계 결과 34.4%를 사용합니다."
+                "strength": "$t(skills.Ingredient Magnet S.strength) $t(candy)를 획득할 확률은 RaenonX의 집계 결과 34.4%를 사용합니다.",
+                "desc": "$t(skills.Ingredient Magnet S.desc) 가끔 팀의 포켓몬 1마리의 $t(candy)를 4개 획득합니다.",
+                "detail": "$t(skills.Ingredient Magnet S.detail) $t(candy) 획득 확률은 34.4%입니다 (RaenonX 집계 결과)."
             },
             "Charge Energy S": {
                 "name": "기력 차지S",
-                "strength": "이 값은 총 강도량에 포함되지 않습니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오."
+                "strength": "이 값은 총 강도량에 포함되지 않습니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
+                "desc": "자신의 기력을 회복한다.",
+                "detail": "에너지 회복량은 발동자의 성격의 영향을 받습니다."
             },
             "Charge Energy S (Moonlight)": {
                 "name": "달빛 (기력 차지S)",
-                "strength": "$t(skills.Charge Energy S.strength)"
+                "strength": "$t(skills.Charge Energy S.strength)",
+                "desc": "$t(skills.Charge Energy S.desc) 때때로 팀 내 포켓몬 1마리의 기력을 회복한다.",
+                "detail": "$t(skills.Charge Energy S.detail) 대성공 시 회복 대상으로 자신이 선택될 수도 있습니다."
             },
             "Charge Strength S": {
                 "name": "에너지 차지S",
-                "strength": ""
+                "strength": "",
+                "desc": "잠만보의 에너지를 늘린다.",
+                "detail": "에너지량에는 $t(area bonus)가 추가됩니다."
             },
             "Charge Strength S (Random)": {
                 "name": "에너지 차지S (랜덤)",
-                "strength": ""
+                "strength": "",
+                "desc": "$t(skills.Charge Strength S.desc)",
+                "detail": "$t(skills.Charge Strength S.detail) $t(skills.random)"
             },
             "Charge Strength S (Stockpile)": {
                 "name": "비축하기 (에너지 차지S)",
-                "strength": "$t(base strength)의 기대값은 RaenonX의 집계 결과 (토해내기 확률: 26.5%)를 이용하여 산출하고 있습니다."
+                "strength": "$t(base strength)의 기대값은 RaenonX의 집계 결과 (토해내기 확률: 26.5%)를 이용하여 산출하고 있습니다.",
+                "desc": "비축하기, 토해내기 중 한쪽이 선택된다. 토해내기를 사용할 때 비축된 횟수에 따라 잠만보의 에너지를 증가시킨다.",
+                "detail": "$t(skills.Charge Strength S.detail) $t(skills.Charge Strength S (Stockpile).strength)"
             },
             "Charge Strength M": {
                 "name": "에너지 차지M",
-                "strength": ""
+                "strength": "",
+                "desc": "$t(skills.Charge Strength S.desc)",
+                "detail": "$t(skills.Charge Strength S.detail)"
             },
             "Charge Strength M (Bad Dreams)": {
                 "name": "나이트메어 (에너지 차지M)",
-                "strength": "$t(types.dark) 타입이 아닌 포켓몬에게 적용되는 $t(energy) 감소 효과 (-12)는 $t(strength) 평가에 포함되지 않았습니다."
+                "strength": "$t(types.dark) 타입이 아닌 포켓몬에게 적용되는 $t(energy) 감소 효과 (-12)는 $t(strength) 평가에 포함되지 않았습니다.",
+                "desc": "$t(skills.Charge Strength M.desc) 동시에 도우미 팀의 악타입 이외의 포켓몬의 기력이 떨어진다.",
+                "detail": "$t(skills.Charge Strength S.detail)"
             },
             "Dream Shard Magnet S": {
                 "name": "꿈의조각 획득S",
-                "strength": ""
+                "strength": "",
+                "desc": "꿈의조각을 획득한다.",
+                "detail": "스킬 레벨 7까지는 랜덤 버전의 기댓값이 1.25배 높습니다. 스킬 레벨 8에서는 차이가 1.15배로 줄어듭니다."
             },
             "Dream Shard Magnet S (Random)": {
                 "name": "꿈의조각 획득S (랜덤)",
-                "strength": ""
+                "strength": "",
+                "desc": "$t(skills.Dream Shard Magnet S.desc)",
+                "detail": "$t(skills.random)"
             },
             "Energizing Cheer S": {
                 "name": "기력 응원S",
-                "strength": "스킬에 의한 활력 회복은 총 강도량에 포함되지 않습니다."
+                "strength": "스킬에 의한 활력 회복은 총 강도량에 포함되지 않습니다.",
+                "desc": "랜덤으로 팀 포켓몬 1마리의 기력을 회복한다.",
+                "detail": "$t(skills.Energy for Everyone S.detail) 팀에서 에너지가 가장 낮은 포켓몬이 선택되기 쉽습니다."
             },
             "Energizing Cheer S (Nuzzle)": {
                 "name": "볼부비부비 (기력 응원S)",
-                "strength": "$t(skills.Energizing Cheer S.strength)"
+                "strength": "$t(skills.Energizing Cheer S.strength)",
+                "desc": "$t(skills.Energizing Cheer S.desc) 운이 좋으면 해당 포켓몬이 메인 스킬 활성화 보너스를 받을 수 있다.",
+                "detail": "$t(skills.Energizing Cheer S.detail)\n메인 스킬 발동 가능 보너스를 얻을 확률은 대상 포켓몬의 \"$t(skill level) + 1\"번 도움 분의 확률입니다."
             },
             "Energizing Cheer S (Heal Pulse)": {
                 "name": "치유파동 (기력 응원S)",
-                "strength": "$t(skills.Energizing Cheer S.strength) 추가 효과는 $t(skills.Extra Helpful S.strength)"
+                "strength": "$t(skills.Energizing Cheer S.strength) 추가 효과는 $t(skills.Extra Helpful S.strength)",
+                "desc": "랜덤으로 팀 포켓몬 2마리의 기력을 회복하고 즉시 회만큼 도움받을 수 있다. 특정 조건을 만족하면 효과가 더욱 상승한다.",
+                "detail": "$t(skills.Energizing Cheer S.detail)"
             },
             "Metronome": {
                 "name": "손가락흔들기",
-                "strength": "$t(skills.Skill Copy.strength)"
+                "strength": "$t(skills.Skill Copy.strength)",
+                "desc": "많은 메인 스킬 중 하나를 무작위로 사용합니다.",
+                "detail": "$t(skills.copy)\n추첨 제외: $t(skills.Charge Strength M (Bad Dreams).name), $t(skills.Ingredient Draw S.name), $t(skills.Energizing Cheer S (Heal Pulse).name) (?)."
             },
             "Energy for Everyone S": {
                 "name": "기력 올S",
-                "strength": "강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오."
+                "strength": "강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
+                "desc": "도우미 팀 포켓몬의 기력을 회복한다.",
+                "detail": "에너지 회복량은 회복 대상의 성격의 영향을 받습니다."
             },
             "Energy for Everyone S (Lunar Blessing)": {
                 "name": "초승달의기도 (기력 올S)",
-                "strength": "$t(skills.Energy for Everyone S.strength)"
+                "strength": "$t(skills.Energy for Everyone S.strength)",
+                "desc": "도우미 팀 포켓몬의 기력을 회복하고 자신과 팀의 나무열매도 획득한다.",
+                "detail": "$t(skills.Energy for Everyone S.detail) 팀에 다른 에스퍼 타입 포켓몬이 많을수록 획득하는 나무열매 수가 증가합니다."
             },
             "Energy for Everyone S (Berry Juice)": {
                 "name": "나무열매쥬스 (기력 올S)",
-                "strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)"
+                "strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+                "desc": "$t(skills.Energy for Everyone S.desc) 가끔 나무열매쥬스를 추가로 획득한다.",
+                "detail": "$t(skills.Energy for Everyone S.detail) 나무열매 주스는 최대 5개까지 보유할 수 있습니다. 획득률은 약 20% 정도로 알려져 있습니다."
             },
             "Extra Helpful S": {
                 "name": "도우미 서포트S",
-                "strength": "스킬에 의해 활성화된 도움 횟수를 표시합니다. 총 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다."
+                "strength": "스킬에 의해 활성화된 도움 횟수를 표시합니다. 총 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다.",
+                "desc": "팀의 포켓몬 1마리의 도움을 즉시 완료합니다.",
+                "detail": "자신을 포함하여 대상이 무작위로 선택됩니다. 메인 스킬 추첨은 발생하지 않습니다. $t(expert mode)나 $t(event bonus)에 의한 나무열매·식재료 수 변화의 영향을 받지 않습니다."
             },
             "Cooking Power-Up S": {
                 "name": "요리 파워 업S",
-                "strength": ""
+                "strength": "",
+                "desc": "다음 요리에서 냄비의 용량을 늘린다.",
+                "detail": "늘어난 냄비 용량은 리서치 필드를 변경하거나 다음 주가 되어도 유지됩니다. 최대 +200까지 늘릴 수 있습니다."
             },
             "Cooking Power-Up S (Minus)": {
                 "name": "마이너스 (요리 파워 업S)",
-                "strength": "팀에 메인 스킬이 「플러스」나 「마이너스」인 포켓몬이 1마리 이상 있을 경우에만 팀 멤버 1마리의 기력을 회복합니다."
+                "strength": "팀에 메인 스킬이 「플러스」나 「마이너스」인 포켓몬이 1마리 이상 있을 경우에만 팀 멤버 1마리의 기력을 회복합니다.",
+                "desc": "$t(skills.Cooking Power-Up S.desc) 특정 조건을 만족하면 랜덤으로 팀 포켓몬 1마리의 기력을 회복한다.",
+                "detail": "$t(skills.Cooking Power-Up S.detail)\n추가 효과: $t(skills.Energizing Cheer S.detail)"
             },
             "Tasty Chance S": {
                 "name": "요리 찬스S",
-                "strength": "큰 성공 확률 증가 %를 표시합니다. 스킬의 효과는 총 강도량에 포함되지 않습니다."
+                "strength": "큰 성공 확률 증가 %를 표시합니다. 스킬의 효과는 총 강도량에 포함되지 않습니다.",
+                "desc": "요리의 대성공 확률이 올라갑니다. 효과는 요리가 대성공하거나 필드를 이동할 때까지 지속됩니다.",
+                "detail": "대성공 확률 효과는 최대 +70%까지 중첩할 수 있습니다. 요리 시에는 메인 스킬 효과에 기본 대성공 확률 (월~토 10%, 일요일 30%)을 더한 확률로 대성공 여부가 결정됩니다."
             },
             "Helper Boost": {
                 "name": "도우미 부스트",
-                "strength": "같은 타입의 포켓몬 3마리를 가정하고 있습니다. 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다."
+                "strength": "같은 타입의 포켓몬 3마리를 가정하고 있습니다. 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다.",
+                "desc": "팀의 포켓몬 모두의 도움을 즉시 완료합니다. 팀에 같은 타입의 다른 종류 포켓몬이 많을수록 효과량이 올라갑니다.",
+                "detail": "도움 포켓몬은 $t(carry limit)를 초과하여 최대 999개까지 나무열매·식재료를 보유할 수 있습니다."
             },
             "Berry Burst": {
                 "name": "나무열매 버스트",
-                "strength": ""
+                "strength": "",
+                "desc": "자신과 팀의 나무열매를 획득합니다.",
+                "detail": "일반 도움의 나무열매 수에 관계없이 스킬 레벨마다 정해진 수의 나무열매를 획득합니다."
             },
             "Berry Burst (Disguise)": {
                 "name": "탈 (나무열매 버스트)",
-                "strength": "대성공 확률은 RaenonX의 데이터(18.5%)를 기반으로 합니다."
+                "strength": "대성공 확률은 RaenonX의 데이터(18.5%)를 기반으로 합니다.",
+                "desc": "$t(skills.Berry Burst.desc) 대성공 시 3배의 수를 획득합니다.",
+                "detail": "$t(skills.Berry Burst.detail) 대성공 후 다음 리서치까지 대성공이 불가능합니다. 대성공 확률은 18.5%입니다 (RaenonX 조사 결과)."
             },
             "Skill Copy": {
                 "name": "스킬 복사",
-                "strength": "효과를 추정하기 어려우므로 스킬 발동 횟수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다."
+                "strength": "효과를 추정하기 어려우므로 스킬 발동 횟수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
+                "desc": "팀의 포켓몬 1마리의 메인 스킬을 사용합니다.",
+                "detail": "$t(skills.copy)\n복사 제외: $t(skills.Charge Strength M (Bad Dreams).name), $t(skills.Energizing Cheer S (Heal Pulse).name)"
             },
             "Skill Copy (Transform)": {
                 "name": "변신 (스킬 복사)",
-                "strength": "$t(skills.Skill Copy.strength)"
+                "strength": "$t(skills.Skill Copy.strength)",
+                "desc": "$t(skills.Skill Copy.desc)",
+                "detail": "$t(skills.Skill Copy.detail)"
             },
             "Skill Copy (Mimic)": {
                 "name": "흉내내기 (스킬 복사)",
-                "strength": "$t(skills.Skill Copy.strength)"
+                "strength": "$t(skills.Skill Copy.strength)",
+                "desc": "$t(skills.Skill Copy.desc)",
+                "detail": "$t(skills.Skill Copy.detail)"
             },
             "Ingredient Draw S": {
                 "name": "식재료 셀렉트S",
-                "strength": "스킬로 획득한 식재료는 $t(recipe bonus)를 적용하여 $t(strength2)를 계산하고 있습니다."
+                "strength": "스킬로 획득한 식재료는 $t(recipe bonus)를 적용하여 $t(strength2)를 계산하고 있습니다.",
+                "desc": "<ingredients/>에서 1개가 선택되어 스킬 레벨에 따른 식재료 수를 획득합니다.",
+                "detail": "아직 발견하지 않은 식재료도 추첨됩니다."
             },
             "Ingredient Draw S (Super Luck)": {
                 "name": "대운 (식재료 셀렉트S)",
-                "strength": "$t(skills.Ingredient Draw S.strength)$t(dream shard)를 획득할 확률은 RaenonX의 집계 결과를 사용합니다."
+                "strength": "$t(skills.Ingredient Draw S.strength)$t(dream shard)를 획득할 확률은 RaenonX의 집계 결과를 사용합니다.",
+                "desc": "$t(skills.Ingredient Draw S.desc) 드물게 식재료 대신 꿈의 파편을 획득합니다.",
+                "detail": "$t(skills.Ingredient Draw S.detail) $t(dream shard) 획득 확률은 11.2%, 2.8%입니다 (RaenonX 집계 결과)."
             },
             "Ingredient Draw S (Hyper Cutter)": {
                 "name": "괴력집게 (식재료 셀렉트S)",
-                "strength": "$t(skills.Ingredient Draw S.strength)$t(additional ingredient rate)는 RaenonX의 집계 결과 (16.68%)를 사용합니다."
+                "strength": "$t(skills.Ingredient Draw S.strength)$t(additional ingredient rate)는 RaenonX의 집계 결과 (16.68%)를 사용합니다.",
+                "desc": "$t(skills.Ingredient Draw S.desc) 가끔 식재료 수가 2배가 됩니다.",
+                "detail": "$t(skills.Ingredient Draw S.detail) 대성공 확률은 16.68%입니다 (RaenonX 조사)."
             },
             "Cooking Assist S": {
                 "name": "요리 어시스트S",
@@ -864,7 +932,9 @@
             },
             "Cooking Assist S (Bulk Up)": {
                 "name": "벌크업(요리 어시스트S)",
-                "strength": "$t(skills.Ingredient Magnet S.strength) 대성공 확률 증가 %는 총 강도량에 포함되지 않습니다."
+                "strength": "$t(skills.Ingredient Magnet S.strength) 대성공 확률 증가 %는 총 강도량에 포함되지 않습니다.",
+                "desc": "$t(skills.Ingredient Magnet S.desc) 또한 $t(skills.Tasty Chance S.desc)",
+                "detail": "$t(skills.Ingredient Magnet S.detail) $t(skills.Tasty Chance S.detail)"
             },
             "Versatile": {
                 "name": "올마이티",
@@ -873,7 +943,9 @@
             "unknown": {
                 "name": "(알 수 없음)",
                 "strength": "메인 스킬은 아직 확정되지 않았습니다."
-            }
+            },
+            "random": "최솟값과 최댓값 사이는 151단계로 균등하게 나뉩니다. 선택 확률은 동일합니다.",
+            "copy": "복사된 스킬이 현재 스킬 레벨로 발동됩니다."
         },
 
         "subskill": {
