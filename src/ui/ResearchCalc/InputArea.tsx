@@ -244,6 +244,11 @@ const StyledRankTextField = styled(TextField)({
     width: '4rem',
     marginRight: '1rem',
 
+    '& span.rank_ball_basic': { color: '#ff0000' },
+    '& span.rank_ball_great': { color: '#0000ff' },
+    '& span.rank_ball_ultra': { color: '#000000' },
+    '& span.rank_ball_master': { color: '#cc00cc' },
+
     '& span.rank_number': {
         paddingLeft: '.2rem',
     },
