@@ -9,6 +9,12 @@ import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue, getSkillSubValue, getMaxSkillLevel } from './MainSkill';
 
+/** Expert mode effects */
+export type ExpertEffects = "berry"|"ing"|"skill";
+
+/** Expert mode effects list */
+const ExpertEffectsList:Readonly<ExpertEffects[]> = ["berry", "ing", "skill"];
+
 /**
  * Represents the parameter of PokemonStrength.calc.
  */
@@ -502,6 +508,8 @@ export function createStrengthParameter(
         isGoodCampTicketSet: false,
         mainBerryHelpingSpeedBonus: 10,
         mainBerryCarryLimitBonus: 10,
+        expertEffect: "berry",
+        expertIngEffectRatio: 30,
         nonFavoriteBerryHelpingSpeedPenalty: 10,
         event: 'none',
         level: 0,
@@ -585,6 +593,16 @@ export function loadStrengthParameter(): StrengthParameter {
         json.nonFavoriteBerryHelpingSpeedPenalty <= 100) {
         ret.nonFavoriteBerryHelpingSpeedPenalty = json.nonFavoriteBerryHelpingSpeedPenalty;
     }
+    if (typeof(json.expertEffect) === "string" &&
+        ExpertEffectsList.includes(json.expertEffect)) {
+        ret.expertEffect = json.expertEffect;
+    }
+    if (typeof(json.expertIngEffectRatio) === "number" &&
+        json.expertIngEffectRatio >= 0 &&
+        json.expertIngEffectRatio <= 100) {
+        ret.expertIngEffectRatio = json.expertIngEffectRatio;
+    }
+
     if (typeof(json.level) === "number" &&
         [0, 10, 25, 30, 50, 55, 60, 75, 100].includes(json.level)) {
         ret.level = json.level;
