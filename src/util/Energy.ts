@@ -3,6 +3,7 @@ import { isExpertField } from '../data/fields';
 import { PokemonType } from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
+import { ExpertEffects } from './PokemonStrength';
 import { HelpEventBonus } from '../data/events';
 
 /** Efficiency list */
@@ -14,6 +15,16 @@ export interface EnergyParameter {
 
     /** Snorlax's favorite berry on Greengrass Isle */
     favoriteType: PokemonType[];
+
+    /**
+     * Effect in expert mode.
+     */
+    expertEffect: ExpertEffects;
+
+    /**
+     * Ingredient bonus probability by ingredient specialty in expert mode.
+     */
+    expertIngEffectRatio: number;
 
     /**
      * Energy restored by 'energy for all' main skill.
