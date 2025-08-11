@@ -52,7 +52,7 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
             );
         }
         return <>
-            <section>
+            <section className="first">
                 <label>{t('main favorite berry')}:</label>
                 <span>
                     <TypeSelect type={value.favoriteType[0]} size="small"

@@ -221,6 +221,7 @@
             "萌綠之島EX"
         ],
         "amber assumption": "以$t(area.6)的$t(favorite berry)為「$t(types.dragon)・$t(types.bug)・$t(types.poison)」進行假設計算。",
+        "expert mode": "EX模式",
         "main": "主",
         "main favorite berry": "$t(favorite berry) (主要)",
         "sub1 favorite berry": "$t(favorite berry) (副1)",
@@ -295,7 +296,7 @@
         "berry strength per berry burst": "收集的漿果$t(strength2)",
         "additional ingredients": "更多食材",
         "max skill level affected": "由於已啟用 [$t(calc with max skill level)]，因此以技能等級 <level/> 進行計算。",
-        "skill level bonus affected": "由於 $t(event bonus)，以技能等級 <level/> 進行計算。",
+        "skill level bonus affected": "由於 <bonus/>，以技能等級 <level/> 進行計算。",
         "skill strength": "技能 能量 (由主技能的等級和技能等級決定)",
         "rp formula": "SP 計算公式使用的是 Mathcode 的 Goobliss、Harold 和 Jeancory 的研究成果。關於計算公式的詳情，請瀏覽ポケスリ攻略的 <link/> 。",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",

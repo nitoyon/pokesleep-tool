@@ -2,7 +2,7 @@ import pokemons from '../data/pokemons';
 import { BonusEffects, getEventBonus, getEventBonusIfTarget } from '../data/events';
 import { IngredientName, PokemonType, PokemonTypes
 } from '../data/pokemons';
-import fields from '../data/fields';
+import fields, { isExpertField } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
@@ -14,6 +14,24 @@ export type ExpertEffects = "berry"|"ing"|"skill";
 
 /** Expert mode effects list */
 const ExpertEffectsList:Readonly<ExpertEffects[]> = ["berry", "ing", "skill"];
+
+/** Helping speed bonus for the main berry in Expert Mode */
+export const expertMainBerrySpeedBonus = 0.1;
+
+/** Skill level bonus for the main berry in Expert Mode */
+export const expertMainSkillLevelBonus = 1;
+
+/** Favorite berry bonus for the favorite berry in Expert Mode */
+export const expertFavoriteBerryBonus = 2.4;
+
+/** Ingredient bonus for the favorite berry in Expert Mode */
+export const expertFavoriteIngredientBonus = 1;
+
+/** Ingredient bonus for the favorite berry in Expert Mode */
+export const expertFavoriteSkillTriggerBonus = 1.25;
+
+/** Helping speed penalty for non-favorite berries in Expert Mode */
+export const expertNonFavoriteBerrySpeedPenalty = 0.15;
 
 /**
  * Represents the parameter of PokemonStrength.calc.
@@ -140,6 +158,18 @@ export const recipeLevelBonus = {
     55: 171,
     60: 203,
     65: 234,
+};
+
+/**
+ * Represents BonusEffects and the source of each bonus.
+ */
+export interface BonusEffectsWithReason extends BonusEffects {
+    /** The source of the skill trigger bonus (event or expert mode). */
+    skillTriggerReason: 'event'|'ex';
+    /** The source of the skill level bonus (event or expert mode). */
+    skillLevelReason: 'event'|'ex'|'event+ex';
+    /** The source of the ingredient bonus (event or expert mode). */
+    ingredientReason: 'event'|'ex';
 };
 
 /**
@@ -282,8 +312,8 @@ class PokemonStrength {
         const berryCount = rp.berryCount;
         const berryRawStrength = rp.berryStrength;
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
-        const berryTotalStrength = berryHelpCount * berryCount * berryStrength *
-            this.berryStrengthBonus;
+        const berryTotalStrength = berryHelpCount * berryCount *
+            Math.ceil(berryStrength * this.berryStrengthBonus);
 
         // calc skill
         const skillRatio = energy.skillRatio;
@@ -438,28 +468,70 @@ class PokemonStrength {
     /**
      * Gets the BonusEffects for the current PokemonIv and StrengthParameter.
      */
-    get bonusEffects(): BonusEffects {
+    get bonusEffects(): BonusEffectsWithReason {
         const param = this.param;
+
+        // event bonus
         const eventBonus = getEventBonus(param.event, param.customEventBonus);
         const targetEventBonus = getEventBonusIfTarget(param.event, param.customEventBonus,
             this.iv.pokemon);
-        
+
+        // expert bonus
+        const isExpertMode = isExpertField(param.fieldIndex);
+        const isMainBerry = isExpertMode &&
+            (param.favoriteType[0] === this.iv.pokemon.type);
+        const isFavoriteBerry = isExpertMode &&
+            param.favoriteType.includes(this.iv.pokemon.type);
+        const expertSkillLevel = (isExpertMode && isMainBerry ?
+            expertMainSkillLevelBonus : 0);
+        const expertIngredientAdditionalEffect = (isExpertMode && isFavoriteBerry &&
+            this.param.expertEffect === "ing" &&
+            this.iv.pokemon.specialty === "Ingredients" ?
+            this.param.expertIngEffectRatio / 100 : 0
+        );
+        const expertIngredient = (isExpertMode && isFavoriteBerry &&
+            this.param.expertEffect === "ing" ?
+            expertFavoriteIngredientBonus + expertIngredientAdditionalEffect :
+            0);
+        const expertSkillTrigger = (isExpertMode && isFavoriteBerry &&
+            this.param.expertEffect === "skill" ?
+            expertFavoriteSkillTriggerBonus : 1
+        );
+
+        // event bonus
+        const eventSkillTrigger = targetEventBonus?.skillTrigger ?? 1;
+        const eventSkillLevel = targetEventBonus?.skillLevel ?? 0;
+        const eventIngredient = targetEventBonus?.ingredient ?? 0;
+
         return {
-            skillTrigger: targetEventBonus?.skillTrigger ?? 1,
-            skillLevel: targetEventBonus?.skillLevel ?? 0,
-            ingredient: targetEventBonus?.ingredient ?? 0,
+            skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger),
+            skillTriggerReason: expertSkillTrigger > eventSkillTrigger ?
+                'ex' : 'event',
+            skillLevel: expertSkillLevel + eventSkillLevel,
+            skillLevelReason: expertSkillLevel * eventSkillLevel !== 0 ? "event+ex" :
+                expertSkillLevel > 0 ? "ex" : "event",
+            ingredient: Math.max(expertIngredient, eventIngredient),
+            ingredientReason: expertIngredient > eventIngredient ?
+                'ex' : 'event',
             dreamShard: eventBonus?.dreamShard ?? 1,
             ingredientMagnet: eventBonus?.ingredientMagnet ?? 1,
             ingredientDraw: eventBonus?.ingredientDraw ?? 1,
             dish: eventBonus?.dish ?? 1,
             energyFromDish: eventBonus?.energyFromDish ?? 0,
-        } as BonusEffects;
+        } as BonusEffectsWithReason;
     }
 
     /**
      * Gets the multiplier for berry strength.
      */
     get berryStrengthBonus(): number {
+        const isExpertMode = isExpertField(this.param.fieldIndex);
+        if(isExpertMode &&
+            this.param.expertEffect === "berry" &&
+            this.param.favoriteType[0] === this.iv.pokemon.type) {
+            return expertFavoriteBerryBonus;
+        }
+
         return this.isFavoriteBerry ? 2 : 1;
     }
 

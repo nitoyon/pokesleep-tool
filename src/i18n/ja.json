@@ -221,6 +221,7 @@
             "ワカクサ本島 EX"
         ],
         "amber assumption": "$t(area.6)の$t(favorite berry)は「$t(types.dragon)・$t(types.bug)・$t(types.poison)」と想定して計算しています。",
+        "expert mode": "EXモード",
         "main": "メイン",
         "main favorite berry": "きのみ(メイン)",
         "sub1 favorite berry": "きのみ(サブ1)",
@@ -295,7 +296,7 @@
         "berry strength per berry burst": "集めてくるきのみ$t(strength2)",
         "additional ingredients": "追加食材数",
         "max skill level affected": "[$t(calc with max skill level)] が有効になっているため、スキルレベル <level/> で計算しています。",
-        "skill level bonus affected": "$t(event bonus)により、スキルレベル <level/> で計算しています。",
+        "skill level bonus affected": "<bonus/>の効果により、スキルレベル <level/> で計算しています。",
         "skill strength": "スキル エナジー (メインスキルの種類とスキルレベルから決まる値)",
         "rp formula": "SP 計算式は Mathcode の Goobliss, Harold, Jeancory が解明したものを利用しています。計算式についての詳細は、ポケスリ攻略の <link/> をご覧ください。",
         "rp formula doc url": "https://pks.raenonx.cc/ja/docs/view/help/rp-model",
