@@ -18,7 +18,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     }
 
     const param = strength.parameter;
-    const berryStrength = result.berryStrength * (strength.isFavoriteBerry() ? 2 : 1);
+    const berryStrength = Math.ceil(result.berryStrength * strength.berryStrengthBonus);
     return <StyledInfoDialog open={open} onClose={onClose}>
         <header>
             <h1>
@@ -37,7 +37,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                 {t('actual berry strength')}<br/>
                 <span className="box box4">{result.berryRawStrength}</span><> × </>
                 (1 + <span className="box box5">{param.fieldBonus}%</span>)<> × </>
-                <span className="box box6">{strength.isFavoriteBerry() ? 2 : 1}</span>
+                <span className="box box6">{strength.berryStrengthBonus}</span>
                 <ul className="detail">
                     <li>
                         <span className="box box4">{result.berryRawStrength}</span>: {t('berry strength')}
@@ -46,7 +46,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                         <span className="box box5">{param.fieldBonus}%</span>: {t('area bonus')}
                     </li>
                     <li>
-                        <span className="box box6">{strength.isFavoriteBerry() ? 2 : 1}</span>: {t('favorite berry')}
+                        <span className="box box6">{strength.berryStrengthBonus}</span>: {t('favorite berry')}
                     </li>
                 </ul>
             </span>
