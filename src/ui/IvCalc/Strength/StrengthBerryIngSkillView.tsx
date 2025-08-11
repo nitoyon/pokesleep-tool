@@ -357,7 +357,9 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     if (mainSkillValue2 !== "") {
         skill2 = <>
             <br/>
-            <MainSkillIcon mainSkill={mainSkill} second/>
+            {mainSkill === "Ingredient Magnet S (Plus)" ?
+                <IngredientIcon name={pokemonIv.pokemon.ing1.name}/> :
+                <MainSkillIcon mainSkill={mainSkill} second/>}
             <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue2}</span>
         </>;
     }
