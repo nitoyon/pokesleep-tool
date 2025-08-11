@@ -221,6 +221,7 @@
             "Greengrass Isle (Expert)"
         ],
         "amber assumption": "The favorite berry in $t(area.6) is assumed to be 'Dragon', 'Bug', and 'Poison'.",
+        "expert mode": "Expert mode",
         "main": "Main",
         "main favorite berry": "Favorite berry (Main)",
         "sub1 favorite berry": "Favorite berry (Sub1)",
@@ -303,7 +304,7 @@
         "berry strength per berry burst": "Strength of berries gathered",
         "additional ingredients": "Additional ingredients",
         "max skill level affected": "Calculated at skill level <level/> because [$t(calc with max skill level)] is enabled.",
-        "skill level bonus affected": "Calculated at skill level <level/> due to $t(event bonus).",
+        "skill level bonus affected": "Calculated at skill level <level/> due to <bonus/>.",
         "skill strength": "Skill strength (determined by the type of main skill and skill level)",
         "rp formula": "This site is using RP formula elucidated by Goobliss, Harold, Jeancory in the Mathcode server on Discord. For more details about the formula, please read <link/> on Pokémon Sleep Info Wiki.",
         "rp formula doc url": "https://pks.raenonx.cc/en/docs/view/help/rp-model",

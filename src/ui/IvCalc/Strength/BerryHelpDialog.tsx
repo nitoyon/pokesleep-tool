@@ -18,7 +18,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     }
 
     const param = strength.parameter;
-    const berryStrength = result.berryStrength * strength.berryStrengthBonus;
+    const berryStrength = Math.ceil(result.berryStrength * strength.berryStrengthBonus);
     return <StyledInfoDialog open={open} onClose={onClose}>
         <header>
             <h1>

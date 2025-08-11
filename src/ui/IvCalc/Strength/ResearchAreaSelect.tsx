@@ -102,13 +102,18 @@ const FavoriteBerrySelectDialog = React.memo(({open, value, onChange, onClose}:{
 });
 
 const StyledFavoriteBerryContent = styled(DialogContent)({
-    '& > section': {
+    minWidth: '14rem',
+    paddingBottom: 0,
+    '& section': {
         marginTop: '1rem',
-        '&:first-of-type': {
+        '&.first': {
             marginTop: 0,
         },
         '& > label': {
             display: 'block',
+        },
+        '& > span, & > div': {
+            marginLeft: '1rem',
         },
     },
 });

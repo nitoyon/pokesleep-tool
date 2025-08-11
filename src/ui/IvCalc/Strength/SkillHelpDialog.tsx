@@ -1,5 +1,5 @@
 import React from 'react';
-import { getEventBonus, getEventBonusIfTarget } from '../../../data/events';
+import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
@@ -66,8 +66,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     ));
 
     const skillLevel = strength.getSkillLevel();
-    const eventBonus = getEventBonusIfTarget(settings.event,
-        settings.customEventBonus, iv.pokemon);
+    const bonus = strength.bonusEffects;
     const [skillValueText, skillValueFooter] = getSkillValueText(strength,
         skillLevel, t);
     const [skillValueText2, skillValueFooter2] = getSkillValueText2(strength,
@@ -132,11 +131,16 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
             </section>
         }
         <Collapse in={!isCountOnly &&
-            ((eventBonus?.skillLevel ?? 0) > 0 || settings.maxSkillLevel) &&
+            (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
             skillLevel !== iv.skillLevel}>
             <div className="skillLevelNotice">
                 <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
-                    components={{ level: <strong>{skillLevel}</strong>}}/>
+                    components={{
+                        level: <strong>{skillLevel}</strong>,
+                        bonus: <strong>{bonus.skillLevelReason === 'event+ex' ?
+                            t('event bonus') + t('text separator') + t('expert mode') :
+                            bonus.skillLevelReason === 'event' ? t('event bonus') : t('expert mode')}</strong>,
+                    }}/>
             </div>
         </Collapse>
         {footnote !== "" && <div className="footnote">{footnote}</div>}
