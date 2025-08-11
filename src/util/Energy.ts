@@ -70,15 +70,6 @@ export interface EnergyParameter {
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
 
-    /** Helping speed bonus for the main berry in Expert Mode */
-    mainBerryHelpingSpeedBonus: number;
-
-    /** Carry limit bonus for the main berry in Expert Mode */
-    mainBerryCarryLimitBonus: number;
-
-    /** Helping speed penalty for non-favorite berries in Expert Mode */
-    nonFavoriteBerryHelpingSpeedPenalty: number;
-
     /**
      * Event option.
      */
