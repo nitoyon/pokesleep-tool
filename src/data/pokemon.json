@@ -6048,31 +6048,31 @@
         "sleepType": "slumbering",
         "exp": 600,
         "type": "poison",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Skills",
+        "skill": "Ingredient Magnet S",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 5600,
+        "ingRatio": 20.9,
+        "skillRatio": 4.8,
         "ancestor": 848,
         "evolutionCount": 0,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 6,
         "ing1": {
-            "name": "unknown1",
+            "name": "milk",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "apple",
+            "c2": 2,
+            "c3": 4
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "leek",
+            "c3": 2
         }
     },
     {
@@ -6083,31 +6083,31 @@
         "sleepType": "dozing",
         "exp": 600,
         "type": "poison",
-        "specialty": "unknown",
-        "skill": "unknown",
-        "fp": 12,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "specialty": "Skills",
+        "skill": "Ingredient Magnet S (Plus)",
+        "fp": 20,
+        "frequency": 3100,
+        "ingRatio": 23.9,
+        "skillRatio": 6.4,
         "ancestor": 848,
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 18,
         "ing1": {
-            "name": "unknown1",
+            "name": "milk",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "apple",
+            "c2": 2,
+            "c3": 4
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "leek",
+            "c3": 2
         }
     },
     {
@@ -6118,31 +6118,31 @@
         "sleepType": "dozing",
         "exp": 600,
         "type": "poison",
-        "specialty": "unknown",
-        "skill": "unknown",
-        "fp": 12,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "specialty": "Skills",
+        "skill": "Cooking Power-Up S (Minus)",
+        "fp": 20,
+        "frequency": 3100,
+        "ingRatio": 23.9,
+        "skillRatio": 6.4,
         "ancestor": 848,
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 18,
         "ing1": {
-            "name": "unknown1",
+            "name": "milk",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "apple",
+            "c2": 2,
+            "c3": 4
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "leek",
+            "c3": 2
         }
     },
     {

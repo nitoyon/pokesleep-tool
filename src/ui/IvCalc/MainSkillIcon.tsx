@@ -7,7 +7,6 @@ import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
-import CoffeeIcon from '../Resources/CoffeeIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
 import PotIcon from '../Resources/PotIcon';
@@ -51,7 +50,8 @@ const MainSkillIcon = React.memo(({mainSkill, second}: {
             if (second !== true) {
                 return <IngredientsIcon fontSize="small"/>;
             } else {
-                return <CoffeeIcon fontSize="small"/>;
+                // not supported. icon changes by its first ing.
+                return <></>;
             }
         case "Ingredient Magnet S":
         case "Ingredient Draw S":

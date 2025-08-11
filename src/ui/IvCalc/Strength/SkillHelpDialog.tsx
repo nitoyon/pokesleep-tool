@@ -7,6 +7,7 @@ import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
 import { Button, Collapse, Dialog, DialogActions, DialogContent,
     FormControl, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import IngredientIcon from '../IngredientIcon';
 import MainSkillIcon from '../MainSkillIcon';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import { IvAction } from '../IvState';
@@ -102,7 +103,9 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         {result.skillValue2 !== 0 && <>
             <header style={{marginTop: '1.2rem'}}>
                 <h1>
-                    <MainSkillIcon mainSkill={skillName} second/>
+                    {skillName === "Ingredient Magnet S (Plus)" ?
+                        <IngredientIcon name={iv.pokemon.ing1.name}/> :
+                        <MainSkillIcon mainSkill={skillName} second/>}
                     {formatNice(result.skillValue2, t)}
                 </h1>
                 <h2>
