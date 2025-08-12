@@ -491,7 +491,7 @@
             "Extra Helpful S": "顯示技能發動帶來的 [幫助次數] 。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
             "Cooking Power-Up S": "技能的效果沒有換算成合計能量值。",
             "Cooking Power-Up S (Minus)": "$t(strength skill info.Cooking Power-Up S)只有當隊伍中有至少一隻擁有「正電」或「負電」主技能的寶可夢時，才會回復一隻隊伍成員的活力。",
-            "Helper Boost": "假定為同類型的3隻寶可夢。能量總量以每次幫助 100（不含營地獎勵）進行計算。",
+            "Helper Boost": "假定為同類型的3隻寶可夢。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
             "Berry Burst (Disguise)": "假設不會發生漂亮成功。$t(strength skill info.Berry Burst)",
             "Berry Burst": "其他寶可夢獲取的每個樹果以 100 能量（不含營地獎勵）進行計算。",
             "Tasty Chance S": "顯示漂亮成功的機率增加百分比。技能的效果沒有換算成合計能量值。",
