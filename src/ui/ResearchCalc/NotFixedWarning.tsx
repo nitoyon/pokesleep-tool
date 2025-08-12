@@ -8,7 +8,7 @@ const NotFixedWarning = React.memo(({fieldIndex}: {
     fieldIndex: number,
 }) => {
     const { t } = useTranslation();
-    const isVisible = (fieldIndex === 5);
+    const isVisible = (fieldIndex === 7);
 
     return <Collapse in={isVisible}>
         <StyledNotFixedWarning>
@@ -20,17 +20,16 @@ const NotFixedWarning = React.memo(({fieldIndex}: {
 
 const StyledNotFixedWarning = styled('div')({
     background: '#e5f6fd',
-    border: '1px solid #d9e9e9',
     borderRadius: '.5rem',
-    paddingTop: '0.2rem',
+    padding: '0.4rem',
     color: '#014343',
     display: 'grid',
-    gridTemplateColumns: '26px 1fr',
+    gridTemplateColumns: '22px 1fr',
     '& > svg': {
         color: '#0288d1',
         width: '18px',
         height: '18px',
-        padding: '4px',
+        paddingTop: '2px',
     },
     '& > div': {
         fontSize: '0.8rem',
