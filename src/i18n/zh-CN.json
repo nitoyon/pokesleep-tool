@@ -250,7 +250,7 @@
         "strength too low": "需要 <strength/> 能量。",
         "strength too much": "能量过多。",
         "next strength to get 1 more pokemon": "第2次睡眠之前获取 <strength2/> 能量的话、可以在第2次研究时遇到 <count2/> 只宝可梦 (※第1次的睡眠分数为 <score1/> 时)。",
-        "border is not fixed": "分数线尚未确定。可能会在低于显示的分数或能量出现所指定数量的宝可梦。",
+        "border is not fixed": "分数线尚未确定。如果在与显示的分数或能量不同的情况下出现了指定数量的宝可梦，烦请反馈。",
 
         "dozing": "浅浅入梦型",
         "snoozing": "安然入睡型",

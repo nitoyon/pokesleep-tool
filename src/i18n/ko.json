@@ -245,7 +245,7 @@
         "strength too low": "총 에너지가 <strength/> 이상 필요합니다.",
         "strength too much": "에너지가 너무 높습니다.",
         "next strength to get 1 more pokemon": "2회차 수면 이전까지 <strength2/> 이상의 에너지를 추가하면, 2회차 리서치에서 <count2/>체까지 만날 수 있습니다 (※1회차 수면 스코어가 <score1/>일 때).",
-        "border is not fixed": "지정된 수의 포켓몬이 출현하기 위한 졸림 파워는 아직 조사 중입니다. 지정된 수의 포켓몬이 표시된 값보다 낮은 점수나 에너지로 출현할 수 있습니다.",
+        "border is not fixed": "지정된 수의 포켓몬이 출현하기 위한 졸림 파워는 아직 조사 중입니다. 표시된 값과 다른 점수나 에너지로 포켓몬이 출현한 경우, 제보해 주시면 감사하겠습니다.",
 
         "dozing": "꾸벅꾸벅 타입",
         "snoozing": "새근새근 타입",
