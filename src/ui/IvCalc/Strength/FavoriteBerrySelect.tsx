@@ -3,7 +3,7 @@ import TypeSelect from '../TypeSelect';
 import { isExpertField } from '../../../data/fields';
 import { PokemonType } from '../../../data/pokemons';
 import { ExpertEffects, StrengthParameter } from '../../../util/PokemonStrength';
-import { Collapse, Select, SelectChangeEvent, MenuItem } from '@mui/material';
+import { Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const FavoriteBerrySelect = React.memo(({value, onChange}: {
@@ -36,10 +36,6 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
     }, [onChange, value]);
     const onExpertEffectChange = React.useCallback((expertEffect: ExpertEffects) => {
         onChange({...value, expertEffect});
-    }, [onChange, value]);
-    const onExpertIngEffectRatioChange = React.useCallback((e: SelectChangeEvent) => {
-        const expertIngEffectRatio = parseInt(e.target.value, 10);
-        onChange({...value, expertIngEffectRatio});
     }, [onChange, value]);
 
     if (expert === true) {
@@ -78,16 +74,6 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
                 <ExpertEffectSelect value={value.expertEffect}
                     onChange={onExpertEffectChange}/>
             </section>
-            <Collapse in={value.expertEffect === "ing"}>
-                <section>
-                    <label>{t('expert ing effect ratio')}:</label>
-                    <Select variant="standard" size="small"  
-                        value={value.expertIngEffectRatio.toString()}
-                        onChange={onExpertIngEffectRatioChange}>
-                        {ingRatioMenu}
-                    </Select>
-                </section>
-            </Collapse>
         </>;
     }
 
