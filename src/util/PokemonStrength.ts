@@ -433,7 +433,8 @@ class PokemonStrength {
                 return [strengthBurst, strengthBurst, 0, 0];
 
             case "Ingredient Magnet S (Plus)":
-                let ingCount = getSkillSubValue(mainSkill, skillLevel);
+                let ingCount = getSkillSubValue(mainSkill, skillLevel,
+                    this.pokemonIv.pokemon.ing1.name);
                 ingCount = Math.floor(ingCount * bonus.ingredientMagnet);
                 return [mainSkillValue, 0, ingCount * skillCount, 0];
 

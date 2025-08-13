@@ -1,3 +1,4 @@
+import { IngredientName } from '../data/pokemons';
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Magnet S (Plus)" |
@@ -146,7 +147,18 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number): number 
     return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
 }
 
-export function getSkillSubValue(skill: MainSkillName, skillLevel: number): number {
+/**
+ * Returns the additional effect of the main skill for the given
+ * skill and level.
+ * @param skill Name of the main skill.
+ * @param skillLevel Level of the main skill.
+ * @param firstIngredient First ingredient name. Used only for
+ *                        `Ingredient Magnet S (Plus)`.
+ * @returns Additional effect for the skill, or throws if not applicable.
+ */
+export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
+    firstIngredient?: IngredientName
+): number {
     // verification
     if (skillLevel !== Math.floor(skillLevel)) {
         throw new Error(`invalid skill level: ${skillLevel}`);
@@ -157,7 +169,13 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number): numb
 
     if (skill === "Ingredient Magnet S (Plus)") {
         // Get additional ingredient count
-        return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
+        if (firstIngredient === 'coffee') {
+            return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
+        }
+        else if (firstIngredient === 'milk') {
+            return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
+        }
+        throw new Error(`invalid ingredient: ${firstIngredient}`);
     }
     if (skill === "Cooking Power-Up S (Minus)") {
         // Get additional energy restore
