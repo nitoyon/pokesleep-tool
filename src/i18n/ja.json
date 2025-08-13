@@ -235,7 +235,6 @@
         "expert ing effect": "食材+1",
         "expert ing effect2": "(食材とくい時々+2)",
         "expert skill effect": "スキル 1.25倍",
-        "expert ing effect ratio": "食材+2の確率 (検証中)",
 
         "none": "なし",
         "cresselia on your team": "クレセリアを編成",
@@ -533,7 +532,7 @@
         "profile": "http://tech.nitoyon.com/ja/about/",
         "x username": "nitoyon",
         "about2": "改善要望・不具合報告は、X (twitter) の <x>@nitoyon</x> または <github>GitHub</github> までお願いします。",
-        "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」と「<rp>RP collection project</rp>」を参照しています。",
+        "about3": "利用しているデータは「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」「<rp>RP collection project</rp>」「<raenonx>RaenonX</raenonx>」を参照しています。",
         "about4": "食材のアイコンは、ちゃんりわさんが作成してくれました。",
 
         "skills": {
