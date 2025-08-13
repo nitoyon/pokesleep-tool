@@ -235,7 +235,6 @@
         "expert ing effect": "食材+1",
         "expert ing effect2": "（$t(specialty)为食材时，有时候+2）",
         "expert skill effect": "技能1.25倍",
-        "expert ing effect ratio": "食材+2的几率（测试中）",
 
         "none": "无",
         "cresselia on your team": "队伍中有克雷色利亚",
@@ -532,9 +531,9 @@
         
         "about1": "本工具非官方工具，由 <profile>nitoyon</profile> 个人制作开发。",
         "profile": "http://tech.nitoyon.com/ja/about/",
-        "x username": "nitoyon",
-        "about2": "改善请求和错误报告请通过X (twitter) <x>@nitoyon</x> 或者 <github>GitHub</github> 进行联系。",
-        "about3": "使用的数据参照了「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」和「<rp>RP collection project</rp>」。",
+        "x username": "nitoyon1",
+        "about2": "改善请求和错误报告请通过X (twitter) <x>@nitoyon1</x> 或者 <github>GitHub</github> 进行联系。",
+        "about3": "使用的数据参照了「<wiki>ポケモンスリープ攻略・検証Wiki</wiki>」，「<rp>RP collection project</rp>」，以及「<raenonx>RaenonX</raenonx>」。",
         "about4": "食材图标由ちゃんりわさん制作。",
 
         "skills": {

@@ -27,6 +27,16 @@ export const expertFavoriteBerryBonus = 2.4;
 /** Ingredient bonus for the favorite berry in Expert Mode */
 export const expertFavoriteIngredientBonus = 1;
 
+/**
+ * Additional ingredient bonus probability for favorite berry
+ * (Specialty: Ingredients) in Expert Mode
+ *
+ * (ref) Fix at 50%
+ * https://discord.com/channels/1138701819464392744/1139000897574289468/1404846527033114767
+ * https://x.com/ao_wasabi28/status/1955088349145993551
+ */
+export const expertFavoriteIngredientAdditionalBonus = 0.5;
+
 /** Ingredient bonus for the favorite berry in Expert Mode */
 export const expertFavoriteSkillTriggerBonus = 1.25;
 
@@ -487,7 +497,7 @@ class PokemonStrength {
         const expertIngredientAdditionalEffect = (isExpertMode && isFavoriteBerry &&
             this.param.expertEffect === "ing" &&
             this.iv.pokemon.specialty === "Ingredients" ?
-            this.param.expertIngEffectRatio / 100 : 0
+            expertFavoriteIngredientAdditionalBonus : 0
         );
         const expertIngredient = (isExpertMode && isFavoriteBerry &&
             this.param.expertEffect === "ing" ?
@@ -579,7 +589,6 @@ export function createStrengthParameter(
         sleepScore: 100,
         isGoodCampTicketSet: false,
         expertEffect: "berry",
-        expertIngEffectRatio: 30,
         event: 'none',
         level: 0,
         evolved: false,
@@ -650,11 +659,6 @@ export function loadStrengthParameter(): StrengthParameter {
     if (typeof(json.expertEffect) === "string" &&
         ExpertEffectsList.includes(json.expertEffect)) {
         ret.expertEffect = json.expertEffect;
-    }
-    if (typeof(json.expertIngEffectRatio) === "number" &&
-        json.expertIngEffectRatio >= 0 &&
-        json.expertIngEffectRatio <= 100) {
-        ret.expertIngEffectRatio = json.expertIngEffectRatio;
     }
 
     if (typeof(json.level) === "number" &&

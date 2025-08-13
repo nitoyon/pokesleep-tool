@@ -25,11 +25,6 @@ export interface EnergyParameter {
     expertEffect: ExpertEffects;
 
     /**
-     * Ingredient bonus probability by ingredient specialty in expert mode.
-     */
-    expertIngEffectRatio: number;
-
-    /**
      * Energy restored by 'energy for all' main skill.
      */
     e4eEnergy: number;
