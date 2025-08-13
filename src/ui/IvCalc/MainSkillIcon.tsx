@@ -1,4 +1,5 @@
 import React from 'react';
+import { IngredientName } from '../../data/pokemons';
 import { MainSkillName } from '../../util/MainSkill';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -7,15 +8,17 @@ import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
+import IngredientIcon from './IngredientIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
 import PotIcon from '../Resources/PotIcon';
 import StreamIcon from '@mui/icons-material/Stream';
 import SavedSearchOutlined from '@mui/icons-material/SavedSearchOutlined';
 
-const MainSkillIcon = React.memo(({mainSkill, second}: {
+const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
     mainSkill: MainSkillName,
     second?: boolean,
+    firstIngredient?: IngredientName,
 }) => {
     switch (mainSkill) {
         case "Charge Energy S":
@@ -50,8 +53,7 @@ const MainSkillIcon = React.memo(({mainSkill, second}: {
             if (second !== true) {
                 return <IngredientsIcon fontSize="small"/>;
             } else {
-                // not supported. icon changes by its first ing.
-                return <></>;
+                return <IngredientIcon name={firstIngredient ?? "apple"}/>;
             }
         case "Ingredient Magnet S":
         case "Ingredient Draw S":
