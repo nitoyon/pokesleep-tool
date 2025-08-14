@@ -539,7 +539,7 @@ class PokemonStrength {
         const isExpertMode = isExpertField(this.param.fieldIndex);
         if(isExpertMode &&
             this.param.expertEffect === "berry" &&
-            this.param.favoriteType[0] === this.iv.pokemon.type) {
+            this.param.favoriteType.includes(this.iv.pokemon.type)) {
             return expertFavoriteBerryBonus;
         }
 
