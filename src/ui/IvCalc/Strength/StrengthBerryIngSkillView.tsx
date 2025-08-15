@@ -311,7 +311,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
 function getIngArticle(result: StrengthResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
-    if (settings.tapFrequency === 'none') {
+    if (settings.period !== whistlePeriod && settings.tapFrequency === 'none') {
         return <article>ー</article>;
     }
 
