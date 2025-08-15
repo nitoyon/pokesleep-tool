@@ -10,7 +10,7 @@ import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue, getSkillSubValue, getMaxSkillLevel } from './MainSkill';
 
 /** Represents the period value for "whistle" calculations in StrengthParameter. */
-export const whistlePeriod = 3;
+export const whistlePeriod = 0;
 
 /** Expert mode effects */
 export type ExpertEffects = "berry"|"ing"|"skill";
@@ -197,6 +197,7 @@ class PokemonStrength {
         if (param.period === whistlePeriod) {
             this.param = {
                 ...param,
+                period: 3,
                 isEnergyAlwaysFull: true,
                 isGoodCampTicketSet: false,
             };
