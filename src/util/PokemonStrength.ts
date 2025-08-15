@@ -200,6 +200,8 @@ class PokemonStrength {
                 period: 3,
                 isEnergyAlwaysFull: true,
                 isGoodCampTicketSet: false,
+                tapFrequency: 'always',
+                tapFrequencyAsleep: 'always',
             };
         }
 
