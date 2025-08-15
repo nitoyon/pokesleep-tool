@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
+import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { Button, Dialog, DialogActions,
@@ -166,13 +166,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [ingHelpOpen, setIngHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
-    const isWhistle = (settings.period === 3);
-    const strength = new PokemonStrength(pokemonIv, {
-        ...settings,
-        isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
-        isGoodCampTicketSet: isWhistle ?
-            false : settings.isGoodCampTicketSet,
-    }, decendantId);
+    const strength = new PokemonStrength(pokemonIv, settings, decendantId);
     const result = strength.calculate();
 
     let decendants: PokemonData[] = [];
@@ -282,7 +276,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 <div>{round2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>
-        <footer>
+        {settings.period !== whistlePeriod && <footer>
             {result.energy.canBeFullInventory ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
@@ -303,7 +297,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 </span>
             </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
-        </footer>
+        </footer>}
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
             strength={strength} result={result}/>
         <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
@@ -317,7 +311,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
 function getIngArticle(result: StrengthResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
-    if (settings.tapFrequency === 'none') {
+    if (settings.period !== whistlePeriod && settings.tapFrequency === 'none') {
         return <article>ー</article>;
     }
 
@@ -339,7 +333,7 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
-    if (settings.period === 3 || settings.tapFrequency === 'none') {
+    if (settings.period === whistlePeriod || settings.tapFrequency === 'none') {
             return <article>ー</article>;
     }
 
