@@ -1,5 +1,5 @@
 import pokemons from '../data/pokemons';
-import { BonusEffects, getEventBonus, getEventBonusIfTarget } from '../data/events';
+import { BonusEffects, emptyBonusEffects, getEventBonus, getEventBonusIfTarget } from '../data/events';
 import { IngredientName, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields, { isExpertField } from '../data/fields';
@@ -178,11 +178,11 @@ export const recipeLevelBonus = {
  */
 export interface BonusEffectsWithReason extends BonusEffects {
     /** The source of the skill trigger bonus (event or expert mode). */
-    skillTriggerReason: 'event'|'ex';
+    skillTriggerReason: 'event'|'ex'|'none';
     /** The source of the skill level bonus (event or expert mode). */
-    skillLevelReason: 'event'|'ex'|'event+ex';
+    skillLevelReason: 'event'|'ex'|'event+ex'|'none';
     /** The source of the ingredient bonus (event or expert mode). */
-    ingredientReason: 'event'|'ex';
+    ingredientReason: 'event'|'ex'|'none';
 };
 
 /**
@@ -191,10 +191,13 @@ export interface BonusEffectsWithReason extends BonusEffects {
 class PokemonStrength {
     private iv: PokemonIv;
     private param: StrengthParameter;
+    private isWhistle: boolean;
 
     constructor(iv: PokemonIv, param: StrengthParameter, decendantId?: number) {
         this.param = param;
+        this.isWhistle = false;
         if (param.period === whistlePeriod) {
+            this.isWhistle = true;
             this.param = {
                 ...param,
                 period: 3,
@@ -269,7 +272,7 @@ class PokemonStrength {
         const level = rp.level;
         const countRatio = param.period / 24;
         const bonus = this.bonusEffects;
-        const energy = new Energy(this.iv).calculate(param, bonus);
+        const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
         const notFullHelpCount = param.tapFrequency === 'none' ? 0 :
             (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRatio;
         const fullHelpCount = param.tapFrequency === 'none' ?
@@ -495,6 +498,15 @@ class PokemonStrength {
      */
     get bonusEffects(): BonusEffectsWithReason {
         const param = this.param;
+
+        if (this.isWhistle) {
+            return {
+                ...emptyBonusEffects,
+                skillTriggerReason: 'none',
+                skillLevelReason: 'none',
+                ingredientReason: 'none',
+            };
+        }
 
         // event bonus
         const eventBonus = getEventBonus(param.event, param.customEventBonus);

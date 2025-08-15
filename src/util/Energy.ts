@@ -164,10 +164,12 @@ class Energy {
      * Calculate energy efficiency, help count, and return an EnergyResult.
      * @param param Parameters for energy calculation.
      * @param bonus Bonus effects for the Pokémon and StrengthParameter.
+     * @param isWhistle Whether whistle is used or not.
      * @returns Calculation result (EnergyResult).
      */
     calculate(param: EnergyParameter,
-        bonus: Readonly<BonusEffects> = emptyBonusEffects
+        bonus: Readonly<BonusEffects> = emptyBonusEffects,
+        isWhistle: boolean = false
     ): EnergyResult {
         const sleepMinutes = param.sleepScore * 510 / 100;
         const recoveryFactor = this._iv.nature.energyRecoveryFactor;
@@ -216,7 +218,7 @@ class Energy {
         // calculate Sneaky Snacking
         const {carryLimit, skillRatio, timeToFullInventory,
             helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, param, bonus);
+            this.calculateSneakySnacking(events, efficiencies, param, bonus, isWhistle);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
@@ -435,7 +437,7 @@ class Energy {
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        param: EnergyParameter, bonus: BonusEffects):
+        param: EnergyParameter, bonus: BonusEffects, isWhistle: boolean):
     {
         carryLimit: number,
         skillRatio: number,
@@ -470,7 +472,7 @@ class Energy {
         const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
 
         // check if the field is expert mode
-        const isExpertMode = isExpertField(param.fieldIndex);
+        const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
         const isMainBerry = isExpertMode &&
             (param.favoriteType[0] === this._iv.pokemon.type);
         const isNonFavoriteBerry = isExpertMode &&
