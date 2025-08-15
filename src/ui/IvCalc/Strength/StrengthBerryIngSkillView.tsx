@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
+import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { Button, Dialog, DialogActions,
@@ -333,7 +333,7 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
-    if (settings.period === 3 || settings.tapFrequency === 'none') {
+    if (settings.period === whistlePeriod || settings.tapFrequency === 'none') {
             return <article>ー</article>;
     }
 
