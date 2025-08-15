@@ -50,7 +50,7 @@ export interface StrengthParameter extends EnergyParameter {
     /**
      * How many hours' worth of accumulated strength to calculate.
      *
-     * 3: 3 hours, 24: one day, 168: one week
+     * 3: whistle, 24: one day, 168: one week
      */
     period: number;
 
@@ -191,6 +191,14 @@ class PokemonStrength {
 
     constructor(iv: PokemonIv, param: StrengthParameter, decendantId?: number) {
         this.param = param;
+        if (param.period === 3) {
+            this.param = {
+                ...param,
+                isEnergyAlwaysFull: true,
+                isGoodCampTicketSet: false,
+            };
+        }
+
         this.iv = this.changePokemonIv(iv, decendantId);
         const pokemon = pokemons.find(x => x.name === iv.pokemonName);
         if (pokemon === undefined) {
