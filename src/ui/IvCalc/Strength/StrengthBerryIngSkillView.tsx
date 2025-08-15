@@ -276,7 +276,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 <div>{round2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>
-        <footer>
+        {settings.period !== whistlePeriod && <footer>
             {result.energy.canBeFullInventory ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
@@ -297,7 +297,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 </span>
             </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
-        </footer>
+        </footer>}
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
             strength={strength} result={result}/>
         <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
