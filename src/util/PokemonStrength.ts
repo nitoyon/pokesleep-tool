@@ -9,6 +9,9 @@ import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue, getSkillSubValue, getMaxSkillLevel } from './MainSkill';
 
+/** Represents the period value for "whistle" calculations in StrengthParameter. */
+export const whistlePeriod = 3;
+
 /** Expert mode effects */
 export type ExpertEffects = "berry"|"ing"|"skill";
 
@@ -191,7 +194,7 @@ class PokemonStrength {
 
     constructor(iv: PokemonIv, param: StrengthParameter, decendantId?: number) {
         this.param = param;
-        if (param.period === 3) {
+        if (param.period === whistlePeriod) {
             this.param = {
                 ...param,
                 isEnergyAlwaysFull: true,
@@ -280,7 +283,7 @@ class PokemonStrength {
         const ingUnlock = 1 +
             (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
             (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
-        const ingEventAdd: number = (param.period !== 3 ? bonus.ingredient : 0);
+        const ingEventAdd: number = (param.period !== whistlePeriod ? bonus.ingredient : 0);
 
         const ing1: IngredientStrength = {...rp.ingredient1, strength: 0,
             helpCount: rp.ingredient1.count + ingEventAdd};
@@ -337,7 +340,7 @@ class PokemonStrength {
         const skillRatio = energy.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         let skillValue2 = 0, skillStrength2 = 0;
-        if (param.period !== 3 && param.tapFrequency !== 'none') {
+        if (param.period !== whistlePeriod && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
                 skillCount = helpCount * skillRatio * countRatio;
@@ -639,7 +642,7 @@ export function loadStrengthParameter(): StrengthParameter {
         return ret;
     }
     if (typeof(json.period) === "number" &&
-        [24, 168, 3].includes(json.period)) {
+        [24, 168, whistlePeriod].includes(json.period)) {
         ret.period = json.period;
     }
     if (typeof(json.fieldBonus) === "number" &&

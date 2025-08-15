@@ -12,7 +12,9 @@ import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
 import { isExpertField } from '../../../data/fields';
 import { getActiveHelpBonus } from '../../../data/events';
-import { createStrengthParameter, StrengthParameter } from '../../../util/PokemonStrength';
+import {
+    createStrengthParameter, StrengthParameter, whistlePeriod,
+} from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
 type PeriodType = "1day"|"1week"|"whistle";
@@ -147,14 +149,14 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const eventName = ['none', ...scheduledEvents]
         .includes(value.event) ? value.event : 'advanced';
 
-    const isNotWhistle = (value.period !== 3);
+    const isNotWhistle = (value.period !== whistlePeriod);
     return <StyledSettingForm>
         <section>
             <label>{t('period')}:</label>
             <Select variant="standard" onChange={onPeriodChange} value={value.period.toString()}>
                 <MenuItem value={24}>{t('1day')}</MenuItem>
                 <MenuItem value={168}>{t('1week')}</MenuItem>
-                <MenuItem value={3}>{t('whistle')}</MenuItem>
+                <MenuItem value={whistlePeriod}>{t('whistle')}</MenuItem>
             </Select>
         </section>
         <section>
