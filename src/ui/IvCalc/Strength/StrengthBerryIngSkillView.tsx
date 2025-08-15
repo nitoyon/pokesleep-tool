@@ -166,13 +166,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [ingHelpOpen, setIngHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
 
-    const isWhistle = (settings.period === 3);
-    const strength = new PokemonStrength(pokemonIv, {
-        ...settings,
-        isEnergyAlwaysFull: isWhistle ? true : settings.isEnergyAlwaysFull,
-        isGoodCampTicketSet: isWhistle ?
-            false : settings.isGoodCampTicketSet,
-    }, decendantId);
+    const strength = new PokemonStrength(pokemonIv, settings, decendantId);
     const result = strength.calculate();
 
     let decendants: PokemonData[] = [];
