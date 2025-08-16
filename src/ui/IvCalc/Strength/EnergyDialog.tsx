@@ -85,7 +85,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     const carryLimit = energy.carryLimit;
 
     return <StyledEnergyDialog open={open} onClose={onClose}>
-        <EnergyChart width={width} result={energy}/>
+        <EnergyChart width={width} period={parameter.period} result={energy}/>
         <Collapse in={!parameter.isEnergyAlwaysFull}>
             <section>
                 <div>
@@ -180,12 +180,12 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
             <section className="first">
                 <label>{t('average help efficiency')}:</label>
                 <div>{energy.averageEfficiency.total}</div>
-                <footer>
+                {parameter.period >= 24 && <footer>
                     <span>{t('awake')}: {energy.averageEfficiency.awake}</span>
                     <span>{t('asleep')}: {energy.averageEfficiency.asleep}</span>
-                </footer>
+                </footer>}
             </section>
-            <Collapse in={energy.canBeFullInventory}>
+            <Collapse in={energy.canBeFullInventory && parameter.period >= 24}>
                 <section>
                     <label>{t('full inventory while sleeping')}:</label>
                     <div>{energy.timeToFullInventory < 0 ? t('none') :
@@ -329,15 +329,17 @@ interface MousePosition {
     svgX: number;
 }
 
-const EnergyChart = React.memo(({width, result}: {
+const EnergyChart = React.memo(({width, period, result}: {
     width: number,
+    period: number,
     result: EnergyResult,
 }) => {
     const svgRef = React.useRef<SVGSVGElement|null>(null);
     const mouse = useSvgTouch(svgRef);
     return <svg width={width} height="200" viewBox={`0 0 ${width} 200`} ref={svgRef}>
         <g transform="translate(25,3)">
-            <EnergyChartAxis width={width - 50} height={180} sleepTime={result.sleepTime}/>
+            <EnergyChartAxis width={width - 50} height={180}
+                period={period} sleepTime={result.sleepTime}/>
             <EnergyLine width={width - 50} height={180} result={result}/>
             {mouse !== null && <EnergyHover width={width - 50} height={180}
                 x={mouse.svgX - 25} gx={mouse.x} gy={mouse.y} result={result}/>}
@@ -345,8 +347,8 @@ const EnergyChart = React.memo(({width, result}: {
     </svg>;
 });
 
-const EnergyChartAxis = React.memo(({width, height, sleepTime}: {
-    width: number, height: number, sleepTime: number,
+const EnergyChartAxis = React.memo(({width, height, period, sleepTime}: {
+    width: number, height: number, period: number, sleepTime: number,
 }) => {
     const y100 = energy2y(100, height);
     const y80 = energy2y(80, height);
@@ -417,6 +419,9 @@ const EnergyChartAxis = React.memo(({width, height, sleepTime}: {
         </g>
         <rect x={width * sleepTime / 1440} y="0" width={width * (1440 - sleepTime) / 1440} height={height}
             fill="#000080" fillOpacity="0.08"/>
+        {period < 24 && <rect x={width * period * 60 / 1440} y="0"
+            width={width * (1440 - period * 60) / 1440} height={height}
+            fill="#6666tt" fillOpacity="0.15"/>}
     </>;
 });
 
