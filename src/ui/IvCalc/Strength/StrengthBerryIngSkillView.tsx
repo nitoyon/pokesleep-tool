@@ -277,7 +277,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         {settings.period !== whistlePeriod && <footer>
-            {result.energy.canBeFullInventory ? <>
+            {result.energy.canBeFullInventory && settings.period >= 24 ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
                 <span>
@@ -292,8 +292,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </> :
             <>
                 <span>
-                    {t('help efficiency')}: {result.energy.averageEfficiency.total} (
-                    {t('awake')}: {result.energy.averageEfficiency.awake}, {t('asleep')}: {result.energy.averageEfficiency.asleep})
+                    {t('help efficiency')}: {result.energy.averageEfficiency.total}
+                    {settings.period >= 24 && <>
+                         {" ("}{t('awake')}: {result.energy.averageEfficiency.awake}, {t('asleep')}: {result.energy.averageEfficiency.asleep})
+                    </>}
                 </span>
             </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
