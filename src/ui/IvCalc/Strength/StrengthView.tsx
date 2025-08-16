@@ -4,6 +4,7 @@ import IvState, { IvAction } from '../IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
+import { whistlePeriod } from '../../../util/PokemonStrength';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -45,8 +46,15 @@ const StrengthView = React.memo(({state, dispatch}: {
         }
         fieldBonus = <small> ({parameter.fieldBonus}%)</small>;
     }
-    const period = (parameter.period === 24 ? '1day' :
-        parameter.period === 168 ? '1week' : 'whistle');
+    let period: string = "ー";
+    switch (parameter.period) {
+        case whistlePeriod: period = t('whistle'); break;
+        case 1: period = t('1hour'); break;
+        case 3: period = t('3hours'); break;
+        case 8: period = t('8hours'); break;
+        case 24: period = t('1day'); break;
+        case 168: period = t('1week'); break;
+    }
 
     const isEventScheduled = getActiveHelpBonus(new Date()).length > 0 || parameter.event !== 'none';
 
@@ -57,7 +65,7 @@ const StrengthView = React.memo(({state, dispatch}: {
             <StrengthParameterPreview>
                 <ul>
                     <li>{area}{fieldBonus}</li>
-                    <li>{t(period)}</li>
+                    <li>{period}</li>
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
                     <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
