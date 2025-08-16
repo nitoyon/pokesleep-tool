@@ -228,6 +228,11 @@ class Energy {
             efficiencies = this.calculateEfficiency(events, sleepTime);
         }
 
+        // Split events and efficiencies, if period < 24
+        if (param.period < 24) {
+            this.splitEventAndEfficiencyByPeriod(events, efficiencies, param);
+        }
+
         // calculate average efficiency
         const total = this.calculateAverageEfficiency(efficiencies);
         const awake = this.calculateAverageEfficiency(efficiencies
@@ -436,6 +441,72 @@ class Energy {
         return ret;
     }
 
+    /**
+     * Splits energy events and efficiency events based on the specified period,
+     * and sets the isInPeriod flag for each entry accordingly.
+     *
+     * @param events Array of energy events. If an event's minutes are less than
+     *               period * 60, it is marked as in-period (isInPeriod = true).
+     *               Inserts an empty event to split the timeline when crossing
+     *               the threshold.
+     * @param efficiencies Array of efficiency events. If an event spans across the
+     *                     threshold,  it is split into two entries.
+     * @param period EnergyParameter which has period and isEnergyAlwaysFull.
+     */
+    splitEventAndEfficiencyByPeriod(events: EnergyEvent[],
+        efficiencies: EfficiencyEvent[], param: EnergyParameter
+    ): void {
+        const threshold = param.period * 60;
+
+        // split events
+        for (let i = 0; i < events.length; i++) {
+            const event = events[i];
+            const nextEvent = events[i + 1] ?? event;
+            if (event.minutes < threshold) {
+                event.isInPeriod = true;
+                if (nextEvent.minutes < threshold) {
+                    continue;
+                }
+            }
+            else if (event.minutes >= threshold) {
+                event.isInPeriod = false;
+                continue
+            }
+
+            // insert empty event object
+            const energy = param.isEnergyAlwaysFull ? event.energyAfter :
+                event.energyAfter - (threshold - event.minutes) / 10;
+            events.splice(i + 1, 0, {
+                minutes: threshold, type: 'empty',
+                energyBefore: energy,
+                energyAfter: energy,
+                isSnacking: event.isSnacking,
+                isInPeriod: false,
+            });
+        }
+
+        // split efficiencies
+        for (let i = 0; i < efficiencies.length; i++) {
+            const efficiency = efficiencies[i];
+            if (efficiency.start >= threshold) {
+                efficiency.isInPeriod = false;
+                continue;
+            }
+            if (efficiency.end < threshold) {
+                efficiency.isInPeriod = true;
+                continue;
+            }
+
+            // split into two efficiency object
+            const copied = {...efficiency};
+            efficiency.end = threshold;
+            efficiency.isInPeriod = true;
+            copied.start = threshold;
+            copied.isInPeriod = false;
+            efficiencies.splice(i + 1, 0, copied);
+        }
+    }
+
     calculateAverageEfficiency(efficiency: EfficiencyEvent[]): number {
         let total = 0;
         let time = 0;
@@ -553,7 +624,7 @@ class Energy {
                 events.splice(i + 1, 0, {
                     minutes: timeFullInventory, type: 'snack',
                     energyBefore: energy, energyAfter: energy,
-                    isSnacking: false, isInPeriod: true,
+                    isSnacking: false, isInPeriod: event.isInPeriod,
                 });
             }
         }
@@ -570,7 +641,8 @@ class Energy {
                 efficiencies.splice(i + 1, 0, {
                     start: timeFullInventory, end,
                     efficiency: efficiency.efficiency,
-                    isAwake: efficiency.isAwake, isSnacking: true, isInPeriod: true,
+                    isAwake: efficiency.isAwake, isSnacking: true,
+                    isInPeriod: efficiency.isInPeriod,
                 });
             }
         }
