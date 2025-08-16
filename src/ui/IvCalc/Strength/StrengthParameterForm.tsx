@@ -17,7 +17,7 @@ import {
 } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
-type PeriodType = "1day"|"1week"|"whistle";
+type PeriodType = "1hour"|"3hours"|"8hours"|"1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
     padding: '0 1rem',
@@ -75,7 +75,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     }, [dispatch]);
 
     const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, period: parseInt(e.target.value as PeriodType, 10) as 24|168|3});
+        onChange({...value, period: parseInt(e.target.value as PeriodType, 10)});
     }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
         onChange({...value, fieldBonus});
@@ -154,6 +154,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         <section>
             <label>{t('period')}:</label>
             <Select variant="standard" onChange={onPeriodChange} value={value.period.toString()}>
+                <MenuItem value={1}>{t('1hour')}</MenuItem>
+                <MenuItem value={3}>{t('3hours')}</MenuItem>
+                <MenuItem value={8}>{t('8hours')}</MenuItem>
                 <MenuItem value={24}>{t('1day')}</MenuItem>
                 <MenuItem value={168}>{t('1week')}</MenuItem>
                 <MenuItem value={whistlePeriod}>{t('whistle')}</MenuItem>
