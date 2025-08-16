@@ -50,13 +50,6 @@ export const expertNonFavoriteBerrySpeedPenalty = 0.15;
  * Represents the parameter of PokemonStrength.calc.
  */
 export interface StrengthParameter extends EnergyParameter {
-    /**
-     * How many hours' worth of accumulated strength to calculate.
-     *
-     * 3: whistle, 24: one day, 168: one week
-     */
-    period: number;
-
     /** Field bonus */
     fieldBonus: number;
 
