@@ -330,8 +330,11 @@
         "deleted all pokemon": "상자 안의 모든 포켓몬을 삭제했습니다.",
 
         "period": "기간",
+        "1hour": "1시간",
+        "3hours": "3시간",
+        "8hours": "8시간",
         "1day": "1일",
-        "1week": "1주",
+        "1week": "1주일",
         "whistle": "휘슬",
         "calc with evolved": "진화한 포켓몬으로 계산하다",
         "calc with evolved (short)": "진화한",
