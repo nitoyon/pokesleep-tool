@@ -94,6 +94,11 @@ type EnergyEvent = {
     energyAfter: number;
     /** Sneaky Snacking or not */
     isSnacking: boolean;
+    /** 
+     * Indicates whether the period condition is met.
+     * Set to false when period < 24 and (minutes * 60) < period.
+     */
+    isInPeriod: boolean;
 }
 
 /** Efficiency event. */
@@ -108,6 +113,11 @@ type EfficiencyEvent = {
     isAwake: boolean;
     /** Sneaky Snacking or not */
     isSnacking: boolean;
+    /** 
+     * Indicates whether the period condition is met.
+     * Set to false when period < 24 and (minutes * 60) < period.
+     */
+    isInPeriod: boolean;
 }
 
 /** Result object for calculation. */
@@ -192,13 +202,13 @@ class Energy {
         let efficiencies: EfficiencyEvent[];
         if (param.isEnergyAlwaysFull) {
             events = [
-                {minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false },
-                {minutes: sleepTime, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false },
-                {minutes: 1440, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false },
+                {minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
+                {minutes: sleepTime, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
+                {minutes: 1440, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
             ];
             efficiencies = [
-                {start: 0, end: sleepTime, isAwake: true, efficiency: 2.222, isSnacking: false},
-                {start: sleepTime, end: 1440, isAwake: false, efficiency: 2.222, isSnacking: false},
+                {start: 0, end: sleepTime, isAwake: true, efficiency: 2.222, isSnacking: false, isInPeriod: true},
+                {start: sleepTime, end: 1440, isAwake: false, efficiency: 2.222, isSnacking: false, isInPeriod: true},
             ];
         }
         else {
@@ -252,13 +262,13 @@ class Energy {
         // * Restore occurs every (15.5 / (e4eCount + 1)) hours
         let events: EnergyEvent[] = [
             // 8:00
-            {minutes: 0, type: 'wake', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 0, type: 'wake', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 10:00
-            {minutes: 120, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 120, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 14:00
-            {minutes: 360, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 360, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 20:00
-            {minutes: 720, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 720, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
         ];
         for (let i = 0; i < e4eCount; i++) {
             events.push({
@@ -266,15 +276,16 @@ class Energy {
                 type: 'e4e',
                 energyBefore: -1, energyAfter: -1,
                 isSnacking: false,
+                isInPeriod: true,
             });
         }
         events.push({
             minutes: sleepTime, type: 'sleep',
-            energyBefore: -1, energyAfter: -1, isSnacking: false,
+            energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true,
         });
         events.push({
             minutes: 1440, type: 'wake',
-            energyBefore: -1, energyAfter: -1, isSnacking: false,
+            energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true,
         });
         return events.sort((a, b) => a.minutes - b.minutes);
     }
@@ -339,7 +350,8 @@ class Energy {
             if (prevEvent.energyAfter > 0 && prevEvent.energyAfter < energyConsumed) {
                 const minutes = prevEvent.minutes + prevEvent.energyAfter * 10;
                 events.splice(i, 0, {minutes, type: 'empty',
-                    energyBefore: 0, energyAfter: 0, isSnacking: false});
+                    energyBefore: 0, energyAfter: 0,
+                    isSnacking: false, isInPeriod: true});
                 continue;
             }
         }
@@ -379,7 +391,7 @@ class Energy {
                 ret.push({
                     start, end,
                     efficiency: this.getEfficiencyByEnergy(energy),
-                    isAwake: true, isSnacking: false,
+                    isAwake: true, isSnacking: false, isInPeriod: true,
                 });
 
                 energy = threshold;
@@ -388,7 +400,7 @@ class Energy {
             ret.push({
                 start, end: curMinutes,
                 efficiency: this.getEfficiencyByEnergy(energy),
-                isAwake: true, isSnacking: false,
+                isAwake: true, isSnacking: false, isInPeriod: true,
             });
         }
 
@@ -540,7 +552,8 @@ class Energy {
                     event.energyAfter - (timeFullInventory - event.minutes) / 10);
                 events.splice(i + 1, 0, {
                     minutes: timeFullInventory, type: 'snack',
-                    energyBefore: energy, energyAfter: energy, isSnacking: false,
+                    energyBefore: energy, energyAfter: energy,
+                    isSnacking: false, isInPeriod: true,
                 });
             }
         }
@@ -557,7 +570,7 @@ class Energy {
                 efficiencies.splice(i + 1, 0, {
                     start: timeFullInventory, end,
                     efficiency: efficiency.efficiency,
-                    isAwake: efficiency.isAwake, isSnacking: true,
+                    isAwake: efficiency.isAwake, isSnacking: true, isInPeriod: true,
                 });
             }
         }
