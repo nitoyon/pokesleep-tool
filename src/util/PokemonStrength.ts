@@ -263,7 +263,7 @@ class PokemonStrength {
         const param = this.param;
         const rp = new PokemonRp(this.iv);
         const level = rp.level;
-        const countRatio = param.period / 24;
+        const countRatio = Math.ceil(param.period / 24);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
         const notFullHelpCount = param.tapFrequency === 'none' ? 0 :
