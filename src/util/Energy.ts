@@ -234,11 +234,12 @@ class Energy {
         }
 
         // calculate average efficiency
-        const total = this.calculateAverageEfficiency(efficiencies);
+        const total = this.calculateAverageEfficiency(efficiencies
+            .filter(x => x.isInPeriod));
         const awake = this.calculateAverageEfficiency(efficiencies
-            .filter(x => x.isAwake));
-        const sleep = this.calculateAverageEfficiency(efficiencies
-            .filter(x => !x.isAwake));
+            .filter(x => x.isInPeriod && x.isAwake));
+        const asleep = this.calculateAverageEfficiency(efficiencies
+            .filter(x => x.isInPeriod && !x.isAwake));
 
         // calculate Sneaky Snacking
         const {carryLimit, skillRatio, timeToFullInventory,
@@ -250,7 +251,7 @@ class Energy {
         return {sleepTime, events, efficiencies, canBeFullInventory,
             timeToFullInventory, carryLimit, skillRatio,
             helpCount, skillProbabilityAfterWakeup,
-            averageEfficiency: { total, awake, asleep: sleep },
+            averageEfficiency: { total, awake, asleep },
         };
     }
 
@@ -510,7 +511,7 @@ class Energy {
     calculateAverageEfficiency(efficiency: EfficiencyEvent[]): number {
         let total = 0;
         let time = 0;
-        for (let e of efficiency) {
+        for (const e of efficiency) {
             const duration = e.end - e.start;
             total += e.efficiency * duration;
             time += duration;
@@ -540,6 +541,7 @@ class Energy {
             twice: number,
         },
         helpCount: {
+            total: number,
             awake: number,
             asleepNotFull: number,
             asleepFull: number,
@@ -552,7 +554,7 @@ class Energy {
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
-                    awake: 0, asleepNotFull: 0, asleepFull: 0
+                    total: 0, awake: 0, asleepNotFull: 0, asleepFull: 0
                 }
             };
         }
@@ -651,14 +653,17 @@ class Energy {
         }
 
         // calculate snacking count
+        const total = efficiencies
+            .filter(x => x.isInPeriod)
+            .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const awake = efficiencies
-            .filter(x => x.isAwake)
+            .filter(x => x.isInPeriod && x.isAwake)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const asleepNotFull = efficiencies
-            .filter(x => !x.isAwake && !x.isSnacking)
+            .filter(x => x.isInPeriod && !x.isAwake && !x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const asleepFull = efficiencies
-            .filter(x => !x.isAwake && x.isSnacking)
+            .filter(x => x.isInPeriod && !x.isAwake && x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
@@ -681,7 +686,7 @@ class Energy {
         }
         return {carryLimit, skillRatio,
             timeToFullInventory, skillProbabilityAfterWakeup,
-            helpCount: { awake, asleepNotFull, asleepFull }
+            helpCount: { total, awake, asleepNotFull, asleepFull }
         };
     }
 

@@ -253,4 +253,26 @@ describe('Energy', () => {
         expect(snackEvent).toBe(undefined);
         expect(result.timeToFullInventory).toBe(-1);
     });
+
+    test('no snacking (3 hours)', () => {
+        const iv = new PokemonIv('Eevee');
+        iv.nature = new Nature('Serious'); // Neutral
+        iv.level = 1;
+
+        // change pokemon parameter
+        iv.pokemon = {...iv.pokemon};
+        iv.pokemon.carryLimit = 10;
+        iv.pokemon.ingRatio = 10;
+        iv.pokemon.skillRatio = 10;
+        iv.pokemon.frequency = 1800; // 30min
+
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({
+            sleepScore: 100,
+            period: 3,
+        }));
+        expect(result.helpCount.awake).toBe(180 * 60 / 1800 * 2.222);
+        expect(result.helpCount.asleepFull).toBe(0);
+        expect(result.helpCount.asleepNotFull).toBe(0);
+    });
 });
