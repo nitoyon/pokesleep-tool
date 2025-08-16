@@ -3711,8 +3711,8 @@
         "ingRatio": 15,
         "skillRatio": 3.5,
         "ancestor": 252,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
         "isFullyEvolved": false,
         "carryLimit": 11,
         "ing1": {
