@@ -64,6 +64,27 @@ describe('Energy', () => {
         expect(emptyEvent.minutes === sleepEvent.minutes + sleepEvent.energyAfter * 10);
     });
 
+    test('calculate (e4e x 0, Energy Recovery Bonus)', () => {
+        const iv = new PokemonIv('Raichu');
+        iv.nature = new Nature('Bold'); // Energy Recovery Up
+        iv.subSkills.lv10 = new SubSkill('Energy Recovery Bonus');
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({e4eCount: 0}));
+
+        expect(result.events[0].energyAfter).toBe(105);
+        expect(result.efficiencies[0]).toEqual({
+            start: 0, end: 260, efficiency: 2.222, isAwake: true, isSnacking: false
+        });
+
+        // empty event is added
+        const sleepEvent = result.events.find(x => x.type === "sleep");
+        const emptyEvent = result.events.find(x => x.type === "empty");
+        expect(sleepEvent !== undefined).toBe(true);
+        expect(emptyEvent !== undefined).toBe(true);
+        if (emptyEvent === undefined || sleepEvent === undefined) { throw new Error(); }
+        expect(emptyEvent.minutes === sleepEvent.minutes + sleepEvent.energyAfter * 10);
+    });
+
     test('calculate (e4e x 0, Energy recovery down, Energy Recovery Bonus)', () => {
         const iv = new PokemonIv('Raichu');
         iv.nature = new Nature('Hasty'); // Energy recovery down

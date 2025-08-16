@@ -151,6 +151,7 @@ export type EnergyResult = {
 
 class Energy {
     private _iv: PokemonIv;
+    private _wakeMax: 100|105;
 
     /**
      * Initialize Energy instance.
@@ -158,6 +159,8 @@ class Energy {
      */
     constructor(iv: PokemonIv) {
         this._iv = iv;
+        this._wakeMax = iv.activeSubSkills
+            .some(x => x.name === 'Energy Recovery Bonus') ? 105 : 100;
     }
 
     /**
@@ -173,7 +176,7 @@ class Energy {
     ): EnergyResult {
         const sleepMinutes = param.sleepScore * 510 / 100;
         const recoveryFactor = this._iv.nature.energyRecoveryFactor;
-        const sleepRecovery = Math.min(100, Math.round(sleepMinutes / 510 * 100) * recoveryFactor *
+        const sleepRecovery = Math.min(this._wakeMax, Math.round(sleepMinutes / 510 * 100) * recoveryFactor *
             (1 + 0.14 * param.recoveryBonusCount));
         const myRestoreEnergy = param.e4eEnergy * recoveryFactor;
         const sleepTime = 1440 - sleepMinutes;
@@ -296,7 +299,7 @@ class Energy {
                 curEvent.energyAfter = Math.min(150, curEvent.energyAfter + myRestoreEnergy);
             }
             else if (curEvent.type === 'wake') {
-                curEvent.energyAfter = Math.min(100, curEvent.energyAfter + sleepRecovery);
+                curEvent.energyAfter = Math.min(this._wakeMax, curEvent.energyAfter + sleepRecovery);
             }
             else if (curEvent.type === 'sleep') {
                 curEvent.energyAfter = curEvent.energyBefore;
