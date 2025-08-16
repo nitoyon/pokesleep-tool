@@ -4,6 +4,7 @@ import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
 
 const paramBase = {
+    period: 24,
     e4eEnergy: 18,
     e4eCount: 3,
     sleepScore: 100,

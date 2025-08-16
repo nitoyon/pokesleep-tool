@@ -13,6 +13,13 @@ import { HelpEventBonus } from '../data/events';
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
 export interface EnergyParameter {
+    /**
+     * How many hours' worth of accumulated strength to calculate.
+     *
+     * 0: whistle, 24: one day, 168: one week
+     */
+    period: number;
+
     /** Index of the current research area */
     fieldIndex: number;
 
