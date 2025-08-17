@@ -15,7 +15,7 @@ import { SubSkillType } from '../../../util/SubSkill';
 import { NatureEffect } from '../../../util/Nature';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonRp from '../../../util/PokemonRp';
-import PokemonStrength, { StrengthParameter } from '../../../util/PokemonStrength';
+import PokemonStrength, { StrengthParameter, whistlePeriod } from '../../../util/PokemonStrength';
 import { Button, ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
 import CandyIcon from '../../Resources/CandyIcon';
@@ -249,7 +249,7 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
     }
     else if (sort === "skill count") {
         if (parameter.tapFrequency === 'none' ||
-            parameter.period === 3) {
+            parameter.period === whistlePeriod) {
             return [[], t('no skill')];
         }
 
