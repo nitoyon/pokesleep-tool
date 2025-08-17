@@ -650,7 +650,7 @@ export function loadStrengthParameter(): StrengthParameter {
         return ret;
     }
     if (typeof(json.period) === "number" &&
-        [24, 168, whistlePeriod].includes(json.period)) {
+        [1, 3, 8, 24, 168, whistlePeriod].includes(json.period)) {
         ret.period = json.period;
     }
     if (typeof(json.fieldBonus) === "number" &&
