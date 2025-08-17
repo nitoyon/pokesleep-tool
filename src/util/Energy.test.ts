@@ -4,6 +4,7 @@ import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
 
 const paramBase = {
+    period: 24,
     e4eEnergy: 18,
     e4eCount: 3,
     sleepScore: 100,
@@ -25,22 +26,50 @@ describe('Energy', () => {
         const result = energy.calculate(createParam({e4eCount: 0}));
 
         expect(result.events).toEqual([
-            { minutes: 0, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false },
-            { minutes: 120, type: 'cook', energyBefore: 88, energyAfter: 89, isSnacking: false },
-            { minutes: 360, type: 'cook', energyBefore: 65, energyAfter: 67, isSnacking: false },
-            { minutes: 720, type: 'cook', energyBefore: 31, energyAfter: 35, isSnacking: false },
-            { minutes: 930, type: 'sleep', energyBefore: 14, energyAfter: 14, isSnacking: false },
-            { minutes: 1070, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false },
-            { minutes: 1440, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false },
+            { minutes: 0, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false, isInPeriod: true },
+            { minutes: 120, type: 'cook', energyBefore: 88, energyAfter: 89, isSnacking: false, isInPeriod: true },
+            { minutes: 360, type: 'cook', energyBefore: 65, energyAfter: 67, isSnacking: false, isInPeriod: true },
+            { minutes: 720, type: 'cook', energyBefore: 31, energyAfter: 35, isSnacking: false, isInPeriod: true },
+            { minutes: 930, type: 'sleep', energyBefore: 14, energyAfter: 14, isSnacking: false, isInPeriod: true },
+            { minutes: 1070, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: true },
+            { minutes: 1440, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false, isInPeriod: true },
         ]);
 
         expect(result.efficiencies).toEqual([
-            {start: 0, end: 210, efficiency: 2.222, isAwake: true, isSnacking: false},
-            {start: 210, end: 430, efficiency: 1.923, isAwake: true, isSnacking: false},
-            {start: 430, end: 630, efficiency: 1.724, isAwake: true, isSnacking: false},
-            {start: 630, end: 930, efficiency: 1.515, isAwake: true, isSnacking: false},
-            {start: 930, end: 1060, efficiency: 1.515, isAwake: false, isSnacking: false},
-            {start: 1060, end: 1440, efficiency: 1, isAwake: false, isSnacking: false},
+            {start: 0, end: 210, efficiency: 2.222, isAwake: true, isSnacking: false, isInPeriod: true},
+            {start: 210, end: 430, efficiency: 1.923, isAwake: true, isSnacking: false, isInPeriod: true},
+            {start: 430, end: 630, efficiency: 1.724, isAwake: true, isSnacking: false, isInPeriod: true},
+            {start: 630, end: 930, efficiency: 1.515, isAwake: true, isSnacking: false, isInPeriod: true},
+            {start: 930, end: 1060, efficiency: 1.515, isAwake: false, isSnacking: false, isInPeriod: true},
+            {start: 1060, end: 1440, efficiency: 1, isAwake: false, isSnacking: false, isInPeriod: true},
+        ]);
+    });
+
+    test('calculate (e4e x 0, period 3)', () => {
+        const iv = new PokemonIv('Raichu');
+        iv.subSkills.lv10 = new SubSkill('Inventory Up L');
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({e4eCount: 0, period: 3}));
+
+        expect(result.events).toEqual([
+            { minutes: 0, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false, isInPeriod: true },
+            { minutes: 120, type: 'cook', energyBefore: 88, energyAfter: 89, isSnacking: false, isInPeriod: true },
+            { minutes: 180, type: 'empty', energyBefore: 83, energyAfter: 83, isSnacking: false, isInPeriod: false },
+            { minutes: 360, type: 'cook', energyBefore: 65, energyAfter: 67, isSnacking: false, isInPeriod: false },
+            { minutes: 720, type: 'cook', energyBefore: 31, energyAfter: 35, isSnacking: false, isInPeriod: false },
+            { minutes: 930, type: 'sleep', energyBefore: 14, energyAfter: 14, isSnacking: false, isInPeriod: false },
+            { minutes: 1070, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: false },
+            { minutes: 1440, type: 'wake', energyBefore: 0, energyAfter: 100, isSnacking: false, isInPeriod: false },
+        ]);
+
+        expect(result.efficiencies).toEqual([
+            {start: 0, end: 180, efficiency: 2.222, isAwake: true, isSnacking: false, isInPeriod: true},
+            {start: 180, end: 210, efficiency: 2.222, isAwake: true, isSnacking: false, isInPeriod: false},
+            {start: 210, end: 430, efficiency: 1.923, isAwake: true, isSnacking: false, isInPeriod: false},
+            {start: 430, end: 630, efficiency: 1.724, isAwake: true, isSnacking: false, isInPeriod: false},
+            {start: 630, end: 930, efficiency: 1.515, isAwake: true, isSnacking: false, isInPeriod: false},
+            {start: 930, end: 1060, efficiency: 1.515, isAwake: false, isSnacking: false, isInPeriod: false},
+            {start: 1060, end: 1440, efficiency: 1, isAwake: false, isSnacking: false, isInPeriod: false},
         ]);
     });
 
@@ -52,7 +81,8 @@ describe('Energy', () => {
 
         expect(result.events[0].energyAfter).toBe(88);
         expect(result.efficiencies[0]).toEqual({
-            start: 0, end: 80, efficiency: 2.222, isAwake: true, isSnacking: false
+            start: 0, end: 80, efficiency: 2.222,
+            isAwake: true, isSnacking: false, isInPeriod: true,
         });
 
         // empty event is added
@@ -73,7 +103,8 @@ describe('Energy', () => {
 
         expect(result.events[0].energyAfter).toBe(105);
         expect(result.efficiencies[0]).toEqual({
-            start: 0, end: 260, efficiency: 2.222, isAwake: true, isSnacking: false
+            start: 0, end: 260, efficiency: 2.222,
+            isAwake: true, isSnacking: false, isInPeriod: true,
         });
 
         // empty event is added
@@ -166,14 +197,14 @@ describe('Energy', () => {
         const sleepEvent = result.events.find(x => x.type === 'sleep');
         expect(sleepEvent).toEqual({
             type: 'sleep', minutes: 981,
-            energyBefore: 0, energyAfter: 0, isSnacking: false,
+            energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: true,
         });
 
         // snacking from 981 + 300 min (30min x 10)
         const snackEvent = result.events.find(x => x.type === 'snack');
         expect(snackEvent).toEqual({
             type: 'snack', minutes: 1281,
-            energyBefore: 0, energyAfter: 0, isSnacking: true,
+            energyBefore: 0, energyAfter: 0, isSnacking: true, isInPeriod: true,
         });
         expect(result.timeToFullInventory).toBe(300);
         expect(result.helpCount.asleepNotFull).toBe(10);
@@ -186,7 +217,7 @@ describe('Energy', () => {
         const ef = result.efficiencies.find(x => x.isSnacking);
         expect(ef).toEqual({
             start: 1281, end: 1440, efficiency: 1,
-            isAwake: false, isSnacking: true,
+            isAwake: false, isSnacking: true, isInPeriod: true,
         });
 
         // change pokemon's specialty to Berries
@@ -221,5 +252,27 @@ describe('Energy', () => {
         const snackEvent = result.events.find(x => x.type === 'snack');
         expect(snackEvent).toBe(undefined);
         expect(result.timeToFullInventory).toBe(-1);
+    });
+
+    test('no snacking (3 hours)', () => {
+        const iv = new PokemonIv('Eevee');
+        iv.nature = new Nature('Serious'); // Neutral
+        iv.level = 1;
+
+        // change pokemon parameter
+        iv.pokemon = {...iv.pokemon};
+        iv.pokemon.carryLimit = 10;
+        iv.pokemon.ingRatio = 10;
+        iv.pokemon.skillRatio = 10;
+        iv.pokemon.frequency = 1800; // 30min
+
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({
+            sleepScore: 100,
+            period: 3,
+        }));
+        expect(result.helpCount.awake).toBe(180 * 60 / 1800 * 2.222);
+        expect(result.helpCount.asleepFull).toBe(0);
+        expect(result.helpCount.asleepNotFull).toBe(0);
     });
 });

@@ -13,6 +13,13 @@ import { HelpEventBonus } from '../data/events';
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
 export interface EnergyParameter {
+    /**
+     * How many hours' worth of accumulated strength to calculate.
+     *
+     * 0: whistle, 24: one day, 168: one week
+     */
+    period: number;
+
     /** Index of the current research area */
     fieldIndex: number;
 
@@ -87,6 +94,11 @@ type EnergyEvent = {
     energyAfter: number;
     /** Sneaky Snacking or not */
     isSnacking: boolean;
+    /** 
+     * Indicates whether the period condition is met.
+     * Set to false when period < 24 and (minutes * 60) < period.
+     */
+    isInPeriod: boolean;
 }
 
 /** Efficiency event. */
@@ -101,6 +113,11 @@ type EfficiencyEvent = {
     isAwake: boolean;
     /** Sneaky Snacking or not */
     isSnacking: boolean;
+    /** 
+     * Indicates whether the period condition is met.
+     * Set to false when period < 24 and (minutes * 60) < period.
+     */
+    isInPeriod: boolean;
 }
 
 /** Result object for calculation. */
@@ -185,13 +202,13 @@ class Energy {
         let efficiencies: EfficiencyEvent[];
         if (param.isEnergyAlwaysFull) {
             events = [
-                {minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false },
-                {minutes: sleepTime, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false },
-                {minutes: 1440, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false },
+                {minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
+                {minutes: sleepTime, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
+                {minutes: 1440, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
             ];
             efficiencies = [
-                {start: 0, end: sleepTime, isAwake: true, efficiency: 2.222, isSnacking: false},
-                {start: sleepTime, end: 1440, isAwake: false, efficiency: 2.222, isSnacking: false},
+                {start: 0, end: sleepTime, isAwake: true, efficiency: 2.222, isSnacking: false, isInPeriod: true},
+                {start: sleepTime, end: 1440, isAwake: false, efficiency: 2.222, isSnacking: false, isInPeriod: true},
             ];
         }
         else {
@@ -211,12 +228,18 @@ class Energy {
             efficiencies = this.calculateEfficiency(events, sleepTime);
         }
 
+        // Split events and efficiencies, if period < 24
+        if (param.period < 24) {
+            this.splitEventAndEfficiencyByPeriod(events, efficiencies, param);
+        }
+
         // calculate average efficiency
-        const total = this.calculateAverageEfficiency(efficiencies);
+        const total = this.calculateAverageEfficiency(efficiencies
+            .filter(x => x.isInPeriod));
         const awake = this.calculateAverageEfficiency(efficiencies
-            .filter(x => x.isAwake));
-        const sleep = this.calculateAverageEfficiency(efficiencies
-            .filter(x => !x.isAwake));
+            .filter(x => x.isInPeriod && x.isAwake));
+        const asleep = this.calculateAverageEfficiency(efficiencies
+            .filter(x => x.isInPeriod && !x.isAwake));
 
         // calculate Sneaky Snacking
         const {carryLimit, skillRatio, timeToFullInventory,
@@ -228,7 +251,7 @@ class Energy {
         return {sleepTime, events, efficiencies, canBeFullInventory,
             timeToFullInventory, carryLimit, skillRatio,
             helpCount, skillProbabilityAfterWakeup,
-            averageEfficiency: { total, awake, asleep: sleep },
+            averageEfficiency: { total, awake, asleep },
         };
     }
 
@@ -245,13 +268,13 @@ class Energy {
         // * Restore occurs every (15.5 / (e4eCount + 1)) hours
         let events: EnergyEvent[] = [
             // 8:00
-            {minutes: 0, type: 'wake', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 0, type: 'wake', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 10:00
-            {minutes: 120, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 120, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 14:00
-            {minutes: 360, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 360, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 20:00
-            {minutes: 720, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false },
+            {minutes: 720, type: 'cook', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
         ];
         for (let i = 0; i < e4eCount; i++) {
             events.push({
@@ -259,15 +282,16 @@ class Energy {
                 type: 'e4e',
                 energyBefore: -1, energyAfter: -1,
                 isSnacking: false,
+                isInPeriod: true,
             });
         }
         events.push({
             minutes: sleepTime, type: 'sleep',
-            energyBefore: -1, energyAfter: -1, isSnacking: false,
+            energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true,
         });
         events.push({
             minutes: 1440, type: 'wake',
-            energyBefore: -1, energyAfter: -1, isSnacking: false,
+            energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true,
         });
         return events.sort((a, b) => a.minutes - b.minutes);
     }
@@ -332,7 +356,8 @@ class Energy {
             if (prevEvent.energyAfter > 0 && prevEvent.energyAfter < energyConsumed) {
                 const minutes = prevEvent.minutes + prevEvent.energyAfter * 10;
                 events.splice(i, 0, {minutes, type: 'empty',
-                    energyBefore: 0, energyAfter: 0, isSnacking: false});
+                    energyBefore: 0, energyAfter: 0,
+                    isSnacking: false, isInPeriod: true});
                 continue;
             }
         }
@@ -372,7 +397,7 @@ class Energy {
                 ret.push({
                     start, end,
                     efficiency: this.getEfficiencyByEnergy(energy),
-                    isAwake: true, isSnacking: false,
+                    isAwake: true, isSnacking: false, isInPeriod: true,
                 });
 
                 energy = threshold;
@@ -381,7 +406,7 @@ class Energy {
             ret.push({
                 start, end: curMinutes,
                 efficiency: this.getEfficiencyByEnergy(energy),
-                isAwake: true, isSnacking: false,
+                isAwake: true, isSnacking: false, isInPeriod: true,
             });
         }
 
@@ -417,10 +442,76 @@ class Energy {
         return ret;
     }
 
+    /**
+     * Splits energy events and efficiency events based on the specified period,
+     * and sets the isInPeriod flag for each entry accordingly.
+     *
+     * @param events Array of energy events. If an event's minutes are less than
+     *               period * 60, it is marked as in-period (isInPeriod = true).
+     *               Inserts an empty event to split the timeline when crossing
+     *               the threshold.
+     * @param efficiencies Array of efficiency events. If an event spans across the
+     *                     threshold,  it is split into two entries.
+     * @param period EnergyParameter which has period and isEnergyAlwaysFull.
+     */
+    splitEventAndEfficiencyByPeriod(events: EnergyEvent[],
+        efficiencies: EfficiencyEvent[], param: EnergyParameter
+    ): void {
+        const threshold = param.period * 60;
+
+        // split events
+        for (let i = 0; i < events.length; i++) {
+            const event = events[i];
+            const nextEvent = events[i + 1] ?? event;
+            if (event.minutes < threshold) {
+                event.isInPeriod = true;
+                if (nextEvent.minutes < threshold) {
+                    continue;
+                }
+            }
+            else if (event.minutes >= threshold) {
+                event.isInPeriod = false;
+                continue
+            }
+
+            // insert empty event object
+            const energy = param.isEnergyAlwaysFull ? event.energyAfter :
+                event.energyAfter - (threshold - event.minutes) / 10;
+            events.splice(i + 1, 0, {
+                minutes: threshold, type: 'empty',
+                energyBefore: energy,
+                energyAfter: energy,
+                isSnacking: event.isSnacking,
+                isInPeriod: false,
+            });
+        }
+
+        // split efficiencies
+        for (let i = 0; i < efficiencies.length; i++) {
+            const efficiency = efficiencies[i];
+            if (efficiency.start >= threshold) {
+                efficiency.isInPeriod = false;
+                continue;
+            }
+            if (efficiency.end < threshold) {
+                efficiency.isInPeriod = true;
+                continue;
+            }
+
+            // split into two efficiency object
+            const copied = {...efficiency};
+            efficiency.end = threshold;
+            efficiency.isInPeriod = true;
+            copied.start = threshold;
+            copied.isInPeriod = false;
+            efficiencies.splice(i + 1, 0, copied);
+        }
+    }
+
     calculateAverageEfficiency(efficiency: EfficiencyEvent[]): number {
         let total = 0;
         let time = 0;
-        for (let e of efficiency) {
+        for (const e of efficiency) {
             const duration = e.end - e.start;
             total += e.efficiency * duration;
             time += duration;
@@ -450,6 +541,7 @@ class Energy {
             twice: number,
         },
         helpCount: {
+            total: number,
             awake: number,
             asleepNotFull: number,
             asleepFull: number,
@@ -462,7 +554,7 @@ class Energy {
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
-                    awake: 0, asleepNotFull: 0, asleepFull: 0
+                    total: 0, awake: 0, asleepNotFull: 0, asleepFull: 0
                 }
             };
         }
@@ -533,7 +625,8 @@ class Energy {
                     event.energyAfter - (timeFullInventory - event.minutes) / 10);
                 events.splice(i + 1, 0, {
                     minutes: timeFullInventory, type: 'snack',
-                    energyBefore: energy, energyAfter: energy, isSnacking: false,
+                    energyBefore: energy, energyAfter: energy,
+                    isSnacking: false, isInPeriod: event.isInPeriod,
                 });
             }
         }
@@ -551,6 +644,7 @@ class Energy {
                     start: timeFullInventory, end,
                     efficiency: efficiency.efficiency,
                     isAwake: efficiency.isAwake, isSnacking: true,
+                    isInPeriod: efficiency.isInPeriod,
                 });
             }
         }
@@ -559,14 +653,17 @@ class Energy {
         }
 
         // calculate snacking count
+        const total = efficiencies
+            .filter(x => x.isInPeriod)
+            .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const awake = efficiencies
-            .filter(x => x.isAwake)
+            .filter(x => x.isInPeriod && x.isAwake)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const asleepNotFull = efficiencies
-            .filter(x => !x.isAwake && !x.isSnacking)
+            .filter(x => x.isInPeriod && !x.isAwake && !x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const asleepFull = efficiencies
-            .filter(x => !x.isAwake && x.isSnacking)
+            .filter(x => x.isInPeriod && !x.isAwake && x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
@@ -589,7 +686,7 @@ class Energy {
         }
         return {carryLimit, skillRatio,
             timeToFullInventory, skillProbabilityAfterWakeup,
-            helpCount: { awake, asleepNotFull, asleepFull }
+            helpCount: { total, awake, asleepNotFull, asleepFull }
         };
     }
 

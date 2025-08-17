@@ -335,8 +335,11 @@
         "deleted all pokemon": "已刪除盒子裏的所有寶可夢。",
 
         "period": "时期",
+        "1hour": "1小時",
+        "3hours": "3小時",
+        "8hours": "8小時",
         "1day": "1天",
-        "1week": "1周",
+        "1week": "1週",
         "whistle": "幫手哨子",
         "current level": "目前的等級",
         "calc with evolved": "使用進化後的寶可夢計算",
