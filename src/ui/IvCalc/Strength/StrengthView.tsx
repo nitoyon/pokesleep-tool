@@ -4,7 +4,9 @@ import IvState, { IvAction } from '../IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
-import { whistlePeriod } from '../../../util/PokemonStrength';
+import {
+    allFavoriteFieldIndex, noFavoriteFieldIndex, whistlePeriod,
+} from '../../../util/PokemonStrength';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -22,30 +24,32 @@ const StrengthView = React.memo(({state, dispatch}: {
     }, [dispatch]);
 
     let area: React.ReactNode, fieldBonus: React.ReactNode;
-    if (parameter.fieldIndex < 0) {
-        area = `${t('area bonus')}: ${parameter.fieldBonus}%`;
+    if (parameter.fieldIndex === allFavoriteFieldIndex) {
+        area = t('favorite berry') + ': ' + t('all');
+    }
+    else if (parameter.fieldIndex === noFavoriteFieldIndex) {
+        area = t('favorite berry') + ': ' + t('none');
+    }
+    else if (parameter.fieldIndex === 0) {
+        area = parameter
+            .favoriteType.map(x => t(`types.${x}`))
+            .join(t('text separator'));
+    }
+    else if (isExpertField(parameter.fieldIndex)) {
+        area = <>
+            {t(`types.${parameter.favoriteType[0]}`)}
+            <small> ({t('main')})</small>
+            {t('text separator')}
+            {t(`types.${parameter.favoriteType[1]}`)}
+            {t('text separator')}
+            {t(`types.${parameter.favoriteType[2]}`)}
+        </>;
     }
     else {
-        if (parameter.fieldIndex === 0) {
-            area = parameter
-                .favoriteType.map(x => t(`types.${x}`))
-                .join(t('text separator'));
-        }
-        else if (isExpertField(parameter.fieldIndex)) {
-            area = <>
-                {t(`types.${parameter.favoriteType[0]}`)}
-                <small> ({t('main')})</small>
-                {t('text separator')}
-                {t(`types.${parameter.favoriteType[1]}`)}
-                {t('text separator')}
-                {t(`types.${parameter.favoriteType[2]}`)}
-            </>;
-        }
-        else {
-            area = t(`area.${parameter.fieldIndex}`);
-        }
-        fieldBonus = <small> ({parameter.fieldBonus}%)</small>;
+        area = t(`area.${parameter.fieldIndex}`);
     }
+    fieldBonus = <small> ({parameter.fieldBonus}%)</small>;
+
     let period: string = "ー";
     switch (parameter.period) {
         case whistlePeriod: period = t('whistle'); break;

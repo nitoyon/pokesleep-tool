@@ -214,6 +214,7 @@
         "bonus": "Event bonus",
         "bonus not match": "Today's event bonus is {{bonus}}.",
         "no favorite berries": "No favorite berries",
+        "all favorite berries": "All favorite berries",
         "area": [
             "Greengrass Isle",
             "Cyan Beach",
