@@ -209,6 +209,7 @@
         "bonus": "졸음 파워 보너스",
         "bonus not match": "오늘의 졸음 파워 보너스는 {{bonus}}입니다.",
         "no favorite berries": "좋아하는 딸기 없음",
+        "all favorite berries": "전부 $t(favorite berry)",
         "area": [
             "연둣빛 본섬",
             "시안 모래해변",

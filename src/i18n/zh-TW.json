@@ -214,6 +214,7 @@
         "bonus": "睡眠獎勵",
         "bonus not match": "今天的睡眠獎勵為 {{bonus}} 。",
         "no favorite berries": "沒有喜歡的樹果",
+        "all favorite berries": "全部是喜歡的樹果",
         "area": [
             "萌綠之島",
             "天青沙灘",

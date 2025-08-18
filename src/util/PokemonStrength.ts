@@ -9,6 +9,12 @@ import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
 import { getSkillValue, getSkillSubValue, getMaxSkillLevel } from './MainSkill';
 
+/** Pseudo field index where all berries are favorites */
+export const allFavoriteFieldIndex = -2;
+
+/** Pseudo field index where no berries are favorites */
+export const noFavoriteFieldIndex = -1;
+
 /** Represents the period value for "whistle" calculations in StrengthParameter. */
 export const whistlePeriod = 0;
 
@@ -573,6 +579,7 @@ class PokemonStrength {
         let types: PokemonType[] = [];
         const param = this.param;
         switch (param.fieldIndex) {
+            case allFavoriteFieldIndex: return true;
             case 0: types = param.favoriteType; break;
             case 1: types = ["water", "flying", "fairy"]; break;
             case 2: types = ["fire", "rock", "ground"]; break;
@@ -599,7 +606,7 @@ export function createStrengthParameter(
     const defaultParameters: StrengthParameter = {
         period: 24,
         fieldBonus: 0,
-        fieldIndex: -1,
+        fieldIndex: noFavoriteFieldIndex,
         favoriteType: ["normal", "fire", "water"],
         helpBonusCount: 0,
         e4eEnergy: 18,
@@ -660,7 +667,7 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.fieldIndex) === "number" &&
         Math.floor(json.fieldIndex) === json.fieldIndex &&
-        json.fieldIndex >= -1 && json.fieldIndex < fields.length) {
+        json.fieldIndex >= allFavoriteFieldIndex && json.fieldIndex < fields.length) {
         ret.fieldIndex = json.fieldIndex;
     }
     if (Array.isArray(json.favoriteType) &&

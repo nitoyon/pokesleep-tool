@@ -4,9 +4,11 @@ import fields, { isExpertField } from '../../../data/fields';
 import MessageDialog from '../../Dialog/MessageDialog';
 import SelectEx from '../../common/SelectEx';
 import FavoriteBerrySelect from './FavoriteBerrySelect';
-import { StrengthParameter } from '../../../util/PokemonStrength';
 import {
-    Button, Dialog, DialogActions, DialogContent, IconButton, MenuItem
+    allFavoriteFieldIndex, noFavoriteFieldIndex, StrengthParameter
+} from '../../../util/PokemonStrength';
+import {
+    Button, Dialog, DialogActions, DialogContent, Divider, IconButton, MenuItem
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
@@ -42,10 +44,16 @@ const ResearchAreaSelect = React.memo(({showConfigButton, value, fontSize, onCha
     const fieldMenuItems = [];
     const showFields = [...fields];
     fieldMenuItems.push(
-        <MenuItem key={-1} value={-1} dense>
+        <MenuItem key={noFavoriteFieldIndex} value={noFavoriteFieldIndex} dense>
             {t('no favorite berries')}
         </MenuItem>
     );
+    fieldMenuItems.push(
+        <MenuItem key={allFavoriteFieldIndex} value={allFavoriteFieldIndex} dense>
+            {t('all favorite berries')}
+        </MenuItem>
+    );
+    fieldMenuItems.push(<Divider/>);
 
     for (const field of showFields) {
         fieldMenuItems.push(

@@ -214,6 +214,7 @@
         "bonus": "ねむけボーナス",
         "bonus not match": "今日のねむけボーナスは {{bonus}} です。",
         "no favorite berries": "好きなきのみなし",
+        "all favorite berries": "すべて$t(favorite berry)",
         "area": [
             "ワカクサ本島",
             "シアンの砂浜",
