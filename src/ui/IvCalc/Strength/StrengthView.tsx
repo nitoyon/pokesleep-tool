@@ -52,6 +52,7 @@ const StrengthView = React.memo(({state, dispatch}: {
         case 1: period = t('1hour'); break;
         case 3: period = t('3hours'); break;
         case 8: period = t('8hours'); break;
+        case 16: period = t('16hours'); break;
         case 24: period = t('1day'); break;
         case 168: period = t('1week'); break;
     }

@@ -17,7 +17,7 @@ import {
 } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 
-type PeriodType = "1hour"|"3hours"|"8hours"|"1day"|"1week"|"whistle";
+type PeriodType = "1hour"|"3hours"|"8hours"|"16hours"|"1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
     padding: '0 1rem',
@@ -157,6 +157,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={1}>{t('1hour')}</MenuItem>
                 <MenuItem value={3}>{t('3hours')}</MenuItem>
                 <MenuItem value={8}>{t('8hours')}</MenuItem>
+                <MenuItem value={16}>{t('16hours')}</MenuItem>
                 <MenuItem value={24}>{t('1day')}</MenuItem>
                 <MenuItem value={168}>{t('1week')}</MenuItem>
                 <MenuItem value={whistlePeriod}>{t('whistle')}</MenuItem>
