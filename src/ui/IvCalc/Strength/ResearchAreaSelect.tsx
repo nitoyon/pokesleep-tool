@@ -53,7 +53,7 @@ const ResearchAreaSelect = React.memo(({showConfigButton, value, fontSize, onCha
             {t('all favorite berries')}
         </MenuItem>
     );
-    fieldMenuItems.push(<Divider/>);
+    fieldMenuItems.push(<Divider key="divider"/>);
 
     for (const field of showFields) {
         fieldMenuItems.push(
