@@ -74,9 +74,9 @@ export interface StrengthParameter extends EnergyParameter {
     recipeBonus: number;
 
     /**
-     * Average recipe level (1 - 60).
+     * Average recipe level (1 - 65).
      */
-    recipeLevel: 1|10|20|30|40|50|55|60;
+    recipeLevel: 1|10|20|30|40|50|55|60|65;
 }
 
 /**
@@ -732,7 +732,7 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.recipeBonus = json.recipeBonus;
     }
     if (typeof(json.recipeLevel) === "number" &&
-        [1, 10, 20, 30, 40, 50, 55, 60].includes(json.recipeLevel)) {
+        [1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
     }
 

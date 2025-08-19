@@ -283,6 +283,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={50}>50</MenuItem>
                 <MenuItem value={55}>55</MenuItem>
                 <MenuItem value={60}>60</MenuItem>
+                <MenuItem value={65}>65</MenuItem>
             </Select>
         </section>
         <section className="mt">
