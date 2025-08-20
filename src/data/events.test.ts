@@ -30,12 +30,12 @@ test('getActiveHelpBonus', () => {
     const evts = [
         new BonusEventData({
             name: '1st week', start: '2024-09-02T04:00:00', end: '2024-09-08T04:00:00',
-            target: {type: 'water'},
+            target: {type: ['water']},
             effects: {skillTrigger: 1.5, skillLevel: 1, ingredient: 1, dreamShard: 1, dish: 1},
         }),
         new BonusEventData({
             name: '1st week', start: '2024-09-09T04:00:00', end: '2024-09-15T04:00:00',
-            target: {type: 'water'},
+            target: {type: ['water']},
             effects: {skillTrigger: 1.5, skillLevel: 3, ingredient: 1, dreamShard: 1, dish: 1},
         }),
     ];
@@ -53,7 +53,7 @@ test('getActiveHelpBonus', () => {
 test('BonusEventData', () => {
     const evt = new BonusEventData({
         name: '1st week', start: '2024-09-02 4:00', end: '2024-09-08 4:00',
-        target: {type: 'water'},
+        target: {type: ['water']},
         effects: {skillTrigger: 1.5, skillLevel: 1, ingredient: 1, dreamShard: 1, dish: 1},
     });
     const bulbasaur = pokemons.find(x => x.name === 'Bulbasaur');
@@ -74,4 +74,23 @@ test('BonusEventData', () => {
     expect(evt.isTarget(bulbasaur)).toBe(false);
     expect(evt.isTarget(squirtle)).toBe(false);
     expect(evt.isTarget(jigglypuff)).toBe(true);
+});
+
+test('BonusEventData.isTarget (multiple type)', () => {
+    const evt = new BonusEventData({
+        name: '1st week', start: '2024-09-02 4:00', end: '2024-09-08 4:00',
+        target: {type: ['water', 'grass']},
+        effects: { ingredient: 1 },
+    });
+    const bulbasaur = pokemons.find(x => x.name === 'Bulbasaur');
+    const squirtle = pokemons.find(x => x.name === 'Squirtle');
+    const jigglypuff = pokemons.find(x => x.name === 'Jigglypuff');
+    if (bulbasaur === undefined || squirtle === undefined || jigglypuff === undefined) {
+        fail('pokemon not found on pokemon.json');
+    }
+    
+    // target is water and grass
+    expect(evt.isTarget(bulbasaur)).toBe(true);
+    expect(evt.isTarget(squirtle)).toBe(true);
+    expect(evt.isTarget(jigglypuff)).toBe(false);
 });
