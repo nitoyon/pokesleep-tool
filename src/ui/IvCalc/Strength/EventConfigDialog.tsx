@@ -199,12 +199,12 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         <ToggleButton value='type'>{t('type')}</ToggleButton>
                         <ToggleButton value='specialty'>{t('specialty')}</ToggleButton>
                     </ToggleButtonGroup>
-                    <Collapse in={typeof(value.customEventBonus.target.type) !== "undefined"}>
-                        <TypeSelect type={type}
-                            onChange={onTypeChange}/>
-                    </Collapse>
                 </div>
             </section>
+            <Collapse in={typeof(value.customEventBonus.target.type) !== "undefined"} sx={{textAlign: 'right'}}>
+                <MultipleTypeSelect onChange={onTypeChange}
+                    value={value.customEventBonus.target.type?.[0] ?? 'normal'}/>
+            </Collapse>
             <Collapse in={typeof(value.customEventBonus.target.specialty) !== "undefined"} sx={{textAlign: 'right'}}>
                 <SpecialtyButton specialty="Berries" onClick={onSpecialtyClick}
                     checked={specialty === "Berries"}/>
@@ -353,6 +353,14 @@ const StyledEventConfigDialog = styled(Dialog)({
             background: 'transparent',
         },
     },
+});
+
+const MultipleTypeSelect = React.memo(({value, onChange}: {
+    value: PokemonType,
+    onChange: (value: PokemonType) => void,
+}) => {
+    return <TypeSelect type={value}
+        onChange={onChange}/>
 });
 
 export default EventConfigDialog;
