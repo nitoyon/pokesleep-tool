@@ -95,7 +95,7 @@ export class BonusEventData {
             return false;
         }
         if (this.target?.type !== undefined &&
-            pokemon.type !== this.target.type) {
+            !this.target.type.includes(pokemon.type)) {
             return false;
         }
         return true;
@@ -217,7 +217,7 @@ export interface TargetPokemon {
     /** Specialty of the pokemon */
     specialty: PokemonSpecialty;
     /** Type of the pokemon */
-    type: PokemonType;
+    type: PokemonType[];
 }
 
 /**
@@ -322,7 +322,12 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
         }
         if (typeof(data.target.type) === "string" &&
             PokemonTypes.includes(data.target.type)) {
-            ret.target.type = data.target.type as PokemonType;
+            ret.target.type = [data.target.type as PokemonType];
+        }
+        if (Array.isArray(data.target.type) &&
+            data.target.type.length <= 3 &&
+            data.target.type.every((x: PokemonType) => PokemonTypes.includes(x))) {
+            ret.target.type = data.target.type;
         }
     }
     if (typeof(data.effects) === "object") {

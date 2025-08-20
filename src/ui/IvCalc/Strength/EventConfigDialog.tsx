@@ -17,7 +17,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
 }) => {
     const { t } = useTranslation();
     const [type, setType] = React.useState<PokemonType>(
-        value.customEventBonus?.target?.type ?? "normal");
+        value.customEventBonus?.target?.type?.[0] ?? "normal");
     const [specialty, setSpecialty] = React.useState<PokemonSpecialty>(
         value.customEventBonus?.target?.specialty ?? "Berries");
 
@@ -31,7 +31,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             return;
         }
         if (typeof(bonus.target.type) !== "undefined") {
-            setType(bonus.target.type);
+            setType(bonus.target.type[0]);
         }
         if (typeof(bonus.target.specialty) !== "undefined") {
             setSpecialty(bonus.target.specialty);
@@ -50,7 +50,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
         }
         const target: Partial<TargetPokemon> = {};
         switch (val) {
-            case "type": target.type = type; break; 
+            case "type": target.type = [type]; break; 
             case "specialty": target.specialty = specialty; break;
         }
         onChange({...value, event: "custom", customEventBonus: {
@@ -61,7 +61,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
         setType(type);
         onChange({...value, event: "custom", customEventBonus: {
             ...value.customEventBonus,
-            target: { type },
+            target: { type: [type] },
         }});
     }, [value, onChange]);
     const onSpecialtyClick = React.useCallback((val: PokemonSpecialty) => {
