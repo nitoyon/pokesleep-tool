@@ -16,8 +16,8 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
     onChange: (value: StrengthParameter) => void,
 }) => {
     const { t } = useTranslation();
-    const [type, setType] = React.useState<PokemonType>(
-        value.customEventBonus?.target?.type?.[0] ?? "normal");
+    const [type, setType] = React.useState<PokemonType[]>(
+        value.customEventBonus?.target?.type ?? ["normal"]);
     const [specialty, setSpecialty] = React.useState<PokemonSpecialty>(
         value.customEventBonus?.target?.specialty ?? "Berries");
 
@@ -30,8 +30,8 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             });
             return;
         }
-        if (typeof(bonus.target.type) !== "undefined") {
-            setType(bonus.target.type[0]);
+        if (Array.isArray(bonus.target.type)) {
+            setType(bonus.target.type);
         }
         if (typeof(bonus.target.specialty) !== "undefined") {
             setSpecialty(bonus.target.specialty);
@@ -50,18 +50,18 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
         }
         const target: Partial<TargetPokemon> = {};
         switch (val) {
-            case "type": target.type = [type]; break; 
+            case "type": target.type = type; break; 
             case "specialty": target.specialty = specialty; break;
         }
         onChange({...value, event: "custom", customEventBonus: {
             ...value.customEventBonus, target,
         }});
     }, [type, specialty, value, onChange]);
-    const onTypeChange = React.useCallback((type: PokemonType) => {
+    const onTypeChange = React.useCallback((type: PokemonType[]) => {
         setType(type);
         onChange({...value, event: "custom", customEventBonus: {
             ...value.customEventBonus,
-            target: { type: [type] },
+            target: { type },
         }});
     }, [value, onChange]);
     const onSpecialtyClick = React.useCallback((val: PokemonSpecialty) => {
@@ -203,7 +203,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             </section>
             <Collapse in={typeof(value.customEventBonus.target.type) !== "undefined"} sx={{textAlign: 'right'}}>
                 <MultipleTypeSelect onChange={onTypeChange}
-                    value={value.customEventBonus.target.type?.[0] ?? 'normal'}/>
+                    value={value.customEventBonus.target.type ?? ['normal']}/>
             </Collapse>
             <Collapse in={typeof(value.customEventBonus.target.specialty) !== "undefined"} sx={{textAlign: 'right'}}>
                 <SpecialtyButton specialty="Berries" onClick={onSpecialtyClick}
@@ -356,11 +356,14 @@ const StyledEventConfigDialog = styled(Dialog)({
 });
 
 const MultipleTypeSelect = React.memo(({value, onChange}: {
-    value: PokemonType,
-    onChange: (value: PokemonType) => void,
+    value: PokemonType[],
+    onChange: (value: PokemonType[]) => void,
 }) => {
-    return <TypeSelect type={value}
-        onChange={onChange}/>
+    const onChangeHandler = React.useCallback((value: PokemonType) => {
+        onChange([value]);
+    }, [onChange]);
+    return <TypeSelect type={value[0]}
+        onChange={onChangeHandler}/>
 });
 
 export default EventConfigDialog;
