@@ -185,6 +185,19 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             <section>
                 <label>{t('event')}:</label>
                 <TextField value={value.event} onChange={onEventChange}
+                    SelectProps={{
+                        MenuProps: {
+                            PaperProps: {
+                                sx: {
+                                '& .MuiMenuItem-root': {
+                                    minHeight: '32px',
+                                    fontSize: '0.875rem',
+                                    py: 0.5,
+                                },
+                                },
+                            },
+                        },
+                    }}
                     select size="small" variant="standard">
                     {eventMenus}
                 </TextField>
@@ -232,6 +245,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={1}>+1</ToggleButton>
                         <ToggleButton value={3}>+3</ToggleButton>
+                        <ToggleButton value={5}>+5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>
@@ -284,6 +298,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
                         value={value.customEventBonus.effects.dish} onChange={onDishChange}>
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.1}>×1.1</ToggleButton>
                         <ToggleButton value={1.25}>×1.25</ToggleButton>
                         <ToggleButton value={1.5}>×1.5</ToggleButton>
                     </ToggleButtonGroup>

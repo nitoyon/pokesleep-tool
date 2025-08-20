@@ -227,7 +227,7 @@ export interface BonusEffects {
     /** Skill probability bonus */
     skillTrigger: 1 | 1.25 | 1.5,
     /** Boosted main skill level */
-    skillLevel: 0 | 1 | 3,
+    skillLevel: 0 | 1 | 3 | 5,
     /** Boosted ingredient count */
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
@@ -237,7 +237,7 @@ export interface BonusEffects {
     /** Ingredient Magnet S bonus */
     ingredientDraw: 1 | 1.5;
     /** Dishes bonus */
-    dish: 1 | 1.25 | 1.5;
+    dish: 1 | 1.1 | 1.25 | 1.5;
     /** Energy recovery bonus by dish */
     energyFromDish: 0 | 5;
 }
@@ -332,7 +332,7 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
     }
     if (typeof(data.effects) === "object") {
         if (typeof(data.effects.skillLevel) === "number" &&
-            [0, 1, 3].includes(data.effects.skillLevel)) {
+            [0, 1, 3, 5].includes(data.effects.skillLevel)) {
             ret.effects.skillLevel = data.effects.skillLevel;
         }
         if (typeof(data.effects.skillTrigger) === "number" &&
@@ -356,7 +356,7 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
             ret.effects.ingredientDraw = data.effects.ingredientDraw;
         }
         if (typeof(data.effects.dish) === "number" &&
-            [1, 1.25, 1.5].includes(data.effects.dish)) {
+            [1, 1.1, 1.25, 1.5].includes(data.effects.dish)) {
             ret.effects.dish = data.effects.dish;
         }
         if (typeof(data.effects.energyFromDish) === "number" &&
