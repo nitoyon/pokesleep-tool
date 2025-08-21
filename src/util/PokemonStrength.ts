@@ -2,7 +2,7 @@ import pokemons from '../data/pokemons';
 import { BonusEffects, emptyBonusEffects, getEventBonus, getEventBonusIfTarget } from '../data/events';
 import { IngredientName, PokemonType, PokemonTypes
 } from '../data/pokemons';
-import fields, { isExpertField } from '../data/fields';
+import fields, { isExpertField, getFavoriteBerries } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
@@ -578,17 +578,15 @@ class PokemonStrength {
     get isFavoriteBerry(): boolean {
         let types: PokemonType[] = [];
         const param = this.param;
+
         switch (param.fieldIndex) {
             case allFavoriteFieldIndex: return true;
+            case noFavoriteFieldIndex: return false;
+            // Greengrass Isle
             case 0: types = param.favoriteType; break;
-            case 1: types = ["water", "flying", "fairy"]; break;
-            case 2: types = ["fire", "rock", "ground"]; break;
-            case 3: types = ["ice", "dark", "normal"]; break;
-            case 4: types = ["grass", "fighting", "psychic"]; break;
-            case 5: types = ["electric", "ghost", "steel"]; break;
-            case 6: types = ["dragon", "poison", "bug"]; break;
+            // Greengrass Isle (Expert)
             case 7: types = param.favoriteType; break;
-            default: return false;
+            default: types = getFavoriteBerries(param.fieldIndex); break;
         }
 
         return types.includes(this.iv.pokemon.type);
