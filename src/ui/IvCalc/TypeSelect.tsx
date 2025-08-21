@@ -4,18 +4,24 @@ import TypeButton from './TypeButton';
 import PopperMenu from '../common/PopperMenu';
 import { PokemonType, PokemonTypes } from '../../data/pokemons';
 
-const TypeSelect = React.memo(({size, type, deletable, onChange, onDelete}: {
+const TypeSelect = React.memo(({size, type, disabled, deletable, onChange, onClick, onDelete}: {
     size?: 'small' | 'medium' | 'large',
     type: PokemonType,
+    disabled?: boolean,
     deletable?: boolean,
     onChange: (value: PokemonType) => void,
+    onClick?: (value: PokemonType) => void,
     onDelete?: (value: PokemonType) => void,
 }) => {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
     const onButtonClick = React.useCallback((value: PokemonType) => {
+        onClick?.(value);
+        if (disabled === true) {
+            return;
+        }
         setOpen(true);
-    }, []);
+    }, [disabled, onClick]);
     const onButtonDelete = React.useCallback((value: PokemonType) => {
         onDelete?.(type);
     }, [type, onDelete]);
