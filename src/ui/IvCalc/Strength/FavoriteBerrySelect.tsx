@@ -39,14 +39,6 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
     }, [onChange, value]);
 
     if (expert === true) {
-        const ingRatioMenu = [];
-        for (let i = 0; i <= 50; i++) {
-            ingRatioMenu.push(
-                <MenuItem key={i} value={i} dense>
-                    {i}%
-                </MenuItem>
-            );
-        }
         return <>
             <section className="first">
                 <label>{t('main favorite berry')}:</label>
