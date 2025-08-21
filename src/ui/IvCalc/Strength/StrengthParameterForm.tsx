@@ -10,7 +10,6 @@ import InfoButton from '../InfoButton';
 import FavoriteBerrySelect from './FavoriteBerrySelect';
 import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
-import { isExpertField } from '../../../data/fields';
 import { getActiveHelpBonus } from '../../../data/events';
 import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
@@ -168,13 +167,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <ResearchAreaSelect value={value} fontSize="0.9rem"
                 onChange={onChange}/>
         </section>
-        <Collapse in={value.fieldIndex === 0}>
+        <Collapse in={value.fieldIndex >= 0}>
             <FavoriteBerrySelect value={value} onChange={onChange}/>
-        </Collapse>
-        <Collapse in={isExpertField(value.fieldIndex)}>
-            <div style={{padding: '0 0 0.7rem 1rem'}}>
-                <FavoriteBerrySelect value={value} onChange={onChange}/>
-            </div>
         </Collapse>
         <section>
             <label>{t('area bonus')}:</label>

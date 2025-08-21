@@ -33,7 +33,9 @@
             "effects": {
                 "skillTrigger": 1.25,
                 "skillLevel": 5,
-                "dish": 1.1
+                "dish": 1.1,
+                "fixedBerries": ["electric", "fire", "water"],
+                "fixedAreas": [0, 1, 2, 5, 7]
             }
         },
         {
@@ -46,7 +48,9 @@
             "effects": {
                 "skillTrigger": 1.25,
                 "skillLevel": 3,
-                "dish": 1.1
+                "dish": 1.1,
+                "fixedBerries": ["electric", "fire", "water"],
+                "fixedAreas": [0, 1, 2, 5, 7]
             }
         },
         {
