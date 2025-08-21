@@ -635,6 +635,8 @@ export function createStrengthParameter(
                 ingredientDraw: 1,
                 dish: 1,
                 energyFromDish: 0,
+                fixedAreas: [],
+                fixedBerries: [],
             }
         },
     };

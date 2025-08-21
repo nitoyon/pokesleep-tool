@@ -117,6 +117,8 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         ingredientDraw: data.ingredientDraw ?? 1,
         dish: data.dish ?? 1,
         energyFromDish: data.energyFromDish ?? 0,
+        fixedBerries: data.fixedBerries ?? [],
+        fixedAreas: data.fixedAreas ?? [],
     };
 }
 
@@ -240,6 +242,20 @@ export interface BonusEffects {
     dish: 1 | 1.1 | 1.25 | 1.5;
     /** Energy recovery bonus by dish */
     energyFromDish: 0 | 5;
+    /**
+     * Types of berries that are fixed (i.e., not randomly selected).
+     *
+     * - Set to an empty array `[]` when berries are not fixed.
+     * - Set to `["electric", "fire", "water"]` during the "Raikou, Entei, and Suicune Research" event.
+     */
+    fixedBerries: PokemonType[];
+    /**
+     * Indexes of research areas where `fixedBerries` are applied.
+     *
+     * - Set to an empty array `[]` when berries are not fixed.
+     * - Set to `[0, 1, 2, 6, 8]` during the "Raikou, Entei, and Suicune Research" event.
+     */
+    fixedAreas: number[];
 }
 
 /**
@@ -254,6 +270,8 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
     ingredientDraw: 1,
     dish: 1,
     energyFromDish: 0,
+    fixedBerries: [],
+    fixedAreas: [],
 };
 
 /**
