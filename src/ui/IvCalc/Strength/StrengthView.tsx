@@ -106,6 +106,10 @@ const StrengthParameterPreview = styled('div')({
             }
         },
     },
+    '& > button': {
+        minWidth: 'auto',
+        textWrap: 'nowrap',
+    }
 });
 
 export default StrengthView;

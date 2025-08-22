@@ -95,7 +95,7 @@ export class BonusEventData {
             return false;
         }
         if (this.target?.type !== undefined &&
-            pokemon.type !== this.target.type) {
+            !this.target.type.includes(pokemon.type)) {
             return false;
         }
         return true;
@@ -117,6 +117,8 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         ingredientDraw: data.ingredientDraw ?? 1,
         dish: data.dish ?? 1,
         energyFromDish: data.energyFromDish ?? 0,
+        fixedBerries: data.fixedBerries ?? [],
+        fixedAreas: data.fixedAreas ?? [],
     };
 }
 
@@ -217,7 +219,7 @@ export interface TargetPokemon {
     /** Specialty of the pokemon */
     specialty: PokemonSpecialty;
     /** Type of the pokemon */
-    type: PokemonType;
+    type: PokemonType[];
 }
 
 /**
@@ -227,7 +229,7 @@ export interface BonusEffects {
     /** Skill probability bonus */
     skillTrigger: 1 | 1.25 | 1.5,
     /** Boosted main skill level */
-    skillLevel: 0 | 1 | 3,
+    skillLevel: 0 | 1 | 3 | 5,
     /** Boosted ingredient count */
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
@@ -237,9 +239,23 @@ export interface BonusEffects {
     /** Ingredient Magnet S bonus */
     ingredientDraw: 1 | 1.5;
     /** Dishes bonus */
-    dish: 1 | 1.25 | 1.5;
+    dish: 1 | 1.1 | 1.25 | 1.5;
     /** Energy recovery bonus by dish */
     energyFromDish: 0 | 5;
+    /**
+     * Types of berries that are fixed (i.e., not randomly selected).
+     *
+     * - Set to an empty array `[]` when berries are not fixed.
+     * - Set to `["electric", "fire", "water"]` during the "Raikou, Entei, and Suicune Research" event.
+     */
+    fixedBerries: PokemonType[];
+    /**
+     * Indexes of research areas where `fixedBerries` are applied.
+     *
+     * - Set to an empty array `[]` when berries are not fixed.
+     * - Set to `[0, 1, 2, 6, 8]` during the "Raikou, Entei, and Suicune Research" event.
+     */
+    fixedAreas: number[];
 }
 
 /**
@@ -254,6 +270,8 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
     ingredientDraw: 1,
     dish: 1,
     energyFromDish: 0,
+    fixedBerries: [],
+    fixedAreas: [],
 };
 
 /**
@@ -322,12 +340,17 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
         }
         if (typeof(data.target.type) === "string" &&
             PokemonTypes.includes(data.target.type)) {
-            ret.target.type = data.target.type as PokemonType;
+            ret.target.type = [data.target.type as PokemonType];
+        }
+        if (Array.isArray(data.target.type) &&
+            data.target.type.length <= 3 &&
+            data.target.type.every((x: PokemonType) => PokemonTypes.includes(x))) {
+            ret.target.type = data.target.type;
         }
     }
     if (typeof(data.effects) === "object") {
         if (typeof(data.effects.skillLevel) === "number" &&
-            [0, 1, 3].includes(data.effects.skillLevel)) {
+            [0, 1, 3, 5].includes(data.effects.skillLevel)) {
             ret.effects.skillLevel = data.effects.skillLevel;
         }
         if (typeof(data.effects.skillTrigger) === "number" &&
@@ -351,7 +374,7 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
             ret.effects.ingredientDraw = data.effects.ingredientDraw;
         }
         if (typeof(data.effects.dish) === "number" &&
-            [1, 1.25, 1.5].includes(data.effects.dish)) {
+            [1, 1.1, 1.25, 1.5].includes(data.effects.dish)) {
             ret.effects.dish = data.effects.dish;
         }
         if (typeof(data.effects.energyFromDish) === "number" &&
