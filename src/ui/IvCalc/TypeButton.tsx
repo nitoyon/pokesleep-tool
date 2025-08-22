@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { PokemonType } from '../../data/pokemons';
 import { Button } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useTranslation } from 'react-i18next';
 
 const TypeButton = React.memo(
@@ -10,17 +11,27 @@ const TypeButton = React.memo(
         size?: 'small' | 'medium' | 'large',
         type: PokemonType,
         checked: boolean,
+        deletable?: boolean,
         onClick: (value: PokemonType) => void,
-    }>(({size, type, checked, onClick}, ref) => {
+        onDelete?: (value: PokemonType) => void,
+    }>(({size, type, checked, deletable, onClick, onDelete}, ref) => {
     const { t } = useTranslation();
     const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        const isDelete = (e.nativeEvent.target as HTMLElement)?.closest('.deleteIcon') != null;
         const value = e.currentTarget.value as PokemonType;
-        onClick(value);
-    }, [onClick]);
+        if (isDelete) {
+            onDelete?.(value);
+        }
+        else {
+            onClick(value);
+        }
+    }, [onClick, onDelete]);
     return <StyledTypeButton ref={ref} size={size ?? 'medium'}
-            key={type} className={type} value={type} onClick={onTypeClick}>
+            className={`${type} ${deletable && 'deletable'}`}
+            key={type} value={type} onClick={onTypeClick}>
             {t(`types.${type}`)}
             {checked && <CheckIcon/>}
+            {deletable && <CancelIcon className="deleteIcon"/>}
         </StyledTypeButton>;
 }));
 
@@ -34,6 +45,9 @@ const StyledTypeButton = styled(Button)({
     '&.MuiButton-sizeSmall': {
         width: '4.6rem',
         fontSize: '0.8rem',
+        '&.deletable': {
+            width: '5.6rem',
+        },
     },
     '& > svg': {
         position: 'absolute',
@@ -44,6 +58,16 @@ const StyledTypeButton = styled(Button)({
         border: '2px solid white',
         right: '-4px',
         top: '-4px',
+        '&.deleteIcon': {
+            position: 'absolute',
+            background: '#ffffff',
+            color: '#888888',
+            borderRadius: '50%',
+            fontSize: '14px',
+            border: 0,
+            right: '-4px',
+            top: '-2px',
+        },
     },
     '&.normal': { backgroundColor: '#939393' },
     '&.fire': { backgroundColor: '#e8554d' },

@@ -1,12 +1,13 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, Dialog, DialogActions, MenuItem, TextField,
+import { Button, Collapse, Dialog, DialogActions, IconButton, MenuItem, TextField,
     ToggleButton, ToggleButtonGroup } from '@mui/material';
 import SpecialtyButton from '../SpecialtyButton';
 import TypeSelect from '../TypeSelect';
-import { PokemonSpecialty, PokemonType } from '../../../data/pokemons';
+import { PokemonSpecialty, PokemonType, PokemonTypes } from '../../../data/pokemons';
 import events, { fillBonusEffects, TargetPokemon } from '../../../data/events';
 import { StrengthParameter } from '../../../util/PokemonStrength';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useTranslation } from 'react-i18next';
 
 const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
@@ -16,8 +17,8 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
     onChange: (value: StrengthParameter) => void,
 }) => {
     const { t } = useTranslation();
-    const [type, setType] = React.useState<PokemonType>(
-        value.customEventBonus?.target?.type ?? "normal");
+    const [type, setType] = React.useState<PokemonType[]>(
+        value.customEventBonus?.target?.type ?? ["normal"]);
     const [specialty, setSpecialty] = React.useState<PokemonSpecialty>(
         value.customEventBonus?.target?.specialty ?? "Berries");
 
@@ -30,7 +31,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             });
             return;
         }
-        if (typeof(bonus.target.type) !== "undefined") {
+        if (Array.isArray(bonus.target.type)) {
             setType(bonus.target.type);
         }
         if (typeof(bonus.target.specialty) !== "undefined") {
@@ -57,7 +58,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             ...value.customEventBonus, target,
         }});
     }, [type, specialty, value, onChange]);
-    const onTypeChange = React.useCallback((type: PokemonType) => {
+    const onTypeChange = React.useCallback((type: PokemonType[]) => {
         setType(type);
         onChange({...value, event: "custom", customEventBonus: {
             ...value.customEventBonus,
@@ -184,6 +185,19 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             <section>
                 <label>{t('event')}:</label>
                 <TextField value={value.event} onChange={onEventChange}
+                    SelectProps={{
+                        MenuProps: {
+                            PaperProps: {
+                                sx: {
+                                '& .MuiMenuItem-root': {
+                                    minHeight: '32px',
+                                    fontSize: '0.875rem',
+                                    py: 0.5,
+                                },
+                                },
+                            },
+                        },
+                    }}
                     select size="small" variant="standard">
                     {eventMenus}
                 </TextField>
@@ -199,12 +213,11 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         <ToggleButton value='type'>{t('type')}</ToggleButton>
                         <ToggleButton value='specialty'>{t('specialty')}</ToggleButton>
                     </ToggleButtonGroup>
-                    <Collapse in={typeof(value.customEventBonus.target.type) !== "undefined"}>
-                        <TypeSelect type={type}
-                            onChange={onTypeChange}/>
-                    </Collapse>
                 </div>
             </section>
+            <Collapse in={typeof(value.customEventBonus.target.type) !== "undefined"} sx={{textAlign: 'right'}}>
+                <MultipleTypeSelect onChange={onTypeChange} value={type}/>
+            </Collapse>
             <Collapse in={typeof(value.customEventBonus.target.specialty) !== "undefined"} sx={{textAlign: 'right'}}>
                 <SpecialtyButton specialty="Berries" onClick={onSpecialtyClick}
                     checked={specialty === "Berries"}/>
@@ -232,6 +245,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={1}>+1</ToggleButton>
                         <ToggleButton value={3}>+3</ToggleButton>
+                        <ToggleButton value={5}>+5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>
@@ -284,6 +298,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
                         value={value.customEventBonus.effects.dish} onChange={onDishChange}>
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.1}>×1.1</ToggleButton>
                         <ToggleButton value={1.25}>×1.25</ToggleButton>
                         <ToggleButton value={1.5}>×1.5</ToggleButton>
                     </ToggleButtonGroup>
@@ -353,6 +368,43 @@ const StyledEventConfigDialog = styled(Dialog)({
             background: 'transparent',
         },
     },
+});
+
+const MultipleTypeSelect = React.memo(({value, onChange}: {
+    value: PokemonType[],
+    onChange: (value: PokemonType[]) => void,
+}) => {
+    const onChangeHandler = React.useCallback((index: number, type: PokemonType) => {
+        const newValue = [...value];
+        newValue[index] = type;
+        onChange(newValue);
+    }, [value, onChange]);
+
+    const onDeleteHandler = React.useCallback((index: number) => {
+        const newValue = [...value];
+        newValue.splice(index, 1);
+        onChange(newValue);
+    }, [value, onChange]);
+
+    const onAddType = React.useCallback(() => {
+        const newValue = [...value];
+        newValue.push(PokemonTypes.find(x => !value.includes(x)) ?? 'normal');
+        onChange(newValue);
+    }, [value, onChange]);
+
+    const buttons = value.map((type, index) => {
+        return <TypeSelect key={index} type={type} size="small"
+            deletable={value.length > 1}
+            onChange={(v) => onChangeHandler(index, v)}
+            onDelete={() => onDeleteHandler(index)}/>
+    });
+
+    return <>
+        {buttons}
+        {buttons.length < 3 && <IconButton size="small" onClick={onAddType}>
+            <AddCircleOutlineIcon fontSize="small"/>
+        </IconButton>}
+    </>;
 });
 
 export default EventConfigDialog;

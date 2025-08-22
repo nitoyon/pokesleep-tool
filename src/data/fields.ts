@@ -1,4 +1,5 @@
 import fields_ from './field.json';
+import { PokemonType } from './pokemons';
 
 export interface FieldData {
     /** field index */
@@ -56,6 +57,31 @@ export function isExpertField(index: number): boolean {
         throw new Error(`Field with index ${index} does not exist.`);
     }
     return field.expert;
+}
+
+export function getFavoriteBerries(index: number): PokemonType[] {
+    if (index < 0) {
+        return [];
+    }
+    switch (index) {
+        // Greengrass Isle
+        case 0: return [];
+        // Cyan Beach
+        case 1: return ["water", "fairy", "flying"];
+        // Taupe Hollow
+        case 2: return ["ground", "fire", "rock"];
+        // Snowdrop Tundra
+        case 3: return ["ice", "normal", "dark"];
+        // Lapis Lakeside
+        case 4: return ["grass", "psychic", "fighting"];
+        // Old Gold Power Plant
+        case 5: return ["electric", "ghost", "steel"];
+        // Amber Canyon
+        case 6: return ["dragon", "bug", "poison"];
+        // Greengrass Isle (Expert)
+        case 7: return [];
+    }
+    return [];
 }
 
 export default fields;
