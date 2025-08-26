@@ -1,4 +1,5 @@
 import PokemonIv from '../../util/PokemonIv';
+import { getEventBonus } from '../../data/events';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
 import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
 
@@ -177,8 +178,10 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     }
     if (type === "changeParameter") {
         const value = action.payload.parameter;
-        localStorage.setItem('PstStrenghParam', JSON.stringify(value));
-        return {...state, parameter: value};
+        const newState = {...state, parameter: value};
+        normalizeState(newState, state.pokemonIv);
+        localStorage.setItem('PstStrenghParam', JSON.stringify(newState.parameter));
+        return newState;
     }
     if (type === "openEnergyDialog") {
         return {...state, energyDialogOpen: true};
@@ -197,7 +200,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         };
     }
     if (type === "updateIv") {
-        const newState = getStateWhenPokemonIvChange(state, action.payload.iv);
+        const newState = normalizeState(state, action.payload.iv);
         saveIvStateCache(newState);
         return newState;
     }
@@ -236,7 +239,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     }
     if (type === "restoreItem") {
         if (selectedItem !== null) {
-            const newValue = {...getStateWhenPokemonIvChange(state, selectedItem.iv)};
+            const newValue = {...normalizeState(state, selectedItem.iv)};
             saveIvStateCache(newValue);
             return newValue;
         }
@@ -266,7 +269,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
             box.set(value.id, value.iv, value.nickname);
         }
         box.save();
-        const s = getStateWhenPokemonIvChange(state, value.iv);
+        const s = normalizeState(state, value.iv);
         const newState = {...s, box, selectedItemId};
         saveIvStateCache(newState);
         return newState;
@@ -288,7 +291,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     const item = state.box.getById(id);
     if (item === null) { return state; }
     if (type === "select") {
-        const s = getStateWhenPokemonIvChange(state, item.iv);
+        const s = normalizeState(state, item.iv);
         const newState = {...s, selectedItemId: id};
         saveIvStateCache(newState);
         return newState;
@@ -315,9 +318,24 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     return state;
 }
 
-function getStateWhenPokemonIvChange(state: IvState, value: PokemonIv): IvState {
+function normalizeState(state: IvState, value: PokemonIv): IvState {
     const selectedItem = state.box.getById(state.selectedItemId);
     value.normalize();
+
+    // apply event fixedBerries type
+    const event = getEventBonus(state.parameter.event,
+        state.parameter.customEventBonus);
+    if (event !== undefined &&
+        event.fixedBerries?.length === 3 &&
+        event.fixedAreas?.includes(state.parameter.fieldIndex)
+    ) {
+        if (!event.fixedBerries?.includes(state.parameter.favoriteType[0]) ||
+            !event.fixedBerries?.includes(state.parameter.favoriteType[1]) ||
+            !event.fixedBerries?.includes(state.parameter.favoriteType[2])
+        ) {
+            state.parameter.favoriteType = [...event.fixedBerries];
+        }
+    }
 
     // if form pokemon differs from the selected pokemon in the box,
     // unselect the pokemon in the box
