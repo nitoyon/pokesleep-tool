@@ -253,7 +253,7 @@ export interface BonusEffects {
      * Indexes of research areas where `fixedBerries` are applied.
      *
      * - Set to an empty array `[]` when berries are not fixed.
-     * - Set to `[0, 1, 2, 6, 8]` during the "Raikou, Entei, and Suicune Research" event.
+     * - Set to `[0, 1, 2, 5, 7]` during the "Raikou, Entei, and Suicune Research" event.
      */
     fixedAreas: number[];
 }
