@@ -368,7 +368,9 @@
             "end": "2023-12-25T04:00:00",
             "target": {},
             "effects": {
-                "dreamShard": 2
+                "dreamShard": 2,
+                "fixedBerries": ["ice", null, null],
+                "fixedAreas": [0, 7]
             }
         },
         {
