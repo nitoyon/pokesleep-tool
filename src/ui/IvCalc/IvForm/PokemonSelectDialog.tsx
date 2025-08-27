@@ -302,7 +302,7 @@ interface PokemonDialogConfig {
 }
 
 const PokemonSelectDialog = React.memo(({
-    open, pokemonOptions, onClose, onChange,
+    open, pokemonOptions, selectedValue, onClose, onChange,
 }: {
     open: boolean,
     pokemonOptions: PokemonOption[],
@@ -465,7 +465,8 @@ const PokemonSelectDialog = React.memo(({
         <Autocomplete options={options}
             fullWidth
             open
-            freeSolo            
+            freeSolo
+            value={options.find(x => x.name === selectedValue.name)}
             PopperComponent={PopperComponent}
             filterOptions={filterOptions}
             getOptionLabel={(option: string|PokemonOption) => {
