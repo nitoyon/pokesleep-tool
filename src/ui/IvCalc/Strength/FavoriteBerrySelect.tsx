@@ -145,16 +145,16 @@ const TypeSelectContainer = styled('span')({
     display: 'flex',
 
     '& > span': {
-        textAlign: 'center',
+        display: 'grid',
         '& > header': {
-            display: 'inline',
+            display: 'inline-block',
+            textAlign: 'center',
             color: 'white',
-            width: '3rem',
+            width: '2rem',
             background: '#7cd377',
             fontSize: '0.5rem',
             borderRadius: '0.7rem',
-            margin: 0,
-            marginBottom: '8px',
+            margin: '0 auto 2px auto',
             padding: '2px 12px',
         },
         '& > button': {
@@ -162,6 +162,7 @@ const TypeSelectContainer = styled('span')({
             marginButton: 0,
         },
         '& > footer': {
+            textAlign: 'center',
             position: 'relative',
             top: '-3px',
             fontSize: '0.6rem',
