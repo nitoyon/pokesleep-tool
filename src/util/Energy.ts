@@ -476,7 +476,7 @@ class Energy {
 
             // insert empty event object
             const energy = param.isEnergyAlwaysFull ? event.energyAfter :
-                event.energyAfter - (threshold - event.minutes) / 10;
+                Math.max(0, event.energyAfter - (threshold - event.minutes) / 10);
             events.splice(i + 1, 0, {
                 minutes: threshold, type: 'empty',
                 energyBefore: energy,
