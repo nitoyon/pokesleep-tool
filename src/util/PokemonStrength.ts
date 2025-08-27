@@ -612,8 +612,15 @@ export function getCurrentFavoriteBerries(parameter: StrengthParameter):
         eventFixedTypes.length === 3
     ) {
         // type is fixed by the current selected event
-        reasons = ["set for event", "set for event", "set for event"];
-        types = parameter.favoriteType;
+        for (let i = 0; i < 3; i++) {
+            if (eventFixedTypes[i] === null) {
+                reasons[i] = "random";
+            }
+            else {
+                reasons[i] = "set for event";
+            }
+        }
+        types = [...parameter.favoriteType];
     }
     else if (defaultAreaBerries.length === 3) {
         // type is fixed by the current area
