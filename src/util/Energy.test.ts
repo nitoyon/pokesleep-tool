@@ -73,6 +73,26 @@ describe('Energy', () => {
         ]);
     });
 
+    test('calculate (e4e x 0, period 8, score: 0)', () => {
+        const iv = new PokemonIv('Raichu');
+        iv.subSkills.lv10 = new SubSkill('Inventory Up L');
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({e4eCount: 0, period: 8, sleepScore: 0}));
+
+        expect(result.events).toEqual([
+            { minutes: 0, type: 'wake', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: true },
+            { minutes: 120, type: 'cook', energyBefore: 0, energyAfter: 5, isSnacking: false, isInPeriod: true },
+            { minutes: 170, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: true },
+            { minutes: 360, type: 'cook', energyBefore: 0, energyAfter: 5, isSnacking: false, isInPeriod: true },
+            { minutes: 410, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: true },
+            { minutes: 480, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: false },
+            { minutes: 720, type: 'cook', energyBefore: 0, energyAfter: 5, isSnacking: false, isInPeriod: false },
+            { minutes: 770, type: 'empty', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: false },
+            { minutes: 1440, type: 'sleep', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: false },
+            { minutes: 1440, type: 'wake', energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: false },
+        ]);
+    });
+
     test('calculate (e4e x 0, Energy recovery down)', () => {
         const iv = new PokemonIv('Raichu');
         iv.nature = new Nature('Hasty'); // Energy recovery down
