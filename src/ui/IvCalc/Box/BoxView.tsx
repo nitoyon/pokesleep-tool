@@ -170,9 +170,11 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
 
     const sort = sortConfig.sort;
     if (sort === "level") {
+        const reverse = sortConfig.descending ? -1 : 1;
         return [filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? reverse * (b.iv.pokemon.id - a.iv.pokemon.id) :
+            b.iv.idForm !== a.iv.idForm ? reverse * (b.iv.idForm - a.iv.idForm) :
             b.id - a.id), ''];
     }
     else if (sort === "name") {
@@ -180,11 +182,13 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
             b.filledNickname(t) > a.filledNickname(t) ? 1 :
             b.filledNickname(t) < a.filledNickname(t) ? -1 :
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.idForm !== a.iv.idForm ? b.iv.idForm - a.iv.idForm :
             b.id - a.id), ''];
     }
     else if (sort === "pokedexno") {
         return [filtered.sort((a, b) =>
             b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.idForm !== a.iv.idForm ? b.iv.idForm - a.iv.idForm :
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
             b.id - a.id), ''];
     }
