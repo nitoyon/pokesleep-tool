@@ -276,7 +276,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 <div>{round2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>
-        {settings.period !== whistlePeriod && <footer>
+        {settings.period > whistlePeriod && <footer>
             {result.energy.canBeFullInventory && settings.period >= 24 ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
@@ -335,7 +335,7 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t,
     onInfoClick: () => void): React.ReactNode {
-    if (settings.period === whistlePeriod || settings.tapFrequency === 'none') {
+    if (settings.period <= whistlePeriod || settings.tapFrequency === 'none') {
             return <article>ー</article>;
     }
 

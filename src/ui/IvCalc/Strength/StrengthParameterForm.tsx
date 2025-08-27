@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent, FormControl, MenuItem,
+import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent,
+    Divider, FormControl, MenuItem,
     Select, SelectChangeEvent, Snackbar, Switch, Typography,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
@@ -160,6 +161,10 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
                 <MenuItem value={24}>{t('1day')}</MenuItem>
                 <MenuItem value={168}>{t('1week')}</MenuItem>
                 <MenuItem value={whistlePeriod}>{t('whistle')}</MenuItem>
+                <Divider/>
+                <MenuItem value={-10}>{t('help x10')}</MenuItem>
+                <MenuItem value={-30}>{t('help x30')}</MenuItem>
+                <MenuItem value={-100}>{t('help x100')}</MenuItem>
             </Select>
         </section>
         <section>
