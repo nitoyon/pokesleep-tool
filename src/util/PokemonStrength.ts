@@ -576,6 +576,13 @@ class PokemonStrength {
      * for the current field.
      */
     get isFavoriteBerry(): boolean {
+        if (this.param.fieldIndex === noFavoriteFieldIndex) {
+            return false;
+        }
+        if (this.param.fieldIndex === allFavoriteFieldIndex) {
+            return true;
+        }
+
         const {types} = getCurrentFavoriteBerries(this.param);
         return types.includes(this.iv.pokemon.type);
     }
