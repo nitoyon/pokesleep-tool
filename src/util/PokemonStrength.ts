@@ -576,19 +576,7 @@ class PokemonStrength {
      * for the current field.
      */
     get isFavoriteBerry(): boolean {
-        let types: PokemonType[] = [];
-        const param = this.param;
-
-        switch (param.fieldIndex) {
-            case allFavoriteFieldIndex: return true;
-            case noFavoriteFieldIndex: return false;
-            // Greengrass Isle
-            case 0: types = param.favoriteType; break;
-            // Greengrass Isle (Expert)
-            case 7: types = param.favoriteType; break;
-            default: types = getFavoriteBerries(param.fieldIndex); break;
-        }
-
+        const {types} = getCurrentFavoriteBerries(this.param);
         return types.includes(this.iv.pokemon.type);
     }
 }
