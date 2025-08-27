@@ -1,7 +1,9 @@
 import PokemonIv from '../../util/PokemonIv';
 import { getEventBonus } from '../../data/events';
+import { PokemonTypes } from '../../data/pokemons';
 import PokemonBox, { PokemonBoxItem } from '../../util/PokemonBox';
 import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStrength';
+import { isExpertField } from '../../data/fields';
 
 export type IvAction = {
     type: "add"|"export"|"exportClose"|"import"|"importClose"|
@@ -326,14 +328,33 @@ function normalizeState(state: IvState, value: PokemonIv): IvState {
     const event = getEventBonus(state.parameter.event,
         state.parameter.customEventBonus);
     if (event !== undefined &&
+        event.fixedBerries !== undefined &&
         event.fixedBerries?.length === 3 &&
         event.fixedAreas?.includes(state.parameter.fieldIndex)
     ) {
-        if (!event.fixedBerries?.includes(state.parameter.favoriteType[0]) ||
-            !event.fixedBerries?.includes(state.parameter.favoriteType[1]) ||
-            !event.fixedBerries?.includes(state.parameter.favoriteType[2])
-        ) {
+        let fixRequired = false;
+        const isExpert = isExpertField(state.parameter.fieldIndex);
+        for (let i = 0; i < 3; i++) {
+            if (event.fixedBerries[i] !== null) {
+                if (
+                    (isExpert && !state.parameter.favoriteType.includes(event.fixedBerries[i])) ||
+                    (!isExpert && state.parameter.favoriteType[i] !== event.fixedBerries[i])
+                ) {
+                    fixRequired = true;
+                    break;
+                }
+            }
+        }
+        if (fixRequired) {
             state.parameter.favoriteType = [...event.fixedBerries];
+            if (state.parameter.favoriteType[1] === null) {
+                state.parameter.favoriteType[1] = PokemonTypes
+                    .find(x => !state.parameter.favoriteType.includes(x)) ?? "normal";
+            }
+            if (state.parameter.favoriteType[2] === null) {
+                state.parameter.favoriteType[2] = PokemonTypes
+                    .find(x => !state.parameter.favoriteType.includes(x)) ?? "normal";
+            }
         }
     }
 
