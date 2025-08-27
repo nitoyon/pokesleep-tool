@@ -231,7 +231,9 @@
             "effects": {
                 "ingredient": 1,
                 "skillTrigger": 1.5,
-                "skillLevel": 1
+                "skillLevel": 1,
+                "fixedBerries": ["ghost", null, null],
+                "fixedAreas": [0, 7]
             }
         },
         {
