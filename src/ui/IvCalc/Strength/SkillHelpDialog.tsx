@@ -2,7 +2,7 @@ import React from 'react';
 import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
+import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
 import { Button, Collapse, Dialog, DialogActions, DialogContent,
@@ -34,7 +34,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     }, [dispatch, strength.pokemonIv]);
 
     const settings = strength.parameter;
-    if (settings.period === 3 || settings.tapFrequency === 'none') {
+    if (settings.period <= whistlePeriod || settings.tapFrequency === 'none') {
         return (
             <Dialog open={open} onClose={onClose}>
                 <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>

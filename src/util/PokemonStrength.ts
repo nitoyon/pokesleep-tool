@@ -272,9 +272,11 @@ class PokemonStrength {
         const countRatio = Math.ceil(param.period / 24);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
-        const notFullHelpCount = param.tapFrequency === 'none' ? 0 :
+        const notFullHelpCount = param.period < 0 ? -param.period :
+            param.tapFrequency === 'none' ? 0 :
             (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRatio;
-        const fullHelpCount = param.tapFrequency === 'none' ?
+        const fullHelpCount = param.period < 0 ? 0 :
+            param.tapFrequency === 'none' ?
             (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRatio :
             energy.helpCount.asleepFull * countRatio;
 
@@ -345,7 +347,7 @@ class PokemonStrength {
         const skillRatio = energy.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0;
         let skillValue2 = 0, skillStrength2 = 0;
-        if (param.period !== whistlePeriod && param.tapFrequency !== 'none') {
+        if (param.period > whistlePeriod && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
                 skillCount = helpCount * skillRatio * countRatio;
@@ -705,7 +707,7 @@ export function loadStrengthParameter(): StrengthParameter {
         return ret;
     }
     if (typeof(json.period) === "number" &&
-        [1, 3, 8, 16, 24, 168, whistlePeriod].includes(json.period)) {
+        [1, 3, 8, 16, 24, 168, whistlePeriod, -10, -30, -100].includes(json.period)) {
         ret.period = json.period;
     }
     if (typeof(json.fieldBonus) === "number" &&

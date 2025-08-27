@@ -59,6 +59,9 @@ const StrengthView = React.memo(({state, dispatch}: {
         case 16: period = t('16hours'); break;
         case 24: period = t('1day'); break;
         case 168: period = t('1week'); break;
+        case -10: period = t('help x10'); break;
+        case -30: period = t('help x30'); break;
+        case -100: period = t('help x100'); break;
     }
 
     const isEventScheduled = getActiveHelpBonus(new Date()).length > 0 || parameter.event !== 'none';

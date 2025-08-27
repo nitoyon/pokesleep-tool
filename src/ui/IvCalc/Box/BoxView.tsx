@@ -249,7 +249,7 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
     }
     else if (sort === "skill count") {
         if (parameter.tapFrequency === 'none' ||
-            parameter.period === whistlePeriod) {
+            parameter.period <= whistlePeriod) {
             return [[], t('no skill')];
         }
 
