@@ -2,15 +2,13 @@ import React from 'react';
 import { styled } from '@mui/system';
 import TypeButton from '../TypeButton';
 import TypeSelect from '../TypeSelect';
-import { getEventBonus } from '../../../data/events';
-import { getFavoriteBerries, isExpertField } from '../../../data/fields';
+import { isExpertField } from '../../../data/fields';
 import { PokemonType } from '../../../data/pokemons';
-import { ExpertEffects, StrengthParameter } from '../../../util/PokemonStrength';
+import {
+    ExpertEffects, getCurrentFavoriteBerries, StrengthParameter,
+} from '../../../util/PokemonStrength';
 import { Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-/** Reason why the berry was set */
-type BerryReason = "set for event"|"set for field"|"random";
 
 const FavoriteBerrySelect = React.memo(({value, onChange}: {
     value: StrengthParameter,
@@ -18,32 +16,8 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
 }) => {
     const { t } = useTranslation();
     const expert = isExpertField(value.fieldIndex);
-    const [types, disabled, reasons] = React.useMemo(() => {
-        const eventBonus = getEventBonus(value.event, value.customEventBonus);
-        const eventFixedTypes = eventBonus?.fixedBerries ?? [];
-        const eventFixedAreas = eventBonus?.fixedAreas ?? [];
-        const defaultAreaBerries = getFavoriteBerries(value.fieldIndex);
-        let types: PokemonType[] = [];
-        let disabled = true, reasons: BerryReason[] = ["random", "random", "random"];
-        if (eventFixedAreas.includes(value.fieldIndex) &&
-            eventFixedTypes.length === 3
-        ) {
-            // type is fixed by the current selected event
-            reasons = ["set for event", "set for event", "set for event"];
-            types = value.favoriteType;
-        }
-        else if (defaultAreaBerries.length === 3) {
-            // type is fixed by the current area
-            reasons = ["set for field", "set for field", "set for field"];
-            types = defaultAreaBerries;
-        }
-        else {
-            // type is selectable
-            disabled = false;
-            types = value.favoriteType;
-        }
-        return [types, disabled, reasons];
-    }, [value]);
+    const {types, reasons} = React.useMemo(() => getCurrentFavoriteBerries(value),
+        [value]);
 
     const onFavoriteBerryChange1 = React.useCallback((type: PokemonType) => {
         const favoriteType = [value.favoriteType[0] ?? "normal",
@@ -129,17 +103,20 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
         <label>{t('favorite berry')}:</label>
         <TypeSelectContainer>
             <span>
-                <TypeSelect type={types[0]} size="small" disabled={disabled}
+                <TypeSelect type={types[0]} size="small"
+                    disabled={reasons[0] !== "random"}
                     onChange={onFavoriteBerryChange1}/>
                 <footer className={reasons[0].replace(/ /g, '-')}>{t(reasons[0])}</footer>
             </span>
             <span>
-                <TypeSelect type={types[1]} size="small" disabled={disabled}
+                <TypeSelect type={types[1]} size="small"
+                    disabled={reasons[1] !== "random"}
                     onChange={onFavoriteBerryChange2}/>
                 <footer className={reasons[1].replace(/ /g, '-')}>{t(reasons[1])}</footer>
             </span>
             <span>
-                <TypeSelect type={types[2]} size="small" disabled={disabled}
+                <TypeSelect type={types[2]} size="small"
+                    disabled={reasons[2] !== "random"}
                     onChange={onFavoriteBerryChange3}/>
                 <footer className={reasons[2].replace(/ /g, '-')}>{t(reasons[2])}</footer>
             </span>
