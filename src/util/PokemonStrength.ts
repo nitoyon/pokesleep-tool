@@ -576,21 +576,55 @@ class PokemonStrength {
      * for the current field.
      */
     get isFavoriteBerry(): boolean {
-        let types: PokemonType[] = [];
-        const param = this.param;
-
-        switch (param.fieldIndex) {
-            case allFavoriteFieldIndex: return true;
-            case noFavoriteFieldIndex: return false;
-            // Greengrass Isle
-            case 0: types = param.favoriteType; break;
-            // Greengrass Isle (Expert)
-            case 7: types = param.favoriteType; break;
-            default: types = getFavoriteBerries(param.fieldIndex); break;
-        }
-
+        const {types} = getCurrentFavoriteBerries(this.param);
         return types.includes(this.iv.pokemon.type);
     }
+}
+
+/** Reason why the berry was set */
+export type BerryReason = "set for event"|"set for field"|"random";
+
+/** 
+ * Returns the current favorite berries and the reasons they were set.
+ * 
+ * @param parameter - A StrengthParameter object.
+ * @returns An object containing:
+ *   - types: An array of Pokémon types.
+ *   - reasons: An array of reasons explaining why each berry type was selected. 
+ *     Possible values:
+ *       * "set for event" – Berry type was fixed by the current event.
+ *       * "set for field" – Berry type was fixed based on the field index.
+ *       * "random" – Berry type is randomly chosen (not fixed).
+ */
+export function getCurrentFavoriteBerries(parameter: StrengthParameter):
+    {
+        types: PokemonType[],
+        reasons: BerryReason[],
+    }
+{
+    const eventBonus = getEventBonus(parameter.event, parameter.customEventBonus);
+    const eventFixedTypes = eventBonus?.fixedBerries ?? [];
+    const eventFixedAreas = eventBonus?.fixedAreas ?? [];
+    const defaultAreaBerries = getFavoriteBerries(parameter.fieldIndex);
+    let types: PokemonType[] = [];
+    let reasons: BerryReason[] = ["random", "random", "random"];
+    if (eventFixedAreas.includes(parameter.fieldIndex) &&
+        eventFixedTypes.length === 3
+    ) {
+        // type is fixed by the current selected event
+        reasons = ["set for event", "set for event", "set for event"];
+        types = parameter.favoriteType;
+    }
+    else if (defaultAreaBerries.length === 3) {
+        // type is fixed by the current area
+        reasons = ["set for field", "set for field", "set for field"];
+        types = defaultAreaBerries;
+    }
+    else {
+        // type is selectable
+        types = parameter.favoriteType;
+    }
+    return {types, reasons};
 }
 
 /**
