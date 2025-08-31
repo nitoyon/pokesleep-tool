@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import IvState, { IvAction } from '../IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import PeriodSelect from './PeriodSelect';
+import TextLikeButton from '../../common/TextLikeButton';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
 import {
@@ -23,6 +24,13 @@ const StrengthView = React.memo(({state, dispatch}: {
     const onEditClick = React.useCallback(() => {
         dispatch({type: "changeLowerTab", payload: {index: 2}});
     }, [dispatch]);
+
+    const onCampTicketClick = React.useCallback(() => {
+        dispatch({type: "changeParameter", payload: { parameter: {
+            ...parameter,
+            isGoodCampTicketSet: !parameter.isGoodCampTicketSet,
+        }}});
+    }, [dispatch, parameter]);
 
     let area: React.ReactNode, fieldBonus: React.ReactNode;
     if (parameter.fieldIndex === allFavoriteFieldIndex) {
@@ -63,7 +71,10 @@ const StrengthView = React.memo(({state, dispatch}: {
                     <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
-                    <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
+                    {parameter.period > 0 && <li>
+                        <>{t('good camp ticket (short)')}: </>
+                        <TextLikeButton onClick={onCampTicketClick} style={{width: '2rem'}}>{t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</TextLikeButton>
+                    </li>}
                     {isEventScheduled && <li>{parameter.event === 'none' ? t('no event') :
                         parameter.event === 'advanced' ? t('event') + ': ' + t('events.advanced') :
                         t('events.' + parameter.event)}</li>}
