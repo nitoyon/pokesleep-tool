@@ -32,10 +32,10 @@ const SelectEx = React.memo(({
         }
 
         const value = child.props.value as string;
-        if (value !== null) {
+        if (value !== null && value !== undefined) {
             onChange(value);
+            onClose();
         }
-        onClose();
     }, [onChange, onClose]);
 
     const childrenArray = React.Children.toArray(children);

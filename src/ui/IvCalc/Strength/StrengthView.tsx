@@ -2,10 +2,12 @@ import React from 'react';
 import { styled } from '@mui/system';
 import IvState, { IvAction } from '../IvState';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
+import PeriodSelect from './PeriodSelect';
+import TextLikeButton from '../../common/TextLikeButton';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
 import {
-    allFavoriteFieldIndex, noFavoriteFieldIndex, whistlePeriod,
+    allFavoriteFieldIndex, noFavoriteFieldIndex,
 } from '../../../util/PokemonStrength';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +24,13 @@ const StrengthView = React.memo(({state, dispatch}: {
     const onEditClick = React.useCallback(() => {
         dispatch({type: "changeLowerTab", payload: {index: 2}});
     }, [dispatch]);
+
+    const onCampTicketClick = React.useCallback(() => {
+        dispatch({type: "changeParameter", payload: { parameter: {
+            ...parameter,
+            isGoodCampTicketSet: !parameter.isGoodCampTicketSet,
+        }}});
+    }, [dispatch, parameter]);
 
     let area: React.ReactNode, fieldBonus: React.ReactNode;
     if (parameter.fieldIndex === allFavoriteFieldIndex) {
@@ -50,20 +59,6 @@ const StrengthView = React.memo(({state, dispatch}: {
     }
     fieldBonus = <small> ({parameter.fieldBonus}%)</small>;
 
-    let period: string = "ー";
-    switch (parameter.period) {
-        case whistlePeriod: period = t('whistle'); break;
-        case 1: period = t('1hour'); break;
-        case 3: period = t('3hours'); break;
-        case 8: period = t('8hours'); break;
-        case 16: period = t('16hours'); break;
-        case 24: period = t('1day'); break;
-        case 168: period = t('1week'); break;
-        case -10: period = t('help x10'); break;
-        case -30: period = t('help x30'); break;
-        case -100: period = t('help x100'); break;
-    }
-
     const isEventScheduled = getActiveHelpBonus(new Date()).length > 0 || parameter.event !== 'none';
 
     return (<div>
@@ -73,10 +68,13 @@ const StrengthView = React.memo(({state, dispatch}: {
             <StrengthParameterPreview>
                 <ul>
                     <li>{area}{fieldBonus}</li>
-                    <li>{period}</li>
+                    <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
-                    <li>{t('good camp ticket (short)')}: {t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</li>
+                    {parameter.period > 0 && <li>
+                        <>{t('good camp ticket (short)')}: </>
+                        <TextLikeButton onClick={onCampTicketClick} style={{width: '2rem'}}>{t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</TextLikeButton>
+                    </li>}
                     {isEventScheduled && <li>{parameter.event === 'none' ? t('no event') :
                         parameter.event === 'advanced' ? t('event') + ': ' + t('events.advanced') :
                         t('events.' + parameter.event)}</li>}
@@ -106,7 +104,11 @@ const StrengthParameterPreview = styled('div')({
             paddingRight: '1rem',
             '&:last-child': {
                 paddingRight: 0,
-            }
+            },
+            '& > button.MuiButtonBase-root': {
+                fontSize: '0.8rem',
+                lineHeight: 1.5,
+            },
         },
     },
     '& > button': {
