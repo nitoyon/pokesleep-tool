@@ -64,7 +64,16 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     return 6;
 }
 
-export function getSkillValue(skill: MainSkillName, skillLevel: number): number {
+/**
+ * Get skill value for the given skill and  skill level.
+ * @param skill Name of the main skill.
+ * @param skillLevel Level of the main skill.
+ * @param species Number of different species of same type Pokémon on the team.
+ * @returns Skill value.
+ */
+export function getSkillValue(skill: MainSkillName, skillLevel: number,
+    species: number = 3,
+): number {
     // verification
     if (skillLevel !== Math.floor(skillLevel)) {
         throw new Error(`invalid skill level: ${skillLevel}`);
@@ -118,8 +127,14 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number): number 
         return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
     }
     if (skill === "Helper Boost") {
-        // Assume that 3 same type pokemon exists in the party
-        return [3, 4, 5, 6, 7, 8][skillLevel - 1];
+        switch (species) {
+            case 1: return [2, 3, 3, 4, 4, 5][skillLevel - 1];
+            case 2: return [2, 3, 3, 4, 5, 6][skillLevel - 1];
+            case 3: return [3, 4, 5, 6, 7, 8][skillLevel - 1];
+            case 4: return [4, 5, 6, 7, 8, 9][skillLevel - 1];
+            case 5: return [6, 7, 8, 9, 10, 11][skillLevel - 1];
+            default: throw new Error(`invalid species count: ${species}`);
+        }
     }
     if (skill === "Dream Shard Magnet S") {
         return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
