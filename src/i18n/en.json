@@ -439,6 +439,15 @@
         "always 81%+": "Always 81%+",
         "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
 
+        "help yield": "Yield",
+        "help yield description": "The average number of berries and ingredients collected over {{n}} helps.",
+        "helps for cap": "Required helps for cap",
+        "helps for cap description": "The average $t(help count) needed to reach the 999 $t(berry) and $t(ingredient) cap, with the effect of $t(skills.Helper Boost), after entering $t(sneaky snacking) mode due to a full $t(carry limit).",
+        "required helper boost": "Helper boost for cap",
+        "required helper boost description": "The average number of $t(skills.Helper Boost) triggers needed to reach the 999 $t(berry) and $t(ingredient) cap, after entering $t(sneaky snacking) mode due to a full $t(carry limit).",
+        "different species": "Different species of same type",
+        "helps per skill": "$t(help count) per skill trigger",
+
         "pokemon": "Pokémon",
         "level": "Level",
         "berry": "Berry",
@@ -468,6 +477,8 @@
         "help count per hour": "{{n}} times/hour",
         "probability": "Prob",
         "times unit": " times",
+        "help unit": " helps",
+        "berry unit": " drops",
         "ingredients unit": " ingredients",
 
         "evolved once": "Evolved once",

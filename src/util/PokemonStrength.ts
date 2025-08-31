@@ -103,6 +103,8 @@ export interface IngredientStrength {
  * Represents the result of strength calculation.
  */
 export interface StrengthResult {
+    /** The bonus effect that was used to calculate this result */
+    bonus: BonusEffectsWithReason;
     /** energy and help count */
     energy: EnergyResult;
     /** Total strength (berry + ingredient + skill) */
@@ -372,7 +374,7 @@ class PokemonStrength {
         const totalStrength = ingStrength + berryTotalStrength + skillStrength + skillStrength2;
 
         return {
-            energy, totalStrength, notFullHelpCount, fullHelpCount,
+            bonus, energy, totalStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength, skillValue2, skillStrength2,

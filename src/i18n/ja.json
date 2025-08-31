@@ -429,6 +429,15 @@
         "always 81%+": "常に81%以上",
         "charge energy not implemented": "現在、げんきチャージSによるげんき回復は考慮されていません。",
 
+        "help yield": "$t(berry)$t(ingredient)数",
+        "help yield description": "おてつだい{{n}}回で拾う「$t(berry)・$t(ingredient)」の平均個数。",
+        "helps for cap": "最大貯め必要$t(help count)",
+        "helps for cap description": "999 個まで$t(berry)・$t(ingredient)を貯めるために必要な平均$t(help count) ($t(sneaky snacking)になってからの$t(help count))。",
+        "required helper boost": "最大貯め必要おてブ回数",
+        "required helper boost description": "999 個まで$t(berry)・$t(ingredient)を貯めるために必要な$t(skills.Helper Boost)のおおよその発動回数 ($t(sneaky snacking)になってからの$t(skill count))。",
+        "different species": "異なる種類の同タイプポケモン数",
+        "helps per skill": "スキル1回の$t(help count)",
+
         "pokemon": "ポケモン",
         "level": "レベル",
         "name": "名前",
@@ -458,6 +467,8 @@
         "help count per hour": "1時間に {{n}} 回",
         "probability": "確率",
         "times unit": "回",
+        "help unit": "回",
+        "berry unit": "個",
         "ingredients unit": "食材",
 
         "evolved once": "1回進化",

@@ -425,6 +425,15 @@
         "always 81%+": "항상 81% 이상",
         "charge energy not implemented": "현재로서는, 기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
 
+        "help yield": "$t(berry)$t(ingredient)수",
+        "help yield description": "도움 {{n}}회당 획득하는 $t(berry)・$t(ingredient)의 평균 수량입니다.",
+        "helps for cap": "최대 필요 $t(help count)",
+        "helps for cap description": "$t(berry)・$t(ingredient)를 999개까지 모으기 위해 필요한 평균 $t(help count) (Sneaky Snacking 상태 이후의 $t(help count)).",
+        "required helper boost": "최대 필요 $t(skills.Helper Boost)수",
+        "required helper boost description": "$t(berry)・$t(ingredient)를 999개까지 모으기 위해 필요한 대략적인 $t(skills.Helper Boost) 발동 횟수 (Sneaky Snacking 상태 이후의 $t(skill count)).",
+        "different species": "같은 타입의 서로 다른 포켓몬 수",
+        "helps per skill": "스킬 1회당 $t(help count)",
+
         "pokemon": "포켓몬",
         "level": "레벨",
         "name": "이름",
@@ -454,6 +463,8 @@
         "help count per hour": "1시간에 {{n}} 회",
         "probability": "확률",
         "times unit": "회",
+        "help unit": "회",
+        "berry unit": "개",
         "ingredients unit": "개",
 
         "evolved once": "한 번 진화함",
