@@ -19,6 +19,7 @@ import IngHelpDialog from './IngHelpDialog';
 import IngredientIcon from '../IngredientIcon';
 import SkillHelpDialog from './SkillHelpDialog';
 import SpecialtyButton from '../SpecialtyButton';
+import HelpStackDialog, { getHelpYield, getRequiredHelperBoost } from './HelpStackDialog';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -165,6 +166,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const [berryHelpOpen, setBerryHelpOpen] = React.useState(false);
     const [ingHelpOpen, setIngHelpOpen] = React.useState(false);
     const [skillHelpOpen, setSkillHelpOpen] = React.useState(false);
+    const [helpStockDialogOpen, setHelpStockDialogOpen] = React.useState(false);
 
     const strength = new PokemonStrength(pokemonIv, settings, decendantId);
     const result = strength.calculate();
@@ -198,6 +200,12 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const onEfficiencyInfoClick = React.useCallback(() => {
         dispatch({type: "openEnergyDialog"});
     }, [dispatch]);
+    const onStockInfoClick = React.useCallback(() => {
+        setHelpStockDialogOpen(true);
+    }, [])
+    const onHelpStockDialogClose = React.useCallback(() => {
+        setHelpStockDialogOpen(false);
+    }, []);
     const onEfficiencyDialogClose = React.useCallback(() => {
         dispatch({type: "closeEnergyDialog"});
     }, [dispatch]);
@@ -300,6 +308,11 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </>}
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>}
+        {settings.period < 0 && <footer>
+            <span>{t('help yield')}: {round1(getHelpYield(settings, strength, result))}{t('berry unit')}/{Math.abs(settings.period)}{t('help unit')}</span>
+            <span>{t('required helper boost')}: {round1(getRequiredHelperBoost(settings, strength, result))}</span>
+            <InfoButton onClick={onStockInfoClick}/>
+        </footer>}
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
             strength={strength} result={result}/>
         <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
@@ -308,6 +321,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             dispatch={dispatch} strength={strength} result={result}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
             iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
+        <HelpStackDialog open={helpStockDialogOpen} onClose={onHelpStockDialogClose}
+            parameter={settings} strength={strength} result={result} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;
 });
 
