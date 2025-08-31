@@ -7,7 +7,7 @@ import TextLikeButton from '../../common/TextLikeButton';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
 import {
-    allFavoriteFieldIndex, noFavoriteFieldIndex,
+    allFavoriteFieldIndex, noFavoriteFieldIndex, whistlePeriod,
 } from '../../../util/PokemonStrength';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -71,7 +71,7 @@ const StrengthView = React.memo(({state, dispatch}: {
                     <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
-                    {parameter.period > 0 && <li>
+                    {parameter.period !== whistlePeriod && <li>
                         <>{t('good camp ticket (short)')}: </>
                         <TextLikeButton onClick={onCampTicketClick} style={{width: '2rem'}}>{t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</TextLikeButton>
                     </li>}

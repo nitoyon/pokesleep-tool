@@ -197,7 +197,8 @@ class Energy {
                 sleepTime: 0, events: [], efficiencies: [],
                 canBeFullInventory: false, timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
-                carryLimit: this._iv.carryLimit, skillRatio: 0,
+                carryLimit: Math.ceil(this._iv.carryLimit * (param.isGoodCampTicketSet ? 1.2 : 1)),
+                skillRatio: 0,
                 helpCount: { awake: 0, asleepNotFull: 0, asleepFull: 0 },
                 averageEfficiency: { total: 0, awake: 0, asleep: 0 },
             };
