@@ -77,6 +77,12 @@ export interface StrengthParameter extends EnergyParameter {
      * Average recipe level (1 - 65).
      */
     recipeLevel: 1|10|20|30|40|50|55|60|65;
+
+    /** Skill level of the 'Helper Boost' skill */
+    helperBoostLevel: number;
+
+    /** Number of different species of same type Pokémon on the team */
+    helperBoostSpecies: number;
 }
 
 /**
@@ -672,6 +678,8 @@ export function createStrengthParameter(
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
+        helperBoostLevel: 6,
+        helperBoostSpecies: 4,
         customEventBonus: {
             target: {},
             effects: {
@@ -780,6 +788,22 @@ export function loadStrengthParameter(): StrengthParameter {
         if (json.recipeBonus === 6 || json.recipeBonus === 11) { json.recipeBonus = 19; }
         if (json.recipeBonus === 17) { json.recipeBonus = 21; }
         ret.recipeBonus = json.recipeBonus;
+    }
+    if (typeof(json.recipeLevel) === "number" &&
+        [1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)) {
+        ret.recipeLevel = json.recipeLevel;
+    }
+    if (typeof(json.helperBoostLevel) === "number" &&
+        json.helperBoostLevel > 0 &&
+        json.helperBoostLevel <= getMaxSkillLevel('Helper Boost')
+    ) {
+        ret.helperBoostLevel = json.helperBoostLevel;
+    }
+    if (typeof(json.helperBoostSpecies) === "number" &&
+        json.helperBoostSpecies > 0 &&
+        json.helperBoostSpecies <= 6
+    ) {
+        ret.helperBoostSpecies = json.helperBoostSpecies;
     }
     if (typeof(json.recipeLevel) === "number" &&
         [1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)) {
