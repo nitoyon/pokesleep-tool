@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent,
-    Divider, FormControl, MenuItem,
+    FormControl, MenuItem,
     Select, SelectChangeEvent, Snackbar, Switch, Typography,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
@@ -9,6 +9,7 @@ import { IvAction } from '../IvState';
 import AreaBonusControl from './AreaBonusControl';
 import InfoButton from '../InfoButton';
 import FavoriteBerrySelect from './FavoriteBerrySelect';
+import PeriodSelect from './PeriodSelect';
 import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
 import { getActiveHelpBonus } from '../../../data/events';
@@ -16,8 +17,6 @@ import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
 } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
-
-type PeriodType = "1hour"|"3hours"|"8hours"|"16hours"|"1day"|"1week"|"whistle";
 
 const StyledSettingForm = styled('div')({
     padding: '0 1rem',
@@ -74,9 +73,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
 
-    const onPeriodChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, period: parseInt(e.target.value as PeriodType, 10)});
-    }, [onChange, value]);
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
         onChange({...value, fieldBonus});
     }, [onChange, value]);
@@ -153,19 +149,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     return <StyledSettingForm>
         <section>
             <label>{t('period')}:</label>
-            <Select variant="standard" onChange={onPeriodChange} value={value.period.toString()}>
-                <MenuItem value={1}>{t('1hour')}</MenuItem>
-                <MenuItem value={3}>{t('3hours')}</MenuItem>
-                <MenuItem value={8}>{t('8hours')}</MenuItem>
-                <MenuItem value={16}>{t('16hours')}</MenuItem>
-                <MenuItem value={24}>{t('1day')}</MenuItem>
-                <MenuItem value={168}>{t('1week')}</MenuItem>
-                <MenuItem value={whistlePeriod}>{t('whistle')}</MenuItem>
-                <Divider/>
-                <MenuItem value={-10}>{t('help x10')}</MenuItem>
-                <MenuItem value={-30}>{t('help x30')}</MenuItem>
-                <MenuItem value={-100}>{t('help x100')}</MenuItem>
-            </Select>
+            <PeriodSelect dispatch={dispatch} value={value}/>
         </section>
         <section>
             <label>{t('research area')}:</label>

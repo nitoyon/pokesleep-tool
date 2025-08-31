@@ -430,6 +430,15 @@
         "always 81%+": "始終超過81%",
         "charge energy not implemented": "目前不考慮活力填充 S 帶來的活力回復。",
 
+        "help yield": "$t(berry)$t(ingredient)數量",
+        "help yield description": "每$t(help count)次可獲得的$t(berry)和$t(ingredient)的平均數量。",
+        "helps for cap": "最大所需$t(help count)",
+        "helps for cap description": "為了將$t(berry)和$t(ingredient)儲存至999個所需的平均$t(help count)（進入Sneaky Snacking狀態後的$t(help count)）。",
+        "required helper boost": "最大所需$t(skills.Helper Boost)數",
+        "required helper boost description": "為了將$t(berry)和$t(ingredient)儲存至999個所需的大致$t(skills.Helper Boost)觸發次數（進入Sneaky Snacking狀態後的$t(skill count)）。",
+        "different species": "同屬性但不同種類的寶可夢數量",
+        "helps per skill": "技能1次 $t(help count)",
+
         "pokemon": "寶可夢",
         "level": "等級",
         "name": "名字",
@@ -459,6 +468,8 @@
         "help count per hour": "每小時 {{n}} 次",
         "probability": "機率",
         "times unit": "次",
+        "help unit": "次",
+        "berry unit": "個",
         "ingredients unit": "食材",
 
         "evolved once": "進化一次",
