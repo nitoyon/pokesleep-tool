@@ -22,7 +22,7 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BoxItemEditDialog = React.memo(({open, boxItem, isEdit, onClose, onChange}: {
+const BoxItemDialog = React.memo(({open, boxItem, isEdit, onClose, onChange}: {
     open: boolean,
     boxItem: PokemonBoxItem|null,
     isEdit: boolean,
@@ -145,4 +145,4 @@ const StyledDialog = styled(Dialog)({
     },
 });
 
-export default BoxItemEditDialog;
+export default BoxItemDialog;
