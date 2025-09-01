@@ -104,7 +104,7 @@ const ResearchCalcApp = React.memo(() => {
                 <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
             </div>}
         {state.lowerTabIndex === 1 &&
-            <BoxView items={state.box.items}
+            <BoxView items={state.box.items} iv={state.pokemonIv}
                 selectedId={state.selectedItemId} dispatch={dispatch}
                 parameter={state.parameter}/>}
         {state.lowerTabIndex === 2 &&

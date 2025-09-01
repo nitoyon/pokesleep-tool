@@ -30,8 +30,9 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
-const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
+const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
     items: PokemonBoxItem[],
+    iv: PokemonIv,
     selectedId: number,
     parameter: StrengthParameter,
     dispatch: (action: IvAction) => void,
@@ -41,7 +42,6 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const [candyOpen, setCandyOpen] = React.useState(false);
-    const [candyIv, setCandyIv] = React.useState(new PokemonIv('Bulbasaur'));
 
     const onAddClick = React.useCallback(() => {
         dispatch({type: "add"});
@@ -69,12 +69,17 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         setFilterConfig(boxFilterConfig);
     }, []);
     const onCandyClick = React.useCallback((item: PokemonBoxItem) => {
-        setCandyIv(item.iv);
         setCandyOpen(true);
     }, []);
     const onCandyDialogClose = React.useCallback(() => {
         setCandyOpen(false);
     }, []);
+    const onIvChange = React.useCallback((iv: PokemonIv) => {
+        const selectedItem = items.find(x => x.id === selectedId);
+        if (selectedItem !== undefined) {
+            dispatch({type: "updateIv", payload: {iv}});
+        }
+    }, [items, dispatch, selectedId]);
 
     // filter
     const filtered = React.useMemo(() => filterConfig.filter(items, t),
@@ -140,9 +145,9 @@ const BoxView = React.memo(({items, selectedId, parameter, dispatch}: {
         </div>
         <BoxFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={filterConfig} onChange={onFilterChange}/>
-        <CandyDialog iv={candyIv} open={candyOpen}
+        <CandyDialog id={selectedId} iv={iv} open={candyOpen}
             dstLevel={parameter.level === 0 ? undefined : parameter.level}
-            onClose={onCandyDialogClose}/>
+            onChange={onIvChange} onClose={onCandyDialogClose}/>
     </>;
 });
 

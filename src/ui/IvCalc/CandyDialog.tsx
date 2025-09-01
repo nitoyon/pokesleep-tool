@@ -20,13 +20,23 @@ import { useTranslation } from 'react-i18next';
 const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
-const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
+const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
+    /**
+     * Id to detect item has been changed
+     *
+     * When in the box, this ID is the same as the Pokémon's ID in the box.
+     * When not in the box, this ID is the same as the Pokémon's level.
+     */
+    id: number,
     iv: PokemonIv,
     dstLevel?: number,
     open: boolean,
-    onClose: () => void }
+    onChange: (iv: PokemonIv) => void,
+    onClose: () => void,
+}
 ) => {
     const { t } = useTranslation();
+    const [currentId, setCurrentId] = React.useState(id);
     const [currentLevel, setCurrentLevel] = React.useState(iv.level);
     const [expGot, setExpGot] = React.useState(0);
     const [isEmpty, setIsEmpty] = React.useState(false);
@@ -38,6 +48,13 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
 
     React.useEffect(() => {
         if (open) {
+            // Reset state when current level has been changed
+            if (id === currentId) {
+                setShouldRender(true);
+                return;
+            }
+
+            setCurrentId(id);
             setCurrentLevel(iv.level);
             setExpGot(0);
             setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
@@ -62,7 +79,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
         else {
             setShouldRender(false);
         }
-    }, [iv, dstLevel, open]);
+    }, [id, iv, currentId, currentLevel, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((e: any) => {
         const value = parseInt(e.target.value, 10);
@@ -73,7 +90,8 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onClose }: {
         setCurrentLevel(level);
         setExpGot(0);
         setMaxExpLeft(calcExp(level, level + 1, iv));
-    }, [iv]);
+        onChange(iv.changeLevel(level));
+    }, [iv, onChange]);
 
     const onExpSliderChange = React.useCallback((e: any) => {
         if (e === null) {
