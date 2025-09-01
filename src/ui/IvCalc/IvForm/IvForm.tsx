@@ -124,7 +124,8 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <span style={{paddingRight: '0.7rem'}}>{t("sleeping time shared")}:</span>
             <SleepingTimeControl value={pokemonIv.ribbon} onChange={onRibbonChange}/>
         </div>
-        <CandyDialog iv={pokemonIv} open={candyDialogOpen} onClose={onCloseCandyDialog}/>
+        <CandyDialog id={pokemonIv.level} iv={pokemonIv} open={candyDialogOpen}
+            onChange={onChange} onClose={onCloseCandyDialog}/>
     </StyledInputForm>;
 });
 
