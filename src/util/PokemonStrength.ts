@@ -83,6 +83,29 @@ export interface StrengthParameter extends EnergyParameter {
 
     /** Number of different species of same type Pokémon on the team */
     helperBoostSpecies: number;
+
+    /** Berry burst team configuration */
+    berryBurstTeam: {
+        /** Whether to calculate automatically using the default team */
+        auto: boolean,
+        /**
+         * Number of different Pokémon species of the same type on the team.
+         *
+         * - Used only when the main skill is "Energy for Everyone S (Lunar Blessing)".
+         * - Ignored if `auto` is set to true.
+         */
+        species: number,
+        /** Custom team members (0 - 4) */
+        members: BerryBurstTeamMember[];
+    },
+}
+
+/** Custom team member to calculate berry burst */
+interface BerryBurstTeamMember {
+    /** Berry type */
+    type: PokemonType;
+    /** Pokemon's level */
+    level: number;
 }
 
 /**
@@ -682,6 +705,16 @@ export function createStrengthParameter(
         recipeLevel: 30,
         helperBoostLevel: 6,
         helperBoostSpecies: 4,
+        berryBurstTeam: {
+            auto: true,
+            species: 3,
+            members: [
+                { type: "electric", level: 50 },
+                { type: "water", level: 50 },
+                { type: "bug", level: 50 },
+                { type: "psychic", level: 50 },
+            ],
+        },
         customEventBonus: {
             target: {},
             effects: {
@@ -810,6 +843,26 @@ export function loadStrengthParameter(): StrengthParameter {
     if (typeof(json.recipeLevel) === "number" &&
         [1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)) {
         ret.recipeLevel = json.recipeLevel;
+    }
+
+    if (typeof(json.berryBurstTeam) === "object") {
+        if (typeof(json.berryBurstTeam.auto) === "boolean") {
+            ret.berryBurstTeam.auto = json.berryBurstTeam.auto;
+        }
+        if (Array.isArray(json.berryBurstTeam.members)) {
+            for (let i = 0; i < 4; i++) {
+                if (typeof(json.berryBurstTeam.members[i]) !== "object") {
+                    continue;
+                }
+                if (PokemonTypes.includes(json.berryBurstTeam.members[i].type)) {
+                    ret.berryBurstTeam.members[i].type = json.berryBurstTeam.members[i].type;
+                }
+                if (json.berryBurstTeam.members[i].level > 0 &&
+                    json.berryBurstTeam.members[i].level <= 100) {
+                    ret.berryBurstTeam.members[i].level = json.berryBurstTeam.members[i].level;
+                }
+            }
+        }
     }
 
     const eventNames = events.bonus.map(x => x.name);
