@@ -1,19 +1,29 @@
 import React from 'react';
+import pokemons from '../../../data/pokemons';
 import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
+import { PokemonType } from '../../../data/pokemons';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
+import PokemonIv from '../../../util/PokemonIv';
+import PokemonStrength, {
+    StrengthResult, getBerryBurstTeam, whistlePeriod,
+} from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
 import { Button, Collapse, Dialog, DialogActions, DialogContent,
-    FormControl, ToggleButtonGroup, ToggleButton } from '@mui/material';
+    FormControl, MenuItem, Switch, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import LevelSelector from '../IvForm/LevelSelector';
+import InfoButton from '../InfoButton';
 import IngredientIcon from '../IngredientIcon';
+import TypeSelect from '../TypeSelect';
 import MainSkillIcon from '../MainSkillIcon';
+import SelectEx from '../../common/SelectEx';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import { IvAction } from '../IvState';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
 import { useTranslation, Trans } from 'react-i18next';
 import i18next from 'i18next'
+import BerryStrengthDialog from './BerryStrengthDialog';
 
 const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}: {
     open: boolean,
@@ -23,6 +33,19 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     result: StrengthResult,
 }) => {
     const { t } = useTranslation();
+    const [berryStrengthOpen, setBerryStrengthOpen] = React.useState(false);
+    const [berryIv, setBerryIv] = React.useState(strength.pokemonIv);
+    const [berryBonus, setBerryBonus] = React.useState(1);
+    const onBerryInfoClick = React.useCallback((type: PokemonType, level: number) => {
+        setBerryStrengthOpen(true);
+        const iv = new PokemonIv(pokemons.find(x => x.type === type)?.name ?? "Bulbasaur");
+        iv.level = level;
+        setBerryIv(iv);
+        setBerryBonus(new PokemonStrength(iv, strength.parameter).berryStrengthBonus);
+    }, [strength.parameter]);
+    const onBerryStrenthClose = React.useCallback(() => {
+        setBerryStrengthOpen(false);
+    }, []);
 
     const onSkillLevelChange = React.useCallback((e: any, value: string|null) => {
         if (value === null) {
@@ -133,6 +156,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </FormControl>
             </section>
         }
+        {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
         <Collapse in={!isCountOnly &&
             (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
             skillLevel !== iv.skillLevel}>
@@ -150,6 +174,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
+        <BerryStrengthDialog open={berryStrengthOpen} onClose={onBerryStrenthClose}
+            iv={berryIv} fieldBonus={settings.fieldBonus} berryBonus={berryBonus}/>
     </StyledInfoDialog>;
 });
 
@@ -383,6 +409,111 @@ function getEnergyRecoveryValueText(value: number,
 function getNormalSkillValueText(t: typeof i18next.t, valueText: string):
 [React.ReactNode, React.ReactNode] {
     return [t('value per skill', { value: valueText}), null];
+}
+
+function getBerryBurstConfigHtml(strength: PokemonStrength,
+    dispatch: React.Dispatch<IvAction>,
+    onBerryInfoClick: (type: PokemonType, level: number) => void,
+    t: typeof i18next.t
+) {
+    const settings = strength.parameter;
+
+    const showBurstConfig = strength.pokemonIv.pokemon.skill.startsWith("Berry Burst") ||
+        strength.pokemonIv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)";
+    if (!showBurstConfig) {
+        return <></>;
+    }
+
+    const iv = strength.pokemonIv;
+    const auto = settings.berryBurstTeam.auto;
+    const burstTeam = getBerryBurstTeam(iv, settings);
+    const maxSpecies = burstTeam.filter(x => x.type === iv.pokemon.type).length + 1;
+    const species = auto ? maxSpecies : settings.berryBurstTeam.species;
+
+    const onBerryBurstAutoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                auto: !e.target.checked,
+            },
+        }}});
+    };
+    const onBerryBurstTypeChange = (index: number, type: PokemonType) => {
+        const members = [...settings.berryBurstTeam.members];
+        members[index].type = type;
+
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                members,
+            },
+        }}});
+    };
+    const onBerryBurstLevelChange = (index: number, level: number) => {
+        const members = [...settings.berryBurstTeam.members];
+        members[index].level = level;
+
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                members,
+            },
+        }}});
+    };
+    const onBerryBurstSpeciesChange = (value: string) => {
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                species: parseInt(value, 10),
+            },
+        }}});
+    };
+
+    return <>
+        <section style={{marginTop: '0.5rem'}}>
+            <label>{t('events.advanced')}:</label>
+            <Switch checked={!auto} size="small"
+                onChange={onBerryBurstAutoChange}/>
+        </section>
+        <section style={{paddingLeft: '1rem'}}>
+            <label>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</label>
+            <span style={{color: '#999'}}>
+                <TypeSelect size="small" disabled
+                    type={strength.pokemonIv.pokemon.type}
+                    onChange={() => {}}/>
+                <span style={{padding: '0 0.2rem 0 0.6rem'}}>Lv.</span>
+                {strength.pokemonIv.level}
+                <InfoButton onClick={() => onBerryInfoClick(iv.pokemon.type, iv.level)}/>
+            </span>
+        </section>
+        {[0, 1, 2, 3].map(i => <section key={i} style={{paddingLeft: '1rem'}}>
+            <label>{t('other team member')} {i + 1}:</label>
+            <span style={{color: auto ? '#999' : 'inherit'}}>
+                <TypeSelect size="small" disabled={auto}
+                    type={burstTeam[i].type}
+                    onChange={type => onBerryBurstTypeChange(i, type)}/>
+                <span style={{padding: '0 0.2rem 0 0.6rem'}}>Lv.</span>
+                {auto ? burstTeam[i].level : <LevelSelector value={burstTeam[i].level}
+                    onChange={level => onBerryBurstLevelChange(i, level)}/>}
+                <InfoButton onClick={() => onBerryInfoClick(burstTeam[i].type, burstTeam[i].level)}/>
+            </span>
+        </section>)}
+        {iv.pokemon.name === "Cresselia" && <section style={{paddingLeft: '1rem'}}>
+            <label>{t('different species')}:</label>
+            <span style={{color: '#999'}}>
+                {auto ? species :
+                <SelectEx value={species.toString()}
+                    sx={{padding: '0 0.5rem'}}
+                    onChange={onBerryBurstSpeciesChange}>
+                    <MenuItem dense value="1">1</MenuItem>
+                    {maxSpecies > 1 && <MenuItem dense value="2">2</MenuItem>}
+                    {maxSpecies > 2 && <MenuItem dense value="3">3</MenuItem>}
+                    {maxSpecies > 3 && <MenuItem dense value="4">4</MenuItem>}
+                    {maxSpecies > 4 && <MenuItem dense value="5">5</MenuItem>}
+                </SelectEx>}
+            </span>
+        </section>}
+    </>;
 }
 
 export default SkillHelpDialog;

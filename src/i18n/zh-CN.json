@@ -298,6 +298,7 @@
         "help count per pokemon": "每只宝可梦的$t(help count)",
         "berry strength per berry burst": "收集的浆果$t(strength2)",
         "additional ingredients": "更多食材",
+        "other team member": "其他编组成员",
         "max skill level affected": "由于已启用「$t(calc with max skill level)」，因此以技能等级 <level/> 进行计算。",
         "skill level bonus affected": "由于 <bonus/>，以技能等级 <level/> 进行计算。",
         "skill strength": "技能 能量 (由主技能的种类和技能等级决定)",

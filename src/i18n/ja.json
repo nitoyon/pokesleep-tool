@@ -300,6 +300,7 @@
         "help count per pokemon": "ポケモン1匹の$t(help count)",
         "berry strength per berry burst": "集めてくるきのみ$t(strength2)",
         "additional ingredients": "追加食材数",
+        "other team member": "他のメンバー",
         "max skill level affected": "[$t(calc with max skill level)] が有効になっているため、スキルレベル <level/> で計算しています。",
         "skill level bonus affected": "<bonus/>の効果により、スキルレベル <level/> で計算しています。",
         "skill strength": "スキル エナジー (メインスキルの種類とスキルレベルから決まる値)",
