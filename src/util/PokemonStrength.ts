@@ -735,6 +735,52 @@ export function createStrengthParameter(
 }
 
 /**
+ * Generates the Berry Burst team based on the current Pokémon and parameters.
+ * @param iv The Pokémon with the Berry Burst skill.
+ * @param param The strength parameters, including team settings.
+ * @returns An array of Berry Burst team members.
+ */
+export function getBerryBurstTeam(
+    iv: PokemonIv, param: StrengthParameter
+): BerryBurstTeamMember[] {
+    // Return custom team if auto is disabled
+    if (!param.berryBurstTeam.auto) {
+        return param.berryBurstTeam.members;
+    }
+
+    // Auto-generate team based on current Pokémon and preferences
+    // 1. Use the same level as the current Pokémon
+    const level = iv.level;
+
+    // 2. Get the current favorite berry types
+    const favoriteTypes = getCurrentFavoriteBerries(param).types;
+
+    // 3. Exclude the current Pokémon's type from the favorite types
+    const otherFavoriteTypes = favoriteTypes
+        .filter(type => type !== iv.pokemon.type);
+
+    // 4. Select a healer type from the favorites (fallback to "psychic")
+    const healerType = favoriteTypes.find(type =>
+        type === "psychic" || type === "electric" || type === "fairy"
+    ) ?? "psychic";
+
+    // Return the generated team
+    return [
+        // Member 1: Same type as the current Pokémon
+        { type: iv.pokemon.type, level },
+
+        // Member 2: First favorite type that isn't the same as the current type
+        { type: otherFavoriteTypes.length > 0 ? otherFavoriteTypes[0] : favoriteTypes[0], level },
+
+        // Member 3: Steel-type (Aggron for ingredients or Magnezone to expand pot)
+        { type: "steel", level },
+
+        // Member 4: Healer type
+        { type: healerType, level },
+    ];
+}
+
+/**
  * Load StrengthParameter fron localStorage.
  * @returns Loaded parameter.
  */
