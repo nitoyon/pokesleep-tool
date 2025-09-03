@@ -596,6 +596,10 @@ export const StyledInfoDialog = styled(Dialog)({
                 marginTop: 0,
                 textWrap: 'nowrap',
             },
+            '& > span': {
+                display: 'flex',
+                alignItems: 'center',
+            },
             '& > div > div > button.MuiToggleButton-root': {
                 margin: 0,
                 padding: '0 0.5rem',
