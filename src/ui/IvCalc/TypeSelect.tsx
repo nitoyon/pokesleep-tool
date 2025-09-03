@@ -37,7 +37,8 @@ const TypeSelect = React.memo(({size, type, disabled, deletable, onChange, onCli
         <TypeButton key={t} type={t} size={size} onClick={onSelect} checked={t === type}/>);
 
     return <>
-        <TypeButton ref={anchorRef} type={type} size={size} deletable={deletable}
+        <TypeButton ref={anchorRef} type={type} size={size}
+            deletable={deletable} disabled={disabled}
             onClick={onButtonClick} onDelete={onButtonDelete} checked={false}/>
         <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}>
             <MenuList style={{
