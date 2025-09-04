@@ -455,8 +455,9 @@ export const StyledInfoDialog = styled(Dialog)({
     },
 
     '& .MuiPaper-root': {
-        '& > header': {
+        '& > h2.MuiDialogTitle-root, & > .MuiDialogContent-root > header': {
             margin: '0.5rem 0.5rem 0 0.5rem',
+            padding: 0,
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
             gridGap: '.8rem',
@@ -485,151 +486,155 @@ export const StyledInfoDialog = styled(Dialog)({
                 fontSize: '0.8rem',
             }
         },
-        '& > div.grid': {
-            margin: '0 0 1rem 1.5rem',
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gridGap: '0.7rem 0.5rem',
-            alignItems: 'start',
-            '& > span': {
-                display: 'flex',
-                alignItems: 'center',
-                fontWeight: 'bold',
-                '& > svg': {
-                    width: '15px',
-                    height: '15px',
-                    paddingRight: '4px',
-                },
-                '& > svg.strength': {
-                    width: '18px',
-                    height: '18px',
-                    paddingRight: 0,
-                },
-            },
-            '& > div': {
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                gap: '0.1rem',
-                '& > span.box': {
-                    padding: '0.1rem 0.2rem',
-                },
-                '& > span > span.MuiBadge-root': {
-                    marginRight: 0,
+        '& > .MuiDialogContent-root': {
+            padding: 0,
+
+            '& > div.inggrid': {
+                margin: '0 0 1rem 1.5rem',
+                display: 'grid',
+                gridTemplateColumns: 'auto 1fr',
+                gridGap: '0.7rem 0.5rem',
+                alignItems: 'start',
+                '& > span': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: 'bold',
                     '& > svg': {
-                        paddingTop: '3px',
                         width: '15px',
                         height: '15px',
+                        paddingRight: '4px',
                     },
-                    '& > .MuiBadge-badge': {
-                        top: '18px',
-                        right: '10px',
+                    '& > svg.strength': {
+                        width: '18px',
+                        height: '18px',
+                        paddingRight: 0,
+                    },
+                },
+                '& > div': {
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    gap: '0.1rem',
+                    '& > span.box': {
+                        padding: '0.1rem 0.2rem',
+                    },
+                    '& > span > span.MuiBadge-root': {
+                        marginRight: 0,
+                        '& > svg': {
+                            paddingTop: '3px',
+                            width: '15px',
+                            height: '15px',
+                        },
+                        '& > .MuiBadge-badge': {
+                            top: '18px',
+                            right: '10px',
+                        },
+                    },
+                },
+                '&.ings1, &.ings2': {
+                    fontSize: '0.9rem',
+                    '& > div': {
+                        fontSize: '0.8rem',
+                    },
+                },
+                '&.ings3': {
+                    fontSize: '0.8rem',
+                    '& > div': {
+                        fontSize: '0.7rem',
                     },
                 },
             },
-            '&.ings1, &.ings2': {
+
+            '& > article': {
+                margin: '0.5rem .5rem 0 .5rem',
+                display: 'grid',
+                gridGap: '.5rem',
+                rowGap: '.8rem',
+                gridTemplateColumns: 'max-content 1fr',
                 fontSize: '0.9rem',
                 '& > div': {
-                    fontSize: '0.8rem',
-                },
-            },
-            '&.ings3': {
-                fontSize: '0.8rem',
-                '& > div': {
-                    fontSize: '0.7rem',
-                },
-            },
-        },
-
-        '& > article': {
-            margin: '0.5rem .5rem 0 .5rem',
-            display: 'grid',
-            gridGap: '.5rem',
-            rowGap: '.8rem',
-            gridTemplateColumns: 'max-content 1fr',
-            fontSize: '0.9rem',
-            '& > div': {
-                textAlign: 'right',
-            },
-            '& > span > ul.detail': {
-                margin: '0.2rem 0 0 1rem',
-                padding: 0,
-                fontSize: '0.8rem',
-                '& span.box': {
-                    padding: '0 0.3rem',
-                },
-            },
-            '& > span > div.bbgrid': {
-                display: 'grid',
-                fontSize: '0.8rem',
-                gridTemplateColumns: 'auto auto 1fr',
-                gap: '0 0.1rem',
-                background: '#f0f0f0',
-                borderRadius: '0.3rem',
-                padding: '0.1rem 0.5rem',
-                '& > label': {
-                    fontWeight: 'bold',
-                    color: '#666',
-                },
-                '& > span': {
-                    paddingLeft: '0.8rem',
                     textAlign: 'right',
                 },
-                '& > small': {
-                    paddingLeft: '0.4rem',
+                '& > span > ul.detail': {
+                    margin: '0.2rem 0 0 1rem',
+                    padding: 0,
+                    fontSize: '0.8rem',
+                    '& span.box': {
+                        padding: '0 0.3rem',
+                    },
+                },
+                '& > span > div.bbgrid': {
+                    display: 'grid',
+                    fontSize: '0.8rem',
+                    gridTemplateColumns: 'auto auto 1fr',
+                    gap: '0 0.1rem',
+                    background: '#f0f0f0',
+                    borderRadius: '0.3rem',
+                    padding: '0.1rem 0.5rem',
+                    '& > label': {
+                        fontWeight: 'bold',
+                        color: '#666',
+                    },
+                    '& > span': {
+                        paddingLeft: '0.8rem',
+                        textAlign: 'right',
+                    },
+                    '& > small': {
+                        paddingLeft: '0.4rem',
+                    },
+                },
+                '& > ul': {
+                    margin: 0,
+                    marginTop: '-0.2rem',
+                    paddingLeft: '1.5rem',
+                    gridColumn: 'span 2',
+                    '& > li > footer': {
+                        fontSize: '0.8rem',
+                    }
+                },
+                '& > footer': {
+                    margin: '-0.3rem 0 0 1.5rem',
+                    fontSize: '0.8rem',
+                    gridColumn: 'span 2',
+                },
+                '& > span > footer': {
+                    margin: '0.2rem 0 0 -1.5rem',
+                    fontSize: '0.8rem',
                 },
             },
-            '& > ul': {
-                margin: 0,
-                marginTop: '-0.2rem',
-                paddingLeft: '1.5rem',
-                gridColumn: 'span 2',
-                '& > li > footer': {
-                    fontSize: '0.8rem',
-                }
+            '& > div.footnote': {
+                margin: '1rem 1rem 0 1rem',
+                fontSize: '0.7rem',
+                whiteSpace: 'pre-wrap',
+                color: '#999',
             },
-            '& > footer': {
-                margin: '-0.3rem 0 0 1.5rem',
-                fontSize: '0.8rem',
-                gridColumn: 'span 2',
-            },
-            '& > span > footer': {
-                margin: '0.2rem 0 0 -1.5rem',
-                fontSize: '0.8rem',
-            },
-        },
-        '& > div.footnote': {
-            margin: '1rem 1rem 0 1rem',
-            fontSize: '0.7rem',
-            whiteSpace: 'pre-wrap',
-            color: '#999',
-        },
-        '& > section': {
-            margin: '0.2rem 0.5rem',
-            fontSize: '.9rem',
-            display: 'flex',
-            flex: '0 auto',
-            '&.mt': {
-                marginTop: '1rem',
-            },
-            '& > label': {
-                marginRight: 'auto',
-                marginTop: 0,
-                textWrap: 'nowrap',
-            },
-            '& > span': {
+            '& > section': {
+                margin: '0.2rem 0.5rem',
+                fontSize: '.9rem',
                 display: 'flex',
-                alignItems: 'center',
+                flex: '0 auto',
+                '&.mt': {
+                    marginTop: '1rem',
+                },
+                '& > label': {
+                    marginRight: 'auto',
+                    marginTop: 0,
+                    textWrap: 'nowrap',
+                },
+                '& > span': {
+                    display: 'flex',
+                    alignItems: 'center',
+                },
+                '& > div > div > button.MuiToggleButton-root': {
+                    margin: 0,
+                    padding: '0 0.5rem',
+                },
             },
-            '& > div > div > button.MuiToggleButton-root': {
-                margin: 0,
-                padding: '0 0.5rem',
+            '& div.skillLevelNotice': {
+                fontSize: '0.7rem',
+                color: '#999',
+                margin: '0.2rem 0.5rem 0 2rem',
             },
-        },
-        '& div.skillLevelNotice': {
-            fontSize: '0.7rem',
-            color: '#999',
-            margin: '0.2rem 0.5rem 0 2rem',
         },
     },
     '& span.box': {
