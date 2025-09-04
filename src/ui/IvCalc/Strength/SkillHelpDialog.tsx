@@ -6,7 +6,7 @@ import { PokemonType } from '../../../data/pokemons';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonStrength, {
-    StrengthResult, getBerryBurstTeam, whistlePeriod,
+    StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam, whistlePeriod,
 } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
@@ -221,7 +221,7 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
         return getNormalSkillValueText(t, t('help count per pokemon'));
     }
     if (skill.startsWith('Berry Burst')) {
-        return getNormalSkillValueText(t, t('berry strength per berry burst'));
+        return getBerryBurstValueText(strength, t, t('berry strength per berry burst'));
     }
     return [null, null];
 }
@@ -240,7 +240,7 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
             t('nature effect.Energy recovery'));
     }
     if (skill === 'Energy for Everyone S (Lunar Blessing)') {
-        return getNormalSkillValueText(t, t('berry strength per berry burst'));
+        return getBerryBurstValueText(strength, t, t('berry strength per berry burst'));
     }
     return [null, null];
 }
@@ -403,6 +403,38 @@ function getEnergyRecoveryValueText(value: number,
                 {Math.floor(value * new Nature("Hasty").energyRecoveryFactor)}
             </li>
         </ul>
+    </>, null];
+}
+
+function getBerryBurstValueText(strength: PokemonStrength,
+    t: typeof i18next.t, valueText: string
+): [React.ReactNode, React.ReactNode] {
+    const text = t('value per skill', { value: valueText});
+    const result = calculateBerryBurstStrength(strength.pokemonIv,
+        strength.parameter);
+    return [<>
+        {text}<br/>
+        <div className="bbgrid">
+            <label>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</label>
+            <span>{formatWithComma(result.members[0].total)}</span>
+            <small>({result.members[0].perBerry} × {result.members[0].count})</small>
+
+            <label>{t('other team member')} 1:</label>
+            <span>{formatWithComma(result.members[1].total)}</span>
+            <small>({result.members[1].perBerry} × {result.members[1].count})</small>
+
+            <label>{t('other team member')} 2:</label>
+            <span>{formatWithComma(result.members[2].total)}</span>
+            <small>({result.members[2].perBerry} × {result.members[2].count})</small>
+
+            <label>{t('other team member')} 3:</label>
+            <span>{formatWithComma(result.members[3].total)}</span>
+            <small>({result.members[3].perBerry} × {result.members[3].count})</small>
+
+            <label>{t('other team member')} 4:</label>
+            <span>{formatWithComma(result.members[4].total)}</span>
+            <small>({result.members[4].perBerry} × {result.members[4].count})</small>
+        </div>
     </>, null];
 }
 
