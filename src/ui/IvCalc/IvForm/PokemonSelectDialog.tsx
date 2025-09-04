@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import pokemons, { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
     PokemonType, PokemonTypes } from '../../../data/pokemons';
-import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
+import { MainSkillName, MainSkillNames, matchMainSkillName } from '../../../util/MainSkill';
 import { Autocomplete, autocompleteClasses, AutocompleteRenderGroupParams, Dialog, 
     FilterOptionsState, InputAdornment, InputBase, MenuItem } from '@mui/material';
 import PokemonIcon from '../PokemonIcon';
@@ -261,7 +261,7 @@ export class PokemonFilterConfig {
         // filter by main skill
         if (this.mainSkillNames.length > 0) {
             ret = ret.filter((option) => this.mainSkillNames
-                .some(x => option.skill.startsWith(x)));
+                .some(x => matchMainSkillName(option.skill, x)));
         }
 
         if (ret.length === 0) {

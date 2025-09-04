@@ -199,7 +199,6 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
 
-
 /**
  * Returns the minimum and maximum value of the skill.
  * @param skill Main skill name.
@@ -244,4 +243,25 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
             break;
     }
     return [0, 0];
+}
+
+/**
+ * Checks if a given `match` string matches the beginning of the `name` or
+ * satisfies a special-case equivalence.
+ *
+ * @param name The main skill name to compare.
+ * @param match The string to match against the skill name.
+ * @returns `true` if the skill name starts with the match string.
+ */
+export function matchMainSkillName(name: MainSkillName, match: string): boolean {
+    if (name.startsWith(match)) {
+        return true;
+    }
+
+    // Treat "Berry Burst" as matching "Energy for Everyone S (Lunar Blessing)"
+    if (name === "Energy for Everyone S (Lunar Blessing)" && match === "Berry Burst") {
+        return true;
+    }
+
+    return false;
 }
