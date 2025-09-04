@@ -3,7 +3,7 @@ import pokemons from '../../../data/pokemons';
 import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
 import { PokemonType } from '../../../data/pokemons';
-import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
+import { round1, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonStrength, {
     StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam, whistlePeriod,
