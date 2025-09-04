@@ -10,7 +10,7 @@ import CandyDialog from '../CandyDialog';
 import { shareIv } from '../ShareUtil';
 import { PokemonSpecialty, IngredientName, IngredientNames, PokemonType
 } from '../../../data/pokemons';
-import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
+import { MainSkillName, MainSkillNames, matchMainSkillName } from '../../../util/MainSkill';
 import { SubSkillType } from '../../../util/SubSkill';
 import { NatureEffect } from '../../../util/Nature';
 import PokemonIv from '../../../util/PokemonIv';
@@ -264,7 +264,7 @@ function sortPokemonItems(filtered: PokemonBoxItem[],
 
         const cache: {[id: string]: number} = {};
         filtered = filtered
-            .filter(x => x.iv.pokemon.skill.startsWith(sortConfig.mainSkill));
+            .filter(x => matchMainSkillName(x.iv.pokemon.skill, sortConfig.mainSkill));
         filtered.forEach((item) => {
             const strength = new PokemonStrength(item.iv, {
                 ...parameter, maxSkillLevel: true,
@@ -406,7 +406,7 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         }
         if (this.mainSkillNames.length !== 0) {
             ret = ret.filter(x => this.mainSkillNames
-                .some(n => x.iv.pokemon.skill.startsWith(n)));
+                .some(n => matchMainSkillName(x.iv.pokemon.skill, n)));
         }
         if (this.subSkillNames.length !== 0) {
             ret = ret.filter(x => {

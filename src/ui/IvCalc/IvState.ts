@@ -358,6 +358,21 @@ function normalizeState(state: IvState, value: PokemonIv): IvState {
         }
     }
 
+    // fix species count
+    if (!state.parameter.berryBurstTeam.auto &&
+        state.pokemonIv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
+    ) {
+        const species = state.parameter.berryBurstTeam.members
+            .filter(x => x.type === state.pokemonIv.pokemon.type).length + 1;
+        if (species <= 2) {
+            state.parameter.berryBurstTeam.species = species;
+        }
+        else {
+            state.parameter.berryBurstTeam.species = Math.min(species,
+                state.parameter.berryBurstTeam.species);
+        }
+    }
+
     // if form pokemon differs from the selected pokemon in the box,
     // unselect the pokemon in the box
     let selectedItemId = state.selectedItemId;
