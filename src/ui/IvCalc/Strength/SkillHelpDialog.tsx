@@ -96,6 +96,14 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     const [skillValueText2, skillValueFooter2] = getSkillValueText2(strength,
         skillLevel, t);
 
+    let greatSuccessRate = 0;
+    const days = Math.ceil(settings.period / 24);
+    if (skillName === "Berry Burst (Disguise)") {
+        // Calculate great success
+        // https://pks.raenonx.cc/en/docs/view/calc/main-skill#disguise
+        greatSuccessRate = 1 - Math.pow(1 - 0.18, result.skillCount / days);
+    }
+
     return <StyledInfoDialog open={open} onClose={onClose}>
         <header>
             <h1>
@@ -106,6 +114,13 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
                 <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
                 <span className="box box3">{round1(result.skillRatio * 100)}%</span>
+                {skillName === "Berry Burst (Disguise)" && <>
+                    <br/>
+                    <> + </>
+                    <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
+                    <span className="box box4">{2 * days}</span><> × </>
+                    <span className="box box5">{round1(greatSuccessRate * 100)}%</span>
+                </>}
             </h2>}
         </header>
         <article>
@@ -118,6 +133,12 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
             <span>{t('normal help count')}</span>
             <div><span className="box box3">{round1(result.skillRatio * 100)}%</span></div>
             <span>{t('skill rate')}</span>
+            {skillName === "Berry Burst (Disguise)" && <>
+                <div><span className="box box4">{2 * days}</span></div>
+                <span>{t('great success increasment')}</span>
+                <div><span className="box box5">{round1(greatSuccessRate * 100)}%</span></div>
+                <span>{t('great success rate')}</span>
+            </>}
         </article>
         {result.skillValue2 !== 0 && <>
             <header style={{marginTop: '1.2rem'}}>

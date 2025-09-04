@@ -460,6 +460,7 @@ export const StyledInfoDialog = styled(Dialog)({
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
             gridGap: '.8rem',
+            alignItems: 'start',
             '& > h1': {
                 fontSize: '1.4rem',
                 margin: 0,
@@ -472,7 +473,7 @@ export const StyledInfoDialog = styled(Dialog)({
                 fontWeight: 'normal',
                 fontSize: '0.9rem',
                 margin: '0.3rem 0 0 0.5rem',
-                lineHeight: '1.9',
+                lineHeight: '1.8',
             },
         },
         '& > ul': {
@@ -598,7 +599,7 @@ export const StyledInfoDialog = styled(Dialog)({
             },
         },
         '& > div.footnote': {
-            margin: '1.5rem 1rem 0 1rem',
+            margin: '1rem 1rem 0 1rem',
             fontSize: '0.7rem',
             whiteSpace: 'pre-wrap',
             color: '#999',

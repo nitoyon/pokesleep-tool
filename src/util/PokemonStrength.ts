@@ -390,8 +390,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength, skillValue2, skillStrength2] =
-                this.getSkillValueAndStrength(skillCount,
-                    param, berryStrength, bonus);
+                this.getSkillValueAndStrength(skillCount, param, berryStrength, bonus);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength + skillStrength2;
@@ -412,11 +411,13 @@ class PokemonStrength {
      * @param bonus BonusEffects for this pokemon and StrengthParameter.
      * @returns [skillValue, skillStrength, skillValue2, skillStrength2].
      */
-    getSkillValueAndStrength(skillCount: number, param: StrengthParameter,
+    getSkillValueAndStrength(skillCount: number,
+        param: StrengthParameter,
         berryStrength: number, bonus: BonusEffects
     ): [number, number, number, number] {
         const mainSkill = this.iv.pokemon.skill;
         const skillLevel = this.getSkillLevel();
+        const days = Math.ceil(param.period / 24);
 
         let mainSkillBase = getSkillValue(mainSkill, skillLevel);
         if (mainSkill.startsWith("Ingredient Magnet S")) {
@@ -466,10 +467,20 @@ class PokemonStrength {
             case "Helper Boost":
                 return [mainSkillValue, mainSkillValue * strengthPerHelp * 5, 0, 0];
 
-            case "Berry Burst (Disguise)":
-            case "Berry Burst":
+            case "Berry Burst (Disguise)": {
+                const ret = calculateBerryBurstStrength(this.iv, param);
+
+                // Calculate great success
+                // https://pks.raenonx.cc/en/docs/view/calc/main-skill#disguise
+                const successRate = 1 - Math.pow(1 - 0.18, skillCount / days);
+
+                const strength = ret.total * skillCount + ret.total * successRate * 2;
+                return [strength, strength, 0, 0];
+            }
+            case "Berry Burst": {
                 const ret = calculateBerryBurstStrength(this.iv, param);
                 return [ret.total * skillCount, ret.total * skillCount, 0, 0];
+            }
 
             case "Ingredient Magnet S (Plus)":
                 let ingCount = getSkillSubValue(mainSkill, skillLevel,
