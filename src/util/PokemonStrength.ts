@@ -7,7 +7,7 @@ import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
 import PokemonRp, { ingredientStrength } from './PokemonRp';
-import { getSkillValue, getSkillSubValue, getMaxSkillLevel } from './MainSkill';
+import { getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount } from './MainSkill';
 
 /** Pseudo field index where all berries are favorites */
 export const allFavoriteFieldIndex = -2;
@@ -438,22 +438,16 @@ class PokemonStrength {
         }
         const mainSkillValue = mainSkillBase * mainSkillFactor * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
-        const berryWithFav = berryStrength * this.berryStrengthBonus;
-        const strengthPerBerry = Math.ceil(100 * (1 + param.fieldBonus / 100));
         switch (mainSkill) {
             case "Charge Energy S":
             case "Charge Energy S (Moonlight)":
             case "Energizing Cheer S":
             case "Energy for Everyone S":
                 return [mainSkillValue, 0, 0, 0];
-            case "Energy for Everyone S (Lunar Blessing)":
-                // asume same type species
-                const selfCount = [7, 12, 17, 19, 24, 29][skillLevel - 1];
-                const fromMember = [1, 1, 1, 2, 2, 2][skillLevel - 1];
-                const skillStrength2 = (
-                    selfCount * berryWithFav + fromMember * strengthPerBerry * 4
-                ) * skillCount;
-                return [mainSkillValue, 0, skillStrength2, skillStrength2];
+            case "Energy for Everyone S (Lunar Blessing)": {
+                const ret = calculateBerryBurstStrength(this.iv, param);
+                return [mainSkillValue, 0, ret.total * skillCount, ret.total * skillCount];
+            }
             case "Dream Shard Magnet S":
             case "Dream Shard Magnet S (Random)":
                 return [mainSkillValue, 0, 0, 0];
@@ -474,12 +468,8 @@ class PokemonStrength {
 
             case "Berry Burst (Disguise)":
             case "Berry Burst":
-                const extra = skillLevel <= 2 ? skillLevel : skillLevel - 1;
-                const strengthBurst =  (
-                    mainSkillValue * berryWithFav +
-                    4 * strengthPerBerry * skillCount * extra
-                );
-                return [strengthBurst, strengthBurst, 0, 0];
+                const ret = calculateBerryBurstStrength(this.iv, param);
+                return [ret.total * skillCount, ret.total * skillCount, 0, 0];
 
             case "Ingredient Magnet S (Plus)":
                 let ingCount = getSkillSubValue(mainSkill, skillLevel,
@@ -778,6 +768,69 @@ export function getBerryBurstTeam(
         // Member 4: Healer type
         { type: healerType, level },
     ];
+}
+
+/**
+ * Calculates the total Berry Burst strength for a Pokémon and its team.
+ *
+ * @param iv The Pokémon's IV and level information.
+ * @param param Additional parameters including team composition and config flags.
+ * @returns An object containing:
+ *   - `total`: Total Berry Burst strength from all team members.
+ *   - `members`: Breakdown of each member’s contribution with:
+ *       - `total`: Member's total contribution.
+ *       - `perBerry`: Strength per berry for that member.
+ *       - `count`: Number of berries contributed.
+ *
+ * @throws Error if the Pokémon’s main skill is not one of the supported types.
+ */
+export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParameter):
+{
+    total: number,
+    members: { total: number, perBerry: number, count: number}[],
+} {
+    // Get berry count
+    const team = getBerryBurstTeam(iv, param);
+    let myBerryCount: number, othersBerryCount: number;
+    switch (iv.pokemon.skill) {
+        case "Berry Burst":
+        case "Berry Burst (Disguise)":
+            myBerryCount = getSkillValue(iv.pokemon.skill, iv.skillLevel);
+            othersBerryCount = getSkillSubValue(iv.pokemon.skill, iv.skillLevel);
+            break;
+        case "Energy for Everyone S (Lunar Blessing)":
+            const cnt = getLunarBlessingBerryCount(
+                iv.skillLevel, param.berryBurstTeam.auto ?
+                team.filter(x => x.type === iv.pokemon.type).length :
+                param.berryBurstTeam.species);
+            myBerryCount = cnt.myBerryCount;
+            othersBerryCount = cnt.othersBerryCount;
+            break;
+        default:
+            throw new Error(`Invalid skill: ${iv.pokemon.skill}`);
+    }
+
+    // Get the Berry Burst team members (types and levels)
+    const levels: number[] = [
+        iv.level, team[0].level, team[1].level, team[3].level, team[3].level,
+    ];
+    const types: PokemonType[] = [
+        iv.pokemon.type, team[0].type, team[1].type, team[2].type, team[3].type,
+    ];
+    const ret = { total: 0, members: [] as { total: number, perBerry: number, count: number}[] };
+    for (let i = 0; i < 5; i++) {
+        const ivMember = new PokemonIv(pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur");
+        ivMember.level = levels[i];
+        const berryRawStrength = new PokemonRp(ivMember).berryStrength;
+        const perBerry = Math.ceil(
+            Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100)) *
+            new PokemonStrength(ivMember, param).berryStrengthBonus);
+        const count = (i === 0 ? myBerryCount : othersBerryCount);
+        const total = perBerry * count;
+        ret.total += total;
+        ret.members.push({ total, perBerry, count });
+    }
+    return ret;
 }
 
 /**
