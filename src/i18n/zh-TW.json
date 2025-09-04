@@ -304,7 +304,7 @@
         "tasty chance increase": "大成功機率增加",
         "help count per pokemon": "每隻寶可夢的$t(help count)",
         "great success increasment": "大成功 (3倍) 時的增加量",
-        "great success rate": "大成功的機率",
+        "great success rate": "在達到研究前大成功的機率",
         "additional ingredients": "更多食材",
         "other team member": "其他編組成員",
         "max skill level affected": "由於已啟用 [$t(calc with max skill level)]，因此以技能等級 <level/> 進行計算。",
