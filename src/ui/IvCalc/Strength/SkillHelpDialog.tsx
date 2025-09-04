@@ -149,16 +149,15 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     {formatNice(result.skillValue2, t)}
                 </h1>
                 <h2>
-                    <span className="box box3">{formatWithComma(skillValue2)}</span><> × </>
-                    <span className="box box2">{round2(result.skillCount)}</span>
+                    <span className="box box4">{formatWithComma(skillValue2)}</span><> × </>
+                    <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
+                    <span className="box box3">{round1(result.skillRatio * 100)}%</span>
                 </h2>
             </header>
             <article>
-                <div><span className="box box3">{formatWithComma(skillValue2)}</span></div>
+                <div><span className="box box4">{formatWithComma(skillValue2)}</span></div>
                 <span>{skillValueText2}</span>
                 {skillValueFooter2 !== null && <footer>{skillValueFooter2}</footer>}
-                <div><span className="box box2">{round2(result.skillCount)}</span></div>
-                <span>{t('skill count')}</span>
             </article>
         </>}
 
