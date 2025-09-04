@@ -3,7 +3,7 @@ import { formatWithComma } from '../../../util/NumberUtil';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonRp from '../../../util/PokemonRp';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
-import { Button, DialogActions } from '@mui/material';
+import { Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useTranslation } from 'react-i18next';
 
@@ -25,7 +25,7 @@ const BerryStrengthDialog = React.memo(({open, onClose, iv, fieldBonus, berryBon
 
     return <StyledInfoDialog open={open} onClose={onClose}
         PaperProps={{style: {maxWidth: '20rem'}}}>
-        <header>
+        <DialogTitle>
             <h1>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
                 {formatWithComma(berryStrength)}
@@ -35,15 +35,17 @@ const BerryStrengthDialog = React.memo(({open, onClose, iv, fieldBonus, berryBon
                 (1 + <span className="box box4">{fieldBonus}%</span>)<> × </>
                 <span className="box box5">{berryBonus}</span>
             </h2>
-        </header>
-        <article style={{maxWidth: '16rem'}}>
-            <div><span className="box box3">{berryRawStrength}</span></div>
-            <span>{t('berry strength')}</span>
-            <div><span className="box box4">{fieldBonus}%</span></div>
-            <span>{t('area bonus')}</span>
-            <div><span className="box box5">{berryBonus}</span></div>
-            <span>{t('favorite berry')}</span>
-        </article>
+        </DialogTitle>
+        <DialogContent>
+            <article>
+                <div><span className="box box3">{berryRawStrength}</span></div>
+                <span>{t('berry strength')}</span>
+                <div><span className="box box4">{fieldBonus}%</span></div>
+                <span>{t('area bonus')}</span>
+                <div><span className="box box5">{berryBonus}</span></div>
+                <span>{t('favorite berry')}</span>
+            </article>
+        </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
