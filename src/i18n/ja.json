@@ -304,7 +304,7 @@
         "help count per pokemon": "ポケモン1匹の$t(help count)",
         "berry strength per berry burst": "きのみ$t(strength2)",
         "great success increasment": "大成功 (3倍) での増加分",
-        "great success rate": "大成功する確率",
+        "great success rate": "リサーチまでに大成功する確率",
         "additional ingredients": "追加食材数",
         "other team member": "他のメンバー",
         "max skill level affected": "[$t(calc with max skill level)] が有効になっているため、スキルレベル <level/> で計算しています。",
