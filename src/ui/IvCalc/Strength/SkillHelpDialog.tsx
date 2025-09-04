@@ -104,7 +104,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
             </h1>
             {!isCountOnly && <h2>
                 <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
-                <span className="box box2">{round2(result.skillCount)}</span>
+                <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
+                <span className="box box3">{round1(result.skillRatio * 100)}%</span>
             </h2>}
         </header>
         <article>
@@ -113,15 +114,10 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 <span>{skillValueText}</span>
                 {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
             </>}
-            <div><span className="box box2">{round2(result.skillCount)}</span></div>
-            <span>{t('skill count')}</span>
-            <footer>
-                {round1(result.notFullHelpCount)}
-                <small> ({t('normal help count')})</small>
-                <> × </>
-                {round1(result.skillRatio * 100)}%
-                <small> ({t('skill rate')})</small>
-            </footer>
+            <div><span className="box box2">{round1(result.notFullHelpCount)}</span></div>
+            <span>{t('normal help count')}</span>
+            <div><span className="box box3">{round1(result.skillRatio * 100)}%</span></div>
+            <span>{t('skill rate')}</span>
         </article>
         {result.skillValue2 !== 0 && <>
             <header style={{marginTop: '1.2rem'}}>
