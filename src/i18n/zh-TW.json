@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "v2.12.0": {
+                    "headline": "已對應 v2.12.0 的平衡性調整，並改進了 $t(skills.Berry Burst) 的模擬。",
+                    "detail": "已更新 $t(pokemons.Braviary) 和 $t(pokemons.Mimikyu) 的技能機率。\n在計算 $t(skills.Berry Burst) 的期望值時，現在預設隊伍中的寶可夢等級相同。此外，現在可透過 [$t(strength2)] 標籤中 [$t(skill)] 右側的 [i] 按鈕，更詳細地自訂隊伍中的寶可夢。"
+                },
                 "ex and toxel": {
                     "headline": "已新增$t(pokemons.Toxel)與顫弦蠑螈的資料，同時也支援 $t(area.7)。",
                     "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
