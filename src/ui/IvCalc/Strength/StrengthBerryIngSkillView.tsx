@@ -451,25 +451,24 @@ export const StyledInfoDialog = styled(Dialog)({
         // extend dialog width
         width: '100%',
         margin: '20px',
-        maxHeight: 'calc(100% - 20px)',
+        maxHeight: 'calc(100% - 50px)',
     },
 
     '& .MuiPaper-root': {
-        '& > h2.MuiDialogTitle-root, & > .MuiDialogContent-root > header': {
+        '& > h2.MuiDialogTitle-root': {
             margin: '0.5rem 0.5rem 0 0.5rem',
             padding: 0,
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
-            gridGap: '.8rem',
+            gridGap: '.4rem',
             alignItems: 'start',
-            '& > h1': {
+            '& > article': {
                 fontSize: '1.4rem',
                 margin: 0,
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.2rem',
             },
-            '& > h2': {
+            '& > footer': {
                 display: 'inline-block',
                 fontWeight: 'normal',
                 fontSize: '0.9rem',

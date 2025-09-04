@@ -98,10 +98,10 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
 
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
-            <h1>
+            <article>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
                 {formatWithComma(Math.round(result.ingStrength))}
-            </h1>
+            </article>
         </DialogTitle>
         <DialogContent>
             <div className={`inggrid ings${ings.length}`}>

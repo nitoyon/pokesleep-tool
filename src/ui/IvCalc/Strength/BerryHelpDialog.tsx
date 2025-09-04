@@ -30,15 +30,15 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     const berryStrength = Math.ceil(result.berryStrength * strength.berryStrengthBonus);
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
-            <h1>
+            <article>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
                 {formatWithComma(Math.round(result.berryTotalStrength))}
-            </h1>
-            <h2>
+            </article>
+            <footer>
                 <span className="box box1">{berryStrength}</span><> × </>
                 <span className="box box2">{result.berryCount}</span><> × </>
                 <span className="box box3">{round1(result.berryHelpCount)}</span>
-            </h2>
+            </footer>
         </DialogTitle>
         <DialogContent>
             <article>
