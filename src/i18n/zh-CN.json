@@ -302,7 +302,7 @@
         "help count per pokemon": "每只宝可梦的$t(help count)",
         "berry strength per berry burst": "收集的浆果$t(strength2)",
         "great success increasment": "대성공 (3배) 시 증가량",
-        "great success rate": "大成功的概率",
+        "great success rate": "在达到研究前大成功的概率",
         "additional ingredients": "更多食材",
         "other team member": "其他编组成员",
         "max skill level affected": "由于已启用「$t(calc with max skill level)」，因此以技能等级 <level/> 进行计算。",

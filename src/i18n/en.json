@@ -314,7 +314,7 @@
         "help count per pokemon": "$t(help count) per Pokémon",
         "berry strength per berry burst": "Strength of berries gathered",
         "great success increasment": "Increase from Great Success (×3)",
-        "great success rate": "Chance of a great success occurring",
+        "great success rate": "Chance of a great success before starting research",
         "additional ingredients": "Additional ingredients",
         "other team member": "Other member",
         "max skill level affected": "Calculated at skill level <level/> because [$t(calc with max skill level)] is enabled.",
