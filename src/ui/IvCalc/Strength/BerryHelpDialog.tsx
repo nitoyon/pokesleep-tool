@@ -1,6 +1,8 @@
 import React from 'react';
 import { round1, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
+import InfoButton from '../InfoButton';
+import BerryStrengthDialog from './BerryStrengthDialog';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
 import { Button, DialogActions } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -13,6 +15,13 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     result: StrengthResult,
 }) => {
     const { t } = useTranslation();
+    const [berryStrengthOpen, setBerryStrengthOpen] = React.useState(false);
+    const onBerryStrengthInfoClick = React.useCallback(() => {
+        setBerryStrengthOpen(true);
+    }, []);
+    const onBerryStrengthInfoClose = React.useCallback(() => {
+        setBerryStrengthOpen(false);
+    }, []);
     if (!open) {
         return <></>;
     }
@@ -33,23 +42,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
         </header>
         <article>
             <div><span className="box box1">{berryStrength}</span></div>
-            <span>
-                {t('actual berry strength')}<br/>
-                <span className="box box4">{result.berryRawStrength}</span><> × </>
-                (1 + <span className="box box5">{param.fieldBonus}%</span>)<> × </>
-                <span className="box box6">{strength.berryStrengthBonus}</span>
-                <ul className="detail">
-                    <li>
-                        <span className="box box4">{result.berryRawStrength}</span>: {t('berry strength')}
-                    </li>
-                    <li>
-                        <span className="box box5">{param.fieldBonus}%</span>: {t('area bonus')}
-                    </li>
-                    <li>
-                        <span className="box box6">{strength.berryStrengthBonus}</span>: {t('favorite berry')}
-                    </li>
-                </ul>
-            </span>
+            <span>{t('actual berry strength')}<InfoButton onClick={onBerryStrengthInfoClick}/></span>
             <div><span className="box box2">{result.berryCount}</span></div>
             <span>{t('berry count')}</span>
             <div><span className="box box3">{round1(result.berryHelpCount)}</span></div>
@@ -74,6 +67,9 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
+        <BerryStrengthDialog open={berryStrengthOpen} onClose={onBerryStrengthInfoClose}
+            iv={strength.pokemonIv} fieldBonus={param.fieldBonus}
+            berryBonus={strength.berryStrengthBonus}/>
     </StyledInfoDialog>;
 });
 

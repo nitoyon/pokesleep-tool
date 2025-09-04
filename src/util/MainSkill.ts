@@ -182,6 +182,11 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
         throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
     }
 
+    if (skill.startsWith("Berry Burst")) {
+        // Get the number of berries gathered from other members
+        return [1, 2, 2, 3, 4, 5][skillLevel - 1];
+    }
+
     if (skill === "Ingredient Magnet S (Plus)") {
         // Get additional ingredient count
         if (firstIngredient === 'coffee') {
@@ -199,6 +204,78 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
 
+/**
+ * Returns the additional effect of the main skill for the given
+ * skill and level.
+ * @param skill Name of the main skill.
+ * @param skillLevel Level of the main skill.
+ * @param firstIngredient First ingredient name. Used only for
+ *                        `Ingredient Magnet S (Plus)`.
+ * @returns Additional effect for the skill, or throws if not applicable.
+ */
+export function getLunarBlessingBerryCount(skillLevel: number, species: number):
+{
+    myBerryCount: number,
+    othersBerryCount: number,
+} {
+    switch (skillLevel) {
+        case 1:
+            switch (species) {
+                case 1: return { myBerryCount: 5, othersBerryCount: 1 };
+                case 2: return { myBerryCount: 7, othersBerryCount: 1 };
+                case 3: return { myBerryCount: 9, othersBerryCount: 1 };
+                case 4: return { myBerryCount: 12, othersBerryCount: 1 };
+                case 5: return { myBerryCount: 14, othersBerryCount: 2 };
+            }
+            break;
+        case 2:
+            switch (species) {
+                case 1: return { myBerryCount: 9, othersBerryCount: 1 };
+                case 2: return { myBerryCount: 12, othersBerryCount: 1 };
+                case 3: return { myBerryCount: 15, othersBerryCount: 1 };
+                case 4: return { myBerryCount: 16, othersBerryCount: 2 };
+                case 5: return { myBerryCount: 19, othersBerryCount: 3 };
+            }
+            break;
+        case 3:
+            switch (species) {
+                case 1: return { myBerryCount: 13, othersBerryCount: 1 };
+                case 2: return { myBerryCount: 17, othersBerryCount: 1 };
+                case 3: return { myBerryCount: 18, othersBerryCount: 2 };
+                case 4: return { myBerryCount: 20, othersBerryCount: 3 };
+                case 5: return { myBerryCount: 24, othersBerryCount: 4 };
+            }
+            break;
+        case 4:
+            switch (species) {
+                case 1: return { myBerryCount: 17, othersBerryCount: 1 };
+                case 2: return { myBerryCount: 19, othersBerryCount: 2 };
+                case 3: return { myBerryCount: 25, othersBerryCount: 2 };
+                case 4: return { myBerryCount: 28, othersBerryCount: 3 };
+                case 5: return { myBerryCount: 29, othersBerryCount: 5 };
+            }
+            break;
+        case 5:
+            switch (species) {
+                case 1: return { myBerryCount: 21, othersBerryCount: 1 };
+                case 2: return { myBerryCount: 24, othersBerryCount: 2 };
+                case 3: return { myBerryCount: 27, othersBerryCount: 3 };
+                case 4: return { myBerryCount: 28, othersBerryCount: 5 };
+                case 5: return { myBerryCount: 30, othersBerryCount: 7 };
+            }
+            break;
+        case 6:
+            switch (species) {
+                case 1: return { myBerryCount: 25, othersBerryCount: 1 };
+                case 2: return { myBerryCount: 29, othersBerryCount: 2 };
+                case 3: return { myBerryCount: 30, othersBerryCount: 4 };
+                case 4: return { myBerryCount: 31, othersBerryCount: 6 };
+                case 5: return { myBerryCount: 32, othersBerryCount: 9 };
+            }
+            break;
+    }
+    throw new Error(`Lunar Blessing doesn’t have a sub-value: ${skillLevel}, ${species}`);
+}
 
 /**
  * Returns the minimum and maximum value of the skill.
@@ -244,4 +321,25 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
             break;
     }
     return [0, 0];
+}
+
+/**
+ * Checks if a given `match` string matches the beginning of the `name` or
+ * satisfies a special-case equivalence.
+ *
+ * @param name The main skill name to compare.
+ * @param match The string to match against the skill name.
+ * @returns `true` if the skill name starts with the match string.
+ */
+export function matchMainSkillName(name: MainSkillName, match: string): boolean {
+    if (name.startsWith(match)) {
+        return true;
+    }
+
+    // Treat "Berry Burst" as matching "Energy for Everyone S (Lunar Blessing)"
+    if (name === "Energy for Everyone S (Lunar Blessing)" && match === "Berry Burst") {
+        return true;
+    }
+
+    return false;
 }

@@ -11,10 +11,11 @@ const TypeButton = React.memo(
         size?: 'small' | 'medium' | 'large',
         type: PokemonType,
         checked: boolean,
+        disabled?: boolean,
         deletable?: boolean,
         onClick: (value: PokemonType) => void,
         onDelete?: (value: PokemonType) => void,
-    }>(({size, type, checked, deletable, onClick, onDelete}, ref) => {
+    }>(({size, type, checked, disabled, deletable, onClick, onDelete}, ref) => {
     const { t } = useTranslation();
     const onTypeClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         const isDelete = (e.nativeEvent.target as HTMLElement)?.closest('.deleteIcon') != null;
@@ -27,7 +28,7 @@ const TypeButton = React.memo(
         }
     }, [onClick, onDelete]);
     return <StyledTypeButton ref={ref} size={size ?? 'medium'}
-            className={`${type} ${deletable && 'deletable'}`}
+            className={`${type}${deletable ? ' deletable' : ''}${disabled ? ' disabled' : ''}`}
             key={type} value={type} onClick={onTypeClick}>
             {t(`types.${type}`)}
             {checked && <CheckIcon/>}
@@ -47,6 +48,9 @@ const StyledTypeButton = styled(Button)({
         fontSize: '0.8rem',
         '&.deletable': {
             width: '5.6rem',
+        },
+        '&.disabled': {
+            opacity: 0.7,
         },
     },
     '& > svg': {

@@ -1,19 +1,29 @@
 import React from 'react';
+import pokemons from '../../../data/pokemons';
 import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
+import { PokemonType } from '../../../data/pokemons';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
+import PokemonIv from '../../../util/PokemonIv';
+import PokemonStrength, {
+    StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam, whistlePeriod,
+} from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
 import { Button, Collapse, Dialog, DialogActions, DialogContent,
-    FormControl, ToggleButtonGroup, ToggleButton } from '@mui/material';
+    FormControl, MenuItem, Switch, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import LevelSelector from '../IvForm/LevelSelector';
+import InfoButton from '../InfoButton';
 import IngredientIcon from '../IngredientIcon';
+import TypeSelect from '../TypeSelect';
 import MainSkillIcon from '../MainSkillIcon';
+import SelectEx from '../../common/SelectEx';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import { IvAction } from '../IvState';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
 import { useTranslation, Trans } from 'react-i18next';
 import i18next from 'i18next'
+import BerryStrengthDialog from './BerryStrengthDialog';
 
 const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}: {
     open: boolean,
@@ -23,6 +33,19 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     result: StrengthResult,
 }) => {
     const { t } = useTranslation();
+    const [berryStrengthOpen, setBerryStrengthOpen] = React.useState(false);
+    const [berryIv, setBerryIv] = React.useState(strength.pokemonIv);
+    const [berryBonus, setBerryBonus] = React.useState(1);
+    const onBerryInfoClick = React.useCallback((type: PokemonType, level: number) => {
+        setBerryStrengthOpen(true);
+        const iv = new PokemonIv(pokemons.find(x => x.type === type)?.name ?? "Bulbasaur");
+        iv.level = level;
+        setBerryIv(iv);
+        setBerryBonus(new PokemonStrength(iv, strength.parameter).berryStrengthBonus);
+    }, [strength.parameter]);
+    const onBerryStrenthClose = React.useCallback(() => {
+        setBerryStrengthOpen(false);
+    }, []);
 
     const onSkillLevelChange = React.useCallback((e: any, value: string|null) => {
         if (value === null) {
@@ -73,6 +96,14 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     const [skillValueText2, skillValueFooter2] = getSkillValueText2(strength,
         skillLevel, t);
 
+    let greatSuccessRate = 0;
+    const days = Math.ceil(settings.period / 24);
+    if (skillName === "Berry Burst (Disguise)") {
+        // Calculate great success
+        // https://pks.raenonx.cc/en/docs/view/calc/main-skill#disguise
+        greatSuccessRate = 1 - Math.pow(1 - 0.18, result.skillCount / days);
+    }
+
     return <StyledInfoDialog open={open} onClose={onClose}>
         <header>
             <h1>
@@ -81,7 +112,15 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
             </h1>
             {!isCountOnly && <h2>
                 <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
-                <span className="box box2">{round2(result.skillCount)}</span>
+                <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
+                <span className="box box3">{round1(result.skillRatio * 100)}%</span>
+                {skillName === "Berry Burst (Disguise)" && <>
+                    <br/>
+                    <> + </>
+                    <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
+                    <span className="box box4">{2 * days}</span><> × </>
+                    <span className="box box5">{round1(greatSuccessRate * 100)}%</span>
+                </>}
             </h2>}
         </header>
         <article>
@@ -90,15 +129,16 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 <span>{skillValueText}</span>
                 {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
             </>}
-            <div><span className="box box2">{round2(result.skillCount)}</span></div>
-            <span>{t('skill count')}</span>
-            <footer>
-                {round1(result.notFullHelpCount)}
-                <small> ({t('normal help count')})</small>
-                <> × </>
-                {round1(result.skillRatio * 100)}%
-                <small> ({t('skill rate')})</small>
-            </footer>
+            <div><span className="box box2">{round1(result.notFullHelpCount)}</span></div>
+            <span>{t('normal help count')}</span>
+            <div><span className="box box3">{round1(result.skillRatio * 100)}%</span></div>
+            <span>{t('skill rate')}</span>
+            {skillName === "Berry Burst (Disguise)" && <>
+                <div><span className="box box4">{2 * days}</span></div>
+                <span>{t('great success increasment')}</span>
+                <div><span className="box box5">{round1(greatSuccessRate * 100)}%</span></div>
+                <span>{t('great success rate')}</span>
+            </>}
         </article>
         {result.skillValue2 !== 0 && <>
             <header style={{marginTop: '1.2rem'}}>
@@ -133,6 +173,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </FormControl>
             </section>
         }
+        {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
         <Collapse in={!isCountOnly &&
             (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
             skillLevel !== iv.skillLevel}>
@@ -150,6 +191,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
+        <BerryStrengthDialog open={berryStrengthOpen} onClose={onBerryStrenthClose}
+            iv={berryIv} fieldBonus={settings.fieldBonus} berryBonus={berryBonus}/>
     </StyledInfoDialog>;
 });
 
@@ -195,7 +238,7 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
         return getNormalSkillValueText(t, t('help count per pokemon'));
     }
     if (skill.startsWith('Berry Burst')) {
-        return getNormalSkillValueText(t, t('berry strength per berry burst'));
+        return getBerryBurstValueText(strength, t, t('berry strength per berry burst'));
     }
     return [null, null];
 }
@@ -214,7 +257,7 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
             t('nature effect.Energy recovery'));
     }
     if (skill === 'Energy for Everyone S (Lunar Blessing)') {
-        return getNormalSkillValueText(t, t('berry strength per berry burst'));
+        return getBerryBurstValueText(strength, t, t('berry strength per berry burst'));
     }
     return [null, null];
 }
@@ -380,9 +423,146 @@ function getEnergyRecoveryValueText(value: number,
     </>, null];
 }
 
+function getBerryBurstValueText(strength: PokemonStrength,
+    t: typeof i18next.t, valueText: string
+): [React.ReactNode, React.ReactNode] {
+    const text = t('value per skill', { value: valueText});
+    const result = calculateBerryBurstStrength(strength.pokemonIv,
+        strength.parameter);
+    return [<>
+        {text}<br/>
+        <div className="bbgrid">
+            <label>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</label>
+            <span>{formatWithComma(result.members[0].total)}</span>
+            <small>({result.members[0].perBerry} × {result.members[0].count})</small>
+
+            <label>{t('other team member')} 1:</label>
+            <span>{formatWithComma(result.members[1].total)}</span>
+            <small>({result.members[1].perBerry} × {result.members[1].count})</small>
+
+            <label>{t('other team member')} 2:</label>
+            <span>{formatWithComma(result.members[2].total)}</span>
+            <small>({result.members[2].perBerry} × {result.members[2].count})</small>
+
+            <label>{t('other team member')} 3:</label>
+            <span>{formatWithComma(result.members[3].total)}</span>
+            <small>({result.members[3].perBerry} × {result.members[3].count})</small>
+
+            <label>{t('other team member')} 4:</label>
+            <span>{formatWithComma(result.members[4].total)}</span>
+            <small>({result.members[4].perBerry} × {result.members[4].count})</small>
+        </div>
+    </>, null];
+}
+
 function getNormalSkillValueText(t: typeof i18next.t, valueText: string):
 [React.ReactNode, React.ReactNode] {
     return [t('value per skill', { value: valueText}), null];
+}
+
+function getBerryBurstConfigHtml(strength: PokemonStrength,
+    dispatch: React.Dispatch<IvAction>,
+    onBerryInfoClick: (type: PokemonType, level: number) => void,
+    t: typeof i18next.t
+) {
+    const settings = strength.parameter;
+
+    const showBurstConfig = strength.pokemonIv.pokemon.skill.startsWith("Berry Burst") ||
+        strength.pokemonIv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)";
+    if (!showBurstConfig) {
+        return <></>;
+    }
+
+    const iv = strength.pokemonIv;
+    const auto = settings.berryBurstTeam.auto;
+    const burstTeam = getBerryBurstTeam(iv, settings);
+    const maxSpecies = burstTeam.filter(x => x.type === iv.pokemon.type).length + 1;
+    const species = auto ? maxSpecies : settings.berryBurstTeam.species;
+
+    const onBerryBurstAutoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                auto: !e.target.checked,
+            },
+        }}});
+    };
+    const onBerryBurstTypeChange = (index: number, type: PokemonType) => {
+        const members = [...settings.berryBurstTeam.members];
+        members[index].type = type;
+
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                members,
+            },
+        }}});
+    };
+    const onBerryBurstLevelChange = (index: number, level: number) => {
+        const members = [...settings.berryBurstTeam.members];
+        members[index].level = level;
+
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                members,
+            },
+        }}});
+    };
+    const onBerryBurstSpeciesChange = (value: string) => {
+        dispatch({type: "changeParameter", payload: {parameter: {
+            ...settings, berryBurstTeam: {
+                ...settings.berryBurstTeam,
+                species: parseInt(value, 10),
+            },
+        }}});
+    };
+
+    return <>
+        <section style={{marginTop: '0.5rem'}}>
+            <label>{t('events.advanced')}:</label>
+            <Switch checked={!auto} size="small"
+                onChange={onBerryBurstAutoChange}/>
+        </section>
+        <section style={{paddingLeft: '1rem'}}>
+            <label>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</label>
+            <span style={{color: '#999'}}>
+                <TypeSelect size="small" disabled
+                    type={strength.pokemonIv.pokemon.type}
+                    onChange={() => {}}/>
+                <span style={{padding: '0 0.2rem 0 0.6rem'}}>Lv.</span>
+                {strength.pokemonIv.level}
+                <InfoButton onClick={() => onBerryInfoClick(iv.pokemon.type, iv.level)}/>
+            </span>
+        </section>
+        {[0, 1, 2, 3].map(i => <section key={i} style={{paddingLeft: '1rem'}}>
+            <label>{t('other team member')} {i + 1}:</label>
+            <span style={{color: auto ? '#999' : 'inherit'}}>
+                <TypeSelect size="small" disabled={auto}
+                    type={burstTeam[i].type}
+                    onChange={type => onBerryBurstTypeChange(i, type)}/>
+                <span style={{padding: '0 0.2rem 0 0.6rem'}}>Lv.</span>
+                {auto ? burstTeam[i].level : <LevelSelector value={burstTeam[i].level}
+                    onChange={level => onBerryBurstLevelChange(i, level)}/>}
+                <InfoButton onClick={() => onBerryInfoClick(burstTeam[i].type, burstTeam[i].level)}/>
+            </span>
+        </section>)}
+        {iv.pokemon.name === "Cresselia" && <section style={{paddingLeft: '1rem'}}>
+            <label>{t('different species')}:</label>
+            <span style={{color: '#999'}}>
+                {auto ? species :
+                <SelectEx value={species.toString()}
+                    sx={{padding: '0 0.5rem'}}
+                    onChange={onBerryBurstSpeciesChange}>
+                    <MenuItem dense value="1">1</MenuItem>
+                    {maxSpecies > 1 && <MenuItem dense value="2">2</MenuItem>}
+                    {maxSpecies > 2 && <MenuItem dense value="3">3</MenuItem>}
+                    {maxSpecies > 3 && <MenuItem dense value="4">4</MenuItem>}
+                    {maxSpecies > 4 && <MenuItem dense value="5">5</MenuItem>}
+                </SelectEx>}
+            </span>
+        </section>}
+    </>;
 }
 
 export default SkillHelpDialog;
