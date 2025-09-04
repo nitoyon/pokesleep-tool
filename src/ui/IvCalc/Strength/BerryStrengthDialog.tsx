@@ -26,15 +26,15 @@ const BerryStrengthDialog = React.memo(({open, onClose, iv, fieldBonus, berryBon
     return <StyledInfoDialog open={open} onClose={onClose}
         PaperProps={{style: {maxWidth: '20rem'}}}>
         <DialogTitle>
-            <h1>
+            <article>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
                 {formatWithComma(berryStrength)}
-            </h1>
-            <h2>
+            </article>
+            <footer>
                 <span className="box box3">{berryRawStrength}</span><> × </>
                 (1 + <span className="box box4">{fieldBonus}%</span>)<> × </>
                 <span className="box box5">{berryBonus}</span>
-            </h2>
+            </footer>
         </DialogTitle>
         <DialogContent>
             <article>

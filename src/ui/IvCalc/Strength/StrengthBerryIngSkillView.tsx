@@ -460,16 +460,15 @@ export const StyledInfoDialog = styled(Dialog)({
             padding: 0,
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
-            gridGap: '.8rem',
+            gridGap: '.4rem',
             alignItems: 'start',
-            '& > h1': {
+            '& > article': {
                 fontSize: '1.4rem',
                 margin: 0,
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.2rem',
             },
-            '& > h2': {
+            '& > footer': {
                 display: 'inline-block',
                 fontWeight: 'normal',
                 fontSize: '0.9rem',
