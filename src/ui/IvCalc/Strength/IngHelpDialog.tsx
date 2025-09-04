@@ -6,7 +6,7 @@ import PokemonStrength, { IngredientStrength, StrengthResult,
 } from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { ingredientStrength } from '../../../util/PokemonRp';
-import { Button, Dialog, DialogActions, DialogContent,
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle,
     FormControl, Select, SelectChangeEvent, Typography,
     MenuItem } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -97,79 +97,81 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     const dishBonus = getEventBonus(param.event, param.customEventBonus)?.dish ?? 1;
 
     return <StyledInfoDialog open={open} onClose={onClose}>
-        <header>
+        <DialogTitle>
             <h1>
                 <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
                 {formatWithComma(Math.round(result.ingStrength))}
             </h1>
-        </header>
-        <div className={`grid ings${ings.length}`}>
-            {getIngDetail(strength, result, recipeRatio, ingSlot, ings[0], t)}
-            {ings.length > 1 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[1], t)}
-            {ings.length > 2 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[2], t)}
-        </div>
-        <article>
-            <div><span className="box box3">{round2(result.ingHelpCount)}</span></div>
-            <span>{t('ing help count')}</span>
-            <footer>
-                {round1(result.notFullHelpCount)}
-                <small> ({t('normal help count')})</small>
-                <> × </>
-                {round1(result.ingRatio * 100)}%
-                <small> ({t('ingredient rate')})</small>
-            </footer>
-            <div><span className="box box1">{round1(ings[0].reduce((p, c) => p + c.count, 0))}</span></div>
-            <span>{t('ing count')}</span>
-            <div><span className="box box2">{ingredientStrength[ings[0][0].name]}</span></div>
-            <span>{t('strength per ing')}</span>
-            <div><span className="box box5">{round2(recipeRatio)}</span></div>
-            <span>{t('recipe multiplier')}<InfoButton onClick={onRecipeBonusInfoClick}/></span>
-            <footer>
-                <>(</>
-                {round2(param.recipeBonus === 0 ? 1 : 1 + param.recipeBonus / 100)}
-                <small> ({t('recipe bonus')})</small>
-                <> × </>
-                {round2(1 + recipeLevelBonus[param.recipeLevel] / 100)}
-                <small>({t('average recipe level')})</small>
-                <>) × 0.8 + 0.2</>
-            </footer>
-            <div><span className="box box4">{param.fieldBonus}%</span></div>
-            <span>{t('area bonus')}</span>
-            {dishBonus !== 1 && <>
-                <div><span className="box box6">{dishBonus}</span></div>
-                <span>{t('event bonus')}</span>
-            </>}
-        </article>
-        <section style={{marginTop: '1.8rem'}}>
-            <label>{t('recipe bonus')}:</label>
-            <FormControl size="small">
-            <Select variant="standard" value={strength.parameter.recipeBonus.toString()}
-                onChange={onRecipeBonusChange}>
-                <MenuItem value={0}>0% <small style={{paddingLeft: '0.3rem'}}>({t('mixed recipe')})</small></MenuItem>
-                <MenuItem value={19}>19% <small style={{paddingLeft: '0.3rem'}}>(7{t('range separator')}16 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={20}>20% <small style={{paddingLeft: '0.3rem'}}>(20{t('range separator')}22 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={21}>21% <small style={{paddingLeft: '0.3rem'}}>(23{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={25}>25% <small style={{paddingLeft: '0.3rem'}}>(17{t('range separator')}35 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={35}>35% <small style={{paddingLeft: '0.3rem'}}>(35{t('range separator')}56 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={48}>48% <small style={{paddingLeft: '0.3rem'}}>(49{t('range separator')}77 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={61}>61% <small style={{paddingLeft: '0.3rem'}}>(87{t('range separator')}102 {t('ingredients unit')})</small></MenuItem>
-            </Select></FormControl>
-        </section>
-        <section>
-            <label>{t('average recipe level')}:</label>
-            <Select variant="standard" value={strength.parameter.recipeLevel.toString()}
-                onChange={onRecipeLevelChange}>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-                <MenuItem value={30}>30</MenuItem>
-                <MenuItem value={40}>40</MenuItem>
-                <MenuItem value={50}>50</MenuItem>
-                <MenuItem value={55}>55</MenuItem>
-                <MenuItem value={60}>60</MenuItem>
-                <MenuItem value={65}>65</MenuItem>
-            </Select>
-        </section>
+        </DialogTitle>
+        <DialogContent>
+            <div className={`inggrid ings${ings.length}`}>
+                {getIngDetail(strength, result, recipeRatio, ingSlot, ings[0], t)}
+                {ings.length > 1 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[1], t)}
+                {ings.length > 2 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[2], t)}
+            </div>
+            <article>
+                <div><span className="box box3">{round2(result.ingHelpCount)}</span></div>
+                <span>{t('ing help count')}</span>
+                <footer>
+                    {round1(result.notFullHelpCount)}
+                    <small> ({t('normal help count')})</small>
+                    <> × </>
+                    {round1(result.ingRatio * 100)}%
+                    <small> ({t('ingredient rate')})</small>
+                </footer>
+                <div><span className="box box1">{round1(ings[0].reduce((p, c) => p + c.count, 0))}</span></div>
+                <span>{t('ing count')}</span>
+                <div><span className="box box2">{ingredientStrength[ings[0][0].name]}</span></div>
+                <span>{t('strength per ing')}</span>
+                <div><span className="box box5">{round2(recipeRatio)}</span></div>
+                <span>{t('recipe multiplier')}<InfoButton onClick={onRecipeBonusInfoClick}/></span>
+                <footer>
+                    <>(</>
+                    {round2(param.recipeBonus === 0 ? 1 : 1 + param.recipeBonus / 100)}
+                    <small> ({t('recipe bonus')})</small>
+                    <> × </>
+                    {round2(1 + recipeLevelBonus[param.recipeLevel] / 100)}
+                    <small>({t('average recipe level')})</small>
+                    <>) × 0.8 + 0.2</>
+                </footer>
+                <div><span className="box box4">{param.fieldBonus}%</span></div>
+                <span>{t('area bonus')}</span>
+                {dishBonus !== 1 && <>
+                    <div><span className="box box6">{dishBonus}</span></div>
+                    <span>{t('event bonus')}</span>
+                </>}
+            </article>
+            <section style={{marginTop: '1.8rem'}}>
+                <label>{t('recipe bonus')}:</label>
+                <FormControl size="small">
+                <Select variant="standard" value={strength.parameter.recipeBonus.toString()}
+                    onChange={onRecipeBonusChange}>
+                    <MenuItem value={0}>0% <small style={{paddingLeft: '0.3rem'}}>({t('mixed recipe')})</small></MenuItem>
+                    <MenuItem value={19}>19% <small style={{paddingLeft: '0.3rem'}}>(7{t('range separator')}16 {t('ingredients unit')})</small></MenuItem>
+                    <MenuItem value={20}>20% <small style={{paddingLeft: '0.3rem'}}>(20{t('range separator')}22 {t('ingredients unit')})</small></MenuItem>
+                    <MenuItem value={21}>21% <small style={{paddingLeft: '0.3rem'}}>(23{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
+                    <MenuItem value={25}>25% <small style={{paddingLeft: '0.3rem'}}>(17{t('range separator')}35 {t('ingredients unit')})</small></MenuItem>
+                    <MenuItem value={35}>35% <small style={{paddingLeft: '0.3rem'}}>(35{t('range separator')}56 {t('ingredients unit')})</small></MenuItem>
+                    <MenuItem value={48}>48% <small style={{paddingLeft: '0.3rem'}}>(49{t('range separator')}77 {t('ingredients unit')})</small></MenuItem>
+                    <MenuItem value={61}>61% <small style={{paddingLeft: '0.3rem'}}>(87{t('range separator')}102 {t('ingredients unit')})</small></MenuItem>
+                </Select></FormControl>
+            </section>
+            <section>
+                <label>{t('average recipe level')}:</label>
+                <Select variant="standard" value={strength.parameter.recipeLevel.toString()}
+                    onChange={onRecipeLevelChange}>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={30}>30</MenuItem>
+                    <MenuItem value={40}>40</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={55}>55</MenuItem>
+                    <MenuItem value={60}>60</MenuItem>
+                    <MenuItem value={65}>65</MenuItem>
+                </Select>
+            </section>
+        </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>

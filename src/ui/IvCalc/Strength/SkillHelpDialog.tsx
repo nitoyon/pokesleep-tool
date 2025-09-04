@@ -10,7 +10,7 @@ import PokemonStrength, {
 } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, MainSkillName } from '../../../util/MainSkill';
-import { Button, Collapse, Dialog, DialogActions, DialogContent,
+import { Button, Collapse, Dialog, DialogActions, DialogContent, DialogTitle,
     FormControl, MenuItem, Switch, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import LevelSelector from '../IvForm/LevelSelector';
 import InfoButton from '../InfoButton';
@@ -105,7 +105,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     }
 
     return <StyledInfoDialog open={open} onClose={onClose}>
-        <header>
+        <DialogTitle>
             <h1>
                 <MainSkillIcon mainSkill={skillName}/>
                 {formatNice(result.skillValue, t)}
@@ -122,71 +122,73 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     <span className="box box5">{round1(greatSuccessRate * 100)}%</span>
                 </>}
             </h2>}
-        </header>
-        <article>
-            {!isCountOnly && <>
-                <div><span className="box box1">{formatWithComma(skillValue)}</span></div>
-                <span>{skillValueText}</span>
-                {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
-            </>}
-            <div><span className="box box2">{round1(result.notFullHelpCount)}</span></div>
-            <span>{t('normal help count')}</span>
-            <div><span className="box box3">{round1(result.skillRatio * 100)}%</span></div>
-            <span>{t('skill rate')}</span>
-            {skillName === "Berry Burst (Disguise)" && <>
-                <div><span className="box box4">{2 * days}</span></div>
-                <span>{t('great success increasment')}</span>
-                <div><span className="box box5">{round1(greatSuccessRate * 100)}%</span></div>
-                <span>{t('great success rate')}</span>
-            </>}
-        </article>
-        {result.skillValue2 !== 0 && <>
-            <header style={{marginTop: '1.2rem'}}>
-                <h1>
-                    {skillName === "Ingredient Magnet S (Plus)" ?
-                        <IngredientIcon name={iv.pokemon.ing1.name}/> :
-                        <MainSkillIcon mainSkill={skillName} second/>}
-                    {formatNice(result.skillValue2, t)}
-                </h1>
-                <h2>
-                    <span className="box box4">{formatWithComma(skillValue2)}</span><> × </>
-                    <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
-                    <span className="box box3">{round1(result.skillRatio * 100)}%</span>
-                </h2>
-            </header>
+        </DialogTitle>
+        <DialogContent>
             <article>
-                <div><span className="box box4">{formatWithComma(skillValue2)}</span></div>
-                <span>{skillValueText2}</span>
-                {skillValueFooter2 !== null && <footer>{skillValueFooter2}</footer>}
+                {!isCountOnly && <>
+                    <div><span className="box box1">{formatWithComma(skillValue)}</span></div>
+                    <span>{skillValueText}</span>
+                    {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
+                </>}
+                <div><span className="box box2">{round1(result.notFullHelpCount)}</span></div>
+                <span>{t('normal help count')}</span>
+                <div><span className="box box3">{round1(result.skillRatio * 100)}%</span></div>
+                <span>{t('skill rate')}</span>
+                {skillName === "Berry Burst (Disguise)" && <>
+                    <div><span className="box box4">{2 * days}</span></div>
+                    <span>{t('great success increasment')}</span>
+                    <div><span className="box box5">{round1(greatSuccessRate * 100)}%</span></div>
+                    <span>{t('great success rate')}</span>
+                </>}
             </article>
-        </>}
+            {result.skillValue2 !== 0 && <>
+                <header style={{marginTop: '1.2rem'}}>
+                    <h1>
+                        {skillName === "Ingredient Magnet S (Plus)" ?
+                            <IngredientIcon name={iv.pokemon.ing1.name}/> :
+                            <MainSkillIcon mainSkill={skillName} second/>}
+                        {formatNice(result.skillValue2, t)}
+                    </h1>
+                    <h2>
+                        <span className="box box4">{formatWithComma(skillValue2)}</span><> × </>
+                        <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
+                        <span className="box box3">{round1(result.skillRatio * 100)}%</span>
+                    </h2>
+                </header>
+                <article>
+                    <div><span className="box box4">{formatWithComma(skillValue2)}</span></div>
+                    <span>{skillValueText2}</span>
+                    {skillValueFooter2 !== null && <footer>{skillValueFooter2}</footer>}
+                </article>
+            </>}
 
-        {!isCountOnly &&
-            <section style={{marginTop: '1.8rem'}}>
-                <label>{t('skill level')}:</label>
-                <FormControl size="small">
-                    <ToggleButtonGroup exclusive
-                        value={iv.skillLevel} onChange={onSkillLevelChange}>
-                        {toggleButtons}
-                    </ToggleButtonGroup>
-                </FormControl>
-            </section>
-        }
-        <Collapse in={!isCountOnly &&
-            (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
-            skillLevel !== iv.skillLevel}>
-            <div className="skillLevelNotice">
-                <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
-                    components={{
-                        level: <strong>{skillLevel}</strong>,
-                        bonus: <strong>{bonus.skillLevelReason === 'event+ex' ?
-                            t('event bonus') + t('text separator') + t('expert mode') :
-                            bonus.skillLevelReason === 'event' ? t('event bonus') : t('expert mode')}</strong>,
-                    }}/>
-            </div>
-        </Collapse>
-        {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
-        {footnote !== "" && <div className="footnote">{footnote}</div>}
+            {!isCountOnly &&
+                <section style={{marginTop: '1.8rem'}}>
+                    <label>{t('skill level')}:</label>
+                    <FormControl size="small">
+                        <ToggleButtonGroup exclusive
+                            value={iv.skillLevel} onChange={onSkillLevelChange}>
+                            {toggleButtons}
+                        </ToggleButtonGroup>
+                    </FormControl>
+                </section>
+            }
+            <Collapse in={!isCountOnly &&
+                (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
+                skillLevel !== iv.skillLevel}>
+                <div className="skillLevelNotice">
+                    <Trans i18nKey={settings.maxSkillLevel ? "max skill level affected" : "skill level bonus affected"}
+                        components={{
+                            level: <strong>{skillLevel}</strong>,
+                            bonus: <strong>{bonus.skillLevelReason === 'event+ex' ?
+                                t('event bonus') + t('text separator') + t('expert mode') :
+                                bonus.skillLevelReason === 'event' ? t('event bonus') : t('expert mode')}</strong>,
+                        }}/>
+                </div>
+            </Collapse>
+            {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
+            {footnote !== "" && <div className="footnote">{footnote}</div>}
+        </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
