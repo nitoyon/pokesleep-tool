@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v2.12.0": {
+                    "headline": "Adjusted for balance changes in v2.12.0 and improved simulation for $t(skills.Berry Burst).",
+                    "detail": "Updated skill probabilities for $t(pokemons.Braviary) and $t(pokemons.Mimikyu).\nWhen calculating the expected strength of $t(skills.Berry Burst), it is now assumed that all Pokémon in the team are at the same level. Additionally, from the [i] button next to [$t(skill)] on the [$t(strength2)] tab, you can now customize each Pokémon in the team in more detail."
+                },
                 "ex and toxel": {
                     "headline": "Added data for Toxel and Toxtricity. Also added support for $t(area.7).",
                     "detail": "The ingredient% and skill% are based on RP Collection values."
