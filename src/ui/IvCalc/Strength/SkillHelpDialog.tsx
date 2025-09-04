@@ -172,7 +172,6 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </FormControl>
             </section>
         }
-        {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
         <Collapse in={!isCountOnly &&
             (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
             skillLevel !== iv.skillLevel}>
@@ -186,6 +185,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     }}/>
             </div>
         </Collapse>
+        {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
         {footnote !== "" && <div className="footnote">{footnote}</div>}
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
@@ -427,7 +427,7 @@ function getBerryBurstValueText(strength: PokemonStrength,
 ): [React.ReactNode, React.ReactNode] {
     const text = t('value per skill', { value: valueText});
     const result = calculateBerryBurstStrength(strength.pokemonIv,
-        strength.parameter);
+        strength.parameter, strength.getSkillLevel());
     return [<>
         {text}<br/>
         <div className="bbgrid">
