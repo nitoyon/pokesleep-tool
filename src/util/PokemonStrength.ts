@@ -828,7 +828,7 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
 
     // Get the Berry Burst team members (types and levels)
     const levels: number[] = [
-        iv.level, team[0].level, team[1].level, team[3].level, team[3].level,
+        iv.level, team[0].level, team[1].level, team[2].level, team[3].level,
     ];
     const types: PokemonType[] = [
         iv.pokemon.type, team[0].type, team[1].type, team[2].type, team[3].type,
