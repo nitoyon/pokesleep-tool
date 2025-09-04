@@ -106,11 +106,11 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
 
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
-            <h1>
+            <article>
                 <MainSkillIcon mainSkill={skillName}/>
                 {formatNice(result.skillValue, t)}
-            </h1>
-            {!isCountOnly && <h2>
+            </article>
+            {!isCountOnly && <footer>
                 <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
                 <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
                 <span className="box box3">{round1(result.skillRatio * 100)}%</span>
@@ -121,7 +121,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     <span className="box box4">{2 * days}</span><> × </>
                     <span className="box box5">{round1(greatSuccessRate * 100)}%</span>
                 </>}
-            </h2>}
+            </footer>}
         </DialogTitle>
         <DialogContent>
             <article>
