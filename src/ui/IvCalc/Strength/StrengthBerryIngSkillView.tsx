@@ -558,6 +558,26 @@ export const StyledInfoDialog = styled(Dialog)({
                     padding: '0 0.3rem',
                 },
             },
+            '& > span > div.bbgrid': {
+                display: 'grid',
+                fontSize: '0.8rem',
+                gridTemplateColumns: 'auto auto 1fr',
+                gap: '0 0.1rem',
+                background: '#f0f0f0',
+                borderRadius: '0.3rem',
+                padding: '0.1rem 0.5rem',
+                '& > label': {
+                    fontWeight: 'bold',
+                    color: '#666',
+                },
+                '& > span': {
+                    paddingLeft: '0.8rem',
+                    textAlign: 'right',
+                },
+                '& > small': {
+                    paddingLeft: '0.4rem',
+                },
+            },
             '& > ul': {
                 margin: 0,
                 marginTop: '-0.2rem',
