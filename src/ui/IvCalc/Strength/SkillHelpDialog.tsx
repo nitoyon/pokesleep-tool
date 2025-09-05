@@ -138,18 +138,18 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 </>}
             </article>
             {result.skillValue2 !== 0 && <>
-                <header style={{marginTop: '1.2rem'}}>
-                    <h1>
+                <header className="second-skill" style={{marginTop: '1.2rem'}}>
+                    <article>
                         {skillName === "Ingredient Magnet S (Plus)" ?
                             <IngredientIcon name={iv.pokemon.ing1.name}/> :
                             <MainSkillIcon mainSkill={skillName} second/>}
                         {formatNice(result.skillValue2, t)}
-                    </h1>
-                    <h2>
+                    </article>
+                    <footer>
                         <span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span><> × </>
                         <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
                         <span className="box box3">{round1(result.skillRatio * 100)}%</span>
-                    </h2>
+                    </footer>
                 </header>
                 <article>
                     <div><span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span></div>
