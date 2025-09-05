@@ -455,7 +455,7 @@ export const StyledInfoDialog = styled(Dialog)({
     },
 
     '& .MuiPaper-root': {
-        '& > h2.MuiDialogTitle-root': {
+        '& > h2.MuiDialogTitle-root, & > div.MuiDialogContent-root > header.second-skill': {
             margin: '0.5rem 0.5rem 0 0.5rem',
             padding: 0,
             display: 'grid',
