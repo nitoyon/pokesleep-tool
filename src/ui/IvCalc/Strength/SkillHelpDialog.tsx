@@ -73,10 +73,6 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
 
     const iv = strength.pokemonIv;
     const skill = iv.pokemon.skill.replace(" (Random)", "");
-    const skillValue = result.skillCount === 0 ? 0 :
-        Math.round(result.skillValue / result.skillCount);
-    const skillValue2 = result.skillCount === 0 ? 0 :
-        Math.round(result.skillValue2 / result.skillCount);
     const footnote = t(`strength skill info.${skill}`);
     const skillName = iv.pokemon.skill;
     const isCountOnly = skillName === "Metronome" ||
@@ -111,13 +107,13 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 {formatNice(result.skillValue, t)}
             </article>
             {!isCountOnly && <footer>
-                <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
+                <span className="box box1">{formatWithComma(result.skillValuePerTrigger)}</span><> × </>
                 <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
                 <span className="box box3">{round1(result.skillRatio * 100)}%</span>
                 {skillName === "Berry Burst (Disguise)" && <>
                     <br/>
                     <> + </>
-                    <span className="box box1">{formatWithComma(skillValue)}</span><> × </>
+                    <span className="box box1">{formatWithComma(result.skillValuePerTrigger)}</span><> × </>
                     <span className="box box4">{2 * days}</span><> × </>
                     <span className="box box5">{round1(greatSuccessRate * 100)}%</span>
                 </>}
@@ -126,7 +122,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         <DialogContent>
             <article>
                 {!isCountOnly && <>
-                    <div><span className="box box1">{formatWithComma(skillValue)}</span></div>
+                    <div><span className="box box1">{formatWithComma(result.skillValuePerTrigger)}</span></div>
                     <span>{skillValueText}</span>
                     {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
                 </>}
@@ -150,13 +146,13 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                         {formatNice(result.skillValue2, t)}
                     </h1>
                     <h2>
-                        <span className="box box4">{formatWithComma(skillValue2)}</span><> × </>
+                        <span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span><> × </>
                         <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
                         <span className="box box3">{round1(result.skillRatio * 100)}%</span>
                     </h2>
                 </header>
                 <article>
-                    <div><span className="box box4">{formatWithComma(skillValue2)}</span></div>
+                    <div><span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span></div>
                     <span>{skillValueText2}</span>
                     {skillValueFooter2 !== null && <footer>{skillValueFooter2}</footer>}
                 </article>
