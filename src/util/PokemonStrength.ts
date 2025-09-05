@@ -390,7 +390,7 @@ class PokemonStrength {
                 skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             [skillValue, skillStrength, skillValue2, skillStrength2] =
-                this.getSkillValueAndStrength(skillCount, param, berryStrength, bonus);
+                this.getSkillValueAndStrength(skillCount, param, bonus);
         }
 
         const totalStrength = ingStrength + berryTotalStrength + skillStrength + skillStrength2;
@@ -407,13 +407,12 @@ class PokemonStrength {
      * Get skill value and skill strength.
      * @param skillCount Skill count.
      * @param param Strength paramter.
-     * @param berryStrength Strength per berry (area bonus included).
      * @param bonus BonusEffects for this pokemon and StrengthParameter.
      * @returns [skillValue, skillStrength, skillValue2, skillStrength2].
      */
     getSkillValueAndStrength(skillCount: number,
         param: StrengthParameter,
-        berryStrength: number, bonus: BonusEffects
+        bonus: BonusEffects
     ): [number, number, number, number] {
         const mainSkill = this.iv.pokemon.skill;
         const skillLevel = this.getSkillLevel();
