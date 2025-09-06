@@ -478,7 +478,7 @@ class PokemonStrength {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
                     skillValue2: ret.total * skillCount,
                     skillStrength2: ret.total * skillCount,
-                    skillValuePerTrigger2: 0,
+                    skillValuePerTrigger2: ret.total,
                 };
             }
             case "Dream Shard Magnet S":

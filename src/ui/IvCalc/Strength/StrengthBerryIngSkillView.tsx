@@ -451,7 +451,7 @@ export const StyledInfoDialog = styled(Dialog)({
         // extend dialog width
         width: '100%',
         margin: '20px',
-        maxHeight: 'calc(100% - 50px)',
+        maxHeight: 'calc(100% - 90px)',
     },
 
     '& .MuiPaper-root': {
