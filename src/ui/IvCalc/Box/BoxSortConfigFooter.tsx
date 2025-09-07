@@ -4,6 +4,7 @@ import { IvAction } from '../IvState';
 import { BoxSortConfig } from './BoxView';
 import IngredientIcon from '../IngredientIcon';
 import MainSkillIcon from '../MainSkillIcon';
+import FixedLevelSelect from '../Strength/FixedLevelSelect';
 import ResearchAreaSelect from '../Strength/ResearchAreaSelect';
 import SelectEx from '../../common/SelectEx';
 import { StrengthParameter } from '../../../util/PokemonStrength';
@@ -23,9 +24,6 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     const onParameterChange = React.useCallback((value: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
-    const onLevelChange = React.useCallback((value: string) => {
-        onParameterChange({...parameter, level: parseInt(value, 10) as 0|10|25|30|50|55|60|75|100})
-    }, [onParameterChange, parameter])
     const onIngredientChange = React.useCallback((value: string) => {
         onChange({
             ...sortConfig, ingredient: value as IngredientName,
@@ -69,18 +67,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     return <StyledBoxHeader>
         <div>
             <span>
-                <SelectEx onChange={onLevelChange} value={parameter.level}
-                    sx={{padding: '0 .2rem', fontSize: '0.8rem', textWrap: 'nowrap'}}>
-                    <MenuItem value={0}>{t('current level')}</MenuItem>
-                    <MenuItem value={10}>Lv. 10</MenuItem>
-                    <MenuItem value={25}>Lv. 25</MenuItem>
-                    <MenuItem value={30}>Lv. 30</MenuItem>
-                    <MenuItem value={50}>Lv. 50</MenuItem>
-                    <MenuItem value={60}>Lv. 60</MenuItem>
-                    <MenuItem value={65}>Lv. 65</MenuItem>
-                    <MenuItem value={75}>Lv. 75</MenuItem>
-                    <MenuItem value={100}>Lv. 100</MenuItem>
-                </SelectEx>
+                <FixedLevelSelect value={parameter} dispatch={dispatch}
+                    sx={{padding: '0 .2rem', fontSize: '0.8rem', textWrap: 'nowrap'}}/>
             </span>
             {(sortConfig.sort === "berry" || sortConfig.sort === "total strength") &&
             <span className="field">
