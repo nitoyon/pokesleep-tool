@@ -27,7 +27,7 @@ const AreaControlDialog = React.memo(({open, value, onChange, onClose}:{
 });
 
 const StyledDialogContent = styled(DialogContent)({
-    minWidth: '14rem',
+    minWidth: '16rem',
     paddingBottom: 0,
     fontSize: '0.9rem',
     '& section': {
