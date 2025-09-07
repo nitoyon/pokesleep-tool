@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem } from '@mui/material';
+import { MenuItem, Divider } from '@mui/material';
 import { IvAction } from '../IvState';
 import SelectEx from '../../common/SelectEx';
 import { StrengthParameter } from '../../../util/PokemonStrength';
@@ -20,15 +20,16 @@ const FixedLevelSelect = React.memo(({value, dispatch, sx}: {
     }, [dispatch, value]);
 
     return <SelectEx sx={sx} value={value.level} onChange={onLevelChange}>
-        <MenuItem value={0}>{t('current level')}</MenuItem>
-        <MenuItem value={10}>Lv. 10</MenuItem>
-        <MenuItem value={25}>Lv. 25</MenuItem>
-        <MenuItem value={30}>Lv. 30</MenuItem>
-        <MenuItem value={50}>Lv. 50</MenuItem>
-        <MenuItem value={60}>Lv. 60</MenuItem>
-        <MenuItem value={65}>Lv. 65</MenuItem>
-        <MenuItem value={75}>Lv. 75</MenuItem>
-        <MenuItem value={100}>Lv. 100</MenuItem>
+        <MenuItem dense value={0}>{t('current level')}</MenuItem>
+        <Divider/>
+        <MenuItem dense value={10}>Lv. 10</MenuItem>
+        <MenuItem dense value={25}>Lv. 25</MenuItem>
+        <MenuItem dense value={30}>Lv. 30</MenuItem>
+        <MenuItem dense value={50}>Lv. 50</MenuItem>
+        <MenuItem dense value={60}>Lv. 60</MenuItem>
+        <MenuItem dense value={65}>Lv. 65</MenuItem>
+        <MenuItem dense value={75}>Lv. 75</MenuItem>
+        <MenuItem dense value={100}>Lv. 100</MenuItem>
     </SelectEx>;
 });
 
