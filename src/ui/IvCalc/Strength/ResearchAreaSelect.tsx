@@ -1,6 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/system';
-import fields, { isExpertField } from '../../../data/fields';
+import fields from '../../../data/fields';
 import MessageDialog from '../../Dialog/MessageDialog';
 import SelectEx from '../../common/SelectEx';
 import AreaControlDialog from './AreaControlDialog';
@@ -62,16 +61,13 @@ const ResearchAreaSelect = React.memo(({showConfigButton, value, fontSize, onCha
         );
     }
 
-    const showConfig = showConfigButton &&
-        (value.fieldIndex === 0 || isExpertField(value.fieldIndex));
-    const showAlert = value.fieldIndex === 6;
-
+    const showAlert = value.fieldIndex === 6 && !showConfigButton;
     return (<>
         <SelectEx value={value.fieldIndex} onChange={onChangeHandler}
             sx={{padding: '0 .2rem', fontSize: fontSize ?? '1rem'}}>
             {fieldMenuItems}
         </SelectEx>
-        {showConfig && <IconButton size="small" style={{padding: '2px'}}
+        {showConfigButton && <IconButton size="small" style={{padding: '2px'}}
             onClick={onConfigClick}>
             <SettingsIcon fontSize={fontSize ? "inherit" : "small"}/>
         </IconButton>}
