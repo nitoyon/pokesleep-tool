@@ -110,22 +110,28 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
     });
 
     return (<StrengthParameterPreview>
-        <ul>
-            <li><TextLikeButton onClick={onAreaClick}>
-                {area}{fieldBonus}
-            </TextLikeButton></li>
-            <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
-            {parameter.level !== 0 && <li className="level">
+            <span className="edit">
+                <Button onClick={onEditClick} size="small">{t('details')}</Button>
+            </span>
+            <span>
+                <TextLikeButton onClick={onAreaClick}>
+                    {area}{fieldBonus}
+                </TextLikeButton>
+            </span>
+            <span>
+                <PeriodSelect dispatch={dispatch} value={parameter}/>
+            </span>
+            {parameter.level !== 0 && <span className="level">
                 <FixedLevelSelect value={parameter} dispatch={dispatch}/>
-            </li>}
-            {parameter.maxSkillLevel && <li>
+            </span>}
+            {parameter.maxSkillLevel && <span>
                 <TextLikeButton onClick={onMaxSkillLevelClick}><strong>{t('calc with max skill level (short)')}</strong></TextLikeButton>
-            </li>}
-            {parameter.period !== whistlePeriod && <li>
+            </span>}
+            {parameter.period !== whistlePeriod && <span>
                 <>{t('good camp ticket (short)')}: </>
                 <TextLikeButton onClick={onCampTicketClick} style={{width: '2rem'}}>{t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</TextLikeButton>
-            </li>}
-            {isEventScheduled && <li>
+            </span>}
+            {isEventScheduled && <span>
                 <SelectEx value={parameter.event} onChange={onEventChange}>
                     {eventMenuItems}
                 </SelectEx>
@@ -133,9 +139,7 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
                     onClick={onEventConfigClick}>
                     <SettingsIcon/>
                 </IconButton>}
-            </li>}
-        </ul>
-        <Button onClick={onEditClick} size="small">{t('edit')}</Button>
+            </span>}
         <AreaControlDialog open={areaDialogOpen} onClose={onAreaDialogClose}
             value={state.parameter} onChange={onParameterChange}/>
         <EventConfigDialog open={eventConfigOpen} onClose={onEventConfigClose}
@@ -150,39 +154,44 @@ const StrengthParameterPreview = styled('div')({
     borderRadius: '1rem',
     background: '#f3f5f0',
     fontSize: '0.8rem',
-    display: 'flex',
-    '& > ul': {
-        margin: 0,
-        padding: 0,
-        listStyle: 'none',
-        display: 'flex',
-        flexWrap: 'wrap',
-        '& > li': {
-            display: 'block',
-            paddingRight: '1rem',
-            '&:last-child': {
-                paddingRight: 0,
+    lineHeight: 1.8,
+    '& > span': {
+        float: 'left',
+        textWrap: 'none',
+        paddingRight: '1rem',
+        '&:last-child': {
+            paddingRight: 0,
+        },
+        '& > button.MuiButtonBase-root': {
+            '&::before': {
+                borderBottomColor: 'rgba(0, 0, 0, 0.25)'
             },
-            '& > button.MuiButtonBase-root': {
-                '&::before': {
-                    borderBottomColor: 'rgba(0, 0, 0, 0.25)'
-                },
-                marginTop: '-2px',
-                fontSize: '0.8rem',
-                lineHeight: 1.5,
-                '& > svg': {
-                    fontSize: '1rem',
-                },
+            marginTop: '-2px',
+            fontSize: '0.8rem',
+            lineHeight: 1.5,
+            '& > svg': {
+                fontSize: '1rem',
             },
-            '&.level > button': {
-                fontWeight: 'bold',
+        },
+        '&.level > button': {
+            fontWeight: 'bold',
+        },
+        '&.edit': {
+            float: 'right',
+            padding: 0,
+            '& > button': {
+                textTransform: 'none',
+                minWidth: 0,
+                textWrap: 'nowrap',
             },
         },
     },
-    '& > button': {
-        minWidth: 'auto',
-        textWrap: 'nowrap',
-    }
+    // clearfix
+    '&::after': {
+        content: "''",
+        display: 'table',
+        clear: 'both',
+    }    
 });
 
 export default StrengthParameterSummary;
