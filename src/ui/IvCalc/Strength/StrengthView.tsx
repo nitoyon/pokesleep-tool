@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import IvState, { IvAction } from '../IvState';
 import AreaControlDialog from './AreaControlDialog';
 import EventConfigDialog from './EventConfigDialog';
+import FixedLevelSelect from './FixedLevelSelect';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import PeriodSelect from './PeriodSelect';
 import SelectEx from '../../common/SelectEx';
@@ -121,7 +122,9 @@ const StrengthView = React.memo(({state, dispatch}: {
                         {area}{fieldBonus}
                     </TextLikeButton></li>
                     <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
-                    {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
+                    {parameter.level !== 0 && <li className="level">
+                        <FixedLevelSelect value={parameter} dispatch={dispatch}/>
+                    </li>}
                     {parameter.maxSkillLevel && <li>
                         <TextLikeButton onClick={onMaxSkillLevelClick}><strong>{t('calc with max skill level (short)')}</strong></TextLikeButton>
                     </li>}
@@ -179,6 +182,9 @@ const StrengthParameterPreview = styled('div')({
                 '& > svg': {
                     fontSize: '1rem',
                 },
+            },
+            '&.level > button': {
+                fontWeight: 'bold',
             },
         },
     },
