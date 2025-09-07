@@ -6,12 +6,11 @@ import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import { IvAction } from '../IvState';
-import AreaBonusControl from './AreaBonusControl';
+import AreaControlGroup from './AreaControlGroup';
 import InfoButton from '../InfoButton';
-import FavoriteBerrySelect from './FavoriteBerrySelect';
 import PeriodSelect from './PeriodSelect';
-import ResearchAreaSelect from './ResearchAreaSelect';
 import EventConfigDialog from './EventConfigDialog';
+import FixedLevelSelect from './FixedLevelSelect';
 import { getActiveHelpBonus } from '../../../data/events';
 import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
@@ -73,18 +72,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
 
-    const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
-        onChange({...value, fieldBonus});
-    }, [onChange, value]);
     const onHelpBonusCountChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, helpBonusCount: parseInt(e.target.value, 10) as 0|1|2|3|4});
     }, [onChange, value]);
-    const onGoodCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({...value, isGoodCampTicketSet: e.target.checked});
-    }, [onChange, value]);
-    const onLevelChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, level: parseInt(e.target.value, 10) as 0|10|25|30|50|55|60|75|100})
-    }, [onChange, value])
     const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, evolved: e.target.checked});
     }, [onChange, value]);
@@ -151,25 +141,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <label>{t('period')}:</label>
             <PeriodSelect dispatch={dispatch} value={value}/>
         </section>
-        <section>
-            <label>{t('research area')}:</label>
-            <ResearchAreaSelect value={value} fontSize="0.9rem"
-                onChange={onChange}/>
-        </section>
-        <Collapse in={value.fieldIndex >= 0}>
-            <FavoriteBerrySelect value={value} onChange={onChange}/>
-        </Collapse>
-        <section>
-            <label>{t('area bonus')}:</label>
-            <AreaBonusControl value={value.fieldBonus}
-                onChange={onFieldBonusChange}/>
-        </section>
-        <Collapse in={isNotWhistle}>
-            <section>
-                <label>{t('good camp ticket')}:</label>
-                <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
-            </section>
-        </Collapse>
+        <AreaControlGroup value={value} onChange={onChange}/>
         <section className="mt">
             <label>{t('event')}:</label>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
@@ -184,17 +156,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <section className="mt">
             <label>{t('level')}:</label>
-            <Select variant="standard" onChange={onLevelChange} value={value.level.toString()}>
-                <MenuItem value={0}>{t('current level')}</MenuItem>
-                <MenuItem value={10}>Lv. 10</MenuItem>
-                <MenuItem value={25}>Lv. 25</MenuItem>
-                <MenuItem value={30}>Lv. 30</MenuItem>
-                <MenuItem value={50}>Lv. 50</MenuItem>
-                <MenuItem value={60}>Lv. 60</MenuItem>
-                <MenuItem value={65}>Lv. 65</MenuItem>
-                <MenuItem value={75}>Lv. 75</MenuItem>
-                <MenuItem value={100}>Lv. 100</MenuItem>
-            </Select>
+            <FixedLevelSelect dispatch={dispatch} value={value}/>
         </section>
         <section>
             <label>{t('calc with evolved')}:</label>
