@@ -21,7 +21,7 @@ const AreaSelectControl = React.memo(({value, onChange}: {
 
     const isNotWhistle = (value.period !== whistlePeriod);
     return <>
-        <section>
+        <section className="first">
             <label>{t('research area')}:</label>
             <ResearchAreaSelect value={value} fontSize="0.9rem"
                 onChange={onChange}/>
@@ -37,7 +37,8 @@ const AreaSelectControl = React.memo(({value, onChange}: {
         <Collapse in={isNotWhistle}>
             <section>
                 <label>{t('good camp ticket')}:</label>
-                <Switch checked={value.isGoodCampTicketSet} onChange={onGoodCampTicketChange}/>
+                <Switch checked={value.isGoodCampTicketSet} size="small"
+                    onChange={onGoodCampTicketChange}/>
             </section>
         </Collapse>
     </>;

@@ -55,7 +55,7 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
     // select main berry and sub-berries (expert)
     if (expert === true) {
         return <>
-            <section className="first">
+            <section>
                 <label>{t('favorite berry')}:</label>
                 <TypeSelectContainer>
                     <span>
@@ -99,7 +99,7 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
     }
 
     // display or select berries
-    return <section className="first">
+    return <section>
         <label>{t('favorite berry')}:</label>
         <TypeSelectContainer>
             <span>
