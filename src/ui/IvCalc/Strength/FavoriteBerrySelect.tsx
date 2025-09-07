@@ -7,7 +7,7 @@ import { PokemonType } from '../../../data/pokemons';
 import {
     ExpertEffects, getCurrentFavoriteBerries, StrengthParameter,
 } from '../../../util/PokemonStrength';
-import { Select, SelectChangeEvent, MenuItem } from '@mui/material';
+import { Collapse, Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const FavoriteBerrySelect = React.memo(({value, onChange}: {
@@ -52,76 +52,57 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
         return <></>;
     }
 
-    // select main berry and sub-berries (expert)
-    if (expert === true) {
-        return <>
-            <section>
-                <label>{t('favorite berry')}:</label>
-                <TypeSelectContainer>
-                    <span>
+    // display or select berries
+    return <>
+        <section>
+            <label>{t('favorite berry')}:</label>
+            <TypeSelectContainer>
+                <span>
+                    <Collapse in={expert}>
                         <header>{t('main')}</header>
-                        {reasons[0] === 'random' ?
-                            <TypeSelect type={types[0]} size="small"
-                                onChange={onFavoriteBerryChange1}/> :
-                            <TypeButton type={types[0]} size="small" checked={false}
-                                onClick={onMainBerryChange}/>
-                        }
-                        <footer className={reasons[0].replace(/ /g, '-')}>{t(reasons[0])}</footer>
-                    </span>
-                    <span>
+                    </Collapse>
+                    {reasons[0] === 'random' ?
+                        <TypeSelect type={types[0]} size="small"
+                            onChange={onFavoriteBerryChange1}/> :
+                        <TypeButton type={types[0]} size="small" checked={false}
+                            onClick={onMainBerryChange}/>
+                    }
+                    <footer className={reasons[0].replace(/ /g, '-')}>{t(reasons[0])}</footer>
+                </span>
+                <span>
+                    <Collapse in={expert}>
                         <header>{t('sub1')}</header>
-                        {reasons[1] === 'random' ?
-                            <TypeSelect type={types[1]} size="small"
-                                onChange={onFavoriteBerryChange2}/> :
-                            <TypeButton type={types[1]} size="small" checked={false}
-                                onClick={onMainBerryChange}/>
-                        }
-                        <footer className={reasons[1].replace(/ /g, '-')}>{t(reasons[1])}</footer>
-                    </span>
-                    <span>
+                    </Collapse>
+                    {reasons[1] === 'random' ?
+                        <TypeSelect type={types[1]} size="small"
+                            onChange={onFavoriteBerryChange2}/> :
+                        <TypeButton type={types[1]} size="small" checked={false}
+                            onClick={onMainBerryChange}/>
+                    }
+                    <footer className={reasons[1].replace(/ /g, '-')}>{t(reasons[1])}</footer>
+                </span>
+                <span>
+                    <Collapse in={expert}>
                         <header>{t('sub2')}</header>
-                        {reasons[2] === 'random' ?
-                            <TypeSelect type={types[2]} size="small"
-                                onChange={onFavoriteBerryChange3}/> :
-                            <TypeButton type={types[2]} size="small" checked={false}
-                                onClick={onMainBerryChange}/>
-                        }
-                        <footer className={reasons[2].replace(/ /g, '-')}>{t(reasons[2])}</footer>
-                    </span>
-                </TypeSelectContainer>
-            </section>
+                    </Collapse>
+                    {reasons[2] === 'random' ?
+                        <TypeSelect type={types[2]} size="small"
+                            onChange={onFavoriteBerryChange3}/> :
+                        <TypeButton type={types[2]} size="small" checked={false}
+                            onClick={onMainBerryChange}/>
+                    }
+                    <footer className={reasons[2].replace(/ /g, '-')}>{t(reasons[2])}</footer>
+                </span>
+            </TypeSelectContainer>
+        </section>
+        <Collapse in={expert}>
             <section>
                 <label>{t('expert effect')}:</label>
                 <ExpertEffectSelect value={value.expertEffect}
                     onChange={onExpertEffectChange}/>
             </section>
-        </>;
-    }
-
-    // display or select berries
-    return <section>
-        <label>{t('favorite berry')}:</label>
-        <TypeSelectContainer>
-            <span>
-                <TypeSelect type={types[0]} size="small"
-                    disabled={reasons[0] !== "random"}
-                    onChange={onFavoriteBerryChange1}/>
-                <footer className={reasons[0].replace(/ /g, '-')}>{t(reasons[0])}</footer>
-            </span>
-            <span>
-                <TypeSelect type={types[1]} size="small"
-                    disabled={reasons[1] !== "random"}
-                    onChange={onFavoriteBerryChange2}/>
-                <footer className={reasons[1].replace(/ /g, '-')}>{t(reasons[1])}</footer>
-            </span>
-            <span>
-                <TypeSelect type={types[2]} size="small"
-                    disabled={reasons[2] !== "random"}
-                    onChange={onFavoriteBerryChange3}/>
-                <footer className={reasons[2].replace(/ /g, '-')}>{t(reasons[2])}</footer>
-            </span>
-        </TypeSelectContainer>
-    </section>;
+        </Collapse>
+    </>;
 });
 
 const ExpertEffectSelect = React.memo(({value, onChange}: {
@@ -146,16 +127,18 @@ const TypeSelectContainer = styled('span')({
 
     '& > span': {
         display: 'grid',
-        '& > header': {
-            display: 'inline-block',
-            textAlign: 'center',
-            color: 'white',
-            width: '2rem',
-            background: '#7cd377',
-            fontSize: '0.5rem',
-            borderRadius: '0.7rem',
-            margin: '0 auto 2px auto',
-            padding: '2px 12px',
+        '& > div.MuiCollapse-root': {
+            '& header': {
+                display: 'block',
+                textAlign: 'center',
+                color: 'white',
+                width: '2rem',
+                background: '#7cd377',
+                fontSize: '0.5rem',
+                borderRadius: '0.7rem',
+                margin: '0 auto 2px auto',
+                padding: '2px 12px',
+            },
         },
         '& > button': {
             marginTop: 0,
