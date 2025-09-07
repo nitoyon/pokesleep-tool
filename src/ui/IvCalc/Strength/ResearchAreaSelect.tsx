@@ -3,13 +3,11 @@ import { styled } from '@mui/system';
 import fields, { isExpertField } from '../../../data/fields';
 import MessageDialog from '../../Dialog/MessageDialog';
 import SelectEx from '../../common/SelectEx';
-import FavoriteBerrySelect from './FavoriteBerrySelect';
+import AreaControlDialog from './AreaControlDialog';
 import {
     allFavoriteFieldIndex, noFavoriteFieldIndex, StrengthParameter
 } from '../../../util/PokemonStrength';
-import {
-    Button, Dialog, DialogActions, DialogContent, Divider, IconButton, MenuItem
-} from '@mui/material';
+import { Divider, IconButton, MenuItem } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import { useTranslation } from 'react-i18next';
@@ -81,49 +79,11 @@ const ResearchAreaSelect = React.memo(({showConfigButton, value, fontSize, onCha
             onClick={onWarningClick}>
             <WarningRoundedIcon fontSize={fontSize ? "inherit" : "small"}/>
         </IconButton>}
-        <FavoriteBerrySelectDialog open={configOpen} onClose={onConfigClose}
+        <AreaControlDialog open={configOpen} onClose={onConfigClose}
             value={value} onChange={onChange}/>
         <MessageDialog open={warningOpen} onClose={onWarningClose}
             message={t('amber assumption')}/>
     </>);
-});
-
-const FavoriteBerrySelectDialog = React.memo(({open, value, onChange, onClose}:{
-    open: boolean,
-    value: StrengthParameter,
-    onChange: (value: StrengthParameter) => void
-    onClose: () => void,
-}) => {
-    const { t } = useTranslation();
-    if (!open) {
-        return <></>;
-    }
-
-    return <Dialog open={open} onClose={onClose}>
-        <StyledFavoriteBerryContent>
-            <FavoriteBerrySelect value={value} onChange={onChange}/>
-        </StyledFavoriteBerryContent>
-        <DialogActions>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </Dialog>;
-});
-
-const StyledFavoriteBerryContent = styled(DialogContent)({
-    minWidth: '14rem',
-    paddingBottom: 0,
-    '& section': {
-        marginTop: '1rem',
-        '&.first': {
-            marginTop: 0,
-        },
-        '& > label': {
-            display: 'block',
-        },
-        '& > span, & > div': {
-            marginLeft: '1rem',
-        },
-    },
 });
 
 export default ResearchAreaSelect;
