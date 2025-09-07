@@ -566,6 +566,7 @@ export const StyledInfoDialog = styled(Dialog)({
                     display: 'grid',
                     fontSize: '0.8rem',
                     gridTemplateColumns: 'auto auto 1fr',
+                    alignItems: 'center',
                     gap: '0 0.1rem',
                     background: '#f0f0f0',
                     borderRadius: '0.3rem',
