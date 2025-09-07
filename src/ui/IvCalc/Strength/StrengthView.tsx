@@ -42,6 +42,12 @@ const StrengthView = React.memo(({state, dispatch}: {
         dispatch({type: "changeParameter", payload: { parameter }});
     }, [dispatch]);
 
+    const onMaxSkillLevelClick = React.useCallback(() => {
+        dispatch({type: "changeParameter", payload: { parameter: {
+            ...parameter, maxSkillLevel: false,
+        }}});
+    }, [dispatch, parameter]);
+
     const onCampTicketClick = React.useCallback(() => {
         dispatch({type: "changeParameter", payload: { parameter: {
             ...parameter,
@@ -116,7 +122,9 @@ const StrengthView = React.memo(({state, dispatch}: {
                     </TextLikeButton></li>
                     <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
-                    {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
+                    {parameter.maxSkillLevel && <li>
+                        <TextLikeButton onClick={onMaxSkillLevelClick}><strong>{t('calc with max skill level (short)')}</strong></TextLikeButton>
+                    </li>}
                     {parameter.period !== whistlePeriod && <li>
                         <>{t('good camp ticket (short)')}: </>
                         <TextLikeButton onClick={onCampTicketClick} style={{width: '2rem'}}>{t(parameter.isGoodCampTicketSet ? 'on' : 'off')}</TextLikeButton>
