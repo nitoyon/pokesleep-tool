@@ -1,13 +1,14 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import IvState, { IvAction } from '../IvState';
+import AreaControlDialog from './AreaControlDialog';
 import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
 import PeriodSelect from './PeriodSelect';
 import TextLikeButton from '../../common/TextLikeButton';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
 import {
-    allFavoriteFieldIndex, noFavoriteFieldIndex, whistlePeriod,
+    allFavoriteFieldIndex, noFavoriteFieldIndex, StrengthParameter, whistlePeriod,
 } from '../../../util/PokemonStrength';
 import { Button, Collapse } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +18,7 @@ const StrengthView = React.memo(({state, dispatch}: {
     dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
+    const [areaDialogOpen, setAreaDialogOpen] = React.useState(false);
     const pokemonIv = state.pokemonIv;
     const parameter = state.parameter;
     const lowerTabIndex = state.lowerTabIndex;
@@ -24,6 +26,17 @@ const StrengthView = React.memo(({state, dispatch}: {
     const onEditClick = React.useCallback(() => {
         dispatch({type: "changeLowerTab", payload: {index: 2}});
     }, [dispatch]);
+
+    const onAreaClick = React.useCallback(() => {
+        setAreaDialogOpen(true);
+    }, []);
+    const onAreaDialogClose = React.useCallback(() => {
+        setAreaDialogOpen(false);
+    }, []);
+
+    const onParameterChange = React.useCallback((parameter: StrengthParameter) => {
+        dispatch({type: "changeParameter", payload: { parameter }});
+    }, []);
 
     const onCampTicketClick = React.useCallback(() => {
         dispatch({type: "changeParameter", payload: { parameter: {
@@ -67,7 +80,9 @@ const StrengthView = React.memo(({state, dispatch}: {
         <Collapse in={lowerTabIndex !== 2}>
             <StrengthParameterPreview>
                 <ul>
-                    <li>{area}{fieldBonus}</li>
+                    <li><TextLikeButton onClick={onAreaClick}>
+                        {area}{fieldBonus}
+                    </TextLikeButton></li>
                     <li><PeriodSelect dispatch={dispatch} value={parameter}/></li>
                     {parameter.level !== 0 && <li><strong>Lv.{parameter.level}</strong></li>}
                     {parameter.maxSkillLevel && <li><strong>{t('calc with max skill level (short)')}</strong></li>}
@@ -82,6 +97,8 @@ const StrengthView = React.memo(({state, dispatch}: {
                 <Button onClick={onEditClick} size="small">{t('edit')}</Button>
             </StrengthParameterPreview>
         </Collapse>
+        <AreaControlDialog open={areaDialogOpen} onClose={onAreaDialogClose}
+            value={state.parameter} onChange={onParameterChange}/>
     </div>);
 });
 
@@ -106,6 +123,10 @@ const StrengthParameterPreview = styled('div')({
                 paddingRight: 0,
             },
             '& > button.MuiButtonBase-root': {
+                '&::before': {
+                    borderBottomColor: 'rgba(0, 0, 0, 0.25)'
+                },
+                marginTop: '-2px',
                 fontSize: '0.8rem',
                 lineHeight: 1.5,
             },
