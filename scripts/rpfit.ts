@@ -4,9 +4,7 @@
 // the RP Collection data.
 //
 // Read tsv from stdin (RP collection sheet format)
-// - Name \t Level \t RP \t Nature \t SkillLevel
-// - Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1 \t SubSkill2 \t Ing2
-// - Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1 \t SubSkill2 \t SubSkill3 \t Ing2 \t Ing3
+// See parseTsv for details
 
 import Nature from '../src/util/Nature';
 import PokemonIv from '../src/util/PokemonIv';
@@ -27,6 +25,11 @@ type CsvData = {
     ing3: IngredientName;
 };
 
+type RpData = {
+    iv: PokemonIv;
+    rp: number;
+};
+
 type RateInfo = {
     skill: number;
     ing: number;
@@ -36,11 +39,23 @@ type I18nDict = {
     [key: string]: string;
 };
 
-function parseTsv(text: string): Record<string, CsvData[]> {
-    const ret: Record<string, CsvData[]> = {};
+/**
+ * Parse TSV data from string.
+ *
+ * Following format is supported.
+ * - Name \t Level \t RP \t Nature \t SkillLevel
+ * - Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1 \t SubSkill2 \t Ing2
+ * - Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1 \t SubSkill2 \t SubSkill3 \t Ing2 \t Ing3
+ *
+ * @param text TSV string
+ * @returns Record<string, RpData[]>. Key is the name of Pokemon.
+ */
+function parseTsv(text: string): Record<string, RpData[]> {
+    const ret: Record<string, RpData[]> = {};
     const lines = text.split(/\r?\n/g);
     const subSkillNames = SubSkill.allSubSkillNames as string[];
     for (const line of lines) {
+        // Parse TSV data
         if (line.trim() === "") {
             continue;
         }
@@ -57,7 +72,7 @@ function parseTsv(text: string): Record<string, CsvData[]> {
             parts[8] = parts[7];
             parts[7] = "";
         }
-        ret[name].push({
+        const datum: CsvData = {
             name,
             level: parseInt(parts[1], 10),
             rp: parseInt(parts[2], 10),
@@ -68,43 +83,9 @@ function parseTsv(text: string): Record<string, CsvData[]> {
             subSkill3: !subSkillNames.includes(parts[7]) ? null : new SubSkill(parts[7] as SubSkillType),
             ing2: convertIngName(parts[8]),
             ing3: convertIngName(parts[9]),
-        });
-    }
-    return ret;
-}
+        };
 
-function convertIngName(val: string): IngredientName {
-    switch (val) {
-        case "Large Leek": return "leek";
-        case "Tasty Mushroom": return "mushroom";
-        case "Fancy Egg": return "egg";
-        case "Soft Potato": return "potato";
-        case "Fancy Apple": return "apple";
-        case "Fiery Herb": return "herb";
-        case "Bean Sausage": return "sausage";
-        case "Moomoo Milk": return "milk";
-        case "Honey": return "honey";
-        case "Pure Oil": return "oil";
-        case "Warming Ginger": return "ginger";
-        case "Snoozy Tomato": return "tomato";
-        case "Soothing Cacao": return "cacao";
-        case "Slowpoke Tail": return "tail";
-        case "Greengrass Soybeans": return "soy";
-        case "Greengrass Corn": return "corn";
-        case "Rousing Coffee": return "coffee";
-        default: return "unknown";
-    }
-}
-
-function fit(data: CsvData[]) {
-    let candidates: RateInfo[] = [];
-    for (let skill = 10; skill < 100; skill++) {
-        for (let ing = 90; ing < 400; ing++) {
-            candidates.push({skill: skill / 10, ing: ing / 10});
-        }
-    }
-
-    for (const datum of data) {
+        // Convert TSV data to PokemonIv
         const iv = new PokemonIv(datum.name);
         iv.level = datum.level;
         iv.nature = datum.nature;
@@ -136,10 +117,48 @@ function fit(data: CsvData[]) {
             }
             iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
         }
+
+        ret[name].push({iv: iv, rp: datum.rp});
+    }
+    return ret;
+}
+
+function convertIngName(val: string): IngredientName {
+    switch (val) {
+        case "Large Leek": return "leek";
+        case "Tasty Mushroom": return "mushroom";
+        case "Fancy Egg": return "egg";
+        case "Soft Potato": return "potato";
+        case "Fancy Apple": return "apple";
+        case "Fiery Herb": return "herb";
+        case "Bean Sausage": return "sausage";
+        case "Moomoo Milk": return "milk";
+        case "Honey": return "honey";
+        case "Pure Oil": return "oil";
+        case "Warming Ginger": return "ginger";
+        case "Snoozy Tomato": return "tomato";
+        case "Soothing Cacao": return "cacao";
+        case "Slowpoke Tail": return "tail";
+        case "Greengrass Soybeans": return "soy";
+        case "Greengrass Corn": return "corn";
+        case "Rousing Coffee": return "coffee";
+        default: return "unknown";
+    }
+}
+
+function fit(data: RpData[]) {
+    let candidates: RateInfo[] = [];
+    for (let skill = 10; skill < 100; skill++) {
+        for (let ing = 90; ing < 400; ing++) {
+            candidates.push({skill: skill / 10, ing: ing / 10});
+        }
+    }
+
+    for (const datum of data) {
         candidates = candidates.filter(x => {
-            iv.pokemon.skillRatio = x.skill;
-            iv.pokemon.ingRatio = x.ing;
-            const rp = new PokemonRp(iv);
+            datum.iv.pokemon.skillRatio = x.skill;
+            datum.iv.pokemon.ingRatio = x.ing;
+            const rp = new PokemonRp(datum.iv);
             return rp.Rp === datum.rp;
         });
     }
