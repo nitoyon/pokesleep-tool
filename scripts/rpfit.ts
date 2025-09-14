@@ -1,7 +1,12 @@
 // Run npm run rpfit < data.tsv
 //
-// Read tsv from stdin (RP collection 'DataLVL10-49' sheet format)
-// Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1
+// This script is designed to estimate skill% and ingredient% from
+// the RP Collection data.
+//
+// Read tsv from stdin (RP collection sheet format)
+// - Name \t Level \t RP \t Nature \t SkillLevel
+// - Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1 \t SubSkill2 \t Ing2
+// - Name \t Level \t RP \t Nature \t SkillLevel \t SubSkill1 \t SubSkill2 \t SubSkill3 \t Ing2 \t Ing3
 
 import Nature from '../src/util/Nature';
 import PokemonIv from '../src/util/PokemonIv';
@@ -17,7 +22,9 @@ type CsvData = {
     skillLevel: number;
     subSkill1: SubSkill|null;
     subSkill2: SubSkill|null;
+    subSkill3: SubSkill|null;
     ing2: IngredientName;
+    ing3: IngredientName;
 };
 
 type RateInfo = {
@@ -32,17 +39,23 @@ type I18nDict = {
 function parseTsv(text: string): Record<string, CsvData[]> {
     const ret: Record<string, CsvData[]> = {};
     const lines = text.split(/\r?\n/g);
+    const subSkillNames = SubSkill.allSubSkillNames as string[];
     for (const line of lines) {
         if (line.trim() === "") {
             continue;
         }
         const parts = line.split(/\t/g);
-        while (parts.length < 8) {
+        while (parts.length < 10) {
             parts.push("");
         }
         const name = fixName(parts[0]);
         if (typeof(ret[name]) === "undefined") {
             ret[name] = [];
+        }
+        // Convert DataLVL10-49 to DataLVL50+ format
+        if (!subSkillNames.includes(parts[7] as SubSkillType)) {
+            parts[8] = parts[7];
+            parts[7] = "";
         }
         ret[name].push({
             name,
@@ -50,9 +63,11 @@ function parseTsv(text: string): Record<string, CsvData[]> {
             rp: parseInt(parts[2], 10),
             nature: new Nature(fixNatures(parts[3])),
             skillLevel: parseInt(parts[4], 10),
-            subSkill1: parts[5] === "" || parts[5] === "-" ? null : new SubSkill(parts[5] as SubSkillType),
-            subSkill2: parts[6] === "" || parts[6] === "-" ? null : new SubSkill(parts[6] as SubSkillType),
-            ing2: convertIngName(parts[7]),
+            subSkill1: !subSkillNames.includes(parts[5]) ? null : new SubSkill(parts[5] as SubSkillType),
+            subSkill2: !subSkillNames.includes(parts[6]) ? null : new SubSkill(parts[6] as SubSkillType),
+            subSkill3: !subSkillNames.includes(parts[7]) ? null : new SubSkill(parts[7] as SubSkillType),
+            ing2: convertIngName(parts[8]),
+            ing3: convertIngName(parts[9]),
         });
     }
     return ret;
@@ -96,7 +111,25 @@ function fit(data: CsvData[]) {
         iv.skillLevel = datum.skillLevel;
         iv.subSkills.set(10, datum.subSkill1);
         iv.subSkills.set(25, datum.subSkill2);
-        if (iv.level >= 30) {
+        iv.subSkills.set(50, datum.subSkill3);
+        if (iv.level >= 60) {
+            if (datum.ing2 === "unknown" || datum.ing3 === "unknown") {
+                console.error("unknown ing");
+                continue;
+            }
+            switch (datum.ing3) {
+                case iv.pokemon.ing3?.name:
+                    iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAC" : "ABC";
+                    break;
+                case iv.pokemon.ing2.name:
+                    iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAB" : "ABB";
+                    break;
+                case iv.pokemon.ing1.name:
+                    iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
+                    break;
+            }
+        }
+        else if (iv.level >= 30) {
             if (datum.ing2 === "unknown") {
                 console.error("unknown ing");
                 continue;
