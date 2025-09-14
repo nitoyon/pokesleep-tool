@@ -81,7 +81,7 @@ export function parseTsv(text: string): Record<string, RpData[]> {
         iv.subSkills.set(50, datum.subSkill3);
         if (iv.level >= 60) {
             if (datum.ing2 === "unknown" || datum.ing3 === "unknown") {
-                console.error("unknown ing");
+                console.error(`unknown ing: ${line}`);
                 continue;
             }
             switch (datum.ing3) {
@@ -97,8 +97,8 @@ export function parseTsv(text: string): Record<string, RpData[]> {
             }
         }
         else if (iv.level >= 30) {
-            if (datum.ing2 === "unknown") {
-                console.error("unknown ing");
+            if (datum.ing2 === "unknown" && iv.pokemonName !== "Darkrai") {
+                console.error(`unknown ing: ${line}`);
                 continue;
             }
             iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
@@ -133,7 +133,12 @@ function convertIngName(val: string): IngredientName {
 }
 
 function fixName(name: string): string {
-    return name.replace(" (Paldean Form)", " (Paldea)");
+    return name
+        .replace(" (Holiday)", " (Festivo)")
+        .replace(" (Alolan Form)", " (Alola)")
+        .replace(" (Paldean Form)", " (Paldea)")
+        .replace(" (Amped Form)", " (Amped)")
+        .replace(" (Low Key Form)", " (Low Key)");
 }
 
 function fixNatures(nature: string): string {
