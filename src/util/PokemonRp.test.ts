@@ -63,7 +63,6 @@ describe('PokemonRP', () => {
             iv.nature = new Nature('Adamant');
             iv.skillLevel = 5;
             const rp = new PokemonRp(iv);
-            console.log(rp.frequency);
 
             expect(rp.frequency).toBe(2236.03);
             expect(rp.helpCountPer5Hour).toBe(8);
