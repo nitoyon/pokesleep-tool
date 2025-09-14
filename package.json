@@ -69,6 +69,7 @@
     "build": "node scripts/build.js",
     "sync": "node scripts/sync.js",
     "rpfit": "npx ts-node --project tsconfig.script.json scripts/rpfit.ts",
+    "rptest": "npx ts-node --project tsconfig.script.json scripts/rptest.ts",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

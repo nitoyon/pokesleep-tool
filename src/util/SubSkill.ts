@@ -132,6 +132,10 @@ class SubSkill {
         }
     }
 
+    static get allSubSkillNames(): SubSkillType[] {
+        return [...this.subSkillNames];
+    }
+
     static get allSubSkills(): SubSkill[] {
         if (SubSkill.allSubSkillsCache.length === 0) {
             SubSkill.allSubSkillsCache = SubSkill.subSkillNames

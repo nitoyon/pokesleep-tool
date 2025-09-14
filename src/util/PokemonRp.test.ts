@@ -63,9 +63,27 @@ describe('PokemonRP', () => {
             iv.nature = new Nature('Adamant');
             iv.skillLevel = 5;
             const rp = new PokemonRp(iv);
+            console.log(rp.frequency);
 
+            expect(rp.frequency).toBe(2236.03);
             expect(rp.helpCountPer5Hour).toBe(8);
             expect(rp.Rp).toBe(2443);
+        });
+
+        test('Sylveon Lv10 (ugly hack)', () => {
+            const iv = new PokemonIv('Sylveon');
+            iv.level = 10;
+            iv.ingredient = "AAA";
+            iv.subSkills = new SubSkillList([
+                new SubSkill('Helping Bonus'),
+            ]);
+            iv.nature = new Nature('Relaxed');
+            iv.skillLevel = 2;
+            const rp = new PokemonRp(iv);
+
+            expect(rp.frequency).toBe(2553.1);
+            expect(rp.helpCountPer5Hour).toBe(7.05);
+            expect(rp.Rp).toBe(1023);
         });
 
         test('Blastoise Lv60 (floating-point error)', () => {

@@ -163,6 +163,9 @@ class PokemonRp {
     }
 
     get frequency(): number {
+        // 0.1 diff when base frequency is 2600 and level 10.
+        const uglyHack = (this.level === 10 && this._pokemon.frequency === 2600 ? 0.1 : 0);
+
         return this._pokemon.frequency * // Base frequency
             trunc(
                 // Level Factor
@@ -173,7 +176,9 @@ class PokemonRp {
                 this.speedOfRibbonFactor *
                 // Sub-Skill Factor
                 (1 - this.activeSubSkills.reduce((p, c) => p + c.helpingSpeed, 0) * 0.07)
-            , 4);
+            , 4) -
+            // ugly hack to fix 2553.2 -> 2553.1
+            uglyHack;
     }
 
     /**
