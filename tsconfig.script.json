@@ -14,10 +14,10 @@
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "module": "esnext",
+        "module": "CommonJS",
         "moduleResolution": "node",
+        "isolatedModules": false,
         "resolveJsonModule": true,
-        "isolatedModules": true,
         "noEmit": true,
         "jsx": "preserve"
       },

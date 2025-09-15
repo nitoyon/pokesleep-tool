@@ -12,7 +12,7 @@ src/data/spo.json
 /coverage
 
 # production
-/dist
+/build
 
 # misc
 .DS_Store
