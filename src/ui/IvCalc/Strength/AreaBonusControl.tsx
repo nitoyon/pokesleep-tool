@@ -90,7 +90,7 @@ const AreaBonusControl = React.memo(({value, onChange}: {
 });
 
 const PopperComponent = function (props: any) {
-    return (<Popper {...props} style={{width: '17.5rem'}} placement='bottom-end' />)
+    return (<Popper {...props} style={{width: '17.5rem', zIndex: 2147483647}} placement='bottom-end' />)
 }
 
 const StyledPopup = styled(Paper)({
