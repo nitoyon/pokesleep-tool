@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import { motion, useMotionValue, useMotionValueEvent, PanInfo } from 'motion/react';
 import IvForm from '../IvForm/IvForm';
 import RpLabel from '../Rp/RpLabel';
 import PokemonIcon from '../PokemonIcon';
@@ -7,6 +8,7 @@ import { PokemonBoxItem } from '../../../util/PokemonBox';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonRp from '../../../util/PokemonRp';
 import { Button, Dialog, DialogActions, TextField }  from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useTranslation } from 'react-i18next'
@@ -97,8 +99,10 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
     }
 
     return <>
-        <article>
+        <DragContainer>
             <RpLabel rp={rp} iv={boxItem.iv}/>
+            <div className="icon"><PokemonIcon idForm={boxItem.iv.idForm} size={80}/></div>
+            <div className="icon"><PokemonIcon idForm={boxItem.iv.idForm} size={80}/></div>
             <div className="icon"><PokemonIcon idForm={boxItem.iv.idForm} size={80}/></div>
             <div className="nickname">
                 <TextField variant="standard" size="small" value={displayNickName}
@@ -107,7 +111,7 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
                     onBlur={onNickNameBlur}/>
             </div>
             <IvForm pokemonIv={boxItem.iv} fixMode={isEdit} onChange={onFormChange}/>
-        </article>
+        </DragContainer>
         <DialogActions>
             <Button onClick={onCloseClick}>{t('close')}</Button>
             {!isEdit && <Button onClick={onSaveClick}>{t('add')}</Button>}
@@ -115,9 +119,96 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
     </>;
 });
 
+// @use-gesture
+// Swiper https://qiita.com/akane2726/items/12caac830f894b9baa8c
+const DragContainer = React.memo(({children}: {
+    children: React.ReactNode|React.ReactNode[],
+}) => {
+    const y = useMotionValue(0);
+    const [scrollY, setScrollY] = React.useState(0);
+    const [constraintY, setConstraintY] = React.useState(0);
+    const parentRef = React.useRef<HTMLDivElement|null>(null);
+    const containerRef = React.useRef<HTMLDivElement|null>(null);
+
+    React.useEffect(() => {
+        const handler = () => {
+            if (containerRef.current === null) {
+                return;
+            }
+            setConstraintY(Math.max(0,
+                containerRef.current.clientHeight - window.innerHeight));
+        };
+        handler();
+
+        window.addEventListener("resize", handler);
+        return () => {
+            window.removeEventListener("resize", handler);
+        };
+        //parentRef.current = containerRef.current.parentElement as HTMLDivElement;
+        //console.log(containerRef.current, parentRef.current);
+    }, []);
+
+    const onDrag = React.useCallback((event: MouseEvent|TouchEvent|PointerEvent, info: PanInfo) => {
+        /*if (y.get() < 0) {
+            y.set(0);
+        }*/
+    }, []);
+    useMotionValueEvent(y, "change", (val: number) => {
+        if (containerRef.current === null) {
+            return;
+        }
+        const parentContainer = containerRef.current.closest(".MuiPaper-root");
+        if (parentContainer === null) {
+            return;
+        }
+        const beforeY = y.get();
+        if (parentContainer.scrollTop > 0 ||
+            parentContainer.scrollTop === 0 && y.get() < 0
+        ) {
+            //parentContainer.scrollTo({ top: parentContainer.scrollTop - y.get() });
+            //y.set(0);
+        }
+        console.log("scroll", parentContainer.scrollTop, y.get(), beforeY);
+    });
+    /*const onTouchMove = React.useCallback((e: React.TouchEvent) => {
+        const currentY = e.touches[0].clientY;
+        const delta = currentY - touchStartY.current;
+        if (parentRef.current === null) {
+            return;
+        }
+        console.log("move", delta, touchStartY.current, parentRef.current.scrollTop);
+    }, []);*/
+//
+    return <>
+        <button className="close"><CloseIcon/></button>
+        <motion.div ref={containerRef}
+            style={{y}}
+            drag="y"
+            dragConstraints={{top: -constraintY, bottom: 0}}
+            onDrag={onDrag}
+        >
+            {children}
+        </motion.div>
+    </>;
+});
+
 const StyledDialog = styled(Dialog)({
     '& div.MuiDialog-paper': {
-        '& > article': {
+        // https://dev.to/webdeasy/top-20-css-buttons-animations-f41
+        // #25 Pure CSS Button with Ring Indicator
+        '& > button.close': {
+            position: 'fixed',
+            top: '10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            borderRadius: '50%',
+            width: '30px',
+            height: '30px',
+            padding: 0,
+        },
+
+        '& > div[draggable]': {
+            touchAction: 'none !important', // hack for iPhone
             padding: '.5rem .5rem 4rem .5rem',
 
             '& > div.icon': {
