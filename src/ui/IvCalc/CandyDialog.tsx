@@ -46,8 +46,10 @@ const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
 
     React.useEffect(() => {
         if (open) {
-            // Reset state when current level has been changed
-            if (id === currentId) {
+            // Reset state when the dialog is opened for a different Pokémon,
+            // when the current level has changed, or when the dialog is
+            // shown for the first time.
+            if (id === currentId && maxExpLeft > 0) {
                 setShouldRender(true);
                 return;
             }
