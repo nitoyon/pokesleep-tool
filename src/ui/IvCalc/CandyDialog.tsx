@@ -79,7 +79,7 @@ const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
         else {
             setShouldRender(false);
         }
-    }, [id, iv, currentId, currentLevel, dstLevel, open]);
+    }, [id, iv, currentId, currentLevel, dstLevel, open, maxExpLeft]);
 
     const onExpFactorChange = React.useCallback((e: any) => {
         const value = parseInt(e.target.value, 10);
