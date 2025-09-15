@@ -478,7 +478,7 @@ const PokemonSelectDialog = React.memo(({
             groupBy={groupByCallback}
             renderGroup={renderGroup}
             renderOption={(props, option) => (
-                <MenuItem key={option.id} {...props}>
+                <MenuItem {...props}>
                     <PokemonIcon idForm={option.idForm} size={48}/>
                     <footer>{option.localName}</footer>
                 </MenuItem>
