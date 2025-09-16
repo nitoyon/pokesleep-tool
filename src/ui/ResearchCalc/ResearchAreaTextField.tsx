@@ -29,11 +29,13 @@ const ResearchAreaTextField = React.memo(({value, onChange}:{
 
     return (
         <TextField variant="standard" size="small" select value={value}
-            SelectProps={{ MenuProps: {
-                anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                transformOrigin: { vertical: "top", horizontal: "left" },
-            }}}
-            onChange={onChangeHandler}>
+            onChange={onChangeHandler}
+            slotProps={{
+                select: { MenuProps: {
+                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                    transformOrigin: { vertical: "top", horizontal: "left" },
+                }}
+            }}>
             {fieldMenuItems}
         </TextField>
     );

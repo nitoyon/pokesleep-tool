@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Autocomplete, Paper, Slider, TextField } from '@mui/material';
+import { Autocomplete, Paper, PaperProps, Slider, TextField } from '@mui/material';
 import ArrowButton from '../../common/ArrowButton';
 
 const LevelControlContainer = styled('div')({
@@ -123,20 +123,24 @@ export const LevelInput = React.memo(({value, onChange}: {
                             MozAppearance: 'textfield',
                         },
                     }}
-                    inputProps={{
-                        ...params.inputProps,
-                        min: 1,
-                        max: 100,
-                        inputMode: "numeric",
-                        style: {textOverflow: "clip", fontSize: '0.9rem'},
+                    slotProps={{
+                        htmlInput: {
+                            ...params.inputProps,
+                            min: 1,
+                            max: 100,
+                            inputMode: "numeric",
+                            style: {textOverflow: "clip", fontSize: '0.9rem'},
+                        }
                     }}
                 />}
-                PaperComponent={StyledPopup}
+                slots={{
+                    paper: StyledPopupRef,
+                }}
             />
     );
 });
 
-const StyledPopup = styled(Paper)({
+const StyledPopup = styled(Paper)<PaperProps>({
     width: '14rem',
     '& > ul': {
         display: 'flex',
@@ -159,6 +163,9 @@ const StyledPopup = styled(Paper)({
     },
 });
   
-  
+const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
+    const { sx, ...rest } = props;
+    return <StyledPopup ref={ref} {...rest} />;
+});  
   
 export default LevelControl;

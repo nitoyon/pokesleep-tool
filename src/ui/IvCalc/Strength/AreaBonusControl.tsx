@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Autocomplete, Paper, Popper, TextField } from '@mui/material';
+import { Autocomplete, Paper, PaperProps, Popper, TextField } from '@mui/material';
 
 const maxBonus = 100;
 
@@ -75,16 +75,20 @@ const AreaBonusControl = React.memo(({value, onChange}: {
                 renderInput={(params) => <TextField {...params}
                     variant="standard" type={inputType}
                     inputRef={inputRef}
-                    inputProps={{
-                        ...params.inputProps,
-                        min: 0,
-                        max: maxBonus,
-                        inputMode: "numeric",
-                        style: {textOverflow: "clip"},
+                    slotProps={{
+                        htmlInput: {
+                            ...params.inputProps,
+                            min: 0,
+                            max: maxBonus,
+                            inputMode: "numeric",
+                            style: {textOverflow: "clip"},
+                        }
                     }}
                 />}
-                PaperComponent={StyledPopup}
-                PopperComponent={PopperComponent}
+                slots={{
+                    paper: StyledPopupRef,
+                    popper: PopperComponent,
+                }}
             />
     );
 });
@@ -116,5 +120,10 @@ const StyledPopup = styled(Paper)({
         },
     },
 });
+
+const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
+    const { sx, ...rest } = props;
+    return <StyledPopup ref={ref} {...rest} />;
+});  
 
 export default AreaBonusControl;

@@ -185,18 +185,20 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             <section>
                 <label>{t('event')}:</label>
                 <TextField value={value.event} onChange={onEventChange}
-                    SelectProps={{
-                        MenuProps: {
-                            PaperProps: {
-                                sx: {
-                                '& .MuiMenuItem-root': {
-                                    minHeight: '32px',
-                                    fontSize: '0.875rem',
-                                    py: 0.5,
-                                },
+                    slotProps={{
+                        select: {
+                            MenuProps: {
+                                PaperProps: {
+                                    sx: {
+                                    '& .MuiMenuItem-root': {
+                                        minHeight: '32px',
+                                        fontSize: '0.875rem',
+                                        py: 0.5,
+                                    },
+                                    },
                                 },
                             },
-                        },
+                        }
                     }}
                     select size="small" variant="standard">
                     {eventMenus}

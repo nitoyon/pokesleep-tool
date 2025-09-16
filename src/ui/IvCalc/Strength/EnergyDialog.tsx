@@ -133,7 +133,9 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                     <div>
                         <TextField variant="standard" type="number" size="small"
                             value={isScoreEmpty ? "" : parameter.sleepScore} onChange={onScoreChange}
-                            inputProps={{min: 0, max: 100}}/>
+                            slotProps={{
+                                htmlInput: {min: 0, max: 100}
+                            }}/>
                     </div>
                 </div>
             </section>
