@@ -145,7 +145,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
         </div>
         <BoxFilterDialog open={filterOpen} onClose={onFilterDialogClose}
             value={filterConfig} onChange={onFilterChange}/>
-        <CandyDialog id={selectedId} iv={iv} open={candyOpen}
+        <CandyDialog iv={iv} open={candyOpen}
             dstLevel={parameter.level === 0 ? undefined : parameter.level}
             onChange={onIvChange} onClose={onCandyDialogClose}/>
     </>;

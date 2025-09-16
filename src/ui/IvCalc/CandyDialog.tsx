@@ -18,14 +18,7 @@ import { useTranslation } from 'react-i18next';
 const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
-const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
-    /**
-     * Id to detect item has been changed
-     *
-     * When in the box, this ID is the same as the Pokémon's ID in the box.
-     * When not in the box, this ID is the same as the Pokémon's level.
-     */
-    id: number,
+const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     iv: PokemonIv,
     dstLevel?: number,
     open: boolean,
@@ -34,7 +27,7 @@ const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
 }
 ) => {
     const { t } = useTranslation();
-    const [currentId, setCurrentId] = React.useState(id);
+    const [currentIv, setCurrentIv] = React.useState(iv);
     const [currentLevel, setCurrentLevel] = React.useState(iv.level);
     const [expGot, setExpGot] = React.useState(0);
     const [isEmpty, setIsEmpty] = React.useState(false);
@@ -44,17 +37,31 @@ const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
     const [candyBoost, setCandyBoost] = React.useState<BoostEvent>("none");
     const [shouldRender, setShouldRender] = React.useState(false);
 
+    // Reset state when the the pokemon, level or nature has changed or
+    // first time when this dialog is open
+    const shouldReset = React.useCallback(() => {
+        // first time
+        if (maxExpLeft === 0) {
+            return true;
+        }
+
+        if (iv.level === currentIv.level &&
+            iv.idForm === currentIv.idForm &&
+            iv.nature.expGainsFactor === currentIv.nature.expGainsFactor
+        ) {
+            return false;
+        }
+        return true;
+    }, [iv, currentIv, maxExpLeft]);
+
     React.useEffect(() => {
         if (open) {
-            // Reset state when the dialog is opened for a different Pokémon,
-            // when the current level has changed, or when the dialog is
-            // shown for the first time.
-            if (id === currentId && maxExpLeft > 0) {
+            if (!shouldReset()) {
                 setShouldRender(true);
                 return;
             }
 
-            setCurrentId(id);
+            setCurrentIv(iv);
             setCurrentLevel(iv.level);
             setExpGot(0);
             setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
@@ -79,7 +86,7 @@ const CandyDialog = React.memo(({ id, iv, dstLevel, open, onChange, onClose }: {
         else {
             setShouldRender(false);
         }
-    }, [id, iv, currentId, currentLevel, dstLevel, open, maxExpLeft]);
+    }, [iv, shouldReset, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((e: any) => {
         const value = parseInt(e.target.value, 10);
