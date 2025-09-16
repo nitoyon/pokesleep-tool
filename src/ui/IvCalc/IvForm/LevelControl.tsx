@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Autocomplete, Paper, PaperProps, Slider, TextField } from '@mui/material';
+import { Autocomplete, Paper, PaperProps, Popper, Slider, TextField } from '@mui/material';
 import ArrowButton from '../../common/ArrowButton';
 
 const LevelControlContainer = styled('div')({
@@ -135,10 +135,15 @@ export const LevelInput = React.memo(({value, onChange}: {
                 />}
                 slots={{
                     paper: StyledPopupRef,
+                    popper: PopperComponent,
                 }}
             />
     );
 });
+
+const PopperComponent = function (props: any) {
+    return (<Popper {...props} style={{zIndex: 2147483647}} placement='bottom-start'/>)
+}
 
 const StyledPopup = styled(Paper)<PaperProps>({
     width: '14rem',
