@@ -1,14 +1,15 @@
 {
       "compilerOptions": {
-        "target": "es2022",
+        "target": "esnext",
+        "types": ["vitest/globals"],
         "lib": [
           "dom",
           "dom.iterable",
           "esnext"
         ],
-        "allowJs": true,
+        "allowJs": false,
         "noImplicitAny": true,
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "downlevelIteration": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -19,10 +20,9 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
-        "jsx": "preserve"
+        "jsx": "react-jsx"
       },
       "include": [
         "src"
       ]
-    }
-    
+}
