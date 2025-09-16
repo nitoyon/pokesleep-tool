@@ -9,14 +9,13 @@ Feel free to [contribute](CONTRIBUTING.md)!
 
 ### Prerequisites
 
-Install Node.js v20.10+.
+Install Node.js v22.19+.
 
 Clone this repository, and run `npm install`.
 
-### `npm start`
+### `npm dev`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the app in the development mode.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
