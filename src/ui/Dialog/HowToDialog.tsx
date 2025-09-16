@@ -18,9 +18,15 @@ export default function HowToDialog({app, open, onClose}: HowToDialogProps) {
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>{t('how to use')}</DialogTitle>
             <DialogContent dividers>
-                <Typography paragraph>{t(`${app}.description`)}</Typography>
-                <Typography paragraph>{t(`${app}.notice detail1`)}</Typography>
-                <Typography paragraph>{t(`${app}.notice detail2`)}</Typography>
+                <Typography sx={{
+                    marginBottom: "16px"
+                }}>{t(`${app}.description`)}</Typography>
+                <Typography sx={{
+                    marginBottom: "16px"
+                }}>{t(`${app}.notice detail1`)}</Typography>
+                <Typography sx={{
+                    marginBottom: "16px"
+                }}>{t(`${app}.notice detail2`)}</Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>{t('close')}</Button>

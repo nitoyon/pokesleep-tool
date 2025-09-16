@@ -81,10 +81,12 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
         <div>
             <TextField size="small" fullWidth value={value.name}
                 onChange={onNameChange}
-                InputProps={{
-                    endAdornment: <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
+                slotProps={{
+                    input: {
+                        endAdornment: <InputAdornment position="start">
+                            <SearchIcon />
+                        </InputAdornment>
+                    }
                 }}/>
         </div>
         <StyledTabs variant="scrollable" scrollButtons

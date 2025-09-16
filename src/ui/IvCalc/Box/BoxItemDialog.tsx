@@ -36,7 +36,7 @@ const BoxItemDialog = React.memo(({open, boxItem, isEdit, onClose, onChange}: {
         return <></>;
     }
     return <StyledDialog open={open} onClose={onClose} fullScreen
-        TransitionComponent={Transition}>
+        slots={{transition: Transition}}>
         <BoxItemDialogContent originalBoxItem={boxItem} isEdit={isEdit}
             onClose={onClose} onChange={onChange}/>
     </StyledDialog>;

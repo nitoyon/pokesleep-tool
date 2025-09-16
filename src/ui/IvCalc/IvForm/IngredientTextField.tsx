@@ -65,10 +65,12 @@ function NormalIngredientTextField(iv: PokemonIv, _onChange: (e: any) => void) {
     return (
         <TextField variant="standard" size="small" select
             value={iv.ingredient}
-            SelectProps={{ MenuProps: {
-                anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                transformOrigin: { vertical: "top", horizontal: "left" },
-            }}}
+            slotProps={{
+                select: { MenuProps: {
+                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                    transformOrigin: { vertical: "top", horizontal: "left" },
+                }}
+            }}
             onChange={_onChange}>
             {options}
         </TextField>

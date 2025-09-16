@@ -467,7 +467,7 @@ const PokemonSelectDialog = React.memo(({
             open
             freeSolo
             value={options.find(x => x.name === selectedValue.name)}
-            PopperComponent={PopperComponent}
+            slots={{popper: PopperComponent}}
             filterOptions={filterOptions}
             getOptionLabel={(option: string|PokemonOption) => {
                 if (typeof option === "string") {

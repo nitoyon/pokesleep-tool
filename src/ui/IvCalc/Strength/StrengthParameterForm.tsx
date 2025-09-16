@@ -250,7 +250,9 @@ const RecipeBonusHelpDialog = React.memo(({open, onClose}: {
 
     return <Dialog open={open} onClose={onClose}>
         <DialogContent>
-            <Typography paragraph>
+            <Typography sx={{
+                marginBottom: "16px"
+            }}>
                 <Trans i18nKey="recipe bonus help"
                     components={{
                         raenonx: <a href={t('recipe bonus list')}>raenonx</a>,

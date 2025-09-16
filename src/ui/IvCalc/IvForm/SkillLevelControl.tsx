@@ -27,11 +27,13 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
         <span style={{marginRight: '1rem'}}>{t(`skills.${pokemon.skill}`)}</span>
         <TextField variant="standard" size="small" select
             value={value}
-            SelectProps={{ MenuProps: {
-                sx: { height: "400px" },
-                anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                transformOrigin: { vertical: "top", horizontal: "left" },
-            }}}
+            slotProps={{
+                select: { MenuProps: {
+                    sx: { height: "400px" },
+                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                    transformOrigin: { vertical: "top", horizontal: "left" },
+                }}
+            }}
             onChange={_onChange}>
             {options}
         </TextField>
