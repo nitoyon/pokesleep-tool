@@ -20,6 +20,22 @@ export default defineConfig({
         ivZhCn: path.resolve(__dirname, 'iv/index.zh-cn.html'),
         ivZhTw: path.resolve(__dirname, 'iv/index.zh-tw.html'),
       },
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('@mui') || id.includes('@emotion') || id.includes('motion')) {
+              return 'mui';
+            }
+            return 'reactc';
+          }
+          if (id.includes('/src/data') || id.includes('/src/i18n/') ||
+            id.includes('PokemonIconData.ts')
+          ) {
+            return 'resource';
+          }
+          return undefined;
+        }
+      }
     },
   },
   server: {
