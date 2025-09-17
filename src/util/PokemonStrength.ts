@@ -909,8 +909,9 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
                 param.berryBurstTeam.auto ?
                     team.filter(x => x.type === iv.pokemon.type).length :
                     param.berryBurstTeam.species);
-            myBerryCount = Math.floor(bonus * cnt.myBerryCount);
-            othersBerryCount = Math.floor(bonus * cnt.othersBerryCount);
+            // NOTE: berry burst bonus is not applied to Lunar Blessing
+            myBerryCount = Math.floor(cnt.myBerryCount);
+            othersBerryCount = Math.floor(cnt.othersBerryCount);
             break;
         default:
             throw new Error(`Invalid skill: ${iv.pokemon.skill}`);
