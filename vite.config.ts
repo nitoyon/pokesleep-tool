@@ -26,7 +26,7 @@ export default defineConfig({
             if (id.includes('@mui') || id.includes('@emotion') || id.includes('motion')) {
               return 'mui';
             }
-            return 'reactc';
+            return 'react';
           }
           if (id.includes('/src/data') || id.includes('/src/i18n/') ||
             id.includes('PokemonIconData.ts')
