@@ -111,10 +111,12 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
     return {
         skillTrigger: data.skillTrigger ?? 1,
         skillLevel: data.skillLevel ?? 0,
+        berry: data.berry ?? 0,
         ingredient: data.ingredient ?? 0,
         dreamShard: data.dreamShard ?? 1,
         ingredientMagnet: data.ingredientMagnet ?? 1,
         ingredientDraw: data.ingredientDraw ?? 1,
+        berryBurst: data.berryBurst ?? 1,
         dish: data.dish ?? 1,
         energyFromDish: data.energyFromDish ?? 0,
         fixedBerries: data.fixedBerries ?? [],
@@ -226,6 +228,8 @@ export interface TargetPokemon {
  * Bonus effects to be triggered.
  */
 export interface BonusEffects {
+    /** Boosted berry count */
+    berry: 0 | 1,
     /** Skill probability bonus */
     skillTrigger: 1 | 1.25 | 1.5,
     /** Boosted main skill level */
@@ -238,6 +242,8 @@ export interface BonusEffects {
     ingredientMagnet: 1 | 1.5;
     /** Ingredient Magnet S bonus */
     ingredientDraw: 1 | 1.5;
+    /** Berry Burst bonus */
+    berryBurst: 1 | 1.4;
     /** Dishes bonus */
     dish: 1 | 1.1 | 1.25 | 1.5;
     /** Energy recovery bonus by dish */
@@ -262,12 +268,14 @@ export interface BonusEffects {
  * BonusEffects with no active bonuses (default values).
  */
 export const emptyBonusEffects: Readonly<BonusEffects> = {
+    berry: 0,
     skillTrigger: 1,
     skillLevel: 0,
     ingredient: 0,
     dreamShard: 1,
     ingredientMagnet: 1,
     ingredientDraw: 1,
+    berryBurst: 1,
     dish: 1,
     energyFromDish: 0,
     fixedBerries: [],
@@ -349,6 +357,10 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
         }
     }
     if (typeof(data.effects) === "object") {
+        if (typeof(data.effects.berry) === "number" &&
+            [0, 1].includes(data.effects.berry)) {
+            ret.effects.berry = data.effects.berry;
+        }
         if (typeof(data.effects.skillLevel) === "number" &&
             [0, 1, 3, 5].includes(data.effects.skillLevel)) {
             ret.effects.skillLevel = data.effects.skillLevel;
@@ -372,6 +384,10 @@ export function loadHelpEventBonus(data: any): HelpEventBonus {
         if (typeof(data.effects.ingredientDraw) === "number" &&
             [1, 1.5].includes(data.effects.ingredientDraw)) {
             ret.effects.ingredientDraw = data.effects.ingredientDraw;
+        }
+        if (typeof(data.effects.berryBurst) === "number" &&
+            [1, 1.4].includes(data.effects.berryBurst)) {
+            ret.effects.ingredientDraw = data.effects.berryBurst;
         }
         if (typeof(data.effects.dish) === "number" &&
             [1, 1.1, 1.25, 1.5].includes(data.effects.dish)) {

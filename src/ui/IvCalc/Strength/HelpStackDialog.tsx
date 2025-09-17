@@ -162,7 +162,7 @@ export function getHelpYield(param: StrengthParameter, strength: PokemonStrength
     result: StrengthResult
 ): number {
     const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
-        .getBagUsagePerHelp(result.bonus.ingredient);
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
     return bagUsagePerHelp * Math.abs(param.period);
 }
 
@@ -177,7 +177,7 @@ export function getHelpsForCap(strength: PokemonStrength,
     result: StrengthResult
 ): number {
     const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
-        .getBagUsagePerHelp(result.bonus.ingredient);
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
     return (999 - result.energy.carryLimit) / bagUsagePerHelp;
 }
 
