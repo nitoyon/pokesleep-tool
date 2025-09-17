@@ -319,6 +319,28 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.1, y: 0.4, w: 0.8, h: 0.8, r: 0.3, color: '#f9e39a'},
         {x: 0.35, y: 0.8, w: 0.3, h: 0.3, r: 0.5, color: '#958575'},
     ],
+    // Natu
+    '118': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#c9ef64'},
+        {x: 0.4, y: -0.05, w: 0.2, h: 0.3, r: 0.3, color: '#d56a79'},
+        {x: 0.3, y: 0.48, w: 0.4, h: 0.2, r: 0.3, color: '#f6e86d'},
+        {x: 0, y: 0.9, w: 1, h: 0.2, color: '#d56a79'},
+        {x: 0, y: 0.97, w: 1, h: 0.1, color: '#fbfbfb'}
+    ],
+    // Xatu
+    '119': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#c9ef64'},
+        {x: 0.4, y: 0.2, w: 0.2, h: 0.24, r: 0.3, color: '#f6e86d'},
+        {x: 0, y: 0.8, w: 1, h: 0.05, color: '#f6e86d'},
+        {x: 0, y: 0.88, w: 1, h: 0.05, color: '#f6e86d'},
+        {x: 0, y: 0.95, w: 1, h: 0.1, color: '#bd4551'},
+        {x: 0, y: 0, w: 0.25, h: 1, color: '#ecf3f8'},
+        {x: 0, y: 0, w: 0.12, h: 1, color: '#bd4551'},
+        {x: 0, y: 0, w: 0.06, h: 1, color: '#353a3b'},
+        {x: 0.75, y: 0, w: 0.25, h: 1, color: '#ecf3f8'},
+        {x: 0.88, y: 0, w: 0.12, h: 1, color: '#bd4551'},
+        {x: 0.94, y: 0, w: 0.06, h: 1, color: '#353a3b'}
+    ],
     // Mr. Mime
     '122': [
         {x: 0, y: 0, w: 1, h: 1, color: '#ffe3e8'},
