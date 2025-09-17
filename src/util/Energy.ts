@@ -595,7 +595,7 @@ class Energy {
             (isGoodCampTicketSet ? 1.2 : 1) *
             (isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
             (isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1);
-        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.ingredient);
+        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient);
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;

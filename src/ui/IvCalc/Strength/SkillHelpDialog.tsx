@@ -424,8 +424,11 @@ function getBerryBurstValueText(strength: PokemonStrength,
     t: typeof i18next.t, valueText: string
 ): [React.ReactNode, React.ReactNode] {
     const text = t('value per skill', { value: valueText});
+
+    const param = strength.parameter;
+    const bonus = getEventBonus(param.event, param.customEventBonus)?.berryBurst ?? 1;
     const result = calculateBerryBurstStrength(strength.pokemonIv,
-        strength.parameter, strength.getSkillLevel());
+        strength.parameter, bonus, strength.getSkillLevel());
     return [<>
         {text}<br/>
         <div className="bbgrid">
