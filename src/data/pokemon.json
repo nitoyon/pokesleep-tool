@@ -1986,6 +1986,74 @@
         }
     },
     {
+        "id": 118,
+        "name": "Natu",
+        "arrival": "2025-09-25",
+        "sleepType": "snoozing",
+        "exp": 600,
+        "type": "psychic",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 118,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 119,
+        "name": "Xatu",
+        "arrival": "2025-09-25",
+        "sleepType": "snoozing",
+        "exp": 600,
+        "type": "psychic",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": 118,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 122,
         "name": "Mr. Mime",
         "arrival": "2023-09-12",
