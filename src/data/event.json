@@ -2,23 +2,18 @@
     "drowsy": [
         {
             "name": "GSD",
-            "day": "2025-09-07",
+            "day": "2025-10-06",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2025-09-08",
+            "day": "2025-10-07",
             "memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
-            "bonus": 4
+            "bonus": 3
         },
         {
             "name": "GSD",
-            "day": "2025-09-09",
-            "bonus": 1.5
-        },
-        {
-            "name": "raikou entei suicune",
-            "day": "2025-09-21",
+            "day": "2025-10-08",
             "bonus": 1.5
         }
     ],
