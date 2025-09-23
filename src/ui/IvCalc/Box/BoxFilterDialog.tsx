@@ -340,7 +340,7 @@ const NatureButton = React.memo(({label, checked, up, down, onClick}: {
         down === true ?
             <StyledNatureDownEffect>{t(`nature effect.${label}`)}</StyledNatureDownEffect> :
             t(`nature effect.${label}`)}
-        {checked && <CheckIcon/>}
+        {checked && <CheckIcon role="switch"/>}
     </StyledNatureButton>;
 });
 
@@ -352,7 +352,7 @@ const StyledNatureButton = styled(Button)({
     borderRadius: '0.5rem',
     border: '1px solid #ccc',
     margin: '2px',
-    '& > svg.MuiSvgIcon-root[data-testid="CheckIcon"]': {
+    '& > svg.MuiSvgIcon-root[role="switch"]': {
         position: 'absolute',
         background: '#24d76a',
         borderRadius: '15px',

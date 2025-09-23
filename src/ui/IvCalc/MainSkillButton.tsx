@@ -21,7 +21,7 @@ const MainSkillButton = React.memo(({mainSkill, checked, onClick}: {
         value={mainSkill} onClick={onMainSkillClick}>
         <div>
             {!checked && <MainSkillIcon mainSkill={mainSkill}/>}
-            {checked && <CheckIcon/>}
+            {checked && <CheckIcon role="switch"/>}
         </div>
         {t(`skills.${mainSkill}`)}
     </StyledMainSkillButton>;
@@ -43,7 +43,7 @@ const StyledMainSkillButton = styled(Button)({
         '& > svg': {
             marginRight: '4px',
         },
-        '& > svg[data-testid="CheckIcon"]': {
+        '& > svg[role="switch"]': {
             color: 'white',
             width: '18px',
             height: '18px',

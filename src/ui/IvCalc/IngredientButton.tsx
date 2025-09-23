@@ -17,7 +17,7 @@ const IngredientButton = React.memo(({ingredient, checked, onClick}: {
     return <StyledIngredientButton
         key={ingredient} value={ingredient} onClick={onIngredientClick}>
         <IngredientIcon name={ingredient}/>
-        {checked && <CheckIcon/>}
+        {checked && <CheckIcon role="switch"/>}
     </StyledIngredientButton>;
 });
 
@@ -29,7 +29,7 @@ const StyledIngredientButton = styled(Button)({
     padding: 0,
     margin: '0.2rem',
     borderRadius: '0.5rem',
-    '& > svg.MuiSvgIcon-root[data-testid="CheckIcon"]': {
+    '& > svg.MuiSvgIcon-root[role="switch"]': {
         position: 'absolute',
         background: '#24d76a',
         borderRadius: '15px',
