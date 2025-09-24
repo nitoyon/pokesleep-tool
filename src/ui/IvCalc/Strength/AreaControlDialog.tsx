@@ -35,6 +35,9 @@ const StyledDialogContent = styled(DialogContent)({
             paddingTop: '1rem',
             display: 'block',
         },
+        '&.first > label': {
+            paddingTop: 0,
+        },
         '& > span, & > div, & > button:first-of-type': {
             marginLeft: '1rem',
             fontSize: '0.9rem',
