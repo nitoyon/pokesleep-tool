@@ -4,10 +4,11 @@ import TypeButton from '../TypeButton';
 import TypeSelect from '../TypeSelect';
 import { isExpertField } from '../../../data/fields';
 import { PokemonType } from '../../../data/pokemons';
+import CollapseEx from '../../common/CollapseEx';
 import {
     ExpertEffects, getCurrentFavoriteBerries, StrengthParameter,
 } from '../../../util/PokemonStrength';
-import { Collapse, Select, SelectChangeEvent, MenuItem } from '@mui/material';
+import { Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const FavoriteBerrySelect = React.memo(({value, onChange}: {
@@ -48,19 +49,15 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
         onChange({...value, expertEffect});
     }, [onChange, value]);
 
-    if (value.fieldIndex < 0) {
-        return <></>;
-    }
-
     // display or select berries
-    return <>
+    return <CollapseEx show={value.fieldIndex >= 0}>
         <section>
             <label>{t('favorite berry')}:</label>
             <TypeSelectContainer>
                 <span>
-                    <Collapse in={expert}>
+                    {expert &&
                         <header>{t('main')}</header>
-                    </Collapse>
+                    }
                     {reasons[0] === 'random' ?
                         <TypeSelect type={types[0]} size="small"
                             onChange={onFavoriteBerryChange1}/> :
@@ -70,9 +67,9 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
                     <footer className={reasons[0].replace(/ /g, '-')}>{t(reasons[0])}</footer>
                 </span>
                 <span>
-                    <Collapse in={expert}>
+                    {expert &&
                         <header>{t('sub1')}</header>
-                    </Collapse>
+                    }
                     {reasons[1] === 'random' ?
                         <TypeSelect type={types[1]} size="small"
                             onChange={onFavoriteBerryChange2}/> :
@@ -82,9 +79,9 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
                     <footer className={reasons[1].replace(/ /g, '-')}>{t(reasons[1])}</footer>
                 </span>
                 <span>
-                    <Collapse in={expert}>
+                    {expert &&
                         <header>{t('sub2')}</header>
-                    </Collapse>
+                    }
                     {reasons[2] === 'random' ?
                         <TypeSelect type={types[2]} size="small"
                             onChange={onFavoriteBerryChange3}/> :
@@ -95,14 +92,14 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
                 </span>
             </TypeSelectContainer>
         </section>
-        <Collapse in={expert}>
+        {expert &&
             <section>
                 <label>{t('expert effect')}:</label>
                 <ExpertEffectSelect value={value.expertEffect}
                     onChange={onExpertEffectChange}/>
             </section>
-        </Collapse>
-    </>;
+        }
+    </CollapseEx>;
 });
 
 const ExpertEffectSelect = React.memo(({value, onChange}: {
@@ -127,18 +124,16 @@ const TypeSelectContainer = styled('span')({
 
     '& > span': {
         display: 'grid',
-        '& > div.MuiCollapse-root': {
-            '& header': {
-                display: 'block',
-                textAlign: 'center',
-                color: 'white',
-                width: '2rem',
-                background: '#7cd377',
-                fontSize: '0.5rem',
-                borderRadius: '0.7rem',
-                margin: '0 auto 2px auto',
-                padding: '2px 12px',
-            },
+        '& header': {
+            display: 'block',
+            textAlign: 'center',
+            color: 'white',
+            width: '2rem',
+            background: '#7cd377',
+            fontSize: '0.5rem',
+            borderRadius: '0.7rem',
+            margin: '0 auto 2px auto',
+            padding: '2px 12px',
         },
         '& > button': {
             marginTop: 0,
