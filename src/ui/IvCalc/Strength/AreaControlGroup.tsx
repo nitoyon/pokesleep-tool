@@ -1,6 +1,5 @@
 import React from 'react';
 import { Collapse, Switch } from '@mui/material';
-import { motion, AnimatePresence } from 'motion/react';
 import AreaBonusControl from './AreaBonusControl';
 import FavoriteBerrySelect from './FavoriteBerrySelect';
 import ResearchAreaSelect from './ResearchAreaSelect';
@@ -12,11 +11,6 @@ const AreaSelectControl = React.memo(({value, onChange}: {
     value: StrengthParameter,
 }) => {
     const { t } = useTranslation();
-    const [mounted, setMounted] = React.useState(false);
-
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
 
     const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
         onChange({...value, fieldBonus});
@@ -32,16 +26,7 @@ const AreaSelectControl = React.memo(({value, onChange}: {
             <ResearchAreaSelect value={value} fontSize="0.9rem"
                 onChange={onChange}/>
         </section>
-        <AnimatePresence>
-            {value.fieldIndex >= 0 && <motion.div
-                style={{overflow: 'hidden'}}
-                transition={{duration: 0.2}}
-                initial={mounted ? { height: 0, opacity: 0 } : false}
-                animate={{height: 'auto', opacity: 1}}
-                exit={{height: 0, opacity: 0}}>
-                <FavoriteBerrySelect value={value} onChange={onChange}/>
-            </motion.div>}
-        </AnimatePresence>
+        <FavoriteBerrySelect value={value} onChange={onChange}/>
         <section>
             <label>{t('area bonus')}:</label>
             <AreaBonusControl value={value.fieldBonus}

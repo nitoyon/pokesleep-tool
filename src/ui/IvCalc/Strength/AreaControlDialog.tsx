@@ -31,11 +31,8 @@ const StyledDialogContent = styled(DialogContent)({
     paddingBottom: 0,
     fontSize: '0.9rem',
     '& section': {
-        marginTop: '1rem',
-        '&.first': {
-            marginTop: 0,
-        },
         '& > label': {
+            paddingTop: '1rem',
             display: 'block',
         },
         '& > span, & > div, & > button:first-of-type': {
