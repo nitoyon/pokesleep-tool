@@ -13,6 +13,8 @@ import { PokemonSpecialty, SpecialtyNames, IngredientName, IngredientNames,
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import SubSkill, { SubSkillType } from '../../../util/SubSkill';
 import { NatureEffect } from '../../../util/Nature';
+import { useElementWidth } from '../../common/Hook';
+import DraggableTabContainer from '../../common/DraggableTabContainer';
 import { Button, Dialog, DialogActions, InputAdornment, Switch,
     Tab, Tabs, TextField } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
@@ -27,6 +29,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
 }) => {
     const { t } = useTranslation();
 
+    const [width, elementRef] = useElementWidth();
     const [tabIndex, setTabIndex] = React.useState(0);
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
@@ -78,7 +81,7 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             checked={value.ingredientName === ing}/>);
 
     return <StyledPokemonFilterDialog open={open} onClose={onClose}>
-        <div>
+        <div ref={elementRef}>
             <TextField size="small" fullWidth value={value.name}
                 onChange={onNameChange}
                 slotProps={{
@@ -97,13 +100,13 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
             <StyledTab label={t('sub skills')} value={3}/>
             <StyledTab label={t('nature')} value={4}/>
         </StyledTabs>
-        <div className="tabContainer">
-            <div className={`tabChild ${tabIndex === 0 ? 'tabChildActive' : ''}`}>
+        <DraggableTabContainer index={tabIndex} width={width} onChange={setTabIndex}>
+            <div className="tabChild">
                 {typeButtons}
                 <h4 style={{margin: '1rem 0 0.5rem'}}>{t('specialty')}</h4>
                 {specialtyButtons}
             </div>
-            <div className={`tabChild ${tabIndex === 1 ? 'tabChildActive' : ''}`}>
+            <div className="tabChild">
                 {ingButtons}
                 <section>
                     <label>{t('unlocked only')}:</label>
@@ -111,17 +114,17 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
                         onChange={onIngredientUnlockedOnlyChange}/>
                 </section>
             </div>
-            <div className={`tabChild ${tabIndex === 2 ? 'tabChildActive' : ''}`}>
+            <div className="tabChild">
                 <MainSkillTab value={value.mainSkillNames}
                     onChange={onMainSkillChange}/>
             </div>
-            <div className={`tabChild ${tabIndex === 3 ? 'tabChildActive' : ''}`}>
+            <div className="tabChild">
                 <SubSkillTab value={value} onChange={onChange}/>
             </div>
-            <div className={`tabChild ${tabIndex === 4 ? 'tabChildActive' : ''}`}>
+            <div className="tabChild">
                 <NatureTab value={value} onChange={onChange}/>
             </div>
-        </div>
+        </DraggableTabContainer>
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
@@ -135,27 +138,20 @@ const StyledPokemonFilterDialog = styled(Dialog)({
         '& > div': {
             margin: '.5rem .5rem 0 .5rem',
         },
-        '& > div.tabContainer': {
-            display: 'grid',
-            '& > div.tabChild': {
-                gridArea: '1 / 1',
-                visibility: 'hidden',
-                '& > section': {
-                    margin: '0 0.8rem',
-                    fontSize: '.9rem',
-                    display: 'flex',
-                    flex: '0 auto',
-                    alignItems: 'center',
-                    '&:first-of-type': {
-                        marginTop: '0.3rem',
-                    },
-                    '& > label': {
-                        marginRight: 'auto',
-                    },
+        '& div.tabChild': {
+            '& > section': {
+                margin: '0 0.8rem',
+                fontSize: '.9rem',
+                display: 'flex',
+                flex: '0 auto',
+                alignItems: 'center',
+                maxWidth: '100%',
+                '&:first-of-type': {
+                    marginTop: '0.3rem',
                 },
-            },
-            '& > div.tabChild.tabChildActive': {
-                visibility: 'visible',
+                '& > label': {
+                    marginRight: 'auto',
+                },
             },
         },
     },
