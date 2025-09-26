@@ -8,8 +8,8 @@ const ResearchAreaTextField = React.memo(({value, onChange}:{
     onChange: (value: number) => void;
 }) => {
     const { t } = useTranslation();
-    const onChangeHandler = React.useCallback((e: any) => {
-        onChange(e.target.value as number);
+    const onChangeHandler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(parseInt(e.target.value, 10));
     }, [onChange]);
 
     // prepare field menus
