@@ -23,11 +23,11 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
     const isMoreMenuOpen = Boolean(moreMenuAnchor);
-    const researchCalcClick = (event: React.MouseEvent<HTMLElement>) => {
+    const researchCalcClick = () => {
         onAppChange("ResearchCalc");
         setMoreMenuAnchor(null);
     };
-    const rpCalcClick = (event: React.MouseEvent<HTMLElement>) => {
+    const rpCalcClick = () => {
         onAppChange("IvCalc");
         setMoreMenuAnchor(null);
     };
