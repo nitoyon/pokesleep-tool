@@ -238,7 +238,8 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
         return <></>;
     }
 
-    let color = "", rpVal = "", title = t(rpType);
+    let color = "", rpVal = "";
+    const title = t(rpType);
     const param1 = round2(rp.helpCountPer5Hour);
     const desc1 = t('helps per 5 hours');
     let param2 = "", desc2 = "", param3 = "", desc3 = "",
