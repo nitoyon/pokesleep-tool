@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
 import SettingsDialog from './Dialog/SettingsDialog';
-import { AppConfig, AppType } from './App';
+import AppConfig, { AppType } from './AppConfig';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';

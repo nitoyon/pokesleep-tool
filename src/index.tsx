@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App, {loadConfig, saveConfig} from './ui/App';
+import App from './ui/App';
+import {loadConfig, saveConfig} from './ui/AppConfig';
 import i18n from './i18n';
 
 (function() {

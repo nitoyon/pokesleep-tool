@@ -1,8 +1,11 @@
 import './App.css';
 import ResearchCalcApp from './ResearchCalc/ResearchCalcApp';
 import IvCalcApp from './IvCalc/IvCalcApp';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material';
+import AppConfig, {
+    AppConfigContext, AppType, saveConfig,
+} from './AppConfig';
 import ToolBar from './ToolBar';
 import NewsInfo from './NewsInfo';
 import PwaNotify from './PwaBanner';
@@ -31,27 +34,6 @@ const scTheme = createTheme({
         }
     }
 });
-
-/** Global configuration. */
-export interface AppConfig {
-    /** Custom icon URL */
-    iconUrl: string|null;
-    /** current language */
-    language: string;
-    /** PWA notify check counter */
-    pwacnt: number,
-    /** Last news closed */
-    news: {
-        ResearchCalc: string,
-        IvCalc: string,
-    },
-}
-
-export type AppType = "ResearchCalc" | "IvCalc";
-
-export const AppConfigContext = React.createContext<AppConfig>({
-    iconUrl: null, language: "", pwacnt: 0,
-    news: {ResearchCalc: "", IvCalc: ""}});
 
 export default function App({config}: {config:AppConfig}) {
     const language = useMultilingual(config);
@@ -123,7 +105,7 @@ function useMultilingual(config: AppConfig) {
  * @return Current app type and setter for it.
  */
 function useRouter(language: string): [AppType, (v:AppType) => void] {
-    let initialApp: AppType = (
+    const initialApp: AppType = (
         window.location.pathname.startsWith("/pokesleep-tool/iv/") ?
         "IvCalc" : "ResearchCalc");
 
@@ -168,45 +150,4 @@ function useRouter(language: string): [AppType, (v:AppType) => void] {
         window.history.replaceState(null, '', url + query);
     }, [language, i18n, t, currentApp]);
     return [currentApp, setCurrentApp];
-}
-
-export function loadConfig(language:string): AppConfig {
-    const config: AppConfig = {
-        iconUrl: null,
-        language,
-        pwacnt: -1,
-        news: {ResearchCalc: "", IvCalc: ""},
-    };
-
-    const data = localStorage.getItem("PokeSleepTool");
-    if (data === null) {
-        return config;
-    }
-    const json = JSON.parse(data);
-    if (typeof(json) !== "object" || json == null) {
-        return config;
-    }
-    if (typeof(json.iconUrl) === "string" &&
-        json.iconUrl.match(/@ID[1-4]?@/)) {
-        config.iconUrl = json.iconUrl;
-    }
-    if (typeof(json.language) === "string") {
-        config.language = json.language;
-    }
-    if (typeof(json.pwacnt) == "number") {
-        config.pwacnt = json.pwacnt;
-    }
-    if (typeof(json.news) === "object") {
-        if (typeof(json.news.ResearchCalc) === "string") {
-            config.news.ResearchCalc = json.news.ResearchCalc;
-        }
-        if (typeof(json.news.IvCalc) === "string") {
-            config.news.IvCalc = json.news.IvCalc;
-        }
-    }
-    return config;
-}
-
-export function saveConfig(state:AppConfig) {
-    localStorage.setItem("PokeSleepTool", JSON.stringify(state));
 }

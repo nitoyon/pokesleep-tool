@@ -2,7 +2,7 @@ import React from 'react';
 import MessageDialog from './MessageDialog';
 import { Button, Dialog, DialogActions, DialogContent,
     TextField, ToggleButtonGroup, ToggleButton } from '@mui/material';
-import { AppConfig, AppConfigContext, AppType } from '../App';
+import AppConfig, { AppConfigContext, AppType } from '../AppConfig';
 import { useTranslation } from 'react-i18next';
 
 interface SettingsDialogProps {

@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import ResearchCalcIcon from './Resources/ResearchCalcIcon';
 import IvCalcIcon from './Resources/IvCalcIcon';
 import SafariIcon from './Resources/SafariIcon';
-import { AppType } from './App';
+import { AppType } from './AppConfig';
 import { copyToClipboard } from '../util/Clipboard';
 import { Button, IconButton, Dialog, DialogContent, DialogTitle,
     Snackbar, DialogActions} from '@mui/material';
