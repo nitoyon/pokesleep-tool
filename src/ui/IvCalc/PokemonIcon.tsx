@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import PokemonIconData from './PokemonIconData';
 import PokemonIv from '../../util/PokemonIv';
-import { AppConfigContext } from '../App';
+import { AppConfigContext } from '../AppConfig';
 
 const PokemonIcon = React.memo(({idForm, size}: {
     idForm: number,
