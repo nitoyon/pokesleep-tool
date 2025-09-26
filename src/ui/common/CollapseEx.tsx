@@ -21,7 +21,7 @@ const CollapseEx = React.memo(({show, children}: {
 
     React.useLayoutEffect(() => {
         setHeight(ref.current ? ref.current.scrollHeight : 0);
-    }, [children, renderedChildren]);
+    }, []);
 
     const styles = useSpring({
         height: show ? height : 0,
