@@ -1,6 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Autocomplete, Paper, PaperProps, Popper, TextField } from '@mui/material';
+import {
+    Autocomplete, Paper, PaperProps,
+    Popper, PopperProps, TextField,
+} from '@mui/material';
 
 const maxBonus = 100;
 
@@ -26,11 +29,11 @@ const AreaBonusControl = React.memo(({value, onChange}: {
             onChange(newValue);
         }
     }, [onChange, value]);
-    const _onChange = React.useCallback((e: any) => {
-        if (e === null) {
+    const _onChange = React.useCallback((_: React.SyntheticEvent, value: string) => {
+        if (value === null) {
             return;
         }
-        const rawText = e.target.value;
+        const rawText = value;
 
         // Update isEmpty state
         if (typeof(rawText) === "string" && rawText.trim() === "") {
@@ -43,7 +46,7 @@ const AreaBonusControl = React.memo(({value, onChange}: {
     const onFocus = React.useCallback(() => {
         setIsFocused(true);
     }, []);
-    const onBlur = React.useCallback((e: any) => {
+    const onBlur = React.useCallback((e: React.FocusEvent<HTMLInputElement>) => {
         setIsFocused(false);
 
         if (e === null) {
@@ -51,7 +54,7 @@ const AreaBonusControl = React.memo(({value, onChange}: {
         }
         updateValue(e.target.value);
     }, [updateValue]);
-    const onSelected = React.useCallback((e: any, value: string|null) => {
+    const onSelected = React.useCallback((_: React.SyntheticEvent, value: string|null) => {
         if (value !== null) {
             onChange(parseInt(value, 10));
         }
@@ -68,13 +71,13 @@ const AreaBonusControl = React.memo(({value, onChange}: {
                 freeSolo disableClearable
                 value={valueText} sx={{width: '4rem'}}
                 onFocus={onFocus}
-                onBlur={onBlur}
                 onInputChange={_onChange}
                 onChange={onSelected}
                 filterOptions={filterOptions}
                 renderInput={(params) => <TextField {...params}
                     variant="standard" type={inputType}
                     inputRef={inputRef}
+                    onBlur={onBlur}
                     slotProps={{
                         htmlInput: {
                             ...params.inputProps,
@@ -93,7 +96,7 @@ const AreaBonusControl = React.memo(({value, onChange}: {
     );
 });
 
-const PopperComponent = function (props: any) {
+const PopperComponent = function (props: PopperProps) {
     return (<Popper {...props} style={{width: '17.5rem', zIndex: 2147483647}} placement='bottom-end' />)
 }
 
@@ -122,6 +125,8 @@ const StyledPopup = styled(Paper)({
 });
 
 const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
+    // Extract sx from props. (ESLint doesn't allow this...)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { sx, ...rest } = props;
     return <StyledPopup ref={ref} {...rest} />;
 });  
