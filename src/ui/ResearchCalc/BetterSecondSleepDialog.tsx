@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import SleepScore from './SleepScore';
-import {getMinTimeForScore, getMaxTimeForScore} from './PreviewScore';
+import {getMinTimeForScore, getMaxTimeForScore} from './Score';
 import { useTranslation, Trans } from 'react-i18next';
 
 interface BetterSecondSleepDialogProps {
