@@ -111,7 +111,7 @@ const StyledDraggableTabContainer = styled('div')({
         flexWrap: 'nowrap',
         gap: gap,
         width: 'max-content',
-        '& > *': {
+        '& > div > *': {
             flex: '0 0 100%',
         },
     },
