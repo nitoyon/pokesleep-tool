@@ -582,25 +582,29 @@ function useSvgTouch(svgRef: React.MutableRefObject<SVGSVGElement|null>) {
     const updateMousePosition = React.useCallback((x: number, y: number) => {
         if (svgRef.current === null) { return; }
         // convert HTML coordinates to SVG coordinates
-        const svg = svgRef.current as any;
+        const svg = svgRef.current as SVGSVGElement;
         const pt = svg.createSVGPoint();
         pt.x = x;
         pt.y = y;
-        const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+        const ctm = svg.getScreenCTM();
+        if (!ctm) {
+            return;
+        }
+        const p = pt.matrixTransform(ctm.inverse());
         setMousePos({x, y, svgX: p.x});
     }, [svgRef]);
 
     const onTouchMove = React.useCallback((e: TouchEvent) => {
         updateMousePosition(e.touches[0].pageX, e.touches[0].pageY);
     }, [updateMousePosition]);
-    const onTouchEnd = React.useCallback((e: TouchEvent) => {
+    const onTouchEnd = React.useCallback(() => {
         setMousePos(null);
     }, []);
     const onMouseMove = React.useCallback((e: MouseEvent) => {
         if ('ontouchstart' in window) { return; }
         updateMousePosition(e.pageX, e.pageY);
     }, [updateMousePosition]);
-    const onMouseLeave = React.useCallback((e: MouseEvent) => {
+    const onMouseLeave = React.useCallback(() => {
         setMousePos(null);
     }, []);
 
