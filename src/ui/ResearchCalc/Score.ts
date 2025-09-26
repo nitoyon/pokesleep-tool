@@ -1,4 +1,4 @@
-import { InputAreaData } from './InputArea'
+import { InputAreaData } from './ResearchCalcAppConfig';
 import { AmountOfSleep } from '../../util/TimeUtil';
 import { PokemonCount, getPokemonCount } from '../../util/PokemonCount';
 import fields from '../../data/fields';
@@ -79,7 +79,7 @@ export function getScoreRange(count:PokemonCount, data:InputAreaData): MultipleS
     const range:ScoreRange = getScoreRangeForCount(count, data, 100);
     const powers = fields[data.fieldIndex].powers;
 
-    let ret: MultipleScoreRange = {
+    const ret: MultipleScoreRange = {
         firstSleep: range,
         secondSleep: null,
         nextStrength: null,
