@@ -220,8 +220,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const ingArticle = getIngArticle(result, settings, t);
 
     // skill value
-    const mainSkillArticle = getMainSkillArticle(pokemonIv, result, settings,
-        t, onSkillHelpClick);
+    const mainSkillArticle = getMainSkillArticle(pokemonIv, result,
+        settings, t);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -351,8 +351,8 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 }
 
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
-    settings: StrengthParameter, t: typeof i18next.t,
-    onInfoClick: () => void): React.ReactNode {
+    settings: StrengthParameter, t: typeof i18next.t
+): React.ReactNode {
     if (settings.period <= whistlePeriod || settings.tapFrequency === 'none') {
             return <article>ー</article>;
     }
