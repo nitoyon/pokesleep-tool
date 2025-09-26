@@ -941,6 +941,55 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
 }
 
 /**
+ * Calculates the total yield per help action over a given help count.
+ *
+ * @param param The strength-related parameters, including the period.
+ * @param strength The Pokémon's strength stats, including IV.
+ * @param result The current strength result containing bonus data.
+ * @returns The total help yield over the specified period.
+ */
+export function getHelpYield(param: StrengthParameter, strength: PokemonStrength,
+    result: StrengthResult
+): number {
+    const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
+    return bagUsagePerHelp * Math.abs(param.period);
+}
+
+/**
+ * Calculates the number of helps required to reach the carry cap (999).
+ *
+ * @param strength The Pokémon's strength stats, including IV.
+ * @param result The current strength result containing bonus data.
+ * @returns The number of helps until the carry cap is reached.
+ */
+export function getHelpsForCap(strength: PokemonStrength,
+    result: StrengthResult
+): number {
+    const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
+    return (999 - result.energy.carryLimit) / bagUsagePerHelp;
+}
+
+/**
+ * Calculates the required number of 'Helper Boost' triggers needed
+ * to reach the carry cap (999).
+ *
+ * @param param The strength-related parameters, including helper boost info.
+ * @param strength The Pokémon's strength stats, including IV.
+ * @param result The current strength result containing bonus data.
+ * @returns The required helper boost value to reach the cap.
+ */
+export function getRequiredHelperBoost(param: StrengthParameter,
+    strength: PokemonStrength, result: StrengthResult
+): number {
+    const helps = getHelpsForCap(strength, result);
+    const helperBoost = getSkillValue("Helper Boost",
+        param.helperBoostLevel, param.helperBoostSpecies);
+    return helps / helperBoost;
+}
+
+/**
  * Load StrengthParameter fron localStorage.
  * @returns Loaded parameter.
  */
