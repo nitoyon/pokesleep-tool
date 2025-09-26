@@ -22,7 +22,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
     const [specialty, setSpecialty] = React.useState<PokemonSpecialty>(
         value.customEventBonus?.target?.specialty ?? "Berries");
 
-    const onEventChange = React.useCallback((e: any) => {
+    const onEventChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.value as string;
         const bonus = events.getBonusByName(name);
         if (bonus === undefined) {
@@ -45,7 +45,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             }
         });
     }, [value, onChange]);
-    const onTargetChange = React.useCallback((e: any, val: string|null) => {
+    const onTargetChange = React.useCallback((_: React.MouseEvent, val: string|null) => {
         if (val === null) {
             return;
         }
@@ -72,7 +72,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             target: { specialty: val },
         }});
     }, [value, onChange]);
-    const onSkillTriggerChange = React.useCallback((e: any, val: number|null) => {
+    const onSkillTriggerChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -84,7 +84,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onSkillLevelChange = React.useCallback((e: any, val: number|null) => {
+    const onSkillLevelChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -96,7 +96,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onBerryChange = React.useCallback((e: any, val: number|null) => {
+    const onBerryChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -108,7 +108,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onIngredientChange = React.useCallback((e: any, val: number|null) => {
+    const onIngredientChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -120,7 +120,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onDreamShardChange = React.useCallback((e: any, val: number|null) => {
+    const onDreamShardChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -132,7 +132,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onIngredientMagnetChange = React.useCallback((e: any, val: number|null) => {
+    const onIngredientMagnetChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -144,7 +144,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onIngredientDrawChange = React.useCallback((e: any, val: number|null) => {
+    const onIngredientDrawChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -156,7 +156,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onBerryBurstChange = React.useCallback((e: any, val: number|null) => {
+    const onBerryBurstChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -168,7 +168,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onDishChange = React.useCallback((e: any, val: number|null) => {
+    const onDishChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -180,7 +180,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onEnergyFromDishChange = React.useCallback((e: any, val: number|null) => {
+    const onEnergyFromDishChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
