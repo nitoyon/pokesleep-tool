@@ -11,7 +11,6 @@ const CollapseEx = React.memo(({show, children}: {
 }) => {
     const ref = React.useRef<HTMLDivElement>(null);
     const [height, setHeight] = React.useState(0);
-    const [mounted, setMounted] = React.useState(false);
     const [renderedChildren, setRenderedChildren] = React.useState(children);
 
     React.useEffect(() => {
@@ -29,7 +28,7 @@ const CollapseEx = React.memo(({show, children}: {
     }, [children, renderedChildren]);
 
     const styles = useSpring({
-        height: !mounted ? 'auto' : show ? height : 0,
+        height: show ? height : 0,
         config: { tension: 400, friction: 40 },
     });
 
