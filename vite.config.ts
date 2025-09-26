@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
+import eslint from 'vite-plugin-eslint';
 import react from '@vitejs/plugin-react'
 import { configDefaults } from 'vitest/config'
 import path from 'path';
 
 export default defineConfig({
   base: '/pokesleep-tool/',
-  plugins: [react()],
+  plugins: [eslint(), react()],
   build: {
     rollupOptions: {
       input: {
