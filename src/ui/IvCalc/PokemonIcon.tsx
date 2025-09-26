@@ -41,7 +41,7 @@ function createIconElements(idForm: number, size: number): React.ReactElement[] 
     const shape: React.ReactElement[] = [];
     let i = 0;
     for (const datum of elements) {
-        const props: any = {};
+        const props: {rx?: string, ry?: string} = {};
         if (datum.r !== undefined) {
             props.rx = props.ry = (size * datum.r).toFixed(1);
         }
