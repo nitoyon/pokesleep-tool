@@ -235,7 +235,7 @@ const NatureTab = React.memo(({value, onChange}: {
     value: BoxFilterConfig,
     onChange: (value: BoxFilterConfig) => void,
 }) => {
-    const onNoEffectClick = useCallback((selected: NatureEffect) => {
+    const onNoEffectClick = useCallback(() => {
         onChange(new BoxFilterConfig({
             ...value,
             neutralNature: !value.neutralNature,
