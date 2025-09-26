@@ -25,7 +25,7 @@ const ScoreTableDialog = React.memo(({open, onClose, bonus, strength}: ScoreTabl
     const ref75 = React.useRef<HTMLDivElement|null>(null);
     const ref100 = React.useRef<HTMLDivElement|null>(null);
 
-    const onMoveClick = React.useCallback((e: any, val: number|null) => {
+    const onMoveClick = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) { return; }
         let element: HTMLDivElement|null = null;
         switch (val) {
