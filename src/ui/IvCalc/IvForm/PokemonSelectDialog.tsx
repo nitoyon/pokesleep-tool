@@ -23,10 +23,14 @@ const StyledDialog = styled(Dialog)({
 });
 
 function PopperComponent(props: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     anchorEl?: any;
     disablePortal?: boolean;
     open: boolean;
 }) {
+    // Extract some property from props.
+    // (ESLint doesn't allow this...)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { disablePortal, anchorEl, open, ...other } = props;
     return <StyledAutocompletePopper {...other} />;
 }
@@ -83,7 +87,7 @@ const StyledAutocompletePopper = styled('div')({
     },
 });
 
-const StyledInput = styled(InputBase)(({ theme }) => ({
+const StyledInput = styled(InputBase)(() => ({
     width: 'calc(100% - 8px)',
     padding: 4,
     margin: 4,
@@ -162,38 +166,48 @@ export class PokemonFilterConfig {
         this.mainSkillNames = values.mainSkillNames ?? [];
     }
 
-    load(json: any) {
-        if (typeof(json) !== "object") {
+    load(json: unknown) {
+        if (typeof(json) !== "object" || json === null) {
             return;
         }
-        if (typeof(json.filterType) === "string" &&
-            PokemonTypes.includes(json.filterType)) {
-            this.filterType = json.filterType;
+        if (typeof((json as {filterType: unknown}).filterType) === "string") {
+            const filterType = (json as {filterType: unknown}).filterType as PokemonType;
+            if (PokemonTypes.includes(filterType)) {
+                this.filterType = filterType;
+            }
         }
-        if (Array.isArray(json.filterSpecialty) &&
-            json.filterSpecialty.every((x: any) => SpecialtyNames.includes(x))) {
-            this.filterSpecialty = json.filterSpecialty;
+        if (Array.isArray((json as {filterSpecialty: unknown}).filterSpecialty)) {
+            const filterSpecialty = (json as {filterSpecialty: unknown}).filterSpecialty as PokemonSpecialty[];
+            if (filterSpecialty.every((x) => SpecialtyNames.includes(x))) {
+                this.filterSpecialty = filterSpecialty;
+            }
         }
-        if (typeof(json.filterEvolve) === "string" &&
-            ["all", "non", "final"].includes(json.filterEvolve)) {
-            this.filterEvolve = json.filterEvolve;
+        if (typeof((json as {filterEvolve: unknown}).filterEvolve) === "string") {
+            const filterEvolve = (json as {filterEvolve: unknown}).filterEvolve as "all"|"non"|"final";
+            if (["all", "non", "final"].includes(filterEvolve)) {
+                this.filterEvolve = filterEvolve;
+            }
         }
-        if (typeof(json.ingredientName) === "string" &&
-            IngredientNames.includes(json.ingredientName)) {
-            this.ingredientName = json.ingredientName;
+        if (typeof((json as {ingredientName: unknown}).ingredientName) === "string") {
+            const ingredientName = (json as {ingredientName: unknown}).ingredientName as IngredientName;
+            if (IngredientNames.includes(ingredientName)) {
+                this.ingredientName = ingredientName;
+            }
         }
-        if (typeof(json.ingredientA) === "boolean") {
-            this.ingredientA = json.ingredientA;
+        if (typeof((json as {ingredientA: unknown}).ingredientA) === "boolean") {
+            this.ingredientA = (json as {ingredientA: unknown}).ingredientA as boolean;
         }
-        if (typeof(json.ingredientB) === "boolean") {
-            this.ingredientB = json.ingredientB;
+        if (typeof((json as {ingredientB: unknown}).ingredientB) === "boolean") {
+            this.ingredientB = (json as {ingredientB: unknown}).ingredientB as boolean;
         }
-        if (typeof(json.ingredientC) === "boolean") {
-            this.ingredientC = json.ingredientC;
+        if (typeof((json as {ingredientC: unknown}).ingredientC) === "boolean") {
+            this.ingredientC = (json as {ingredientC: unknown}).ingredientC as boolean;
         }
-        if (Array.isArray(json.mainSkillNames) &&
-            json.mainSkillNames.every((x: any) => MainSkillNames.includes(x))) {
-            this.mainSkillNames = json.mainSkillNames;
+        if (Array.isArray((json as {mainSkillNames: unknown}).mainSkillNames)) {
+            const mainSkillNames = (json as {mainSkillNames: unknown}).mainSkillNames as MainSkillName[];
+            if (mainSkillNames.every((x) => MainSkillNames.includes(x))) {
+                this.mainSkillNames = mainSkillNames;
+            }
         }
     }
 
@@ -312,7 +326,7 @@ const PokemonSelectDialog = React.memo(({
 }) => {
     const { t } = useTranslation();
     const [filterOpen, setFilterOpen] = React.useState(false);
-    let [config_, setConfig] = React.useState<PokemonDialogConfig|null>(null);
+    const [config_, setConfig] = React.useState<PokemonDialogConfig|null>(null);
 
     // initialize config
     const config: PokemonDialogConfig = (config_ === null ?
@@ -334,7 +348,7 @@ const PokemonSelectDialog = React.memo(({
     }, [config.filter]);
 
     // Selected handler
-    const onAutocompleteChange = useCallback((event: any, newValue: PokemonOption|string|null) => {
+    const onAutocompleteChange = useCallback((_: React.SyntheticEvent, newValue: PokemonOption|string|null) => {
         if (newValue === null) { return; }
         let selected: PokemonOption|undefined = undefined;
         if (typeof(newValue) === 'string') {
@@ -343,15 +357,16 @@ const PokemonSelectDialog = React.memo(({
         }
         else {
             // skip empty entry
-            if (newValue.id < 0) { return; }
-            selected = newValue;
+            const newOption = newValue as PokemonOption;
+            if (newOption.id < 0) { return; }
+            selected = newOption;
         }
         onChange(selected);
         closeHandler();
     }, [onChange, closeHandler, pokemonOptions]);
 
     // close when ESC key is pressed
-    const onAutocompleteClose = useCallback((event: any, reason: string) => {
+    const onAutocompleteClose = useCallback((_: React.SyntheticEvent, reason: string) => {
         if (reason === 'escape') {
             closeHandler();
         }
