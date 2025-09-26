@@ -81,7 +81,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, maxSkillLevel: e.target.checked});
     }, [onChange, value]);
-    const onEventChange = React.useCallback((e: any, val: string|null) => {
+    const onEventChange = React.useCallback((_: React.MouseEvent, val: string|null) => {
         if (val === null) {
             return;
         }
