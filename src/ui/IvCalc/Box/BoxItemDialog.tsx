@@ -65,13 +65,13 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
     const onNickNameChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setNickname(event.target.value);
     }, [setNickname]);
-    const onNickNameFocus = React.useCallback((e: any) => {
+    const onNickNameFocus = React.useCallback(() => {
         setIsEditingNickName(true);
         if (nickname === "") {
             setNickname(localName);
         }
     }, [setIsEditingNickName, setNickname, nickname, localName]);
-    const onNickNameBlur = React.useCallback((e: any) => {
+    const onNickNameBlur = React.useCallback(() => {
         setIsEditingNickName(false);
         if (nickname === localName) {
             setNickname("");
