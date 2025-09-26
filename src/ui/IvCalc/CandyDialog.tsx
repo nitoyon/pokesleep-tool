@@ -11,7 +11,9 @@ import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
 import { Button, Dialog, DialogActions, Input, InputAdornment, 
-    MenuItem, Select, Slider, ToggleButton, ToggleButtonGroup } from '@mui/material';
+    MenuItem, Select, SelectChangeEvent, Slider,
+    ToggleButton, ToggleButtonGroup,
+} from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
 
@@ -88,7 +90,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         }
     }, [iv, shouldReset, dstLevel, open]);
 
-    const onExpFactorChange = React.useCallback((e: any) => {
+    const onExpFactorChange = React.useCallback((e: SelectChangeEvent) => {
         const value = parseInt(e.target.value, 10);
         setExpFactor(value);
     }, []);
@@ -100,7 +102,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         onChange(iv.changeLevel(level));
     }, [iv, onChange]);
 
-    const onExpSliderChange = React.useCallback((e: any) => {
+    const onExpSliderChange = React.useCallback((e: Event, value: number|number[]) => {
         if (e === null) {
             return;
         }
@@ -112,13 +114,12 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         }
 
         setIsEmpty(false);
-        setExpGot(e.target.value);
+        if (typeof(value) === 'number') {
+            setExpGot(value);
+        }
     }, []);
 
-    const onExpLeftChange = React.useCallback((e: any) => {
-        if (e === null) {
-            return;
-        }
+    const onExpLeftChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const rawText = e.target.value;
 
         // Update isEmpty state
@@ -139,7 +140,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         setExpGot(maxExpLeft - value);
     }, [maxExpLeft]);
 
-    const onCanyBoostChange = React.useCallback((e: any, value: BoostEvent) => {
+    const onCanyBoostChange = React.useCallback((_: React.MouseEvent, value: BoostEvent) => {
         if (value === null) {
             return;
         }
@@ -215,7 +216,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     </section>
                     <section>
                         <label>{t('nature')}:</label>
-                        <Select variant="standard" onChange={onExpFactorChange} value={expFactor}
+                        <Select variant="standard" onChange={onExpFactorChange} value={expFactor.toString()}
                             size="small">
                             <MenuItem value={1}><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
                             <MenuItem value={0}>{t('nature effect.EXP gains')} ーー</MenuItem>
