@@ -8,6 +8,8 @@ import SpecialtyButton from '../SpecialtyButton';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { SpecialtyNames, PokemonSpecialty, IngredientName, IngredientNames,
     PokemonType, PokemonTypes } from '../../../data/pokemons';
+import { useElementWidth } from '../../common/Hook';
+import DraggableTabContainer from '../../common/DraggableTabContainer';
 import { Button, Dialog, DialogActions, Switch,
     Tab, Tabs, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +21,7 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
+    const [width, elementRef] = useElementWidth();
     const [tabIndex, setTabIndex] = React.useState(value.tabIndex);
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
@@ -32,23 +35,24 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
 
     return <StyledPokemonFilterDialog open={open} onClose={onClose}>
         <StyledTabs variant="scrollable" scrollButtons
+            ref={elementRef}
             value={tabIndex} onChange={onTabChange}>
             <StyledTab label={t('type')} value={0}/>
             <StyledTab label={t('ingredient')} value={1}/>
             <StyledTab label={t('main skill')} value={2}/>
         </StyledTabs>
         
-        <div className="tabContainer">
-            <div className={`tabChild ${tabIndex === 0 ? 'tabChildActive' : ''}`}>
+        <DraggableTabContainer index={tabIndex} width={width} onChange={setTabIndex}>
+            <div className="tabChild">
                 <TypeTab value={value} onChange={onChange}/>
             </div>
-            <div className={`tabChild ${tabIndex === 1 ? 'tabChildActive' : ''}`}>
+            <div className="tabChild">
                 <IngredientTab value={value} onChange={onChange}/>
             </div>
-            <div className={`tabChild ${tabIndex === 2 ? 'tabChildActive' : ''}`}>
+            <div className="tabChild">
                 <MainSkillTab value={value} onChange={onChange}/>
             </div>
-        </div>
+        </DraggableTabContainer>
         <DialogActions>
             <Button onClick={onClearClick}>{t('clear')}</Button>
             <Button onClick={onCloseClick}>{t('close')}</Button>
@@ -59,29 +63,20 @@ const PokemonFilterDialog = React.memo(({open, value, onChange, onClose}: {
 const StyledPokemonFilterDialog = styled(Dialog)({
     'div.MuiPaper-root': {
         padding: '0 .5rem 0 .5rem',
-        '& > div.tabContainer': {
-            margin: '0.8rem 0 0 0',
-            display: 'grid',
-            '& > div.tabChild': {
-                gridArea: '1 / 1',
-                visibility: 'hidden',
-                '& > section': {
-                    margin: '0 0.8rem',
-                    fontSize: '.9rem',
-                    display: 'flex',
-                    flex: '0 auto',
-                    alignItems: 'center',
-                    maxWidth: '40rem',
-                    '&:first-of-type': {
-                        marginTop: '0.3rem',
-                    },
-                    '& > label': {
-                        marginRight: 'auto',
-                    },
+        '& div.tabChild': {
+            '& > section': {
+                margin: '0 0.8rem',
+                fontSize: '.9rem',
+                display: 'flex',
+                flex: '0 auto',
+                alignItems: 'center',
+                maxWidth: '40rem',
+                '&:first-of-type': {
+                    marginTop: '0.3rem',
                 },
-            },
-            '& > div.tabChildActive': {
-                visibility: 'visible',
+                '& > label': {
+                    marginRight: 'auto',
+                },
             },
         },
     },
@@ -89,8 +84,11 @@ const StyledPokemonFilterDialog = styled(Dialog)({
 
 const StyledTabs = styled(Tabs)({
     minHeight: '36px',
+    marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
 });
 const StyledTab = styled(Tab)({
+    minHeight: '36px',
+    minWidth: '0',
     textTransform: 'none',
 });
 
