@@ -3,7 +3,10 @@ import { styled } from '@mui/system';
 import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
+import PokemonStrength, {
+    getRequiredHelperBoost, getHelpYield,
+    StrengthResult, whistlePeriod,
+} from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { Button, Dialog, DialogActions,
@@ -19,7 +22,7 @@ import IngHelpDialog from './IngHelpDialog';
 import IngredientIcon from '../IngredientIcon';
 import SkillHelpDialog from './SkillHelpDialog';
 import SpecialtyButton from '../SpecialtyButton';
-import HelpStackDialog, { getHelpYield, getRequiredHelperBoost } from './HelpStackDialog';
+import HelpStackDialog from './HelpStackDialog';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
