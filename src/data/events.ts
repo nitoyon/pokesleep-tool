@@ -336,66 +336,72 @@ const events = new EventData(events_ as JsonEventData);
  * @param data Loaded JSON data.
  * @returns Loaded HelpEventBonus object.
  */
-export function loadHelpEventBonus(data: any): HelpEventBonus {
+export function loadHelpEventBonus(data: unknown): HelpEventBonus {
     const ret: HelpEventBonus = {
         target: {},
         effects: fillBonusEffects({}),
     };
-    if (typeof(data.target) === "object") {
-        if (typeof(data.target.specialty) === "string" &&
-            SpecialtyNames.includes(data.target.specialty)) {
-            ret.target.specialty = data.target.specialty as PokemonSpecialty;
+    if (typeof(data) !== "object" || data === null) {
+        return ret;
+    }
+
+    if (typeof((data as {target?: unknown}).target) === "object") {
+        const target = (data as {target?: unknown}).target as Partial<TargetPokemon>;
+        if (typeof(target.specialty) === "string" &&
+            SpecialtyNames.includes(target.specialty)) {
+            ret.target.specialty = target.specialty as PokemonSpecialty;
         }
-        if (typeof(data.target.type) === "string" &&
-            PokemonTypes.includes(data.target.type)) {
-            ret.target.type = [data.target.type as PokemonType];
+        if (typeof(target.type) === "string" &&
+            PokemonTypes.includes(target.type)) {
+            ret.target.type = [target.type as PokemonType];
         }
-        if (Array.isArray(data.target.type) &&
-            data.target.type.length <= 3 &&
-            data.target.type.every((x: PokemonType) => PokemonTypes.includes(x))) {
-            ret.target.type = data.target.type;
+        if (Array.isArray(target.type) &&
+            target.type.length <= 3 &&
+            target.type.every((x: PokemonType) => PokemonTypes.includes(x))) {
+            ret.target.type = target.type;
         }
     }
-    if (typeof(data.effects) === "object") {
-        if (typeof(data.effects.berry) === "number" &&
-            [0, 1].includes(data.effects.berry)) {
-            ret.effects.berry = data.effects.berry;
+    if (typeof((data as {effects?: unknown}).effects) === "object") {
+        const effects = (data as {effects?: unknown}).effects as Partial<BonusEffects>;
+        if (typeof(effects.berry) === "number" &&
+            [0, 1].includes(effects.berry)) {
+            ret.effects.berry = effects.berry;
         }
-        if (typeof(data.effects.skillLevel) === "number" &&
-            [0, 1, 3, 5].includes(data.effects.skillLevel)) {
-            ret.effects.skillLevel = data.effects.skillLevel;
+        if (typeof(effects.skillLevel) === "number" &&
+            [0, 1, 3, 5].includes(effects.skillLevel)) {
+            ret.effects.skillLevel = effects.skillLevel;
         }
-        if (typeof(data.effects.skillTrigger) === "number" &&
-            [1, 1.25, 1.5].includes(data.effects.skillTrigger)) {
-            ret.effects.skillTrigger = data.effects.skillTrigger;
+        if (typeof(effects.skillTrigger) === "number" &&
+            [1, 1.25, 1.5].includes(effects.skillTrigger)) {
+            ret.effects.skillTrigger = effects.skillTrigger;
         }
-        if (typeof(data.effects.ingredient) === "number" &&
-            [0, 1].includes(data.effects.ingredient)) {
-            ret.effects.ingredient = data.effects.ingredient;
+        if (typeof(effects.ingredient) === "number" &&
+            [0, 1].includes(effects.ingredient)) {
+            ret.effects.ingredient = effects.ingredient;
         }
-        if (typeof(data.effects.dreamShard) === "number" &&
-            [1, 1.5, 2].includes(data.effects.dreamShard)) {
-            ret.effects.dreamShard = data.effects.dreamShard;
+        if (typeof(effects.dreamShard) === "number" &&
+            [1, 1.5, 2].includes(effects.dreamShard)) {
+            ret.effects.dreamShard = effects.dreamShard;
         }
-        if (typeof(data.effects.ingredientMagnet) === "number" &&
-            [1, 1.5].includes(data.effects.ingredientMagnet)) {
-            ret.effects.ingredientMagnet = data.effects.ingredientMagnet;
+        if (typeof(effects.ingredientMagnet) === "number" &&
+            [1, 1.5].includes(effects.ingredientMagnet)) {
+            ret.effects.ingredientMagnet = effects.ingredientMagnet;
         }
-        if (typeof(data.effects.ingredientDraw) === "number" &&
-            [1, 1.5].includes(data.effects.ingredientDraw)) {
-            ret.effects.ingredientDraw = data.effects.ingredientDraw;
+        if (typeof(effects.ingredientDraw) === "number" &&
+            [1, 1.5].includes(effects.ingredientDraw)) {
+            ret.effects.ingredientDraw = effects.ingredientDraw;
         }
-        if (typeof(data.effects.berryBurst) === "number" &&
-            [1, 1.4].includes(data.effects.berryBurst)) {
-            ret.effects.ingredientDraw = data.effects.berryBurst;
+        if (typeof(effects.berryBurst) === "number" &&
+            [1, 1.4].includes(effects.berryBurst)) {
+            ret.effects.berryBurst = effects.berryBurst;
         }
-        if (typeof(data.effects.dish) === "number" &&
-            [1, 1.1, 1.25, 1.5].includes(data.effects.dish)) {
-            ret.effects.dish = data.effects.dish;
+        if (typeof(effects.dish) === "number" &&
+            [1, 1.1, 1.25, 1.5].includes(effects.dish)) {
+            ret.effects.dish = effects.dish;
         }
-        if (typeof(data.effects.energyFromDish) === "number" &&
-            [0, 5].includes(data.effects.energyFromDish)) {
-            ret.effects.energyFromDish = data.effects.energyFromDish;
+        if (typeof(effects.energyFromDish) === "number" &&
+            [0, 5].includes(effects.energyFromDish)) {
+            ret.effects.energyFromDish = effects.energyFromDish;
         }
     }
     return ret;
