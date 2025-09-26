@@ -19,7 +19,7 @@ const IngredientTextField = React.memo(({iv, onChange}: {
     iv: PokemonIv,
     onChange: (value: PokemonIv) => void,
 }) => {
-    const _onChange = useCallback((e: any) => {
+    const _onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = iv.clone();
         value.ingredient = e.target.value as IngredientType;
         onChange(value);
@@ -48,7 +48,7 @@ const IngredientTextField = React.memo(({iv, onChange}: {
 });
 
 /** Ingredient text field for normal pokemon */
-function NormalIngredientTextField(iv: PokemonIv, _onChange: (e: any) => void) {
+function NormalIngredientTextField(iv: PokemonIv, _onChange: (e: React.ChangeEvent<HTMLInputElement>) => void) {
     // prepare menus
     const options = [];
     const values: IngredientType[] = ["AAA", "AAB", "ABA", "ABB"];
@@ -98,9 +98,10 @@ const PokemonIngredient = React.memo(({pokemon, value}: {
 });
 
 /** Ingredient text field for normal pokemon */
-function MythicalIngredientTextField(iv: PokemonIv, onChange1: (e: any) => void,
-    onChange2: (e: any) => void,
-    onChange3: (e: any) => void) {
+function MythicalIngredientTextField(iv: PokemonIv,
+    onChange1: (e: string) => void,
+    onChange2: (e: string) => void,
+    onChange3: (e: string) => void) {
     if (iv.pokemon.mythIng === undefined) {
         return <></>;
     }
