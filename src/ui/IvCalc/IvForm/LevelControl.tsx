@@ -1,6 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Autocomplete, Paper, PaperProps, Popper, Slider, TextField } from '@mui/material';
+import {
+    Autocomplete, Paper, PaperProps,
+    Popper, PopperProps, Slider, TextField,
+} from '@mui/material';
 import ArrowButton from '../../common/ArrowButton';
 
 const LevelControlContainer = styled('div')({
@@ -26,7 +29,7 @@ const LevelControl = React.memo(({hideInput, max, value, onChange}: {
     value: number,
     onChange: (value: number) => void,
 }) => {
-    const _onChange = React.useCallback((e: any) => {
+    const _onChange = React.useCallback((e: Event, value: number|number[]) => {
         if (e === null) {
             return;
         }
@@ -37,8 +40,9 @@ const LevelControl = React.memo(({hideInput, max, value, onChange}: {
             return;
         }
 
-        const value = e.target.value;
-        onChange(value);
+        if (typeof(value) === 'number') {
+            onChange(value);
+        }
     }, [onChange]);
 
     const onLevelDownClick = React.useCallback(() => {
@@ -66,19 +70,7 @@ export const LevelInput = React.memo(({value, onChange}: {
     const [isEmpty, setIsEmpty] = React.useState(false);
     const inputRef = React.useRef<HTMLInputElement|null>(null);
 
-    const _onChange = React.useCallback((e: any) => {
-        if (e === null) {
-            return;
-        }
-        const rawText = e.target.value;
-
-        // Update isEmpty state
-        if (typeof(rawText) === "string" && rawText.trim() === "") {
-            setIsEmpty(true);
-            onChange(1);
-            return;
-        }
-
+    const applyValue = React.useCallback((rawText: string) => {
         let value = parseInt(rawText, 10);
         if (isNaN(value) || value < 1) {
             value = 1;
@@ -89,8 +81,18 @@ export const LevelInput = React.memo(({value, onChange}: {
         setIsEmpty(false);
         onChange(value);
     }, [onChange]);
-    const onSelected = React.useCallback((e: any, value: string|null) => {
+    const onInputChange = React.useCallback((_: React.SyntheticEvent, value: string) => {
         if (value !== null) {
+            applyValue(value);
+        }
+    }, [applyValue]);
+    const onBlur = React.useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        if (e !== null && typeof(e.target.value) !== 'string') {
+            applyValue(e.target.value);
+        }
+    }, [applyValue]);
+    const onSelected = React.useCallback((_: React.SyntheticEvent, value: string|string[]) => {
+        if (value !== null && typeof(value) === 'string') {
             onChange(parseInt(value, 10));
             // fix unknown bug: selected level's is not displayed property.
             // 1. When the level is 30, tap the textbox and tap level 25.
@@ -108,13 +110,13 @@ export const LevelInput = React.memo(({value, onChange}: {
     return (<Autocomplete size="small" options={options}
                 freeSolo disableClearable
                 value={valueText} sx={{width: '3rem'}}
-                onBlur={_onChange}
-                onInputChange={_onChange}
+                onInputChange={onInputChange}
                 onChange={onSelected}
                 filterOptions={filterOptions}
                 renderInput={(params) => <TextField {...params}
                     variant="standard" type="number"
                     inputRef={inputRef}
+                    onBlur={onBlur}
                     sx={{
                         '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
                             WebkitAppearance: 'none',
@@ -141,7 +143,7 @@ export const LevelInput = React.memo(({value, onChange}: {
     );
 });
 
-const PopperComponent = function (props: any) {
+const PopperComponent = function (props: PopperProps) {
     return (<Popper {...props} style={{zIndex: 2147483647}} placement='bottom-start'/>)
 }
 
@@ -169,6 +171,8 @@ const StyledPopup = styled(Paper)<PaperProps>({
 });
   
 const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
+    // Extract sx from props. (ESLint doesn't allow this...)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { sx, ...rest } = props;
     return <StyledPopup ref={ref} {...rest} />;
 });  
