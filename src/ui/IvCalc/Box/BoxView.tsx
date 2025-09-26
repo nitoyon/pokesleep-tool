@@ -68,7 +68,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
         boxFilterConfig = value;
         setFilterConfig(boxFilterConfig);
     }, []);
-    const onCandyClick = React.useCallback((item: PokemonBoxItem) => {
+    const onCandyClick = React.useCallback(() => {
         setCandyOpen(true);
     }, []);
     const onCandyDialogClose = React.useCallback(() => {
@@ -436,7 +436,7 @@ export class BoxFilterConfig implements IBoxFilterConfig {
     }
 
     /** Check whether the instance is empty */
-    get isEmpty(): Boolean {
+    get isEmpty(): boolean {
         return this.name === "" &&
             this.filterTypes.length === 0 &&
             this.filterSpecialty.length === 0 &&
@@ -627,14 +627,18 @@ function useLongPress(
         timeout.current = setTimeout(callback, ms);
     }, [callback, ms]);
     const touchEnd = React.useCallback(() => {
-        timeout.current && clearTimeout(timeout.current);
+        if (timeout.current) {
+            clearTimeout(timeout.current);
+        }
         timeout.current = null;
     }, []);
 
     const mouseEnd = React.useCallback(() => {
         document.removeEventListener("mousemove", mouseEnd);
         document.removeEventListener("mouseup", mouseEnd);
-        timeout.current && clearTimeout(timeout.current);
+        if (timeout.current) {
+            clearTimeout(timeout.current);
+        }
         timeout.current = null;
     }, []);
     const mouseStart = React.useCallback(() => {
