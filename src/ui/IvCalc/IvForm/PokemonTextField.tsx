@@ -48,14 +48,14 @@ const PokemonTextField = React.memo(({iv, fixMode, onChange, onCandyClick}: {
                 ing3Name: pokemon.ing3?.name,
             })),
         [t]);
-    let _selectedOption = pokemonOptions.find(x => x.name === value);
+    const _selectedOption = pokemonOptions.find(x => x.name === value);
     if (_selectedOption === undefined) {
         throw new Error(`value ${value} is invalid`);
     }
     const selectedOption = _selectedOption;
 
     // Open popup when input area is clicked
-    const onInputClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    const onInputClick = useCallback(() => {
         setOpen(true);
     }, [setOpen]);
 
