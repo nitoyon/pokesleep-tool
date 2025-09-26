@@ -109,7 +109,7 @@ const TypeTab = React.memo(({value, onChange}: {
                 [] : [val],
         }))
     }, [value, onChange]);
-    const onEvolveChange = useCallback((e: any, val: string|null) => {
+    const onEvolveChange = useCallback((_: React.MouseEvent, val: string|null) => {
         if (val === null || value.filterEvolve === val) { return; }
         onChange(new PokemonFilterConfig({...value, filterEvolve: val as "all"|"non"|"final"}));
     }, [value, onChange]);
