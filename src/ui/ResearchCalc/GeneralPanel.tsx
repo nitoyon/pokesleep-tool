@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { InputAreaData } from './InputArea';
+import { useState } from 'react';
+import { InputAreaData } from './ResearchCalcAppConfig';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import PreviewScore from './PreviewScore';
 import { getScoreRange } from './Score';

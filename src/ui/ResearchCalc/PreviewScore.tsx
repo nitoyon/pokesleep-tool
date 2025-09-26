@@ -1,7 +1,7 @@
 import { styled } from '@mui/system';
 import { Button } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { InputAreaData } from './InputArea'
+import { InputAreaData } from './ResearchCalcAppConfig'
 import Rank from '../../util/Rank';
 import { PokemonCount } from '../../util/PokemonCount';
 import SleepScore from './SleepScore'

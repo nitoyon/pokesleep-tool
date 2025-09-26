@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
+import { InputAreaData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
 import ResearchAreaTextField from './ResearchAreaTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -18,20 +19,6 @@ interface InputAreaProps {
 
     /** callback function when strength is changed */
     onChange: (value: Partial<InputAreaData>) => void;
-}
-
-interface InputAreaData {
-    /** field index */
-    fieldIndex: number;
-
-    /** current strength */
-    strength: number;
-
-    /** event bonus (multiplier) */
-    bonus: number;
-
-    /** whether to do two sleep sessions in one day */
-    secondSleep: boolean;
 }
 
 const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
@@ -389,4 +376,3 @@ const SecondSleepCheckbox = React.memo(({value, onChange}:SecondSleepCheckboxPro
 });
 
 export { InputArea };
-export type { InputAreaData };
