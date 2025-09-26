@@ -14,10 +14,6 @@ const CollapseEx = React.memo(({show, children}: {
     const [renderedChildren, setRenderedChildren] = React.useState(children);
 
     React.useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    React.useEffect(() => {
         if (show) {
             setRenderedChildren(children);
         }
