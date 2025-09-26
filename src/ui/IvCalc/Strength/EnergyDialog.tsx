@@ -6,6 +6,7 @@ import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { EnergyResult } from '../../../util/Energy';
+import { useElementWidth } from '../../common/Hook';
 import { Collapse, Button, Dialog, DialogActions, MenuItem, Popper,
     Select, SelectChangeEvent, Switch, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -221,32 +222,6 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
         </DialogActions>
     </StyledEnergyDialog>;
 });
-
-function useElementWidth(): [number, (elm: HTMLElement|null) => void] {
-    const elmRef = React.useRef<{elm: HTMLElement|null}>({elm: null});
-    const [width, setWidth] = React.useState(200);
-    const observer = React.useMemo(() => {
-        return new ResizeObserver(() => {
-            const node = elmRef.current.elm;
-            if (node === null) {
-                return;
-            }
-            setWidth(Math.floor(node.getBoundingClientRect().width));
-        });
-    }, []);
-    
-    const ref = React.useCallback((node: HTMLElement|null) => {
-        if (node === null) {
-            observer.disconnect();
-            return;
-        }
-        elmRef.current.elm = node;
-        setWidth(Math.floor(node.getBoundingClientRect().width));
-        observer.disconnect();
-        observer.observe(node);
-    }, [observer]);
-    return [width, ref];
-}
 
 const StyledEnergyDialog = styled(Dialog)({
     '& > div.MuiDialog-container > div.MuiPaper-root': {
