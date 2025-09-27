@@ -86,7 +86,7 @@ class Nature {
         ];
 
     constructor(nature: string) {
-        if (!(Nature.allNatureNames as any[]).includes(nature)) {
+        if (!Nature.allNatureNames.includes(nature as NatureType)) {
             throw new Error(`Invalid nature specified: ${nature}`);
         }
         this.value = nature as NatureType;  
@@ -155,43 +155,43 @@ class Nature {
     } 
 
     get isNeautral() {
-        return (Nature.neautralNatures as any[]).includes(this.value);
+        return (Nature.neautralNatures as NatureType[]).includes(this.value);
     }
     get isEnergyRecoveryUp() {
-        return (Nature.energyRecoveryUpNatures as any[]).includes(this.value);
+        return (Nature.energyRecoveryUpNatures as NatureType[]).includes(this.value);
     }
     get isEnergyRecoveryDown() {
-        return (Nature.energyRecoveryDownNatures as any[]).includes(this.value);
+        return (Nature.energyRecoveryDownNatures as NatureType[]).includes(this.value);
     }
     get isSpeedOfHelpUp() {
-        return (Nature.speedOfHelpUpNatures as any[]).includes(this.value);
+        return (Nature.speedOfHelpUpNatures as NatureType[]).includes(this.value);
     }
     get isSpeedOfHelpDown() {
-        return (Nature.speedOfHelpDownNatures as any[]).includes(this.value);
+        return (Nature.speedOfHelpDownNatures as NatureType[]).includes(this.value);
     }
     get isMainSkillChanceUp() {
-        return (Nature.mainSkillChanceUpNatures as any[]).includes(this.value);
+        return (Nature.mainSkillChanceUpNatures as NatureType[]).includes(this.value);
     }
     get isMainSkillChanceDown() {
-        return (Nature.mainSkillChanceDownNatures as any[]).includes(this.value);
+        return (Nature.mainSkillChanceDownNatures as NatureType[]).includes(this.value);
     }
     get isIngredientFindingUp() {
-        return (Nature.ingredientFindingUpNatures as any[]).includes(this.value);
+        return (Nature.ingredientFindingUpNatures as NatureType[]).includes(this.value);
     }
     get isIngredientFindingDown() {
-        return (Nature.ingredientFindingDownNatures as any[]).includes(this.value);
+        return (Nature.ingredientFindingDownNatures as NatureType[]).includes(this.value);
     }
     get isExpGainsUp() {
-        return (Nature.expGainsUpNatures as any[]).includes(this.value);
+        return (Nature.expGainsUpNatures as NatureType[]).includes(this.value);
     }
     get isExpGainsDown() {
-        return (Nature.expGainsDownNatures as any[]).includes(this.value);
+        return (Nature.expGainsDownNatures as NatureType[]).includes(this.value);
     }
     get isAmped() {
-        return (Nature.ampedNatures as any[]).includes(this.value);
+        return (Nature.ampedNatures as NatureType[]).includes(this.value);
     }
     get isLowKey() {
-        return (Nature.lowKeyNatures as any[]).includes(this.value);
+        return (Nature.lowKeyNatures as NatureType[]).includes(this.value);
     }
 
     static get allNatures(): Nature[] {
