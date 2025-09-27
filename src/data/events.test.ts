@@ -2,6 +2,7 @@ import { BonusEventData, DrowsyEventData, getDrowsyBonus,
     getActiveHelpBonus
 } from './events';
 import pokemons from './pokemons';
+import { assert } from 'vitest';
 
 test('IsInProgress', () => {
     const evt = new DrowsyEventData({name: '', day: '2024-09-02', bonus: 1.5});
@@ -60,7 +61,7 @@ test('BonusEventData', () => {
     const squirtle = pokemons.find(x => x.name === 'Squirtle');
     const jigglypuff = pokemons.find(x => x.name === 'Jigglypuff');
     if (bulbasaur === undefined || squirtle === undefined || jigglypuff === undefined) {
-        fail('pokemon not found on pokemon.json');
+        assert.fail('pokemon not found on pokemon.json');
     }
     
     // target is water
@@ -86,7 +87,7 @@ test('BonusEventData.isTarget (multiple type)', () => {
     const squirtle = pokemons.find(x => x.name === 'Squirtle');
     const jigglypuff = pokemons.find(x => x.name === 'Jigglypuff');
     if (bulbasaur === undefined || squirtle === undefined || jigglypuff === undefined) {
-        fail('pokemon not found on pokemon.json');
+        assert.fail('pokemon not found on pokemon.json');
     }
     
     // target is water and grass
