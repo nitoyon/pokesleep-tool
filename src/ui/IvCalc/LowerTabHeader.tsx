@@ -151,7 +151,7 @@ function startAddToBoxAnimation(elm: HTMLDivElement|null) {
         easing: 'ease-out',
         iterations: 1
     });
-    animation.onfinish = (e: any) => {
+    animation.onfinish = () => {
         document.body.removeChild(div);
     };
 }

@@ -22,7 +22,7 @@ const TypeSelect = React.memo(({size, type, disabled, deletable, onChange, onCli
         }
         setOpen(true);
     }, [disabled, onClick]);
-    const onButtonDelete = React.useCallback((value: PokemonType) => {
+    const onButtonDelete = React.useCallback(() => {
         onDelete?.(type);
     }, [type, onDelete]);
     const onSelect = React.useCallback((value: PokemonType) => {

@@ -183,7 +183,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     const [ingBonus, setIngBonus] = React.useState<0|1>(0);
     const [value, setValue] = React.useState<"frequency"|"count"|"full">("frequency");
 
-    const onHelpingBonusChange = React.useCallback((e: any, value: string|null) => {
+    const onHelpingBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value !== null) {
             setHelpingBonus(parseInt(value, 10));
         }
@@ -191,12 +191,12 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setCampTicket(e.target.checked);
     }, []);
-    const onIngBonusChange = React.useCallback((e: any, value: string|null) => {
+    const onIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value !== null) {
             setIngBonus(parseInt(value, 10) as 0|1);
         }
     }, []);
-    const onValueChange = React.useCallback((e: any, value: string|null) => {
+    const onValueChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value === null) {
             return;
         }
@@ -224,10 +224,11 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                 return frequencyToString(Math.floor(baseFreq * rate), t);
             case "count":
                 return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
-            case "full":
+            case "full": {
                 const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
                 const mins = carryLimit / rp.getBagUsagePerHelp(0, ingBonus) * baseFreq * rate / 60;
                 return new AmountOfSleep(mins).toString(t);
+            }
         }
         return "";
     };

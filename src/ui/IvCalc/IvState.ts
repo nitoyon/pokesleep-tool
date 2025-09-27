@@ -70,7 +70,9 @@ export function getInitialIvState(): IvState {
         try {
             iv = PokemonIv.deserialize(cache.iv);
         }
-        catch { }
+        catch {
+            // ignore deserialization error (e.g. corrupted cache)
+        }
     }
     let selectedItemId = -1;
     if (cache.selectedIv !== "") {
@@ -81,7 +83,9 @@ export function getInitialIvState(): IvState {
                 selectedItemId = initialBox.items[selectedIndex].id;
             }
         }
-        catch { }
+        catch {
+            // ignore deserialization error (e.g. corrupted cache)
+        }
     }
 
     const ret: IvState = {
@@ -107,7 +111,9 @@ export function getInitialIvState(): IvState {
         try {
             ret.pokemonIv = PokemonIv.deserialize(m[1]);
         }
-        catch { }
+        catch {
+            // ignore deserialization error (e.g. corrupted cache)
+        }
     }
 
     return ret;
@@ -164,7 +170,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     const type = action.type;
     const selectedItem = state.box.getById(state.selectedItemId);
     if (type === "changeUpperTab") {
-        let value = action.payload.index;
+        const value = action.payload.index;
         let lowerTabIndex = state.lowerTabIndex;
         if (value !== 1 && lowerTabIndex === 2) {
             lowerTabIndex = 0;

@@ -3,7 +3,10 @@ import { styled } from '@mui/system';
 import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
-import PokemonStrength, { StrengthResult, whistlePeriod } from '../../../util/PokemonStrength';
+import PokemonStrength, {
+    getRequiredHelperBoost, getHelpYield,
+    StrengthResult, whistlePeriod,
+} from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { Button, Dialog, DialogActions,
@@ -19,7 +22,7 @@ import IngHelpDialog from './IngHelpDialog';
 import IngredientIcon from '../IngredientIcon';
 import SkillHelpDialog from './SkillHelpDialog';
 import SpecialtyButton from '../SpecialtyButton';
-import HelpStackDialog, { getHelpYield, getRequiredHelperBoost } from './HelpStackDialog';
+import HelpStackDialog from './HelpStackDialog';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -217,8 +220,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
     const ingArticle = getIngArticle(result, settings, t);
 
     // skill value
-    const mainSkillArticle = getMainSkillArticle(pokemonIv, result, settings,
-        t, onSkillHelpClick);
+    const mainSkillArticle = getMainSkillArticle(pokemonIv, result,
+        settings, t);
 
     const onHelpClick = React.useCallback(() => {
         setHelpOpen(true);
@@ -348,8 +351,8 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 }
 
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
-    settings: StrengthParameter, t: typeof i18next.t,
-    onInfoClick: () => void): React.ReactNode {
+    settings: StrengthParameter, t: typeof i18next.t
+): React.ReactNode {
     if (settings.period <= whistlePeriod || settings.tapFrequency === 'none') {
             return <article>ー</article>;
     }

@@ -1,9 +1,10 @@
 import pokemons, { getDecendants } from './pokemons';
+import { assert } from 'vitest';
 
 describe('getDecendants', () => {
     test('returns itself when non evolved pokemon is specified', () => {
         const p = pokemons.find(x => x.name === "Cramorant");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(0);
@@ -11,7 +12,7 @@ describe('getDecendants', () => {
 
     test('returns evolved pokemon', () => {
         const p = pokemons.find(x => x.name === "Bulbasaur");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(1);
@@ -20,7 +21,7 @@ describe('getDecendants', () => {
 
     test('returns evolved pokemon (non-final)', () => {
         const p = pokemons.find(x => x.name === "Bulbasaur");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p, true);
         expect(decendants.length).toBe(3);
@@ -31,7 +32,7 @@ describe('getDecendants', () => {
 
     test('returns Pikachu decendants (non-final)', () => {
         const p = pokemons.find(x => x.name === "Pikachu");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p, true);
         expect(decendants.length).toBe(3);
@@ -42,7 +43,7 @@ describe('getDecendants', () => {
 
     test('returns Eevee evolution line', () => {
         const p = pokemons.find(x => x.name === "Eevee");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(8);
@@ -51,7 +52,7 @@ describe('getDecendants', () => {
 
     test('returns Slowpoke evolution line', () => {
         const p = pokemons.find(x => x.name === "Slowpoke");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(2);
@@ -61,7 +62,7 @@ describe('getDecendants', () => {
 
     test('returns Ralts evolution line', () => {
         const p = pokemons.find(x => x.name === "Ralts");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(2);
@@ -71,7 +72,7 @@ describe('getDecendants', () => {
 
     test('returns Ralts evolution line (non-final)', () => {
         const p = pokemons.find(x => x.name === "Ralts");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p, true);
         expect(decendants.length).toBe(4);
@@ -83,7 +84,7 @@ describe('getDecendants', () => {
 
     test('returns Vulpix (Alola) evolution line', () => {
         const p = pokemons.find(x => x.name === "Vulpix (Alola)");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(1);
@@ -92,7 +93,7 @@ describe('getDecendants', () => {
 
     test('returns Vulpix evolution line', () => {
         const p = pokemons.find(x => x.name === "Vulpix");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(1);
@@ -101,7 +102,7 @@ describe('getDecendants', () => {
 
     test('returns Toxel evolution line', () => {
         const p = pokemons.find(x => x.name === "Toxel");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p);
         expect(decendants.length).toBe(2);
@@ -111,7 +112,7 @@ describe('getDecendants', () => {
 
     test('returns Toxel evolution line (non-final)', () => {
         const p = pokemons.find(x => x.name === "Toxel");
-        if (p === undefined) { fail('p should not be undefined'); }
+        if (p === undefined) { assert.fail('p should not be undefined'); }
 
         const decendants = getDecendants(p, true);
         expect(decendants.length).toBe(3);

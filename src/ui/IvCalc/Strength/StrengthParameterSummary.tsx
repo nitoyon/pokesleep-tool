@@ -70,7 +70,7 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
         setEventConfigOpen(false);
     }, []);
 
-    let area: React.ReactNode, fieldBonus: React.ReactNode;
+    let area: React.ReactNode;
     if (parameter.fieldIndex === allFavoriteFieldIndex) {
         area = t('favorite berry') + ': ' + t('all');
     }
@@ -95,14 +95,14 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
     else {
         area = t(`area.${parameter.fieldIndex}`);
     }
-    fieldBonus = <small> ({parameter.fieldBonus}%)</small>;
+    const fieldBonus = <small> ({parameter.fieldBonus}%)</small>;
 
     const activeEvents = getActiveHelpBonus(new Date())
         .map(x => x.name)
         .reverse();
     const isEventScheduled = activeEvents.length > 0 || parameter.event !== 'none';
     const eventMenuItems = ['none', ...activeEvents, 'custom'].map(x => {
-        let name = x === 'none' ? t('no event') :
+        const name = x === 'none' ? t('no event') :
             x === 'custom' ? (t('event') + ': ' + t('events.advanced')) :
             t(`events.${x}`);
         return <MenuItem key={x} value={x} dense

@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import PokemonIconData from './PokemonIconData';
 import PokemonIv from '../../util/PokemonIv';
-import { AppConfigContext } from '../App';
+import { AppConfigContext } from '../AppConfig';
 
 const PokemonIcon = React.memo(({idForm, size}: {
     idForm: number,
@@ -41,7 +41,7 @@ function createIconElements(idForm: number, size: number): React.ReactElement[] 
     const shape: React.ReactElement[] = [];
     let i = 0;
     for (const datum of elements) {
-        const props: any = {};
+        const props: {rx?: string, ry?: string} = {};
         if (datum.r !== undefined) {
             props.rx = props.ry = (size * datum.r).toFixed(1);
         }

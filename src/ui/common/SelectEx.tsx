@@ -3,6 +3,13 @@ import { MenuList } from '@mui/material';
 import TextLikeButton from './TextLikeButton';
 import PopperMenu from './PopperMenu';
 
+type SelectExChildProps = {
+    value: string | number,
+    children: React.ReactNode,
+    onClick: () => void,
+    selected: boolean,
+};
+
 const SelectEx = React.memo(({
     children,
     value,
@@ -11,11 +18,11 @@ const SelectEx = React.memo(({
     menuSx,
     onChange
 }: {
-    children: React.ReactNode|React.ReactNode[],
-    value: string|number,
-    renderValue?: (value: string|number) => React.ReactNode,
-    sx?: object,
-    menuSx?: object,
+    children: React.ReactNode | React.ReactNode[],
+    value: string | number,
+    renderValue?: (value: string | number) => React.ReactNode,
+    sx?: React.CSSProperties,
+    menuSx?: React.CSSProperties,
     onChange?: (value: string) => void,
 }) => {
     const [open, setOpen] = React.useState(false);
@@ -26,36 +33,34 @@ const SelectEx = React.memo(({
     const onClose = React.useCallback(() => {
         setOpen(false);
     }, []);
-    const onMenuClick = React.useCallback((child: React.ReactElement<any>) => {
+
+    const onMenuClick = React.useCallback((child: React.ReactElement<SelectExChildProps>) => {
         if (onChange === undefined) {
             return;
         }
 
-        const value = child.props.value as string;
+        const value = child.props.value;
         if (value !== null && value !== undefined) {
-            onChange(value);
+            onChange(String(value));
             onClose();
         }
     }, [onChange, onClose]);
 
-    const childrenArray = React.Children.toArray(children);
-    const selectedChild = childrenArray.find(c => typeof(c) === 'object' &&
-        'props' in c && c.props.value === value);
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<SelectExChildProps>[];
+    const selectedChild = childrenArray.find(c => c.props.value === value);
+
     let valueElement = null;
     if (renderValue !== undefined) {
         valueElement = renderValue(value);
     }
-    else if (typeof(selectedChild) === 'object' && 'props' in selectedChild) {
+    else if (selectedChild) {
         valueElement = selectedChild.props.children;
     }
 
     const menuItems = childrenArray.map(child => {
-        if (!React.isValidElement(child)) {
-            return null;
-        }
         const selected = (value === child.props.value);
-        return React.cloneElement(child as React.ReactElement<any>, {
-            onClick: () => { onMenuClick(child) },
+        return React.cloneElement(child, {
+            onClick: () => { onMenuClick(child as React.ReactElement<SelectExChildProps>); },
             selected,
         });
     });

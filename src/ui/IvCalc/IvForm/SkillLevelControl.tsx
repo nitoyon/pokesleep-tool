@@ -19,8 +19,8 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
         options.push(<MenuItem key={i} value={i} dense>Lv {i}</MenuItem>);
     }
 
-    const _onChange = React.useCallback((e: any) => {
-        onChange(e.target.value as number);
+    const _onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(parseInt(e.target.value, 10));
     }, [onChange]);
 
     return <StyledSkillLevel>

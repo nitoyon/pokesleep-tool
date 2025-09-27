@@ -46,7 +46,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
         x: -index * widthGap,
     }), [index, widthGap]);
 
-    const bind = useDrag(({ active, movement: [mx], velocity: [vx], cancel}) => {
+    const bind = useDrag(({ active, movement: [mx], velocity: [vx]}) => {
         if (active) {
             return api.start({
                 x: -index * widthGap + mx,
@@ -85,7 +85,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
             api.start({ x: -index * widthGap });
         }
         isFirstTime.current = false;
-    }, [index, width, api]);
+    }, [index, widthGap, api]);
 
     if (!Array.isArray(children)) {
         return null;

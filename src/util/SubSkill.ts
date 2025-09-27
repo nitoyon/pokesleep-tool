@@ -52,7 +52,7 @@ class SubSkill {
     private static allSubSkillsCache: SubSkill[] = [];
     
     constructor(subSkill: SubSkillType) {
-        if (!(SubSkill.subSkillNames as any[]).includes(subSkill)) {
+        if (!SubSkill.subSkillNames.includes(subSkill)) {
             throw new Error(`Invalid subskill specified: ${subSkill}`);
         }
         this.value = subSkill;  
@@ -63,13 +63,13 @@ class SubSkill {
     }
 
     get isGold() {
-        return (SubSkill.goldSubSkillNames as any[]).includes(this.value);
+        return (SubSkill.goldSubSkillNames as SubSkillType[]).includes(this.value);
     }
     get isBlue() {
-        return (SubSkill.blueSubSkillNames as any[]).includes(this.value);
+        return (SubSkill.blueSubSkillNames as SubSkillType[]).includes(this.value);
     }
     get isWhite() {
-        return (SubSkill.whiteSubSkillNames as any[]).includes(this.value);
+        return (SubSkill.whiteSubSkillNames as SubSkillType[]).includes(this.value);
     }
 
     get index(): number {

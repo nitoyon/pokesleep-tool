@@ -32,7 +32,7 @@ const PokemonFilterFooter = React.memo(({
     const sortMenuAnchorRef = React.useRef<HTMLButtonElement>(null);
 
     // Sort menu handler
-    const onSortButtonClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const onSortButtonClick = useCallback(() => {
         setSortMenuOpen(true);
     }, [setSortMenuOpen]);
     const onSortMenuClose = useCallback(() => {

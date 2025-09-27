@@ -13,7 +13,7 @@ const BoxImportDialog = React.memo(({box, open, onClose}: {
     const [importedMessage, setImportedMessage] = React.useState("");
     const { t } = useTranslation();
 
-    const onValueChange = React.useCallback((e: any) => {
+    const onValueChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     }, [setValue]);
 

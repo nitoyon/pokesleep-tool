@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { AppConfig, AppConfigContext, AppType } from './App';
+import AppConfig, { AppConfigContext, AppType } from './AppConfig';
 import News, { NewsArticle } from '../data/news';
 import { Button, Dialog, DialogActions, IconButton } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
