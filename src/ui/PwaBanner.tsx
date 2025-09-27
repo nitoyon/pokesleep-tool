@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import ResearchCalcIcon from './Resources/ResearchCalcIcon';
 import IvCalcIcon from './Resources/IvCalcIcon';
 import SafariIcon from './Resources/SafariIcon';
-import { AppType } from './App';
+import { AppType } from './AppConfig';
 import { copyToClipboard } from '../util/Clipboard';
 import { Button, IconButton, Dialog, DialogContent, DialogTitle,
     Snackbar, DialogActions} from '@mui/material';
@@ -12,7 +12,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { useTranslation, Trans } from 'react-i18next';
 
-let defferedPrompt:any = undefined;
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+  prompt(): Promise<void>;
+}
+
+let defferedPrompt: BeforeInstallPromptEvent|undefined = undefined;
 
 /// Show banner when pwaCount is greater than or equal to this value
 const iOsShowPwaBannerThreshold = 3;
@@ -52,8 +58,8 @@ const PwaBanner = React.memo(({app, pwaCount, onClose}:PwaBannerProps) => {
     const [iPhoneMessageOpen, setIPhoneMessageOpen] = useState(false);
 
     // If google chrome is trying to install this app, show this component
-    const onBeforeInstallPrompt = useCallback((e:any) => {
-        defferedPrompt = e;
+    const onBeforeInstallPrompt = useCallback((e:Event) => {
+        defferedPrompt = e as BeforeInstallPromptEvent;
         setOpen(true);
     }, []);
     useEffect(() => {

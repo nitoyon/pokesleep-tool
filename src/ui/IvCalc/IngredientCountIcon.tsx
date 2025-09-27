@@ -4,7 +4,7 @@ import { IngredientName } from '../../data/pokemons';
 import { Badge } from '@mui/material';
 import IngredientIcon from './IngredientIcon';
 
-const IngredientBadge = styled(Badge)(({ theme }) => ({
+const IngredientBadge = styled(Badge)(() => ({
     marginRight: '.8rem',
     width: 26,
     height: 26,

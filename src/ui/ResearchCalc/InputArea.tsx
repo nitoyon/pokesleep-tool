@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     Slider, TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
+import { InputAreaData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
 import ResearchAreaTextField from './ResearchAreaTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -18,20 +19,6 @@ interface InputAreaProps {
 
     /** callback function when strength is changed */
     onChange: (value: Partial<InputAreaData>) => void;
-}
-
-interface InputAreaData {
-    /** field index */
-    fieldIndex: number;
-
-    /** current strength */
-    strength: number;
-
-    /** event bonus (multiplier) */
-    bonus: number;
-
-    /** whether to do two sleep sessions in one day */
-    secondSleep: boolean;
 }
 
 const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
@@ -57,8 +44,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             setRank(rank.index + 1);
         }
     }, [setRank, rank.index]);
-    const onRankChange = useCallback((e:any) => {
-        const rankIndex = e.target.value as number;
+    const onRankChange = useCallback((rankIndex: number) => {
         setRank(rankIndex);
     }, [setRank]);
     const onRankDownClick = useCallback(() => { moveRank(-1); }, [moveRank]);
@@ -78,7 +64,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({strength});
     }, [onchange]);
 
-    function onSliderChange(e: Event, value: number | Array<any>) {
+    function onSliderChange(e: Event, value: number) {
         // fix iOS bug on MUI slider
         // https://github.com/mui/material-ui/issues/31869
         if (isIOS && e.type === 'mousedown') {
@@ -90,8 +76,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({...data, strength});
     }
 
-    const onBonusChange = React.useCallback((e: any) => {
-        const bonus = e.target.value as number;
+    const onBonusChange = React.useCallback((bonus: number) => {
         onchange?.({bonus});
     }, [onchange]);
 
@@ -205,11 +190,16 @@ const StyledForm = styled('div')({
 interface RankTextFieldProps {
     field: FieldData;
     value: number;
-    onChange: (e: any) => void;
+    onChange: (value: number) => void;
 }
 
 const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) => {
     const { t } = useTranslation();
+
+    const onChangeHandler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(e.target.value, 10);
+        onChange(value);
+    }, [onChange]);
 
     // prepare rank menus
     const rankMenuItems = [];
@@ -234,7 +224,7 @@ const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) =
                 anchorOrigin: { vertical: "bottom", horizontal: "left" },
                 transformOrigin: { vertical: "top", horizontal: "left" },
             }}}
-            onChange={onChange}>
+            onChange={onChangeHandler}>
             {rankMenuItems}
         </StyledRankTextField>
     );
@@ -290,10 +280,10 @@ const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) 
     const { t } = useTranslation();
 
     const [strengthFocused, setStrengthFocused] = useState(false);
-    const onStrengthFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    const onStrengthFocus = useCallback(() => {
         setStrengthFocused(true);
     }, []);
-    const onStrengthBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    const onStrengthBlur = useCallback(() => {
         setStrengthFocused(false);
     }, []);
 
@@ -322,7 +312,7 @@ const StyledStrengthTextField = styled(TextField)({
 
 interface EventBonusProps {
     value: number;
-    onChange: (e: any) => void;
+    onChange: (value: number) => void;
 }
 
 const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
@@ -335,8 +325,11 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
         return () => clearInterval(id);
     }, []);
 
+    const onChangeHandler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(parseFloat(e.target.value));
+    }, [onChange]);
     const onBonusClick = React.useCallback(() => {
-        onChange({target: {value: todaysBonus}});
+        onChange(todaysBonus);
     }, [onChange, todaysBonus]);
 
     const open = (todaysBonus !== value);
@@ -344,7 +337,7 @@ const EventBonusTextField = React.memo(({value, onChange}:EventBonusProps) => {
 
     return (<>
         <TextField variant="standard" size="small" select
-                value={value} onChange={onChange}>
+                value={value} onChange={onChangeHandler}>
                 <MenuItem key="1" value={1} dense>{t("none")}</MenuItem>
                 <MenuItem key="1.5" value={1.5} dense>×1.5</MenuItem>
                 <MenuItem key="2" value={2} dense>×2</MenuItem>
@@ -383,4 +376,3 @@ const SecondSleepCheckbox = React.memo(({value, onChange}:SecondSleepCheckboxPro
 });
 
 export { InputArea };
-export type { InputAreaData };

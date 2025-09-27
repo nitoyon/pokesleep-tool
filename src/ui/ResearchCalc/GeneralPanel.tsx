@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { InputAreaData } from './InputArea';
+import { useState } from 'react';
+import { InputAreaData } from './ResearchCalcAppConfig';
 import BetterSecondSleepDialog, { BetterSecondSleepData } from './BetterSecondSleepDialog';
-import PreviewScore, {getScoreRange} from './PreviewScore';
+import PreviewScore from './PreviewScore';
+import { getScoreRange } from './Score';
 
 export default function GeneralPanel({data}: {data: InputAreaData}) {
     const [isBetterSecondSleepDialogOpen, setBetterSecondSleepOpen] = useState(false);

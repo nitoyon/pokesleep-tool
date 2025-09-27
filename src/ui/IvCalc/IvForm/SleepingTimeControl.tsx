@@ -1,6 +1,6 @@
 import React from 'react';
-import { styled } from '@mui/system';
-import { MenuItem, TextField } from '@mui/material';
+import SelectEx from '../../common/SelectEx';
+import { MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const SleepingTimeControl = React.memo(({value, onChange}: {
@@ -9,31 +9,17 @@ const SleepingTimeControl = React.memo(({value, onChange}: {
 }) => {
     const { t } = useTranslation();
 
-    const _onChange = React.useCallback((e: any) => {
-        onChange(e.target.value as 0|1|2|3|4);
+    const _onChange = React.useCallback((value: string) => {
+        onChange(parseInt(value, 10) as 0|1|2|3|4);
     }, [onChange]);
 
-    return <StyledTextField variant="standard" size="small" select
-            value={value}
-            SelectProps={{ MenuProps: {
-                anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                transformOrigin: { vertical: "top", horizontal: "left" },
-            }}}
-            onChange={_onChange}>
+    return <SelectEx value={value} onChange={_onChange}>
             <MenuItem value={0}>{t('200 hours-')}</MenuItem>
             <MenuItem value={1}>{t('200 hours+')}</MenuItem>
             <MenuItem value={2}>{t('500 hours+')}</MenuItem>
             <MenuItem value={3}>{t('1000 hours+')}</MenuItem>
             <MenuItem value={4}>{t('2000 hours+')}</MenuItem>
-        </StyledTextField>;
-});
-
-const StyledTextField = styled(TextField)({
-    '& .MuiSelect-select': {
-        paddingTop: '1px',
-        paddingBottom: '1px',
-        fontSize: '0.9rem',
-    },
+        </SelectEx>;
 });
 
 export default SleepingTimeControl;

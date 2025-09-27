@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppType } from '../App';
+import { AppType } from '../AppConfig';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next'

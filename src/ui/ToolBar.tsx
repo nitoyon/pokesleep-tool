@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
 import SettingsDialog from './Dialog/SettingsDialog';
-import { AppConfig, AppType } from './App';
+import AppConfig, { AppType } from './AppConfig';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
@@ -23,11 +23,11 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
 
     const [moreMenuAnchor, setMoreMenuAnchor] = useState<HTMLElement | null>(null);
     const isMoreMenuOpen = Boolean(moreMenuAnchor);
-    const researchCalcClick = (event: React.MouseEvent<HTMLElement>) => {
+    const researchCalcClick = () => {
         onAppChange("ResearchCalc");
         setMoreMenuAnchor(null);
     };
-    const rpCalcClick = (event: React.MouseEvent<HTMLElement>) => {
+    const rpCalcClick = () => {
         onAppChange("IvCalc");
         setMoreMenuAnchor(null);
     };

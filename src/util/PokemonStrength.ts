@@ -493,7 +493,7 @@ class PokemonStrength {
             case "Charge Strength M (Bad Dreams)":
             case "Charge Strength S":
             case "Charge Strength S (Random)":
-            case "Charge Strength S (Stockpile)":
+            case "Charge Strength S (Stockpile)": {
                 const strength = skillValue * (1 + param.fieldBonus / 100);
                 return {
                     skillValue: strength,
@@ -501,6 +501,7 @@ class PokemonStrength {
                     skillValuePerTrigger: mainSkillBase * (1 + param.fieldBonus / 100),
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
+            }
 
             case "Extra Helpful S":
                 return {
@@ -545,7 +546,7 @@ class PokemonStrength {
                 };
             }
 
-            case "Ingredient Magnet S (Plus)":
+            case "Ingredient Magnet S (Plus)": {
                 let ingCount = getSkillSubValue(mainSkill, skillLevel,
                     this.pokemonIv.pokemon.ing1.name);
                 ingCount = Math.floor(ingCount * bonus.ingredientMagnet);
@@ -555,8 +556,9 @@ class PokemonStrength {
                     skillStrength2: 0,
                     skillValuePerTrigger2: ingCount,
                 };
+            }
 
-            case "Cooking Power-Up S (Minus)":
+            case "Cooking Power-Up S (Minus)": {
                 const energy = getSkillSubValue(mainSkill, skillLevel);
                 return {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
@@ -564,6 +566,7 @@ class PokemonStrength {
                     skillStrength2: 0,
                     skillValuePerTrigger2: energy,
                 };
+            }
 
             case "Ingredient Magnet S":
             case "Ingredient Draw S":
@@ -904,7 +907,7 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
             othersBerryCount = Math.floor(bonus *
                 getSkillSubValue(iv.pokemon.skill, _skillLevel));
             break;
-        case "Energy for Everyone S (Lunar Blessing)":
+        case "Energy for Everyone S (Lunar Blessing)": {
             const cnt = getLunarBlessingBerryCount(_skillLevel,
                 param.berryBurstTeam.auto ?
                     team.filter(x => x.type === iv.pokemon.type).length :
@@ -913,6 +916,7 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
             myBerryCount = Math.floor(cnt.myBerryCount);
             othersBerryCount = Math.floor(cnt.othersBerryCount);
             break;
+        }
         default:
             throw new Error(`Invalid skill: ${iv.pokemon.skill}`);
     }
@@ -938,6 +942,55 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
         ret.members.push({ total, perBerry, count });
     }
     return ret;
+}
+
+/**
+ * Calculates the total yield per help action over a given help count.
+ *
+ * @param param The strength-related parameters, including the period.
+ * @param strength The Pokémon's strength stats, including IV.
+ * @param result The current strength result containing bonus data.
+ * @returns The total help yield over the specified period.
+ */
+export function getHelpYield(param: StrengthParameter, strength: PokemonStrength,
+    result: StrengthResult
+): number {
+    const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
+    return bagUsagePerHelp * Math.abs(param.period);
+}
+
+/**
+ * Calculates the number of helps required to reach the carry cap (999).
+ *
+ * @param strength The Pokémon's strength stats, including IV.
+ * @param result The current strength result containing bonus data.
+ * @returns The number of helps until the carry cap is reached.
+ */
+export function getHelpsForCap(strength: PokemonStrength,
+    result: StrengthResult
+): number {
+    const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
+    return (999 - result.energy.carryLimit) / bagUsagePerHelp;
+}
+
+/**
+ * Calculates the required number of 'Helper Boost' triggers needed
+ * to reach the carry cap (999).
+ *
+ * @param param The strength-related parameters, including helper boost info.
+ * @param strength The Pokémon's strength stats, including IV.
+ * @param result The current strength result containing bonus data.
+ * @returns The required helper boost value to reach the cap.
+ */
+export function getRequiredHelperBoost(param: StrengthParameter,
+    strength: PokemonStrength, result: StrengthResult
+): number {
+    const helps = getHelpsForCap(strength, result);
+    const helperBoost = getSkillValue("Helper Boost",
+        param.helperBoostLevel, param.helperBoostSpecies);
+    return helps / helperBoost;
 }
 
 /**

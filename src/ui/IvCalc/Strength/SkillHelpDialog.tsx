@@ -47,12 +47,12 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         setBerryStrengthOpen(false);
     }, []);
 
-    const onSkillLevelChange = React.useCallback((e: any, value: string|null) => {
+    const onSkillLevelChange = React.useCallback((e: React.MouseEvent, value: string|null) => {
         if (value === null) {
             return;
         }
         const iv = strength.pokemonIv.clone();
-        iv.skillLevel = parseInt(e.target.value);
+        iv.skillLevel = parseInt(value, 10);
         dispatch({type: "updateIv", payload: {iv}});
     }, [dispatch, strength.pokemonIv]);
 

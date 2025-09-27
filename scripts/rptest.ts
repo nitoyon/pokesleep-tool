@@ -8,6 +8,7 @@
 
 import PokemonRp from '../src/util/PokemonRp';
 import parseTsv, { RpData } from './rpparse';
+import * as fs from 'fs';
 
 function test(data: RpData[]) {
     for (const datum of data) {
@@ -19,7 +20,6 @@ function test(data: RpData[]) {
 }
 
 // Read from stdin
-const fs = require('fs');
 const tsv = fs.readFileSync(0).toString();
 console.log("read done");
 

@@ -8,6 +8,7 @@
 
 import parseTsv, { RpData } from './rpparse';
 import PokemonRp from '../src/util/PokemonRp';
+import * as fs from 'fs';
 
 type RateInfo = {
     skill: number;
@@ -34,7 +35,6 @@ function fit(data: RpData[]) {
 }
 
 // Read from stdin
-const fs = require('fs');
 const tsv = fs.readFileSync(0).toString();
 console.log("read done");
 
