@@ -279,7 +279,7 @@ class Energy {
         // * Sleep at 23:30., wake up at 8:00.
         // * Cook at 10:00, 14:00, and 20:00.
         // * Restore occurs every (15.5 / (e4eCount + 1)) hours
-        let events: EnergyEvent[] = [
+        const events: EnergyEvent[] = [
             // 8:00
             {minutes: 0, type: 'wake', energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
             // 10:00
