@@ -4,7 +4,6 @@ import TypeButton from '../TypeButton';
 import TypeSelect from '../TypeSelect';
 import { isExpertField } from '../../../data/fields';
 import { PokemonType } from '../../../data/pokemons';
-import CollapseEx from '../../common/CollapseEx';
 import {
     ExpertEffects, getCurrentFavoriteBerries, StrengthParameter,
 } from '../../../util/PokemonStrength';
@@ -50,7 +49,7 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
     }, [onChange, value]);
 
     // display or select berries
-    return <CollapseEx show={value.fieldIndex >= 0}>
+    return value.fieldIndex >= 0 ? (<>
         <section>
             <label>{t('favorite berry')}:</label>
             <TypeSelectContainer>
@@ -99,7 +98,7 @@ const FavoriteBerrySelect = React.memo(({value, onChange}: {
                     onChange={onExpertEffectChange}/>
             </section>
         }
-    </CollapseEx>;
+    </>) : null;
 });
 
 const ExpertEffectSelect = React.memo(({value, onChange}: {
