@@ -77,7 +77,7 @@ export function getFavoriteBerries(index: number): PokemonType[] {
         // Old Gold Power Plant
         case 5: return ["electric", "ghost", "steel"];
         // Amber Canyon
-        case 6: return ["dragon", "bug", "poison"];
+        case 6: return ["poison", "bug", "dragon"];
         // Greengrass Isle (Expert)
         case 7: return [];
     }

@@ -224,7 +224,6 @@
             "앰버 골짜기",
             "연둣빛 본섬 EX"
         ],
-        "amber assumption": "$t(area.6)의 $t(favorite berry)는 「$t(types.dragon)・$t(types.bug)・$t(types.poison)」이라고 가정하고 계산하고 있습니다.",
         "expert mode": "EX 모드",
         "main": "메인",
         "sub1": "서브1",
