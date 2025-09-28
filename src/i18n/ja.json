@@ -229,7 +229,6 @@
             "アンバー渓谷",
             "ワカクサ本島 EX"
         ],
-        "amber assumption": "$t(area.6)の$t(favorite berry)は「$t(types.dragon)・$t(types.bug)・$t(types.poison)」と想定して計算しています。",
         "expert mode": "EXモード",
         "main": "メイン",
         "sub1": "サブ1",
