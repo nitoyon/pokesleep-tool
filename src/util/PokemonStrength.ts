@@ -896,15 +896,15 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
     const _skillLevel = skillLevel ?? iv.skillLevel;
 
     // Get berry count
-    // Assuming that event bonus is floored.
+    // Bonus is ceiled.
     const team = getBerryBurstTeam(iv, param);
     let myBerryCount: number, othersBerryCount: number;
     switch (iv.pokemon.skill) {
         case "Berry Burst":
         case "Berry Burst (Disguise)":
-            myBerryCount = Math.floor(bonus *
+            myBerryCount = Math.ceil(bonus *
                 getSkillValue(iv.pokemon.skill, _skillLevel));
-            othersBerryCount = Math.floor(bonus *
+            othersBerryCount = Math.ceil(bonus *
                 getSkillSubValue(iv.pokemon.skill, _skillLevel));
             break;
         case "Energy for Everyone S (Lunar Blessing)": {
