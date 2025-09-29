@@ -1,16 +1,16 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { PokemonData } from '../../../data/pokemons';
 import { getMaxSkillLevel } from '../../../util/MainSkill';
+import PokemonIv from '../../../util/PokemonIv';
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
-    pokemon: PokemonData,
-    value: number,
-    onChange: (value: number) => void,
+const SkillLevelControl = React.memo(({value, onChange}: {
+    value: PokemonIv,
+    onChange: (value: PokemonIv) => void,
 }) => {
     const { t } = useTranslation();
+    const pokemon = value.pokemon;
     const maxLevel = getMaxSkillLevel(pokemon.skill);
 
     // prepare menus
@@ -20,7 +20,9 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
     }
 
     const _onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(parseInt(e.target.value, 10));
+        onChange(value.clone({
+            skillLevel: parseInt(e.target.value, 10),
+        }));
     }, [onChange]);
 
     return <StyledSkillLevel>

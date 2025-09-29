@@ -55,9 +55,6 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
     const onLevelChange = React.useCallback((level: number) => {
         onChange(pokemonIv.changeLevel(level));
     }, [pokemonIv, onChange]);
-    const onSkillLevelChange = React.useCallback((skillLevel: number) => {
-        onChange(pokemonIv.clone({skillLevel}));
-    }, [pokemonIv, onChange]);
     const onSubSkillChange = React.useCallback((event: SubSkillChangeEvent) => {
         onChange(pokemonIv.changeSubSkills(event.value));
     }, [pokemonIv, onChange]);
@@ -108,7 +105,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             {pokemonIv.carryLimit}
         </div>
         <h3>{t("Main Skill & Sub Skills")}</h3>
-        <SkillLevelControl pokemon={rp.pokemon} value={pokemonIv.skillLevel} onChange={onSkillLevelChange}/>
+        <SkillLevelControl value={pokemonIv} onChange={onChange}/>
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
         <h3 className="nature">{t("additional stats")}</h3>
         <NatureTextField iv={pokemonIv} onChange={onNatureChange}/>
