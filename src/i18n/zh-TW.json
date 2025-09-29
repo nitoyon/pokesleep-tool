@@ -17,7 +17,7 @@
             "news": {
                 "add natu": {
                     "headline": "已新增$t(pokemons.Natu)與$t(pokemons.Xatu)的資料。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
                     "headline": "已對應 v2.12.0 的平衡性調整，並改進了 $t(skills.Berry Burst) 的模擬。",
@@ -25,7 +25,7 @@
                 },
                 "ex and toxel": {
                     "headline": "已新增$t(pokemons.Toxel)與顫弦蠑螈的資料，同時也支援 $t(area.7)。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.11.0": {
                     "headline": "已因應 v2.11.0 的平衡性調整。",
@@ -37,7 +37,7 @@
                 },
                 "add hoenn": {
                     "headline": "已新增$t(pokemons.Treecko)、$t(pokemons.Torchic)、$t(pokemons.Mudkip)、$t(pokemons.Plusle)與$t(pokemons.Minun)的資料。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.10.0": {
                     "headline": "v2.10.0 的平衡調整已反映在糖果計算功能中。",
@@ -45,11 +45,11 @@
                 },
                 "add farfetch'd": {
                     "headline": "更新了$t(pokemons.Farfetch'd)的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "add mawile & candy calc": {
                     "headline": "更新了$t(pokemons.Mawile)的数据。另外，新增了糖果計算功能。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。\n糖果計算功能可以透過點擊寶可夢名字右側的糖果圖示，或是在盒子中的寶可夢右上角點選︙後選擇 [糖果] 來使用。"
+                    "detail": "$t(rp collection)\n糖果計算功能可以透過點擊寶可夢名字右側的糖果圖示，或是在盒子中的寶可夢右上角點選︙後選擇 [糖果] 來使用。"
                 },
                 "v2.9.0": {
                     "headline": "v2.9.0中的平衡調整已應用。",
@@ -57,7 +57,7 @@
                 },
                 "add murkrow": {
                     "headline": "更新了$t(pokemons.Murkrow), $t(pokemons.Honchkrow)的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "darkrai ing": {
                     "headline": "可以更改$t(pokemons.Darkrai)的材料了。",
@@ -65,7 +65,7 @@
                 },
                 "add happiny": {
                     "headline": "更新了$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.7.0": {
                     "headline": "已新增支援版本 2.7.0。",
@@ -73,11 +73,11 @@
                 },
                 "add darkrai": {
                     "headline": "更新了達克萊伊的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "add cresselia": {
                     "headline": "更新了克雷色利亞的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.6.0": {
                     "headline": "v2.6.0中的平衡調整已應用。",
@@ -85,11 +85,11 @@
                 },
                 "add munna": {
                     "headline": "更新了食夢夢，夢夢蝕的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "add clodsire": {
                     "headline": "更新了烏波 (帕底亞)，土王的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.5.0": {
                     "headline": "已更新 v2.5.0 中進行平衡調整的阿勃梭魯數據。",
@@ -97,19 +97,19 @@
                 },
                 "add rufflet": {
                     "headline": "更新了毛頭小鷹，勇士雄鷹的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.4.0": {
                     "headline": "已更新 v2.4.0 中進行平衡調整的寶可夢數據。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "add holiday 2024 pokemons": {
                     "headline": "新增了佳節活動的寶可夢數據。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.3.0": {
                     "headline": "已更新 v2.3.0 中進行平衡調整的寶可夢數據。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "holiday 2024": {
                     "headline": "現在可以計算佳節活動。",
@@ -117,7 +117,7 @@
                 },
                 "add sneasel": {
                     "headline": "更新了狃拉，瑪狃拉的数据。",
-                    "detail": "食材機率、技能機率參考了 RP Collection 的資料。"
+                    "detail": "$t(rp collection)"
                 },
                 "eevee week 2024": {
                     "headline": "現在可以計算伊布週。",
@@ -125,11 +125,11 @@
                 },
                 "add mimikyu": {
                     "headline": "更新了謎擬Ｑ的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
+                    "detail": "$t(rp collection)"
                 },
                 "v2.1.0": {
                     "headline": "更新了戴魯比、黑魯加、月亮伊布、皮卡丘 (萬聖節) 的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
+                    "detail": "$t(rp collection)"
                 },
                 "halloween event 2024 simmulation": {
                     "headline": "現在可以計算萬聖節活動。",
@@ -137,11 +137,11 @@
                 },
                 "add drifloon and drifblim": {
                     "headline": "更新了飄飄球、隨風球的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。\n能量是假設一次都沒有蓄力的情況下計算的。"
+                    "detail": "$t(rp collection)"
                 },
                 "add OGPP pokemons": {
                     "headline": "更新了強顎雞母蟲、小貓怪、可可多拉及其進化型的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
+                    "detail": "$t(rp collection)"
                 },
                 "add OGPP": {
                     "headline": "添加了黃金舊發電廠到營地一覽。",
@@ -149,11 +149,11 @@
                 },
                 "add suicune": {
                     "headline": "更新了水君的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
+                    "detail": "$t(rp collection)"
                 },
                 "add wooper and quagsire": {
                     "headline": "更新了烏波、沼王的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
+                    "detail": "$t(rp collection)"
                 },
                 "box filter and sort improvement": {
                     "headline": "顯著改進了盒子的篩選和排序功能。",
@@ -173,7 +173,7 @@
                 },
                 "add paldea starter": {
                     "headline": "更新了新葉喵、呆火鱷、潤水鴨及其進化型的數據。",
-                    "detail": "食材機率和技能機率參照了 RP Collection 的數據。"
+                    "detail": "$t(rp collection)"
                 },
                 "v1.9.0": {
                     "headline": "在 Ver.1.9.0 更新中，新增了活力減少時對幫助效率的影響的支持。",
@@ -185,6 +185,7 @@
                 }
             }
         },
+        "rp collection": "食材機率、技能機率參考了 RP Collection 的資料。",
         "num": "{{n, number}}",
         "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",

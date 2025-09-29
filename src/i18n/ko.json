@@ -17,7 +17,7 @@
             "news": {
                 "add natu": {
                     "headline": "$t(pokemons.Natu) 그리고 $t(pokemons.Xatu)가 추가되었습니다.",
-                    "detail": "식재료 확률과 스킬 확률은 RP Collection의 정보를 참고했습니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
                     "headline": "v2.12.0 밸런스 조정을 반영하고 $t(skills.Berry Burst)의 시뮬레이션을 개선했습니다.",
@@ -25,7 +25,7 @@
                 },
                 "ex and toxel": {
                     "headline": "$t(pokemons.Xatu) 그리고 $t(pokemons.Natu)의 데이터가 추가되었습니다.",
-                    "detail": "재료 확률과 스킬 확률은 RP Collection의 정보를 참고했습니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.11.0": {
                     "headline": "v2.11.0의 밸런스 조정에 대응하였습니다.",
@@ -37,7 +37,7 @@
                 },
                 "add hoenn": {
                     "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle), 그리고 $t(pokemons.Minun)의 데이터가 추가되었습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다. 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.10.0": {
                     "headline": "v2.10.0의 밸런스 조정이 사탕 계산 기능에 반영되었습니다.",
@@ -49,7 +49,7 @@
                 },
                 "add mawile & candy calc": {
                     "headline": "$t(pokemons.Mawile)가 추가되었습니다. 또한, 사탕 계산 기능을 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다. 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
+                    "detail": "$t(rp collection) 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
                 },
                 "v2.9.0": {
                     "headline": "v2.9.0에서 밸런스 조정이 적용되었습니다.",
@@ -57,7 +57,7 @@
                 },
                 "add murkrow": {
                     "headline": "$t(pokemons.Murkrow), $t(pokemons.Honchkrow)가 추가되었습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "darkrai ing": {
                     "headline": "$t(pokemons.Darkrai)의 식재료를 변경할 수 있게 되었습니다.",
@@ -65,7 +65,7 @@
                 },
                 "add happiny": {
                     "headline": "$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)가 추가되었습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.7.0": {
                     "headline": "버전 2.7.0이 지원됩니다.",
@@ -73,11 +73,11 @@
                 },
                 "add darkrai": {
                     "headline": "다크라이의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "add cresselia": {
                     "headline": "크레세리아의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.6.0": {
                     "headline": "v2.6.0에서 밸런스 조정이 적용되었습니다.",
@@ -85,11 +85,11 @@
                 },
                 "add munna": {
                     "headline": "몽나 와 몽얌나의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "add clodsire": {
                     "headline": "우파 (팔데아) 와 토오의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.5.0": {
                     "headline": "v2.5.0에서 밸런스 조정이 있던 앱솔의 데이터를 업데이트했습니다.",
@@ -97,23 +97,23 @@
                 },
                 "add rufflet": {
                     "headline": "수리둥보와 워글의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.4.0": {
                     "headline": "v2.4.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.3.0": {
                     "headline": "v2.3.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "holiday 2024": {
                     "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "add sneasel": {
                     "headline": "포푸니와 포푸니라의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "eevee week 2024": {
                     "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
@@ -121,11 +121,11 @@
                 },
                 "add mimikyu": {
                     "headline": "따라큐의 정보를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.1.0": {
                     "headline": "델빌, 헬가, 블래키, 그리고 피카츄 (핼러윈)의 데이터를 업데이트했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "halloween event 2024 simmulation": {
                     "headline": "핼러윈 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
@@ -133,11 +133,11 @@
                 },
                 "add drifloon and drifblim": {
                     "headline": "흔들풍손와 둥실라이드의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다.\n힘의 양은 매번 발산된다고 가정하여 계산됩니다."
+                    "detail": "$t(rp collection)\n힘의 양은 매번 발산된다고 가정하여 계산됩니다."
                 },
                 "add OGPP pokemons": {
                     "headline": "턱지충이, 꼬링크, 가보리와 그 진화형가 추가되었습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "add OGPP": {
                     "headline": "골드 폐발전소가 연구 지역 목록에 추가되었습니다.",
@@ -145,11 +145,11 @@
                 },
                 "add suicune": {
                     "headline": "스이쿤의 정보를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "add wooper and quagsire": {
                     "headline": "우파와 누오의 데이터를 추가했습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "box filter and sort improvement": {
                     "headline": "박스 필터링 및 정렬 기능이 크게 향상되었습니다.",
@@ -169,7 +169,7 @@
                 },
                 "add paldea starter": {
                     "headline": "나오하, 뜨아거, 꾸왁스와 그 진화형가 추가되었습니다.",
-                    "detail": "재료%와 기술%은 RP Collection 값에 기반합니다."
+                    "detail": "$t(rp collection)"
                 },
                 "v1.9.0": {
                     "headline": "포켓몬 슬립 버전 1.9.0의 변경에 대응하여 에너지 효율 값 조정",
@@ -181,6 +181,7 @@
                 }
             }
         },
+        "rp collection": "식재료%와 기술%은 RP Collection 값에 기반합니다.",
         "num": "{{n, number}}",
         "short num unit": "만",
         "short num unit digits": "4",
