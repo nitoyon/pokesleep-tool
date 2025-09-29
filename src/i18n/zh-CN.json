@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add natu": {
+                    "headline": "已新增$t(pokemons.Natu)與$t(pokemons.Xatu)的資料。",
+                    "detail": "食材几率、技能几率参照了 RP Collection 的数据。"
+                },
                 "v2.12.0": {
                     "headline": "已适配 v2.12.0 的平衡性调整，并改进了 $t(skills.Berry Burst) 的模拟。",
                     "detail": "已更新 $t(pokemons.Braviary) 和 $t(pokemons.Mimikyu) 的技能概率。\n在计算 $t(skills.Berry Burst) 的期望值时，现在默认队伍中的宝可梦等级相同。此外，现在可以通过 [$t(strength2)] 标签中 [$t(skill)] 右侧的 [i] 按钮，更详细地自定义队伍中的宝可梦。"
