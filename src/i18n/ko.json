@@ -15,12 +15,16 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add natu": {
+                    "headline": "$t(pokemons.Natu) 그리고 $t(pokemons.Xatu)가 추가되었습니다.",
+                    "detail": "식재료 확률과 스킬 확률은 RP Collection의 정보를 참고했습니다."
+                },
                 "v2.12.0": {
                     "headline": "v2.12.0 밸런스 조정을 반영하고 $t(skills.Berry Burst)의 시뮬레이션을 개선했습니다.",
                     "detail": "$t(pokemons.Braviary), $t(pokemons.Mimikyu)의 스킬 확률을 업데이트했습니다.\n$t(skills.Berry Burst)의 기대값 계산 시, 팀 내 포켓몬들은 동일한 레벨이라고 가정하도록 변경되었습니다. 또한 [$t(strength2)] 탭의 [$t(skill)] 오른쪽에 있는 [i] 버튼을 통해 팀 내 포켓몬들을 보다 상세하게 커스터마이즈할 수 있게 되었습니다."
                 },
                 "ex and toxel": {
-                    "headline": "$t(pokemons.Toxel) 그리고 스트린더의 데이터가 추가되었습니다. 또한 $t(area.7)를 지원합니다.",
+                    "headline": "$t(pokemons.Xatu) 그리고 $t(pokemons.Natu)의 데이터가 추가되었습니다.",
                     "detail": "재료 확률과 스킬 확률은 RP Collection의 정보를 참고했습니다."
                 },
                 "v2.11.0": {
