@@ -17,7 +17,7 @@
             "news": {
                 "add natu": {
                     "headline": "Add data for Natu and Xatu.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
                     "headline": "Adjusted for balance changes in v2.12.0 and improved simulation for $t(skills.Berry Burst).",
@@ -25,7 +25,7 @@
                 },
                 "ex and toxel": {
                     "headline": "Added data for Toxel and Toxtricity. Also added support for $t(area.7).",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.11.0": {
                     "headline": "Updated the data with balance adjustments in version 2.11.0",
@@ -37,7 +37,7 @@
                 },
                 "add hoenn": {
                     "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle) and $t(pokemons.Minun) have been added.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.10.0": {
                     "headline": "Balance adjustments in v2.10.0 have been reflected in the Candy Calculator feature.",
@@ -45,11 +45,11 @@
                 },
                 "add farfetch'd": {
                     "headline": "Farfetch'd has been added.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                     "add mawile & candy calc": {
                     "headline": "Mawile has been added. A candy calculator feature has also been added.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values.\nA candy calculator feature can be used by tapping the candy button to the right of the Pokémon’s name, or by selecting [Candy] from the ︙ menu at the top right of a Pokémon in your box."
+                    "detail": "$t(rp collection)\nA candy calculator feature can be used by tapping the candy button to the right of the Pokémon’s name, or by selecting [Candy] from the ︙ menu at the top right of a Pokémon in your box."
                 },
                 "v2.9.0": {
                     "headline": "Updated the data for Pokémon with balance adjustments in v2.9.0.",
@@ -57,7 +57,7 @@
                 },
                 "add murkrow": {
                     "headline": "Murkrow and Honchkrow has been added.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "darkrai ing": {
                     "headline": "It is now possible to change Darkrai's ingredients.",
@@ -65,7 +65,7 @@
                 },
                 "add happiny": {
                     "headline": "Happiny, Chansey and Blissey has been added.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.7.0": {
                     "headline": "Support for version 2.7.0 has been added.",
@@ -73,11 +73,11 @@
                 },
                 "add darkrai": {
                     "headline": "Darkrai has been added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "add cresselia": {
                     "headline": "Cresselia has been added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.6.0": {
                     "headline": "Balance adjustments in v2.6.0 have been applied.",
@@ -85,11 +85,11 @@
                 },
                 "add munna": {
                     "headline": "Munna and Musharna are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "add clodsire": {
                     "headline": "Wooper (Paldea) and Clodsire are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.5.0": {
                     "headline": "Updated the data for Absol with balance adjustments in v2.5.0.",
@@ -97,19 +97,19 @@
                 },
                 "add rufflet": {
                     "headline": "Rufflet and Braviary are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.4.0": {
                     "headline": "Updated the data for Pokémon with balance adjustments in v2.4.0.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "add holiday 2024 pokemons": {
                     "headline": "New Pokémon data for the holiday event has been added.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.3.0": {
                     "headline": "Updated the data for Pokémon with balance adjustments in v2.3.0.",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "holiday 2024": {
                     "headline": "You can now simulate Holiday event.",
@@ -117,7 +117,7 @@
                 },
                 "add sneasel": {
                     "headline": "Sneasel and Weavile are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "eevee week 2024": {
                     "headline": "You can now simulate Eevee week.",
@@ -125,11 +125,11 @@
                 },
                 "add mimikyu": {
                     "headline": "Mimikyu is added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v2.1.0": {
                     "headline": "Updated the data for Houndour, Houndoom, Umbreon, and Pikachu (Halloween).",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "halloween event 2024 simmulation": {
                     "headline": "You can now simulate Halloween event.",
@@ -137,11 +137,11 @@
                 },
                 "add drifloon and drifblim": {
                     "headline": "Drifloon and Drifblim are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values.\nThe strength amount is calculated based on the assumption that it spits up every time."
+                    "detail": "$t(rp collection)\nThe strength amount is calculated based on the assumption that it spits up every time."
                 },
                 "add OGPP pokemons": {
                     "headline": "Grubbin, Shinx, Aron, and their evolutions are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "add OGPP": {
                     "headline": "Old Gold Power Plant has been added to research area list.",
@@ -149,11 +149,11 @@
                 },
                 "add suicune": {
                     "headline": "Suicune are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "add wooper and quagsire": {
                     "headline": "Wooper and Quagsire are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "box filter and sort improvement": {
                     "headline": "Box filtering and sorting have significantly evolved.",
@@ -173,7 +173,7 @@
                 },
                 "add paldea starter": {
                     "headline": "Sprigatito, Fuecoco, Quaxly, and their evolutions are added!!!",
-                    "detail": "The ingredient% and skill% are based on RP Collection values."
+                    "detail": "$t(rp collection)"
                 },
                 "v1.9.0": {
                     "headline": "Energy efficiency values adjusted in response to changes made by Pokémon Sleep version 1.9.0.",
@@ -185,6 +185,7 @@
                 }
             }
         },
+        "rp collection": "The ingredient% and skill% are based on RP Collection values.",
         "num": "{{n, number}}",
         "short num unit": "K",
         "short num unit digits": "3",
