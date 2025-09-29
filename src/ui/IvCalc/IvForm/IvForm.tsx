@@ -107,7 +107,7 @@ const IvForm = React.memo(({fixMode, parameter, pokemonIv, dispatch, onChange}: 
             {pokemonIv.carryLimit}
         </div>
         <h3>{t("Main Skill & Sub Skills")}</h3>
-        <SkillLevelControl iv={pokemonIv} onChange={onChange}/>
+        <SkillLevelControl value={pokemonIv} onChange={onChange}/>
         <SubSkillControl value={pokemonIv.subSkills} onChange={onSubSkillChange}/>
         <h3 className="nature">{t("additional stats")}</h3>
         <NatureTextField iv={pokemonIv} onChange={onNatureChange}/>
