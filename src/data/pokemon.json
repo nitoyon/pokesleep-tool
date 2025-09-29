@@ -2831,31 +2831,31 @@
         "sleepType": "snoozing",
         "exp": 600,
         "type": "psychic",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Berries",
+        "skill": "Ingredient Magnet S",
         "fp": 12,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 4500,
+        "ingRatio": 18.5,
+        "skillRatio": 1.6,
         "ancestor": 118,
         "evolutionCount": 0,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 11,
         "ing1": {
-            "name": "unknown1",
+            "name": "egg",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "cacao",
+            "c2": 2,
+            "c3": 3
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "apple",
+            "c3": 5
         }
     },
     {
@@ -2865,31 +2865,31 @@
         "sleepType": "snoozing",
         "exp": 600,
         "type": "psychic",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Berries",
+        "skill": "Ingredient Magnet S",
         "fp": 12,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 2500,
+        "ingRatio": 19.1,
+        "skillRatio": 2.5,
         "ancestor": 118,
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 19,
         "ing1": {
-            "name": "unknown1",
+            "name": "egg",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "cacao",
+            "c2": 2,
+            "c3": 3
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "apple",
+            "c3": 5
         }
     },
     {
