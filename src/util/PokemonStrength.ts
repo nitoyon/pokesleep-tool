@@ -386,7 +386,7 @@ class PokemonStrength {
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryStrengthWithBonus = Math.ceil(berryStrength * this.berryStrengthBonus);
         const berryTotalStrength =
-            berryStrengthWithBonus * berryCountWithBonus * notFullHelpCount +
+            berryStrengthWithBonus * berryCountWithBonus * (notFullHelpCount * (1 - ingRatio)) +  +
             berryStrengthWithBonus * berryCount * fullHelpCount;
 
         // calc skill
