@@ -16,7 +16,7 @@
             "notice detail2": "",
             "news": {
                 "add natu": {
-                    "headline": "Add data for Natu and Xatu.",
+                    "headline": "Added data for Natu and Xatu.",
                     "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
