@@ -28,6 +28,11 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
 
     const param = strength.parameter;
     const berryStrength = Math.ceil(result.berryStrength * strength.berryStrengthBonus);
+    const hasBerryCountBonus = (result.bonus.berry > 0);
+    const berryCountWithBonus = result.berryCount + result.bonus.berry;
+    const helpCount = hasBerryCountBonus ? 
+        round1(result.notFullHelpCount * result.berryRatio) :
+        round1(result.berryHelpCount);
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
             <article>
@@ -36,17 +41,24 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
             </article>
             <footer>
                 <span className="box box1">{berryStrength}</span><> × </>
-                <span className="box box2">{result.berryCount}</span><> × </>
-                <span className="box box3">{round1(result.berryHelpCount)}</span>
+                <span className="box box2">{berryCountWithBonus}</span><> × </>
+                <span className="box box3">{helpCount}</span>
+                {hasBerryCountBonus && <>
+                    <br/>
+                    <> + </>
+                    <span className="box box1">{berryStrength}</span><> × </>
+                    <span className="box box2">{result.berryCount}</span><> × </>
+                    <span className="box box3">{round1(result.fullHelpCount)}</span>
+                </>}
             </footer>
         </DialogTitle>
         <DialogContent>
             <article>
                 <div><span className="box box1">{berryStrength}</span></div>
                 <span>{t('actual berry strength')}<InfoButton onClick={onBerryStrengthInfoClick}/></span>
-                <div><span className="box box2">{result.berryCount}</span></div>
+                <div><span className="box box2">{berryCountWithBonus}</span></div>
                 <span>{t('berry count')}</span>
-                <div><span className="box box3">{round1(result.berryHelpCount)}</span></div>
+                <div><span className="box box3">{helpCount}</span></div>
                 <span>{t('berry help count')}
                     <ul className="detail">
                         <li>

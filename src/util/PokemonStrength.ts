@@ -380,11 +380,14 @@ class PokemonStrength {
         // calc berry
         const berryRatio = (this.iv.pokemon.frequency > 0 ? 1 - ingRatio : 0);
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
-        const berryCount = rp.berryCount + bonus.berry;
+        const berryCount = rp.berryCount;
+        const berryCountWithBonus = rp.berryCount + bonus.berry;
         const berryRawStrength = rp.berryStrength;
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
-        const berryTotalStrength = berryHelpCount * berryCount *
-            Math.ceil(berryStrength * this.berryStrengthBonus);
+        const berryStrengthWithBonus = Math.ceil(berryStrength * this.berryStrengthBonus);
+        const berryTotalStrength =
+            berryStrengthWithBonus * berryCountWithBonus * notFullHelpCount +
+            berryStrengthWithBonus * berryCount * fullHelpCount;
 
         // calc skill
         const skillRatio = energy.skillRatio;
