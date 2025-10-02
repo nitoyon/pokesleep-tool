@@ -12,6 +12,7 @@ const CollapseEx = React.memo(({show, children}: {
     const ref = React.useRef<HTMLDivElement>(null);
     const [height, setHeight] = React.useState(0);
     const [renderedChildren, setRenderedChildren] = React.useState(children);
+    const isFirstRender = React.useRef(true);
 
     React.useEffect(() => {
         if (show) {
@@ -21,11 +22,15 @@ const CollapseEx = React.memo(({show, children}: {
 
     React.useLayoutEffect(() => {
         setHeight(ref.current ? ref.current.scrollHeight : 0);
-    }, []);
+    }, [renderedChildren, show]);
 
     const styles = useSpring({
         height: show ? height : 0,
         config: { tension: 400, friction: 40 },
+        immediate: isFirstRender.current,
+        onRest: () => {
+            isFirstRender.current = false;
+        },
     });
 
     return <animated.div style={{...styles, overflow: 'hidden'}}>
