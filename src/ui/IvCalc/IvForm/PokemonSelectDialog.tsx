@@ -367,6 +367,11 @@ const PokemonSelectDialog = React.memo(({
 
     // close when ESC key is pressed
     const onAutocompleteClose = useCallback((_: React.SyntheticEvent, reason: string) => {
+        // close when selected item is selected
+        if (reason === 'selectOption') {
+            closeHandler();
+        }
+        // close when ESC key is pressed
         if (reason === 'escape') {
             closeHandler();
         }
