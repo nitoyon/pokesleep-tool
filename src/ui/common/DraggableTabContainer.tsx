@@ -44,13 +44,13 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
 
     const [{x}, api] = useSpring(() => ({
         x: -index * widthGap,
+        immediate: isFirstTime.current,
     }), [index, widthGap]);
 
     const bind = useDrag(({ active, movement: [mx], velocity: [vx]}) => {
         if (active) {
             return api.start({
                 x: -index * widthGap + mx,
-                immediate: true,
             });
         }
 
@@ -67,6 +67,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
 
         return api.start({
             x: -newIndex * widthGap,
+            immediate: isFirstTime.current,
         });
     }, {
         from: [-index * widthGap, 0],
@@ -80,11 +81,16 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
     React.useEffect(() => {
         if (isFirstTime.current) {
             api.set({ x: -index * widthGap });
+
+            // Set isFirstTime to false in the next frame
+            // to avoid animation on the initial render
+            requestAnimationFrame(() => {
+                isFirstTime.current = false;
+            });
         }
         else {
             api.start({ x: -index * widthGap });
         }
-        isFirstTime.current = false;
     }, [index, widthGap, api]);
 
     if (!Array.isArray(children)) {
