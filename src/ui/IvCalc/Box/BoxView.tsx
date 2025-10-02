@@ -435,6 +435,36 @@ export class BoxFilterConfig implements IBoxFilterConfig {
         return ret;
     }
 
+    /** Get the default tab index */
+    get defaultTabIndex(): number {
+        if (this.filterTypes.length > 0 ||
+            this.filterSpecialty.length > 0
+        ) {
+            return 0;
+        }
+
+        if (this.ingredientName !== undefined) {
+            return 1;
+        }
+
+        if (this.mainSkillNames.length > 0) {
+            return 2;
+        }
+
+        if (this.subSkillNames.length > 0) {
+            return 3;
+        }
+
+        if (this.neutralNature ||
+            this.upNature !== "No effect" ||
+            this.downNature !== "No effect"
+        ) {
+            return 4;
+        }
+
+        return 0;
+    }
+
     /** Check whether the instance is empty */
     get isEmpty(): boolean {
         return this.name === "" &&

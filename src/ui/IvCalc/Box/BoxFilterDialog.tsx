@@ -30,8 +30,8 @@ const BoxFilterDialog = React.memo(({open, value, onChange, onClose}: {
     const { t } = useTranslation();
 
     const [width, elementRef] = useElementWidth();
-    const [tabIndex, setTabIndex] = React.useState(0);
-    const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
+    const [tabIndex, setTabIndex] = React.useState(value.defaultTabIndex);
+    const onTabChange = React.useCallback((_: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
     }, []);
     const onClearClick = useCallback(() => {
