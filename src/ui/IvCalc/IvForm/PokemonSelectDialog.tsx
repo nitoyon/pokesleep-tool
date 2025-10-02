@@ -492,12 +492,13 @@ const PokemonSelectDialog = React.memo(({
             }}
             groupBy={groupByCallback}
             renderGroup={renderGroup}
-            renderOption={(props, option) => (
-                <MenuItem {...props}>
+            renderOption={(props, option) => {
+                const {key, ...others} = props;
+                return (<MenuItem key={key} {...others}>
                     <PokemonIcon idForm={option.idForm} size={48}/>
                     <footer>{option.localName}</footer>
-                </MenuItem>
-            )}
+                </MenuItem>);
+            }}
             renderInput={(params) => (
                 <StyledInput
                     ref={params.InputProps.ref}
