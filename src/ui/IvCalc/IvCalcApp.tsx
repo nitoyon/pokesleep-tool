@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 const StyledTabs = styled(Tabs)({
     minHeight: '36px',
     marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
+    padding: "0 .5rem",
 });
 const StyledTab = styled(Tab)({
     minHeight: '36px',
@@ -76,7 +77,7 @@ const ResearchCalcApp = React.memo(() => {
     }, []);
 
     return <>
-        <div style={{padding: "0 .5rem", position: 'sticky', top: 0,
+        <div style={{position: 'sticky', top: 0,
             zIndex: 1, background: '#f9f9f9',
         }}>
             <StyledTabs value={state.tabIndex} onChange={onTabChange}>
@@ -93,7 +94,7 @@ const ResearchCalcApp = React.memo(() => {
                 color: 'red',
                 fontSize: '0.9rem',
                 borderRadius: '0.5rem',
-                marginTop: '3px',
+                marginTop: '3px 0.5rem',
                 padding: '0 0.3rem',
             }}>{t('rate is not fixed')}</div>}
             <LowerTabHeader state={state}

@@ -172,6 +172,7 @@ const AddToBoxConfirmDialog = React.memo(({
 
 const StyledContainer = styled('div')({
     'marginTop': 'clamp(.3rem, 0.6vh, .7rem)',
+    padding: '0 0.5rem',
     '& > button.MuiIconButton-root': {
         float: 'right',
         color: '#999',
