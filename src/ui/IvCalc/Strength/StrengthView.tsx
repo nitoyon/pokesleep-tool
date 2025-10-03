@@ -12,7 +12,7 @@ const StrengthView = React.memo(({state, dispatch}: {
     const parameter = state.parameter;
     const lowerTabIndex = state.lowerTabIndex;
 
-    return (<div>
+    return (<div style={{padding: "0 .5rem"}}>
         <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}
             energyDialogOpen={state.energyDialogOpen} dispatch={dispatch}/>
         <Collapse in={lowerTabIndex !== 2}>

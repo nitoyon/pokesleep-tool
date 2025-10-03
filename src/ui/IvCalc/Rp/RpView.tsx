@@ -55,7 +55,7 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
         (state.parameter.level > 0 || state.parameter.fieldIndex >= 0);
 
     return (<>
-        <div>
+        <div style={{padding: "0 .5rem"}}>
             <RpLabel rp={rpResult.rp} iv={pokemonIv} showIcon isError={isError}
                 onClick={onRpInfoClick}/>
             <BerryIngSkillView
