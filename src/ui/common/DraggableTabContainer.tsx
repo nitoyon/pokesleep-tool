@@ -51,6 +51,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
         if (active) {
             return api.start({
                 x: -index * widthGap + mx,
+                immediate: true,
             });
         }
 
@@ -71,6 +72,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
         });
     }, {
         from: [-index * widthGap, 0],
+        filterTaps: true,
         bounds: () => ({
             left: (index === length - 1 ? -widthGap * (length - 1) - bound : -Infinity),
             right: (index === 0 ? bound : Infinity),
