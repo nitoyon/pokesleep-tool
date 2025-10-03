@@ -28,23 +28,30 @@ const bound = 20;
  * ```
  *
  * @param index The current active tab index.
+ * @param fitHeight If true, the container height will adjust to
+ *                  the content height.
  * @param width The width of each tab (in pixels).
  * @param children Tab contents to be rendered side by side.
  * @param onChange Callback fired when the tab index changes.
  */
-const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
+const DraggableTabContainer = React.memo(({index, fitHeight, width, children, onChange}: {
     index: number,
+    fitHeight?: boolean,
     width: number,
     children: React.ReactNode,
     onChange: (value: number) => void,
 }) => {
     const length = Array.isArray(children) ? children.length : 0;
-
-    const [{x}, api] = useSpring(() => ({
+    const prevHeight = React.useRef(0);
+    const [{ x, height }, api] = useSpring(() => ({
         x: -index * (width + gap),
+        height: prevHeight.current,
     }), [index, width]);
 
-    const bind = useDrag(({ active, movement: [mx], velocity: [vx]}) => {
+    const childRefs = React.useRef<(HTMLDivElement | null)[]>(Array(length).fill(null));
+
+    // Handle drag gesture
+    const bind = useDrag(({ active, movement: [mx], velocity: [vx] }) => {
         if (active) {
             return api.start({
                 x: -index * (width + gap) + mx,
@@ -87,12 +94,37 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
     // Move to appropriate position when width changes
     const prevIndexRef = React.useRef(index);
     React.useEffect(() => {
+        const el = childRefs.current[index];
+        if (!el) {
+            return;
+        }
+
+        prevHeight.current = el.clientHeight || 200;
         api.start({
             x: -index * (width + gap),
+            height: prevHeight.current,
             immediate: prevIndexRef.current === index,
         });
         prevIndexRef.current = index;
-    }, [index, width, api]);
+    }, [index, width, children, api]);
+
+    // Observe height changes of the current tab
+    React.useEffect(() => {
+        const el = childRefs.current[index];
+        if (!fitHeight || !el) {
+            return;
+        }
+
+        const observer = new ResizeObserver(() => {
+            prevHeight.current = el.clientHeight;
+            api.start({ height: prevHeight.current });
+        });
+
+        observer.observe(el);
+        return () => {
+            observer.disconnect();
+        };
+    }, [index, fitHeight, children, api]);
 
     // Do not render if children is not an array
     if (!Array.isArray(children)) {
@@ -100,9 +132,13 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
     }
 
     return <StyledDraggableTabContainer {...bind()}>
-        <animated.div className="tabTrack" style={{x}}>
+        <animated.div className="tabTrack"
+            style={{x, height: fitHeight ? height : 'auto'}}
+        >
             {children.map((child, i) =>
-                <div style={{width}} key={i}>
+                <div style={{ width }} key={i}
+                    ref={el => childRefs.current[i] = el}
+                >
                     {child}
                 </div>)
             }
@@ -116,11 +152,17 @@ const StyledDraggableTabContainer = styled('div')({
     overscrollBehavior: 'contain',
     '& > div.tabTrack': {
         display: 'flex',
+        alignItems: 'start',
         flexWrap: 'nowrap',
         gap: gap,
         width: 'max-content',
-        '& > div > *': {
-            flex: '0 0 100%',
+        overflow: 'hidden',
+        willChange: 'height, transform',
+        '& > div': {
+            position: 'relative',
+            '& > div': {
+                flex: '0 0 100%',
+            }
         },
     },
 });

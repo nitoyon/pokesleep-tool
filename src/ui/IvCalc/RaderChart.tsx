@@ -25,7 +25,7 @@ const RaderChart = React.memo(({
         viewBox={`0 0 ${width} ${height}`}
         style={{
             position: 'absolute',
-            top: '-45px', left: '-0.5rem',
+            top: '-95px', left: '-0.5rem',
             pointerEvents: 'none',
         }}>
             <g transform={`translate(${left}, ${r + padTop})`}>

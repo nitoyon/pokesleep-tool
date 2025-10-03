@@ -4,6 +4,7 @@ import { Button, Snackbar, Tab, Tabs } from '@mui/material';
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { getInitialIvState, ivStateReducer } from './IvState';
+import DraggableTabContainer from '../common/DraggableTabContainer';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './Box/BoxView';
 import IvForm from './IvForm/IvForm';
@@ -41,6 +42,9 @@ const ResearchCalcApp = React.memo(() => {
     }, []);
 
     const onTabChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
+        dispatch({type: "changeUpperTab", payload: {index: newValue}});
+    }, []);
+    const onTabChange2 = React.useCallback((newValue: number) => {
         dispatch({type: "changeUpperTab", payload: {index: newValue}});
     }, []);
 
@@ -85,9 +89,12 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
-            {state.tabIndex === 0 && <RpView state={state} width={width}/>}
-            {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
-            {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
+            <DraggableTabContainer index={state.tabIndex} width={width}
+                fitHeight onChange={onTabChange2}>
+                <RpView state={state} width={width}/>
+                <StrengthView state={state} dispatch={dispatch}/>
+                <RatingView pokemonIv={state.pokemonIv} width={width}/>
+            </DraggableTabContainer>
             {state.pokemonIv.pokemon.ratioNotFixed && <div style={{
                 border: '1px solid red',
                 background: '#ffeeee',
