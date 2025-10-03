@@ -31,7 +31,7 @@ const RatingView = React.memo(({pokemonIv, width}: {
             "." + (n * 10 % 10);
     };
 
-    return (<div>
+    return (<div style={{padding: "0 .5rem"}}>
         <p style={{margin: '0'}}>
             {t('rate subskill and nature')}
             <InfoButton onClick={onHelpClick}/>
