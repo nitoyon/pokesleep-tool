@@ -39,19 +39,16 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
     children: React.ReactNode,
     onChange: (value: number) => void,
 }) => {
-    const isFirstTime = React.useRef(true);
     const length = Array.isArray(children) ? children.length : 0;
-    const widthGap = width + gap;
 
     const [{x}, api] = useSpring(() => ({
-        x: -index * widthGap,
-        immediate: isFirstTime.current,
-    }), [index, widthGap]);
+        x: -index * (width + gap),
+    }), [index, width]);
 
     const bind = useDrag(({ active, movement: [mx], velocity: [vx]}) => {
         if (active) {
             return api.start({
-                x: -index * widthGap + mx,
+                x: -index * (width + gap) + mx,
                 immediate: true,
             });
         }
@@ -65,37 +62,40 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
         }
         if (newIndex !== index) {
             onChange(newIndex);
+            return;
         }
 
         return api.start({
-            x: -newIndex * widthGap,
-            immediate: isFirstTime.current,
+            x: -newIndex * (width + gap),
         });
     }, {
-        from: [-index * widthGap, 0],
+        from: [-index * (width + gap), 0],
         filterTaps: true,
         bounds: () => ({
-            left: (index === length - 1 ? -widthGap * (length - 1) - bound : -Infinity),
+            left: (index === length - 1 ? -(width + gap) * (length - 1) - bound : -Infinity),
             right: (index === 0 ? bound : Infinity),
         }),
         rubberband: true,
     });
 
+    // Set initial position after width is known
     React.useEffect(() => {
-        if (isFirstTime.current) {
-            api.set({ x: -index * widthGap });
+        api.set({ x: -index * (width + gap) });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-            // Set isFirstTime to false in the next frame
-            // to avoid animation on the initial render
-            requestAnimationFrame(() => {
-                isFirstTime.current = false;
-            });
-        }
-        else {
-            api.start({ x: -index * widthGap });
-        }
-    }, [index, widthGap, api]);
+    // Animate when index has been changed
+    // Move to appropriate position when width changes
+    const prevIndexRef = React.useRef(index);
+    React.useEffect(() => {
+        api.start({
+            x: -index * (width + gap),
+            immediate: prevIndexRef.current === index,
+        });
+        prevIndexRef.current = index;
+    }, [index, width, api]);
 
+    // Do not render if children is not an array
     if (!Array.isArray(children)) {
         return null;
     }
