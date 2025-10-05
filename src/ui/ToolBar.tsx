@@ -12,6 +12,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useTranslation } from 'react-i18next'
 
+/** Height of the toolbar (in pixels) */
+export const toolBarHeight = 44;
+
 interface ToolBarProps {
     app: AppType;
     onAppChange: (value: AppType) => void;
@@ -63,7 +66,7 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
     };
 
     return (
-        <StyledAppBar>
+        <StyledAppBar className={app}>
             <div className="title">{t(`${app}.title`)}</div>
             <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
                 <MoreIcon />
@@ -104,10 +107,16 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
 const StyledAppBar = styled('div')({
     background: '#665500',
     color: 'white',
-    padding: '.2rem .5rem',
+    padding: '2px .5rem',
     fontSize: '1rem',
     display: 'flex',
     alignItems: 'center',
+    '&.IvCalc': {
+        position:'fixed',
+        top:0,
+        width: 'calc(100% - .5rem)',
+        zIndex: 1,
+    },
 
     '@media all and (display-mode: standalone)': {
         background: '#002244',

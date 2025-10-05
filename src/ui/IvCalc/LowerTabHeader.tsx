@@ -14,6 +14,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
+/** Height of the lower tab (in pixels) */
+export const lowerTabHeaderHeight = 40;
+
 const LowerTabHeader = React.memo(({
     state, isBoxEmpty, dispatch,
 }: {
@@ -171,20 +174,20 @@ const AddToBoxConfirmDialog = React.memo(({
 });
 
 const StyledContainer = styled('div')({
-    'marginTop': 'clamp(.3rem, 0.6vh, .7rem)',
-    padding: '0 0.5rem',
+    height: '30px',
+    padding: '10px 0.5rem 0',
     '& > button.MuiIconButton-root': {
         float: 'right',
+        marginTop: '-6px',
         color: '#999',
     },
 });
 
 const StyledTabs = styled(Tabs)({
-    minHeight: 'clamp(20px, 3vh, 36px)',
-    marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
+    minHeight: '30px',
 });
 const StyledTab = styled(Tab)({
-    minHeight: 'clamp(20px, 3vh, 36px)',
+    minHeight: '30px',
     padding: '6px 16px',
 });
 
