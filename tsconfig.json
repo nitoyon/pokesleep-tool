@@ -23,6 +23,6 @@
         "jsx": "react-jsx"
       },
       "include": [
-        "src"
+        "src", "env.d.ts"
       ]
 }
