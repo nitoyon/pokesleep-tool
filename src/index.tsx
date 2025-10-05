@@ -40,25 +40,19 @@ import i18n from './i18n';
     );
 
     // emulate AdSense banner
-    if (window.location.hostname !== "nitoyon.github.io") {
+    if (import.meta.env.DEV) {
         document.body.style.padding = '30px 0px 0px';
         const ins = document.createElement('ins');
-        ins.style.display = 'block';
-        ins.style.width = '100%';
-        ins.style.height = '30px';
-        ins.style.clear = 'none';
-        ins.style.float = 'none';
-        ins.style.top = '0px';
-        ins.style.bottom = 'auto';
-        ins.style.left = '0px';
-        ins.style.right = '0px';
-        ins.style.margin = '0px';
-        ins.style.padding = '0px';
-        ins.style.position = 'fixed';
-        ins.style.verticalAlign = 'baseline';
-        ins.style.zIndex = '2147483647';
-        ins.style.background = '#cccccc';
+        ins.style.cssText=`display:block;width:100%;height:30px;clear:none;float:none;top:0px;bottom:auto;left:0px;right:0px;margin:0px;padding:0px;position:fixed;vertical-align:baseline;z-index:2147483647;pointer-events:none;`;
         document.body.appendChild(ins);
+
+        const border = document.createElement('ins');
+        border.style.cssText=`display: block;height:5px;margin:0;padding:0;position:relative;vertical-align:baseline;z-index:1;background-color:rgb(250, 250, 250);box-shadow:rgba(0, 0, 0, 0.2) 0px 1px 5px -1px, rgba(0, 0, 0, 0.1) 0px -1px 2px -1px;`;
+        ins.appendChild(border);
+
+        const span = document.createElement('span');
+        span.style.cssText = `width:58px;height:30px;display:block;background:#fff;border-radius:0 0 8px 8px;box-shadow:rgba(0, 0, 0, 0.2) 0px 1px 5px -1px, rgba(0, 0, 0, 0.1) 0px -1px 2px -1px;`;
+        border.appendChild(span);
     }
 
     window.addEventListener('load', () => {
