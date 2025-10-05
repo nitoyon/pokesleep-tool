@@ -3,9 +3,10 @@ import { styled } from '@mui/system';
 import { Button, Snackbar, Tab, Tabs } from '@mui/material'; 
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
+import { toolBarHeight } from '../ToolBar';
 import { getInitialIvState, ivStateReducer } from './IvState';
 import UpperTabContainer from './UpperTabContainer';
-import LowerTabHeader from './LowerTabHeader';
+import LowerTabHeader, { lowerTabHeaderHeight } from './LowerTabHeader';
 import BoxView from './Box/BoxView';
 import IvForm from './IvForm/IvForm';
 import StrengthSettingForm from './Strength/StrengthParameterForm';
@@ -18,9 +19,12 @@ import BoxImportDialog from './Box/BoxImportDialog';
 import BoxDeleteAllDialog from './Box/BoxDeleteAllDialog';
 import { useTranslation } from 'react-i18next';
 
+/** Height of the upper tab (in pixels) */
+const upperTabHeaderHeight = 40;
+
 const StyledTabs = styled(Tabs)({
     minHeight: '36px',
-    marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
+    marginBottom: '4px',
     padding: "0 .5rem",
 });
 const StyledTab = styled(Tab)({
@@ -78,8 +82,11 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "deleteAllClose"});
     }, []);
 
+    const lowerTabBodyY = toolBarHeight + upperTabHeaderHeight +
+        upperTabHeight + lowerTabHeaderHeight + 5;
+
     return <>
-        <div style={{position: 'sticky', top: 0,
+        <div style={{position: 'fixed', top: toolBarHeight, width: '100%',
             zIndex: 1, background: '#f9f9f9',
         }}>
             <StyledTabs value={state.tabIndex} onChange={onTabChange}>
@@ -103,18 +110,20 @@ const ResearchCalcApp = React.memo(() => {
             <LowerTabHeader state={state}
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>
-        {state.lowerTabIndex === 0 &&
-            <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
-                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
-            </div>}
-        {state.lowerTabIndex === 1 &&
-            <BoxView items={state.box.items} iv={state.pokemonIv}
-                selectedId={state.selectedItemId} dispatch={dispatch}
-                parameter={state.parameter}/>}
-        {state.lowerTabIndex === 2 &&
-            <StrengthSettingForm value={state.parameter}
-                hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                dispatch={dispatch}/>}
+        <div style={{position: 'fixed', top: lowerTabBodyY, bottom: 0, width: '100%', overflow: 'auto'}}>
+            {state.lowerTabIndex === 0 &&
+                <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
+                    <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+                </div>}
+            {state.lowerTabIndex === 1 &&
+                <BoxView items={state.box.items} iv={state.pokemonIv}
+                    selectedId={state.selectedItemId} dispatch={dispatch}
+                    parameter={state.parameter}/>}
+            {state.lowerTabIndex === 2 &&
+                <StrengthSettingForm value={state.parameter}
+                    hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
+                    dispatch={dispatch}/>}
+        </div>
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
