@@ -4,6 +4,7 @@ import { Button, Snackbar, Tab, Tabs } from '@mui/material';
 import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { getInitialIvState, ivStateReducer } from './IvState';
+import UpperTabContainer from './UpperTabContainer';
 import LowerTabHeader from './LowerTabHeader';
 import BoxView from './Box/BoxView';
 import IvForm from './IvForm/IvForm';
@@ -85,9 +86,17 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
-            {state.tabIndex === 0 && <RpView state={state} width={width}/>}
-            {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
-            {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
+            <UpperTabContainer index={state.tabIndex}>
+                <div className="tabChild">
+                    <RpView state={state} width={width}/>
+                </div>
+                <div className="tabChild">
+                    <StrengthView state={state} dispatch={dispatch}/>
+                </div>
+                <div className="tabChild">
+                    <RatingView pokemonIv={state.pokemonIv} width={width}/>
+                </div>
+            </UpperTabContainer>
             {state.pokemonIv.pokemon.rateNotFixed && <div style={{
                 border: '1px solid red',
                 background: '#ffeeee',
