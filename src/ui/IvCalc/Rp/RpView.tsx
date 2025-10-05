@@ -84,6 +84,15 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
             berry={rpResult.berryRp / 2000}
             ingredient={rpResult.ingredientRp / 2000}
             skill={rpResult.skillRp / 2000}/>
+        {state.pokemonIv.pokemon.rateNotFixed && <div style={{
+            border: '1px solid red',
+            background: '#ffeeee',
+            color: 'red',
+            fontSize: '0.9rem',
+            borderRadius: '0.5rem',
+            margin: '3px 0.5rem',
+            padding: '0 0.3rem',
+        }}>{t('ratio is not fixed')}</div>}
     </>);
 });
 
