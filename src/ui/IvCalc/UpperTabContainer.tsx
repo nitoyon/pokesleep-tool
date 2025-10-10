@@ -7,7 +7,9 @@ import { styled } from '@mui/system';
  *
  * @example
  * ```tsx
- * <UpperTabContainer index={tabIndex}>
+ * <UpperTabContainer index={tabIndex}
+ *     height={height} onHeightChange={setHeight}
+ * >
  *     <div className="tabChild">
  *         content 1
  *     </div>
@@ -18,19 +20,22 @@ import { styled } from '@mui/system';
  * ```
  *
  * @param index The current active tab index.
+ * @param height The height of the container.
  * @param children Tab contents to be rendered side by side.
+ * @param onHeightChange Callback when the height of the container changes.
  */
-const UpperTabContainer = React.memo(({index, children}: {
+const UpperTabContainer = React.memo(({index, children, height, onHeightChange}: {
     index: number,
     children: React.ReactNode,
+    height: number,
+    onHeightChange: (height: number) => void,
 }) => {
     const length = Array.isArray(children) ? children.length : 0;
     const childRef = React.useRef<HTMLDivElement | null>(null);
 
-    const [prevHeight, setPrevHeight] = React.useState(0);
-    const [{ height }, api] = useSpring(() => ({
-        height: prevHeight,
-    }), [prevHeight]);
+    const [{ springHeight }, api] = useSpring(() => ({
+        springHeight: height,
+    }), [height]);
 
     // Set initial position after initial render
     React.useEffect(() => {
@@ -40,8 +45,8 @@ const UpperTabContainer = React.memo(({index, children}: {
         }
 
         const initHeight = el.clientHeight || 0;
-        setPrevHeight(initHeight);
-        api.set({ height: initHeight });
+        onHeightChange(initHeight);
+        api.set({ springHeight: initHeight });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -54,9 +59,9 @@ const UpperTabContainer = React.memo(({index, children}: {
         }
 
         const currentHeight = el.clientHeight || 0;
-        setPrevHeight(currentHeight);
+        onHeightChange(currentHeight);
         api.start({
-            height: currentHeight,
+            springHeight: currentHeight,
             immediate: prevIndexRef.current === index,
         });
         prevIndexRef.current = index;
@@ -71,8 +76,8 @@ const UpperTabContainer = React.memo(({index, children}: {
 
         const observer = new ResizeObserver(() => {
             const currentHeight = el.clientHeight;
-            setPrevHeight(currentHeight);
-            api.start({ height: currentHeight });
+            onHeightChange(currentHeight);
+            api.start({ springHeight: currentHeight });
         });
 
         observer.observe(el);
@@ -91,7 +96,7 @@ const UpperTabContainer = React.memo(({index, children}: {
 
     return <StyledUpperTabContainer>
         <animated.div className="tabTrack"
-            style={{height}}
+            style={{height: springHeight}}
         >
             <div ref={childRef}>
                 {children[index]}
