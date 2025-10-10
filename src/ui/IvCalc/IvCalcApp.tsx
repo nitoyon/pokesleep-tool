@@ -32,6 +32,7 @@ const initialIvState = getInitialIvState();
 
 const ResearchCalcApp = React.memo(() => {
     const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
+    const [upperTabHeight, setUpperTabHeight] = React.useState(0);
     const { t } = useTranslation();
     const width = useDomWidth();
 
@@ -86,7 +87,9 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
-            <UpperTabContainer index={state.tabIndex}>
+            <UpperTabContainer index={state.tabIndex}
+                height={upperTabHeight} onHeightChange={setUpperTabHeight}
+            >
                 <div className="tabChild">
                     <RpView state={state} width={width}/>
                 </div>
