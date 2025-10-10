@@ -6,6 +6,7 @@ import { PokemonBoxItem } from '../../util/PokemonBox';
 import { toolBarHeight } from '../ToolBar';
 import { getInitialIvState, ivStateReducer } from './IvState';
 import UpperTabContainer from './UpperTabContainer';
+import LowerTabContainer from './LowerTabContainer';
 import LowerTabHeader, { lowerTabHeaderHeight } from './LowerTabHeader';
 import BoxView from './Box/BoxView';
 import IvForm from './IvForm/IvForm';
@@ -110,20 +111,23 @@ const ResearchCalcApp = React.memo(() => {
             <LowerTabHeader state={state}
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>
-        <div style={{position: 'fixed', top: lowerTabBodyY, bottom: 0, width: '100%', overflow: 'auto'}}>
-            {state.lowerTabIndex === 0 &&
+        <LowerTabContainer index={state.lowerTabIndex} y={lowerTabBodyY}>
+            <div className="tabChild">
                 <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
                     <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
-                </div>}
-            {state.lowerTabIndex === 1 &&
+                </div>
+            </div>
+            <div className="tabChild">
                 <BoxView items={state.box.items} iv={state.pokemonIv}
                     selectedId={state.selectedItemId} dispatch={dispatch}
-                    parameter={state.parameter}/>}
-            {state.lowerTabIndex === 2 &&
+                    parameter={state.parameter}/>
+            </div>
+            <div className="tabChild">
                 <StrengthSettingForm value={state.parameter}
                     hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
-                    dispatch={dispatch}/>}
-        </div>
+                    dispatch={dispatch}/>
+            </div>
+        </LowerTabContainer>
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
