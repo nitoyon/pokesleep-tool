@@ -51,6 +51,10 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "changeUpperTab", payload: {index: newValue}});
     }, []);
 
+    const onUpperTabSwipe = React.useCallback((newValue: number) => {
+        dispatch({type: "changeUpperTab", payload: {index: newValue}});
+    }, []);
+
     const onRestoreClick = React.useCallback(() => {
         dispatch({type: "restoreItem"});
     }, []);
@@ -95,8 +99,9 @@ const ResearchCalcApp = React.memo(() => {
                 <StyledTab label={t('strength2')}/>
                 <StyledTab label={t('rating')}/>
             </StyledTabs>
-            <UpperTabContainer index={state.tabIndex}
+            <UpperTabContainer index={state.tabIndex} width={width}
                 height={upperTabHeight} onHeightChange={setUpperTabHeight}
+                onChange={onUpperTabSwipe}
             >
                 <div className="tabChild">
                     <RpView state={state} width={width}/>
