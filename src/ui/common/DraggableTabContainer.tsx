@@ -1,14 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { useSpring, animated } from '@react-spring/web'
-import { useDrag } from '@use-gesture/react'
+import { useSwipeGesture } from './Hook';
 import { clamp } from '../../util/NumberUtil';
 
 /** Gap between each tab (in pixels) */
 const gap = 20;
-
-/** Drag bounds beyond the container (in pixels) */
-const bound = 20;
 
 /**
  * A container component that enables drag gesture for
@@ -45,38 +42,17 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
         x: -index * (width + gap),
     }), [index, width]);
 
-    const bind = useDrag(({ active, movement: [mx], velocity: [vx]}) => {
-        if (active) {
-            return api.start({
-                x: -index * (width + gap) + mx,
-                immediate: true,
-            });
-        }
+    const { bind, offset } = useSwipeGesture({
+        index, length, width, gap, onChange,
+    });
 
-        const changed = (Math.abs(vx) > 0.2 ||
-            Math.abs(mx) > width / 2);
-        let newIndex = index;
-        if (changed) {
-            newIndex += mx > 0 ? -1 : 1;
-            newIndex = clamp(0, newIndex, length - 1);
-        }
-        if (newIndex !== index) {
-            onChange(newIndex);
+    // Update spring animation based on drag offset
+    React.useEffect(() => {
+        if (offset === 0) {
             return;
         }
-
-        return api.start({
-            x: -newIndex * (width + gap),
-        });
-    }, {
-        from: [-index * (width + gap), 0],
-        filterTaps: true,
-        bounds: () => ({
-            left: (index === length - 1 ? -(width + gap) * (length - 1) - bound : -Infinity),
-            right: (index === 0 ? bound : Infinity),
-        }),
-        rubberband: true,
-    });
+        api.set({ x: -index * (width + gap) + offset });
+    }, [offset, index, width, api]);
 
     // Set initial position after width is known
     React.useEffect(() => {
