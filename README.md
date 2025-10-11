@@ -13,7 +13,7 @@ Install Node.js v22.19+.
 
 Clone this repository, and run `npm install`.
 
-### `npm dev`
+### `npm run dev`
 
 Runs the app in the development mode.
 
@@ -27,8 +27,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
-
-Run `npm run build -- --no-minimize` to read the unminified JavaScript source code.
 
 ### `npm test`
 
