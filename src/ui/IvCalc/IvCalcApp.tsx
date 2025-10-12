@@ -55,6 +55,10 @@ const ResearchCalcApp = React.memo(() => {
         dispatch({type: "changeUpperTab", payload: {index: newValue}});
     }, []);
 
+    const onLowerTabSwipe = React.useCallback((newValue: number) => {
+        dispatch({type: "changeLowerTab", payload: {index: newValue}});
+    }, []);
+
     const onRestoreClick = React.useCallback(() => {
         dispatch({type: "restoreItem"});
     }, []);
@@ -116,7 +120,9 @@ const ResearchCalcApp = React.memo(() => {
             <LowerTabHeader state={state}
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>
-        <LowerTabContainer index={state.lowerTabIndex} y={lowerTabBodyY}>
+        <LowerTabContainer index={state.lowerTabIndex} y={lowerTabBodyY}
+            width={width} onChange={onLowerTabSwipe}
+        >
             <div className="tabChild">
                 <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
                     <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
