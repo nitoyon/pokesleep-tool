@@ -3,10 +3,7 @@ import { isExpertField } from '../data/fields';
 import { PokemonType } from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
-import {
-    ExpertEffects,
-    expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
- } from './PokemonStrength';
+import { ExpertEffects } from './PokemonStrength';
 import { HelpEventBonus } from '../data/events';
 
 /** Efficiency list */
@@ -581,21 +578,20 @@ class Energy {
 
         // check if the field is expert mode
         const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
+        const isFavoriteBerry = param.favoriteType.includes(this._iv.pokemon.type);
         const isMainBerry = isExpertMode &&
             (param.favoriteType[0] === this._iv.pokemon.type);
-        const isNonFavoriteBerry = isExpertMode &&
-            !param.favoriteType.includes(this._iv.pokemon.type);
+        const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
 
         // get carry limit
         const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1));
 
         // calculate the number of berries and ings per help
         const rp = new PokemonRp(this._iv);
-        const baseFreq = rp.frequencyWithHelpingBonus(helpBonusCount) /
-            (isGoodCampTicketSet ? 1.2 : 1) *
-            (isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
-            (isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1);
-        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient);
+        const baseFreq = rp.getBaseFrequency(helpBonusCount, isGoodCampTicketSet,
+            isMainBerry, isNonFavoriteBerry);
+        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient,
+            isExpertMode && isFavoriteBerry && param.expertEffect === 'ing');
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;
