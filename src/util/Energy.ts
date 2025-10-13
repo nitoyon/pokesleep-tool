@@ -578,7 +578,7 @@ class Energy {
 
         // check if the field is expert mode
         const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
-        const isFavoriteBerry = param.favoriteType.includes(this._iv.pokemon.type);
+        const isFavoriteBerry = isExpertMode && param.favoriteType.includes(this._iv.pokemon.type);
         const isMainBerry = isExpertMode &&
             (param.favoriteType[0] === this._iv.pokemon.type);
         const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
