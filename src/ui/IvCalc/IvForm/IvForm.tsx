@@ -168,7 +168,7 @@ const StyledFrequencyDialog = styled(Dialog)({
                 },
             },
         },
-        '& div.value button.MuiToggleButton-root': {
+        '& button.MuiToggleButton-root': {
             lineHeight: 1.3,
             textTransform: 'none',
         },
@@ -246,7 +246,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                 const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
                 const mins = carryLimit /
                     rp.getBagUsagePerHelp(berryBonus, ingBonus,
-                        expertMode && expertIngBonus === 1) *
+                        expertMode && expertBerry !== 2 && expertIngBonus === 1) *
                     baseFreq * rate / 60;
                 return new AmountOfSleep(mins).toString(t);
             }
@@ -321,7 +321,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                     </ToggleButtonGroup>
                 </div>
             </Collapse>
-            <Collapse in={expertMode && value === "full"}>
+            <Collapse in={expertMode && expertBerry !== 2 && value === "full"}>
                 <div className="line">
                     <label className="indent">{t('expert effect')}:</label>
                     <ToggleButtonGroup size="small" exclusive
