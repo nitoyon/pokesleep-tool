@@ -151,10 +151,14 @@ const StyledFrequencyDialog = styled(Dialog)({
         margin: '0.5rem 1rem 0 1rem',
         '& div.line': {
             fontSize: '.9rem',
+            paddingBottom: 2,
             display: 'flex',
             flex: '0 auto',
             alignItems: 'center',
             '& > label': {
+                '&.indent': {
+                    paddingLeft: '1rem',
+                },
                 marginRight: 'auto',
             },
             '& > div': {
@@ -180,7 +184,11 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     const { t } = useTranslation();
     const [helpingBonus, setHelpingBonus] = React.useState(0);
     const [campTicket, setCampTicket] = React.useState(false);
+    const [berryBonus, setBerryBonus] = React.useState<0|1>(0);
     const [ingBonus, setIngBonus] = React.useState<0|1>(0);
+    const [expertMode, setExpertMode] = React.useState(false);
+    const [expertBerry, setExpertBerry] = React.useState(2);
+    const [expertIngBonus, setExpertIngBonus] = React.useState(0);
     const [value, setValue] = React.useState<"frequency"|"count"|"full">("frequency");
 
     const onHelpingBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
@@ -191,9 +199,27 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setCampTicket(e.target.checked);
     }, []);
+    const onBerryBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setBerryBonus(parseInt(value, 10) as 0|1);
+        }
+    }, []);
     const onIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value !== null) {
             setIngBonus(parseInt(value, 10) as 0|1);
+        }
+    }, []);
+    const onExpertModeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setExpertMode(e.target.checked);
+    }, []);
+    const onExpertBerryChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setExpertBerry(parseInt(value, 10));
+        }
+    }, []);
+    const onExpertIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setExpertIngBonus(parseInt(value, 10));
         }
     }, []);
     const onValueChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
@@ -203,21 +229,13 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
         setValue(value as "frequency"|"count"|"full");
     }, []);
 
-    // reset state when closed
-    React.useEffect(() => {
-        if (open) { return; }
-        setTimeout(() => {
-            setHelpingBonus(0);
-            setCampTicket(false);
-            setValue("frequency");
-        }, 200);
-    }, [open]);
     if (!open) {
         return <></>;
     }
 
-    const baseFreq = rp.frequencyWithHelpingBonus(helpingBonus) /
-        (campTicket ? 1.2 : 1);
+    const baseFreq = rp.getBaseFrequency(helpingBonus, campTicket,
+        expertMode && expertBerry === 0,
+        expertMode && expertBerry === 2);
     const convertToVal = (rate: number) => {
         switch (value) {
             case "frequency":
@@ -226,7 +244,10 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                 return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
             case "full": {
                 const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
-                const mins = carryLimit / rp.getBagUsagePerHelp(0, ingBonus) * baseFreq * rate / 60;
+                const mins = carryLimit /
+                    rp.getBagUsagePerHelp(berryBonus, ingBonus,
+                        expertMode && expertIngBonus === 1) *
+                    baseFreq * rate / 60;
                 return new AmountOfSleep(mins).toString(t);
             }
         }
@@ -269,11 +290,44 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
             </div>
             <Collapse in={value === "full"}>
                 <div className="line">
+                    <label>{t('berry bonus from event')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={berryBonus} onChange={onBerryBonusChange}>
+                        <ToggleButton value={0}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1}>+1</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+                <div className="line">
                     <label>{t('ingredient bonus from event')}:</label>
                     <ToggleButtonGroup size="small" exclusive
                         value={ingBonus} onChange={onIngBonusChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={1}>+1</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </Collapse>
+            <div className="line">
+                <label>{t('expert mode')}:</label>
+                <Switch checked={expertMode} onChange={onExpertModeChange}/>
+            </div>
+            <Collapse in={expertMode}>
+                <div className="line">
+                    <label className="indent">{t('berry')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={expertBerry} onChange={onExpertBerryChange}>
+                        <ToggleButton value={0}>{t('main')}</ToggleButton>
+                        <ToggleButton value={1}>{t('sub')}</ToggleButton>
+                        <ToggleButton value={2}>{t('others')}</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </Collapse>
+            <Collapse in={expertMode && value === "full"}>
+                <div className="line">
+                    <label className="indent">{t('expert effect')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={expertIngBonus} onChange={onExpertIngBonusChange}>
+                        <ToggleButton value={1}>{t('expert ing effect')}</ToggleButton>
+                        <ToggleButton value={0}>{t('others')}</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </Collapse>

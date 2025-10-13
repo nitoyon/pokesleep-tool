@@ -958,8 +958,9 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
 export function getHelpYield(param: StrengthParameter, strength: PokemonStrength,
     result: StrengthResult
 ): number {
+    // expertIngBonus is always false because we calculate based on regular help
     const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
-        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient, false);
     return bagUsagePerHelp * Math.abs(param.period);
 }
 
@@ -973,8 +974,9 @@ export function getHelpYield(param: StrengthParameter, strength: PokemonStrength
 export function getHelpsForCap(strength: PokemonStrength,
     result: StrengthResult
 ): number {
+    // expertIngBonus is always false because we calculate based on regular help
     const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
-        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient);
+        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient, false);
     return (999 - result.energy.carryLimit) / bagUsagePerHelp;
 }
 
