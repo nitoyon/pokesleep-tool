@@ -226,7 +226,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
                 return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
             case "full": {
                 const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
-                const mins = carryLimit / rp.getBagUsagePerHelp(0, ingBonus) * baseFreq * rate / 60;
+                const mins = carryLimit / rp.getBagUsagePerHelp(0, ingBonus, false) * baseFreq * rate / 60;
                 return new AmountOfSleep(mins).toString(t);
             }
         }

@@ -5,6 +5,7 @@ import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 import {
     expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
+    expertFavoriteIngredientBonus, expertFavoriteIngredientAdditionalBonus,
 } from './PokemonStrength';
 
 export const maxLevel = 65;
@@ -383,12 +384,35 @@ class PokemonRp {
             0.00367 * this.level - 0.00609 + 1;
     }
 
-    getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1): number {
+    /**
+     * Calculate the average bag usage (inventory slots used) per help action.
+     *
+     * This method calculates how many inventory slots are consumed on average
+     * when the Pokemon helps, taking into account both berries and ingredients
+     * based on the ingredient ratio.
+     *
+     * @param berryBonus Berry count bonus from events (0 or 1)
+     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
+     * @param expertIngBonus Whether expert mode ingredient bonus applies
+     *                       True if following condition are all met.
+     *                       - Expert mode
+     *                       - ExpertEffects is `ing`
+     *                       - Favorite berry
+     * @returns Average number of inventory slots used per help
+     */
+    getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
         const berryCount = this.berryCount + berryBonus;
         const ingRatio = this.ingredientRatio;
-        const ingCount = this.level < 30 ? (this.ingredient1.count + ingredientBonus) :
-            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingredientBonus) / 2 :
-            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingredientBonus) / 3;
+        let ingBonus = ingredientBonus;
+        if (expertIngBonus) {
+            ingBonus += expertFavoriteIngredientBonus;
+            if (this.pokemon.specialty === "Ingredients") {
+                ingBonus += expertFavoriteIngredientAdditionalBonus;
+            }
+        }
+        const ingCount = this.level < 30 ? (this.ingredient1.count + ingBonus) :
+            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus) / 2 :
+            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus) / 3;
         return (1 - ingRatio) * berryCount + ingRatio * ingCount;
     }
 
