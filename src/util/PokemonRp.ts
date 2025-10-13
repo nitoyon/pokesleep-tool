@@ -3,6 +3,9 @@ import PokemonIv from './PokemonIv';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
+import {
+    expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
+} from './PokemonStrength';
 
 export const maxLevel = 65;
 
@@ -219,6 +222,26 @@ class PokemonRp {
                 // Sub-Skill Factor
                 (1 - subSkillFactor)
             , 4);
+    }
+
+    /**
+     * Calculate base frequency with helping bonus and optional modifiers.
+     * @param helpBonusCount Number of other pokemon in the team with Helping Bonus sub-skill
+     * @param isGoodCampTicketSet Whether good camp ticket is set
+     * @param isMainBerry Whether this is the main berry in expert mode
+     * @param isNonFavoriteBerry Whether this is a non-favorite berry in expert mode
+     * @returns Base frequency
+     */
+    getBaseFrequency(
+        helpBonusCount: number,
+        isGoodCampTicketSet: boolean,
+        isMainBerry: boolean,
+        isNonFavoriteBerry: boolean
+    ): number {
+        return this.frequencyWithHelpingBonus(helpBonusCount) /
+            (isGoodCampTicketSet ? 1.2 : 1) *
+            (isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
+            (isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1);
     }
 
     get hasHelpingBonusInActiveSubSkills(): boolean {
