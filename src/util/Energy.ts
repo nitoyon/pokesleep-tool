@@ -578,10 +578,10 @@ class Energy {
 
         // check if the field is expert mode
         const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
+        const isFavoriteBerry = param.favoriteType.includes(this._iv.pokemon.type);
         const isMainBerry = isExpertMode &&
             (param.favoriteType[0] === this._iv.pokemon.type);
-        const isNonFavoriteBerry = isExpertMode &&
-            !param.favoriteType.includes(this._iv.pokemon.type);
+        const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
 
         // get carry limit
         const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1));
@@ -590,7 +590,8 @@ class Energy {
         const rp = new PokemonRp(this._iv);
         const baseFreq = rp.getBaseFrequency(helpBonusCount, isGoodCampTicketSet,
             isMainBerry, isNonFavoriteBerry);
-        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient);
+        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient,
+            isExpertMode && isFavoriteBerry && param.expertEffect === 'ing');
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;
