@@ -579,7 +579,7 @@
     },
     {
         "id": 25,
-        "name": "Pikachu (Festivo)",
+        "name": "Pikachu (Holiday)",
         "arrival": "2023-12-18",
         "sleepType": "snoozing",
         "exp": 600,
@@ -610,7 +610,7 @@
             "name": "egg",
             "c3": 3
         },
-        "form": "Festivo"
+        "form": "Holiday"
     },
     {
         "id": 25,
@@ -2123,7 +2123,42 @@
     },
     {
         "id": 133,
-        "name": "Eevee (Festivo)",
+        "name": "Eevee (Halloween)",
+        "arrival": "2025-10-27",
+        "sleepType": "snoozing",
+        "exp": 600,
+        "type": "normal",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        },
+        "form": "Halloween"
+    },
+    {
+        "id": 133,
+        "name": "Eevee (Holiday)",
         "arrival": "2024-12-23",
         "sleepType": "snoozing",
         "exp": 600,
@@ -2154,7 +2189,7 @@
             "name": "sausage",
             "c3": 3
         },
-        "form": "Festivo"
+        "form": "Holiday"
     },
     {
         "id": 134,

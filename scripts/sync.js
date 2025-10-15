@@ -247,8 +247,7 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
         if (confidence !== 'Very good') {
             unknown = true;
         }
-        pokemon = pokemon.replace("Holiday", "Festivo")
-            .replace("Alolan Form", "Alola");
+        pokemon = pokemon.replace("Alolan Form", "Alola");
         ingRatio = parseFloat(ingRatio.replace('%', ''));
         skillRatio = parseFloat(skillRatio.replace('%', ''));
         prob[pokemon] = {ingRatio, skillRatio, unknown};
