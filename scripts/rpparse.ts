@@ -134,7 +134,6 @@ function convertIngName(val: string): IngredientName {
 
 function fixName(name: string): string {
     return name
-        .replace(" (Holiday)", " (Festivo)")
         .replace(" (Alolan Form)", " (Alola)")
         .replace(" (Paldean Form)", " (Paldea)")
         .replace(" (Amped Form)", " (Amped)")

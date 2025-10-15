@@ -579,7 +579,7 @@
     },
     {
         "id": 25,
-        "name": "Pikachu (Festivo)",
+        "name": "Pikachu (Holiday)",
         "arrival": "2023-12-18",
         "sleepType": "snoozing",
         "exp": 600,
@@ -610,7 +610,7 @@
             "name": "egg",
             "c3": 3
         },
-        "form": "Festivo"
+        "form": "Holiday"
     },
     {
         "id": 25,
@@ -2123,7 +2123,7 @@
     },
     {
         "id": 133,
-        "name": "Eevee (Festivo)",
+        "name": "Eevee (Holiday)",
         "arrival": "2024-12-23",
         "sleepType": "snoozing",
         "exp": 600,
@@ -2154,7 +2154,7 @@
             "name": "sausage",
             "c3": 3
         },
-        "form": "Festivo"
+        "form": "Holiday"
     },
     {
         "id": 134,
