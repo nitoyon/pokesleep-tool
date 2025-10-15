@@ -306,7 +306,7 @@ class PokemonIv {
         switch (m[1]) {
             case 'Halloween':
                 return 1;
-            case 'Festivo':
+            case 'Holiday':
                 return 2;
             case 'Alola':
                 return 3;
@@ -328,7 +328,7 @@ class PokemonIv {
     public static formToString(form: number): string {
         switch (form) {
             case 1: return 'Halloween';
-            case 2: return 'Festivo';
+            case 2: return 'Holiday';
             case 3: return 'Alola';
             case 4: return 'Paldea';
             case 5: return 'Amped';
@@ -373,7 +373,7 @@ class PokemonIv {
      * * 4bit  : Version (1)
      * * 12bit : Pokedex ID
      *
-     * * 6bit  : Form (0: normal, 1: Halloween, 2: Festivo, 3: Alola,
+     * * 6bit  : Form (0: normal, 1: Halloween, 2: Holiday, 3: Alola,
      *           4: Paldea, 5: Amped, 6: Low-Key)
      * * 7bit  : level
      * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)

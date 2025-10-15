@@ -93,6 +93,23 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.15, color: '#3d3532'},
         {x: 0, y: 0.15, w: 1, h: 0.85, color: '#ffe14f'},
     ],
+    // Pikachu (Halloween)
+    '4121': [
+        {x: 0, y: 0, w: 1, h: 0.15, color: '#3d3532'},
+        {x: 0, y: 0.15, w: 1, h: 0.85, color: '#ffe14f'},
+        {x: 0.55, y: 0.8, w: 0.5, h: 0.1, r: 0.05, color: '#5a5a60'},
+        {x: 0.65, y: 0.55, w: 0.3, h: 0.35, r: 0.15, color: '#5a5a60'},
+        {x: 0.65, y: 0.75, w: 0.3, h: 0.05, color: '#eab253'},
+        {x: 0.82, y: 0.72, w: 0.12, h: 0.12, r: 0.1, color: '#f7ea74'}
+    ],
+    // Pikachu (Holiday)
+    '8217': [
+        {x: 0, y: 0, w: 1, h: 0.15, color: '#3d3532'},
+        {x: 0, y: 0.15, w: 1, h: 0.85, color: '#ffe14f'},
+        {x: 0.65, y: 0.6, w: 0.3, h: 0.3, r: 0.15, color: '#cd5f59'},
+        {x: 0.55, y: 0.8, w: 0.5, h: 0.1, r: 0.05, color: '#fefcf3'},
+        {x: 0.72, y: 0.48, w: 0.15, h: 0.15, r: 0.1, color: '#fefcf3'}
+    ],
     // Raichu
     '26': [
         {x: 0, y: 0, w: 1, h: 1, color: '#f9cb60'},
@@ -343,6 +360,23 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     '133': [
         {x: 0, y: 0, w: 1, h: 1, color: '#e9b860'},
         {x: 0, y: 0.6, w: 1, h: 0.4, color: '#f8eabf'},
+    ],
+    // Eevee (Halloween)
+    '4229': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#e9b860'},
+        {x: 0, y: 0.6, w: 1, h: 0.4, color: '#f8eabf'},
+        {x: 0.55, y: 0.8, w: 0.5, h: 0.1, r: 0.05, color: '#5a5a60'},
+        {x: 0.65, y: 0.55, w: 0.3, h: 0.35, r: 0.15, color: '#5a5a60'},
+        {x: 0.65, y: 0.75, w: 0.3, h: 0.05, color: '#eab253'},
+        {x: 0.82, y: 0.72, w: 0.12, h: 0.12, r: 0.1, color: '#f7ea74'}
+    ],
+    // Eevee (Holiday)
+    '8325': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#e9b860'},
+        {x: 0, y: 0.6, w: 1, h: 0.4, color: '#f8eabf'},
+        {x: 0.65, y: 0.6, w: 0.3, h: 0.3, r: 0.15, color: '#cd5f59'},
+        {x: 0.55, y: 0.8, w: 0.5, h: 0.1, r: 0.05, color: '#fefcf3'},
+        {x: 0.72, y: 0.48, w: 0.15, h: 0.15, r: 0.1, color: '#fefcf3'}
     ],
     // Vaporeon
     '134': [
