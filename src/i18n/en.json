@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v3.0.0": {
+                    "headline": "Updated the data with balance adjustments in version 3.0.0",
+                    "detail": "Some skill values are still tentative, so RP may not be displayed accurately."
+                },
                 "add natu": {
                     "headline": "Added data for Natu and Xatu.",
                     "detail": "$t(rp collection)"
