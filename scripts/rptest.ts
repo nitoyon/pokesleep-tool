@@ -4,10 +4,10 @@
 // the RP Collection data.
 //
 // Read tsv from stdin (RP collection sheet format)
-// See rpparse.tsv for details
+// See src/util/RpParse.tsv for details
 
 import PokemonRp from '../src/util/PokemonRp';
-import parseTsv, { RpData } from './rpparse';
+import parseTsv, { RpData } from '../src/util/RpParse';
 import * as fs from 'fs';
 
 function test(data: RpData[]) {
