@@ -1,7 +1,7 @@
-import Nature from '../src/util/Nature';
-import PokemonIv from '../src/util/PokemonIv';
-import SubSkill, { SubSkillType } from '../src/util/SubSkill';
-import { IngredientName } from '../src/data/pokemons';
+import Nature from './Nature';
+import PokemonIv from './PokemonIv';
+import SubSkill, { SubSkillType } from './SubSkill';
+import { IngredientName } from '../data/pokemons';
 
 type CsvData = {
     name: string;
@@ -46,17 +46,24 @@ export function parseTsv(text: string): Record<string, RpData[]> {
             continue;
         }
         const parts = line.split(/\t/g);
-        while (parts.length < 10) {
+
+        // Convert DataLVL1-9 to DataLVL10-49 format
+        if (parts.length === 5) {
             parts.push("");
+            parts.push("");
+            parts.push("");
+        }
+
+        // Convert DataLVL10-49 to DataLVL50+ format
+        if (parts.length === 8) {
+            parts.push("");
+            parts.push("");
+            parts[8] = parts[7];
+            parts[7] = "";
         }
         const name = fixName(parts[0]);
         if (typeof(ret[name]) === "undefined") {
             ret[name] = [];
-        }
-        // Convert DataLVL10-49 to DataLVL50+ format
-        if (!subSkillNames.includes(parts[7] as SubSkillType)) {
-            parts[8] = parts[7];
-            parts[7] = "";
         }
         const datum: CsvData = {
             name,
