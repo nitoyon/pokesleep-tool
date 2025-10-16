@@ -1,4 +1,6 @@
-// Run npm run rpfit < data.tsv
+// npm run rpfit < data.tsv
+// npm run rpfit -- --fitSkillOnly < data.tsv
+//     Use ing% in src/data/pokemon.json
 //
 // This script is designed to estimate skill% and ingredient% from
 // the RP Collection data.
@@ -18,6 +20,10 @@ type RateInfo = {
 function fit(data: RpData[]) {
     let candidates: RateInfo[] = [];
     for (let skill = 10; skill < 100; skill++) {
+        if (process.argv.some(x => x === '--fitSkillOnly')) {
+            candidates.push({skill: skill / 10, ing: data[0].iv.pokemon.ingRatio});
+            continue;
+        }
         for (let ing = 90; ing < 400; ing++) {
             candidates.push({skill: skill / 10, ing: ing / 10});
         }
