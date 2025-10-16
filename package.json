@@ -24,6 +24,7 @@
     "preview": "vite preview",
     "rpfit": "npx ts-node --project tsconfig.script.json scripts/rpfit.ts",
     "rptest": "npx ts-node --project tsconfig.script.json scripts/rptest.ts",
+    "skillvaluefit": "npx ts-node --project tsconfig.script.json scripts/skillvaluefit.ts",
     "test": "vitest"
   },
   "devDependencies": {
