@@ -48,6 +48,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     if (skill === "Ingredient Magnet S" ||
         skill === "Ingredient Magnet S (Plus)" ||
         skill === "Charge Strength M" ||
+        skill === "Charge Strength M (Bad Dreams)" ||
         skill === "Charge Strength S" ||
         skill === "Charge Strength S (Random)" ||
         skill === "Charge Strength S (Stockpile)" ||
@@ -106,7 +107,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [880, 1251, 1726, 2383, 3290, 4546, 6409][skillLevel - 1];
     }
     if (skill === "Charge Strength M (Bad Dreams)") {
-        return [2640, 3753, 5178, 7149, 9870, 13638][skillLevel - 1];
+        return [2640, 3753, 5178, 7149, 9870, 13638, 17304][skillLevel - 1];
     }
     if (skill === "Cooking Power-Up S") {
         return [7, 10, 12, 17, 22, 27, 31][skillLevel - 1];

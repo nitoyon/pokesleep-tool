@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "v3.0.0": {
+                    "headline": "已因应 v3.0.0 的平衡性调整。",
+                    "detail": "由于部分技能数值尚未确定，SP 可能无法正确显示。"
+                },
                 "add natu": {
                     "headline": "已新增$t(pokemons.Natu)與$t(pokemons.Xatu)的資料。",
                     "detail": "$t(rp collection)"
