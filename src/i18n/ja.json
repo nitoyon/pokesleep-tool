@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "v3.0.0": {
+                    "headline": "v3.0.0 でのバランス調整に対応しました。",
+                    "detail": "一部のスキルバリューは未確定のため、SP が正確に表示されない可能性があります。"
+                },
                 "add natu": {
                     "headline": "ネイティとネイティオのデータを追加しました。",
                     "detail": "$t(rp collection)"
