@@ -489,7 +489,10 @@ class PokemonRp {
             return [1400, 1991, 2747, 3791, 5234, 7232][this.skillLevel - 1];
         }
         if (this._pokemon.skill === "Charge Strength M (Bad Dreams)") {
-            return [2400, 3313, 4643, 6441, 8864, 11878][this.skillLevel - 1];
+            return [2400, 3313, 4643, 6441, 8864, 11878, 13142/*may*/][this.skillLevel - 1];
+        }
+        if (this._pokemon.skill === "Energizing Cheer S") {
+            return [766/*may*/, 1089, 1502/*may*/, 2074, 2862/*may*/, 3955/*may*/][this.skillLevel - 1];
         }
         return [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303][this.skillLevel - 1];
     }
