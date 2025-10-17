@@ -17,7 +17,7 @@
             "news": {
                 "v3.0.0": {
                     "headline": "Updated the data with balance adjustments in version 3.0.0",
-                    "detail": "Some skill values are still tentative, so RP may not be displayed accurately."
+                    "detail": "$t(rp collection)"
                 },
                 "add natu": {
                     "headline": "Added data for Natu and Xatu.",
