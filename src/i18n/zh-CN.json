@@ -17,7 +17,7 @@
             "news": {
                 "v3.0.0": {
                     "headline": "已因应 v3.0.0 的平衡性调整。",
-                    "detail": "由于部分技能数值尚未确定，SP 可能无法正确显示。"
+                    "detail": "$t(rp collection)"
                 },
                 "add natu": {
                     "headline": "已新增$t(pokemons.Natu)與$t(pokemons.Xatu)的資料。",
