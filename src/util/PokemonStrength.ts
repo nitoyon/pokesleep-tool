@@ -393,7 +393,7 @@ class PokemonStrength {
         const skillRatio = energy.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0, skillValuePerTrigger = 0;
         let skillValue2 = 0, skillStrength2 = 0, skillValuePerTrigger2 = 0;
-        if (param.period > whistlePeriod && param.tapFrequency !== 'none') {
+        if (param.period > 0 && !this.isWhistle && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
                 skillCount = helpCount * skillRatio * countRatio;
