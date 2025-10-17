@@ -1,5 +1,5 @@
 import PokemonStrength, {
-    createStrengthParameter, StrengthParameter,
+    createStrengthParameter, StrengthParameter, whistlePeriod,
 } from './PokemonStrength';
 import PokemonIv from './PokemonIv';
 import Nature from './Nature';
@@ -128,6 +128,32 @@ describe('PokemonStrength', () => {
             // Sum of ingredient strengths should equal total ingStrength
             const sumStrength = result.ingredients.reduce((sum, ing) => sum + ing.strength, 0);
             expect(sumStrength).toBeCloseTo(result.ingStrength);
+        });
+
+        test('calculates strength with whistle period', () => {
+            const iv = new PokemonIv('Pikachu');
+            iv.level = 50;
+
+            // simulate whistle
+            const paramWhistle = createParam({ period: whistlePeriod });
+            const strengthWhistle = new PokemonStrength(iv, paramWhistle);
+            const resultWhistle = strengthWhistle.calculate();
+
+            // simulate 3 hours (always energy full)
+            const param3Hours = createParam({ period: 3, isEnergyAlwaysFull: true });
+            const strength3Hours = new PokemonStrength(iv, param3Hours);
+            const result3Hours = strength3Hours.calculate();
+
+            // Verify modified parameters
+            expect(strengthWhistle.parameter.period).toBe(3);
+            expect(strengthWhistle.parameter.isEnergyAlwaysFull).toBe(true);
+            expect(strengthWhistle.parameter.isGoodCampTicketSet).toBe(false);
+            expect(strengthWhistle.parameter.tapFrequency).toBe('always');
+
+            // Verify result
+            expect(resultWhistle.skillCount).toBe(0);
+            expect(resultWhistle.berryStrength).toBe(result3Hours.berryStrength);
+            expect(resultWhistle.ingStrength).toBe(result3Hours.ingStrength);
         });
     });
 
