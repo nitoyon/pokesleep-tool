@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add pumpkaboo": {
+                    "headline": "已新增南瓜精與南瓜怪人的資料。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.0.0": {
                     "headline": "已因應 v3.0.0 的平衡性調整。",
                     "detail": "$t(rp collection)"
@@ -886,6 +890,14 @@
             "Braviary": "勇士雄鷹",
             "Sylveon": "仙子伊布",
             "Dedenne": "咚咚鼠",
+            "Pumpkaboo (Small)": "南瓜精 (小顆種)",
+            "Pumpkaboo (Medium)": "南瓜精 (中顆種)",
+            "Pumpkaboo (Large)": "南瓜精 (大顆種)",
+            "Pumpkaboo (Jumbo)": "南瓜精 (巨顆種)",
+            "Gourgeist (Small)": "南瓜怪人 (小顆種)",
+            "Gourgeist (Medium)": "南瓜怪人 (中顆種)",
+            "Gourgeist (Large)": "南瓜怪人 (大顆種)",
+            "Gourgeist (Jumbo)": "南瓜怪人 (巨顆種)",
             "Grubbin": "強顎雞母蟲",
             "Charjabug": "蟲電寶",
             "Vikavolt": "鍬農炮蟲",

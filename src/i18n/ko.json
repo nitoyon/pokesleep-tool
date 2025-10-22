@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add pumpkaboo": {
+                    "headline": "호바귀와 펌킨인가 추가되었습니다.",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.0.0": {
                     "headline": "v3.0.0의 밸런스 조정에 대응하였습니다.",
                     "detail": "$t(rp collection)"
@@ -880,6 +884,14 @@
             "Braviary": "워글",
             "Sylveon": "님피아",
             "Dedenne": "데덴네",
+            "Pumpkaboo (Small)": "호바귀 (소과종)",
+            "Pumpkaboo (Medium)": "호바귀 (중과종)",
+            "Pumpkaboo (Large)": "호바귀 (대과종)",
+            "Pumpkaboo (Jumbo)": "호바귀 (특대과종)",
+            "Gourgeist (Small)": "펌킨인 (소과종)",
+            "Gourgeist (Medium)": "펌킨인 (중과종)",
+            "Gourgeist (Large)": "펌킨인 (대과종)",
+            "Gourgeist (Jumbo)": "펌킨인 (특대과종)",
             "Grubbin": "턱지충이",
             "Charjabug": "전지충이",
             "Vikavolt": "투구뿌논",
