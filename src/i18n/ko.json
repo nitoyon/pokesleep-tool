@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "add pumpkaboo": {
+                    "headline": "호바귀와 펌킨인가 추가되었습니다.",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.0.0": {
                     "headline": "v3.0.0의 밸런스 조정에 대응하였습니다.",
                     "detail": "$t(rp collection)"
