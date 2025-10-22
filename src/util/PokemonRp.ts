@@ -28,6 +28,7 @@ export const ingredientStrength: {[ing in IngredientName]: number} = {
     "soy": 100,
     "corn": 140,
     "coffee": 153,
+    "pumpkin": 250,
     "unknown": 0,
     "unknown1": 0,
     "unknown2": 0,
