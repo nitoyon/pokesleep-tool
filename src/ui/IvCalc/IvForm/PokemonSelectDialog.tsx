@@ -80,6 +80,10 @@ const StyledAutocompletePopper = styled('div')({
                         textWrap: 'wrap',
                         lineHeight: 1.1,
                         verticalAlign: 'middle',
+                        '& > small': {
+                            display: 'block',
+                            fontSize: '9px',
+                        },
                     },
                 },
             },
@@ -501,7 +505,12 @@ const PokemonSelectDialog = React.memo(({
                 const {key, ...others} = props;
                 return (<MenuItem key={key} {...others}>
                     <PokemonIcon idForm={option.idForm} size={48}/>
-                    <footer>{option.localName}</footer>
+                    <footer>
+                        {option.localName.replace(/\(.+/, "")}
+                        {option.localName.endsWith(")") && <small>
+                            {option.localName.replace(/^[^(]+/, "")}
+                        </small>}
+                    </footer>
                 </MenuItem>);
             }}
             renderInput={(params) => (
