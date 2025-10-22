@@ -71,7 +71,10 @@ const PokemonTextField = React.memo(({iv, fixMode, onChange, onCandyClick}: {
         {fixMode ? <>{selectedOption.localName}</> :
         <TextLikeButton onClick={onInputClick} style={{width: '10.2rem', fontSize: '0.9rem'}}
             className={open ? 'focused' : ''}>
-            {selectedOption.localName}
+            {selectedOption.localName.replace(/\(.+/, "")}
+            {selectedOption.localName.endsWith(")") && <small>
+                {selectedOption.localName.replace(/^[^(]+/, "")}
+            </small>}
         </TextLikeButton>}
         <EvolveButton iv={iv} onChange={onChange}/>
         <CandyButton onClick={onCandyClick}/>

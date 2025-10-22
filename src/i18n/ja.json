@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add pumpkaboo": {
+                    "headline": "バケッチャとパンプジンのデータを追加しました。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.0.0": {
                     "headline": "v3.0.0 でのバランス調整に対応しました。",
                     "detail": "$t(rp collection)"
@@ -886,6 +890,14 @@
             "Braviary": "ウォーグル",
             "Sylveon": "ニンフィア",
             "Dedenne": "デデンネ",
+            "Pumpkaboo (Small)": "バケッチャ (こだましゅ)",
+            "Pumpkaboo (Medium)": "バケッチャ (ちゅうだましゅ)",
+            "Pumpkaboo (Large)": "バケッチャ (おおだましゅ)",
+            "Pumpkaboo (Jumbo)": "バケッチャ (ギガだましゅ)",
+            "Gourgeist (Small)": "パンプジン (こだましゅ)",
+            "Gourgeist (Medium)": "パンプジン (ちゅうだましゅ)",
+            "Gourgeist (Large)": "パンプジン (おおだましゅ)",
+            "Gourgeist (Jumbo)": "パンプジン (ギガだましゅ)",
             "Grubbin": "アゴジムシ",
             "Charjabug": "デンヂムシ",
             "Vikavolt": "クワガノン",

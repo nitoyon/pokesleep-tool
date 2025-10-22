@@ -5873,6 +5873,286 @@
         }
     },
     {
+        "id": 710,
+        "name": "Pumpkaboo (Small)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 5300,
+        "ingRatio": 12,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 7,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Small"
+    },
+    {
+        "id": 710,
+        "name": "Pumpkaboo (Medium)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 5400,
+        "ingRatio": 12,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Medium"
+    },
+    {
+        "id": 710,
+        "name": "Pumpkaboo (Large)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 5500,
+        "ingRatio": 12,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 15,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Large"
+    },
+    {
+        "id": 710,
+        "name": "Pumpkaboo (Jumbo)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 5600,
+        "ingRatio": 12,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 21,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Jumbo"
+    },
+    {
+        "id": 711,
+        "name": "Gourgeist (Small)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 20,
+        "frequency": 3100,
+        "ingRatio": 13,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 10,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Small"
+    },
+    {
+        "id": 711,
+        "name": "Gourgeist (Medium)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 20,
+        "frequency": 3200,
+        "ingRatio": 13,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Medium"
+    },
+    {
+        "id": 711,
+        "name": "Gourgeist (Large)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 20,
+        "frequency": 3300,
+        "ingRatio": 13,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 19,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Large"
+    },
+    {
+        "id": 711,
+        "name": "Gourgeist (Jumbo)",
+        "arrival": "2025-10-22",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "ghost",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 20,
+        "frequency": 3400,
+        "ingRatio": 13,
+        "skillRatio": 4.9,
+        "ancestor": 710,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 25,
+        "ing1": {
+            "name": "pumpkin",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "soy",
+            "c2": 11,
+            "c3": 18
+        },
+        "ing3": {
+            "name": "potato",
+            "c3": 15
+        },
+        "form": "Jumbo"
+    },
+    {
         "id": 736,
         "name": "Grubbin",
         "arrival": "2024-10-02",

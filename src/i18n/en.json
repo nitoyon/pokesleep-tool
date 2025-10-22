@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add pumpkaboo": {
+                    "headline": "Pumpkaboo and Gourgeist are added!!!",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.0.0": {
                     "headline": "Updated the data with balance adjustments in version 3.0.0",
                     "detail": "$t(rp collection)"
@@ -896,6 +900,14 @@
             "Braviary": "Braviary",
             "Sylveon": "Sylveon",
             "Dedenne": "Dedenne",
+            "Pumpkaboo (Small)": "Pumpkaboo (Small)",
+            "Pumpkaboo (Medium)": "Pumpkaboo (Medium)",
+            "Pumpkaboo (Large)": "Pumpkaboo (Large)",
+            "Pumpkaboo (Jumbo)": "Pumpkaboo (Jumbo)",
+            "Gourgeist (Small)": "Gourgeist (Small)",
+            "Gourgeist (Medium)": "Gourgeist (Medium)",
+            "Gourgeist (Large)": "Gourgeist (Large)",
+            "Gourgeist (Jumbo)": "Gourgeist (Jumbo)",
             "Grubbin": "Grubbin",
             "Charjabug": "Charjabug",
             "Vikavolt": "Vikavolt",
