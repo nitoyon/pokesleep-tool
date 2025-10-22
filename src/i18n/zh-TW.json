@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "add pumpkaboo": {
+                    "headline": "已新增南瓜精與南瓜怪人的資料。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.0.0": {
                     "headline": "已因應 v3.0.0 的平衡性調整。",
                     "detail": "$t(rp collection)"
