@@ -47,14 +47,14 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             return true;
         }
 
-        if (iv.level === currentIv.level &&
+        if (iv.level === currentLevel &&
             iv.idForm === currentIv.idForm &&
             iv.nature.expGainsFactor === currentIv.nature.expGainsFactor
         ) {
             return false;
         }
         return true;
-    }, [iv, currentIv, maxExpLeft]);
+    }, [iv, currentLevel, currentIv, maxExpLeft]);
 
     React.useEffect(() => {
         if (!open) {
