@@ -644,7 +644,7 @@ class PokemonStrength {
             expertMainSkillLevelBonus : 0);
         const expertIngredientAdditionalEffect = (isExpertMode && isFavoriteBerry &&
             this.param.expertEffect === "ing" &&
-            this.iv.pokemon.specialty === "Ingredients" ?
+            (this.iv.pokemon.specialty === "Ingredients" || this.iv.pokemon.specialty === "All") ?
             expertFavoriteIngredientAdditionalBonus : 0
         );
         const expertIngredient = (isExpertMode && isFavoriteBerry &&
