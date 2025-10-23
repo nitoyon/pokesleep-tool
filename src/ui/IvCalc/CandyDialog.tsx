@@ -47,47 +47,47 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             return true;
         }
 
-        if (iv.level === currentIv.level &&
+        if (iv.level === currentLevel &&
             iv.idForm === currentIv.idForm &&
             iv.nature.expGainsFactor === currentIv.nature.expGainsFactor
         ) {
             return false;
         }
         return true;
-    }, [iv, currentIv, maxExpLeft]);
+    }, [iv, currentLevel, currentIv, maxExpLeft]);
 
     React.useEffect(() => {
-        if (open) {
-            if (!shouldReset()) {
-                setShouldRender(true);
-                return;
-            }
+        if (!open) {
+            setShouldRender(false);
+            return;
+        }
 
-            setCurrentIv(iv);
-            setCurrentLevel(iv.level);
-            setExpGot(0);
-            setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
-            setExpFactor(iv.nature.expGainsFactor);
+        if (!shouldReset()) {
             setShouldRender(true);
+            return;
+        }
 
-            let level = 0;
-            if (dstLevel !== undefined) {
-                level = Math.min(dstLevel, maxLevel);
-            }
-            else if (iv.pokemon.specialty === "Berries") {
-                level = 65;
-            }
-            else if (iv.pokemon.specialty === "Ingredients") {
-                level = 60;
-            }
-            else {
-                level = 50;
-            }
-            setTargetLevel(Math.max(level, iv.level));
+        setCurrentIv(iv);
+        setCurrentLevel(iv.level);
+        setExpGot(0);
+        setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
+        setExpFactor(iv.nature.expGainsFactor);
+        setShouldRender(true);
+
+        let level = 0;
+        if (dstLevel !== undefined) {
+            level = Math.min(dstLevel, maxLevel);
+        }
+        else if (iv.pokemon.specialty === "Berries") {
+            level = 65;
+        }
+        else if (iv.pokemon.specialty === "Ingredients") {
+            level = 60;
         }
         else {
-            setShouldRender(false);
+            level = 50;
         }
+        setTargetLevel(Math.max(level, iv.level));
     }, [iv, shouldReset, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((e: SelectChangeEvent) => {
