@@ -531,7 +531,7 @@
         "strength detail2": "Currently, there are constraints in the calculation logic as follows:",
         "strength restriction2": "Energy recovery via Charge Energy S is not included in the calculations.",
         "strength skill info": {
-            "Ingredient Magnet S": "This value is not counted towards the total strength amount.",
+            "Ingredient Magnet S": "Ingredients from the skill are assumed to be surplus.",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) The additional ingredients will be obtainedr when there's one or more Pokémon on the team with the Plus or Minus main skill.",
             "Charge Energy S": "This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",

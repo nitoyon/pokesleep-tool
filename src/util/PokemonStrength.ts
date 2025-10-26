@@ -6,7 +6,9 @@ import fields, { isExpertField, getFavoriteBerries } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
 import PokemonIv from './PokemonIv';
-import PokemonRp, { ingredientStrength } from './PokemonRp';
+import PokemonRp, {
+    averageIngredientStrength, ingredientStrength,
+ } from './PokemonRp';
 import { getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount } from './MainSkill';
 
 /** Pseudo field index where all berries are favorites */
@@ -466,6 +468,8 @@ class PokemonStrength {
         const skillValue = skillValuePerTrigger * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
 
+        const ingFactor = (1 + param.fieldBonus / 100) * bonus.dish;
+
         switch (mainSkill) {
             case "Charge Energy S":
             case "Charge Energy S (Moonlight)":
@@ -554,9 +558,11 @@ class PokemonStrength {
                     this.pokemonIv.pokemon.ing1.name);
                 ingCount = Math.floor(ingCount * bonus.ingredientMagnet);
                 return {
-                    skillValue, skillStrength: 0, skillValuePerTrigger,
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillValuePerTrigger,
                     skillValue2: ingCount * skillCount,
-                    skillStrength2: 0,
+                    skillStrength2: ingCount * ingredientStrength[this.iv.pokemon.ing1.name] * ingFactor,
                     skillValuePerTrigger2: ingCount,
                 };
             }
@@ -572,9 +578,30 @@ class PokemonStrength {
             }
 
             case "Ingredient Magnet S":
-            case "Ingredient Draw S":
-            case "Ingredient Draw S (Super Luck)":
-            case "Ingredient Draw S (Hyper Cutter)":
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillValuePerTrigger,
+                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                };
+            case "Ingredient Draw S (Super Luck)": {
+                const averageStrength = 123.75;
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageStrength * ingFactor,
+                    skillValuePerTrigger,
+                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                };
+            }
+            case "Ingredient Draw S (Hyper Cutter)": {
+                const averageStrength = 130.75;
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageStrength * ingFactor,
+                    skillValuePerTrigger,
+                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                };
+            }
             case "Cooking Power-Up S":
             case "Tasty Chance S":
                 return {
