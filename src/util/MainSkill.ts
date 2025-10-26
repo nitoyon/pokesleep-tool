@@ -40,6 +40,13 @@ export const MainSkillNames: MainSkillName[] = [
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
 ];
 
+/**
+ * Success proberbility for Hyper Cutter
+ *
+ * ref: https://pks.raenonx.cc/en/mainskill/24
+ */
+export const hyperCutterSuccess = 0.1668;
+
 export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     if (skill === "Dream Shard Magnet S" ||
         skill === "Dream Shard Magnet S (Random)") {

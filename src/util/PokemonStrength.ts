@@ -9,7 +9,10 @@ import PokemonIv from './PokemonIv';
 import PokemonRp, {
     averageIngredientStrength, ingredientStrength,
  } from './PokemonRp';
-import { getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount } from './MainSkill';
+import {
+    getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount,
+    hyperCutterSuccess,
+ } from './MainSkill';
 
 /** Pseudo field index where all berries are favorites */
 export const allFavoriteFieldIndex = -2;
@@ -596,9 +599,9 @@ class PokemonStrength {
             case "Ingredient Draw S (Hyper Cutter)": {
                 const averageStrength = 130.75;
                 return {
-                    skillValue,
-                    skillStrength: skillValue * averageStrength * ingFactor,
-                    skillValuePerTrigger,
+                    skillValue: skillValue * (1 + hyperCutterSuccess),
+                    skillStrength: skillValue * averageStrength * ingFactor * (1 + hyperCutterSuccess),
+                    skillValuePerTrigger, // Additional ingredients are not included
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
             }
