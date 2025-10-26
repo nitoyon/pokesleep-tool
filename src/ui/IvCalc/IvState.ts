@@ -326,7 +326,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     return state;
 }
 
-function normalizeState(state: IvState, value: PokemonIv): IvState {
+export function normalizeState(state: IvState, value: PokemonIv): IvState {
     const selectedItem = state.box.getById(state.selectedItemId);
     value.normalize();
 
