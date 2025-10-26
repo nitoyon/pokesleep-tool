@@ -319,6 +319,7 @@
         "berry strength per berry burst": "きのみ$t(strength2)",
         "great success increasment": "大成功 (3倍) での増加分",
         "great success rate": "リサーチまでに大成功する確率",
+        "additional ingredient rate": "追加食材取得倍率",
         "additional ingredients": "追加食材数",
         "other team member": "他のメンバー",
         "max skill level affected": "[$t(calc with max skill level)] が有効になっているため、スキルレベル <level/> で計算しています。",
@@ -545,7 +546,7 @@
             "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
             "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Magnet S)$t(dream shard)を拾う確率については考慮していません。",
-            "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)追加の食材取得数については考慮していません。",
+            "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)$t(additional ingredient rate)は RaenonX での集計結果 (16.68%) を利用しています。",
             "not triggered": "この設定ではメインスキルは発動しません。",
             "unknown": "メインスキルはまだ判明していません。"
         },
