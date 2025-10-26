@@ -88,6 +88,15 @@ export interface StrengthParameter extends EnergyParameter {
     totalFlags: boolean[],
 
     /**
+     * Whether to add other Pokémon's additional strength gained from this
+     * Pokémon's Helping Bonus.
+     *
+     * When set to true, the additional strength that other Pokémon gain due to
+     * this Pokémon's Helping Bonus is added to totalStrength.
+     */
+    addHelpingBonusEffect: boolean,
+
+    /**
      * Recipe bonus, which increases as the number of ingredients increases.
      */
     recipeBonus: number;
@@ -842,6 +851,7 @@ export function createStrengthParameter(
         evolved: false,
         maxSkillLevel: false,
         totalFlags: [true, true, true],
+        addHelpingBonusEffect: true,
         tapFrequency: "always",
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
@@ -1112,6 +1122,12 @@ export function loadStrengthParameter(): StrengthParameter {
     ) {
         ret.totalFlags = json.totalFlags;
     }
+    if (typeof(json.addHelpingBonusEffect) === "boolean") {
+        ret.addHelpingBonusEffect = json.addHelpingBonusEffect;
+    } else {
+        ret.addHelpingBonusEffect = true;
+    }
+
     if (typeof(json.e4eEnergy) === "number" &&
         [5, 7, 9, 11, 15, 18].includes(json.e4eEnergy)) {
         ret.e4eEnergy = json.e4eEnergy;
