@@ -9,9 +9,7 @@ import PokemonStrength, {
 } from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
-import { Button, Dialog, DialogActions,
-    Select, SelectChangeEvent,
-    MenuItem } from '@mui/material';
+import { Dialog, Select, SelectChangeEvent, MenuItem } from '@mui/material';
 import MainSkillIcon from '../MainSkillIcon';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import InfoButton from '../InfoButton';
@@ -21,8 +19,8 @@ import EnergyDialog from './EnergyDialog';
 import IngHelpDialog from './IngHelpDialog';
 import IngredientIcon from '../IngredientIcon';
 import SkillHelpDialog from './SkillHelpDialog';
-import SpecialtyButton from '../SpecialtyButton';
 import HelpStackDialog from './HelpStackDialog';
+import TotalStrengthDialog from './TotalStrengthDialog';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next'
 
@@ -239,7 +237,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
             <span className="strength">{formatWithComma(Math.round(result.totalStrength))}</span>
             <InfoButton onClick={onHelpClick}/>
-            <HelpDialog result={result} open={helpOpen} onClose={onHelpClose}/>
+            <TotalStrengthDialog result={result} open={helpOpen} onClose={onHelpClose}/>
             {decendants.length === 1 && <span className="evolved">
                 {t('strength of x', {x: t(`pokemons.${pokemonIv.pokemon.name}`)})}
             </span>}
@@ -385,69 +383,6 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     </article>;
 }
 
-const HelpDialog = React.memo(({result, open, onClose}: {
-    result: StrengthResult,
-    open: boolean,
-    onClose: () => void,
-}) => {
-    const { t } = useTranslation();
-
-    return <StyledHelpDialog open={open} onClose={onClose}>
-        <article>
-            <h1>
-                <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
-                <span style={{transform: 'scale(1, 0.9)'}}>{formatWithComma(Math.round(result.totalStrength))}</span>
-            </h1>
-            <div className="grid">
-                <SpecialtyButton disabled specialty="Berries"/>
-                <div>{formatWithComma(Math.round(result.berryTotalStrength))}</div>
-                <SpecialtyButton disabled specialty="Ingredients"/>
-                <div>{formatWithComma(Math.round(result.ingStrength))}</div>
-                <SpecialtyButton disabled specialty="Skills"/>
-                <div>{formatWithComma(Math.round(result.skillStrength + result.skillStrength2))}</div>
-            </div>
-            <p style={{marginTop: 0}}>{t('strength detail1')}</p>
-            <p>{t('strength detail2')}</p>
-            <ul style={{paddingLeft: '1rem'}}>
-                <li>{t('strength restriction2')}</li>
-            </ul>
-        </article>
-        <DialogActions>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </StyledHelpDialog>;
-});
-
-const StyledHelpDialog = styled(Dialog)({
-    '& article': {
-        margin: '0.8rem 0.8rem 0 0.8rem',
-        '& > h1': {
-            fontSize: '1.4rem',
-            margin: 0,
-            display: 'flex',
-            alignItems: 'center',
-        },
-        '& > div.grid': {
-            margin: '0.2rem 0 1.5rem 1rem',
-            display: 'grid',
-            gridTemplateColumns: 'min-content min-content',
-            gridGap: '0.2rem 0.5rem',
-            alignItems: 'center',
-            '& > div': {
-                textAlign: 'right',
-                fontWeight: 'bold',
-            },
-        },
-        '& > p': {
-            margin: '0.5rem 0',
-            fontSize: '0.9rem',
-        },
-        '& > ul': {
-            margin: 0,
-            fontSize: '0.9rem',
-        }
-    },
-});
 
 export const StyledInfoDialog = styled(Dialog)({
     '& > div.MuiDialog-container > div.MuiPaper-root': {

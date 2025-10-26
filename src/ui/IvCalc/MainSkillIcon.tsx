@@ -57,9 +57,14 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
             }
         case "Ingredient Magnet S":
         case "Ingredient Draw S":
-        case "Ingredient Draw S (Super Luck)":
         case "Ingredient Draw S (Hyper Cutter)":
             return <IngredientsIcon fontSize="small"/>;
+        case "Ingredient Draw S (Super Luck)":
+            if (second !== true) {
+                return <IngredientsIcon fontSize="small"/>;
+            } else {
+                return <DreamShardIcon/>;
+            }
         case "Cooking Power-Up S":
             return <PotIcon sx={{color: "#886666"}} fontSize="small"/>;
         case "Cooking Power-Up S (Minus)":

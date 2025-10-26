@@ -35,6 +35,17 @@ export const ingredientStrength: {[ing in IngredientName]: number} = {
     "unknown3": 0,
 };
 
+/**
+ * Average ingredient strength excluding unknown ingredients.
+ */
+export const averageIngredientStrength: number = (() => {
+    const ingredients = Object.entries(ingredientStrength)
+        .filter(([name]) => !name.startsWith('unknown'));
+
+    const total = ingredients.reduce((sum, [, strength]) => sum + strength, 0);
+    return total / ingredients.length;
+})();
+
 const berryStrength: {[type in PokemonType]: number} = {
     "normal": 28,
     "fire": 27,
