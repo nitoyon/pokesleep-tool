@@ -100,7 +100,11 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
     const activeEvents = getActiveHelpBonus(new Date())
         .map(x => x.name)
         .reverse();
-    const isEventScheduled = activeEvents.length > 0 || parameter.event !== 'none';
+    if (parameter.event !== 'none' && parameter.event !== 'custom' &&
+        activeEvents.indexOf(parameter.event) < 0) {
+        activeEvents.unshift(parameter.event);
+    }
+    const isEventScheduled = activeEvents.length > 0;
     const eventMenuItems = ['none', ...activeEvents, 'custom'].map(x => {
         const name = x === 'none' ? t('no event') :
             x === 'custom' ? (t('event') + ': ' + t('events.advanced')) :
