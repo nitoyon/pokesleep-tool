@@ -237,7 +237,8 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
             <span className="strength">{formatWithComma(Math.round(result.totalStrength))}</span>
             <InfoButton onClick={onHelpClick}/>
-            <TotalStrengthDialog result={result} open={helpOpen} onClose={onHelpClose}/>
+            <TotalStrengthDialog param={settings} result={result} open={helpOpen}
+                dispatch={dispatch} onClose={onHelpClose}/>
             {decendants.length === 1 && <span className="evolved">
                 {t('strength of x', {x: t(`pokemons.${pokemonIv.pokemon.name}`)})}
             </span>}

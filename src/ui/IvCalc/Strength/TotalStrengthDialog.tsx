@@ -1,18 +1,32 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Dialog, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogActions, IconButton } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { formatWithComma } from '../../../util/NumberUtil';
-import { StrengthResult } from '../../../util/PokemonStrength';
+import { StrengthParameter, StrengthResult } from '../../../util/PokemonStrength';
+import { IvAction } from '../IvState';
 import SpecialtyButton from '../SpecialtyButton';
+import BlockIcon from '@mui/icons-material/Block';
 import { useTranslation } from 'react-i18next';
 
-const TotalStrengthDialog = React.memo(({result, open, onClose}: {
+const TotalStrengthDialog = React.memo(({param, result, open, dispatch, onClose}: {
+    param: StrengthParameter,
     result: StrengthResult,
     open: boolean,
+    dispatch: React.Dispatch<IvAction>,
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
+
+    const onDisableClick = React.useCallback((index: number) => {
+        const totalFlags = [...param.totalFlags];
+        if (index < totalFlags.length) {
+            totalFlags[index] = !totalFlags[index];
+        }
+        dispatch({type: 'changeParameter', payload: {
+            parameter: { ...param, totalFlags }
+        }})
+    }, [dispatch, param]);
 
     return <StyledTotalStrengthDialog open={open} onClose={onClose}>
         <article>
@@ -22,11 +36,23 @@ const TotalStrengthDialog = React.memo(({result, open, onClose}: {
             </h1>
             <div className="grid">
                 <SpecialtyButton disabled specialty="Berries"/>
-                <div>{formatWithComma(Math.round(result.berryTotalStrength))}</div>
+                <div className={param.totalFlags[0] ? '': 'disabled'}>{formatWithComma(Math.round(result.berryTotalStrength))}</div>
+                <IconButton size="small" onClick={() => onDisableClick(0)}
+                    className={param.totalFlags[0] ? '': 'disabled'}>
+                    <BlockIcon fontSize="small"/>
+                </IconButton>
                 <SpecialtyButton disabled specialty="Ingredients"/>
-                <div>{formatWithComma(Math.round(result.ingStrength))}</div>
+                <div className={param.totalFlags[1] ? '': 'disabled'}>{formatWithComma(Math.round(result.ingStrength))}</div>
+                <IconButton size="small" onClick={() => onDisableClick(1)}
+                    className={param.totalFlags[1] ? '': 'disabled'}>
+                    <BlockIcon fontSize="small"/>
+                </IconButton>
                 <SpecialtyButton disabled specialty="Skills"/>
-                <div>{formatWithComma(Math.round(result.skillStrength + result.skillStrength2))}</div>
+                <div className={param.totalFlags[2] ? '': 'disabled'}>{formatWithComma(Math.round(result.skillStrength + result.skillStrength2))}</div>
+                <IconButton size="small" onClick={() => onDisableClick(2)}
+                    className={param.totalFlags[2] ? '': 'disabled'}>
+                    <BlockIcon fontSize="small"/>
+                </IconButton>
             </div>
             <p style={{marginTop: 0}}>{t('strength detail1')}</p>
             <p>{t('strength detail2')}</p>
@@ -52,12 +78,25 @@ const StyledTotalStrengthDialog = styled(Dialog)({
         '& > div.grid': {
             margin: '0.2rem 0 1.5rem 1rem',
             display: 'grid',
-            gridTemplateColumns: 'min-content min-content',
-            gridGap: '0.2rem 0.5rem',
+            gridTemplateColumns: 'min-content min-content min-content',
+            gridGap: '0.2rem 0rem',
             alignItems: 'center',
             '& > div': {
                 textAlign: 'right',
                 fontWeight: 'bold',
+                paddingLeft: '0.5rem',
+                '&.disabled': {
+                    color: '#ccc',
+                    textDecoration: 'line-through #ff0000',
+                },
+            },
+            '& > button': {
+                '& > svg': {
+                    fill: '#ccc',
+                },
+                '&.disabled > svg': {
+                    fill: '#ff0000',
+                },
             },
         },
         '& > p': {
