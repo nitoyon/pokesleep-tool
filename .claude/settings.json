@@ -3,9 +3,11 @@
     "allow": [
       "Bash(npm run:*)",
       "Bash(npm test:*)",
-      "Bash(git status:*)",
+      "Bash(git commit:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git status:*)",
       "Read(./src/**)",
       "Edit(./src/**)"
     ],
