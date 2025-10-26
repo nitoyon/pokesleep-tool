@@ -9,7 +9,9 @@ import PokemonStrength, {
     StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam, whistlePeriod,
 } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
-    getSkillSubValue, hyperCutterSuccess, MainSkillName,
+    getSkillSubValue, hyperCutterSuccess,
+    superLuckIngRate, superLuckShardRate, superLuckShard5Rate,
+    MainSkillName,
 } from '../../../util/MainSkill';
 import { Button, Collapse, Dialog, DialogActions, DialogContent, DialogTitle,
     FormControl, MenuItem, Switch, ToggleButtonGroup, ToggleButton } from '@mui/material';
@@ -115,6 +117,10 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     <> × </>
                     <span className="box box4">{round2(1 + hyperCutterSuccess)}</span>
                 </>}
+                {skillName === "Ingredient Draw S (Super Luck)" && <>
+                    <> × </>
+                    <span className="box box5">{superLuckIngRate * 100}%</span>
+                </>}
                 {skillName === "Berry Burst (Disguise)" && <>
                     <br/>
                     <> + </>
@@ -138,6 +144,10 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                 {skillName === "Ingredient Draw S (Hyper Cutter)" && <>
                     <div><span className="box box4">{round2(1 + hyperCutterSuccess)}</span></div>
                     <span>{t('additional ingredient rate')}</span>
+                </>}
+                {skillName === "Ingredient Draw S (Super Luck)" && <>
+                    <div><span className="box box5">{superLuckIngRate * 100}%</span></div>
+                    <span>{t('ingredient obtain rate')}</span>
                 </>}
                 {skillName === "Berry Burst (Disguise)" && <>
                     <div><span className="box box4">{2 * days}</span></div>
@@ -254,6 +264,9 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
 [React.ReactNode, React.ReactNode]{
     const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
 
+    if (skill === 'Ingredient Draw S (Super Luck)') {
+        return getSuperLuckShardText(skillLevel, t, t('expected dream shard'));
+    }
     if (skill === 'Ingredient Magnet S (Plus)') {
         return getNormalSkillValueText(t, t('additional ingredients'));
     }
@@ -400,6 +413,25 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
     }
 
     return [null, null];
+}
+
+function getSuperLuckShardText(skillLevel: number,
+    t: typeof i18next.t, valueText: string
+):
+[React.ReactNode, React.ReactNode] {
+    const text = t('value per skill', { value: valueText});
+    const shards = getSkillSubValue("Ingredient Draw S (Super Luck)", skillLevel);
+    return [<>
+        {text}<br/>
+        <ul className="detail">
+            <li>
+                <strong>{formatWithComma(shards)}</strong>: {round1(superLuckShardRate * 100)}%
+            </li>
+            <li>
+                <strong>{formatWithComma(shards * 5)}</strong>: {round1(superLuckShard5Rate * 100)}%
+            </li>
+        </ul>
+    </>, null];
 }
 
 function getEnergyRecoveryValueText(value: number,
