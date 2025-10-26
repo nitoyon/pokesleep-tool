@@ -41,6 +41,19 @@ export const MainSkillNames: MainSkillName[] = [
 ];
 
 /**
+ * Ingredient proberbility for Super Luck
+ *
+ * ref: https://pks.raenonx.cc/en/mainskill/23
+ */
+export const superLuckIngRate = 0.86;
+
+/** Dream Shard proberbility (x1) for Super Luck */
+export const superLuckShardRate = 0.112;
+
+/** Dream Shard proberbility (x5) for Super Luck */
+export const superLuckShard5Rate = 0.028;
+
+/**
  * Success proberbility for Hyper Cutter
  *
  * ref: https://pks.raenonx.cc/en/mainskill/24
@@ -208,6 +221,10 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
     if (skill === "Cooking Power-Up S (Minus)") {
         // Get additional energy restore
         return [8, 10, 13, 17, 23, 30, 35][skillLevel - 1];
+    }
+    if (skill === "Ingredient Draw S (Super Luck)") {
+        // Amount of Dream Shards (x1)
+        return [500, 720, 1030, 1440, 2000, 2800, 4000][skillLevel - 1];
     }
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }

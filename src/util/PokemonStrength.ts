@@ -11,7 +11,7 @@ import PokemonRp, {
  } from './PokemonRp';
 import {
     getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount,
-    hyperCutterSuccess,
+    hyperCutterSuccess, superLuckIngRate, superLuckShardRate, superLuckShard5Rate,
  } from './MainSkill';
 
 /** Pseudo field index where all berries are favorites */
@@ -589,11 +589,16 @@ class PokemonStrength {
                 };
             case "Ingredient Draw S (Super Luck)": {
                 const averageStrength = 123.75;
+                const baseShards = getSkillSubValue(mainSkill, skillLevel);
+                const shardsPerSkill = baseShards * superLuckShardRate +
+                    baseShards * 5 * superLuckShard5Rate;
                 return {
-                    skillValue,
-                    skillStrength: skillValue * averageStrength * ingFactor,
-                    skillValuePerTrigger,
-                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                    skillValue: skillValue * superLuckIngRate,
+                    skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
+                    skillValuePerTrigger, // Dream shard is not included
+                    skillValue2: shardsPerSkill * skillCount,
+                    skillStrength2: 0,
+                    skillValuePerTrigger2: shardsPerSkill,
                 };
             }
             case "Ingredient Draw S (Hyper Cutter)": {

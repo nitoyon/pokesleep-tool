@@ -331,6 +331,8 @@
         "great success rate": "Probability of a single great success before starting research",
         "additional ingredient rate": "Additional ingredient rate",
         "additional ingredients": "Additional ingredients",
+        "ingredient obtain rate": "Ingredient obtain rate",
+        "expected dream shard": "Expected dream shard",
         "other team member": "Other member",
         "max skill level affected": "Calculated at skill level <level/> because [$t(calc with max skill level)] is enabled.",
         "skill level bonus affected": "Calculated at skill level <level/> due to <bonus/>.",
@@ -555,7 +557,7 @@
             "Skill Copy": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
             "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
             "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
-            "Ingredient Draw S (Super Luck)": "The probability of collecting $t(dream shard) via $t(strength skill info.Ingredient Magnet S) is not taken into account.",
+            "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Magnet S)The probability of collecting $t(dream shard) is based on aggregated results from RaenonX.",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)$t(additional ingredient rate) uses aggregated results from RaenonX (16.68%).",
             "not triggered": "The main skill is not triggered in this setting.",
             "unknown": "The main skill has not been determined yet."
