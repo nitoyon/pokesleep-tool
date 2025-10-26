@@ -196,5 +196,40 @@ describe('PokemonStrength', () => {
             expect(strength.berryStrengthBonus).toBe(1);
         });
     });
+
+    describe('totalFlags', () => {
+        test('controls which components are included in total strength', () => {
+            const iv = new PokemonIv('Raichu');
+            iv.level = 50;
+
+            // [true, true, true] - all components
+            let param = createParam({ totalFlags: [true, true, true] });
+            let strength = new PokemonStrength(iv, param);
+            let result = strength.calculate();
+            expect(result.totalStrength).toBeCloseTo(
+                result.berryTotalStrength + result.ingStrength + result.skillStrength + result.skillStrength2
+            );
+
+            // [true, false, false] - berry only
+            param = createParam({ totalFlags: [true, false, false] });
+            strength = new PokemonStrength(iv, param);
+            result = strength.calculate();
+            expect(result.totalStrength).toBeCloseTo(result.berryTotalStrength);
+
+            // [true, false, true] - berry + skill
+            param = createParam({ totalFlags: [true, false, true] });
+            strength = new PokemonStrength(iv, param);
+            result = strength.calculate();
+            expect(result.totalStrength).toBeCloseTo(
+                result.berryTotalStrength + result.skillStrength + result.skillStrength2
+            );
+
+            // [false, false, false] - nothing
+            param = createParam({ totalFlags: [false, false, false] });
+            strength = new PokemonStrength(iv, param);
+            result = strength.calculate();
+            expect(result.totalStrength).toBe(0);
+        });
+    });
 });
 
