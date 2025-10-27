@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add halloween eevee": {
+                    "headline": "添加了$t(pokemons.Eevee (Halloween))的数据，并改进了$t(subskill.Helping Bonus)的$t(strength2)计算。",
+                    "detail": "$t(rp collection)\n现在可以$t(helping bonus addition label)。"
+                },
                 "add pumpkaboo": {
                     "headline": "已新增南瓜精與南瓜怪人的資料。",
                     "detail": "$t(rp collection)"
