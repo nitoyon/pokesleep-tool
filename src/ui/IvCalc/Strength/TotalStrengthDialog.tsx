@@ -1,9 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Dialog, DialogActions, IconButton } from '@mui/material';
+import {
+    Button, Checkbox, Dialog, DialogActions, FormControlLabel, IconButton,
+} from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { formatWithComma } from '../../../util/NumberUtil';
 import { StrengthParameter, StrengthResult } from '../../../util/PokemonStrength';
+import CollapseEx from '../../common/CollapseEx';
 import { IvAction } from '../IvState';
 import SpecialtyButton from '../SpecialtyButton';
 import BlockIcon from '@mui/icons-material/Block';
@@ -26,6 +29,14 @@ const TotalStrengthDialog = React.memo(({param, result, open, dispatch, onClose}
         dispatch({type: 'changeParameter', payload: {
             parameter: { ...param, totalFlags }
         }})
+    }, [dispatch, param]);
+    const onHelpingBonusEffectChange = React.useCallback(() => {
+        dispatch({type: 'changeParameter', payload: {
+            parameter: {
+                ...param,
+                addHelpingBonusEffect: !param.addHelpingBonusEffect
+            },
+        }});
     }, [dispatch, param]);
 
     return <StyledTotalStrengthDialog open={open} onClose={onClose}>
@@ -54,7 +65,21 @@ const TotalStrengthDialog = React.memo(({param, result, open, dispatch, onClose}
                     <BlockIcon fontSize="small"/>
                 </IconButton>
             </div>
-            <p style={{marginTop: 0}}>{t('strength detail1')}</p>
+            <CollapseEx show={result.helpingBonusStrength > 0}>
+                <footer className="helpingBonus">
+                    <label>{t('helping bonus addition')}: </label>
+                    <strong>{formatWithComma(result.helpingBonusStrength)}</strong>
+                </footer>
+            </CollapseEx>
+            <FormControlLabel control={<Checkbox size="small" checked={param.addHelpingBonusEffect}
+                onChange={onHelpingBonusEffectChange}/>} label={t('helping bonus addition label')} />
+            <CollapseEx show={param.addHelpingBonusEffect}>
+                <footer className="helpingBonusNote">
+                    {t('helping bonus addition note')}
+                </footer>
+            </CollapseEx>
+
+            <p>{t('strength detail1')}</p>
             <p>{t('strength detail2')}</p>
             <ul style={{paddingLeft: '1rem'}}>
                 <li>{t('strength restriction2')}</li>
@@ -76,7 +101,7 @@ const StyledTotalStrengthDialog = styled(Dialog)({
             alignItems: 'center',
         },
         '& > div.grid': {
-            margin: '0.2rem 0 1.5rem 1rem',
+            margin: '0.2rem 0 0.5rem 1rem',
             display: 'grid',
             gridTemplateColumns: 'min-content min-content min-content',
             gridGap: '0.2rem 0rem',
@@ -98,6 +123,23 @@ const StyledTotalStrengthDialog = styled(Dialog)({
                     fill: '#ff0000',
                 },
             },
+        },
+        '& footer.helpingBonus': {
+            padding: '0 0 0.5rem 1rem',
+            fontSize: '0.9rem',
+        },
+        '& > label.MuiFormControlLabel-root': {
+            alignItems: 'start',
+            marginRight: 0,
+            '& > span.MuiFormControlLabel-label': {
+                paddingTop: '0.5rem',
+                fontSize: '0.9rem',
+            },
+        },
+        '& footer.helpingBonusNote': {
+            padding: '0 0 0.5rem 1.8rem',
+            fontSize: '0.8rem',
+            color: '#999',
         },
         '& > p': {
             margin: '0.5rem 0',

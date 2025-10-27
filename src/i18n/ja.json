@@ -520,6 +520,9 @@
         "normal candy boost": "無制限",
 
         "strength of x": "{{x}}のエナジー",
+        "helping bonus addition": "$t(subskill.Helping Bonus)の効果",
+        "helping bonus addition label": "[$t(subskill.Helping Bonus)]による$t(other team member)の$t(strength2)増加分を$t(total strength)に含める",
+        "helping bonus addition note": "$t(other team member)が稼ぐ$t(strength2)はこのポケモンと同じと仮定して計算しています。",
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
         "strength detail2": "現時点の計算ロジックには次のような制約があります。",
         "strength restriction2": "げんきチャージSによるげんき回復は考慮されていません。",
