@@ -3,6 +3,8 @@ import PokemonStrength, {
 } from './PokemonStrength';
 import PokemonIv from './PokemonIv';
 import Nature from './Nature';
+import SubSkill from './SubSkill';
+import SubSkillList from './SubSkillList';
 
 function createParam(obj: Partial<StrengthParameter>): StrengthParameter {
     return createStrengthParameter(obj);
@@ -194,6 +196,103 @@ describe('PokemonStrength', () => {
             const strength = new PokemonStrength(iv, param);
 
             expect(strength.berryStrengthBonus).toBe(1);
+        });
+    });
+
+    describe('totalFlags', () => {
+        test('controls which components are included in total strength', () => {
+            const iv = new PokemonIv('Raichu');
+            iv.level = 50;
+
+            // [true, true, true] - all components
+            let param = createParam({ totalFlags: [true, true, true] });
+            let strength = new PokemonStrength(iv, param);
+            let result = strength.calculate();
+            expect(result.totalStrength).toBeCloseTo(
+                result.berryTotalStrength + result.ingStrength + result.skillStrength + result.skillStrength2
+            );
+
+            // [true, false, false] - berry only
+            param = createParam({ totalFlags: [true, false, false] });
+            strength = new PokemonStrength(iv, param);
+            result = strength.calculate();
+            expect(result.totalStrength).toBeCloseTo(result.berryTotalStrength);
+
+            // [true, false, true] - berry + skill
+            param = createParam({ totalFlags: [true, false, true] });
+            strength = new PokemonStrength(iv, param);
+            result = strength.calculate();
+            expect(result.totalStrength).toBeCloseTo(
+                result.berryTotalStrength + result.skillStrength + result.skillStrength2
+            );
+
+            // [false, false, false] - nothing
+            param = createParam({ totalFlags: [false, false, false] });
+            strength = new PokemonStrength(iv, param);
+            result = strength.calculate();
+            expect(result.totalStrength).toBe(0);
+        });
+    });
+
+    describe('helpingBonusStrength', () => {
+        test('does not calculates additional strength when addHelpingBonusEffect is false', () => {
+            const iv = new PokemonIv('Raichu');
+            iv.level = 10;
+            iv.subSkills = new SubSkillList([new SubSkill('Helping Bonus')]);
+
+            const param = createParam({ helpBonusCount: 0, addHelpingBonusEffect: false });
+            const strength = new PokemonStrength(iv, param);
+            const result = strength.calculate();
+            const baseTotal = result.berryTotalStrength + result.ingStrength +
+                result.skillStrength + result.skillStrength2;
+
+            expect(result.helpingBonusStrength).toBe(0);
+            expect(result.totalStrength).toBeCloseTo(baseTotal);
+        });
+
+        test('calculates additional strength when Helping Bonus sub-skill is active', () => {
+            const iv = new PokemonIv('Raichu');
+            iv.level = 10;
+            iv.subSkills = new SubSkillList([new SubSkill('Helping Bonus')]);
+
+            const param = createParam({ helpBonusCount: 0, addHelpingBonusEffect: true });
+            const strength = new PokemonStrength(iv, param);
+            const result = strength.calculate();
+
+            // When helpBonusCount is 0:
+            // currentFactor = 1 - 0.05 * 0 = 1.0
+            // newFactor = 1 - 0.05 * 1 = 0.95
+            // rate = 1.0 / 0.95 - 1 ≈ 0.0526
+            // helpingBonusStrength = baseTotal * rate * 4
+            const baseTotal = result.berryTotalStrength + result.ingStrength +
+                result.skillStrength + result.skillStrength2;
+            const expectedRate = 1.0 / 0.95 - 1;
+            const expectedHelpingBonus = baseTotal * expectedRate * 4;
+
+            expect(result.helpingBonusStrength).toBeCloseTo(expectedHelpingBonus);
+            expect(result.totalStrength).toBeCloseTo(baseTotal + expectedHelpingBonus);
+        });
+
+        test('calculates correctly with different helpBonusCount values', () => {
+            const iv = new PokemonIv('Raichu');
+            iv.level = 10;
+            iv.subSkills = new SubSkillList([new SubSkill('Helping Bonus')]);
+
+            // Test with helpBonusCount = 1
+            const param = createParam({ helpBonusCount: 1, addHelpingBonusEffect: true });
+            const strength = new PokemonStrength(iv, param);
+            const result = strength.calculate();
+
+            // currentFactor = 1 - 0.05 * 1 = 0.95
+            // newFactor = 1 - 0.05 * 2 = 0.9
+            // rate = 0.95 / 0.9 - 1 ≈ 0.0556
+            const baseTotal = result.berryTotalStrength + result.ingStrength +
+                result.skillStrength + result.skillStrength2;
+            const expectedRate = 0.95 / 0.9 - 1;
+            const expectedHelpingBonus = baseTotal * expectedRate * 4;
+
+            expect(result.helpingBonusStrength).toBeCloseTo(expectedHelpingBonus);
+            expect(result.totalStrength).toBeCloseTo(baseTotal + expectedHelpingBonus);
         });
     });
 });

@@ -516,6 +516,9 @@
         "normal candy boost": "무제한",
 
         "strength of x": "{{x}} 의 에너지",
+        "helping bonus addition": "$t(subskill.Helping Bonus)의 효과",
+        "helping bonus addition label": "[$t(subskill.Helping Bonus)]에 의한 $t(other team member)의 $t(strength2) 증가분을 $t(total strength)에 포함",
+        "helping bonus addition note": "$t(other team member)가 벌어들이는 $t(strength2)는 이 포켓몬과 같다고 가정하여 계산합니다.",
         "strength detail1": "포켓몬이 벌어들이는 에너지와 식재료, 스킬의 평균 발생 횟수를 확인할 수 있습니다.",
         "strength detail2": "현재 시점의 계산 로직에는 다음과 같은 제한이 있습니다.",
         "strength restriction2": "기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",

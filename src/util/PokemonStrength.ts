@@ -74,6 +74,29 @@ export interface StrengthParameter extends EnergyParameter {
     maxSkillLevel: boolean;
 
     /**
+     * Total strength calculation flag (berry, ingredient, skill).
+     *
+     * This is a 3-element boolean array where:
+     * - 1st element: Include berry strength in total
+     * - 2nd element: Include ingredient strength in total
+     * - 3rd element: Include skill strength in total
+     *
+     * Examples:
+     * - [true, true, true]: Total strength includes berry, ingredient, and skill strength
+     * - [true, false, true]: Total strength includes berry and skill strength only
+     */
+    totalFlags: boolean[],
+
+    /**
+     * Whether to add other Pokémon's additional strength gained from this
+     * Pokémon's Helping Bonus.
+     *
+     * When set to true, the additional strength that other Pokémon gain due to
+     * this Pokémon's Helping Bonus is added to totalStrength.
+     */
+    addHelpingBonusEffect: boolean,
+
+    /**
      * Recipe bonus, which increases as the number of ingredients increases.
      */
     recipeBonus: number;
@@ -135,8 +158,13 @@ export interface StrengthResult {
     bonus: BonusEffectsWithReason;
     /** energy and help count */
     energy: EnergyResult;
-    /** Total strength (berry + ingredient + skill) */
+    /** Total strength (berry + ingredient + skill + helpingBonusStrength) */
     totalStrength: number;
+    /**
+     * Additional strength that other Pokémon gain from this Pokémon's
+     * Helping Bonus
+     */
+    helpingBonusStrength: number;
 
     /** Normal help count (not sneaky snacking) */
     notFullHelpCount: number;
@@ -414,10 +442,25 @@ class PokemonStrength {
                 this.getSkillValueAndStrength(skillCount, param, bonus));
         }
 
-        const totalStrength = ingStrength + berryTotalStrength + skillStrength + skillStrength2;
+        let totalStrength = (param.totalFlags[1] ? ingStrength : 0) +
+            (param.totalFlags[0] ? berryTotalStrength : 0) +
+            (param.totalFlags[2] ? skillStrength + skillStrength2 : 0);
+        let helpingBonusStrength = 0;
+        if (param.addHelpingBonusEffect && this.pokemonIv.hasHelpingBonusInActiveSubSkills) {
+            // current factor (ex: if helpBonusCount is 1, factor is 0.95)
+            const currentHelpingBonusEffect = 1 - 0.05 * param.helpBonusCount;
+            // new factor (ex: if helpBonusCount is 1, factor is 0.9)
+            const newHelpingBonusEffect = 1 - 0.05 * (param.helpBonusCount + 1);
+            // Increased strength rate (ex: helpBonusCount is 1, factor is 0.055...)
+            const rate = currentHelpingBonusEffect / newHelpingBonusEffect - 1;
+            // Assume that other 4 members gain totalStrength too
+            helpingBonusStrength = totalStrength * rate * 4;
+            // Add helpingBonusStrength to totalStrength
+            totalStrength += helpingBonusStrength;
+        }
 
         return {
-            bonus, energy, totalStrength, notFullHelpCount, fullHelpCount,
+            bonus, energy, totalStrength, helpingBonusStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength, skillValuePerTrigger,
@@ -825,6 +868,8 @@ export function createStrengthParameter(
         level: 0,
         evolved: false,
         maxSkillLevel: false,
+        totalFlags: [true, true, true],
+        addHelpingBonusEffect: true,
         tapFrequency: "always",
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
@@ -1053,9 +1098,9 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.period = json.period;
     }
     if (typeof(json.fieldBonus) === "number" &&
-        Math.floor(json.fieldBonus / 5) === json.fieldBonus / 5 &&
+        Math.floor(json.fieldBonus) === json.fieldBonus &&
         json.fieldBonus >= 0 && json.fieldBonus <= 100) {
-        ret.fieldBonus = json.fieldBonus;
+        ret.fieldBonus = Math.floor(json.fieldBonus);
     }
     if (typeof(json.fieldIndex) === "number" &&
         Math.floor(json.fieldIndex) === json.fieldIndex &&
@@ -1090,6 +1135,17 @@ export function loadStrengthParameter(): StrengthParameter {
     if (typeof(json.maxSkillLevel) === "boolean") {
         ret.maxSkillLevel = json.maxSkillLevel;
     }
+    if (Array.isArray(json.totalFlags) && json.totalFlags.length === 3 &&
+        json.totalFlags.every((x: unknown) => typeof(x) === "boolean")
+    ) {
+        ret.totalFlags = json.totalFlags;
+    }
+    if (typeof(json.addHelpingBonusEffect) === "boolean") {
+        ret.addHelpingBonusEffect = json.addHelpingBonusEffect;
+    } else {
+        ret.addHelpingBonusEffect = true;
+    }
+
     if (typeof(json.e4eEnergy) === "number" &&
         [5, 7, 9, 11, 15, 18].includes(json.e4eEnergy)) {
         ret.e4eEnergy = json.e4eEnergy;

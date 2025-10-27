@@ -520,6 +520,9 @@
         "normal candy boost": "无限制",
 
         "strength of x": "{{x}}的能量",
+        "helping bonus addition": "$t(subskill.Helping Bonus)的效果",
+        "helping bonus addition label": "將[$t(subskill.Helping Bonus)]帶來的$t(other team member)的$t(strength2)增加量包含在$t(total strength)中",
+        "helping bonus addition note": "假定$t(other team member)賺取的$t(strength2)與該寶可夢相同來進行計算。",
         "strength detail1": "可以確認寶可夢賺取的能量，食材，技能發動的次數。",
         "strength detail2": "目前的計算邏輯有以下限制。",
         "strength restriction2": "沒有考慮活力填充S所帶來的活力回復。",
