@@ -2128,31 +2128,31 @@
         "sleepType": "snoozing",
         "exp": 600,
         "type": "normal",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Skills",
+        "skill": "Ingredient Magnet S",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3200,
+        "ingRatio": 12,
+        "skillRatio": 4.6,
         "ancestor": null,
         "evolutionCount": -1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 18,
         "ing1": {
-            "name": "unknown1",
+            "name": "pumpkin",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "cacao",
+            "c2": 4,
+            "c3": 6
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "milk",
+            "c3": 9
         },
         "form": "Halloween"
     },
