@@ -186,8 +186,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     }
     if (type === "changeParameter") {
         const value = action.payload.parameter;
-        const newState = {...state, parameter: value};
-        normalizeState(newState, state.pokemonIv);
+        const newState = normalizeState({...state, parameter: value});
         localStorage.setItem('PstStrenghParam', JSON.stringify(newState.parameter));
         return newState;
     }
@@ -208,7 +207,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         };
     }
     if (type === "updateIv") {
-        const newState = normalizeState(state, action.payload.iv);
+        const newState = normalizeState({...state, pokemonIv: action.payload.iv});
         saveIvStateCache(newState);
         return newState;
     }
@@ -247,7 +246,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     }
     if (type === "restoreItem") {
         if (selectedItem !== null) {
-            const newValue = {...normalizeState(state, selectedItem.iv)};
+            const newValue = normalizeState({...state, pokemonIv: selectedItem.iv});
             saveIvStateCache(newValue);
             return newValue;
         }
@@ -277,8 +276,8 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
             box.set(value.id, value.iv, value.nickname);
         }
         box.save();
-        const s = normalizeState(state, value.iv);
-        const newState = {...s, box, selectedItemId};
+        const newState = normalizeState({...state, pokemonIv: value.iv, box});
+        newState.selectedItemId = selectedItemId;
         saveIvStateCache(newState);
         return newState;
     }
@@ -299,8 +298,8 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     const item = state.box.getById(id);
     if (item === null) { return state; }
     if (type === "select") {
-        const s = normalizeState(state, item.iv);
-        const newState = {...s, selectedItemId: id};
+        const newState = normalizeState({...state, pokemonIv: item.iv});
+        newState.selectedItemId = id;
         saveIvStateCache(newState);
         return newState;
     }
@@ -326,9 +325,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     return state;
 }
 
-export function normalizeState(state: IvState, value: PokemonIv): IvState {
+export function normalizeState(state: IvState): IvState {
     const selectedItem = state.box.getById(state.selectedItemId);
-    value.normalize();
+    state.pokemonIv.normalize();
 
     // apply event fixedBerries type
     const event = getEventBonus(state.parameter.event,
@@ -384,17 +383,17 @@ export function normalizeState(state: IvState, value: PokemonIv): IvState {
     let selectedItemId = state.selectedItemId;
     if (selectedItem !== null) {
         // Ancestor of Evolving pokemon has changed
-        if (selectedItem.iv.pokemon.ancestor !== value.pokemon.ancestor) {
+        if (selectedItem.iv.pokemon.ancestor !== state.pokemonIv.pokemon.ancestor) {
             selectedItemId = -1;
         }
         // Non-evolving pokemon has changed
         if (selectedItem.iv.pokemon.ancestor === null &&
-            selectedItem.iv.pokemon.id !== value.pokemon.id) {
-                selectedItemId = -1;
-            }
+            selectedItem.iv.pokemon.id !== state.pokemonIv.pokemon.id) {
+            selectedItemId = -1;
+        }
     }
 
-    return {...state, pokemonIv: value, selectedItemId};
+    return {...state, selectedItemId};
 }
 
 export default IvState;
