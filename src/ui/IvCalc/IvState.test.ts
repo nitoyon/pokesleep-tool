@@ -34,7 +34,8 @@ describe('normalizeState', () => {
         test('should call normalize on the PokemonIv', () => {
             const iv = new PokemonIv('Pikachu');
             iv.skillLevel = 0;
-            const newState = normalizeState(baseState, iv);
+            const state = { ...baseState, pokemonIv: iv };
+            const newState = normalizeState(state);
 
             expect(newState.pokemonIv).toBe(iv);
             expect(newState.pokemonIv.skillLevel).toBe(1);
@@ -47,9 +48,9 @@ describe('normalizeState', () => {
             state.parameter.event = 'halloween 2024';
             state.parameter.fieldIndex = 0;
             state.parameter.favoriteType = ['normal', 'bug', 'rock'];
+            state.pokemonIv = new PokemonIv('Venusaur');
 
-            const iv = new PokemonIv('Venusaur');
-            const newState = normalizeState(state, iv);
+            const newState = normalizeState(state);
 
             // The favoriteType should be updated if the event has fixedBerries
             expect(newState.parameter.favoriteType[0]).toBe("ghost");
@@ -62,9 +63,9 @@ describe('normalizeState', () => {
             state.parameter.event = 'halloween2024';
             state.parameter.fieldIndex = 1;
             state.parameter.favoriteType = ['normal', 'normal', 'normal'];
+            state.pokemonIv = new PokemonIv('Venusaur');
 
-            const iv = new PokemonIv('Venusaur');
-            const newState = normalizeState(state, iv);
+            const newState = normalizeState(state);
 
             // The favoriteType shouldn't be updated
             expect(newState.parameter.favoriteType[0]).toBe("normal");
@@ -75,9 +76,9 @@ describe('normalizeState', () => {
             state.parameter.event = 'raikou entei suicune research 1st week';
             state.parameter.fieldIndex = 0;
             state.parameter.favoriteType = ['normal', 'normal', 'normal'];
+            state.pokemonIv = new PokemonIv('Venusaur');
 
-            const iv = new PokemonIv('Venusaur');
-            const newState = normalizeState(state, iv);
+            const newState = normalizeState(state);
 
             // The favoriteType should be updated if the event has fixedBerries
             expect(newState.parameter.favoriteType[0]).toBe("electric");
@@ -100,8 +101,7 @@ describe('normalizeState', () => {
             ];
             state.parameter.berryBurstTeam.species = 1;
 
-            const iv = new PokemonIv('Cresselia');
-            const newState = normalizeState(state, iv);
+            const newState = normalizeState(state);
 
             // Species count should be updated based on team members of same type
             expect(newState.parameter.berryBurstTeam.species).toBe(2);
@@ -109,7 +109,7 @@ describe('normalizeState', () => {
 
         test('should use min when species count > 2', () => {
             const state = { ...baseState };
-            state.pokemonIv = new PokemonIv('Cresselia');
+            state.pokemonIv = new PokemonIv('Cresselia'); // psychic type
             state.parameter.berryBurstTeam.auto = false;
             state.parameter.berryBurstTeam.members = [
                 { type: 'psychic', level: 50 },
@@ -119,8 +119,7 @@ describe('normalizeState', () => {
             ];
             state.parameter.berryBurstTeam.species = 3;
 
-            const iv = new PokemonIv('Cresselia'); // psychic type
-            const newState = normalizeState(state, iv);
+            const newState = normalizeState(state);
 
             expect(newState.parameter.berryBurstTeam.species).toBe(2);
         });
@@ -129,14 +128,16 @@ describe('normalizeState', () => {
     describe('State immutability', () => {
         test('should return new state object', () => {
             const iv = new PokemonIv('Pikachu');
-            const newState = normalizeState(baseState, iv);
+            const state = { ...baseState, pokemonIv: iv };
+            const newState = normalizeState(state);
 
-            expect(newState).not.toBe(baseState);
+            expect(newState).not.toBe(state);
         });
 
         test('should update pokemonIv reference', () => {
             const iv = new PokemonIv('Pikachu');
-            const newState = normalizeState(baseState, iv);
+            const state = { ...baseState, pokemonIv: iv };
+            const newState = normalizeState(state);
 
             expect(newState.pokemonIv).toBe(iv);
             expect(newState.pokemonIv).not.toBe(baseState.pokemonIv);
