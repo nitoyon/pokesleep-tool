@@ -158,8 +158,13 @@ export interface StrengthResult {
     bonus: BonusEffectsWithReason;
     /** energy and help count */
     energy: EnergyResult;
-    /** Total strength (berry + ingredient + skill) */
+    /** Total strength (berry + ingredient + skill + helpingBonusStrength) */
     totalStrength: number;
+    /**
+     * Additional strength that other Pokémon gain from this Pokémon's
+     * Helping Bonus
+     */
+    helpingBonusStrength: number;
 
     /** Normal help count (not sneaky snacking) */
     notFullHelpCount: number;
@@ -437,12 +442,25 @@ class PokemonStrength {
                 this.getSkillValueAndStrength(skillCount, param, bonus));
         }
 
-        const totalStrength = (param.totalFlags[1] ? ingStrength : 0) +
+        let totalStrength = (param.totalFlags[1] ? ingStrength : 0) +
             (param.totalFlags[0] ? berryTotalStrength : 0) +
             (param.totalFlags[2] ? skillStrength + skillStrength2 : 0);
+        let helpingBonusStrength = 0;
+        if (param.addHelpingBonusEffect && this.pokemonIv.hasHelpingBonusInActiveSubSkills) {
+            // current factor (ex: if helpBonusCount is 1, factor is 0.95)
+            const currentHelpingBonusEffect = 1 - 0.05 * param.helpBonusCount;
+            // new factor (ex: if helpBonusCount is 1, factor is 0.9)
+            const newHelpingBonusEffect = 1 - 0.05 * (param.helpBonusCount + 1);
+            // Increased strength rate (ex: helpBonusCount is 1, factor is 0.055...)
+            const rate = currentHelpingBonusEffect / newHelpingBonusEffect - 1;
+            // Assume that other 4 members gain totalStrength too
+            helpingBonusStrength = totalStrength * rate * 4;
+            // Add helpingBonusStrength to totalStrength
+            totalStrength += helpingBonusStrength;
+        }
 
         return {
-            bonus, energy, totalStrength, notFullHelpCount, fullHelpCount,
+            bonus, energy, totalStrength, helpingBonusStrength, notFullHelpCount, fullHelpCount,
             ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
             skillRatio, skillCount, skillValue, skillStrength, skillValuePerTrigger,
