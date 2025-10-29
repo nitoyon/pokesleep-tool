@@ -324,6 +324,7 @@
         "value per skill": "{{value}} per skill",
         "e4e per pokemon": "Energy restored per Pokémon",
         "base value": "Base {{value}}",
+        "base strength": "Base strength",
         "range average": "Average of {{min}} to {{max}}",
         "range expected": "Expected value from {{min}} to {{max}}",
         "nature factor": "Modifier based on nature",

@@ -310,6 +310,7 @@
         "value per skill": "스킬 1회당 {{value}}",
         "e4e per pokemon": "포켓몬 1마리당 회복량",
         "base value": "기본 {{value}}",
+        "base strength": "기본 에너지",
         "range average": "{{min}}～{{max}}의 평균값",
         "range expected": "{{min}}～{{max}}의 기대값",
         "nature factor": "성격에 따른 보정치",

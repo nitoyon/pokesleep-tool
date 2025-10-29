@@ -314,6 +314,7 @@
         "value per skill": "スキル1回あたりの{{value}}",
         "e4e per pokemon": "1匹のげんき回復量",
         "base value": "基礎{{value}}",
+        "base strength": "基礎エナジー",
         "range average": "{{min}}～{{max}} の平均値",
         "range expected": "{{min}}～{{max}} の期待値",
         "nature factor": "せいかくによる補正値",
