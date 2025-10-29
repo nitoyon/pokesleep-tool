@@ -118,7 +118,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [400, 569, 785, 1083, 1496, 2066, 3002][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Stockpile)") {
-        return [623.96, 887.03, 1224.08, 1690.11, 2232.54, 3222.7, 4681.77][skillLevel - 1];
+        return [644.3, 915.95, 1263.97, 1745.19, 2408.59, 3327.75, 4834.38][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
         return [500, 711.5, 981.5, 1354, 1870, 2582.5, 3752.5][skillLevel - 1];
@@ -136,7 +136,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [5, 7, 9, 12, 16, 20, 24][skillLevel - 1];
     }
     if (skill === "Energizing Cheer S") {
-        return [14, 17, 23, 29, 38, 51][skillLevel - 1];
+        return [12, 15, 20, 25, 33, 44][skillLevel - 1];
     }
     if (skill === "Energy for Everyone S") {
         return [5, 7, 9, 11, 15, 18][skillLevel - 1];
@@ -323,13 +323,13 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
             break;
         case "Charge Strength S (Stockpile)":
             switch (skillLevel) {
-                case 1: return [600, 10980];
-                case 2: return [853, 15610];
-                case 3: return [1177, 21540];
-                case 4: return [1625, 29740];
-                case 5: return [2243, 41047];
-                case 6: return [3099, 56712];
-                case 7: return [4502, 82386];
+                case 1: return [600, 12120];
+                case 2: return [853, 17231];
+                case 3: return [1177, 23776];
+                case 4: return [1625, 32827];
+                case 5: return [2243, 45309];
+                case 6: return [3099, 62600];
+                case 7: return [4502, 90940];
             }
             break;
         case "Dream Shard Magnet S (Random)":

@@ -315,6 +315,7 @@
         "value per skill": "每次技能的{{value}}",
         "e4e per pokemon": "每隻寶可夢的元氣回復量",
         "base value": "基礎{{value}}",
+        "base strength": "基礎能量",
         "range average": "{{min}}～{{max}} 的平均值",
         "range expected": "{{min}}～{{max}} 的期望值",
         "nature factor": "性格的補正值",
