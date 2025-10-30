@@ -39,7 +39,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
 }) => {
     const { t } = useTranslation();
     const [sortConfig, setSortConfig] = React.useState(() => loadBoxSortConfig());
-    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
+    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(() => new BoxFilterConfig({}));
     const [filterOpen, setFilterOpen] = React.useState(false);
     const [candyOpen, setCandyOpen] = React.useState(false);
 
@@ -65,8 +65,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
         setFilterOpen(false);
     }, [])
     const onFilterChange = React.useCallback((value: BoxFilterConfig) => {
-        boxFilterConfig = value;
-        setFilterConfig(boxFilterConfig);
+        setFilterConfig(value);
     }, []);
     const onCandyClick = React.useCallback(() => {
         setCandyOpen(true);
@@ -478,9 +477,6 @@ export class BoxFilterConfig implements IBoxFilterConfig {
             this.downNature === "No effect";
     }
 }
-
-/** Cache for latest filter config */
-let boxFilterConfig = new BoxFilterConfig({});
 
 /**
  * Load box sort config from localStorage.
