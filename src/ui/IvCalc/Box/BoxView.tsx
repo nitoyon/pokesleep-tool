@@ -38,7 +38,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
     dispatch: (action: IvAction) => void,
 }) => {
     const { t } = useTranslation();
-    const [sortConfig, setSortConfig] = React.useState(loadBoxSortConfig());
+    const [sortConfig, setSortConfig] = React.useState(() => loadBoxSortConfig());
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const [candyOpen, setCandyOpen] = React.useState(false);
