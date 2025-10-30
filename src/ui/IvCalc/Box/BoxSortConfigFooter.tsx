@@ -37,6 +37,9 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onParameterChange({...parameter, evolved: e.target.checked});
     }, [parameter, onParameterChange]);
+    const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onParameterChange({...parameter, maxSkillLevel: e.target.checked});
+    }, [parameter, onParameterChange]);
 
     const ingMenus = React.useMemo(() => {
         const ret: React.ReactElement[] = IngredientNames.map(ing =>
@@ -111,13 +114,20 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     {skillMenus}
                 </SelectEx>
             </span>}
-            <span className="evolved">
+            <span className="switch">
                 <FormControlLabel control={
                     <Switch checked={parameter.evolved} size="small"
                         onChange={onEvolvedChange} />
                     }
                     label={t('calc with evolved (short)')} />
             </span>
+            {sortConfig.sort === "skill" && <span className="switch">
+                <FormControlLabel control={
+                    <Switch checked={parameter.maxSkillLevel} size="small"
+                        onChange={onMaxSkillLevelChange} />
+                    }
+                    label={t('calc with max skill level (short)')} />
+            </span>}
         </div>
     </StyledBoxHeader>;
 });
@@ -154,7 +164,7 @@ const StyledBoxHeader = styled('div')({
                 paddingRight: '4px',
                 verticalAlign: 'top',
             },
-            '&.evolved': {
+            '&.switch': {
                 paddingLeft: '5px',
                 '& span.MuiTypography-root': {
                     textWrap: 'nowrap',
