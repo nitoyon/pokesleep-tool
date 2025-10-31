@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { IvAction } from '../IvState';
-import { BoxSortConfig } from './BoxView';
+import { BoxSortConfig } from '../../../util/PokemonBoxSort';
 import IngredientIcon from '../IngredientIcon';
 import MainSkillIcon from '../MainSkillIcon';
 import FixedLevelSelect from '../Strength/FixedLevelSelect';
