@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { PokemonBoxItem } from '../../../util/PokemonBox';
 import BoxFilterConfig from '../../../util/PokemonBoxFilter';
+import { sortPokemonItems, BoxSortType, BoxSortConfig, loadBoxSortConfig } from '../../../util/PokemonBoxSort';
 import PokemonIcon from '../PokemonIcon';
 import { IvAction } from '../IvState';
 import PokemonFilterFooter, { PokemonFilterFooterConfig } from '../PokemonFilterFooter';
@@ -9,11 +10,8 @@ import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
 import CandyDialog from '../CandyDialog';
 import { shareIv } from '../ShareUtil';
-import { IngredientName, IngredientNames } from '../../../data/pokemons';
-import { MainSkillName, MainSkillNames, matchMainSkillName } from '../../../util/MainSkill';
 import PokemonIv from '../../../util/PokemonIv';
-import PokemonRp from '../../../util/PokemonRp';
-import PokemonStrength, { StrengthParameter, whistlePeriod } from '../../../util/PokemonStrength';
+import { StrengthParameter } from '../../../util/PokemonStrength';
 import { Button, ButtonBase, Fab, IconButton, ListItemIcon,
     Menu, MenuItem, MenuList }  from '@mui/material';
 import CandyIcon from '../../Resources/CandyIcon';
@@ -26,7 +24,6 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next'
 
 const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
     items: PokemonBoxItem[],
@@ -147,203 +144,6 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
             onChange={onIvChange} onClose={onCandyDialogClose}/>
     </>;
 });
-
-/**
- * Filter the given Pokemon box items.
- * @param filtered The array of Pokémon box items to be filtered.
- * @param sortConfig Sort configuration.
- * @param parameter Strength parameter.
- * @param t The translation function from i18next.
- * @returns A tuple containing:
- *   - An array of filtered and sorted Pokémon box items.
- *   - An error string, if any error occurs; otherwise, an empty string.
- */
-function sortPokemonItems(filtered: PokemonBoxItem[],
-    sortConfig: BoxSortConfig,
-    parameter: StrengthParameter,
-    t: typeof i18next.t
-): [PokemonBoxItem[], string] {
-    if (filtered.length === 0) {
-        return [[], t('no pokemon found')];
-    }
-
-    // Create a shallow copy of `filtered` because Array.sort mutates it
-    filtered = [...filtered];
-
-    const sort = sortConfig.sort;
-    if (sort === "level") {
-        const reverse = sortConfig.descending ? -1 : 1;
-        return [filtered.sort((a, b) =>
-            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? reverse * (b.iv.pokemon.id - a.iv.pokemon.id) :
-            b.iv.idForm !== a.iv.idForm ? reverse * (b.iv.idForm - a.iv.idForm) :
-            b.id - a.id), ''];
-    }
-    else if (sort === "name") {
-        return [filtered.sort((a, b) =>
-            b.filledNickname(t) > a.filledNickname(t) ? 1 :
-            b.filledNickname(t) < a.filledNickname(t) ? -1 :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.iv.idForm !== a.iv.idForm ? b.iv.idForm - a.iv.idForm :
-            b.id - a.id), ''];
-    }
-    else if (sort === "pokedexno") {
-        return [filtered.sort((a, b) =>
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.iv.idForm !== a.iv.idForm ? b.iv.idForm - a.iv.idForm :
-            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.id - a.id), ''];
-    }
-    else if (sort === "rp") {
-        const rpCache: {[id: string]: number} = {};
-        filtered.forEach((item) => {
-            rpCache[item.id] = new PokemonRp(item.iv).Rp;
-        });
-        return [filtered.sort((a, b) =>
-            rpCache[b.id] !== rpCache[a.id] ? rpCache[b.id] - rpCache[a.id] :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.id - a.id), ''];
-    }
-    else if (sort === "total strength") {
-        const cache: {[id: string]: number} = {};
-        filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            cache[item.id] = strength.calculate().totalStrength;
-        });
-        return [filtered.sort((a, b) =>
-            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id), ''];
-    }
-    else if (sort === "berry") {
-        const cache: {[id: string]: number} = {};
-        filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            cache[item.id] = strength.calculate().berryTotalStrength;
-        });
-        return [filtered.sort((a, b) =>
-            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.id - a.id), ''];
-    }
-    else if (sort === "ingredient") {
-        if (parameter.tapFrequency === 'none') {
-            return [[], t('no ingredient')];
-        }
-
-        const cache: {[id: string]: number} = {};
-        filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            const res = strength.calculate().ingredients;
-            if (sortConfig.ingredient === "unknown") {
-                // total ingredient count
-                cache[item.id] = res.reduce((p, c) => p + c.count, 0);
-            }
-            else {
-                // specified ingredient count
-                cache[item.id] = res
-                    .find(x => x.name === sortConfig.ingredient)?.count ?? 0;
-            }
-        });
-        const ret = filtered
-            .filter(x => cache[x.id] > 0)
-            .sort((a, b) =>
-                cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
-                b.id - a.id);
-        return [ret, ret.length > 0 ? '' : t('no pokemon found')]
-    }
-    else if (sort === "skill count") {
-        if (parameter.tapFrequency === 'none' ||
-            parameter.period <= whistlePeriod) {
-            return [[], t('no skill')];
-        }
-
-        const cache: {[id: string]: number} = {};
-        filtered = filtered
-            .filter(x => matchMainSkillName(x.iv.pokemon.skill, sortConfig.mainSkill));
-        filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, {
-                ...parameter, maxSkillLevel: true,
-            });
-            cache[item.id] = strength.calculate().skillCount;
-        });
-        const ret = filtered.sort((a, b) =>
-            cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
-            b.id - a.id);
-        return [ret, ret.length > 0 ? '' : t('no pokemon found')]
-    }
-    return [filtered, ''];
-}
-
-/** Represents the field by which the box are sorted.  */
-export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berry"|"ingredient"|"skill count";
-
-/**
- * Pokemon box sort configuration.
- */
-export interface BoxSortConfig {
-    /** Sort type. */
-    sort: BoxSortType;
-    /** Ingredient name when `sort` is `"ingredient"`. */
-    ingredient: IngredientName;
-    /** Main skill name when `sort` is `"skill count"`. */
-    mainSkill: MainSkillName;
-    /** Descending (true) or ascending (false). */
-    descending: boolean;
-    /** Box items when last warning was shown. */
-    warnItems: number;
-    /** Date when last warning was shown. */
-    warnDate: string;
-}
-
-
-/**
- * Load box sort config from localStorage.
- * @returns config.
- */
-function loadBoxSortConfig(): BoxSortConfig {
-    const ret: BoxSortConfig = {
-        sort: "level",
-        ingredient: "unknown",
-        mainSkill: "Energy for Everyone S",
-        descending: true,
-        warnItems: 0,
-        warnDate: '',
-    };
-
-    const settings = localStorage.getItem('PstPokemonBoxParam');
-    if (settings === null) {
-        return ret;
-    }
-    const json = JSON.parse(settings);
-    if (typeof(json) !== "object" || json === null) {
-        return ret;
-    }
-    if (typeof(json.sort) === "string" &&
-        ["level", "name", "pokedexno", "rp", "berry", "total strength", "ingredient", "skill count"].includes(json.sort)) {
-        ret.sort = json.sort;
-    }
-    if (typeof(json.ingredient) === "string" &&
-        IngredientNames.includes(json.ingredient)) {
-        ret.ingredient = json.ingredient;
-    }
-    if (typeof(json.mainSkill) === "string" &&
-        MainSkillNames.includes(json.mainSkill)) {
-        ret.mainSkill = json.mainSkill;
-    }
-    if (typeof(json.descending) === "boolean") {
-        ret.descending = json.descending;
-    }
-    if (typeof(json.warnItems) === "number") {
-        ret.warnItems = json.warnItems;
-    }
-    if (typeof(json.warnDate) === "string" &&
-        json.warnDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
-        ret.warnDate = json.warnDate;
-    }
-    return ret;
-}
 
 const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
     item: PokemonBoxItem,
