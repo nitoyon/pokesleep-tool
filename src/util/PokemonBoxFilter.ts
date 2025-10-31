@@ -87,57 +87,77 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
      * @returns An array of filtered box items.
      */
     filter(items: PokemonBoxItem[], t: typeof i18next.t): PokemonBoxItem[] {
-        let ret = items;
+        return items.filter(item => this.matches(item, t));
+    }
+
+    /**
+     * Check if a single box item matches the current filter config.
+     * @param item A box item to test against the filter.
+     * @param t The `i18next.t` function for translations.
+     * @returns True if the item matches all filter criteria, false otherwise.
+     */
+    matches(item: PokemonBoxItem, t: typeof i18next.t): boolean {
         if (this.name !== "") {
             const name = this.name.toLowerCase();
-            ret = ret.filter(x =>
-                x.nickname.toLowerCase().indexOf(this.name) !== -1 ||
-                t(`pokemons.${x.iv.pokemonName}`).toLowerCase().indexOf(name) !== -1
-            );
+            if (item.nickname.toLowerCase().indexOf(this.name) === -1 &&
+                t(`pokemons.${item.iv.pokemonName}`).toLowerCase().indexOf(name) === -1) {
+                return false;
+            }
         }
         if (this.ingredientName !== undefined) {
             const ing: IngredientName = this.ingredientName;
             const unlocked = this.ingredientUnlockedOnly;
-            ret = ret.filter(x =>
-                x.iv.getIngredients(unlocked).includes(ing));
+            if (!item.iv.getIngredients(unlocked).includes(ing)) {
+                return false;
+            }
         }
         if (this.filterTypes.length !== 0) {
-            ret = ret.filter(x => this.filterTypes.includes(x.iv.pokemon.type));
+            if (!this.filterTypes.includes(item.iv.pokemon.type)) {
+                return false;
+            }
         }
         if (this.filterSpecialty.length > 0) {
-            ret = ret.filter((x) =>
-                x.iv.pokemon.specialty === "All" ||
-                this.filterSpecialty.includes(x.iv.pokemon.specialty));
+            if (item.iv.pokemon.specialty !== "All" &&
+                !this.filterSpecialty.includes(item.iv.pokemon.specialty)) {
+                return false;
+            }
         }
         if (this.mainSkillNames.length !== 0) {
-            ret = ret.filter(x => this.mainSkillNames
-                .some(n => matchMainSkillName(x.iv.pokemon.skill, n)));
+            if (!this.mainSkillNames.some(n => matchMainSkillName(item.iv.pokemon.skill, n))) {
+                return false;
+            }
         }
         if (this.subSkillNames.length !== 0) {
-            ret = ret.filter(x => {
-                const subSkills = x.iv.subSkills
-                    .getActiveSubSkills(this.subSkillUnlockedOnly ? x.iv.level : 100)
-                    .map(x => x.name);
-                if (this.subSkillAnd) {
-                    return this.subSkillNames
-                        .every(skill => subSkills.includes(skill));
+            const subSkills = item.iv.subSkills
+                .getActiveSubSkills(this.subSkillUnlockedOnly ? item.iv.level : 100)
+                .map(x => x.name);
+            if (this.subSkillAnd) {
+                if (!this.subSkillNames.every(skill => subSkills.includes(skill))) {
+                    return false;
                 }
-                else {
-                    return this.subSkillNames
-                        .some(skill => subSkills.includes(skill));
+            }
+            else {
+                if (!this.subSkillNames.some(skill => subSkills.includes(skill))) {
+                    return false;
                 }
-            });
+            }
         }
         if (this.neutralNature) {
-            ret = ret.filter(x => x.iv.nature.isNeautral);
+            if (!item.iv.nature.isNeautral) {
+                return false;
+            }
         }
         if (this.upNature !== "No effect") {
-            ret = ret.filter(x => x.iv.nature.upEffect === this.upNature);
+            if (item.iv.nature.upEffect !== this.upNature) {
+                return false;
+            }
         }
         if (this.downNature !== "No effect") {
-            ret = ret.filter(x => x.iv.nature.downEffect === this.downNature);
+            if (item.iv.nature.downEffect !== this.downNature) {
+                return false;
+            }
         }
-        return ret;
+        return true;
     }
 
     /** Get the default tab index */
