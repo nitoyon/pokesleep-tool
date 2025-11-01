@@ -10,7 +10,7 @@ import SelectEx from '../../common/SelectEx';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { IngredientName, IngredientNames } from '../../../data/pokemons';
-import { FormControlLabel, Switch, MenuItem }  from '@mui/material';
+import { Divider, FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChange}: {
@@ -43,8 +43,14 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
             <IngMenuItem key={ing} value={ing}>
                 <IngredientIcon name={ing}/>
             </IngMenuItem>);
-        ret.push(<IngMenuItem key="unknown" value="unknown">
-            {t('total')}
+        ret.push(<Divider key="divider" style={{gridColumn: '1 / -1'}}/>);
+        ret.push(<IngMenuItem key="strength" value="strength"
+            style={{gridColumn: 'span 2', width: '8rem'}}>
+            {t('total strength')}
+        </IngMenuItem>);
+        ret.push(<IngMenuItem key="count" value="count"
+            style={{gridColumn: 'span 2', width: '8rem'}}>
+            {t('total count')}
         </IngMenuItem>);
         return ret;
     }, [t]);
@@ -80,9 +86,8 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     value={sortConfig.ingredient}
                     sx={{padding: '0 .5rem', fontSize: '0.8rem'}}
                     menuSx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        width: '16rem',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr 1fr 1fr',
                     }}>
                     {ingMenus}
                 </SelectEx>
@@ -153,6 +158,7 @@ const StyledBoxHeader = styled('div')({
 
 const IngMenuItem = styled(MenuItem)({
     width: '4rem',
+    fontSize: '0.9rem',
 });
 const SkillMenuItem = styled(MenuItem)({
     maxWidth: '12rem',
