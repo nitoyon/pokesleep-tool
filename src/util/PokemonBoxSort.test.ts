@@ -394,7 +394,7 @@ describe('loadBoxSortConfig', () => {
 
         expect(config).toEqual({
             sort: 'level',
-            ingredient: 'unknown',
+            ingredient: 'strength',
             mainSkill: 'Energy for Everyone S',
             descending: true,
             warnItems: 0,
@@ -408,7 +408,7 @@ describe('loadBoxSortConfig', () => {
         const config = loadBoxSortConfig();
 
         expect(config.sort).toBe('level');
-        expect(config.ingredient).toBe('unknown');
+        expect(config.ingredient).toBe('strength');
         expect(config.mainSkill).toBe('Energy for Everyone S');
         expect(config.descending).toBe(true);
     });
@@ -434,7 +434,7 @@ describe('loadBoxSortConfig', () => {
         const config = loadBoxSortConfig();
 
         expect(config.sort).toBe('rp'); // valid
-        expect(config.ingredient).toBe('unknown'); // invalid, uses default
+        expect(config.ingredient).toBe('strength'); // invalid, uses default
         expect(config.mainSkill).toBe('Charge Strength S'); // valid
         expect(config.descending).toBe(true); // invalid, uses default
         expect(config.warnItems).toBe(25); // valid
@@ -453,5 +453,15 @@ describe('loadBoxSortConfig', () => {
 
             expect(config.sort).toBe(sortType);
         }
+    });
+
+    test('handles ingredient sort type "unknown"', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            sort: 'rp',
+            ingredient: 'unknown',
+        }));
+
+        const config = loadBoxSortConfig();
+        expect(config.ingredient).toBe("strength");
     });
 });
