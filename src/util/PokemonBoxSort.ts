@@ -19,7 +19,7 @@ import i18next from 'i18next';
  */
 export function sortPokemonItems(filtered: PokemonBoxItem[],
     sort: BoxSortType,
-    ingredient: IngredientName,
+    ingredient: IngredientSortType,
     mainSkill: MainSkillName,
     parameter: StrengthParameter,
     t: typeof i18next.t
@@ -138,6 +138,9 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 /** Represents the field by which the box items are sorted.  */
 export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berry"|"ingredient"|"skill count";
 
+/** Represents the ingredient filter type. */
+export type IngredientSortType = IngredientName|"strength"|"count";
+
 /**
  * Pokemon box sort configuration.
  */
@@ -145,7 +148,7 @@ export interface BoxSortConfig {
     /** Sort type. */
     sort: BoxSortType;
     /** Ingredient name when `sort` is `"ingredient"`. */
-    ingredient: IngredientName;
+    ingredient: IngredientSortType;
     /** Main skill name when `sort` is `"skill count"`. */
     mainSkill: MainSkillName;
     /** Descending (true) or ascending (false). */
@@ -163,7 +166,7 @@ export interface BoxSortConfig {
 export function loadBoxSortConfig(): BoxSortConfig {
     const ret: BoxSortConfig = {
         sort: "level",
-        ingredient: "unknown",
+        ingredient: "strength",
         mainSkill: "Energy for Everyone S",
         descending: true,
         warnItems: 0,
@@ -189,9 +192,12 @@ export function loadBoxSortConfig(): BoxSortConfig {
         ["level", "name", "pokedexno", "rp", "berry", "total strength", "ingredient", "skill count"].includes(json.sort)) {
         ret.sort = json.sort;
     }
-    if (typeof(json.ingredient) === "string" &&
-        IngredientNames.includes(json.ingredient)) {
-        ret.ingredient = json.ingredient;
+    if (typeof(json.ingredient) === "string") {
+        if (json.ingredient === "strength" || json.ingredient === "count" ||
+            IngredientNames.includes(json.ingredient)
+        ) {
+            ret.ingredient = json.ingredient;
+        }
     }
     if (typeof(json.mainSkill) === "string" &&
         MainSkillNames.includes(json.mainSkill)) {
