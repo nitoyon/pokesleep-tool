@@ -18,6 +18,12 @@ export type SimpleStrengthResult = {
     ingredients: IngredientStrength[];
     /** Total skill count */
     skillCount: number;
+    /** Skill value got from the skillCount skill occurance */
+    skillValue: number;
+    /** Strength got from the skillCount skill occurance */
+    skillStrength: number;
+    /** Strength got from the second skill effect */
+    skillStrength2: number;
 };
 
 /** Wrapper for calculate strength */
@@ -40,7 +46,7 @@ export type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
 export function sortPokemonItems(filtered: PokemonBoxItem[],
     sort: BoxSortType,
     ingredient: IngredientSortType,
-    mainSkill: MainSkillName,
+    mainSkill: MainSkillSortType,
     parameter: StrengthParameter,
     t: typeof i18next.t,
     strengthCalculator?: StrengthCalculator
@@ -146,12 +152,40 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         }
 
         const cache: {[id: string]: number} = {};
-        filtered = filtered
-            .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
+
+        // Filter by mainSkill if needed
+        if (mainSkill !== "strength" && mainSkill !== "count") {
+            filtered = filtered
+                .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
+        }
         filtered.forEach((item) => {
             const result = calculator(item.iv, parameter);
-            cache[item.id] = result.skillCount;
+
+            if (mainSkill === "count") {
+                cache[item.id] = result.skillCount;
+                return;
+            }
+            if (mainSkill === "strength") {
+                cache[item.id] = result.skillStrength + result.skillStrength2;
+                return;
+            }
+
+            // Special handling for "Dream Shard Magnet S" because its
+            // skillStrength is always 0 and skillValue cannot be determined
+            // by skillCount because it has random values and fixed values.
+            if (mainSkill === "Dream Shard Magnet S") {
+                cache[item.id] = result.skillValue;
+                return;
+            }
+
+            cache[item.id] = result.skillValue;
         });
+
+        // Delete strength 0 items if mainSkill is "strength"
+        if (mainSkill === "strength") {
+            filtered = filtered.filter(x => cache[x.id] > 0);
+        }
+
         const ret = filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
             b.id - a.id);
@@ -166,6 +200,9 @@ export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berr
 /** Represents the ingredient filter type. */
 export type IngredientSortType = IngredientName|"strength"|"count";
 
+/** Represents the main skill filter type. */
+export type MainSkillSortType = MainSkillName|"strength"|"count";
+
 /**
  * Pokemon box sort configuration.
  */
@@ -175,7 +212,7 @@ export interface BoxSortConfig {
     /** Ingredient name when `sort` is `"ingredient"`. */
     ingredient: IngredientSortType;
     /** Main skill name when `sort` is `"skill"`. */
-    mainSkill: MainSkillName;
+    mainSkill: MainSkillSortType;
     /** Descending (true) or ascending (false). */
     descending: boolean;
     /** Box items when last warning was shown. */

@@ -321,7 +321,7 @@ describe('sortPokemonItems', () => {
         });
     });
 
-    describe('skill count sort', () => {
+    describe('skill sort', () => {
         test('returns error when tapFrequency is none', () => {
             const parameter = createStrengthParameter({});
             parameter.tapFrequency = 'none';
@@ -386,6 +386,113 @@ describe('sortPokemonItems', () => {
             // Pikachu doesn't have Dream Shard Magnet S
             expect(result.length).toBe(0);
             expect(error).toBe('no pokemon found');
+        });
+
+        test('returns different result wheather mainSkill is "count" or "strength"', () => {
+            const parameter = createStrengthParameter({});
+
+            const iv1 = new PokemonIv('Golduck');
+            const iv2 = new PokemonIv('Drifblim');
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Golduck':
+                        return createStrengthResult({
+                            skillCount: 15,
+                            skillStrength: 10000,
+                        });
+                    case 'Drifblim':
+                        return createStrengthResult({
+                            skillCount: 10,
+                            skillStrength: 12000,
+                        });
+                }
+                return createStrengthResult({});
+            };
+
+            // Skill count is higher for Golduck
+            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+                'count', parameter, mockT, calculator);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemon.name).toBe('Golduck');
+
+            // Skill strength is higher for Drifblim
+            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+                'strength', parameter, mockT, calculator);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemon.name).toBe('Drifblim');
+        });
+
+        test('uses skillValue for Dream Shard Magnet S', () => {
+            const parameter = createStrengthParameter({});
+
+            // Pikachu (Holiday) has Dream Shard Magnet S skill
+            const iv1 = new PokemonIv('Lucario');
+            const iv2 = new PokemonIv('Swalot');
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Lucario':
+                        return createStrengthResult({
+                            skillCount: 6,
+                            skillValue: 6000,
+                        });
+                    case 'Swalot':
+                        return createStrengthResult({
+                            skillCount: 5.5,
+                            skillValue: 8000,
+                        });
+                }
+                return createStrengthResult({});
+            };
+
+            // Dream shards is higher for Swalot
+            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+                'Dream Shard Magnet S', parameter, mockT, calculator);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemon.name).toBe('Swalot');
+
+            // Skill count is higher for Lucario
+            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+                'count', parameter, mockT, calculator);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemon.name).toBe('Lucario');
+        });
+
+        test('filters out zero-strength items when `mainSkill` is "strength"', () => {
+            const parameter = createStrengthParameter({});
+
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.level = 50;
+            const iv2 = new PokemonIv('Pawmot');
+            iv2.level = 50; // Energy for Everyone, might have 0 strength
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+                'strength', parameter, mockT);
+
+            // Should only include items with strength > 0
+            expect(error).toBe('');
+            expect(result.length).toBe(1);
+            expect(result[0].iv.pokemon.name).toBe('Pikachu');
         });
     });
 });
@@ -509,5 +616,8 @@ function createStrengthResult(template: Partial<SimpleStrengthResult>): SimpleSt
         berryTotalStrength: template.berryTotalStrength ?? 0,
         ingredients: template.ingredients ?? [],
         skillCount: template.skillCount ?? 0,
+        skillValue: template.skillValue ?? 0,
+        skillStrength: template.skillStrength ?? 0,
+        skillStrength2: template.skillStrength2 ?? 0,
     };
 }
