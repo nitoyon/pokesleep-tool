@@ -3,6 +3,7 @@ import { sortPokemonItems, loadBoxSortConfig } from './PokemonBoxSort';
 import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
 import { createStrengthParameter } from './PokemonStrength';
+import SubSkill from './SubSkill';
 import type { TFunction } from 'i18next';
 
 // Mock translation function
@@ -387,6 +388,87 @@ describe('sortPokemonItems', () => {
             // Pikachu doesn't have Dream Shard Magnet S
             expect(result.length).toBe(0);
             expect(error).toBe('no pokemon found');
+        });
+
+        test('returns different result wheather mainSkill is "count" or "strength"', () => {
+            const parameter = createStrengthParameter({});
+
+            const iv1 = new PokemonIv('Golduck');
+            iv1.level = 10;
+            const iv2 = new PokemonIv('Drifblim');
+            iv2.level = 10;
+            iv2.subSkills.lv10 = new SubSkill('Skill Trigger M');
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            // Skill count is higher for Golduck
+            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+                'count', parameter, mockT);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemon.name).toBe('Golduck');
+
+            // Skill strength is higher for Drifblim
+            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+                'strength', parameter, mockT);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemon.name).toBe('Drifblim');
+        });
+
+        test('uses skillValue for Dream Shard Magnet S', () => {
+            const parameter = createStrengthParameter({});
+
+            // Pikachu (Holiday) has Dream Shard Magnet S skill
+            const iv1 = new PokemonIv('Lucario');
+            iv1.level = 10;
+            iv1.subSkills.lv10 = new SubSkill('Skill Trigger S');
+            const iv2 = new PokemonIv('Swalot');
+            iv2.level = 10;
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            // Dream shards is higher for Swalot
+            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+                'Dream Shard Magnet S', parameter, mockT);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemon.name).toBe('Swalot');
+
+            // Skill count is higher for Lucario
+            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+                'count', parameter, mockT);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemon.name).toBe('Lucario');
+        });
+
+        test('filters out zero-strength items when mainSkill is "strength"', () => {
+            const parameter = createStrengthParameter({});
+
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.level = 50;
+            const iv2 = new PokemonIv('Pawmot');
+            iv2.level = 50; // Energy for Everyone, might have 0 strength
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+                'strength', parameter, mockT);
+
+            // Should only include items with strength > 0
+            expect(error).toBe('');
+            expect(result.length).toBe(1);
+            expect(result[0].iv.pokemon.name).toBe('Pikachu');
         });
     });
 });

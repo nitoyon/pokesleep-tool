@@ -20,7 +20,7 @@ import i18next from 'i18next';
 export function sortPokemonItems(filtered: PokemonBoxItem[],
     sort: BoxSortType,
     ingredient: IngredientSortType,
-    mainSkill: MainSkillName,
+    mainSkill: MainSkillSortType,
     parameter: StrengthParameter,
     t: typeof i18next.t
 ): [PokemonBoxItem[], string] {
@@ -123,14 +123,41 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         }
 
         const cache: {[id: string]: number} = {};
-        filtered = filtered
-            .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
+        if (mainSkill !== "strength" && mainSkill !== "count") {
+            filtered = filtered
+                .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
+        }
         filtered.forEach((item) => {
             const strength = new PokemonStrength(item.iv, {
                 ...parameter, maxSkillLevel: true,
             });
-            cache[item.id] = strength.calculate().skillCount;
+            const result = strength.calculate();
+            if (mainSkill === "count") {
+                cache[item.id] = result.skillCount;
+            }
+            else if (mainSkill === "Dream Shard Magnet S" ||
+                mainSkill === "Dream Shard Magnet S (Random)"
+            ) {
+                // Special handling for "Dream Shard Magnet S" because its
+                // skillStrength is always 0 and skillValue can be determined
+                // by skillCount.
+                cache[item.id] = result.skillValue;
+            }
+            else if (mainSkill === "strength" ||
+                result.skillStrength > 0 || result.skillStrength2 > 0
+            ) {
+                cache[item.id] = result.skillStrength + result.skillStrength2;
+            }
+            else {
+                cache[item.id] = result.skillCount;
+            }
         });
+
+        // Delete strength 0 items if mainSkill is "strength"
+        if (mainSkill === "strength") {
+            filtered = filtered.filter(x => cache[x.id] > 0);
+        }
+
         const ret = filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
             b.id - a.id);
@@ -145,6 +172,9 @@ export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berr
 /** Represents the ingredient filter type. */
 export type IngredientSortType = IngredientName|"strength"|"count";
 
+/** Represents the main skill filter type. */
+export type MainSkillSortType = MainSkillName|"strength"|"count";
+
 /**
  * Pokemon box sort configuration.
  */
@@ -154,7 +184,7 @@ export interface BoxSortConfig {
     /** Ingredient name when `sort` is `"ingredient"`. */
     ingredient: IngredientSortType;
     /** Main skill name when `sort` is `"skill"`. */
-    mainSkill: MainSkillName;
+    mainSkill: MainSkillSortType;
     /** Descending (true) or ascending (false). */
     descending: boolean;
     /** Box items when last warning was shown. */
