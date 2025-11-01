@@ -81,8 +81,11 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
 
     // sort
     const [sortedItems, errorMessage] = React.useMemo(
-        () => sortPokemonItems(filtered, sortConfig, parameter, t),
-        [sortConfig, filtered, parameter, t]);
+        () => sortPokemonItems(filtered, sortConfig.sort,
+            sortConfig.ingredient, sortConfig.mainSkill,
+            parameter, t),
+        [sortConfig.sort, sortConfig.ingredient, sortConfig.mainSkill,
+            filtered, parameter, t]);
 
     let elms = sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}

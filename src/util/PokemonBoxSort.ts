@@ -8,7 +8,9 @@ import i18next from 'i18next';
 /**
  * Sort the given Pokemon box items in descending order.
  * @param filtered The array of Pokémon box items to be sorted.
- * @param sortConfig Sort configuration.
+ * @param sort Sort type.
+ * @param ingredient Ingredient name.
+ * @param mainSkill Main skill name.
  * @param parameter Strength parameter.
  * @param t The translation function from i18next.
  * @returns A tuple containing:
@@ -16,7 +18,9 @@ import i18next from 'i18next';
  *   - An error string, if any error occurs; otherwise, an empty string.
  */
 export function sortPokemonItems(filtered: PokemonBoxItem[],
-    sortConfig: BoxSortConfig,
+    sort: BoxSortType,
+    ingredient: IngredientName,
+    mainSkill: MainSkillName,
     parameter: StrengthParameter,
     t: typeof i18next.t
 ): [PokemonBoxItem[], string] {
@@ -27,7 +31,6 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
     // Create a shallow copy of `filtered` because Array.sort mutates it
     filtered = [...filtered];
 
-    const sort = sortConfig.sort;
     if (sort === "level") {
         return [filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
@@ -92,14 +95,14 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         filtered.forEach((item) => {
             const strength = new PokemonStrength(item.iv, parameter);
             const res = strength.calculate().ingredients;
-            if (sortConfig.ingredient === "unknown") {
+            if (ingredient === "unknown") {
                 // total ingredient count
                 cache[item.id] = res.reduce((p, c) => p + c.count, 0);
             }
             else {
                 // specified ingredient count
                 cache[item.id] = res
-                    .find(x => x.name === sortConfig.ingredient)?.count ?? 0;
+                    .find(x => x.name === ingredient)?.count ?? 0;
             }
         });
         const ret = filtered
@@ -117,7 +120,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 
         const cache: {[id: string]: number} = {};
         filtered = filtered
-            .filter(x => matchMainSkillName(x.iv.pokemon.skill, sortConfig.mainSkill));
+            .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
         filtered.forEach((item) => {
             const strength = new PokemonStrength(item.iv, {
                 ...parameter, maxSkillLevel: true,
