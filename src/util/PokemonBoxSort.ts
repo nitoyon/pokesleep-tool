@@ -95,9 +95,13 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         filtered.forEach((item) => {
             const strength = new PokemonStrength(item.iv, parameter);
             const res = strength.calculate().ingredients;
-            if (ingredient === "unknown") {
+            if (ingredient === "count") {
                 // total ingredient count
                 cache[item.id] = res.reduce((p, c) => p + c.count, 0);
+            }
+            else if (ingredient === "strength") {
+                // total ingredient strength
+                cache[item.id] = res.reduce((p, c) => p + c.strength, 0);
             }
             else {
                 // specified ingredient count

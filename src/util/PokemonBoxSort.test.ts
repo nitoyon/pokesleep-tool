@@ -254,7 +254,7 @@ describe('sortPokemonItems', () => {
             expect(error).toBe('no ingredient');
         });
 
-        test('sorts by total ingredient count when ingredient is unknown', () => {
+        test('sorts by total ingredient count when ingredient is "count"', () => {
             const parameter = createStrengthParameter({});
 
             const iv1 = new PokemonIv('Pikachu');
@@ -267,13 +267,42 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'ingredient', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'ingredient', 'count',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
             expect(result.length).toBe(2);
+            // Higher level Pokemon should produce more total ingredients
             expect(result[0].iv.level).toBe(50);
             expect(result[1].iv.level).toBe(10);
+        });
+
+        test('sorts by total ingredient strength when ingredient is "strength"', () => {
+            const parameter = createStrengthParameter({
+                tapFrequency: 'always',
+                tapFrequencyAsleep: 'always',
+            });
+
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.level = 10;
+            iv1.pokemon = {...iv1.pokemon, frequency: 3600, ingRatio: 10};
+            const iv2 = new PokemonIv('Vulpix');
+            iv2.pokemon = {...iv2.pokemon, frequency: 3600, ingRatio: 10};
+            iv2.level = 10;
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const [result, error] = sortPokemonItems(items, 'ingredient', 'strength',
+                'Energy for Everyone S', parameter, mockT);
+
+            expect(error).toBe('');
+            expect(result.length).toBe(2);
+            // Higher level Pokemon should produce more ingredient strength
+            expect(result[0].iv.pokemon.name).toBe('Vulpix');
+            expect(result[1].iv.pokemon.name).toBe('Pikachu');
         });
 
         test('returns error message when no pokemon found with ingredients', () => {

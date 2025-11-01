@@ -284,7 +284,8 @@ class PokemonStrength {
         }
 
         this.iv = this.changePokemonIv(iv, decendantId);
-        const pokemon = pokemons.find(x => x.name === iv.pokemonName);
+        const pokemon = this.iv === iv ? iv.pokemon :
+            pokemons.find(x => x.name === iv.pokemonName);
         if (pokemon === undefined) {
             throw new Error(`Unknown name: ${iv.pokemonName}`);
         }
