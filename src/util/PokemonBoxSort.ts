@@ -6,8 +6,8 @@ import { MainSkillName, MainSkillNames, matchMainSkillName } from './MainSkill';
 import i18next from 'i18next';
 
 /**
- * Filter the given Pokemon box items.
- * @param filtered The array of Pokémon box items to be filtered.
+ * Sort the given Pokemon box items in descending order.
+ * @param filtered The array of Pokémon box items to be sorted.
  * @param sortConfig Sort configuration.
  * @param parameter Strength parameter.
  * @param t The translation function from i18next.
@@ -29,11 +29,10 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 
     const sort = sortConfig.sort;
     if (sort === "level") {
-        const reverse = sortConfig.descending ? -1 : 1;
         return [filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? reverse * (b.iv.pokemon.id - a.iv.pokemon.id) :
-            b.iv.idForm !== a.iv.idForm ? reverse * (b.iv.idForm - a.iv.idForm) :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
+            b.iv.idForm !== a.iv.idForm ? b.iv.idForm - a.iv.idForm :
             b.id - a.id), ''];
     }
     else if (sort === "name") {
@@ -133,7 +132,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
     return [filtered, ''];
 }
 
-/** Represents the field by which the box are sorted.  */
+/** Represents the field by which the box items are sorted.  */
 export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berry"|"ingredient"|"skill count";
 
 /**
