@@ -21,7 +21,7 @@ export type SimpleStrengthResult = {
 };
 
 /** Wrapper for calculate strength */
-type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
+export type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
     SimpleStrengthResult;
 
 /**
@@ -118,9 +118,13 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
             const res = calculator(item.iv, parameter).ingredients;
-            if (ingredient === "unknown") {
+            if (ingredient === "count") {
                 // total ingredient count
                 cache[item.id] = res.reduce((p, c) => p + c.count, 0);
+            }
+            else if (ingredient === "strength") {
+                // total ingredient strength
+                cache[item.id] = res.reduce((p, c) => p + c.strength, 0);
             }
             else {
                 // specified ingredient count
