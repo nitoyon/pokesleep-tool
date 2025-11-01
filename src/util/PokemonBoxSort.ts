@@ -139,7 +139,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
                 b.id - a.id);
         return [ret, ret.length > 0 ? '' : t('no pokemon found')]
     }
-    else if (sort === "skill count") {
+    else if (sort === "skill") {
         if (parameter.tapFrequency === 'none' ||
             parameter.period <= whistlePeriod) {
             return [[], t('no skill')];
@@ -161,7 +161,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 }
 
 /** Represents the field by which the box items are sorted.  */
-export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berry"|"ingredient"|"skill count";
+export type BoxSortType = "level"|"name"|"pokedexno"|"rp"|"total strength"|"berry"|"ingredient"|"skill";
 
 /** Represents the ingredient filter type. */
 export type IngredientSortType = IngredientName|"strength"|"count";
@@ -174,7 +174,7 @@ export interface BoxSortConfig {
     sort: BoxSortType;
     /** Ingredient name when `sort` is `"ingredient"`. */
     ingredient: IngredientSortType;
-    /** Main skill name when `sort` is `"skill count"`. */
+    /** Main skill name when `sort` is `"skill"`. */
     mainSkill: MainSkillName;
     /** Descending (true) or ascending (false). */
     descending: boolean;
@@ -214,8 +214,14 @@ export function loadBoxSortConfig(): BoxSortConfig {
         return ret;
     }
     if (typeof(json.sort) === "string" &&
-        ["level", "name", "pokedexno", "rp", "berry", "total strength", "ingredient", "skill count"].includes(json.sort)) {
-        ret.sort = json.sort;
+        ["level", "name", "pokedexno", "rp", "berry", "total strength", "ingredient",
+            "skill count", "skill"].includes(json.sort)) {
+        if (json.sort === "skill count") {
+            ret.sort = "skill";
+        }
+        else {
+            ret.sort = json.sort;
+        }
     }
     if (typeof(json.ingredient) === "string") {
         if (json.ingredient === "strength" || json.ingredient === "count" ||
