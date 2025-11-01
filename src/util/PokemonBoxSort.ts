@@ -128,9 +128,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
                 .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
         }
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, {
-                ...parameter, maxSkillLevel: true,
-            });
+            const strength = new PokemonStrength(item.iv, parameter);
             const result = strength.calculate();
             if (mainSkill === "count") {
                 cache[item.id] = result.skillCount;
