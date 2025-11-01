@@ -331,7 +331,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill count', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(result).toEqual([]);
@@ -346,14 +346,14 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill count', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(result).toEqual([]);
             expect(error).toBe('no skill');
         });
 
-        test('filters by main skill and sorts by skill count', () => {
+        test('filters by main skill and sorts by skill', () => {
             const parameter = createStrengthParameter({});
 
             const iv1 = new PokemonIv('Pikachu'); // Has Charge Strength S
@@ -366,7 +366,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result] = sortPokemonItems(items, 'skill count', 'unknown',
+            const [result] = sortPokemonItems(items, 'skill', 'unknown',
                 'Charge Strength S', parameter, mockT);
 
             // Should only include Pokémon with matching skill
@@ -381,7 +381,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill count', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
                 'Dream Shard Magnet S', parameter, mockT);
 
             // Pikachu doesn't have Dream Shard Magnet S
@@ -471,7 +471,7 @@ describe('loadBoxSortConfig', () => {
     });
 
     test('handles all valid sort types', () => {
-        const sortTypes = ['level', 'name', 'pokedexno', 'rp', 'berry', 'total strength', 'ingredient', 'skill count'];
+        const sortTypes = ['level', 'name', 'pokedexno', 'rp', 'berry', 'total strength', 'ingredient', 'skill'];
 
         for (const sortType of sortTypes) {
             localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
@@ -492,5 +492,14 @@ describe('loadBoxSortConfig', () => {
 
         const config = loadBoxSortConfig();
         expect(config.ingredient).toBe("strength");
+    });
+
+    test('handles old sort type "skill count"', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            sort: 'skill count',
+        }));
+
+        const config = loadBoxSortConfig();
+        expect(config.sort).toBe("skill");
     });
 });

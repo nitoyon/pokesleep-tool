@@ -100,7 +100,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
         descending: sortConfig.descending,
     }), [filterConfig, sortConfig]);
     const footerSortTypes = React.useMemo(() => 
-        ["level", "name", "pokedexno", "rp", "total strength", "berry", "ingredient", "skill count"], []);
+        ["level", "name", "pokedexno", "rp", "total strength", "berry", "ingredient", "skill"], []);
 
     return <>
         <div style={{
