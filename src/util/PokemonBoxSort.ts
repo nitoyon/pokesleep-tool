@@ -174,7 +174,14 @@ export function loadBoxSortConfig(): BoxSortConfig {
     if (settings === null) {
         return ret;
     }
-    const json = JSON.parse(settings);
+
+    let json;
+    try {
+        json = JSON.parse(settings);
+    } catch {
+        return ret;
+    }
+
     if (typeof(json) !== "object" || json === null) {
         return ret;
     }

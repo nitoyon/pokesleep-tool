@@ -1,5 +1,5 @@
-import { describe, test, expect, vi } from 'vitest';
-import { sortPokemonItems } from './PokemonBoxSort';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
+import { sortPokemonItems, loadBoxSortConfig } from './PokemonBoxSort';
 import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
 import { createStrengthParameter } from './PokemonStrength';
@@ -359,5 +359,99 @@ describe('sortPokemonItems', () => {
             expect(result.length).toBe(0);
             expect(error).toBe('no pokemon found');
         });
+    });
+});
+
+describe('loadBoxSortConfig', () => {
+    // Mock localStorage
+    let localStorageMock: { [key: string]: string } = {};
+
+    beforeEach(() => {
+        localStorageMock = {};
+
+        global.localStorage = {
+            getItem: vi.fn((key: string) => localStorageMock[key] || null),
+            setItem: vi.fn((key: string, value: string) => {
+                localStorageMock[key] = value;
+            }),
+            removeItem: vi.fn((key: string) => {
+                delete localStorageMock[key];
+            }),
+            clear: vi.fn(() => {
+                localStorageMock = {};
+            }),
+            length: 0,
+            key: vi.fn(),
+        } as Storage;
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
+    test('returns default config when localStorage is empty', () => {
+        const config = loadBoxSortConfig();
+
+        expect(config).toEqual({
+            sort: 'level',
+            ingredient: 'unknown',
+            mainSkill: 'Energy for Everyone S',
+            descending: true,
+            warnItems: 0,
+            warnDate: '',
+        });
+    });
+
+    test('returns default config when localStorage has null', () => {
+        localStorage.setItem('PstPokemonBoxParam', 'null');
+
+        const config = loadBoxSortConfig();
+
+        expect(config.sort).toBe('level');
+        expect(config.ingredient).toBe('unknown');
+        expect(config.mainSkill).toBe('Energy for Everyone S');
+        expect(config.descending).toBe(true);
+    });
+
+    test('returns default config when JSON is invalid', () => {
+        localStorage.setItem('PstPokemonBoxParam', 'invalid json');
+
+        const config = loadBoxSortConfig();
+
+        expect(config.sort).toBe('level');
+    });
+
+    test('loads partial configuration with mixed valid and invalid values', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            sort: 'rp',
+            ingredient: 'invalid-ingredient',
+            mainSkill: 'Charge Strength S',
+            descending: 'invalid',
+            warnItems: 25,
+            warnDate: 'bad-format',
+        }));
+
+        const config = loadBoxSortConfig();
+
+        expect(config.sort).toBe('rp'); // valid
+        expect(config.ingredient).toBe('unknown'); // invalid, uses default
+        expect(config.mainSkill).toBe('Charge Strength S'); // valid
+        expect(config.descending).toBe(true); // invalid, uses default
+        expect(config.warnItems).toBe(25); // valid
+        expect(config.warnDate).toBe(''); // invalid, uses default
+    });
+
+    test('handles all valid sort types', () => {
+        const sortTypes = ['level', 'name', 'pokedexno', 'rp', 'berry', 'total strength', 'ingredient', 'skill count'];
+
+        for (const sortType of sortTypes) {
+            localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+                sort: sortType,
+            }));
+
+            const config = loadBoxSortConfig();
+
+            expect(config.sort).toBe(sortType);
+        }
     });
 });
