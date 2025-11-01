@@ -1,5 +1,8 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import { sortPokemonItems, loadBoxSortConfig } from './PokemonBoxSort';
+import {
+    SimpleStrengthResult, StrengthCalculator,
+    sortPokemonItems, loadBoxSortConfig,
+ } from './PokemonBoxSort';
 import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
 import { createStrengthParameter } from './PokemonStrength';
@@ -254,26 +257,51 @@ describe('sortPokemonItems', () => {
             expect(error).toBe('no ingredient');
         });
 
-        test('sorts by total ingredient count when ingredient is unknown', () => {
+        test('sorts ingredient by "count" and "strength"', () => {
             const parameter = createStrengthParameter({});
 
             const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 10;
-            const iv2 = new PokemonIv('Bulbasaur');
-            iv2.level = 50;
+            const iv2 = new PokemonIv('Eevee (Halloween)');
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Pikachu':
+                        return createStrengthResult({
+                            ingredients: [
+                                {name: 'apple', count: 8, strength: 800, helpCount: 8},
+                                {name: 'ginger', count: 16, strength: 1600, helpCount: 16},
+                            ],
+                        });
+                    case 'Eevee (Halloween)':
+                        return createStrengthResult({
+                            ingredients: [
+                                {name: 'pumpkin', count: 20, strength: 5000, helpCount: 20},
+                            ],
+                        });
+                }
+                return createStrengthResult({});
+            };
 
             const items = [
                 new PokemonBoxItem(iv1),
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'ingredient', 'unknown',
-                'Energy for Everyone S', parameter, mockT);
+            // Sort by ingredient count
+            const [result1, error1] = sortPokemonItems(items, 'ingredient', 'count',
+                'Energy for Everyone S', parameter, mockT, calculator);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemon.name).toBe('Pikachu');
+            expect(result1[1].iv.pokemon.name).toBe('Eevee (Halloween)');
 
-            expect(error).toBe('');
-            expect(result.length).toBe(2);
-            expect(result[0].iv.level).toBe(50);
-            expect(result[1].iv.level).toBe(10);
+            // Sort by ingredient strength
+            const [result2, error2] = sortPokemonItems(items, 'ingredient', 'strength',
+                'Energy for Everyone S', parameter, mockT, calculator);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemon.name).toBe('Eevee (Halloween)');
+            expect(result2[1].iv.pokemon.name).toBe('Pikachu');
         });
 
         test('returns error message when no pokemon found with ingredients', () => {
@@ -465,3 +493,12 @@ describe('loadBoxSortConfig', () => {
         expect(config.ingredient).toBe("strength");
     });
 });
+
+function createStrengthResult(template: Partial<SimpleStrengthResult>): SimpleStrengthResult {
+    return {
+        totalStrength: template.totalStrength ?? 0,
+        berryTotalStrength: template.berryTotalStrength ?? 0,
+        ingredients: template.ingredients ?? [],
+        skillCount: template.skillCount ?? 0,
+    };
+}
