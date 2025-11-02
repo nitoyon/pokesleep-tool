@@ -155,8 +155,10 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 
         // Filter by mainSkill if needed
         if (mainSkill !== "strength" && mainSkill !== "count") {
-            filtered = filtered
-                .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
+            // Delete other skills if mainSkill is specified
+            filtered = filtered.filter(x => {
+                return matchMainSkillName(x.iv.pokemon, mainSkill);
+            });
         }
         filtered.forEach((item) => {
             const result = calculator(item.iv, parameter);

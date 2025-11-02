@@ -1,4 +1,4 @@
-import { IngredientName } from '../data/pokemons';
+import { IngredientName, PokemonData } from '../data/pokemons';
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Magnet S (Plus)" |
@@ -349,14 +349,15 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
 }
 
 /**
- * Checks if a given `match` string matches the beginning of the `name` or
+ * Checks if a given `match` string matches the `pokemon`'s main skill or
  * satisfies a special-case equivalence.
  *
- * @param name The main skill name to compare.
+ * @param pokemon The Pokémon data to compare.
  * @param match The string to match against the skill name.
  * @returns `true` if the skill name starts with the match string.
  */
-export function matchMainSkillName(name: MainSkillName, match: string): boolean {
+export function matchMainSkillName(pokemon: PokemonData, match: string): boolean {
+    const name = pokemon.skill;
     if (name.startsWith(match)) {
         return true;
     }
