@@ -1,9 +1,28 @@
 import { PokemonBoxItem } from './PokemonBox';
+import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
-import PokemonStrength, { StrengthParameter, whistlePeriod } from './PokemonStrength';
+import PokemonStrength, {
+    IngredientStrength, StrengthParameter, whistlePeriod,
+} from './PokemonStrength';
 import { IngredientName, IngredientNames } from '../data/pokemons';
 import { MainSkillName, MainSkillNames, matchMainSkillName } from './MainSkill';
 import i18next from 'i18next';
+
+/** Subset of StrengthResult. */
+export type SimpleStrengthResult = {
+    /** Total strength */
+    totalStrength: number;
+    /** Total strength gained by berry */
+    berryTotalStrength: number;
+    /** Ing1 ~ Ing3 name, count, strength summary */
+    ingredients: IngredientStrength[];
+    /** Total skill count */
+    skillCount: number;
+};
+
+/** Wrapper for calculate strength */
+type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
+    SimpleStrengthResult;
 
 /**
  * Sort the given Pokemon box items in descending order.
@@ -13,6 +32,7 @@ import i18next from 'i18next';
  * @param mainSkill Main skill name.
  * @param parameter Strength parameter.
  * @param t The translation function from i18next.
+ * @param strengthCalculator Strength calculation logic (used in unit test).
  * @returns A tuple containing:
  *   - An array of filtered and sorted Pokémon box items.
  *   - An error string, if any error occurs; otherwise, an empty string.
@@ -22,11 +42,17 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
     ingredient: IngredientSortType,
     mainSkill: MainSkillName,
     parameter: StrengthParameter,
-    t: typeof i18next.t
+    t: typeof i18next.t,
+    strengthCalculator?: StrengthCalculator
 ): [PokemonBoxItem[], string] {
     if (filtered.length === 0) {
         return [[], t('no pokemon found')];
     }
+
+    // Prepare calculator
+    const calculator = strengthCalculator ??
+        ((iv: PokemonIv, param: StrengthParameter) =>
+            new PokemonStrength(iv, param).calculate());
 
     // Create a shallow copy of `filtered` because Array.sort mutates it
     filtered = [...filtered];
@@ -67,8 +93,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
     else if (sort === "total strength") {
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            cache[item.id] = strength.calculate().totalStrength;
+            cache[item.id] = calculator(item.iv, parameter).totalStrength;
         });
         return [filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
@@ -78,8 +103,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
     else if (sort === "berry") {
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            cache[item.id] = strength.calculate().berryTotalStrength;
+            cache[item.id] = calculator(item.iv, parameter).berryTotalStrength;
         });
         return [filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
@@ -93,8 +117,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 
         const cache: {[id: string]: number} = {};
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, parameter);
-            const res = strength.calculate().ingredients;
+            const res = calculator(item.iv, parameter).ingredients;
             if (ingredient === "unknown") {
                 // total ingredient count
                 cache[item.id] = res.reduce((p, c) => p + c.count, 0);
@@ -122,10 +145,10 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         filtered = filtered
             .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
         filtered.forEach((item) => {
-            const strength = new PokemonStrength(item.iv, {
+            const result = calculator(item.iv, {
                 ...parameter, maxSkillLevel: true,
             });
-            cache[item.id] = strength.calculate().skillCount;
+            cache[item.id] = result.skillCount;
         });
         const ret = filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
