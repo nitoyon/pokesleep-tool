@@ -22,6 +22,8 @@ export type SimpleStrengthResult = {
     skillValue: number;
     /** Strength got from the skillCount skill occurance */
     skillStrength: number;
+    /** Skill value got from the second skill effect */
+    skillValue2: number;
     /** Strength got from the second skill effect */
     skillStrength2: number;
 };
@@ -193,6 +195,14 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
                 item.iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
             ) {
                 cache[item.id] = result.skillValue;
+                return;
+            }
+
+            // Special handing for "Energizing Cheer S" to be compared with
+            // "Cooking Power-Up S (Minus)"'s second effect
+            // Use result.skillValue2 to handle Toxel and evolved (true).
+            if (mainSkill === "Energizing Cheer S" && result.skillValue2 > 0) {
+                cache[item.id] = result.skillValue2;
                 return;
             }
 
