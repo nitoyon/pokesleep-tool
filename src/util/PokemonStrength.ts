@@ -616,7 +616,9 @@ class PokemonStrength {
             case "Cooking Power-Up S (Minus)": {
                 const energy = getSkillSubValue(mainSkill, skillLevel);
                 return {
-                    skillValue, skillStrength: 0, skillValuePerTrigger,
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillValuePerTrigger,
                     skillValue2: energy * skillCount,
                     skillStrength2: 0,
                     skillValuePerTrigger2: energy,
@@ -654,6 +656,12 @@ class PokemonStrength {
                 };
             }
             case "Cooking Power-Up S":
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillValuePerTrigger,
+                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                };
             case "Tasty Chance S":
                 return {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
