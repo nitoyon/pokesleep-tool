@@ -49,6 +49,16 @@ describe('MainSkill', () => {
             expect(matchMainSkillName(cresselia, 'Energy for Everyone S')).toBe(true);
         });
 
+        test('special case: Cooking Power-Up S (Minus) matches Energizing Cheer S', () => {
+            const minun = pokemons.find(x => x.name === 'Minun');
+            if (minun === undefined) {
+                throw new Error('Toxel not found in pokemons data');
+            }
+
+            expect(matchMainSkillName(minun, 'Energizing Cheer S')).toBe(true);
+            expect(matchMainSkillName(minun, 'Cooking Power-Up S')).toBe(true);
+        });
+
         describe('Toxel evolution special cases', () => {
             test('Toxel with Amped nature evolves to Ingredient Magnet S (Plus)', () => {
                 const toxel = pokemons.find(x => x.name === 'Toxel');
