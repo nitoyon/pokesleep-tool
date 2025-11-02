@@ -564,6 +564,45 @@ describe('sortPokemonItems', () => {
             expect(result2[1].iv.pokemon.name).toBe('Cresselia');
             expect(result2[2].iv.pokemon.name).toBe('Braviary');
         });
+
+        test('uses skillValue2 for "Cooking Power-Up S (Minus)" when skillValue2 > 0', () => {
+            const parameter = createStrengthParameter({evolved: true});
+
+            const iv1 = new PokemonIv('Toxel');
+            iv1.nature = new Nature('Bashful'); // Low Key nature
+            const iv2 = new PokemonIv('Slowking');
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Toxel':
+                        return createStrengthResult({
+                            skillCount: 5,
+                            skillValue: 100,
+                            skillValue2: 50,
+                        });
+                    case 'Slowking':
+                        return createStrengthResult({
+                            skillCount: 5,
+                            skillValue: 90,
+                        });
+                }
+                return createStrengthResult({});
+            };
+
+            // When sorting by "Energizing Cheer S", should use skillValue2
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+                'Energizing Cheer S', parameter, mockT, calculator);
+
+            expect(error).toBe('');
+            expect(result.length).toBe(2);
+            expect(result[0].iv.pokemon.name).toBe('Slowking');
+            expect(result[1].iv.pokemon.name).toBe('Toxel');
+        });
     });
 
     describe('special handling for Toxel', () => {
@@ -736,6 +775,7 @@ function createStrengthResult(template: Partial<SimpleStrengthResult>): SimpleSt
         skillCount: template.skillCount ?? 0,
         skillValue: template.skillValue ?? 0,
         skillStrength: template.skillStrength ?? 0,
+        skillValue2: template.skillValue2 ?? 0,
         skillStrength2: template.skillStrength2 ?? 0,
     };
 }
