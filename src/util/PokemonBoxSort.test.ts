@@ -3,6 +3,7 @@ import {
     SimpleStrengthResult, StrengthCalculator,
     sortPokemonItems, loadBoxSortConfig,
  } from './PokemonBoxSort';
+import Nature from './Nature';
 import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
 import { createStrengthParameter } from './PokemonStrength';
@@ -562,6 +563,53 @@ describe('sortPokemonItems', () => {
             expect(result2[0].iv.pokemon.name).toBe('Sceptile');
             expect(result2[1].iv.pokemon.name).toBe('Cresselia');
             expect(result2[2].iv.pokemon.name).toBe('Braviary');
+        });
+    });
+
+    describe('special handling for Toxel', () => {
+        test('handles Toxel with evolved=true and Amped', () => {
+            const parameter = createStrengthParameter({evolved: true});
+
+            const toxel = new PokemonIv('Toxel');
+            toxel.nature = new Nature('Hardy'); // Amped nature
+            const pikachu = new PokemonIv('Pikachu'); // Different skill
+
+            const items = [
+                new PokemonBoxItem(toxel),
+                new PokemonBoxItem(pikachu),
+            ];
+
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+                'Ingredient Magnet S', parameter, mockT);
+
+            // Toxel should be included because with evolved=true and amped nature,
+            // it uses "Ingredient Magnet S (Plus)" which matches "Ingredient Magnet S"
+            expect(error).toBe('');
+            expect(result.length).toBe(1);
+            expect(result[0].iv.pokemon.name).toBe('Toxel');
+        });
+
+        test('handles Toxel with evolved=true and Low key', () => {
+            const parameter = createStrengthParameter({});
+            parameter.evolved = true;
+
+            const toxel = new PokemonIv('Toxel');
+            toxel.nature = new Nature('Bashful'); // Low Key nature
+            const pikachu = new PokemonIv('Pikachu'); // Different skill
+
+            const items = [
+                new PokemonBoxItem(toxel),
+                new PokemonBoxItem(pikachu),
+            ];
+
+            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+                'Cooking Power-Up S', parameter, mockT);
+
+            // Toxel should be included because with evolved=true and low key nature,
+            // it uses "Cooking Power-Up S (Minus)" which matches "Cooking Power-Up S"
+            expect(error).toBe('');
+            expect(result.length).toBe(1);
+            expect(result[0].iv.pokemon.name).toBe('Toxel');
         });
     });
 });

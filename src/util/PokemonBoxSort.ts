@@ -162,7 +162,9 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         else if (mainSkill !== "count") {
             // Delete other skills if mainSkill is specified
             filtered = filtered.filter(x => {
-                return matchMainSkillName(x.iv.pokemon, mainSkill);
+                return matchMainSkillName(x.iv.pokemon, mainSkill,
+                    parameter.evolved, x.iv
+                );
             });
         }
         filtered.forEach((item) => {
