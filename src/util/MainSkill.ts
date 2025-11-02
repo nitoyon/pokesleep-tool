@@ -1,4 +1,5 @@
-import { IngredientName, PokemonData } from '../data/pokemons';
+import PokemonIv from './PokemonIv';
+import { IngredientName, PokemonData, toxelId } from '../data/pokemons';
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Magnet S (Plus)" |
@@ -356,8 +357,18 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
  * @param match The string to match against the skill name.
  * @returns `true` if the skill name starts with the match string.
  */
-export function matchMainSkillName(pokemon: PokemonData, match: string): boolean {
-    const name = pokemon.skill;
+export function matchMainSkillName(pokemon: PokemonData, match: string,
+    evolved?: boolean, iv?: PokemonIv
+): boolean {
+    let name: MainSkillName = pokemon.skill;
+
+    // Special case: Toxel's main skill changes upon evolution
+    if (evolved && pokemon.id === toxelId && iv !== undefined) {
+        name = (iv.nature.isAmped ?
+            'Ingredient Magnet S (Plus)' :
+            'Cooking Power-Up S (Minus)');
+    }
+
     if (name.startsWith(match)) {
         return true;
     }
