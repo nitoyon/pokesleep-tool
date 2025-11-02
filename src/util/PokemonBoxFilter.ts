@@ -83,20 +83,22 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
     /**
      * Filter the given box item based on the current filter config.
      * @param items An array of box items to be filtered.
+     * @param evolved Whether to consider evolved forms.
      * @param t The `i18next.t` function for translations.
      * @returns An array of filtered box items.
      */
-    filter(items: PokemonBoxItem[], t: typeof i18next.t): PokemonBoxItem[] {
-        return items.filter(item => this.matches(item, t));
+    filter(items: PokemonBoxItem[], evolved: boolean, t: typeof i18next.t): PokemonBoxItem[] {
+        return items.filter(item => this.matches(item, evolved, t));
     }
 
     /**
      * Check if a single box item matches the current filter config.
      * @param item A box item to test against the filter.
+     * @param evolved Whether to consider evolved forms.
      * @param t The `i18next.t` function for translations.
      * @returns True if the item matches all filter criteria, false otherwise.
      */
-    matches(item: PokemonBoxItem, t: typeof i18next.t): boolean {
+    matches(item: PokemonBoxItem, evolved: boolean, t: typeof i18next.t): boolean {
         if (this.name !== "") {
             const name = this.name.toLowerCase();
             if (item.nickname.toLowerCase().indexOf(this.name) === -1 &&
@@ -123,7 +125,9 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
             }
         }
         if (this.mainSkillNames.length !== 0) {
-            if (!this.mainSkillNames.some(n => matchMainSkillName(item.iv.pokemon, n))) {
+            if (!this.mainSkillNames.some(n => matchMainSkillName(item.iv.pokemon, n,
+                evolved, item.iv
+            ))) {
                 return false;
             }
         }
