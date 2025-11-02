@@ -369,7 +369,16 @@ export function matchMainSkillName(pokemon: PokemonData, match: string,
             'Cooking Power-Up S (Minus)');
     }
 
+    // `name` should start with `match`
+    // (ex) `Charge Strength S (Stockpile)` matches `Charge Strength S`
     if (name.startsWith(match)) {
+        return true;
+    }
+
+    // Treat "Cooking Power-Up S (Minus)" as matching "Energizing Cheer S"
+    if (name === 'Cooking Power-Up S (Minus)' &&
+        match === 'Energizing Cheer S'
+    ) {
         return true;
     }
 
