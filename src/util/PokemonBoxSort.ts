@@ -185,6 +185,21 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
                 return;
             }
 
+            // Special handling for "Lunar Blessing" to use skillValue
+            // is mainSkill is "Energy for Everyone S"
+            if (mainSkill === "Energy for Everyone S" &&
+                item.iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
+            ) {
+                cache[item.id] = result.skillValue;
+                return;
+            }
+
+            // Calculate by skill strength
+            if (!isSkillStrengthZero(item.iv.pokemon.skill)) {
+                cache[item.id] = result.skillStrength + result.skillStrength2;
+                return;
+            }
+
             cache[item.id] = result.skillValue;
         });
 
