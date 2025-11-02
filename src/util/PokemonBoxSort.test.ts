@@ -494,8 +494,78 @@ describe('sortPokemonItems', () => {
             expect(result.length).toBe(1);
             expect(result[0].iv.pokemon.name).toBe('Pikachu');
         });
+
+        test('uses skillValue for Lunar Blessing when mainSkill is "Energy for Everyone S"', () => {
+            const parameter = createStrengthParameter({});
+
+            // Create mock Pokémon with Energy for Everyone S skills
+            const iv1 = new PokemonIv('Cresselia');
+            const iv2 = new PokemonIv('Pawmot');
+            const iv3 = new PokemonIv('Braviary');
+            const iv4 = new PokemonIv('Sceptile');
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+                new PokemonBoxItem(iv3),
+                new PokemonBoxItem(iv4),
+            ];
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Cresselia':
+                        // Cresselia has "Energy for Everyone S (Lunar Blessing)"
+                        // Should use skillValue for sorting
+                        return createStrengthResult({
+                            skillCount: 5,
+                            skillValue: 30,
+                            skillStrength: 0, // Strength is 0 for this skill
+                            skillStrength2: 30000,
+                        });
+                    case 'Pawmot':
+                        // Regular "Energy for Everyone S"
+                        return createStrengthResult({
+                            skillCount: 6,
+                            skillValue: 50,
+                            skillStrength: 0,
+                        });
+                    case 'Braviary':
+                        return createStrengthResult({
+                            skillCount: 4,
+                            skillValue: 20000,
+                            skillStrength: 20000,
+                        });
+                    case 'Sceptile':
+                        return createStrengthResult({
+                            skillCount: 4,
+                            skillValue: 40000,
+                            skillStrength: 40000,
+                        });
+                }
+                return createStrengthResult({});
+            };
+
+            // When sorting by "Energy for Everyone S", Pawmot should be first
+            // because its skillValue (50) is higher than Cresselia's (30)
+            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+                'Energy for Everyone S', parameter, mockT, calculator);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[1].iv.pokemon.name).toBe('Cresselia');
+
+            // When sorting by "Berry Burst", Sceptile should be first,
+            // Cresselia second, Braviary third
+            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+                'Berry Burst', parameter, mockT, calculator);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(3);
+            expect(result2[0].iv.pokemon.name).toBe('Sceptile');
+            expect(result2[1].iv.pokemon.name).toBe('Cresselia');
+            expect(result2[2].iv.pokemon.name).toBe('Braviary');
+        });
     });
 });
+
 
 describe('loadBoxSortConfig', () => {
     // Mock localStorage
