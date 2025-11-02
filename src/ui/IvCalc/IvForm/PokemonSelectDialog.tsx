@@ -279,7 +279,7 @@ export class PokemonFilterConfig {
         // filter by main skill
         if (this.mainSkillNames.length > 0) {
             ret = ret.filter((option) => this.mainSkillNames
-                .some(x => matchMainSkillName(option.skill, x)));
+                .some(x => matchMainSkillName(option, x)));
         }
 
         if (ret.length === 0) {

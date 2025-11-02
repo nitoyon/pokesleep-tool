@@ -5,6 +5,7 @@ import { IngredientName, PokemonType, PokemonTypes
 import fields, { isExpertField, getFavoriteBerries } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult } from './Energy';
+import { MainSkillName } from './MainSkill';
 import PokemonIv from './PokemonIv';
 import PokemonRp, {
     averageIngredientStrength, ingredientStrength,
@@ -616,7 +617,9 @@ class PokemonStrength {
             case "Cooking Power-Up S (Minus)": {
                 const energy = getSkillSubValue(mainSkill, skillLevel);
                 return {
-                    skillValue, skillStrength: 0, skillValuePerTrigger,
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillValuePerTrigger,
                     skillValue2: energy * skillCount,
                     skillStrength2: 0,
                     skillValuePerTrigger2: energy,
@@ -654,6 +657,12 @@ class PokemonStrength {
                 };
             }
             case "Cooking Power-Up S":
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillValuePerTrigger,
+                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                };
             case "Tasty Chance S":
                 return {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
@@ -788,6 +797,33 @@ class PokemonStrength {
         const {types} = getCurrentFavoriteBerries(this.param);
         return types.includes(this.iv.pokemon.type);
     }
+}
+
+/**
+ * Checks if the given skill's strength is zero or not.
+ *
+ * Skills that return true have indirect effects or provide benefits that cannot
+ * be directly converted to strength points (e.g., energy recovery, dream shards).
+ *
+ * @param skillName The name of the main skill to check.
+ * @returns True if the skill's strength is calculated as 0 in the strength calculation.
+ */
+export function isSkillStrengthZero(skillName: MainSkillName): boolean {
+    if (skillName === "Charge Energy S" ||
+        skillName === "Charge Energy S (Moonlight)" ||
+        skillName === "Energizing Cheer S" ||
+        skillName === "Energy for Everyone S" ||
+        skillName === "Dream Shard Magnet S" ||
+        skillName === "Dream Shard Magnet S (Random)" ||
+        skillName === "Tasty Chance S" ||
+        skillName === "Metronome" ||
+        skillName === "Skill Copy" ||
+        skillName === "Skill Copy (Transform)" ||
+        skillName === "Skill Copy (Mimic)"
+    ) {
+        return true;
+    }
+    return false;
 }
 
 /** Reason why the berry was set */

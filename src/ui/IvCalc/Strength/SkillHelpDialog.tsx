@@ -111,8 +111,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
             </article>
             {!isCountOnly && <footer>
                 <span className="box box1">{formatWithComma(result.skillValuePerTrigger)}</span><> × </>
-                <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
-                <span className="box box3">{round1(result.skillRatio * 100)}%</span>
+                <span className="box box2">{round2(result.skillCount)}</span>
                 {skillName === "Ingredient Draw S (Hyper Cutter)" && <>
                     <> × </>
                     <span className="box box4">{round2(1 + hyperCutterSuccess)}</span>
@@ -137,10 +136,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     <span>{skillValueText}</span>
                     {skillValueFooter !== null && <footer>{skillValueFooter}</footer>}
                 </>}
-                <div><span className="box box2">{round1(result.notFullHelpCount)}</span></div>
-                <span>{t('normal help count')}</span>
-                <div><span className="box box3">{round1(result.skillRatio * 100)}%</span></div>
-                <span>{t('skill rate')}</span>
+                <div><span className="box box2">{round2(result.skillCount)}</span></div>
+                <span>{t('skill count')}</span>
                 {skillName === "Ingredient Draw S (Hyper Cutter)" && <>
                     <div><span className="box box4">{round2(1 + hyperCutterSuccess)}</span></div>
                     <span>{t('additional ingredient rate')}</span>
@@ -166,8 +163,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     </article>
                     <footer>
                         <span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span><> × </>
-                        <span className="box box2">{round1(result.notFullHelpCount)}</span><> × </>
-                        <span className="box box3">{round1(result.skillRatio * 100)}%</span>
+                        <span className="box box2">{round2(result.skillCount)}</span>
                     </footer>
                 </header>
                 <article>

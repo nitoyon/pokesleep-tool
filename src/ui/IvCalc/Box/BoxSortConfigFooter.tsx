@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { IvAction } from '../IvState';
-import { BoxSortConfig } from './BoxView';
+import { BoxSortConfig } from '../../../util/PokemonBoxSort';
 import IngredientIcon from '../IngredientIcon';
 import MainSkillIcon from '../MainSkillIcon';
 import FixedLevelSelect from '../Strength/FixedLevelSelect';
@@ -10,7 +10,7 @@ import SelectEx from '../../common/SelectEx';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { MainSkillName, MainSkillNames } from '../../../util/MainSkill';
 import { IngredientName, IngredientNames } from '../../../data/pokemons';
-import { FormControlLabel, Switch, MenuItem }  from '@mui/material';
+import { Divider, FormControlLabel, Switch, MenuItem }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChange}: {
@@ -37,30 +37,47 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
     const onEvolvedChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onParameterChange({...parameter, evolved: e.target.checked});
     }, [parameter, onParameterChange]);
+    const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onParameterChange({...parameter, maxSkillLevel: e.target.checked});
+    }, [parameter, onParameterChange]);
 
     const ingMenus = React.useMemo(() => {
         const ret: React.ReactElement[] = IngredientNames.map(ing =>
             <IngMenuItem key={ing} value={ing}>
                 <IngredientIcon name={ing}/>
             </IngMenuItem>);
-        ret.push(<IngMenuItem key="unknown" value="unknown">
-            {t('total')}
+        ret.push(<Divider key="divider" style={{gridColumn: '1 / -1'}}/>);
+        ret.push(<IngMenuItem key="strength" value="strength"
+            style={{gridColumn: 'span 2', width: '8rem'}}>
+            {t('total strength')}
+        </IngMenuItem>);
+        ret.push(<IngMenuItem key="count" value="count"
+            style={{gridColumn: 'span 2', width: '8rem'}}>
+            {t('total count')}
         </IngMenuItem>);
         return ret;
     }, [t]);
 
     const skillMenus = React.useMemo(() => {
-        return MainSkillNames.map(name =>
+        const ret = MainSkillNames.map(name =>
             <SkillMenuItem key={name} value={name}>
                 <MainSkillIcon mainSkill={name}/>
                 {t(`skills.${name}`)}
             </SkillMenuItem>);
+        ret.push(<Divider key="divider" style={{gridColumn: '1 / -1'}}/>);
+        ret.push(<SkillMenuItem key="strength" value="strength" style={{paddingLeft: '.8rem'}}>
+            {t('strength2')}
+        </SkillMenuItem>);
+        ret.push(<SkillMenuItem key="count" value="count" style={{paddingLeft: '.8rem'}}>
+            {t('skill count')}
+        </SkillMenuItem>);
+        return ret;
     }, [t]);
 
     if (sortConfig.sort !== "total strength" &&
         sortConfig.sort !== "berry" &&
         sortConfig.sort !== "ingredient" &&
-        sortConfig.sort !== "skill count"
+        sortConfig.sort !== "skill"
     ) {
         return <></>;
     }
@@ -80,14 +97,13 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     value={sortConfig.ingredient}
                     sx={{padding: '0 .5rem', fontSize: '0.8rem'}}
                     menuSx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        width: '16rem',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr 1fr 1fr',
                     }}>
                     {ingMenus}
                 </SelectEx>
             </span>}
-            {sortConfig.sort === "skill count" && <span className="skill">
+            {sortConfig.sort === "skill" && <span className="skill">
                 <SelectEx onChange={onSkillChange}
                     sx={{fontSize: '0.8rem', textWrap: 'nowrap'}}
                     menuSx={{
@@ -98,13 +114,20 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
                     {skillMenus}
                 </SelectEx>
             </span>}
-            <span className="evolved">
+            <span className="switch">
                 <FormControlLabel control={
                     <Switch checked={parameter.evolved} size="small"
                         onChange={onEvolvedChange} />
                     }
                     label={t('calc with evolved (short)')} />
             </span>
+            {sortConfig.sort === "skill" && <span className="switch">
+                <FormControlLabel control={
+                    <Switch checked={parameter.maxSkillLevel} size="small"
+                        onChange={onMaxSkillLevelChange} />
+                    }
+                    label={t('calc with max skill level (short)')} />
+            </span>}
         </div>
     </StyledBoxHeader>;
 });
@@ -141,7 +164,7 @@ const StyledBoxHeader = styled('div')({
                 paddingRight: '4px',
                 verticalAlign: 'top',
             },
-            '&.evolved': {
+            '&.switch': {
                 paddingLeft: '5px',
                 '& span.MuiTypography-root': {
                     textWrap: 'nowrap',
@@ -153,6 +176,7 @@ const StyledBoxHeader = styled('div')({
 
 const IngMenuItem = styled(MenuItem)({
     width: '4rem',
+    fontSize: '0.9rem',
 });
 const SkillMenuItem = styled(MenuItem)({
     maxWidth: '12rem',
