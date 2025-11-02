@@ -76,8 +76,8 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
     }, [items, dispatch, selectedId]);
 
     // filter
-    const filtered = React.useMemo(() => filterConfig.filter(items, t),
-        [items, filterConfig, t]);
+    const filtered = React.useMemo(() => filterConfig.filter(items, parameter.evolved, t),
+        [items, filterConfig, parameter.evolved, t]);
 
     // sort
     const [sortedItems, errorMessage] = React.useMemo(

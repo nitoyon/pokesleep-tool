@@ -73,7 +73,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee'))
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(2);
             expect(filtered).toEqual(items);
         });
@@ -87,7 +87,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee'), 'Fluffy')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('Sparky');
         });
@@ -100,7 +100,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee'), 'y')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].iv.pokemonName).toBe('Pikachu');
         });
@@ -113,7 +113,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee'), 'y')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].iv.pokemonName).toBe('Pikachu');
         });
@@ -126,7 +126,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee'))
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].iv.pokemonName).toBe('Pikachu');
         });
@@ -140,7 +140,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee')),
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(2);
             expect(filtered[0].iv.pokemonName).toBe('Pikachu');
             expect(filtered[1].iv.pokemonName).toBe('Eevee');
@@ -155,10 +155,49 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee')),
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             // Pikachu's specialty is "Berries" so it should be in the results
             expect(filtered.length).toBe(1);
             expect(filtered[0].iv.pokemonName).toBe('Pikachu');
+        });
+
+        test('filters by main skill (Toxel with evolved=true, Amped nature)', () => {
+            const config = new BoxFilterConfig({ mainSkillNames: ["Ingredient Magnet S"] });
+
+            const toxelAmped = new PokemonIv('Toxel');
+            toxelAmped.nature = new Nature('Hardy'); // Amped nature -> Ingredient Magnet S
+
+            const toxelLowKey = new PokemonIv('Toxel');
+            toxelLowKey.nature = new Nature('Bold'); // Low Key nature -> Cooking Power-Up S
+
+            const items = [
+                new PokemonBoxItem(toxelAmped, 'AmpedForm'),
+                new PokemonBoxItem(toxelLowKey, 'LowKeyForm')
+            ];
+
+            const filtered = config.filter(items, true, mockT);
+            expect(filtered.length).toBe(1);
+            expect(filtered[0].nickname).toBe('AmpedForm');
+        });
+
+        test('filters by main skill (Toxel with evolved=true, Low Key nature)', () => {
+            const config = new BoxFilterConfig({ mainSkillNames: ["Cooking Power-Up S"] });
+
+            const toxelAmped = new PokemonIv('Toxel');
+            toxelAmped.nature = new Nature('Hardy'); // Amped nature -> Ingredient Magnet S
+
+            const toxelLowKey = new PokemonIv('Toxel');
+            toxelLowKey.nature = new Nature('Bold'); // Low Key nature -> Cooking Power-Up S
+
+            const items = [
+                new PokemonBoxItem(toxelAmped, 'AmpedForm'),
+                new PokemonBoxItem(toxelLowKey, 'LowKeyForm')
+            ];
+
+            // With evolved=true, should match Low Key Toxel (evolves to Cooking Power-Up S)
+            const filtered = config.filter(items, true, mockT);
+            expect(filtered.length).toBe(1);
+            expect(filtered[0].nickname).toBe('LowKeyForm');
         });
 
         test('filters by sub skills (AND logic)', () => {
@@ -182,7 +221,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv2, 'HasOne')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('HasBoth');
         });
@@ -212,7 +251,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv3, 'HasNeither')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(2);
             expect(filtered.map(x => x.nickname).sort()).toEqual(['HasFirst', 'HasSecond']);
         });
@@ -236,7 +275,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv2, 'Level10')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('Level10');
         });
@@ -255,7 +294,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv2, 'NonNeutral')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('Neutral');
         });
@@ -274,7 +313,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv2, 'SpeedUp')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('EnergyUp');
         });
@@ -293,7 +332,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv2, 'ExpDown')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('SpeedDown');
         });
@@ -319,7 +358,7 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(iv3, 'WrongType')
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(1);
             expect(filtered[0].nickname).toBe('Match');
         });
@@ -332,13 +371,13 @@ describe('BoxFilterConfig', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee'))
             ];
 
-            const filtered = config.filter(items, mockT);
+            const filtered = config.filter(items, false, mockT);
             expect(filtered.length).toBe(0);
         });
 
         test('filters empty array', () => {
             const config = new BoxFilterConfig({ filterTypes: ["electric"] });
-            const filtered = config.filter([], mockT);
+            const filtered = config.filter([], false, mockT);
             expect(filtered.length).toBe(0);
         });
     });
