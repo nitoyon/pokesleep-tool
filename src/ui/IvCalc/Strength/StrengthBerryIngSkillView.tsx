@@ -123,6 +123,20 @@ const StyledBerryIngSkillStrengthView = styled('div')({
                     height: '16px',
                 },
             },
+            '&.skillc': {
+                display: 'grid',
+                gridTemplateColumns: 'auto auto',
+                '&.skill1': {
+                    fontSize: '0.9rem',
+                    '& > div > svg': { width: '0.8em', height: '0.8em'},
+                },
+                '& > span.strength': {
+                    paddingLeft: '0.3rem',
+                    textAlign: 'right',
+                    fontSize: '0.7em',
+                    '& > svg': { width: '0.6em', height: '0.6em'},
+                },
+            },
         },
         '& > footer': {
             fontSize: '0.7rem',
@@ -361,26 +375,47 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     const mainSkillValue2: string = result.skillValue2 === 0 ? "" :
         formatNice(result.skillValue2, t);
 
-    const skill1 = <>
+    const skill1 = <div>
         <MainSkillIcon mainSkill={mainSkill}/>
         <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
-    </>;
+    </div>;
 
-    let skill2 = <></>;
+    let skillStrength: React.ReactNode = null;
+    if (result.skillValue !== result.skillStrength && result.skillStrength > 0) {
+        skillStrength = <span className="strength">
+            <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
+            <span>{formatNice(result.skillStrength, t)}</span>
+        </span>;
+    }
+
+    let skillStrength2: React.ReactNode = null;
+    if (result.skillValue2 !== result.skillStrength2 && result.skillStrength2 > 0) {
+        skillStrength2 = <span className="strength">
+            <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>
+            <span>{formatNice(result.skillStrength2, t)}</span>
+        </span>;
+    }
+
+    let skill2 = null;
     if (mainSkillValue2 !== "") {
-        skill2 = <>
-            <br/>
+        skill2 = <div style={skillStrength !== null && skillStrength2 === null ?
+            {gridColumn: '1 / -1'} : {}
+        }>
             {mainSkill === "Ingredient Magnet S (Plus)" ?
                 <IngredientIcon name={pokemonIv.pokemon.ing1.name}/> :
                 <MainSkillIcon mainSkill={mainSkill} second/>}
             <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue2}</span>
-        </>;
+        </div>;
     }
-    return <article className={mainSkillValue2 !== "" ? "skill2" : ""}>
-        <div>
-            {skill1}
-            {skill2}
-        </div>
+
+    const gridClass = skillStrength !== null || skillStrength2 !== null ?
+        " skillc" : "";
+
+    return <article className={mainSkillValue2 !== "" ? `skill2${gridClass}` : `skill1${gridClass}`}>
+        {skill1}
+        {skillStrength}
+        {skill2}
+        {skillStrength2}
     </article>;
 }
 
