@@ -2,7 +2,7 @@ import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 import PokemonStrength, {
-    IngredientStrength, StrengthParameter, whistlePeriod,
+    IngredientStrength, isSkillStrengthZero, StrengthParameter, whistlePeriod,
 } from './PokemonStrength';
 import { IngredientName, IngredientNames } from '../data/pokemons';
 import { MainSkillName, MainSkillNames, matchMainSkillName } from './MainSkill';
@@ -154,7 +154,12 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         const cache: {[id: string]: number} = {};
 
         // Filter by mainSkill if needed
-        if (mainSkill !== "strength" && mainSkill !== "count") {
+        if (mainSkill === "strength") {
+            // Delete strength 0 items if mainSkill is "strength"
+            filtered = filtered
+                .filter(x => !isSkillStrengthZero(x.iv.pokemon.skill));
+        }
+        else if (mainSkill !== "count") {
             // Delete other skills if mainSkill is specified
             filtered = filtered.filter(x => {
                 return matchMainSkillName(x.iv.pokemon, mainSkill);
@@ -182,11 +187,6 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 
             cache[item.id] = result.skillValue;
         });
-
-        // Delete strength 0 items if mainSkill is "strength"
-        if (mainSkill === "strength") {
-            filtered = filtered.filter(x => cache[x.id] > 0);
-        }
 
         const ret = filtered.sort((a, b) =>
             cache[b.id] !== cache[a.id] ? cache[b.id] - cache[a.id] :
