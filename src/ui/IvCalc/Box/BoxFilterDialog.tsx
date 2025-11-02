@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { styled } from '@mui/system';
 import TypeButton from '../TypeButton';
 import SpecialtyButton from '../SpecialtyButton';
-import { BoxFilterConfig } from './BoxView';
+import BoxFilterConfig from '../../../util/PokemonBoxFilter';
 import { EditSubSkillControl } from '../IvForm/SubSkillControl';
 import IngredientButton from '../IngredientButton';
 import MainSkillButton from '../MainSkillButton';

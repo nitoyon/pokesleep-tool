@@ -1,10 +1,13 @@
 import PokemonStrength, {
     createStrengthParameter, StrengthParameter, whistlePeriod,
+    isSkillStrengthZero,
 } from './PokemonStrength';
 import PokemonIv from './PokemonIv';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
+import pokemons from '../data/pokemons';
+import { MainSkillNames } from './MainSkill';
 
 function createParam(obj: Partial<StrengthParameter>): StrengthParameter {
     return createStrengthParameter(obj);
@@ -293,6 +296,32 @@ describe('PokemonStrength', () => {
 
             expect(result.helpingBonusStrength).toBeCloseTo(expectedHelpingBonus);
             expect(result.totalStrength).toBeCloseTo(baseTotal + expectedHelpingBonus);
+        });
+    });
+
+    describe('isSkillStrengthCalculated', () => {
+        test('returns false for skills with zero strength and true for skills with non-zero strength', () => {
+            // Test each skill
+            MainSkillNames.forEach(skillName => {
+                // Find a pokemon with this skill
+                const pokemon = pokemons.find(p => p.skill === skillName);
+                if (!pokemon) {
+                    return; // Skip if no pokemon found (shouldn't happen)
+                }
+
+                // Create IV and calculate strength
+                const iv = new PokemonIv(pokemon.name);
+                iv.level = 50;
+                iv.skillLevel = 6;
+                const param = createParam({ period: 24 });
+                const strength = new PokemonStrength(iv, param);
+                const result = strength.calculate();
+
+                const hasZeroStrength = result.skillStrength === 0 && result.skillStrength2 === 0;
+                const isCalculatedAsZero = isSkillStrengthZero(skillName);
+
+                expect(hasZeroStrength).toBe(isCalculatedAsZero);
+            });
         });
     });
 });

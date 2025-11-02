@@ -1,4 +1,5 @@
-import { IngredientName } from '../data/pokemons';
+import PokemonIv from './PokemonIv';
+import { IngredientName, PokemonData, toxelId } from '../data/pokemons';
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Magnet S (Plus)" |
@@ -349,15 +350,35 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
 }
 
 /**
- * Checks if a given `match` string matches the beginning of the `name` or
+ * Checks if a given `match` string matches the `pokemon`'s main skill or
  * satisfies a special-case equivalence.
  *
- * @param name The main skill name to compare.
+ * @param pokemon The Pokémon data to compare.
  * @param match The string to match against the skill name.
  * @returns `true` if the skill name starts with the match string.
  */
-export function matchMainSkillName(name: MainSkillName, match: string): boolean {
+export function matchMainSkillName(pokemon: PokemonData, match: string,
+    evolved?: boolean, iv?: PokemonIv
+): boolean {
+    let name: MainSkillName = pokemon.skill;
+
+    // Special case: Toxel's main skill changes upon evolution
+    if (evolved && pokemon.id === toxelId && iv !== undefined) {
+        name = (iv.nature.isAmped ?
+            'Ingredient Magnet S (Plus)' :
+            'Cooking Power-Up S (Minus)');
+    }
+
+    // `name` should start with `match`
+    // (ex) `Charge Strength S (Stockpile)` matches `Charge Strength S`
     if (name.startsWith(match)) {
+        return true;
+    }
+
+    // Treat "Cooking Power-Up S (Minus)" as matching "Energizing Cheer S"
+    if (name === 'Cooking Power-Up S (Minus)' &&
+        match === 'Energizing Cheer S'
+    ) {
         return true;
     }
 
