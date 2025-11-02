@@ -123,7 +123,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
             }
         }
         if (this.mainSkillNames.length !== 0) {
-            if (!this.mainSkillNames.some(n => matchMainSkillName(item.iv.pokemon.skill, n))) {
+            if (!this.mainSkillNames.some(n => matchMainSkillName(item.iv.pokemon, n))) {
                 return false;
             }
         }
