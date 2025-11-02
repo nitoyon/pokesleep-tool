@@ -149,9 +149,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         filtered = filtered
             .filter(x => matchMainSkillName(x.iv.pokemon.skill, mainSkill));
         filtered.forEach((item) => {
-            const result = calculator(item.iv, {
-                ...parameter, maxSkillLevel: true,
-            });
+            const result = calculator(item.iv, parameter);
             cache[item.id] = result.skillCount;
         });
         const ret = filtered.sort((a, b) =>
