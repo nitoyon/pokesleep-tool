@@ -2,7 +2,8 @@ import React from 'react';
 import { styled } from '@mui/system';
 import IvState, { IvAction } from './IvState';
 import { shareIv } from './ShareUtil';
-import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
     Tab, Tabs
  } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -24,6 +25,7 @@ const LowerTabHeader = React.memo(({
     const tabIndex = state.lowerTabIndex;
 
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
+    const [showAddConfirm, setShowAddConfirm] = React.useState(false);
     const { t } = useTranslation();
 
     const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
@@ -34,9 +36,10 @@ const LowerTabHeader = React.memo(({
         setMoreMenuAnchor(null);
 
         const type = e.currentTarget.getAttribute('data-value') || "";
-        dispatch({type} as IvAction);
         if (type === "addThis") {
-            startAddToBoxAnimation(boxTabRef.current);
+            setShowAddConfirm(true);
+        } else {
+            dispatch({type} as IvAction);
         }
     }, [dispatch]);
 
@@ -55,6 +58,16 @@ const LowerTabHeader = React.memo(({
     const onMoreMenuClose = React.useCallback(() => {
         setMoreMenuAnchor(null);
     }, []);
+
+    const onAddConfirmCancel = React.useCallback(() => {
+        setShowAddConfirm(false);
+    }, []);
+
+    const onAddConfirmOk = React.useCallback(() => {
+        setShowAddConfirm(false);
+        dispatch({type: "addThis"} as IvAction);
+        startAddToBoxAnimation(boxTabRef.current);
+    }, [dispatch]);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -99,6 +112,18 @@ const LowerTabHeader = React.memo(({
                 </MenuItem>
             </MenuList>
         </Menu>
+        <Dialog open={showAddConfirm} onClose={onAddConfirmCancel}>
+            <DialogTitle>{t('add to box')}</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    {t('confirm add to box')}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onAddConfirmOk} autoFocus>{t('add')}</Button>
+                <Button onClick={onAddConfirmCancel}>{t('cancel')}</Button>
+            </DialogActions>
+        </Dialog>
     </StyledContainer>);
 });
 

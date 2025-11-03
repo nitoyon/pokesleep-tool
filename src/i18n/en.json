@@ -352,6 +352,7 @@
         "box": "Box",
         "parameter": "Parameter",
         "add to box": "Add to box",
+        "confirm add to box": "Are you sure you want to add this Pokémon to the box?",
         "export": "Export",
         "import": "Import",
         "pokemon in the box is edited": "The Pokémon in the box have been edited. Please save to apply the changes to the box.",
