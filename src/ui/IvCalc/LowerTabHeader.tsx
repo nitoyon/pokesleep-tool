@@ -4,7 +4,7 @@ import IvState, { IvAction } from './IvState';
 import { shareIv } from './ShareUtil';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText,
     DialogTitle, Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
-    Tab, Tabs
+    Tab, Tabs, TextField
  } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -26,6 +26,7 @@ const LowerTabHeader = React.memo(({
 
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const [showAddConfirm, setShowAddConfirm] = React.useState(false);
+    const [nickname, setNickname] = React.useState("");
     const { t } = useTranslation();
 
     const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
@@ -37,11 +38,12 @@ const LowerTabHeader = React.memo(({
 
         const type = e.currentTarget.getAttribute('data-value') || "";
         if (type === "addThis") {
+            setNickname(t(`pokemons.${state.pokemonIv.pokemonName}`));
             setShowAddConfirm(true);
         } else {
             dispatch({type} as IvAction);
         }
-    }, [dispatch]);
+    }, [dispatch, state.pokemonIv.pokemonName, t]);
 
     const onShareHandler = React.useCallback(() => {
         setMoreMenuAnchor(null);
@@ -65,9 +67,9 @@ const LowerTabHeader = React.memo(({
 
     const onAddConfirmOk = React.useCallback(() => {
         setShowAddConfirm(false);
-        dispatch({type: "addThis"} as IvAction);
+        dispatch({type: "addThis", payload: {iv: state.pokemonIv, nickname}} as IvAction);
         startAddToBoxAnimation(boxTabRef.current);
-    }, [dispatch]);
+    }, [dispatch, nickname, state.pokemonIv]);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -115,9 +117,16 @@ const LowerTabHeader = React.memo(({
         <Dialog open={showAddConfirm} onClose={onAddConfirmCancel}>
             <DialogTitle>{t('add to box')}</DialogTitle>
             <DialogContent>
-                <DialogContentText>
+                <DialogContentText sx={{ marginBottom: 2 }}>
                     {t('confirm add to box')}
                 </DialogContentText>
+                <TextField
+                    variant="standard"
+                    size="small"
+                    fullWidth
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={onAddConfirmOk} autoFocus>{t('add')}</Button>
