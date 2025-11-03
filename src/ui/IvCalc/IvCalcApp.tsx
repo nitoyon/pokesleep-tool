@@ -12,7 +12,6 @@ import RpView from './Rp/RpView';
 import StrengthView from './Strength/StrengthView';
 import RatingView from './RatingView';
 import BoxItemDialog from './Box/BoxItemDialog';
-import BoxExportDialog from './Box/BoxExportDialog';
 import BoxImportDialog from './Box/BoxImportDialog';
 import { useTranslation } from 'react-i18next';
 
@@ -64,9 +63,6 @@ const ResearchCalcApp = React.memo(() => {
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(state.pokemonIv);
 
-    const onBoxExportDialogClose = React.useCallback(() => {
-        dispatch({type: "exportClose"});
-    }, []);
     const onBoxImportDialogClose = React.useCallback(() => {
         dispatch({type: "importClose"});
     }, []);
@@ -111,8 +107,6 @@ const ResearchCalcApp = React.memo(() => {
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
             onClose={onBoxItemEditDialogClose} onChange={onBoxItemDialogChange}/>
-        <BoxExportDialog box={state.box}
-            open={state.boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
         <BoxImportDialog box={state.box}
             open={state.boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
         <Snackbar open={state.alertMessage !== ""} message={t(state.alertMessage)}

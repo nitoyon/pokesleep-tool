@@ -14,6 +14,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
+import BoxExportDialog from './Box/BoxExportDialog';
 
 const LowerTabHeader = React.memo(({
     state, isBoxEmpty, dispatch,
@@ -27,6 +28,7 @@ const LowerTabHeader = React.memo(({
 
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const [showAddConfirm, setShowAddConfirm] = React.useState(false);
+    const [exportDialogOpen, setExportDialogOpen] = React.useState(false);
     const [boxDeleteAllDialogOpen, setBoxDeleteAllDialogOpen] = React.useState(false);
     const { t } = useTranslation();
 
@@ -40,6 +42,8 @@ const LowerTabHeader = React.memo(({
         const type = e.currentTarget.getAttribute('data-value') || "";
         if (type === "addThis") {
             setShowAddConfirm(true);
+        } else if (type === "export") {
+            setExportDialogOpen(true);
         } else if (type === "deleteAll") {
             setBoxDeleteAllDialogOpen(true);
         } else {
@@ -75,6 +79,9 @@ const LowerTabHeader = React.memo(({
 
     const onBoxDeleteAllDialogClose = React.useCallback(() => {
         setBoxDeleteAllDialogOpen(false);
+    }, []);
+    const onBoxExportDialogClose = React.useCallback(() => {
+        setExportDialogOpen(false);
     }, []);
 
     return (<StyledContainer>
@@ -123,6 +130,8 @@ const LowerTabHeader = React.memo(({
         <AddToBoxConfirmDialog open={showAddConfirm}
             initialNickname={t(`pokemons.${state.pokemonIv.pokemonName}`)}
             onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
+        <BoxExportDialog box={state.box}
+            open={exportDialogOpen} onClose={onBoxExportDialogClose}/>
         <BoxDeleteAllDialog dispatch={dispatch}
             open={boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
     </StyledContainer>);
