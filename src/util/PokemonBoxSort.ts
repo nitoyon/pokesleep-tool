@@ -296,9 +296,12 @@ export function loadBoxSortConfig(): BoxSortConfig {
             ret.ingredient = json.ingredient;
         }
     }
-    if (typeof(json.mainSkill) === "string" &&
-        MainSkillNames.includes(json.mainSkill)) {
-        ret.mainSkill = json.mainSkill;
+    if (typeof(json.mainSkill) === "string") {
+        if (json.mainSkill === "strength" || json.mainSkill === "count" ||
+            MainSkillNames.includes(json.mainSkill)
+        ) {
+            ret.mainSkill = json.mainSkill;
+        }
     }
     if (typeof(json.descending) === "boolean") {
         ret.descending = json.descending;
