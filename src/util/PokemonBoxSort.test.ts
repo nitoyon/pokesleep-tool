@@ -765,6 +765,42 @@ describe('loadBoxSortConfig', () => {
         const config = loadBoxSortConfig();
         expect(config.sort).toBe("skill");
     });
+
+    test('loads mainSkill "strength" correctly', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            mainSkill: 'strength',
+        }));
+
+        const config = loadBoxSortConfig();
+        expect(config.mainSkill).toBe('strength');
+    });
+
+    test('loads mainSkill "count" correctly', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            mainSkill: 'count',
+        }));
+
+        const config = loadBoxSortConfig();
+        expect(config.mainSkill).toBe('count');
+    });
+
+    test('loads valid MainSkillName correctly', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            mainSkill: 'Charge Strength S',
+        }));
+
+        const config = loadBoxSortConfig();
+        expect(config.mainSkill).toBe('Charge Strength S');
+    });
+
+    test('rejects invalid mainSkill and uses default', () => {
+        localStorage.setItem('PstPokemonBoxParam', JSON.stringify({
+            mainSkill: 'invalid-skill-name',
+        }));
+
+        const config = loadBoxSortConfig();
+        expect(config.mainSkill).toBe('Energy for Everyone S'); // default value
+    });
 });
 
 function createStrengthResult(template: Partial<SimpleStrengthResult>): SimpleStrengthResult {

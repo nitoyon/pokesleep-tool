@@ -342,6 +342,7 @@
         "box": "ボックス",
         "parameter": "パラメーター",
         "add to box": "ボックスに追加",
+        "confirm add to box": "このポケモンをボックスに追加してもよろしいですか？",
         "export": "エクスポート",
         "import": "インポート",
         "pokemon in the box is edited": "ボックス内のポケモンが編集されています。ボックスに反映するには保存してください。",

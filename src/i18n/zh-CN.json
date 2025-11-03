@@ -340,6 +340,7 @@
         "box": "盒子",
         "parameter": "参数",
         "add to box": "添加到盒子",
+        "confirm add to box": "确定要将此宝可梦添加到盒子吗？",
         "export": "导出",
         "import": "导入",
         "pokemon in the box is edited": "盒子里的宝可梦已被修改。如需反映到盒子中请保存。",

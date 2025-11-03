@@ -2,8 +2,9 @@ import React from 'react';
 import { styled } from '@mui/system';
 import IvState, { IvAction } from './IvState';
 import { shareIv } from './ShareUtil';
-import { Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
-    Tab, Tabs
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
+    Tab, Tabs, TextField
  } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -24,6 +25,7 @@ const LowerTabHeader = React.memo(({
     const tabIndex = state.lowerTabIndex;
 
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
+    const [showAddConfirm, setShowAddConfirm] = React.useState(false);
     const { t } = useTranslation();
 
     const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
@@ -34,9 +36,10 @@ const LowerTabHeader = React.memo(({
         setMoreMenuAnchor(null);
 
         const type = e.currentTarget.getAttribute('data-value') || "";
-        dispatch({type} as IvAction);
         if (type === "addThis") {
-            startAddToBoxAnimation(boxTabRef.current);
+            setShowAddConfirm(true);
+        } else {
+            dispatch({type} as IvAction);
         }
     }, [dispatch]);
 
@@ -55,6 +58,16 @@ const LowerTabHeader = React.memo(({
     const onMoreMenuClose = React.useCallback(() => {
         setMoreMenuAnchor(null);
     }, []);
+
+    const onAddConfirmCancel = React.useCallback(() => {
+        setShowAddConfirm(false);
+    }, []);
+
+    const onAddConfirmOk = React.useCallback((nickname: string) => {
+        setShowAddConfirm(false);
+        dispatch({type: "addThis", payload: {iv: state.pokemonIv, nickname}} as IvAction);
+        startAddToBoxAnimation(boxTabRef.current);
+    }, [dispatch, state.pokemonIv]);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -99,7 +112,58 @@ const LowerTabHeader = React.memo(({
                 </MenuItem>
             </MenuList>
         </Menu>
+        <AddToBoxConfirmDialog open={showAddConfirm}
+            initialNickname={t(`pokemons.${state.pokemonIv.pokemonName}`)}
+            onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
     </StyledContainer>);
+});
+
+/**
+ * Confirmation dialog for adding a Pokémon to the box.
+ * Allows the user to edit the nickname before confirming.
+ */
+const AddToBoxConfirmDialog = React.memo(({
+    open, initialNickname, onConfirm, onCancel,
+}: {
+    open: boolean,
+    initialNickname: string,
+    onConfirm: (nickname: string) => void,
+    onCancel: () => void,
+}) => {
+    const { t } = useTranslation();
+    const [nickname, setNickname] = React.useState("");
+
+    React.useEffect(() => {
+        if (open) {
+            setNickname(initialNickname);
+        }
+    }, [open, initialNickname]);
+
+    const handleConfirm = React.useCallback(() => {
+        onConfirm(nickname);
+    }, [nickname, onConfirm]);
+
+    return (
+        <Dialog open={open} onClose={onCancel}>
+            <DialogTitle>{t('add to box')}</DialogTitle>
+            <DialogContent>
+                <DialogContentText sx={{ marginBottom: 2 }}>
+                    {t('confirm add to box')}
+                </DialogContentText>
+                <TextField
+                    variant="standard"
+                    size="small"
+                    fullWidth
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleConfirm} autoFocus>{t('add')}</Button>
+                <Button onClick={onCancel}>{t('cancel')}</Button>
+            </DialogActions>
+        </Dialog>
+    );
 });
 
 const StyledContainer = styled('div')({
