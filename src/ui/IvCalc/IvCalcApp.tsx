@@ -30,6 +30,7 @@ const initialIvState = getInitialIvState();
 
 const ResearchCalcApp = React.memo(() => {
     const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
+    const [boxDeleteAllDialogOpen, setBoxDeleteAllDialogOpen] = React.useState(false);
     const { t } = useTranslation();
     const width = useDomWidth();
 
@@ -71,8 +72,11 @@ const ResearchCalcApp = React.memo(() => {
     const onBoxImportDialogClose = React.useCallback(() => {
         dispatch({type: "importClose"});
     }, []);
+    const onBoxDeleteAllDialogOpen = React.useCallback(() => {
+        setBoxDeleteAllDialogOpen(true);
+    }, []);
     const onBoxDeleteAllDialogClose = React.useCallback(() => {
-        dispatch({type: "deleteAllClose"});
+        setBoxDeleteAllDialogOpen(false);
     }, []);
 
     return <>
@@ -97,7 +101,8 @@ const ResearchCalcApp = React.memo(() => {
                 padding: '0 0.3rem',
             }}>{t('ratio is not fixed')}</div>}
             <LowerTabHeader state={state}
-                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
+                dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}
+                onDeleteAllClick={onBoxDeleteAllDialogOpen}/>
         </div>
         {state.lowerTabIndex === 0 &&
             <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
@@ -119,8 +124,8 @@ const ResearchCalcApp = React.memo(() => {
             open={state.boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
         <BoxImportDialog box={state.box}
             open={state.boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
-        <BoxDeleteAllDialog box={state.box}
-            open={state.boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
+        <BoxDeleteAllDialog dispatch={dispatch}
+            open={boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
         <Snackbar open={state.alertMessage !== ""} message={t(state.alertMessage)}
             autoHideDuration={2000} onClose={onAlertMessageClose}/>
         <Snackbar open={isSelectedItemEdited} message={t('pokemon in the box is edited')}

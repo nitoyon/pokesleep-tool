@@ -15,11 +15,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 const LowerTabHeader = React.memo(({
-    state, isBoxEmpty, dispatch,
+    state, isBoxEmpty, dispatch, onDeleteAllClick,
 }: {
     state: IvState,
     isBoxEmpty: boolean,
     dispatch: (action: IvAction) => void,
+    onDeleteAllClick: () => void,
 }) => {
     const upperTabIndex = state.tabIndex;
     const tabIndex = state.lowerTabIndex;
@@ -38,10 +39,12 @@ const LowerTabHeader = React.memo(({
         const type = e.currentTarget.getAttribute('data-value') || "";
         if (type === "addThis") {
             setShowAddConfirm(true);
+        } else if (type === "deleteAll") {
+            onDeleteAllClick();
         } else {
             dispatch({type} as IvAction);
         }
-    }, [dispatch]);
+    }, [dispatch, onDeleteAllClick]);
 
     const onShareHandler = React.useCallback(() => {
         setMoreMenuAnchor(null);

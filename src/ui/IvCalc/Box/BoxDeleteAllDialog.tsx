@@ -1,10 +1,10 @@
 import React from 'react';
-import PokemonBox from '../../../util/PokemonBox';
+import { IvAction } from '../IvState';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const BoxDeleteAllDialog = React.memo(({ box, open, onClose }: {
-    box: PokemonBox,
+const BoxDeleteAllDialog = React.memo(({ dispatch, open, onClose }: {
+    dispatch: React.Dispatch<IvAction>,
     open: boolean,
     onClose: () => void }
 ) => {
@@ -12,10 +12,10 @@ const BoxDeleteAllDialog = React.memo(({ box, open, onClose }: {
     const { t } = useTranslation();
 
     const onDelete = React.useCallback(() => {
-        box.removeAll();
+        dispatch({ type: "deleteAll" });
         setDeletedMessageVisible(true);
         onClose();
-    }, [box, onClose]);
+    }, [dispatch, onClose]);
     const onDeletedMessageClose = React.useCallback(() => {
         setDeletedMessageVisible(false);
     }, []);

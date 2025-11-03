@@ -7,7 +7,7 @@ import { isExpertField } from '../../data/fields';
 
 export type IvAction = {
     type: "add"|"export"|"exportClose"|"import"|"importClose"|
-        "deleteAll" | "deleteAllClose" | "saveItem"|"restoreItem"|
+        "deleteAll" | "saveItem"|"restoreItem"|
         "editDialogClose"|"closeAlert"|"openEnergyDialog"|"closeEnergyDialog";
 }|{
     type: "select"|"edit"|"dup"|"remove";
@@ -48,7 +48,6 @@ type IvState = {
     boxItemDialogIsEdit: boolean;
     boxExportDialogOpen: boolean;
     boxImportDialogOpen: boolean;
-    boxDeleteAllDialogOpen: boolean;
     alertMessage: string;
 };
 
@@ -104,7 +103,6 @@ export function getInitialIvState(): IvState {
         boxItemDialogIsEdit: false,
         boxExportDialogOpen: false,
         boxImportDialogOpen: false,
-        boxDeleteAllDialogOpen: false,
         alertMessage: "",
     };
 
@@ -242,10 +240,9 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         return {...state, box, boxImportDialogOpen: false};
     }
     if (type === "deleteAll") {
-        return {...state, boxDeleteAllDialogOpen: true};
-    }
-    if (type === "deleteAllClose") {
-        return {...state, boxDeleteAllDialogOpen: false};
+        const box = new PokemonBox([]);
+        box.save();
+        return {...state, box};
     }
     if (type === "restoreItem") {
         if (selectedItem !== null) {

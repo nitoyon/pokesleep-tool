@@ -20,7 +20,6 @@ function createBaseState(): IvState {
         boxItemDialogIsEdit: false,
         boxExportDialogOpen: false,
         boxImportDialogOpen: false,
-        boxDeleteAllDialogOpen: false,
         alertMessage: '',
     };
 }
