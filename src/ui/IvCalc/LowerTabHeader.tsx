@@ -26,7 +26,6 @@ const LowerTabHeader = React.memo(({
 
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const [showAddConfirm, setShowAddConfirm] = React.useState(false);
-    const [nickname, setNickname] = React.useState("");
     const { t } = useTranslation();
 
     const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
@@ -38,12 +37,11 @@ const LowerTabHeader = React.memo(({
 
         const type = e.currentTarget.getAttribute('data-value') || "";
         if (type === "addThis") {
-            setNickname(t(`pokemons.${state.pokemonIv.pokemonName}`));
             setShowAddConfirm(true);
         } else {
             dispatch({type} as IvAction);
         }
-    }, [dispatch, state.pokemonIv.pokemonName, t]);
+    }, [dispatch]);
 
     const onShareHandler = React.useCallback(() => {
         setMoreMenuAnchor(null);
@@ -65,11 +63,11 @@ const LowerTabHeader = React.memo(({
         setShowAddConfirm(false);
     }, []);
 
-    const onAddConfirmOk = React.useCallback(() => {
+    const onAddConfirmOk = React.useCallback((nickname: string) => {
         setShowAddConfirm(false);
         dispatch({type: "addThis", payload: {iv: state.pokemonIv, nickname}} as IvAction);
         startAddToBoxAnimation(boxTabRef.current);
-    }, [dispatch, nickname, state.pokemonIv]);
+    }, [dispatch, state.pokemonIv]);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -114,7 +112,39 @@ const LowerTabHeader = React.memo(({
                 </MenuItem>
             </MenuList>
         </Menu>
-        <Dialog open={showAddConfirm} onClose={onAddConfirmCancel}>
+        <AddToBoxConfirmDialog open={showAddConfirm}
+            initialNickname={t(`pokemons.${state.pokemonIv.pokemonName}`)}
+            onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
+    </StyledContainer>);
+});
+
+/**
+ * Confirmation dialog for adding a Pokémon to the box.
+ * Allows the user to edit the nickname before confirming.
+ */
+const AddToBoxConfirmDialog = React.memo(({
+    open, initialNickname, onConfirm, onCancel,
+}: {
+    open: boolean,
+    initialNickname: string,
+    onConfirm: (nickname: string) => void,
+    onCancel: () => void,
+}) => {
+    const { t } = useTranslation();
+    const [nickname, setNickname] = React.useState("");
+
+    React.useEffect(() => {
+        if (open) {
+            setNickname(initialNickname);
+        }
+    }, [open, initialNickname]);
+
+    const handleConfirm = React.useCallback(() => {
+        onConfirm(nickname);
+    }, [nickname, onConfirm]);
+
+    return (
+        <Dialog open={open} onClose={onCancel}>
             <DialogTitle>{t('add to box')}</DialogTitle>
             <DialogContent>
                 <DialogContentText sx={{ marginBottom: 2 }}>
@@ -129,11 +159,11 @@ const LowerTabHeader = React.memo(({
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={onAddConfirmOk} autoFocus>{t('add')}</Button>
-                <Button onClick={onAddConfirmCancel}>{t('cancel')}</Button>
+                <Button onClick={handleConfirm} autoFocus>{t('add')}</Button>
+                <Button onClick={onCancel}>{t('cancel')}</Button>
             </DialogActions>
         </Dialog>
-    </StyledContainer>);
+    );
 });
 
 const StyledContainer = styled('div')({
