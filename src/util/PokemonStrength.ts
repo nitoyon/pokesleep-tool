@@ -633,6 +633,15 @@ class PokemonStrength {
                     skillValuePerTrigger,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
+            case "Ingredient Draw S": {
+                const averageStrength = 407 / 3;
+                return {
+                    skillValue: skillValue * superLuckIngRate,
+                    skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
+                    skillValuePerTrigger,
+                    skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
+                };
+            }
             case "Ingredient Draw S (Super Luck)": {
                 const averageStrength = 123.75;
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);

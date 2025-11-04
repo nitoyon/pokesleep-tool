@@ -135,6 +135,8 @@ function convertIngName(val: string): IngredientName {
         case "Greengrass Soybeans": return "soy";
         case "Greengrass Corn": return "corn";
         case "Rousing Coffee": return "coffee";
+        case "Plump Pumpkin": return "pumpkin";
+        case "Glossy Avocado": return "avocado";
         default: return "unknown";
     }
 }
