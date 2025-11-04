@@ -130,7 +130,7 @@ const LowerTabHeader = React.memo(({
         <AddToBoxConfirmDialog open={showAddConfirm}
             initialNickname={t(`pokemons.${state.pokemonIv.pokemonName}`)}
             onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
-        <BoxExportDialog box={state.box}
+        <BoxExportDialog items={state.box.items}
             open={exportDialogOpen} onClose={onBoxExportDialogClose}/>
         <BoxDeleteAllDialog dispatch={dispatch}
             open={boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>

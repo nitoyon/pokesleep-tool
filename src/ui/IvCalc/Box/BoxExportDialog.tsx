@@ -1,18 +1,18 @@
 import React from 'react';
-import PokemonBox from '../../../util/PokemonBox';
+import { PokemonBoxItem } from '../../../util/PokemonBox';
 import { copyToClipboard } from '../../../util/Clipboard';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar,
     TextField }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const BoxExportDialog = React.memo(({box, open, onClose}: {
-    box: PokemonBox,
+const BoxExportDialog = React.memo(({items, open, onClose}: {
+    items: PokemonBoxItem[],
     open: boolean,
     onClose: () => void,
 }) => {
     const [copiedMessageVisible, setCopiedMessageVisible] = React.useState(false);
     const { t } = useTranslation();
-    const value = box.items
+    const value = items
         .map(x => x.serialize())
         .join("\n");
 
