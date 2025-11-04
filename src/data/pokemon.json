@@ -4583,6 +4583,108 @@
         }
     },
     {
+        "id": 328,
+        "name": "Trapinch",
+        "arrival": "2025-11-06",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "ground",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 5000,
+        "ingRatio": 15.2,
+        "skillRatio": 3.1,
+        "ancestor": 328,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
+        "ing1": {
+            "name": "avocado",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 12
+        }
+    },
+    {
+        "id": 329,
+        "name": "Vibrava",
+        "arrival": "2025-11-06",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "ground",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 12,
+        "frequency": 3700,
+        "ingRatio": 15.5,
+        "skillRatio": 3.4,
+        "ancestor": 328,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 12,
+        "ing1": {
+            "name": "avocado",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 12
+        }
+    },
+    {
+        "id": 330,
+        "name": "Flygon",
+        "arrival": "2025-11-06",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "ground",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 20,
+        "frequency": 2700,
+        "ingRatio": 17.2,
+        "skillRatio": 3.9,
+        "ancestor": 328,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "avocado",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 6,
+            "c3": 9
+        },
+        "ing3": {
+            "name": "soy",
+            "c3": 12
+        }
+    },
+    {
         "id": 333,
         "name": "Swablu",
         "arrival": "2023-07-17",
@@ -4885,6 +4987,109 @@
         },
         "ing3": {
             "name": "ginger",
+            "c3": 4
+        }
+    },
+    {
+        "id": 371,
+        "name": "Bagon",
+        "arrival": "2025-11-06",
+        "sleepType": "dozing",
+        "exp": 900,
+        "type": "dragon",
+        "specialty": "Berries",
+        "skill": "Cooking Power-Up S",
+        "fp": 5,
+        "frequency": 5300,
+        "ingRatio": 20.9,
+        "skillRatio": 2.7,
+        "ancestor": 371,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "potato",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 4
+        }
+    },
+    {
+        "id": 372,
+        "name": "Shelgon",
+        "arrival": "2025-11-06",
+        "sleepType": "dozing",
+        "exp": 900,
+        "type": "dragon",
+        "specialty": "Berries",
+        "skill": "Cooking Power-Up S",
+        "fp": 12,
+        "frequency": 3800,
+        "ingRatio": 20.6,
+        "skillRatio": 2.7,
+        "ancestor": 371,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 14,
+        "ing1": {
+            "name": "potato",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "sausage",
+            "c3": 4
+        },
+        "ratioNotFixed": true
+    },
+    {
+        "id": 373,
+        "name": "Salamence",
+        "arrival": "2025-11-06",
+        "sleepType": "dozing",
+        "exp": 900,
+        "type": "dragon",
+        "specialty": "Berries",
+        "skill": "Cooking Power-Up S",
+        "fp": 20,
+        "frequency": 2800,
+        "ingRatio": 21.7,
+        "skillRatio": 3.4,
+        "ancestor": 371,
+        "evolutionCount": 2,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 22,
+        "ing1": {
+            "name": "potato",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "ginger",
+            "c2": 3,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "sausage",
             "c3": 4
         }
     },
@@ -5734,6 +5939,74 @@
         "ing3": {
             "name": "coffee",
             "c3": 2
+        }
+    },
+    {
+        "id": 557,
+        "name": "Dwebble",
+        "arrival": "2025-11-06",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "bug",
+        "specialty": "Skills",
+        "skill": "Ingredient Draw S",
+        "fp": 5,
+        "frequency": 4300,
+        "ingRatio": 17.5,
+        "skillRatio": 5.4,
+        "ancestor": 557,
+        "evolutionCount": 1,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 8,
+        "ing1": {
+            "name": "avocado",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 5
+        }
+    },
+    {
+        "id": 558,
+        "name": "Crustle",
+        "arrival": "2025-11-06",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "bug",
+        "specialty": "Skills",
+        "skill": "Ingredient Draw S",
+        "fp": 12,
+        "frequency": 3200,
+        "ingRatio": 23.9,
+        "skillRatio": 6.4,
+        "ancestor": 558,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 17,
+        "ing1": {
+            "name": "avocado",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 3,
+            "c3": 5
+        },
+        "ing3": {
+            "name": "oil",
+            "c3": 5
         }
     },
     {

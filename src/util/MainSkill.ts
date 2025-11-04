@@ -173,7 +173,8 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
     if (skill === "Berry Burst") {
         return [11, 14, 21, 24, 27, 30][skillLevel - 1];
     }
-    if (skill === "Ingredient Draw S (Super Luck)" ||
+    if (skill === "Ingredient Draw S" ||
+        skill === "Ingredient Draw S (Super Luck)" ||
         skill === "Ingredient Draw S (Hyper Cutter)"
     ) {
         return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
