@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import IvState, { IvAction } from './IvState';
 import { shareIv } from './ShareUtil';
+import BoxDeleteAllDialog from './Box/BoxDeleteAllDialog';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText,
     DialogTitle, Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuList,
     Tab, Tabs, TextField
@@ -15,18 +16,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 const LowerTabHeader = React.memo(({
-    state, isBoxEmpty, dispatch, onDeleteAllClick,
+    state, isBoxEmpty, dispatch,
 }: {
     state: IvState,
     isBoxEmpty: boolean,
     dispatch: (action: IvAction) => void,
-    onDeleteAllClick: () => void,
 }) => {
     const upperTabIndex = state.tabIndex;
     const tabIndex = state.lowerTabIndex;
 
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const [showAddConfirm, setShowAddConfirm] = React.useState(false);
+    const [boxDeleteAllDialogOpen, setBoxDeleteAllDialogOpen] = React.useState(false);
     const { t } = useTranslation();
 
     const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
@@ -40,11 +41,11 @@ const LowerTabHeader = React.memo(({
         if (type === "addThis") {
             setShowAddConfirm(true);
         } else if (type === "deleteAll") {
-            onDeleteAllClick();
+            setBoxDeleteAllDialogOpen(true);
         } else {
             dispatch({type} as IvAction);
         }
-    }, [dispatch, onDeleteAllClick]);
+    }, [dispatch]);
 
     const onShareHandler = React.useCallback(() => {
         setMoreMenuAnchor(null);
@@ -71,6 +72,10 @@ const LowerTabHeader = React.memo(({
         dispatch({type: "addThis", payload: {iv: state.pokemonIv, nickname}} as IvAction);
         startAddToBoxAnimation(boxTabRef.current);
     }, [dispatch, state.pokemonIv]);
+
+    const onBoxDeleteAllDialogClose = React.useCallback(() => {
+        setBoxDeleteAllDialogOpen(false);
+    }, []);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -118,6 +123,8 @@ const LowerTabHeader = React.memo(({
         <AddToBoxConfirmDialog open={showAddConfirm}
             initialNickname={t(`pokemons.${state.pokemonIv.pokemonName}`)}
             onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
+        <BoxDeleteAllDialog dispatch={dispatch}
+            open={boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
     </StyledContainer>);
 });
 
