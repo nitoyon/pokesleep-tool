@@ -6,6 +6,7 @@ import { sortPokemonItems, BoxSortType, BoxSortConfig, loadBoxSortConfig } from 
 import PokemonIcon from '../PokemonIcon';
 import { IvAction } from '../IvState';
 import PokemonFilterFooter, { PokemonFilterFooterConfig } from '../PokemonFilterFooter';
+import BoxExportDialog from './BoxExportDialog';
 import BoxFilterDialog from './BoxFilterDialog';
 import BoxSortConfigFooter from './BoxSortConfigFooter';
 import CandyDialog from '../CandyDialog';
@@ -124,8 +125,8 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
                 sx={{position: 'absolute', top: '-55px', right: '10px'}}>
                 <AddIcon/>
             </Fab>
-            <BoxExportAlert count={items.length} config={sortConfig}
-                dispatch={dispatch} onChange={onSortConfigChange}/>
+            <BoxExportAlert items={items} config={sortConfig}
+                onChange={onSortConfigChange}/>
             <BoxSortConfigFooter parameter={parameter} sortConfig={sortConfig}
                 dispatch={dispatch} onChange={onSortConfigChange}/>
             <div style={{
@@ -325,26 +326,31 @@ const alertDaysThreshold = 30;
  */
 const boxCountDiffThreshold = 10;
 
-const BoxExportAlert = React.memo(({count, config, dispatch, onChange}: {
-    count: number,
+const BoxExportAlert = React.memo(({items, config, onChange}: {
+    items: PokemonBoxItem[],
     config: BoxSortConfig,
-    dispatch: (action: IvAction) => void,
     onChange: (value: BoxSortConfig) => void,
 }) => {
     const { t } = useTranslation();
+    const [exportOpen, setExportOpen] = React.useState(false);
+
     const onClose = React.useCallback(() => {
         onChange({
             ...config,
             // YYYY-MM-DD
             warnDate: new Date().toLocaleDateString('sv-SE'),
-            warnItems: count,
+            warnItems: items.length,
         })
-    }, [config, count, onChange]);
+    }, [config, items.length, onChange]);
 
     const onExportClick = React.useCallback(() => {
-        dispatch({type: 'export'});
+        setExportOpen(true);
+    }, []);
+
+    const onExportDialogClose = React.useCallback(() => {
+        setExportOpen(false);
         onClose();
-    }, [dispatch, onClose]);
+    }, [onClose]);
 
     // get time since we displayed the warning message
     const lastWarningTime = config.warnDate !== '' ?
@@ -355,21 +361,24 @@ const BoxExportAlert = React.memo(({count, config, dispatch, onChange}: {
     const elapsed = elapsedTime > alertDaysThreshold * 24 * 60 * 60 * 1000;
 
     // check whether the box items increases too much
-    const boxIncreased = Math.abs(count - config.warnItems) >= boxCountDiffThreshold;
+    const boxIncreased = Math.abs(items.length - config.warnItems) >= boxCountDiffThreshold;
 
     // return empty element when no need to show message
     if (!boxIncreased && !elapsed) {
         return <></>;
     }
 
-    return <StyledBoxExportAlert>
-        <InfoOutlinedIcon/>
-        <div>
-            {t('export notice')}
-            <Button onClick={onExportClick}>[{t("export")}]</Button>
-        </div>
-        <IconButton onClick={onClose}><CloseIcon/></IconButton>
-    </StyledBoxExportAlert>;
+    return <>
+        <StyledBoxExportAlert>
+            <InfoOutlinedIcon/>
+            <div>
+                {t('export notice')}
+                <Button onClick={onExportClick}>[{t("export")}]</Button>
+            </div>
+            <IconButton onClick={onClose}><CloseIcon/></IconButton>
+        </StyledBoxExportAlert>
+        <BoxExportDialog items={items} open={exportOpen} onClose={onExportDialogClose}/>
+    </>;
 });
 
 const StyledBoxExportAlert = styled('div')({
