@@ -609,7 +609,7 @@ class PokemonStrength {
                     skillStrength: skillValue * averageIngredientStrength * ingFactor,
                     skillValuePerTrigger,
                     skillValue2: ingCount * skillCount,
-                    skillStrength2: ingCount * ingredientStrength[this.iv.pokemon.ing1.name] * ingFactor,
+                    skillStrength2: ingCount * ingredientStrength[this.iv.pokemon.ing1.name] * ingFactor * skillCount,
                     skillValuePerTrigger2: ingCount,
                 };
             }
