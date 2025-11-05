@@ -530,6 +530,7 @@ const EnergyHover = React.memo(({width, height, x, gx, gy, result}: {
 const StyledPopper = styled(Popper)({
     pointerEvents: 'none',
     padding: '1rem',
+    zIndex: 2147483647,
     '& > div': {
         padding: '.5rem',
         background: 'rgba(246, 246, 246, 0.8)',
