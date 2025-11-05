@@ -1,7 +1,7 @@
 import React from 'react';
 import { IvAction } from '../IvState';
 import PokemonBox from '../../../util/PokemonBox';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar,
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle,
     TextField }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +12,6 @@ const BoxImportDialog = React.memo(({dispatch, box, open, onClose}: {
     onClose: () => void,
 }) => {
     const [value, setValue] = React.useState("");
-    const [importedMessage, setImportedMessage] = React.useState("");
     const { t } = useTranslation();
 
     const onValueChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,20 +41,16 @@ const BoxImportDialog = React.memo(({dispatch, box, open, onClose}: {
         }
 
         if (added === 0) {
-            setImportedMessage(t('failed to import'));
+            dispatch({type: 'showAlert', payload: {message: t('failed to import')}});
         }
         else {
             dispatch({type: 'updateBox', payload: {box: newBox}});
-            setImportedMessage(t('imported N pokemon', {n: added}));
+            dispatch({type: 'showAlert', payload: {message:
+                t('imported N pokemon', {n: added})
+            }});
             onClose_();
         }
-    }, [box, dispatch, setImportedMessage, t, onClose_, value]);
-
-    const onImportedMessageClose = React.useCallback(() => {
-        setImportedMessage("");
-    }, [setImportedMessage]);
-
-    const importedMessageVisible = importedMessage !== "";
+    }, [box, dispatch, t, onClose_, value]);
 
     return <>
         <Dialog open={open} onClose={onClose_}>
@@ -70,10 +65,6 @@ const BoxImportDialog = React.memo(({dispatch, box, open, onClose}: {
                 <Button onClick={onClose_}>{t('close')}</Button>
             </DialogActions>
         </Dialog>
-        <Snackbar open={importedMessageVisible}
-            autoHideDuration={2000}
-            onClose={onImportedMessageClose}
-            message={importedMessage}/>
     </>;
 });
 
