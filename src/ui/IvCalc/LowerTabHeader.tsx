@@ -15,6 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import BoxExportDialog from './Box/BoxExportDialog';
+import BoxImportDialog from './Box/BoxImportDialog';
 
 const LowerTabHeader = React.memo(({
     state, isBoxEmpty, dispatch,
@@ -29,6 +30,7 @@ const LowerTabHeader = React.memo(({
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const [showAddConfirm, setShowAddConfirm] = React.useState(false);
     const [exportDialogOpen, setExportDialogOpen] = React.useState(false);
+    const [importDialogOpen, setImportDialogOpen] = React.useState(false);
     const [boxDeleteAllDialogOpen, setBoxDeleteAllDialogOpen] = React.useState(false);
     const { t } = useTranslation();
 
@@ -44,12 +46,18 @@ const LowerTabHeader = React.memo(({
             setShowAddConfirm(true);
         } else if (type === "export") {
             setExportDialogOpen(true);
+        } else if (type === "import") {
+            if (!state.box.canAdd) {
+                dispatch({type: 'showAlert', payload: {message: t('box is full')}});
+                return;
+            }
+            setImportDialogOpen(true);
         } else if (type === "deleteAll") {
             setBoxDeleteAllDialogOpen(true);
         } else {
             dispatch({type} as IvAction);
         }
-    }, [dispatch]);
+    }, [dispatch, state, t]);
 
     const onShareHandler = React.useCallback(() => {
         setMoreMenuAnchor(null);
@@ -82,6 +90,10 @@ const LowerTabHeader = React.memo(({
     }, []);
     const onBoxExportDialogClose = React.useCallback(() => {
         setExportDialogOpen(false);
+    }, []);
+    const onBoxImportDialogClose = React.useCallback(() => {
+        dispatch({type: "importClose"});
+        setImportDialogOpen(false);
     }, []);
 
     return (<StyledContainer>
@@ -132,6 +144,8 @@ const LowerTabHeader = React.memo(({
             onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
         <BoxExportDialog items={state.box.items}
             open={exportDialogOpen} onClose={onBoxExportDialogClose}/>
+        <BoxImportDialog box={state.box}
+            open={importDialogOpen} onClose={onBoxImportDialogClose}/>
         <BoxDeleteAllDialog dispatch={dispatch}
             open={boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
     </StyledContainer>);

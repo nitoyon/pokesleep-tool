@@ -12,7 +12,6 @@ import RpView from './Rp/RpView';
 import StrengthView from './Strength/StrengthView';
 import RatingView from './RatingView';
 import BoxItemDialog from './Box/BoxItemDialog';
-import BoxImportDialog from './Box/BoxImportDialog';
 import { useTranslation } from 'react-i18next';
 
 const StyledTabs = styled(Tabs)({
@@ -63,10 +62,6 @@ const ResearchCalcApp = React.memo(() => {
     const isSelectedItemEdited = selectedItem !== null &&
         !selectedItem.iv.isEqual(state.pokemonIv);
 
-    const onBoxImportDialogClose = React.useCallback(() => {
-        dispatch({type: "importClose"});
-    }, []);
-
     return <>
         <div style={{padding: "0 .5rem", position: 'sticky', top: 0,
             zIndex: 1, background: '#f9f9f9',
@@ -107,8 +102,6 @@ const ResearchCalcApp = React.memo(() => {
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
             onClose={onBoxItemEditDialogClose} onChange={onBoxItemDialogChange}/>
-        <BoxImportDialog box={state.box}
-            open={state.boxImportDialogOpen} onClose={onBoxImportDialogClose}/>
         <Snackbar open={state.alertMessage !== ""} message={t(state.alertMessage)}
             autoHideDuration={2000} onClose={onAlertMessageClose}/>
         <Snackbar open={isSelectedItemEdited} message={t('pokemon in the box is edited')}
