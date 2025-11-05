@@ -6,7 +6,7 @@ import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStre
 import { isExpertField } from '../../data/fields';
 
 export type IvAction = {
-    type: "add"|"export"|"exportClose"|"import"|"importClose"|
+    type: "add"|"import"|"importClose"|
         "deleteAll" | "saveItem"|"restoreItem"|
         "editDialogClose"|"closeAlert"|"openEnergyDialog"|"closeEnergyDialog";
 }|{
@@ -46,7 +46,6 @@ type IvState = {
     boxItemDialogOpen: boolean;
     boxItemDialogKey: string;
     boxItemDialogIsEdit: boolean;
-    boxExportDialogOpen: boolean;
     boxImportDialogOpen: boolean;
     alertMessage: string;
 };
@@ -101,7 +100,6 @@ export function getInitialIvState(): IvState {
         boxItemDialogOpen: false,
         boxItemDialogKey: "",
         boxItemDialogIsEdit: false,
-        boxExportDialogOpen: false,
         boxImportDialogOpen: false,
         alertMessage: "",
     };
@@ -221,12 +219,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         const selectedItemId: number = box.add(action.payload.iv, action.payload.nickname);
         box.save();
         return {...state, box, selectedItemId};
-    }
-    if (type === "export") {
-        return {...state, boxExportDialogOpen: true};
-    }
-    if (type === "exportClose") {
-        return {...state, boxExportDialogOpen: false};
     }
     if (type === "import") {
         if (!state.box.canAdd) {
