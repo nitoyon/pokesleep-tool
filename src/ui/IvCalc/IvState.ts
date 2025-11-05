@@ -6,8 +6,7 @@ import { StrengthParameter, loadStrengthParameter } from '../../util/PokemonStre
 import { isExpertField } from '../../data/fields';
 
 export type IvAction = {
-    type: "add"|"import"|"importClose"|
-        "deleteAll" | "saveItem"|"restoreItem"|
+    type: "add"|"deleteAll"|"saveItem"|"restoreItem"|
         "editDialogClose"|"closeAlert"|"openEnergyDialog"|"closeEnergyDialog";
 }|{
     type: "select"|"edit"|"dup"|"remove";
@@ -49,7 +48,6 @@ type IvState = {
     boxItemDialogOpen: boolean;
     boxItemDialogKey: string;
     boxItemDialogIsEdit: boolean;
-    boxImportDialogOpen: boolean;
     alertMessage: string;
 };
 
@@ -103,7 +101,6 @@ export function getInitialIvState(): IvState {
         boxItemDialogOpen: false,
         boxItemDialogKey: "",
         boxItemDialogIsEdit: false,
-        boxImportDialogOpen: false,
         alertMessage: "",
     };
 
@@ -222,17 +219,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         const selectedItemId: number = box.add(action.payload.iv, action.payload.nickname);
         box.save();
         return {...state, box, selectedItemId};
-    }
-    if (type === "import") {
-        if (!state.box.canAdd) {
-            return {...state, alertMessage: 'box is full'};
-        }
-
-        return {...state, boxImportDialogOpen: true};
-    }
-    if (type === "importClose") {
-        const box = new PokemonBox(state.box.items);
-        return {...state, box, boxImportDialogOpen: false};
     }
     if (type === "updateBox") {
         const box = action.payload.box;

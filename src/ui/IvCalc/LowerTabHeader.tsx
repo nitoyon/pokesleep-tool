@@ -92,9 +92,8 @@ const LowerTabHeader = React.memo(({
         setExportDialogOpen(false);
     }, []);
     const onBoxImportDialogClose = React.useCallback(() => {
-        dispatch({type: "importClose"});
         setImportDialogOpen(false);
-    }, [dispatch]);
+    }, []);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
