@@ -22,6 +22,9 @@ export type IvAction = {
     type: "addThis";
     payload: {iv: PokemonIv; nickname?: string};
 }|{
+    type: "updateBox";
+    payload: {box: PokemonBox};
+}|{
     type: "changeUpperTab"|"changeLowerTab",
     payload: {index: number},
 }|{
@@ -230,6 +233,11 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
     if (type === "importClose") {
         const box = new PokemonBox(state.box.items);
         return {...state, box, boxImportDialogOpen: false};
+    }
+    if (type === "updateBox") {
+        const box = action.payload.box;
+        box.save();
+        return {...state, box};
     }
     if (type === "deleteAll") {
         const box = new PokemonBox([]);

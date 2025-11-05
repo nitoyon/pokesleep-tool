@@ -1,10 +1,12 @@
 import React from 'react';
+import { IvAction } from '../IvState';
 import PokemonBox from '../../../util/PokemonBox';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar,
     TextField }  from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const BoxImportDialog = React.memo(({box, open, onClose}: {
+const BoxImportDialog = React.memo(({dispatch, box, open, onClose}: {
+    dispatch: React.Dispatch<IvAction>,
     box: PokemonBox,
     open: boolean,
     onClose: () => void,
@@ -23,17 +25,19 @@ const BoxImportDialog = React.memo(({box, open, onClose}: {
     }, [setValue, onClose]);
 
     const onImportClick = React.useCallback(() => {
+        const newBox = new PokemonBox(box.items);
+
         const lines = value.split(/\n/g);
         let added = 0;
         for (const line of lines) {
-            if (!box.canAdd) {
+            if (!newBox.canAdd) {
                 break;
             }
-            const data = box.deserializeItem(line);
+            const data = newBox.deserializeItem(line);
             if (data === null) {
                 continue;
             }
-            box.add(data.iv, data.nickname);
+            newBox.add(data.iv, data.nickname);
             added++;
         }
 
@@ -41,11 +45,11 @@ const BoxImportDialog = React.memo(({box, open, onClose}: {
             setImportedMessage(t('failed to import'));
         }
         else {
-            box.save();
+            dispatch({type: 'updateBox', payload: {box: newBox}});
             setImportedMessage(t('imported N pokemon', {n: added}));
             onClose_();
         }
-    }, [box, setImportedMessage, t, onClose_, value]);
+    }, [box, dispatch, setImportedMessage, t, onClose_, value]);
 
     const onImportedMessageClose = React.useCallback(() => {
         setImportedMessage("");

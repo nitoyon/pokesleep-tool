@@ -94,7 +94,7 @@ const LowerTabHeader = React.memo(({
     const onBoxImportDialogClose = React.useCallback(() => {
         dispatch({type: "importClose"});
         setImportDialogOpen(false);
-    }, []);
+    }, [dispatch]);
 
     return (<StyledContainer>
         {tabIndex !== 2 && <IconButton aria-label="actions" color="inherit" onClick={moreButtonClick}>
@@ -144,7 +144,7 @@ const LowerTabHeader = React.memo(({
             onConfirm={onAddConfirmOk} onCancel={onAddConfirmCancel}/>
         <BoxExportDialog items={state.box.items}
             open={exportDialogOpen} onClose={onBoxExportDialogClose}/>
-        <BoxImportDialog box={state.box}
+        <BoxImportDialog box={state.box} dispatch={dispatch}
             open={importDialogOpen} onClose={onBoxImportDialogClose}/>
         <BoxDeleteAllDialog dispatch={dispatch}
             open={boxDeleteAllDialogOpen} onClose={onBoxDeleteAllDialogClose}/>
