@@ -79,6 +79,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
         skill === "Metronome" ||
         skill === "Skill Copy (Transform)" ||
         skill === "Skill Copy (Mimic)" ||
+        skill === "Ingredient Draw S" ||
         skill === "Ingredient Draw S (Super Luck)" ||
         skill === "Ingredient Draw S (Hyper Cutter)") {
         return 7;
