@@ -555,6 +555,7 @@
             "Skill Copy": "효과를 추정하기 어려우므로 스킬 발동 횟수를 표시합니다. 이 값은 총 강도량에 포함되지 않습니다.",
             "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
             "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
+            "Ingredient Draw S": "$t(strength skill info.Ingredient Magnet S)",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Magnet S)$t(dream shard)를 획득할 확률은 RaenonX의 집계 결과를 사용합니다.",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)$t(additional ingredient rate)는 RaenonX의 집계 결과 (16.68%)를 사용합니다.",
             "not triggered": "이 설정에서는 메인 스킬이 발동되지 않습니다.",
