@@ -570,6 +570,7 @@
             "Skill Copy": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
             "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
             "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
+            "Ingredient Draw S": "$t(strength skill info.Ingredient Magnet S)",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Magnet S)The probability of collecting $t(dream shard) is based on aggregated results from RaenonX.",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)$t(additional ingredient rate) uses aggregated results from RaenonX (16.68%).",
             "not triggered": "The main skill is not triggered in this setting.",

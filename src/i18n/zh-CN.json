@@ -558,6 +558,7 @@
             "Skill Copy": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。",
             "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
             "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
+            "Ingredient Draw S": "$t(strength skill info.Ingredient Magnet S)",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Magnet S)通过 RaenonX 的汇总结果计算获取$t(dream shard)的概率。",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)$t(additional ingredient rate)使用 RaenonX 的汇总结果 (16.68%)。",
             "not triggered": "在此设置中，主技能未被触发。",
