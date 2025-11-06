@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add amber pokemons": {
+                    "headline": "$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)たちのデータを追加しました。",
+                    "detail": "$t(rp collection)"
+                },
                 "add halloween eevee": {
                     "headline": "$t(pokemons.Eevee (Halloween))のデータを追加し、$t(subskill.Helping Bonus)の$t(strength2)計算を改善しました。",
                     "detail": "$t(rp collection)\nまた、$t(helping bonus addition label)ようになりました。"

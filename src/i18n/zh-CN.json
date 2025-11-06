@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add amber pokemons": {
+                    "headline": "添加了$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)及其进化形态的数据。",
+                    "detail": "$t(rp collection)"
+                },
                 "add halloween eevee": {
                     "headline": "添加了$t(pokemons.Eevee (Halloween))的数据，并改进了$t(subskill.Helping Bonus)的$t(strength2)计算。",
                     "detail": "$t(rp collection)\n现在可以$t(helping bonus addition label)。"

@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add amber pokemons": {
+                    "headline": "$t(pokemons.Trapinch), $t(pokemons.Bagon), $t(pokemons.Dwebble) and their evolutions have been added.",
+                    "detail": "$t(rp collection)"
+                },
                 "add halloween eevee": {
                     "headline": "Added $t(pokemons.Eevee (Halloween)) data and improved simulations for $t(subskill.Helping Bonus).",
                     "detail": "$t(rp collection)\nTotal strength now includes other members' strength gained through the current Pokémon's [Helping Bonus]."
