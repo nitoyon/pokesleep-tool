@@ -1,6 +1,7 @@
 import React from 'react';
 import { IngredientName } from '../../data/pokemons';
 import AppleIcon from '../Resources/AppleIcon';
+import AvocadoIcon from '../Resources/AvocadoIcon';
 import CacaoIcon from '../Resources/CacaoIcon';
 import CoffeeIcon from '../Resources/CoffeeIcon';
 import CornIcon from '../Resources/CornIcon';
@@ -22,6 +23,7 @@ import TomatoIcon from '../Resources/TomatoIcon';
 const IngredientIcon = React.memo(({name}: {name: IngredientName}) => {
     switch (name) {
         case "apple": return <AppleIcon/>;
+        case "avocado": return <AvocadoIcon/>;
         case "cacao": return <CacaoIcon/>;
         case "coffee": return <CoffeeIcon/>;
         case "corn": return <CornIcon/>;

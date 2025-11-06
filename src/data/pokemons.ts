@@ -86,11 +86,14 @@ export type PokemonSpecialty = "Ingredients" | "Berries" | "Skills" | "All" | "u
 export const IngredientNames: IngredientName[] = [
     "leek", "mushroom", "egg", "potato",
     "apple", "herb", "sausage", "milk", "honey", "oil", "ginger",
-    "tomato", "cacao", "tail", "soy", "corn", "coffee", "pumpkin"];
+    "tomato", "cacao", "tail", "soy", "corn", "coffee", "pumpkin",
+    "avocado",
+];
 
 export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
     "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
     "tomato" | "cacao" | "tail" | "soy" | "corn" | "coffee" | "pumpkin" |
+    "avocado" |
     "unknown" | "unknown1" | "unknown2" | "unknown3";
 
 /** Ingredient for mythical pokemon */
