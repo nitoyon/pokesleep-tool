@@ -8,7 +8,7 @@ const NotFixedWarning = React.memo(({fieldIndex}: {
     fieldIndex: number,
 }) => {
     const { t } = useTranslation();
-    const isVisible = (fieldIndex === 6);
+    const isVisible = (fieldIndex > 7);
 
     return <Collapse in={isVisible}>
         <StyledNotFixedWarning>
