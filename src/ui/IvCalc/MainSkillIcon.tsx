@@ -9,8 +9,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import IngredientIcon from './IngredientIcon';
+import IngredientDrawIcon from '../Resources/IngredientDrawIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
+import HyperCutterIcon from '../Resources/HyperCutterIcon';
 import IngredientsIcon from '../Resources/IngredientsIcon';
+import SuperLuckIcon from '../Resources/SuperLuckIcon';
 import PotIcon from '../Resources/PotIcon';
 import StreamIcon from '@mui/icons-material/Stream';
 import SavedSearchOutlined from '@mui/icons-material/SavedSearchOutlined';
@@ -57,11 +60,12 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
             }
         case "Ingredient Magnet S":
         case "Ingredient Draw S":
+            return <IngredientDrawIcon fontSize="small"/>;
         case "Ingredient Draw S (Hyper Cutter)":
-            return <IngredientsIcon fontSize="small"/>;
+            return <HyperCutterIcon fontSize="small"/>;
         case "Ingredient Draw S (Super Luck)":
             if (second !== true) {
-                return <IngredientsIcon fontSize="small"/>;
+                return <SuperLuckIcon fontSize="small"/>;
             } else {
                 return <DreamShardIcon/>;
             }
