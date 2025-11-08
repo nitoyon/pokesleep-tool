@@ -636,8 +636,8 @@ class PokemonStrength {
             case "Ingredient Draw S": {
                 const averageStrength = 407 / 3;
                 return {
-                    skillValue: skillValue * superLuckIngRate,
-                    skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
+                    skillValue: skillValue,
+                    skillStrength: skillValue * averageStrength * ingFactor,
                     skillValuePerTrigger,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
