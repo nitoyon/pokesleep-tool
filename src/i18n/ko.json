@@ -327,7 +327,7 @@
         "additional ingredient rate": "추가 식재료 획득 확률",
         "additional ingredients": "추가 식재료",
         "ingredient obtain rate": "식재료 획득 확률",
-        "expected dream shard": "$t(꿈의조각) 기댓값",
+        "expected dream shard": "$t(dream shard) 기댓값",
         "other team member": "다른 팀원",
         "max skill level affected": "[$t(calc with max skill level)] 가 활성화되어 있어 스킬 레벨 <level/>로 계산됩니다.",
         "skill level bonus affected": "<bonus/>에 따라 스킬 레벨 <level/>로 계산됩니다.",
