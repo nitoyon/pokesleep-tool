@@ -95,6 +95,20 @@ const StyledDialog = styled(Dialog)({
         padding: '0 1rem',
         '& > div.sleep_time': {
             margin: '.4rem 0',
+            display: 'flex',
+            alignItems: 'flex-start',
+            '& > div.time': {
+                fontSize: '.9rem',
+                fontWeight: 700,
+                marginLeft: '.3rem',
+                marginTop: 0,
+                '& > div.time_power': {
+                    color: '#aaaaaa',
+                    fontSize: '.8rem',
+                    fontWeight: 500,
+                    marginTop: '-.2rem',
+                },
+            },
         },
-    },    
+    },
 });
