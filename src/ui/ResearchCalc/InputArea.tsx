@@ -4,10 +4,11 @@ import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import { getDrowsyBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
-    Slider, TextField } from '@mui/material';
+    TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
 import { InputAreaData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
+import SliderEx from '../common/SliderEx';
 import ResearchAreaTextField from './ResearchAreaTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ScheduleIcon from '@mui/icons-material/Schedule';
@@ -20,9 +21,6 @@ interface InputAreaProps {
     /** callback function when strength is changed */
     onChange: (value: Partial<InputAreaData>) => void;
 }
-
-const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
-    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
 function InputArea({data, onChange: onchange}:InputAreaProps) {
     const { t } = useTranslation();
@@ -64,14 +62,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({strength});
     }, [onchange]);
 
-    function onSliderChange(e: Event, value: number) {
-        // fix iOS bug on MUI slider
-        // https://github.com/mui/material-ui/issues/31869
-        if (isIOS && e.type === 'mousedown') {
-            return;
-        }
-
-        if (typeof(value) !== "number") { return; }
+    function onSliderChange(value: number) {
         const strength = Math.min(value, rank.nextStrength - 1);
         onchange?.({...data, strength});
     }
@@ -110,7 +101,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <div className="strength_second_line">
                 <ArrowButton disabled={rank.index === 0} label="◀"
                     onClick={onRankDownClick}/>
-                <Slider className="strength_progress" size="small" onChange={onSliderChange}
+                <SliderEx className="strength_progress" size="small" onChange2={onSliderChange}
                     min={rank.thisStrength}
                     max={rank.nextStrength} value={strength} />
                 <ArrowButton disabled={rank.rankNumber === 20} label="▶"

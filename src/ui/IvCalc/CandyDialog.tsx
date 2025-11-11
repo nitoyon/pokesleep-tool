@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import SliderEx from '../common/SliderEx';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
 import Nature from '../../util/Nature';
@@ -11,14 +12,11 @@ import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
 import { Button, Dialog, DialogActions, Input, InputAdornment, 
-    MenuItem, Select, SelectChangeEvent, Slider,
+    MenuItem, Select, SelectChangeEvent,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
-
-const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
-    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
 const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     iv: PokemonIv,
@@ -102,21 +100,9 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         onChange(iv.changeLevel(level));
     }, [iv, onChange]);
 
-    const onExpSliderChange = React.useCallback((e: Event, value: number|number[]) => {
-        if (e === null) {
-            return;
-        }
-
-        // fix iOS bug on MUI slider
-        // https://github.com/mui/material-ui/issues/31869
-        if (isIOS && e.type === 'mousedown') {
-            return;
-        }
-
+    const onExpSliderChange = React.useCallback((value: number) => {
         setIsEmpty(false);
-        if (typeof(value) === 'number') {
-            setExpGot(value);
-        }
+        setExpGot(value);
     }, []);
 
     const onExpLeftChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,7 +159,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                         </div>
                         <div className="expLeft">
                             <StyledSlider value={expGot}
-                                min={0} max={maxExpLeft - 1} onChange={onExpSliderChange}/>
+                                min={0} max={maxExpLeft - 1} onChange2={onExpSliderChange}/>
                             <Input value={valueText} type="number" size="small"
                                 startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
                                 endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
@@ -353,7 +339,7 @@ const StyledDialog = styled(Dialog)({
     },
 })
 
-const StyledSlider = styled(Slider)({
+const StyledSlider = styled(SliderEx)({
     color: '#79d073',
     height: 8,
     '@media (pointer: coarse)': {
