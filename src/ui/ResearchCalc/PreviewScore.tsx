@@ -7,6 +7,7 @@ import { PokemonCount } from '../../util/PokemonCount';
 import SleepScore from './SleepScore'
 import { MultipleScoreRange, ScoreRange } from './Score';
 import fields from '../../data/fields';
+import SpawnCountLabel from './SpawnCountLabel'
 import { BetterSecondSleepData } from './BetterSecondSleepDialog';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
@@ -111,10 +112,11 @@ const StyledPreviewScore = styled('div')({
         width: '100%',
         gridTemplateColumns: '4.5rem max-content 1.5rem max-content',
         rowGap: '.5rem',
+    },
 
-        '& > .count_box': {
-            width: '5rem',
-        },
+    '& > div > .count_box': {
+        width: '5rem',
+        fontSize: '1.2rem',
     },
 
     '& > .preview_warning': {
@@ -123,20 +125,6 @@ const StyledPreviewScore = styled('div')({
         gridTemplateColumns: '4.5rem 1fr',
     },
 
-    '& div.count': {
-        '& > span.ball': {
-            color: '#ff6347',
-            fontSize: '1.2rem',
-        },
-        '& > span.multiply': {
-            color: '#666',
-            fontSize: '1.2rem',
-        },
-        '& > span.value': {
-            color: '#e6a83a',
-            fontSize: '1.4rem',
-        },
-    },
     '& div.power': {
         color: '#aaaaaa',
         fontSize: '.7rem',
@@ -237,11 +225,7 @@ const StyledPreviewScore = styled('div')({
 function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
     const countElement = (
         <div className="count_box">
-            <div className="count">
-                <span className="ball">◓</span>
-                <span className="multiply">×</span>
-                <span className="value">{range.count}</span>
-            </div>
+            <SpawnCountLabel count={range.count} />
             <div className="power">
                 <span>
                     {t('num', {n: range.power})}
