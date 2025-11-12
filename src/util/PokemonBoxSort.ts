@@ -36,6 +36,8 @@ export type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
  * Sort the given Pokemon box items in descending order.
  * @param filtered The array of Pokémon box items to be sorted.
  * @param sort Sort type.
+ * @param descending Descending (true) or ascending (false).
+ *                   This parameter is used only when `sort` is `level`.
  * @param ingredient Ingredient name.
  * @param mainSkill Main skill name.
  * @param parameter Strength parameter.
@@ -47,6 +49,7 @@ export type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
  */
 export function sortPokemonItems(filtered: PokemonBoxItem[],
     sort: BoxSortType,
+    descending: boolean,
     ingredient: IngredientSortType,
     mainSkill: MainSkillSortType,
     parameter: StrengthParameter,
@@ -66,10 +69,11 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
     filtered = [...filtered];
 
     if (sort === "level") {
+        const reverse = descending ? -1 : 1;
         return [filtered.sort((a, b) =>
             b.iv.level !== a.iv.level ? b.iv.level - a.iv.level :
-            b.iv.pokemon.id !== a.iv.pokemon.id ? b.iv.pokemon.id - a.iv.pokemon.id :
-            b.iv.idForm !== a.iv.idForm ? b.iv.idForm - a.iv.idForm :
+            b.iv.pokemon.id !== a.iv.pokemon.id ? reverse * (b.iv.pokemon.id - a.iv.pokemon.id) :
+            b.iv.idForm !== a.iv.idForm ? reverse * (b.iv.idForm - a.iv.idForm) :
             b.id - a.id), ''];
     }
     else if (sort === "name") {
