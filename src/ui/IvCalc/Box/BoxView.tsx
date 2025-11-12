@@ -149,7 +149,12 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
     </>;
 });
 
-/** Cache for latest filter config */
+/**
+ * Cache for latest filter config
+ *
+ * This global variable persists the filter config across tab switches.
+ * Without it, BoxFilterConfig would be cleared when the [Box] tab is unselected.
+ */
 let boxFilterConfig = new BoxFilterConfig({});
 
 const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
