@@ -36,6 +36,7 @@ export type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
  * Sort the given Pokemon box items in descending order.
  * @param filtered The array of Pokémon box items to be sorted.
  * @param sort Sort type.
+ * @param descending Descending (true) or ascending (false).
  * @param ingredient Ingredient name.
  * @param mainSkill Main skill name.
  * @param parameter Strength parameter.
@@ -47,6 +48,7 @@ export type StrengthCalculator = (iv: PokemonIv, param: StrengthParameter) =>
  */
 export function sortPokemonItems(filtered: PokemonBoxItem[],
     sort: BoxSortType,
+    descending: boolean,
     ingredient: IngredientSortType,
     mainSkill: MainSkillSortType,
     parameter: StrengthParameter,
@@ -64,6 +66,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
 
     // Create a shallow copy of `filtered` because Array.sort mutates it
     filtered = [...filtered];
+    console.log(descending);
 
     if (sort === "level") {
         return [filtered.sort((a, b) =>
