@@ -1,5 +1,23 @@
 import fields from '../../data/fields';
 
+/** Sleep tracking configuration. */
+export interface TrackingData {
+    /** Score to aim */
+    score: number;
+
+    /** Started time (UNIX time) */
+    start: number;
+
+    /** Area index */
+    area: number;
+
+    /** Strength when started tracking */
+    strength: number;
+
+    /** Drowsy power to aim */
+    dp: number;
+}
+
 export interface InputAreaData {
     /** field index */
     fieldIndex: number;
@@ -12,6 +30,9 @@ export interface InputAreaData {
 
     /** whether to do two sleep sessions in one day */
     secondSleep: boolean;
+
+    /** Tracking configuration (undefined when not tracking) */
+    tracking?: TrackingData;
 }
 
 export function loadConfig(): InputAreaData {
@@ -20,6 +41,7 @@ export function loadConfig(): InputAreaData {
         strength: 73120,
         bonus: 1,
         secondSleep: false,
+        tracking: undefined,
     };
 
     const data = localStorage.getItem("ResearchCalcPokeSleep");
@@ -43,6 +65,27 @@ export function loadConfig(): InputAreaData {
     }
     if (typeof(json.secondSleep) === "boolean") {
         config.secondSleep = json.secondSleep;
+    }
+
+    if (typeof(json.tracking) === "object" &&
+        typeof(json.tracking.score) === "number" &&
+        json.tracking.score > 0 && json.tracking.score <= 100 &&
+        typeof(json.tracking.start) === "number" &&
+        json.tracking.score < (new Date().getTime() / 1000) &&
+        typeof(json.tracking.area) === "number" &&
+        json.tracking.area >= 0 && json.tracking.area < fields.length &&
+        typeof(json.tracking.strength) === "number" &&
+        json.tracking.strength >= 0 &&
+        typeof(json.tracking.dp) === "number" &&
+        json.tracking.dp >= 0
+    ) {
+        config.tracking = {
+            score: json.tracking.score,
+            start: json.tracking.start,
+            area: json.tracking.area,
+            strength: json.tracking.strength,
+            dp: json.tracking.dp,
+        };
     }
     return config;
 }
