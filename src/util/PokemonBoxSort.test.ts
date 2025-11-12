@@ -21,7 +21,7 @@ describe('sortPokemonItems', () => {
     test('returns error message when array is empty', () => {
         const parameter = createStrengthParameter({});
 
-        const [result, error] = sortPokemonItems([], 'level', 'unknown',
+        const [result, error] = sortPokemonItems([], 'level', true, 'unknown',
             'Energy for Everyone S', parameter, mockT);
 
         expect(result).toEqual([]);
@@ -45,13 +45,22 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv3),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'level', 'unknown',
+            const [result1, error1] = sortPokemonItems(items, 'level', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
-            expect(error).toBe('');
-            expect(result.length).toBe(3);
-            expect(result[0].iv.level).toBe(50);
-            expect(result[1].iv.level).toBe(25);
-            expect(result[2].iv.level).toBe(10);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(3);
+            expect(result1[0].iv.level).toBe(50);
+            expect(result1[1].iv.level).toBe(25);
+            expect(result1[2].iv.level).toBe(10);
+
+            // descending parameter doesn't affect the result
+            const [result2, error2] = sortPokemonItems(items, 'level', false, 'unknown',
+                'Energy for Everyone S', parameter, mockT);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(3);
+            expect(result2[0].iv.level).toBe(50);
+            expect(result2[1].iv.level).toBe(25);
+            expect(result2[2].iv.level).toBe(10);
         });
 
         test('sorts by pokemon ID as secondary sort when levels are equal', () => {
@@ -67,14 +76,22 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'level', 'unknown',
+            // Secondary sort by ID is descending (lower IDs first)
+            const [result1, error1] = sortPokemonItems(items, 'level', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemonName).toBe('Bulbasaur');
+            expect(result1[1].iv.pokemonName).toBe('Pikachu');
 
-            expect(error).toBe('');
-            expect(result.length).toBe(2);
             // Secondary sort by ID is descending (higher IDs first)
-            expect(result[0].iv.pokemonName).toBe('Pikachu');
-            expect(result[1].iv.pokemonName).toBe('Bulbasaur');
+            // because items is reversed afterward
+            const [result2, error2] = sortPokemonItems(items, 'level', false, 'unknown',
+                'Energy for Everyone S', parameter, mockT);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemonName).toBe('Pikachu');
+            expect(result2[1].iv.pokemonName).toBe('Bulbasaur');
         });
     });
 
@@ -88,7 +105,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Eevee')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'name', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'name', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -108,7 +125,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu'), 'Bolt'),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'name', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'name', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -130,7 +147,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Charmander')), // ID 4
             ];
 
-            const [result, error] = sortPokemonItems(items, 'pokedexno', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'pokedexno', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -154,7 +171,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'pokedexno', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'pokedexno', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -181,7 +198,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv3),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'rp', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'rp', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -207,7 +224,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'total strength', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'total strength', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -232,7 +249,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'berry', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'berry', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(error).toBe('');
@@ -251,7 +268,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'ingredient', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'ingredient', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(result).toEqual([]);
@@ -289,7 +306,7 @@ describe('sortPokemonItems', () => {
             ];
 
             // Sort by ingredient count
-            const [result1, error1] = sortPokemonItems(items, 'ingredient', 'count',
+            const [result1, error1] = sortPokemonItems(items, 'ingredient', true, 'count',
                 'Energy for Everyone S', parameter, mockT, calculator);
             expect(error1).toBe('');
             expect(result1.length).toBe(2);
@@ -297,7 +314,7 @@ describe('sortPokemonItems', () => {
             expect(result1[1].iv.pokemon.name).toBe('Eevee (Halloween)');
 
             // Sort by ingredient strength
-            const [result2, error2] = sortPokemonItems(items, 'ingredient', 'strength',
+            const [result2, error2] = sortPokemonItems(items, 'ingredient', true, 'strength',
                 'Energy for Everyone S', parameter, mockT, calculator);
             expect(error2).toBe('');
             expect(result2.length).toBe(2);
@@ -312,7 +329,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'ingredient', 'sausage',
+            const [result, error] = sortPokemonItems(items, 'ingredient', true, 'sausage',
                 'Energy for Everyone S', parameter, mockT);
 
             // If no Pokemon produce the specified ingredient
@@ -331,7 +348,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(result).toEqual([]);
@@ -346,7 +363,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
 
             expect(result).toEqual([]);
@@ -366,7 +383,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Charge Strength S', parameter, mockT);
 
             // Should only include Pokémon with matching skill
@@ -381,7 +398,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(new PokemonIv('Pikachu')),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Dream Shard Magnet S', parameter, mockT);
 
             // Pikachu doesn't have Dream Shard Magnet S
@@ -417,14 +434,14 @@ describe('sortPokemonItems', () => {
             };
 
             // Skill count is higher for Golduck
-            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result1, error1] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'count', parameter, mockT, calculator);
             expect(error1).toBe('');
             expect(result1.length).toBe(2);
             expect(result1[0].iv.pokemon.name).toBe('Golduck');
 
             // Skill strength is higher for Drifblim
-            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result2, error2] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'strength', parameter, mockT, calculator);
             expect(error2).toBe('');
             expect(result2.length).toBe(2);
@@ -460,14 +477,14 @@ describe('sortPokemonItems', () => {
             };
 
             // Dream shards is higher for Swalot
-            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result1, error1] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Dream Shard Magnet S', parameter, mockT, calculator);
             expect(error1).toBe('');
             expect(result1.length).toBe(2);
             expect(result1[0].iv.pokemon.name).toBe('Swalot');
 
             // Skill count is higher for Lucario
-            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result2, error2] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'count', parameter, mockT, calculator);
             expect(error2).toBe('');
             expect(result2.length).toBe(2);
@@ -487,7 +504,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'strength', parameter, mockT);
 
             // Should only include items with strength > 0
@@ -548,7 +565,7 @@ describe('sortPokemonItems', () => {
 
             // When sorting by "Energy for Everyone S", Pawmot should be first
             // because its skillValue (50) is higher than Cresselia's (30)
-            const [result1, error1] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result1, error1] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT, calculator);
             expect(error1).toBe('');
             expect(result1.length).toBe(2);
@@ -556,7 +573,7 @@ describe('sortPokemonItems', () => {
 
             // When sorting by "Berry Burst", Sceptile should be first,
             // Cresselia second, Braviary third
-            const [result2, error2] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result2, error2] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Berry Burst', parameter, mockT, calculator);
             expect(error2).toBe('');
             expect(result2.length).toBe(3);
@@ -595,7 +612,7 @@ describe('sortPokemonItems', () => {
             };
 
             // When sorting by "Energizing Cheer S", should use skillValue2
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Energizing Cheer S', parameter, mockT, calculator);
 
             expect(error).toBe('');
@@ -618,7 +635,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(pikachu),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Ingredient Magnet S', parameter, mockT);
 
             // Toxel should be included because with evolved=true and amped nature,
@@ -641,7 +658,7 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(pikachu),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'skill', 'unknown',
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Cooking Power-Up S', parameter, mockT);
 
             // Toxel should be included because with evolved=true and low key nature,
