@@ -23,17 +23,55 @@ export default defineConfig({
       },
       output: {
         manualChunks(id) {
+          // Third-party libraries
           if (id.includes('node_modules')) {
             if (id.includes('@mui') || id.includes('@emotion')) {
               return 'mui';
             }
-            return 'react';
+            if (id.includes('react') || id.includes('scheduler') ||
+              id.includes('i18next') || id.includes('react-i18next')
+            ) {
+              return 'react';
+            }
+            return 'vendor';
           }
-          if (id.includes('/src/data') || id.includes('/src/i18n/') ||
-            id.includes('PokemonIconData.ts')
-          ) {
-            return 'resource';
+
+          if (id.includes('pokemon.json')) {
+            return 'pokemon';
           }
+          if (id.includes('field.json')) {
+            return 'field';
+          }
+          if (id.includes('event.json')) {
+            return 'event';
+          }
+          if (id.includes('news.json')) {
+            return 'news';
+          }
+          if (id.includes('/src/i18n/') || id.includes('/src/i18n.ts')) {
+            return 'i18n';
+          }
+          if (id.includes('PokemonIconData.ts')) {
+            return 'pokemon-icon';
+          }
+          if (id.includes('ui/Resources')) {
+            return 'svg-icon';
+          }
+          // Catch-all for any other data files
+          if (id.includes('/src/data')) {
+            return 'data';
+          }
+
+          // Utility modules
+          if (id.includes('/src/util/')) {
+            return 'util';
+          }
+
+          // Common UI components (Dialog, common, etc.)
+          if (id.includes('/src/ui/')) {
+            return 'ui';
+          }
+
           return undefined;
         }
       }
