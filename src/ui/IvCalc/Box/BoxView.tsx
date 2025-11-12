@@ -34,7 +34,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
 }) => {
     const { t } = useTranslation();
     const [sortConfig, setSortConfig] = React.useState(() => loadBoxSortConfig());
-    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(() => new BoxFilterConfig({}));
+    const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const [candyOpen, setCandyOpen] = React.useState(false);
 
@@ -60,7 +60,8 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
         setFilterOpen(false);
     }, [])
     const onFilterChange = React.useCallback((value: BoxFilterConfig) => {
-        setFilterConfig(value);
+        boxFilterConfig = value;
+        setFilterConfig(boxFilterConfig);
     }, []);
     const onCandyClick = React.useCallback(() => {
         setCandyOpen(true);
@@ -147,6 +148,9 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
             onChange={onIvChange} onClose={onCandyDialogClose}/>
     </>;
 });
+
+/** Cache for latest filter config */
+let boxFilterConfig = new BoxFilterConfig({});
 
 const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
     item: PokemonBoxItem,
