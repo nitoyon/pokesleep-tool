@@ -45,13 +45,22 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv3),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'level', true, 'unknown',
+            const [result1, error1] = sortPokemonItems(items, 'level', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
-            expect(error).toBe('');
-            expect(result.length).toBe(3);
-            expect(result[0].iv.level).toBe(50);
-            expect(result[1].iv.level).toBe(25);
-            expect(result[2].iv.level).toBe(10);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(3);
+            expect(result1[0].iv.level).toBe(50);
+            expect(result1[1].iv.level).toBe(25);
+            expect(result1[2].iv.level).toBe(10);
+
+            // descending parameter doesn't affect the result
+            const [result2, error2] = sortPokemonItems(items, 'level', false, 'unknown',
+                'Energy for Everyone S', parameter, mockT);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(3);
+            expect(result2[0].iv.level).toBe(50);
+            expect(result2[1].iv.level).toBe(25);
+            expect(result2[2].iv.level).toBe(10);
         });
 
         test('sorts by pokemon ID as secondary sort when levels are equal', () => {
@@ -67,14 +76,22 @@ describe('sortPokemonItems', () => {
                 new PokemonBoxItem(iv2),
             ];
 
-            const [result, error] = sortPokemonItems(items, 'level', true, 'unknown',
+            // Secondary sort by ID is descending (lower IDs first)
+            const [result1, error1] = sortPokemonItems(items, 'level', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT);
+            expect(error1).toBe('');
+            expect(result1.length).toBe(2);
+            expect(result1[0].iv.pokemonName).toBe('Bulbasaur');
+            expect(result1[1].iv.pokemonName).toBe('Pikachu');
 
-            expect(error).toBe('');
-            expect(result.length).toBe(2);
             // Secondary sort by ID is descending (higher IDs first)
-            expect(result[0].iv.pokemonName).toBe('Pikachu');
-            expect(result[1].iv.pokemonName).toBe('Bulbasaur');
+            // because items is reversed afterward
+            const [result2, error2] = sortPokemonItems(items, 'level', false, 'unknown',
+                'Energy for Everyone S', parameter, mockT);
+            expect(error2).toBe('');
+            expect(result2.length).toBe(2);
+            expect(result2[0].iv.pokemonName).toBe('Pikachu');
+            expect(result2[1].iv.pokemonName).toBe('Bulbasaur');
         });
     });
 
