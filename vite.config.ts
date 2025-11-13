@@ -20,6 +20,8 @@ export default defineConfig({
         ivKo: path.resolve(__dirname, 'iv/index.ko.html'),
         ivZhCn: path.resolve(__dirname, 'iv/index.zh-cn.html'),
         ivZhTw: path.resolve(__dirname, 'iv/index.zh-tw.html'),
+        apiSerialize: path.resolve(__dirname, 'api/serialize.html'),
+        apiDeserialize: path.resolve(__dirname, 'api/deserialize.html'),
       },
       output: {
         manualChunks(id) {

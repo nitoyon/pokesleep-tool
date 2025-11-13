@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Deserialize API</title>
+  </head>
+  <body>
+    <script type="module">
+      import { deserializeToJson } from '../src/api/deserialize.ts';
+
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const serialized = params.get('data');
+        
+        if (!serialized) {
+          throw new Error('data parameter is required');
+        }
+
+        const result = deserializeToJson(serialized);
+        
+        // JSONとして返す
+        document.body.textContent = JSON.stringify(result, null, 2);
+        document.body.style.fontFamily = 'monospace';
+        document.body.style.padding = '1rem';
+        document.body.style.whiteSpace = 'pre-wrap';
+      } catch (error) {
+        // エラーの場合はエラーメッセージを返す
+        document.body.textContent = JSON.stringify({ error: error.message }, null, 2);
+        document.body.style.fontFamily = 'monospace';
+        document.body.style.padding = '1rem';
+        document.body.style.color = 'red';
+        document.body.style.whiteSpace = 'pre-wrap';
+      }
+    </script>
+  </body>
+</html>
+

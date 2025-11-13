@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Serialize API</title>
+  </head>
+  <body>
+    <script type="module">
+      import { serializeFromParams } from '../src/api/serialize.ts';
+
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const result = serializeFromParams(params);
+        
+        // テキストとして返す
+        document.body.textContent = result;
+        document.body.style.fontFamily = 'monospace';
+        document.body.style.padding = '1rem';
+      } catch (error) {
+        // エラーの場合はエラーメッセージを返す
+        document.body.textContent = `Error: ${error.message}`;
+        document.body.style.fontFamily = 'monospace';
+        document.body.style.padding = '1rem';
+        document.body.style.color = 'red';
+      }
+    </script>
+  </body>
+</html>
+
