@@ -210,6 +210,10 @@
         "how to use": "使用方法",
         "about": "关于本工具",
         "sleep score table": "睡眠分数表",
+        "score is too low": "在分数 <score/> 时睡眠监测可能失败，建议在 17 分或更高分数时进行测量。",
+        "drowsy power": "睡意之力",
+        "time range": "测量期间",
+        "start tracking": "测量开始",
         "settings": "设定",
 
         "change language": "切换语言",

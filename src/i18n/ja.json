@@ -210,6 +210,10 @@
         "how to use": "つかいかた",
         "about": "このツールについて",
         "sleep score table": "睡眠スコア表",
+        "score is too low": "スコア <score/> での睡眠計測は難しいため、スコア 17 以上での計測を推奨します。",
+        "start tracking": "計測開始",
+        "drowsy power": "ねむけパワー",
+        "time range": "計測期間",
         "settings": "設定",
 
         "change language": "言語切り替え",

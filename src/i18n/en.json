@@ -209,6 +209,10 @@
         "how to use": "How to Use",
         "about": "About This Tool",
         "sleep score table": "Sleep Score Table",
+        "score is too low": "Sleep tracking may fail at <score/>. Recommended at 17 or higher.",
+        "start tracking": "Start Tracking",
+        "drowsy power": "Drowsy power",
+        "time range": "Time range",
         "settings": "Settings",
 
         "change language": "Change Language",
