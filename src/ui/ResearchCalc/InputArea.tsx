@@ -6,12 +6,14 @@ import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
     TextField } from '@mui/material';
 import ScoreTableDialog from './ScoreTableDialog';
-import { InputAreaData } from './ResearchCalcAppConfig';
+import TrackingDialog from './TrackingDialog';
+import { InputAreaData, TrackingData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
 import SliderEx from '../common/SliderEx';
 import ResearchAreaTextField from './ResearchAreaTextField';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import ScheduleIcon from '@mui/icons-material/Schedule';
+import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import { useTranslation } from 'react-i18next';
 
 interface InputAreaProps {
@@ -28,6 +30,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
     const strength = data.strength;
     const rank = new Rank(strength, field.ranks);
     const [isScoreTableDialogOpen, setIsScoreTableDialogOpen] = useState(false);
+    const [isTrackingDialogOpen, setTrackingDialogOpen] = useState(false);
 
     const setRank = useCallback((rankIndex: number) => {
         if (rankIndex < 0 || rankIndex >= field.ranks.length) { return; }
@@ -84,6 +87,18 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         setIsScoreTableDialogOpen(false);
     }, [setIsScoreTableDialogOpen]);
 
+    const onTrackingButtonClick = useCallback(() => {
+        setTrackingDialogOpen(true);
+    }, []);
+    
+    const onTrackingDialogClose = useCallback(() => {
+        setTrackingDialogOpen(false);
+    }, []);
+
+    const onStartTracking = useCallback((tracking: TrackingData) => {
+        console.log("start tracking:", tracking.score);
+    }, []);
+
     return (<><StyledForm>
         <div>{t("research area")}:</div>
         <div>
@@ -115,12 +130,15 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             </div>
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
+        <div className="buttons">
+            <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
+            <Button startIcon={<TimerOutlinedIcon/>} onClick={onTrackingButtonClick}>{t('start tracking')}</Button>
+        </div>
     </StyledForm>
-    <div style={{textAlign: 'right'}}>
-        <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
-    </div>
     <ScoreTableDialog open={isScoreTableDialogOpen}
         onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
+    <TrackingDialog open={isTrackingDialogOpen} data={data}
+        onClose={onTrackingDialogClose} onStart={onStartTracking}/>
     </>);
 }
 
@@ -174,8 +192,18 @@ const StyledForm = styled('div')({
             },
         },
     },
-/*
-*/
+
+    '& > div.buttons': {
+        marginTop: '-0.5rem',
+        textAlign: 'right',
+        gridColumn: '1/-1',
+        '& > button': {
+            textTransform: 'none',
+            '& > span.MuiButton-icon': {
+                marginRight: 2,
+            },
+        },
+    },
 });
 
 interface RankTextFieldProps {
