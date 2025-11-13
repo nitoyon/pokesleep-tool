@@ -12,7 +12,7 @@ const CollapseEx = React.memo(({show, children}: {
     const ref = React.useRef<HTMLDivElement>(null);
     const [height, setHeight] = React.useState(0);
     const [renderedChildren, setRenderedChildren] = React.useState(children);
-    const isFirstRender = React.useRef(true);
+    const animate = React.useRef(!show);
 
     React.useEffect(() => {
         if (show) {
@@ -27,9 +27,9 @@ const CollapseEx = React.memo(({show, children}: {
     const styles = useSpring({
         height: show ? height : 0,
         config: { tension: 400, friction: 40 },
-        immediate: isFirstRender.current,
+        immediate: !animate.current,
         onRest: () => {
-            isFirstRender.current = false;
+            animate.current = true;
         },
     });
 
