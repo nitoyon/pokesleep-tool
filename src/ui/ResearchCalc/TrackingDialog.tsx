@@ -6,6 +6,7 @@ import { getScoreRangeForCount } from './Score';
 import {
     getAverageMinuteForScore, getTrackingPeriod, minutesTakenToFallAsleep,
 } from './TrackingDetail';
+import MessageDialog from '../Dialog/MessageDialog';
 import RankBallLabel from './RankBallLabel';
 import SleepScore from './SleepScore';
 import SpawnCountLabel from './SpawnCountLabel';
@@ -25,11 +26,19 @@ const TrackingDialog = React.memo(({data, open, onClose, onStart}: {
     onStart: (data: TrackingData) => void,
 }) => {
     const { t, i18n } = useTranslation();
+    const [goPlusWarningShown, setGoPlusWarningShown] = React.useState(false);
     const [score, setScore] = React.useState(100);
     const [initialStart, initialEnd] = getTrackingPeriod(new Date(), score, i18n.language);
     const [start, setStart] = React.useState(initialStart);
     const [end, setEnd] = React.useState(initialEnd);
 
+    const onGoPlusWarningClick = React.useCallback(() => {
+        setGoPlusWarningShown(true);
+    }, []);
+    const onGoPlusWarningClose = React.useCallback(() => {
+        setGoPlusWarningShown(false);
+    }, []);
+    
     const updateTime = React.useCallback((s: number) => {
         const [newStart, newEnd] = getTrackingPeriod(new Date(), s, i18n.language);
         if (start !== newStart) {
@@ -109,9 +118,21 @@ const TrackingDialog = React.memo(({data, open, onClose, onStart}: {
     const rank = new Rank(data.strength, fields[data.fieldIndex].ranks);
     const spawnCount = getPokemonCount(fields[data.fieldIndex].powers, dp);
 
-    return (
+    return (<>
         <StyledDialog open={open} onClose={onClose}>
             <DialogContent>
+                <div className="notice">
+                    <p>{t('tracking title')}</p>
+                    <label>❶</label>
+                    <div>
+                        {t('tracking desc1')}
+                        <Button onClick={onGoPlusWarningClick}>{t('tracking go plus+ title')}</Button>
+                    </div>
+                    <label>❷</label>
+                    <div>{t('tracking desc2')}</div>
+                    <label>❸</label>
+                    <div>{t('tracking desc3')}</div>
+                </div>
                 <label>{t('sleep score')}:</label>
                 <header>
                     <SleepScore score={score}/>
@@ -160,7 +181,14 @@ const TrackingDialog = React.memo(({data, open, onClose, onStart}: {
                 <Button onClick={onClose} size="small">{t('cancel')}</Button>
             </DialogActions>
         </StyledDialog>
-    );
+        <MessageDialog open={goPlusWarningShown} onClose={onGoPlusWarningClose}
+            message={<>
+                <p style={{fontSize: '0.9rem', margin: 0}}>{t('tracking go plus+ detail.0')}</p>
+                <p style={{fontSize: '0.9rem', margin: '0.5rem 0'}}>{t('tracking go plus+ detail.1')}</p>
+                <p style={{fontSize: '0.9rem', margin: 0}}>{t('tracking go plus+ detail.2')}</p>
+            </>}
+        />
+    </>);
 });
 
 export default TrackingDialog;
@@ -169,6 +197,32 @@ const StyledDialog = styled(Dialog)({
     '& div.MuiDialogContent-root': {
         minWidth: '250px',
         paddingBottom: "0.5rem",
+        '& > div.notice': {
+            gap: '0.5rem 0.3rem',
+            display: 'grid',
+            gridTemplateColumns: 'max-content 1fr',
+            fontSize: '0.9rem',
+            marginBottom: '1.4rem',
+            '& > p': {
+                gridColumn: '1 / -1',
+                fontSize: '0.9rem',
+                margin: '0 0 0.4rem 0',
+                lineHeight: 1.2,
+            },
+            '& > label': {
+                color: '#24da6d',
+            },
+            '& > div': {
+                fontSize: '0.8rem',
+                '& > button': {
+                    fontSize: '0.8rem',
+                    lineHeight: 1.2,
+                    padding: 0,
+                    textTransform: 'none',
+                    textAlign: 'left',
+                },
+            },
+        },
         '& > label': {
             fontSize: '0.9rem',
             marginTop: '1rem',

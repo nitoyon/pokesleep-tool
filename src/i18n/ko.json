@@ -206,6 +206,16 @@
         "about": "이 도구에 대하여",
         "sleep score table": "수면 스코어표",
         "score is too low": "<score/>점에서 수면 측정이 실패할 수 있으므로, 17점 이상에서 측정하는 것을 권장합니다.",
+        "tracking title": "다음 절차에 따라 원하는 수면 스코어로 측정할 수 있습니다.",
+        "tracking desc1": "$t(strength)가 포켓몬 슬립과 같은지 확인합니다.",
+        "tracking go plus+ title": "Pokémon GO Plus + 사용 시 주의사항",
+        "tracking go plus+ detail": [
+            "Pokémon GO Plus +를 사용하는 경우 30분~1시간 전의 에너지로 측정될 수 있습니다.",
+            "이를 피하려면 '요리하기' 또는 '스마트폰으로 수면 측정을 시작한 후 즉시 중단'하는 것을 권장합니다.",
+            "특히 수면 측정 직전에 $t(whistle)를 사용한 경우 주의하세요."
+        ],
+        "tracking desc2": "원하는 [$t(sleep score)]를 아래 화면에서 선택합니다.",
+        "tracking desc3": "포켓몬 슬립에서 수면 측정을 시작한 후 [$t(start tracking)] 버튼을 누릅니다.",
         "start tracking": "수면을 측정한다",
         "abort tracking": "측정 중단",
         "end tracking": "측정 종료",
