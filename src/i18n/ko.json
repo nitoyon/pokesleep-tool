@@ -219,6 +219,7 @@
         "start tracking": "수면을 측정한다",
         "abort tracking": "측정 중단",
         "end tracking": "측정 종료",
+        "confirm abort": "측정을 중단하시겠습니까?",
         "tracking": "측정 중",
         "tracked": "측정 완료",
         "drowsy power": "졸음 파워",
