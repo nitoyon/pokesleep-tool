@@ -224,6 +224,7 @@
         "start tracking": "测量开始",
         "abort tracking": "中止测量",
         "end tracking": "结束测量",
+        "confirm abort": "确定要中止测量吗？",
         "tracking": "测量中",
         "tracked": "测量完成",
         "drowsy power": "睡意之力",

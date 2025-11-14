@@ -224,6 +224,7 @@
         "start tracking": "計測開始",
         "abort tracking": "計測中断",
         "end tracking": "計測終了",
+        "confirm abort": "計測を中断してよいですか？",
         "tracking": "計測中",
         "tracked": "計測完了",
         "drowsy power": "ねむけパワー",

@@ -223,6 +223,7 @@
         "start tracking": "Start Tracking",
         "abort tracking": "Abort Tracking",
         "end tracking": "End Tracking",
+        "confirm abort": "Are you sure you want to abort tracking?",
         "tracking": "Tracking",
         "tracked": "Tracking Completed",
         "drowsy power": "Drowsy power",

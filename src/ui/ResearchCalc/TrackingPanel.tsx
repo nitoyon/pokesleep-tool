@@ -14,6 +14,7 @@ import ScoreTableDialog from './ScoreTableDialog';
 import SpawnCountLabel from './SpawnCountLabel';
 import TrackingDialog from './TrackingDialog';
 import CollapseEx from '../common/CollapseEx';
+import ConfirmDialog from '../Dialog/ConfirmDialog';
 import MessageDialog from '../Dialog/MessageDialog';
 import fields from '../../data/fields';
 import Rank from '../../util/Rank';
@@ -28,6 +29,7 @@ const TrackingPanel = React.memo(({data, onChange}: {
     const { t, i18n } = useTranslation();
     const [isScoreTableDialogOpen, setIsScoreTableDialogOpen] = React.useState(false);
     const [isTrackingDialogOpen, setTrackingDialogOpen] = React.useState(false);
+    const [isConfirmDialogOpen, setConfirmDialogOpen] = React.useState(false);
     const [isDetailDialogOpen, setDetailDialogOpen] = React.useState(false);
 
     const stages = React.useRef<TrackingStage[]>([]);
@@ -99,6 +101,14 @@ const TrackingPanel = React.memo(({data, onChange}: {
     const onEndTracking = React.useCallback(() => {
         onChange({tracking: undefined});
     }, [onChange]);
+
+    const onConfirmClick = React.useCallback(() => {
+        setConfirmDialogOpen(true);
+    }, []);
+
+    const onConfirmDialogClose = React.useCallback(() => {
+        setConfirmDialogOpen(false);
+    }, []);
 
     const onDetailClick = React.useCallback(() => {
         setDetailDialogOpen(true);
@@ -173,7 +183,7 @@ const TrackingPanel = React.memo(({data, onChange}: {
                 <Button startIcon={<TimerOffOutlinedIcon/>} onClick={onEndTracking}>{t('reset')}</Button>
             }
             {!completed && data.tracking &&
-                <Button startIcon={<TimerOffOutlinedIcon/>} onClick={onEndTracking} color="error">{t('abort tracking')}</Button>
+                <Button startIcon={<TimerOffOutlinedIcon/>} onClick={onConfirmClick} color="error">{t('abort tracking')}</Button>
             }
             {!completed && !data.tracking &&
                 <Button startIcon={<TimerOutlinedIcon/>} onClick={onTrackingButtonClick}>{t('start tracking')}</Button>
@@ -183,6 +193,8 @@ const TrackingPanel = React.memo(({data, onChange}: {
             onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
         <TrackingDialog open={isTrackingDialogOpen} data={data}
             onClose={onTrackingDialogClose} onStart={onStartTracking}/>
+        <ConfirmDialog open={isConfirmDialogOpen} onClose={onConfirmDialogClose}
+            onOk={onEndTracking} okLabel={t('ok')} message={t('confirm abort')}/>
         <MessageDialog open={isDetailDialogOpen} onClose={onDetailDialogClose}
             message={
                 <StyledDetailContent>
