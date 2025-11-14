@@ -107,7 +107,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </StyledForm>
-    <TrackingPanel data={data}/>
+    <TrackingPanel data={data} onChange={onchange}/>
     </>);
 }
 
