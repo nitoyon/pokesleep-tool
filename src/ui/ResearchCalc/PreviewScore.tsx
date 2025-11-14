@@ -9,6 +9,7 @@ import { MultipleScoreRange, ScoreRange } from './Score';
 import fields from '../../data/fields';
 import SpawnCountLabel from './SpawnCountLabel'
 import { BetterSecondSleepData } from './BetterSecondSleepDialog';
+import RankBall from './RankBallLabel';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 
@@ -215,10 +216,6 @@ const StyledPreviewScore = styled('div')({
         '&::before': {
             content: "'\\26a0\\fe0f'",
         },
-        '& .rank_ball_basic': { color: '#ff0000' },
-        '& .rank_ball_great': { color: '#0000ff' },
-        '& .rank_ball_ultra': { color: '#000000' },
-        '& .rank_ball_master': { color: '#cc00cc' },
     }
 });
 
@@ -248,8 +245,7 @@ function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
                     components={{strength:
                         <>
                             <strong>{t('num', {n: range.requiredStrength})} </strong>
-                            (<span className={"rank_ball_" + rank.type}>◓</span>
-                            <span className="rank_number">{rank.rankNumber}</span>
+                            (<RankBall type={rank.type} number={rank.rankNumber} />
                             <span> + {percent}%</span>
                             )
                         </>
