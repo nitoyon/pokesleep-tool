@@ -211,6 +211,16 @@
         "about": "このツールについて",
         "sleep score table": "睡眠スコア表",
         "score is too low": "スコア <score/> での睡眠計測は難しいため、スコア 17 以上での計測を推奨します。",
+        "tracking title": "以下の手順により、狙った睡眠スコアで計測できます。",
+        "tracking desc1": "$t(strength)がポケモンスリープと同じかどうか確認します。",
+        "tracking go plus+ title": "Pokémon GO Plus + を利用する場合の注意点",
+        "tracking go plus+ detail": [
+            "Pokémon GO Plus + を使うと、30分～1時間前のエナジーで計測される場合があります。",
+            "これを避けるには「料理する」または「スマートフォンで睡眠計測してすぐ中断する」ことをお薦めします。",
+            "特に、睡眠計測の直前に$t(whistle)を使ったときには注意してください。"
+        ],
+        "tracking desc2": "狙いたい [$t(sleep score)] を下の画面から選択します。",
+        "tracking desc3": "ポケモンスリープの睡眠計測を開始したあと、[$t(start tracking)] ボタンを押します。",
         "start tracking": "計測開始",
         "abort tracking": "計測中断",
         "end tracking": "計測終了",

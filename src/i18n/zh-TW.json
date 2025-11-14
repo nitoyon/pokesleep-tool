@@ -211,6 +211,16 @@
         "about": "關於本工具",
         "sleep score table": "睡眠分數表",
         "score is too low": "在分數 <score/> 時睡眠監測可能失敗，建議在 17 分或更高分數時進行測量。",
+        "tracking title": "透過以下步驟，可以在目標睡眠分數進行測量。",
+        "tracking desc1": "確認$t(strength)是否與寶可夢睡眠相同。",
+        "tracking go plus+ title": "使用 Pokémon GO Plus + 時的注意事項",
+        "tracking go plus+ detail": [
+            "如果使用 Pokémon GO Plus +，可能會根據30分鐘到1小時前的能量進行測量。",
+            "要避免這種情況，請選擇「做飯」或「用智慧型手機開始睡眠測量後立即中斷」。",
+            "特別是在睡眠測量前使用了$t(whistle)時請注意。"
+        ],
+        "tracking desc2": "從下方的畫面選擇想要的 [$t(sleep score)]。",
+        "tracking desc3": "在寶可夢睡眠中開始睡眠測量後，按 [$t(start tracking)] 按鈕。",
         "start tracking": "測量開始",
         "abort tracking": "中止測量",
         "end tracking": "結束測量",

@@ -210,6 +210,16 @@
         "about": "About This Tool",
         "sleep score table": "Sleep Score Table",
         "score is too low": "Sleep tracking may fail at <score/>. Recommended at 17 or higher.",
+        "tracking title": "You can track at your target sleep score by following these steps:",
+        "tracking desc1": "Check if your $t(strength) matches Pokémon Sleep.",
+        "tracking go plus+ title": "Use Pokémon GO Plus+ with caution",
+        "tracking go plus+ detail": [
+            "If using Pokémon GO Plus +, sleep tracking may be based on strength from 30 minutes to 1 hour ago.",
+            "To avoid this, either try 'cook a meal' or 'start sleep tracking on your smartphone and cancel it immediately'.",
+            "Be especially careful if you use whistle just before sleep tracking."
+        ],
+        "tracking desc2": "Select your target [$t(sleep score)] from below.",
+        "tracking desc3": "After starting sleep tracking in Pokémon Sleep, press the [$t(start tracking)] button.",
         "start tracking": "Start Tracking",
         "abort tracking": "Abort Tracking",
         "end tracking": "End Tracking",
