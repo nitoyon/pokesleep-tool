@@ -10,6 +10,7 @@ import { InputAreaData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
 import SliderEx from '../common/SliderEx';
 import ResearchAreaTextField from './ResearchAreaTextField';
+import RankBall from './RankBallLabel';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useTranslation } from 'react-i18next';
 
@@ -185,8 +186,7 @@ const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) =
         const strength = field.ranks[i];
         rankMenuItems.push(
             <StyledRankMenuItem key={i} value={i} dense selected={selected}>
-                <span className={"rank_ball rank_ball_" + rankType}>◓</span>
-                <span className="rank_number">{rankNumber}</span>
+                <RankBall type={rankType} number={rankNumber} />
                 <span className="strength">{t("num", {n: strength})}{t("range separator")}</span>
             </StyledRankMenuItem>);
     }
@@ -209,33 +209,12 @@ const StyledRankTextField = styled(TextField)({
     width: '4rem',
     marginRight: '1rem',
 
-    '& span.rank_ball_basic': { color: '#ff0000' },
-    '& span.rank_ball_great': { color: '#0000ff' },
-    '& span.rank_ball_ultra': { color: '#000000' },
-    '& span.rank_ball_master': { color: '#cc00cc' },
-
-    '& span.rank_number': {
-        paddingLeft: '.2rem',
-    },
-
     '& span.strength': {
         display: 'none',
     },
 });
 
 const StyledRankMenuItem = styled(MenuItem)({
-    '& > span.rank_ball': {
-        fontSize: '1rem',
-        '&.rank_ball_basic': { color: '#ff0000' },
-        '&.rank_ball_great': { color: '#0000ff' },
-        '&.rank_ball_ultra': { color: '#000000' },
-        '&.rank_ball_master': { color: '#cc00cc' },
-    },
-    '& > span.rank_number': {
-        fontSize: '1rem',
-        paddingLeft: '.2rem',
-    },
-
     '& > span.strength': {
         paddingLeft: '1.2rem',
         color: '#999',
