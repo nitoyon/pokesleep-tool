@@ -15,7 +15,7 @@ const MessageDialog = React.memo(({message, open, onClose}: {
     }
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogContent>{message}</DialogContent>
+            <DialogContent style={{paddingBottom: 0}}>{message}</DialogContent>
             <DialogActions>
                 <Button onClick={onClose} autoFocus>{t('close')}</Button>
             </DialogActions>
