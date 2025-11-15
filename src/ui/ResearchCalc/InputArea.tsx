@@ -4,13 +4,14 @@ import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import { getDrowsyBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
 import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
-    Slider, TextField } from '@mui/material';
-import ScoreTableDialog from './ScoreTableDialog';
+    TextField } from '@mui/material';
+import TrackingPanel from './TrackingPanel';
 import { InputAreaData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
+import SliderEx from '../common/SliderEx';
 import ResearchAreaTextField from './ResearchAreaTextField';
+import RankBall from './RankBallLabel';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useTranslation } from 'react-i18next';
 
 interface InputAreaProps {
@@ -21,15 +22,11 @@ interface InputAreaProps {
     onChange: (value: Partial<InputAreaData>) => void;
 }
 
-const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
-    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-
 function InputArea({data, onChange: onchange}:InputAreaProps) {
     const { t } = useTranslation();
     const field = fields[data.fieldIndex];
     const strength = data.strength;
     const rank = new Rank(strength, field.ranks);
-    const [isScoreTableDialogOpen, setIsScoreTableDialogOpen] = useState(false);
 
     const setRank = useCallback((rankIndex: number) => {
         if (rankIndex < 0 || rankIndex >= field.ranks.length) { return; }
@@ -64,14 +61,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({strength});
     }, [onchange]);
 
-    function onSliderChange(e: Event, value: number) {
-        // fix iOS bug on MUI slider
-        // https://github.com/mui/material-ui/issues/31869
-        if (isIOS && e.type === 'mousedown') {
-            return;
-        }
-
-        if (typeof(value) !== "number") { return; }
+    function onSliderChange(value: number) {
         const strength = Math.min(value, rank.nextStrength - 1);
         onchange?.({...data, strength});
     }
@@ -84,14 +74,6 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         const secondSleep = e.target.checked;
         onchange?.({secondSleep});
     }, [onchange]);
-
-    const onScoreTableButtonClick = useCallback(() => {
-        setIsScoreTableDialogOpen(true);
-    }, [setIsScoreTableDialogOpen]);
-    
-    const onScoreTableDialogClose = useCallback(() => {
-        setIsScoreTableDialogOpen(false);
-    }, [setIsScoreTableDialogOpen]);
 
     return (<><StyledForm>
         <div>{t("research area")}:</div>
@@ -110,7 +92,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <div className="strength_second_line">
                 <ArrowButton disabled={rank.index === 0} label="◀"
                     onClick={onRankDownClick}/>
-                <Slider className="strength_progress" size="small" onChange={onSliderChange}
+                <SliderEx className="strength_progress" size="small" onChange2={onSliderChange}
                     min={rank.thisStrength}
                     max={rank.nextStrength} value={strength} />
                 <ArrowButton disabled={rank.rankNumber === 20} label="▶"
@@ -125,11 +107,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
             <SecondSleepCheckbox value={data.secondSleep} onChange={onSecondSleepChange}/>
         </div>
     </StyledForm>
-    <div style={{textAlign: 'right'}}>
-        <Button startIcon={<ScheduleIcon/>} onClick={onScoreTableButtonClick}>{t('sleep score table')}</Button>
-    </div>
-    <ScoreTableDialog open={isScoreTableDialogOpen}
-        onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
+    <TrackingPanel data={data} onChange={onchange}/>
     </>);
 }
 
@@ -183,8 +161,6 @@ const StyledForm = styled('div')({
             },
         },
     },
-/*
-*/
 });
 
 interface RankTextFieldProps {
@@ -210,8 +186,7 @@ const RankTextField = React.memo(({value, onChange, field}:RankTextFieldProps) =
         const strength = field.ranks[i];
         rankMenuItems.push(
             <StyledRankMenuItem key={i} value={i} dense selected={selected}>
-                <span className={"rank_ball rank_ball_" + rankType}>◓</span>
-                <span className="rank_number">{rankNumber}</span>
+                <RankBall type={rankType} number={rankNumber} />
                 <span className="strength">{t("num", {n: strength})}{t("range separator")}</span>
             </StyledRankMenuItem>);
     }
@@ -234,33 +209,12 @@ const StyledRankTextField = styled(TextField)({
     width: '4rem',
     marginRight: '1rem',
 
-    '& span.rank_ball_basic': { color: '#ff0000' },
-    '& span.rank_ball_great': { color: '#0000ff' },
-    '& span.rank_ball_ultra': { color: '#000000' },
-    '& span.rank_ball_master': { color: '#cc00cc' },
-
-    '& span.rank_number': {
-        paddingLeft: '.2rem',
-    },
-
     '& span.strength': {
         display: 'none',
     },
 });
 
 const StyledRankMenuItem = styled(MenuItem)({
-    '& > span.rank_ball': {
-        fontSize: '1rem',
-        '&.rank_ball_basic': { color: '#ff0000' },
-        '&.rank_ball_great': { color: '#0000ff' },
-        '&.rank_ball_ultra': { color: '#000000' },
-        '&.rank_ball_master': { color: '#cc00cc' },
-    },
-    '& > span.rank_number': {
-        fontSize: '1rem',
-        paddingLeft: '.2rem',
-    },
-
     '& > span.strength': {
         paddingLeft: '1.2rem',
         color: '#999',

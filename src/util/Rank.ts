@@ -1,5 +1,5 @@
 
-type RankType = "basic" | "great" | "ultra" | "master";
+export type RankType = "basic" | "great" | "ultra" | "master";
 
 class Rank {
     /** rank index (=rankTypeIndex * 5 + rankNumber - 1) */

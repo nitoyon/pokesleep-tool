@@ -4,12 +4,19 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next'
 
-const MessageDialog = React.memo(({message, open, onClose}: {
-    onClose: () => void,
+const ConfirmDialog = React.memo(({okLabel, message, open, onOk, onClose}: {
+    okLabel: string,
     open: boolean,
     message: React.ReactNode,
+    onOk: () => void,
+    onClose: () => void,
 }) => {
     const { t } = useTranslation();
+    const okHandler = React.useCallback(() => {
+        onOk();
+        onClose();
+    }, [onOk, onClose]);
+
     if (!open) {
         return <></>;
     }
@@ -17,10 +24,11 @@ const MessageDialog = React.memo(({message, open, onClose}: {
         <Dialog open={open} onClose={onClose}>
             <DialogContent style={{paddingBottom: 0}}>{message}</DialogContent>
             <DialogActions>
-                <Button onClick={onClose} autoFocus>{t('close')}</Button>
+                <Button onClick={okHandler} color="error">{okLabel}</Button>
+                <Button onClick={onClose} autoFocus>{t('cancel')}</Button>
             </DialogActions>
         </Dialog>
     );
 });
 
-export default MessageDialog;
+export default ConfirmDialog;
