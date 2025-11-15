@@ -2,9 +2,10 @@ import React from 'react';
 import { styled } from '@mui/system';
 import {
     Autocomplete, Paper, PaperProps,
-    Popper, PopperProps, Slider, TextField,
+    Popper, PopperProps, TextField,
 } from '@mui/material';
 import ArrowButton from '../../common/ArrowButton';
+import SliderEx from '../../common/SliderEx';
 
 const LevelControlContainer = styled('div')({
     display: 'flex',
@@ -13,38 +14,12 @@ const LevelControlContainer = styled('div')({
     height: '1.8rem',
 });
 
-const UnselectableSlider = styled(Slider)({
-    userSelect: 'none',
-    '& *': {
-        userSelect: 'none',
-    },
-});
-
-const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
-    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-
 const LevelControl = React.memo(({hideInput, max, value, onChange}: {
     hideInput?: boolean,
     max: number,
     value: number,
     onChange: (value: number) => void,
 }) => {
-    const _onChange = React.useCallback((e: Event, value: number|number[]) => {
-        if (e === null) {
-            return;
-        }
-
-        // fix iOS bug on MUI slider
-        // https://github.com/mui/material-ui/issues/31869
-        if (isIOS && e.type === 'mousedown') {
-            return;
-        }
-
-        if (typeof(value) === 'number') {
-            onChange(value);
-        }
-    }, [onChange]);
-
     const onLevelDownClick = React.useCallback(() => {
         onChange(value - 1);
     }, [value, onChange]);
@@ -55,8 +30,8 @@ const LevelControl = React.memo(({hideInput, max, value, onChange}: {
     return (<LevelControlContainer>
             {!hideInput && <LevelInput value={value} onChange={onChange}/>}
             <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <UnselectableSlider min={1} max={max} size="small" style={{userSelect: "none"}}
-                value={value} onChange={_onChange}/>
+            <SliderEx min={1} max={max} size="small" style={{userSelect: "none"}}
+                value={value} onChange2={onChange}/>
             <ArrowButton label="▶" disabled={value === max} onClick={onLevelUpClick}/>
         </LevelControlContainer>
     );

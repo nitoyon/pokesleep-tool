@@ -7,7 +7,9 @@ import { PokemonCount } from '../../util/PokemonCount';
 import SleepScore from './SleepScore'
 import { MultipleScoreRange, ScoreRange } from './Score';
 import fields from '../../data/fields';
+import SpawnCountLabel from './SpawnCountLabel'
 import { BetterSecondSleepData } from './BetterSecondSleepDialog';
+import RankBall from './RankBallLabel';
 import { useTranslation, Trans } from 'react-i18next'
 import i18next from 'i18next'
 
@@ -111,10 +113,11 @@ const StyledPreviewScore = styled('div')({
         width: '100%',
         gridTemplateColumns: '4.5rem max-content 1.5rem max-content',
         rowGap: '.5rem',
+    },
 
-        '& > .count_box': {
-            width: '5rem',
-        },
+    '& > div > .count_box': {
+        width: '5rem',
+        fontSize: '1.2rem',
     },
 
     '& > .preview_warning': {
@@ -123,20 +126,6 @@ const StyledPreviewScore = styled('div')({
         gridTemplateColumns: '4.5rem 1fr',
     },
 
-    '& div.count': {
-        '& > span.ball': {
-            color: '#ff6347',
-            fontSize: '1.2rem',
-        },
-        '& > span.multiply': {
-            color: '#666',
-            fontSize: '1.2rem',
-        },
-        '& > span.value': {
-            color: '#e6a83a',
-            fontSize: '1.4rem',
-        },
-    },
     '& div.power': {
         color: '#aaaaaa',
         fontSize: '.7rem',
@@ -227,21 +216,13 @@ const StyledPreviewScore = styled('div')({
         '&::before': {
             content: "'\\26a0\\fe0f'",
         },
-        '& .rank_ball_basic': { color: '#ff0000' },
-        '& .rank_ball_great': { color: '#0000ff' },
-        '& .rank_ball_ultra': { color: '#000000' },
-        '& .rank_ball_master': { color: '#cc00cc' },
     }
 });
 
 function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
     const countElement = (
         <div className="count_box">
-            <div className="count">
-                <span className="ball">◓</span>
-                <span className="multiply">×</span>
-                <span className="value">{range.count}</span>
-            </div>
+            <SpawnCountLabel count={range.count} />
             <div className="power">
                 <span>
                     {t('num', {n: range.power})}
@@ -264,8 +245,7 @@ function renderRange(range:ScoreRange, data:InputAreaData, t:typeof i18next.t) {
                     components={{strength:
                         <>
                             <strong>{t('num', {n: range.requiredStrength})} </strong>
-                            (<span className={"rank_ball_" + rank.type}>◓</span>
-                            <span className="rank_number">{rank.rankNumber}</span>
+                            (<RankBall type={rank.type} number={rank.rankNumber} />
                             <span> + {percent}%</span>
                             )
                         </>
