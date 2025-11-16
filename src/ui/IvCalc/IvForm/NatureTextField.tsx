@@ -46,7 +46,7 @@ const NatureTextField = React.memo(({iv, onChange}: {
 const NatureEditPopper = React.memo(({iv, open, anchorRef, onClose, onChange}: {
     iv: PokemonIv,
     open: boolean,
-    anchorRef: React.RefObject<HTMLButtonElement>,
+    anchorRef: React.RefObject<HTMLButtonElement | null>,
     onClose: () => void,
     onChange: (value: Nature) => void,
 }) => {
