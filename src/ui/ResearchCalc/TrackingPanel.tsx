@@ -320,12 +320,12 @@ const StyledDetailContent = styled('div')({
         fontSize: '0.9rem',
         '& > dt': {
             marginTop: '0.8rem',
-            padding: '0.1rem 0.2rem',
+            padding: '0.1rem 0.4rem',
             borderRadius: 5,
             display: 'inline',
             '&.dozing': { backgroundColor: '#fdec6e', color: '#862' },
             '&.snoozing': { backgroundColor: '#85fbff', color: '#226' },
-            '&.slumbering': { backgroundColor: '#5592fc' },
+            '&.slumbering': { backgroundColor: '#5592fc', color: '#fff' },
         },
         '& > dd': {
             fontSize: '0.8rem',
