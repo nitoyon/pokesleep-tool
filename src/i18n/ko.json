@@ -498,6 +498,7 @@
         "lottery count": "추첨을 진행한 횟수",
         "always 81%+": "항상 81% 이상",
         "charge energy not implemented": "현재로서는, 기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
+        "plus assumption": "$t(skills.Ingredient Magnet S (Plus))에 $t(event bonus)가 적용되는 것으로 가정하여 계산합니다.",
 
         "help yield": "$t(berry)$t(ingredient)수",
         "help yield description": "도움 {{n}}회당 획득하는 $t(berry)・$t(ingredient)의 평균 수량입니다.",

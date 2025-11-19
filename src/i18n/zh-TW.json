@@ -502,6 +502,7 @@
         "lottery count": "抽選次數",
         "always 81%+": "始終超過81%",
         "charge energy not implemented": "目前不考慮活力填充 S 帶來的活力回復。",
+        "plus assumption": "計算時假設$t(event bonus)適用於$t(skills.Ingredient Magnet S (Plus))。",
 
         "help yield": "$t(berry)$t(ingredient)數量",
         "help yield description": "每$t(help count)次可獲得的$t(berry)和$t(ingredient)的平均數量。",
