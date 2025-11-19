@@ -389,5 +389,10 @@ export function matchMainSkillName(pokemon: PokemonData, match: string,
         return true;
     }
 
+    // Treat "Dream Shard Magnet S" as matching "Ingredient Draw S (Super Luck)"
+    if (name === "Ingredient Draw S (Super Luck)" && match === "Dream Shard Magnet S") {
+        return true;
+    }
+
     return false;
 }
