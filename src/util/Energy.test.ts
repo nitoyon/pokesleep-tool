@@ -295,4 +295,147 @@ describe('Energy', () => {
         expect(result.helpCount.asleepFull).toBe(0);
         expect(result.helpCount.asleepNotFull).toBe(0);
     });
+
+    test('calculate (negative period)', () => {
+        const iv = new PokemonIv('Pikachu');
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({period: -1}));
+
+        expect(result.sleepTime).toBe(0);
+        expect(result.events).toEqual([]);
+        expect(result.efficiencies).toEqual([]);
+        expect(result.canBeFullInventory).toBe(false);
+        expect(result.timeToFullInventory).toBe(-1);
+        expect(result.skillProbabilityAfterWakeup).toEqual({ once: 0, twice: 0 });
+        expect(result.carryLimit).toBe(iv.carryLimit);
+        expect(result.skillRatio).toBe(0);
+        expect(result.helpCount).toEqual({ awake: 0, asleepNotFull: 0, asleepFull: 0 });
+        expect(result.averageEfficiency).toEqual({ total: 0, awake: 0, asleep: 0 });
+    });
+
+    test('calculate (isEnergyAlwaysFull = true)', () => {
+        const iv = new PokemonIv('Pikachu');
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({
+            isEnergyAlwaysFull: true,
+            sleepScore: 100,
+        }));
+
+        // sleepTime = 1440 - 510 = 930
+        expect(result.sleepTime).toBe(930);
+
+        // simplified events with constant 100 energy (wake, sleep, snack, wake)
+        expect(result.events[0]).toEqual(
+            { minutes: 0, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true }
+        );
+        expect(result.events[1]).toEqual(
+            { minutes: 930, type: 'sleep', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true }
+        );
+        // all events should have energy 100
+        for (const event of result.events) {
+            expect(event.energyBefore).toBe(100);
+            expect(event.energyAfter).toBe(100);
+        }
+
+        // simplified efficiencies with max efficiency
+        expect(result.efficiencies[0]).toEqual(
+            { start: 0, end: 930, isAwake: true, efficiency: 2.222, isSnacking: false, isInPeriod: true }
+        );
+        // check asleep efficiency has max efficiency
+        const asleepEfficiency = result.efficiencies.find(e => !e.isAwake && !e.isSnacking);
+        expect(asleepEfficiency?.efficiency).toBe(2.222);
+
+        // average efficiency should be max
+        expect(result.averageEfficiency).toEqual({
+            total: 2.222,
+            awake: 2.222,
+            asleep: 2.222,
+        });
+    });
+
+    test('calculate (isGoodCampTicketSet = true)', () => {
+        const iv = new PokemonIv('Pikachu');
+        const energy = new Energy(iv);
+        const baseCarryLimit = iv.carryLimit;
+
+        // without good camp ticket
+        const resultWithout = energy.calculate(createParam({
+            isGoodCampTicketSet: false,
+        }));
+        expect(resultWithout.carryLimit).toBe(baseCarryLimit);
+
+        // with good camp ticket
+        const resultWith = energy.calculate(createParam({
+            isGoodCampTicketSet: true,
+        }));
+        expect(resultWith.carryLimit).toBe(Math.ceil(baseCarryLimit * 1.2));
+    });
+
+    test('calculate (tapFrequency = "none")', () => {
+        const iv = new PokemonIv('Eevee');
+        const energy = new Energy(iv);
+        const result = energy.calculate(createParam({
+            tapFrequency: "none",
+            tapFrequencyAsleep: "none",
+            sleepScore: 100,
+        }));
+
+        // all events should be snacking when tapFrequency = "none"
+        for (const event of result.events) {
+            expect(event.isSnacking).toBe(true);
+        }
+
+        // all efficiencies should be snacking
+        for (const efficiency of result.efficiencies) {
+            expect(efficiency.isSnacking).toBe(true);
+        }
+
+        // timeToFullInventory should be -1 (no snacking calculation)
+        expect(result.timeToFullInventory).toBe(-1);
+
+        // canBeFullInventory should be false
+        expect(result.canBeFullInventory).toBe(false);
+
+        // all help counts should be in asleepFull (snacking)
+        expect(result.helpCount.asleepNotFull).toBe(0);
+    });
+
+    test('calculate (combined tap settings)', () => {
+        const iv = new PokemonIv('Eevee');
+        const energy = new Energy(iv);
+
+        // tapFrequency = "always", tapFrequencyAsleep = "none" -> canBeFullInventory = true
+        const result1 = energy.calculate(createParam({
+            tapFrequency: "always",
+            tapFrequencyAsleep: "none",
+            sleepScore: 100,
+        }));
+        expect(result1.canBeFullInventory).toBe(true);
+        // should have snacking during sleep
+        expect(result1.timeToFullInventory).toBeGreaterThan(0);
+
+        // tapFrequency = "always", tapFrequencyAsleep = "always" -> no snacking
+        const result2 = energy.calculate(createParam({
+            tapFrequency: "always",
+            tapFrequencyAsleep: "always",
+            sleepScore: 100,
+        }));
+        expect(result2.canBeFullInventory).toBe(false);
+        expect(result2.timeToFullInventory).toBe(-1);
+        // no snacking events
+        const snackEvent = result2.events.find(x => x.type === 'snack');
+        expect(snackEvent).toBe(undefined);
+
+        // tapFrequency = "none", tapFrequencyAsleep = "always" -> all snacking
+        const result3 = energy.calculate(createParam({
+            tapFrequency: "none",
+            tapFrequencyAsleep: "always",
+            sleepScore: 100,
+        }));
+        expect(result3.canBeFullInventory).toBe(false);
+        // all events should be snacking
+        for (const event of result3.events) {
+            expect(event.isSnacking).toBe(true);
+        }
+    });
 });
