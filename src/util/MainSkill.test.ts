@@ -59,6 +59,17 @@ describe('MainSkill', () => {
             expect(matchMainSkillName(minun, 'Cooking Power-Up S')).toBe(true);
         });
 
+        test('special case: Ingredient Draw S (Super Luck) matches Dream Shard Magnet S', () => {
+            const murkrow = pokemons.find(x => x.name === 'Murkrow');
+            if (murkrow === undefined) {
+                throw new Error('Murkrow not found in pokemons data');
+            }
+
+            expect(matchMainSkillName(murkrow, 'Dream Shard Magnet S')).toBe(true);
+            expect(matchMainSkillName(murkrow, 'Ingredient Draw S')).toBe(true);
+            expect(matchMainSkillName(murkrow, 'Energy for Everyone S')).toBe(false);
+        });
+
         describe('Toxel evolution special cases', () => {
             test('Toxel with Amped nature evolves to Ingredient Magnet S (Plus)', () => {
                 const toxel = pokemons.find(x => x.name === 'Toxel');
