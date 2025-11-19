@@ -999,6 +999,16 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.3, y: 0.45, w: 0.4, h: 0.3, r: 0.2, color: '#ffffff'},
         {x: 0, y: 0.7, w: 1, h: 0.3, color: '#e593a6'},
     ],
+    // Spiritomb
+    '442': [
+        {x: 0.32, y: 0.2, w: 0.39, h: 0.78, r: 0.1, color: '#e7decf'},
+        {x: 0.02, y: 0, w: 0.96, h: 0.8, r: 0.3, color: '#e0abd6'},
+        {x: 0.11, y: 0.4, w: 0.24, h: 0.24, r: 0.2, color: '#aace4e'},
+        {x: 0.18, y: 0.47, w: 0.1, h: 0.1, r: 0.2, color: '#f9f27e'},
+        {x: 0.72, y: 0.23, w: 0.18, h: 0.18, r: 0.2, color: '#aace4e'},
+        {x: 0.77, y: 0.28, w: 0.08, h: 0.08, r: 0.2, color: '#c6e55e'},
+        {x: 0.4, y: 0.3, w: 0.2, h: 0.2, r: 0.3, color: '#a0c85c'},
+    ],
     // Riolu
     '447': [
         {x: 0, y: 0, w: 1, h: 1, color: '#7ab9d5'},

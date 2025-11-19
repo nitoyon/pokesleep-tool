@@ -5433,6 +5433,40 @@
         }
     },
     {
+        "id": 442,
+        "name": "Spiritomb",
+        "arrival": "2025-12-01",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "dark",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 16,
+        "frequency": 0,
+        "ingRatio": 0,
+        "skillRatio": 0,
+        "ancestor": null,
+        "evolutionCount": 0,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 0,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 448,
         "name": "Lucario",
         "arrival": "2023-07-17",
