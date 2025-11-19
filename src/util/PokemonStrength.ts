@@ -517,8 +517,8 @@ class PokemonStrength {
 
         const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
-        const ingFactor = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
-            (1 + param.fieldBonus / 100) * bonus.dish;
+        const rawIngFactor = (1 + param.fieldBonus / 100) * bonus.dish;
+        const ingFactor = (ingInRecipeStrengthRatio * 0.8 + 0.2) * rawIngFactor;
 
         switch (mainSkill) {
             case "Charge Energy S":
@@ -621,7 +621,7 @@ class PokemonStrength {
                 const energy = getSkillSubValue(mainSkill, skillLevel);
                 return {
                     skillValue,
-                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
                     skillValuePerTrigger,
                     skillValue2: energy * skillCount,
                     skillStrength2: 0,
@@ -671,7 +671,7 @@ class PokemonStrength {
             case "Cooking Power-Up S":
                 return {
                     skillValue,
-                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
                     skillValuePerTrigger,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };

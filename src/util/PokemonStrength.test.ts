@@ -418,6 +418,31 @@ describe('PokemonStrength', () => {
             // fieldBonus = 50 should multiply ingFactor by 1.5
             expect(result50.skillStrength).toBeCloseTo(resultBase.skillStrength * 1.5);
         });
+
+        test('Cooking Power-Up S skill strength is not affected by recipeBonus', () => {
+            // Magnemite has "Cooking Power-Up S" skill
+            const iv = new PokemonIv('Magnemite');
+            iv.level = 50;
+
+            // recipeBonus = 0
+            const param0 = createParam({ recipeBonus: 0, recipeLevel: 30, fieldBonus: 0 });
+            const strength0 = new PokemonStrength(iv, param0);
+            const result0 = strength0.calculate();
+
+            // Skill strength should be the same regardless of recipeBonus
+            // recipeBonus = 25, recipeLevel = 30
+            const param25 = createParam({ recipeBonus: 25, recipeLevel: 30, fieldBonus: 0 });
+            const strength25 = new PokemonStrength(iv, param25);
+            const result25 = strength25.calculate();
+            expect(result25.skillStrength).toBeCloseTo(result0.skillStrength);
+
+            // Skill strength should be x1.5
+            // recipeBonus = 25, recipeLevel = 30, fieldBonus: 50
+            const param50 = createParam({ recipeBonus: 25, recipeLevel: 30, fieldBonus: 50 });
+            const strength50 = new PokemonStrength(iv, param50);
+            const result50 = strength50.calculate();
+            expect(result50.skillStrength).toBeCloseTo(result25.skillStrength * 1.5);
+        });
     });
 });
 
