@@ -575,7 +575,7 @@
         "strength detail2": "目前的計算邏輯有以下限制。",
         "strength restriction2": "沒有考慮活力填充S所帶來的活力回復。",
         "strength skill info": {
-            "Ingredient Magnet S": "通過技能獲取的食材假定作為剩餘食材進行計算。",
+            "Ingredient Magnet S": "技能獲取的食材是通過將$t(recipe bonus)應用於$t(strength2)來計算的。",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)不會考慮隊伍中是否有除了自己以外擁有「正電」或「負電」特性的寶可夢。",
             "Charge Energy S": "技能的效果沒有換算成合計能量值。如需估計對能量的影響，請嘗試變更 [$t(energy)] 的值並進行確認。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
