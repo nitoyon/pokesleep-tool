@@ -329,6 +329,18 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <span>{t('required helper boost')}: {round1(getRequiredHelperBoost(settings, strength, result))}</span>
             <InfoButton onClick={onStockInfoClick}/>
         </footer>}
+        {result.bonus.ingredientDraw !== 1 && strength.pokemonIv.pokemon.skill === 'Ingredient Magnet S (Plus)' &&
+            <div style={{
+                gridColumn: '1 / -1',
+                border: '1px solid red',
+                background: '#ffeeee',
+                color: 'red',
+                fontSize: '0.8rem',
+                borderRadius: '0.5rem',
+                margin: '.2rem .5rem 0',
+                padding: '0 0.3rem',
+            }}>{t('plus assumption')}</div>
+        }
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
             strength={strength} result={result}/>
         <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}

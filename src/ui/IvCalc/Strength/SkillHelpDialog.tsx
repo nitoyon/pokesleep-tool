@@ -261,10 +261,10 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
     const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
 
     if (skill === 'Ingredient Draw S (Super Luck)') {
-        return getSuperLuckShardText(skillLevel, t, t('expected dream shard'));
+        return getSuperLuckShardText(strength, skillLevel, t, t('expected dream shard'));
     }
     if (skill === 'Ingredient Magnet S (Plus)') {
-        return getNormalSkillValueText(t, t('additional ingredients'));
+        return getPlusValueText(strength, skillLevel, t);
     }
     if (skill === 'Cooking Power-Up S (Minus)') {
         const val = getSkillSubValue(skill, skillLevel);
@@ -411,23 +411,56 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
     return [null, null];
 }
 
-function getSuperLuckShardText(skillLevel: number,
+function getSuperLuckShardText(strength: PokemonStrength, skillLevel: number,
     t: typeof i18next.t, valueText: string
 ):
 [React.ReactNode, React.ReactNode] {
     const text = t('value per skill', { value: valueText});
     const shards = getSkillSubValue("Ingredient Draw S (Super Luck)", skillLevel);
+
+    const param = strength.parameter;
+    const ingBonus = getEventBonus(param.event, param.customEventBonus)?.ingredientMagnet ?? 1;
+
     return [<>
         {text}<br/>
         <ul className="detail">
             <li>
-                <strong>{formatWithComma(shards)}</strong>: {round1(superLuckShardRate * 100)}%
+                <strong>
+                    {formatWithComma(shards)}
+                    {ingBonus !== 1 && <> × {ingBonus}</>}
+                </strong>
+                : {round1(superLuckShardRate * 100)}%
             </li>
             <li>
-                <strong>{formatWithComma(shards * 5)}</strong>: {round1(superLuckShard5Rate * 100)}%
+                <strong>
+                    {formatWithComma(shards * 5)}
+                    {ingBonus !== 1 && <> × {ingBonus}</>}
+                </strong>
+                : {round1(superLuckShard5Rate * 100)}%
             </li>
         </ul>
     </>, null];
+}
+
+function getPlusValueText(strength: PokemonStrength, skillLevel: number, t: typeof i18next.t):
+[React.ReactNode, React.ReactNode] {
+    const text = t('value per skill', { value: t('additional ingredients') });
+    const param = strength.parameter;
+    const ingBonus = getEventBonus(param.event, param.customEventBonus)?.ingredientMagnet ?? 1;
+
+    if (ingBonus === 1) {
+        return [text, null];
+    }
+
+    const val = getSkillSubValue(strength.pokemonIv.pokemon.skill,
+        skillLevel, strength.pokemonIv.pokemon.ing1.name);
+    return [text, <>
+        {val}
+        <small> ({t('base value', { value: t('additional ingredients')})})</small>
+        <> × </>
+        {ingBonus}
+        <small> ({t('event bonus')})</small>
+    </>];
 }
 
 function getEnergyRecoveryValueText(value: number,

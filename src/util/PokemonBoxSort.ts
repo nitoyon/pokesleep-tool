@@ -189,7 +189,12 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
             // skillStrength is always 0 and skillValue cannot be determined
             // by skillCount because it has random values and fixed values.
             if (mainSkill === "Dream Shard Magnet S") {
-                cache[item.id] = result.skillValue;
+                if (item.iv.pokemon.skill === "Ingredient Draw S (Super Luck)") {
+                    cache[item.id] = result.skillValue2;
+                }
+                else {
+                    cache[item.id] = result.skillValue;
+                }
                 return;
             }
 

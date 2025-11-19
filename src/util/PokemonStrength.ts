@@ -515,7 +515,10 @@ class PokemonStrength {
         const skillValue = skillValuePerTrigger * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
 
-        const ingFactor = (1 + param.fieldBonus / 100) * bonus.dish;
+        const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
+            (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
+        const ingFactor = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
+            (1 + param.fieldBonus / 100) * bonus.dish;
 
         switch (mainSkill) {
             case "Charge Energy S":
@@ -645,8 +648,8 @@ class PokemonStrength {
             case "Ingredient Draw S (Super Luck)": {
                 const averageStrength = 123.75;
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);
-                const shardsPerSkill = baseShards * superLuckShardRate +
-                    baseShards * 5 * superLuckShard5Rate;
+                const shardsPerSkill = (baseShards * superLuckShardRate +
+                    baseShards * 5 * superLuckShard5Rate) * bonus.ingredientDraw;
                 return {
                     skillValue: skillValue * superLuckIngRate,
                     skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,

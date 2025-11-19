@@ -491,6 +491,47 @@ describe('sortPokemonItems', () => {
             expect(result2[0].iv.pokemon.name).toBe('Lucario');
         });
 
+        test('uses skillValue2 for Ingredient Draw S (Super Luck) when sorting by Dream Shard Magnet S', () => {
+            const parameter = createStrengthParameter({});
+
+            // Murkrow has Ingredient Draw S (Super Luck) - should use skillValue2
+            // Lucario has Dream Shard Magnet S - should use skillValue
+            const iv1 = new PokemonIv('Murkrow');
+            const iv2 = new PokemonIv('Lucario');
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Murkrow':
+                        // Ingredient Draw S (Super Luck) - dream shards are in skillValue2
+                        return createStrengthResult({
+                            skillCount: 5,
+                            skillValue: 50, // ingredient count
+                            skillValue2: 10000, // dream shards
+                        });
+                    case 'Lucario':
+                        // Dream Shard Magnet S - dream shards are in skillValue
+                        return createStrengthResult({
+                            skillCount: 6,
+                            skillValue: 8000, // dream shards
+                        });
+                }
+                return createStrengthResult({});
+            };
+
+            // Murkrow should be first because skillValue2 (10000) > Lucario's skillValue (8000)
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
+                'Dream Shard Magnet S', parameter, mockT, calculator);
+            expect(error).toBe('');
+            expect(result.length).toBe(2);
+            expect(result[0].iv.pokemon.name).toBe('Murkrow');
+            expect(result[1].iv.pokemon.name).toBe('Lucario');
+        });
+
         test('filters out zero-strength items when `mainSkill` is "strength"', () => {
             const parameter = createStrengthParameter({});
 
