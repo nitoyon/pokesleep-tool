@@ -21,6 +21,7 @@
     "build": "npm run typecheck && npm run lint && vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
+    "verify": "npm run test -- run && npm run build",
     "preview": "vite preview",
     "rpfit": "npx ts-node --project tsconfig.script.json scripts/rpfit.ts",
     "rptest": "npx ts-node --project tsconfig.script.json scripts/rptest.ts",
