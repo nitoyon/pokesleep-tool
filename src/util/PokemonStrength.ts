@@ -645,8 +645,8 @@ class PokemonStrength {
             case "Ingredient Draw S (Super Luck)": {
                 const averageStrength = 123.75;
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);
-                const shardsPerSkill = baseShards * superLuckShardRate +
-                    baseShards * 5 * superLuckShard5Rate;
+                const shardsPerSkill = (baseShards * superLuckShardRate +
+                    baseShards * 5 * superLuckShard5Rate) * bonus.ingredientDraw;
                 return {
                     skillValue: skillValue * superLuckIngRate,
                     skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
