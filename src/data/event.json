@@ -19,6 +19,21 @@
     ],
     "bonus": [
         {
+            "name": "packed portion cooking week 2",
+            "start": "2025-12-01T04:00:00",
+            "end": "2025-12-08T04:00:00",
+            "target": {
+                "specialty": "Ingredients"
+            },
+            "effects": {
+                "ingredient": 1,
+                "ingredientMagnet": 1.5,
+                "ingredientDraw": 1.5,
+                "dish": 1.25,
+                "energyFromDish": 5
+            }
+        },
+        {
             "name": "halloween 2025",
             "start": "2025-10-27T04:00:00",
             "end": "2025-11-03T04:00:00",
