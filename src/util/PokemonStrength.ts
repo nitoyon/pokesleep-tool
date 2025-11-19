@@ -515,7 +515,10 @@ class PokemonStrength {
         const skillValue = skillValuePerTrigger * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
 
-        const ingFactor = (1 + param.fieldBonus / 100) * bonus.dish;
+        const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
+            (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
+        const ingFactor = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
+            (1 + param.fieldBonus / 100) * bonus.dish;
 
         switch (mainSkill) {
             case "Charge Energy S":
