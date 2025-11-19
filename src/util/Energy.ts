@@ -117,6 +117,18 @@ type EfficiencyEvent = {
     isInPeriod: boolean;
 }
 
+/** Actual IV parameters adjusted for field bonuses and camp ticket effects. */
+type ActualIv = {
+    /** Help interval in seconds, adjusted for bonuses */
+    baseFreq: number;
+    /** Probability of triggering a skill per help */
+    skillRatio: number;
+    /** Maximum inventory capacity */
+    carryLimit: number;
+    /** Inventory slots consumed per help */
+    bagUsagePerHelp: number;
+}
+
 /** Result object for calculation. */
 export type EnergyResult = {
     /** The time when going to bed. */
@@ -211,6 +223,9 @@ class Energy {
         const myRestoreEnergy = param.e4eEnergy * recoveryFactor;
         const sleepTime = 1440 - sleepMinutes;
 
+        // Calculate actual IV
+        const actualIv: ActualIv = this.calculateActualIv(param, bonus, isWhistle);
+
         let events: EnergyEvent[];
         let efficiencies: EfficiencyEvent[];
         if (param.isEnergyAlwaysFull) {
@@ -255,14 +270,15 @@ class Energy {
             .filter(x => x.isInPeriod && !x.isAwake));
 
         // calculate Sneaky Snacking
-        const {carryLimit, skillRatio, timeToFullInventory,
+        const {timeToFullInventory,
             helpCount, skillProbabilityAfterWakeup } =
-            this.calculateSneakySnacking(events, efficiencies, param, bonus, isWhistle);
+            this.calculateSneakySnacking(events, efficiencies, param, actualIv);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
-            timeToFullInventory, carryLimit, skillRatio,
+            timeToFullInventory,
+            carryLimit: actualIv.carryLimit, skillRatio: actualIv.skillRatio,
             helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep },
             chargeEnergyCount: 0,
@@ -537,48 +553,27 @@ class Energy {
     }
 
     /**
-     * Calculate sneaky snacking and returns help count while sleeping.
-     * @param events Events.
-     * @param efficiencies Efficiencies.
+     * Calculate actual IV parameters with field bonuses and camp ticket effects applied.
      * @param param Parameters for energy calculation.
      * @param bonus Bonus effects for the Pokémon and StrengthParameter.
-     * @return Help count and time to full inverntory.
+     * @param isWhistle Whether whistle is used.
+     * @returns Adjusted IV parameters for the current conditions.
      */
-    calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        param: EnergyParameter, bonus: BonusEffects, isWhistle: boolean):
-    {
-        carryLimit: number,
-        skillRatio: number,
-        timeToFullInventory: number,
-        skillProbabilityAfterWakeup: {
-            once: number,
-            twice: number,
-        },
-        helpCount: {
-            total: number,
-            awake: number,
-            asleepNotFull: number,
-            asleepFull: number,
-        },
-    } {
+    calculateActualIv(param: EnergyParameter,
+        bonus: BonusEffects, isWhistle: boolean
+    ): ActualIv {
         if (this._iv.pokemon.frequency === 0) {
             return {
-                carryLimit: this._iv.pokemon.carryLimit,
+                baseFreq: 0,
                 skillRatio: 0,
-                timeToFullInventory: -1,
-                skillProbabilityAfterWakeup: { once: 0, twice: 0 },
-                helpCount: {
-                    total: 0, awake: 0, asleepNotFull: 0, asleepFull: 0
-                }
+                carryLimit: this._iv.pokemon.carryLimit,
+                bagUsagePerHelp: 0,
             };
         }
 
-        const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
         const helpBonusCount = param.helpBonusCount +
             (this._iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
         const isGoodCampTicketSet = param.isGoodCampTicketSet;
-        const alwaysSnacking = param.tapFrequency === "none";
-        const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
 
         // check if the field is expert mode
         const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
@@ -596,6 +591,52 @@ class Energy {
             isMainBerry, isNonFavoriteBerry);
         const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient,
             isExpertMode && isFavoriteBerry && param.expertEffect === 'ing');
+
+        // calculate skill ratio
+        const skillRatio = rp.skillRatio * bonus.skillTrigger;
+
+        return { baseFreq, skillRatio, carryLimit, bagUsagePerHelp };
+    }
+
+    /**
+     * Calculate sneaky snacking and returns help count while sleeping.
+     * @param events Events.
+     * @param efficiencies Efficiencies.
+     * @param param Parameters for energy calculation.
+     * @param actualIv Adjusted IV parameters from calculateActualIv().
+     * @return Help count and time to full inventory.
+     */
+    calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
+        param: EnergyParameter, actualIv: ActualIv):
+    {
+        timeToFullInventory: number,
+        skillProbabilityAfterWakeup: {
+            once: number,
+            twice: number,
+        },
+        helpCount: {
+            total: number,
+            awake: number,
+            asleepNotFull: number,
+            asleepFull: number,
+        },
+    } {
+        if (this._iv.pokemon.frequency === 0) {
+            return {
+                timeToFullInventory: -1,
+                skillProbabilityAfterWakeup: { once: 0, twice: 0 },
+                helpCount: {
+                    total: 0, awake: 0, asleepNotFull: 0, asleepFull: 0
+                }
+            };
+        }
+
+        const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
+        const alwaysSnacking = param.tapFrequency === "none";
+        const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
+
+        // Use pre-calculated frequency parameters
+        const { baseFreq, skillRatio, carryLimit, bagUsagePerHelp } = actualIv;
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;
@@ -681,7 +722,6 @@ class Energy {
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
-        const skillRatio = rp.skillRatio * bonus.skillTrigger;
         if (lotteryCount > 0) {
             const skillNone = Math.pow(1 - skillRatio, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills' &&
@@ -696,7 +736,7 @@ class Energy {
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
         }
-        return {carryLimit, skillRatio,
+        return {
             timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { total, awake, asleepNotFull, asleepFull }
         };
