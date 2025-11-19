@@ -84,7 +84,7 @@ type EnergyEvent = {
     /** Elapsed minutes since waking up */
     minutes: number;
     /** Event type */
-    type: "sleep"|"wake"|"cook"|"e4e"|"empty"|"snack";
+    type: "sleep"|"wake"|"cook"|"e4e"|"empty"|"snack"|"chargeEnergy";
     /** Energy before the event occurs */
     energyBefore: number;
     /** Energy after the event occurs */
@@ -161,6 +161,8 @@ export type EnergyResult = {
         /** Alleep efficiency */
         asleep: number,
     },
+    /** Number of Charge Energy S skill triggers */
+    chargeEnergyCount: number,
 }
 
 class Energy {
@@ -198,6 +200,7 @@ class Energy {
                 skillRatio: 0,
                 helpCount: { awake: 0, asleepNotFull: 0, asleepFull: 0 },
                 averageEfficiency: { total: 0, awake: 0, asleep: 0 },
+                chargeEnergyCount: 0,
             };
         }
 
@@ -262,6 +265,7 @@ class Energy {
             timeToFullInventory, carryLimit, skillRatio,
             helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep },
+            chargeEnergyCount: 0,
         };
     }
 
