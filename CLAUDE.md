@@ -107,3 +107,4 @@ The IV Calculator uses a reducer pattern with action dispatching. When modifying
 - AdSense banner emulation in development mode
 - Strict TypeScript configuration with `noImplicitAny` enabled
 - Game data is extensive - always reference existing patterns when adding new Pokémon/features
+- (Windows ONLY) There's a file modification bug in Claude Code. The workaround is: always use complete absolute paths with drive letters and backslashes for ALL file operations. Apply this rule going forward, not just for this file
