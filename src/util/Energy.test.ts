@@ -438,4 +438,62 @@ describe('Energy', () => {
             expect(event.isSnacking).toBe(true);
         }
     });
+
+    describe('calculateSkillProbabilityAfterWakeup', () => {
+        test('returns zero when lotteryCount is 0', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const result = energy.calculateSkillProbabilityAfterWakeup(0.1, 0, false);
+            expect(result).toEqual({ once: 0, twice: 0 });
+        });
+
+        test('returns zero when lotteryCount is negative', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const result = energy.calculateSkillProbabilityAfterWakeup(0.1, -5, false);
+            expect(result).toEqual({ once: 0, twice: 0 });
+        });
+
+        test('non-skill specialty: twice is always 0', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const result = energy.calculateSkillProbabilityAfterWakeup(0.1, 10, false);
+
+            // once = 1 - (1 - 0.1)^10
+            const expected = 1 - Math.pow(0.9, 10);
+            expect(result.once).toBeCloseTo(expected);
+            expect(result.twice).toBe(0);
+        });
+
+        test('skill specialty: calculates both once and twice', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const result = energy.calculateSkillProbabilityAfterWakeup(0.1, 10, true);
+
+            // skillNone = (1 - 0.1)^10
+            const skillNone = Math.pow(0.9, 10);
+            // skillOnce = 10 * 0.1 * (1 - 0.1)^9
+            const skillOnce = 10 * 0.1 * Math.pow(0.9, 9);
+            // skillTwice = 1 - skillNone - skillOnce
+            const skillTwice = 1 - skillNone - skillOnce;
+
+            expect(result.once).toBeCloseTo(skillOnce);
+            expect(result.twice).toBeCloseTo(skillTwice);
+        });
+
+        test('lotteryCount = 1', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+
+            // non-skill specialty: once = skillRatio
+            const result1 = energy.calculateSkillProbabilityAfterWakeup(0.2, 1, false);
+            expect(result1.once).toBeCloseTo(0.2);
+            expect(result1.twice).toBe(0);
+
+            // skill specialty: once = skillRatio, twice = 0 (can't trigger twice with 1 lottery)
+            const result2 = energy.calculateSkillProbabilityAfterWakeup(0.2, 1, true);
+            expect(result2.once).toBeCloseTo(0.2);
+            expect(result2.twice).toBeCloseTo(0);
+        });
+    });
 });

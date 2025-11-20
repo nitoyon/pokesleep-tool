@@ -129,6 +129,16 @@ type ActualIv = {
     bagUsagePerHelp: number;
 }
 
+/** Skill trigger probability after wakeup. */
+export type SkillProbabilityAfterWakeup = {
+    /** Skill triggered once% after wakeup */
+    once: number;
+    /** Skill triggered twice% after wakeup.
+     * Always 0 if specialty is not skill.
+     */
+    twice: number;
+}
+
 /** Result object for calculation. */
 export type EnergyResult = {
     /** The time when going to bed. */
@@ -143,14 +153,7 @@ export type EnergyResult = {
     /** Sleep time required to fulfill inventory. -1 when not fulfilled. */
     timeToFullInventory: number,
     /** Skill% after wakeup */
-    skillProbabilityAfterWakeup: {
-        /** Skill triggered once% after wakeup */
-        once: number,
-        /** Skill triggered twice% after wakeup.
-         * Always 0 if specialty is not skill.
-         */
-        twice: number,
-    },
+    skillProbabilityAfterWakeup: SkillProbabilityAfterWakeup,
     /** Carry limit */
     carryLimit: number,
     /** Skill ratio */
@@ -610,10 +613,7 @@ class Energy {
         param: EnergyParameter, actualIv: ActualIv):
     {
         timeToFullInventory: number,
-        skillProbabilityAfterWakeup: {
-            once: number,
-            twice: number,
-        },
+        skillProbabilityAfterWakeup: SkillProbabilityAfterWakeup,
         helpCount: {
             total: number,
             awake: number,
@@ -720,25 +720,41 @@ class Energy {
             .filter(x => x.isInPeriod && !x.isAwake && x.isSnacking)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
-        const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
-        if (lotteryCount > 0) {
-            const skillNone = Math.pow(1 - skillRatio, lotteryCount);
-            if (this._iv.pokemon.specialty !== 'Skills' &&
-                this._iv.pokemon.specialty !== 'All'
-            ) {
-                skillProbabilityAfterWakeup.once = 1 - skillNone;
-            }
-            else {
-                const skillOnce = lotteryCount * skillRatio *
-                    Math.pow(1 - skillRatio, lotteryCount - 1);
-                skillProbabilityAfterWakeup.once = skillOnce;
-                skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
-            }
-        }
+        const isSkillSpecialty = this._iv.pokemon.specialty === 'Skills' ||
+            this._iv.pokemon.specialty === 'All';
+        const skillProbabilityAfterWakeup = this.calculateSkillProbabilityAfterWakeup(
+            skillRatio, lotteryCount, isSkillSpecialty);
         return {
             timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { total, awake, asleepNotFull, asleepFull }
+        };
+    }
+
+    /**
+     * Calculate skill trigger probability after wakeup.
+     * @param skillRatio Probability of triggering a skill per help.
+     * @param lotteryCount Number of helps during sleep (before inventory full).
+     * @param isSkillSpecialty Whether the Pokémon's specialty is 'Skills' or 'All'.
+     * @returns Skill trigger probability after wakeup.
+     */
+    calculateSkillProbabilityAfterWakeup(skillRatio: number, lotteryCount: number,
+        isSkillSpecialty: boolean
+    ): SkillProbabilityAfterWakeup {
+        if (lotteryCount <= 0) {
+            return { once: 0, twice: 0 };
+        }
+
+        const skillNone = Math.pow(1 - skillRatio, lotteryCount);
+        if (!isSkillSpecialty) {
+            return { once: 1 - skillNone, twice: 0 };
+        }
+
+        const skillOnce = lotteryCount * skillRatio *
+            Math.pow(1 - skillRatio, lotteryCount - 1);
+        return {
+            once: skillOnce,
+            twice: 1 - skillNone - skillOnce
         };
     }
 
