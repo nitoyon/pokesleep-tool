@@ -496,4 +496,106 @@ describe('Energy', () => {
             expect(result2.twice).toBeCloseTo(0);
         });
     });
+
+    describe('findSkillTriggerTime', () => {
+        test('returns zero when skillRatio is 0', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const efficiencies = [
+                { start: 0, end: 100, efficiency: 1.0 as const, isAwake: true, isSnacking: false, isInPeriod: true }
+            ];
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0, 0);
+            expect(result).toEqual({ minute: 0, count: 0 });
+        });
+
+        test('returns zero when efficiencies is empty', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const result = energy.findSkillTriggerTime([], 3600, 0.1, 0);
+            expect(result).toEqual({ minute: 0, count: 0 });
+        });
+
+        test('returns zero when all efficiencies are asleep or snacking', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const efficiencies = [
+                { start: 0, end: 100, efficiency: 1.0 as const, isAwake: false, isSnacking: false, isInPeriod: true },
+                { start: 100, end: 200, efficiency: 1.0 as const, isAwake: true, isSnacking: true, isInPeriod: true }
+            ];
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0.1, 0);
+            expect(result).toEqual({ minute: 0, count: 0 });
+        });
+
+        test('calculates exact trigger time when skill reaches count 1', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            // skillRatio = 0.5, baseFreq = 3600 (1 hour)
+            // With efficiency 1.0, freq = 3600 seconds (60 minutes)
+            // Need 1 / 0.5 = 2 helps to trigger skill
+            // Time needed = 2 * 60 = 120 minutes
+            const efficiencies = [
+                { start: 0, end: 200, efficiency: 1.0 as const, isAwake: true, isSnacking: false, isInPeriod: true }
+            ];
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0.5, 0);
+            expect(result.minute).toBe(120);
+            expect(result.count).toBe(1);
+        });
+
+        test('returns last efficiency end when skill does not trigger', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            // skillRatio = 0.01, baseFreq = 3600 (1 hour)
+            // Need 1 / 0.01 = 100 helps to trigger skill
+            const efficiencies = [
+                // Only 0.5 helps in 30 minutes (30 * 60 / 3600 = 0.5)
+                { start: 0, end: 30, efficiency: 1.0 as const, isAwake: true, isSnacking: false, isInPeriod: true }
+            ];
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0.01, 0);
+            expect(result.minute).toBe(30);
+            // skillCount = 0.5 * 0.01 = 0.005
+            expect(result.count).toBeCloseTo(0.005);
+        });
+
+        test('respects startMinutes parameter', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            // skillRatio = 0.5, baseFreq = 3600, need 2 helps = 120 minutes
+            const efficiencies = [
+                { start: 0, end: 200, efficiency: 1.0 as const, isAwake: true, isSnacking: false, isInPeriod: true }
+            ];
+            // Start counting from minute 50, trigger at 50 + 120 = 170
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0.5, 50);
+            expect(result.minute).toBe(170);
+            expect(result.count).toBe(1);
+        });
+
+        test('handles partial efficiency period with startMinutes', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const efficiencies = [
+                // Period starts at 0, but we start counting from 30
+                { start: 0, end: 200, efficiency: 1.0 as const, isAwake: true, isSnacking: false, isInPeriod: true }
+            ];
+            // skillRatio = 0.5, need 2 helps = 120 minutes from minute 30
+            // Trigger at 30 + 120 = 150
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0.5, 30);
+            expect(result.minute).toBe(150);
+            expect(result.count).toBe(1);
+        });
+
+        test('calculates across multiple efficiency', () => {
+            const iv = new PokemonIv('Pikachu');
+            const energy = new Energy(iv);
+            const efficiencies = [
+                // Period 1: 60min, 1.515 helps (skillCount = 0.7575)
+                { start: 0, end: 60, efficiency: 1.515 as const, isAwake: true, isSnacking: false, isInPeriod: true },
+                // Period 2: Need 0.485 more helps = 29.1 minutes, trigger at 60 + 29.1 = 89.1
+                { start: 60, end: 300, efficiency: 1.0 as const, isAwake: true, isSnacking: false, isInPeriod: true }
+            ];
+            // skillRatio = 0.5, need 2 helps total (1.515 from period 1 + 0.485 from period 2)
+            const result = energy.findSkillTriggerTime(efficiencies, 3600, 0.5, 0);
+            expect(result.minute).toBeCloseTo(89.1, 1);
+            expect(result.count).toBe(1);
+        });
+    });
 });

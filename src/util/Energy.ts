@@ -758,6 +758,70 @@ class Energy {
         };
     }
 
+    /**
+     * Find when the skill will trigger based on help count.
+     * @param efficiencies Efficiency event list.
+     * @param baseFreq Base frequency in seconds.
+     * @param skillRatio Probability of triggering a skill per help.
+     * @param startMinutes Minutes to start counting from.
+     * @returns Object with minute and count:
+     *   - When `skillRatio * helpCount` reaches 1:
+     *     - `minute`: The exact minute when `skillRatio * helpCount` reaches 1
+     *        (helpCount starts from startMinutes)
+     *     - `count`: Set to 1
+     *   - When `skillRatio * helpCount` doesn't reach 1:
+     *     - `minute`: The end time of the last efficiency event where isAwake=true
+     *     - `count`: The expected skill trigger count (< 1)
+     */
+    findSkillTriggerTime(efficiencies: EfficiencyEvent[], baseFreq: number,
+        skillRatio: number, startMinutes: number
+    ): { minute: number, count: number } {
+        // Only counts helps during awake time when not snacking
+        const activeEfficiencies = efficiencies.filter(e => e.isAwake && !e.isSnacking);
+
+        if (skillRatio === 0 || activeEfficiencies.length === 0) {
+            return { minute: 0, count: 0 };
+        }
+
+        // Find efficiency when `skillRatio * helpCount` reaches 1
+        let helpCount = 0;
+        let skillCount = 0;
+        for (const efficiency of activeEfficiencies) {
+            // Skip efficiencies before startMinutes
+            if (efficiency.end <= startMinutes) {
+                continue;
+            }
+
+            const effectiveStart = Math.max(efficiency.start, startMinutes);
+            const time = efficiency.end - effectiveStart;
+            const freq = baseFreq / efficiency.efficiency;
+            const helpsInThisEfficiency = time * 60 / freq;
+
+            helpCount += helpsInThisEfficiency;
+            skillCount = helpCount * skillRatio;
+
+            if (skillCount >= 1) {
+                // Calculate exact minute when skill triggers
+                const requiredHelpCount = 1 / skillRatio;
+                const helpsSoFar = helpCount - helpsInThisEfficiency;
+                const additionalHelpsNeeded = requiredHelpCount - helpsSoFar;
+                const minutesNeeded = additionalHelpsNeeded * freq / 60;
+                return {
+                    minute: effectiveStart + minutesNeeded,
+                    count: 1,
+                };
+            }
+        }
+
+        // Skill didn't trigger
+        // return last active efficiency's end time and expected skill count (< 1)
+        const lastActive = activeEfficiencies[activeEfficiencies.length - 1];
+        return {
+            minute: lastActive.end,
+            count: skillCount,
+        };
+    }
+
     getEnergyRecoveryForCook(energy: number) {
         if (energy > 80) { return 1; }
         if (energy > 60) { return 2; }
