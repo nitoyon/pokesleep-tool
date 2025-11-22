@@ -1,6 +1,7 @@
 import { BonusEffects, emptyBonusEffects } from '../data/events';
 import { isExpertField } from '../data/fields';
 import { PokemonType } from '../data/pokemons';
+import { getSkillValue } from './MainSkill';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 import { ExpertEffects } from './PokemonStrength';
@@ -243,16 +244,23 @@ class Energy {
             ];
         }
         else {
+            // Calculate Charge Energy S amount
+            let chargedEnergy = 0;
+            const mainSkill = this._iv.pokemon.skill;
+            if (mainSkill.startsWith("Charge Energy S")) {
+                chargedEnergy = getSkillValue(mainSkill, this._iv.skillLevel) * recoveryFactor;
+            }
+
             events = this.createEvents(param.e4eCount, sleepTime);
 
             // 1st calculation to know the initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
-                sleepRecovery, bonus.energyFromDish);
+                sleepRecovery, chargedEnergy, bonus.energyFromDish);
             const initialEnergy = events[events.length - 1].energyAfter;
 
             // 2nd calculation using initialEnergy
             this.calculateEnergyForEvents(events, myRestoreEnergy, sleepRecovery,
-                initialEnergy, bonus.energyFromDish);
+                initialEnergy, chargedEnergy, bonus.energyFromDish);
             this.addEmptyEvent(events);
 
             // calculate efficiency
@@ -335,10 +343,12 @@ class Energy {
      * @param myRestoreEnergy The amount of energy to be restored by e4e.
      * @param sleepRecovery Energy recovery by sleep.
      * @param initialEnergy Energy value after waking up.
+     * @param chargedEnergy The amount of energy to be restored by Charge Energy S.
      * @param energyFromDishBonus: Energy recovery bonus by dish.
      */
     calculateEnergyForEvents(events: EnergyEvent[], myRestoreEnergy: number,
-        sleepRecovery: number, initialEnergy: number, energyFromDishBonus: number
+        sleepRecovery: number, initialEnergy: number, chargedEnergy: number,
+        energyFromDishBonus: number
     ) {
         events[0].energyAfter = initialEnergy;
         for (let i = 1; i < events.length; i++) {
@@ -354,6 +364,9 @@ class Energy {
             }
             else if (curEvent.type === 'e4e') {
                 curEvent.energyAfter = Math.min(150, curEvent.energyAfter + myRestoreEnergy);
+            }
+            else if (curEvent.type === 'chargeEnergy') {
+                curEvent.energyAfter = Math.min(150, curEvent.energyAfter + chargedEnergy);
             }
             else if (curEvent.type === 'wake') {
                 curEvent.energyAfter = Math.min(this._wakeMax, curEvent.energyAfter + sleepRecovery);

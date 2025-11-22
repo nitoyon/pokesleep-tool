@@ -598,4 +598,95 @@ describe('Energy', () => {
             expect(result.count).toBe(1);
         });
     });
+
+    describe('calculateEnergyForEvents', () => {
+        test('restores energy with chargeEnergy event', () => {
+            const iv = new PokemonIv('Rattata'); // Has Charge Energy S skill
+            iv.skillLevel = 1; // Skill level 1 = 12 energy
+            const energy = new Energy(iv);
+
+            // Create events with a chargeEnergy event
+            const events = [
+                { minutes: 0, type: 'wake' as const, energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
+                { minutes: 300, type: 'chargeEnergy' as const, energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
+            ];
+
+            // Calculate energy for events
+            energy.calculateEnergyForEvents(events, 0, 100, 100, 12, 0);
+
+            // After 300 minutes, energy should be 100 - 30 = 70
+            // After chargeEnergy, it should be 70 + 12 = 82
+            expect(events[1].energyBefore).toBe(70);
+            expect(events[1].energyAfter).toBe(82);
+        });
+
+        test('caps chargeEnergy restoration at 150', () => {
+            const iv = new PokemonIv('Rattata'); // Has Charge Energy S skill
+            iv.skillLevel = 6; // Skill level 6 = 43 energy
+            const energy = new Energy(iv);
+
+            // Create events with a chargeEnergy event
+            const events = [
+                { minutes: 0, type: 'wake' as const, energyBefore: 100, energyAfter: 140, isSnacking: false, isInPeriod: true },
+                { minutes: 10, type: 'chargeEnergy' as const, energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
+            ];
+
+            // chargedEnergy = getSkillValue("Charge Energy S", 6) * recoveryFactor
+            // = 43 * 1.0 = 43
+            const chargedEnergy = 43;
+
+            // Calculate energy for events
+            energy.calculateEnergyForEvents(events, 0, 100, 140, chargedEnergy, 0);
+
+            // After 10 minutes, energy should be 140 - 1 = 139
+            // After chargeEnergy, it should be min(150, 139 + 43) = 150
+            expect(events[1].energyBefore).toBe(139);
+            expect(events[1].energyAfter).toBe(150);
+        });
+
+        test('applies nature energy recovery factor to chargeEnergy', () => {
+            const iv = new PokemonIv('Rattata'); // Has Charge Energy S skill
+            iv.skillLevel = 3; // Skill level 3 = 21 energy
+            iv.nature = new Nature('Bold'); // Energy Recovery Up (1.2x)
+            const energy = new Energy(iv);
+
+            // Create events with a chargeEnergy event
+            const events = [
+                { minutes: 0, type: 'wake' as const, energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
+                { minutes: 200, type: 'chargeEnergy' as const, energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
+            ];
+
+            // chargedEnergy = getSkillValue("Charge Energy S", 3) * recoveryFactor
+            // = 21 * 1.2 = 25.2 -> ceil(25.2) = 26
+            const chargedEnergy = 21 * 1.2;
+
+            // Calculate energy for events
+            energy.calculateEnergyForEvents(events, 0, 100, 100, chargedEnergy, 0);
+
+            // After 200 minutes, energy should be 100 - 20 = 80
+            // After chargeEnergy, it should be ceil(80 + 25.2) = 106
+            expect(events[1].energyBefore).toBe(80);
+            expect(events[1].energyAfter).toBe(106);
+        });
+
+        test('chargeEnergy with zero energy', () => {
+            const iv = new PokemonIv('Rattata'); // Has Charge Energy S skill
+            iv.skillLevel = 2; // Skill level 2 = 16 energy
+            const energy = new Energy(iv);
+
+            // Create events with a chargeEnergy event when energy is 0
+            const events = [
+                { minutes: 0, type: 'wake' as const, energyBefore: 10, energyAfter: 10, isSnacking: false, isInPeriod: true },
+                { minutes: 100, type: 'chargeEnergy' as const, energyBefore: -1, energyAfter: -1, isSnacking: false, isInPeriod: true },
+            ];
+
+            // Calculate energy for events
+            energy.calculateEnergyForEvents(events, 0, 100, 10, 16, 0);
+
+            // After 100 minutes, energy should be 10 - 10 = 0
+            // After chargeEnergy, it should be 0 + 16 = 16
+            expect(events[1].energyBefore).toBe(0);
+            expect(events[1].energyAfter).toBe(16);
+        });
+    });
 });
