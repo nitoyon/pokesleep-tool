@@ -44,6 +44,7 @@ export class AmountOfSleep {
      * @returns Formatted string.
      */
     toString(t:typeof i18next.t): string {
-        return t('hhmm', {h: this.h, m: this.m});
+        const min = Math.round(this._minutes);
+        return t('hhmm', {h: Math.floor(min / 60), m: this.m % 60});
     }
 }
