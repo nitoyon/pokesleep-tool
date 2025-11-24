@@ -609,10 +609,10 @@ class PokemonStrength {
                 ingCount = Math.floor(ingCount * bonus.ingredientMagnet);
                 return {
                     skillValue,
-                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
                     skillValuePerTrigger,
                     skillValue2: ingCount * skillCount,
-                    skillStrength2: ingCount * ingredientStrength[this.iv.pokemon.ing1.name] * ingFactor * skillCount,
+                    skillStrength2: ingCount * ingredientStrength[this.iv.pokemon.ing1.name] * rawIngFactor * skillCount,
                     skillValuePerTrigger2: ingCount,
                 };
             }
@@ -632,7 +632,7 @@ class PokemonStrength {
             case "Ingredient Magnet S":
                 return {
                     skillValue,
-                    skillStrength: skillValue * averageIngredientStrength * ingFactor,
+                    skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
                     skillValuePerTrigger,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
