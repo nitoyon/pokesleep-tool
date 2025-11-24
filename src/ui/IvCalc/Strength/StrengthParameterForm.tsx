@@ -1,22 +1,21 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Button, Collapse, Dialog, DialogActions, DialogTitle, DialogContent,
-    FormControl, MenuItem,
-    Select, SelectChangeEvent, Snackbar, Switch, Typography,
+    MenuItem, Select, SelectChangeEvent, Snackbar, Switch,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import { IvAction } from '../IvState';
 import AreaControlGroup from './AreaControlGroup';
-import InfoButton from '../InfoButton';
 import PeriodSelect from './PeriodSelect';
 import EventConfigDialog from './EventConfigDialog';
 import FixedLevelSelect from './FixedLevelSelect';
+import RecipeDialog from './RecipeDialog';
 import { LevelInput } from '../IvForm/LevelControl';
 import { getActiveHelpBonus } from '../../../data/events';
 import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
 } from '../../../util/PokemonStrength';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const StyledSettingForm = styled('div')({
     padding: '0 1rem',
@@ -58,15 +57,15 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
-    const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
+    const [recipeDialogOpen, setRecipeDialogOpen] = React.useState(false);
     const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
     const [initializeConfirmOpen, setInitializeConfirmOpen] = React.useState(false);
 
     const onRecipeBonusInfoClick = React.useCallback(() => {
-        setRecipeBonusHelpOpen(true);
+        setRecipeDialogOpen(true);
     }, []);
     const onRecipeBonusHelpClose = React.useCallback(() => {
-        setRecipeBonusHelpOpen(false);
+        setRecipeDialogOpen(false);
     }, []);
 
     const onChange = React.useCallback((value: StrengthParameter) => {
@@ -106,12 +105,6 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onEditEnergyClick = React.useCallback(() => {
         dispatch({type: 'openEnergyDialog'});
     }, [dispatch]);
-    const onRecipeBonusChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, recipeBonus: parseInt(e.target.value)});
-    }, [onChange, value]);
-    const onRecipeLevelChange = React.useCallback((recipeLevel: number) => {
-        onChange({...value, recipeLevel});
-    }, [onChange, value]);
     const onInitializeClick = React.useCallback(() => {
         setInitializeConfirmOpen(true);
     }, []);
@@ -203,60 +196,19 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             </section>
         </Collapse>
         <section className="mt">
-            <label>{t('recipe bonus')}:<InfoButton onClick={onRecipeBonusInfoClick}/></label>
-            <FormControl size="small">
-            <Select variant="standard" value={value.recipeBonus.toString()}
-                onChange={onRecipeBonusChange}>
-                <MenuItem value={0}>0% <small style={{paddingLeft: '0.3rem'}}>({t('mixed recipe')})</small></MenuItem>
-                <MenuItem value={19}>19% <small style={{paddingLeft: '0.3rem'}}>(7{t('range separator')}16 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={20}>20% <small style={{paddingLeft: '0.3rem'}}>(20{t('range separator')}22 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={21}>21% <small style={{paddingLeft: '0.3rem'}}>(23{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={25}>25% <small style={{paddingLeft: '0.3rem'}}>(17{t('range separator')}35 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={35}>35% <small style={{paddingLeft: '0.3rem'}}>(35{t('range separator')}56 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={48}>48% <small style={{paddingLeft: '0.3rem'}}>(49{t('range separator')}77 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={61}>61% <small style={{paddingLeft: '0.3rem'}}>(78{t('range separator')}102 {t('ingredients unit')})</small></MenuItem>
-                <MenuItem value={78}>78% <small style={{paddingLeft: '0.3rem'}}>(103{t('range separator')}115 {t('ingredients unit')})</small></MenuItem>
-            </Select></FormControl>
-        </section>
-        <section>
-            <label>{t('average recipe level')}:</label>
-            <LevelInput value={value.recipeLevel}
-                onChange={onRecipeLevelChange}
-                showSlider sx={{width: '2rem'}}/>
+            <label>{t('recipe bonus')}:</label>
+            <Button onClick={onRecipeBonusInfoClick}>{t('edit')}</Button>
         </section>
         <section className="mt">
             <Button onClick={onInitializeClick} variant="outlined">{t('initialize all parameters')}</Button>
         </section>
         <InitializeConfirmDialog open={initializeConfirmOpen} onClose={onInitializeConfirmClose}
             dispatch={dispatch}/>
-        <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
         <EventConfigDialog open={eventDetailOpen} onClose={onEventDetailClose}
             value={value} onChange={onChange}/>
+        <RecipeDialog open={recipeDialogOpen} onClose={onRecipeBonusHelpClose}
+            parameter={value} dispatch={dispatch}/>
     </StyledSettingForm>;
-});
-
-const RecipeBonusHelpDialog = React.memo(({open, onClose}: {
-    open: boolean,
-    onClose: () => void,
-}) => {
-    const { t } = useTranslation();
-
-    return <Dialog open={open} onClose={onClose}>
-        <DialogContent>
-            <Typography sx={{
-                marginBottom: "16px"
-            }}>
-                <Trans i18nKey="recipe bonus help"
-                    components={{
-                        raenonx: <a href={t('recipe bonus list')}>raenonx</a>,
-                    }}/>
-            </Typography>
-            <Typography variant="body2">{t('recipe strength help')}</Typography>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </Dialog>;
 });
 
 const InitializeConfirmDialog = React.memo(({ dispatch, open, onClose }: {
