@@ -1,0 +1,805 @@
+[
+    {
+        "type": "curries",
+        "name": "fancy",
+        "ings": [
+            {"ing": "apple", "count": 7}
+        ],
+        "total": 7,
+        "strength": 748
+    },
+    {
+        "type": "curries",
+        "name": "grilled",
+        "ings": [
+            {"ing": "tail", "count": 8},
+            {"ing": "herb", "count": 25}
+        ],
+        "total": 33,
+        "strength": 7483
+    },
+    {
+        "type": "curries",
+        "name": "solar",
+        "ings": [
+            {"ing": "tomato", "count": 10},
+            {"ing": "herb", "count": 5}
+        ],
+        "total": 15,
+        "strength": 2078
+    },
+    {
+        "type": "curries",
+        "name": "dream",
+        "ings": [
+            {"ing": "potato", "count": 18},
+            {"ing": "tomato", "count": 15},
+            {"ing": "cacao", "count": 12},
+            {"ing": "milk", "count": 10}
+        ],
+        "total": 55,
+        "strength": 9010
+    },
+    {
+        "type": "curries",
+        "name": "spicy",
+        "ings": [
+            {"ing": "leek", "count": 14},
+            {"ing": "ginger", "count": 10},
+            {"ing": "herb", "count": 8}
+        ],
+        "total": 32,
+        "strength": 5900
+    },
+    {
+        "type": "curries",
+        "name": "spore",
+        "ings": [
+            {"ing": "mushroom", "count": 14},
+            {"ing": "potato", "count": 9}
+        ],
+        "total": 23,
+        "strength": 4162
+    },
+    {
+        "type": "curries",
+        "name": "egg",
+        "ings": [
+            {"ing": "honey", "count": 12},
+            {"ing": "apple", "count": 11},
+            {"ing": "egg", "count": 8},
+            {"ing": "potato", "count": 4}
+        ],
+        "total": 35,
+        "strength": 4523
+    },
+    {
+        "type": "curries",
+        "name": "hearty",
+        "ings": [
+            {"ing": "milk", "count": 8},
+            {"ing": "sausage", "count": 8}
+        ],
+        "total": 16,
+        "strength": 1910
+    },
+    {
+        "type": "curries",
+        "name": "soft",
+        "ings": [
+            {"ing": "milk", "count": 10},
+            {"ing": "potato", "count": 8},
+            {"ing": "mushroom", "count": 4}
+        ],
+        "total": 22,
+        "strength": 3181
+    },
+    {
+        "type": "curries",
+        "name": "simple",
+        "ings": [
+            {"ing": "milk", "count": 7}
+        ],
+        "total": 7,
+        "strength": 814
+    },
+    {
+        "type": "curries",
+        "name": "beanburger",
+        "ings": [
+            {"ing": "sausage", "count": 7}
+        ],
+        "total": 7,
+        "strength": 856
+    },
+    {
+        "type": "curries",
+        "name": "mild",
+        "ings": [
+            {"ing": "honey", "count": 7}
+        ],
+        "total": 7,
+        "strength": 839
+    },
+    {
+        "type": "curries",
+        "name": "ninja",
+        "ings": [
+            {"ing": "soy", "count": 24},
+            {"ing": "sausage", "count": 9},
+            {"ing": "leek", "count": 12},
+            {"ing": "mushroom", "count": 5}
+        ],
+        "total": 50,
+        "strength": 9445
+    },
+    {
+        "type": "curries",
+        "name": "drought",
+        "ings": [
+            {"ing": "sausage", "count": 10},
+            {"ing": "oil", "count": 5}
+        ],
+        "total": 15,
+        "strength": 1942
+    },
+    {
+        "type": "curries",
+        "name": "melty",
+        "ings": [
+            {"ing": "egg", "count": 10},
+            {"ing": "tomato", "count": 6}
+        ],
+        "total": 16,
+        "strength": 2150
+    },
+    {
+        "type": "curries",
+        "name": "bulk",
+        "ings": [
+            {"ing": "soy", "count": 12},
+            {"ing": "sausage", "count": 6},
+            {"ing": "herb", "count": 4},
+            {"ing": "egg", "count": 4}
+        ],
+        "total": 26,
+        "strength": 3372
+    },
+    {
+        "type": "curries",
+        "name": "limber",
+        "ings": [
+            {"ing": "corn", "count": 14},
+            {"ing": "milk", "count": 8},
+            {"ing": "potato", "count": 8}
+        ],
+        "total": 30,
+        "strength": 4670
+    },
+    {
+        "type": "curries",
+        "name": "inferno",
+        "ings": [
+            {"ing": "herb", "count": 27},
+            {"ing": "sausage", "count": 24},
+            {"ing": "corn", "count": 14},
+            {"ing": "ginger", "count": 12}
+        ],
+        "total": 77,
+        "strength": 13690
+    },
+    {
+        "type": "curries",
+        "name": "dizzy",
+        "ings": [
+            {"ing": "coffee", "count": 11},
+            {"ing": "herb", "count": 11},
+            {"ing": "honey", "count": 11}
+        ],
+        "total": 33,
+        "strength": 5702
+    },
+    {
+        "type": "curries",
+        "name": "hidden",
+        "ings": [
+            {"ing": "soy", "count": 28},
+            {"ing": "tomato", "count": 25},
+            {"ing": "mushroom", "count": 23},
+            {"ing": "coffee", "count": 16}
+        ],
+        "total": 92,
+        "strength": 19061
+    },
+    {
+        "type": "curries",
+        "name": "cut",
+        "ings": [
+            {"ing": "leek", "count": 27},
+            {"ing": "sausage", "count": 26},
+            {"ing": "honey", "count": 26},
+            {"ing": "egg", "count": 22}
+        ],
+        "total": 101,
+        "strength": 20655
+    },
+    {
+        "type": "curries",
+        "name": "role",
+        "ings": [
+            {"ing": "pumpkin", "count": 10},
+            {"ing": "sausage", "count": 16},
+            {"ing": "potato", "count": 18},
+            {"ing": "mushroom", "count": 25}
+        ],
+        "total": 69,
+        "strength": 15621
+    },
+    {
+        "type": "curries",
+        "name": "overgrow",
+        "ings": [
+            {"ing": "avocado", "count": 22},
+            {"ing": "potato", "count": 20},
+            {"ing": "milk", "count": 41},
+            {"ing": "oil", "count": 32}
+        ],
+        "total": 115,
+        "strength": 24802
+    },
+
+    {
+        "type": "salads",
+        "name": "slowpoke",
+        "ings": [
+            {"ing": "tail", "count": 10},
+            {"ing": "herb", "count": 10},
+            {"ing": "oil", "count": 15}
+        ],
+        "total": 35,
+        "strength": 8169
+    },
+    {
+        "type": "salads",
+        "name": "spore",
+        "ings": [
+            {"ing": "mushroom", "count": 17},
+            {"ing": "tomato", "count": 8},
+            {"ing": "oil", "count": 8}
+        ],
+        "total": 33,
+        "strength": 5859
+    },
+    {
+        "type": "salads",
+        "name": "snow",
+        "ings": [
+            {"ing": "milk", "count": 10},
+            {"ing": "sausage", "count": 6}
+        ],
+        "total": 16,
+        "strength": 1898
+    },
+    {
+        "type": "salads",
+        "name": "gluttony",
+        "ings": [
+            {"ing": "potato", "count": 14},
+            {"ing": "egg", "count": 9},
+            {"ing": "sausage", "count": 7},
+            {"ing": "apple", "count": 6}
+        ],
+        "total": 36,
+        "strength": 5040
+    },
+    {
+        "type": "salads",
+        "name": "water",
+        "ings": [
+            {"ing": "soy", "count": 15},
+            {"ing": "tomato", "count": 9}
+        ],
+        "total": 24,
+        "strength": 3113
+    },
+    {
+        "type": "salads",
+        "name": "superpower",
+        "ings": [
+            {"ing": "sausage", "count": 9},
+            {"ing": "ginger", "count": 6},
+            {"ing": "egg", "count": 5},
+            {"ing": "potato", "count": 3}
+        ],
+        "total": 23,
+        "strength": 3046
+    },
+    {
+        "type": "salads",
+        "name": "bean",
+        "ings": [
+            {"ing": "sausage", "count": 8}
+        ],
+        "total": 8,
+        "strength": 978
+    },
+    {
+        "type": "salads",
+        "name": "snoozy",
+        "ings": [
+            {"ing": "tomato", "count": 8}
+        ],
+        "total": 8,
+        "strength": 1045
+    },
+    {
+        "type": "salads",
+        "name": "moomoo",
+        "ings": [
+            {"ing": "milk", "count": 12},
+            {"ing": "tomato", "count": 6},
+            {"ing": "oil", "count": 5}
+        ],
+        "total": 23,
+        "strength": 2942
+    },
+    {
+        "type": "salads",
+        "name": "contrary",
+        "ings": [
+            {"ing": "cacao", "count": 14},
+            {"ing": "sausage", "count": 9}
+        ],
+        "total": 23,
+        "strength": 3665
+    },
+    {
+        "type": "salads",
+        "name": "overheat",
+        "ings": [
+            {"ing": "herb", "count": 17},
+            {"ing": "ginger", "count": 10},
+            {"ing": "tomato", "count": 8}
+        ],
+        "total": 35,
+        "strength": 5225
+    },
+    {
+        "type": "salads",
+        "name": "fancy",
+        "ings": [
+            {"ing": "apple", "count": 8}
+        ],
+        "total": 8,
+        "strength": 855
+    },
+    {
+        "type": "salads",
+        "name": "immunity",
+        "ings": [
+            {"ing": "leek", "count": 10},
+            {"ing": "ginger", "count": 5}
+        ],
+        "total": 15,
+        "strength": 2845
+    },
+    {
+        "type": "salads",
+        "name": "dazzling",
+        "ings": [
+            {"ing": "apple", "count": 15},
+            {"ing": "milk", "count": 5},
+            {"ing": "oil", "count": 3}
+        ],
+        "total": 23,
+        "strength": 2655
+    },
+    {
+        "type": "salads",
+        "name": "ninja",
+        "ings": [
+            {"ing": "leek", "count": 15},
+            {"ing": "soy", "count": 19},
+            {"ing": "mushroom", "count": 12},
+            {"ing": "ginger", "count": 11}
+        ],
+        "total": 57,
+        "strength": 11659
+    },
+    {
+        "type": "salads",
+        "name": "heat",
+        "ings": [
+            {"ing": "soy", "count": 10},
+            {"ing": "herb", "count": 6}
+        ],
+        "total": 16,
+        "strength": 2114
+    },
+    {
+        "type": "salads",
+        "name": "greengrass",
+        "ings": [
+            {"ing": "oil", "count": 22},
+            {"ing": "corn", "count": 17},
+            {"ing": "tomato", "count": 14},
+            {"ing": "potato", "count": 9}
+        ],
+        "total": 62,
+        "strength": 11393
+    },
+    {
+        "type": "salads",
+        "name": "calm",
+        "ings": [
+            {"ing": "apple", "count": 21},
+            {"ing": "honey", "count": 16},
+            {"ing": "corn", "count": 12}
+        ],
+        "total": 49,
+        "strength": 7675
+    },
+    {
+        "type": "salads",
+        "name": "fury",
+        "ings": [
+            {"ing": "corn", "count": 9},
+            {"ing": "oil", "count": 8}
+        ],
+        "total": 17,
+        "strength": 2785
+    },
+    {
+        "type": "salads",
+        "name": "cross",
+        "ings": [
+            {"ing": "egg", "count": 20},
+            {"ing": "sausage", "count": 15},
+            {"ing": "corn", "count": 11},
+            {"ing": "tomato", "count": 10}
+        ],
+        "total": 56,
+        "strength": 8755
+    },
+    {
+        "type": "salads",
+        "name": "defiant",
+        "ings": [
+            {"ing": "coffee", "count": 28},
+            {"ing": "sausage", "count": 28},
+            {"ing": "oil", "count": 22},
+            {"ing": "potato", "count": 22}
+        ],
+        "total": 100,
+        "strength": 20218
+    },
+    {
+        "type": "salads",
+        "name": "petal",
+        "ings": [
+            {"ing": "egg", "count": 25},
+            {"ing": "oil", "count": 17},
+            {"ing": "potato", "count": 15},
+            {"ing": "sausage", "count": 12}
+        ],
+        "total": 69,
+        "strength": 11811
+    },
+    {
+        "type": "salads",
+        "name": "apple",
+        "ings": [
+            {"ing": "egg", "count": 35},
+            {"ing": "apple", "count": 28},
+            {"ing": "tomato", "count": 23},
+            {"ing": "milk", "count": 18}
+        ],
+        "total": 104,
+        "strength": 19293
+    },
+    {
+        "type": "salads",
+        "name": "luscious",
+        "ings": [
+            {"ing": "avocado", "count": 14},
+            {"ing": "soy", "count": 18},
+            {"ing": "oil", "count": 10}
+        ],
+        "total": 42,
+        "strength": 7125
+    },
+    {
+        "type": "salads",
+        "name": "bulldoze",
+        "ings": [
+            {"ing": "avocado", "count": 28},
+            {"ing": "corn", "count": 25},
+            {"ing": "herb", "count": 30},
+            {"ing": "soy", "count": 22}
+        ],
+        "total": 105,
+        "strength": 25162
+    },
+
+    {
+        "type": "desserts",
+        "name": "fluffy",
+        "ings": [
+            {"ing": "potato", "count": 9},
+            {"ing": "milk", "count": 5}
+        ],
+        "total": 14,
+        "strength": 1907
+    },
+    {
+        "type": "desserts",
+        "name": "steadfast",
+        "ings": [
+            {"ing": "honey", "count": 14},
+            {"ing": "ginger", "count": 12},
+            {"ing": "cacao", "count": 5},
+            {"ing": "egg", "count": 4}
+        ],
+        "total": 35,
+        "strength": 4921
+    },
+    {
+        "type": "desserts",
+        "name": "fancy",
+        "ings": [
+            {"ing": "apple", "count": 8}
+        ],
+        "total": 8,
+        "strength": 855
+    },
+    {
+        "type": "desserts",
+        "name": "craft",
+        "ings": [
+            {"ing": "honey", "count": 9}
+        ],
+        "total": 9,
+        "strength": 1079
+    },
+    {
+        "type": "desserts",
+        "name": "ember",
+        "ings": [
+            {"ing": "ginger", "count": 9},
+            {"ing": "apple", "count": 7}
+        ],
+        "total": 16,
+        "strength": 1913
+    },
+    {
+        "type": "desserts",
+        "name": "jigglypuff",
+        "ings": [
+            {"ing": "honey", "count": 20},
+            {"ing": "egg", "count": 15},
+            {"ing": "milk", "count": 10},
+            {"ing": "apple", "count": 10}
+        ],
+        "total": 55,
+        "strength": 7594
+    },
+    {
+        "type": "desserts",
+        "name": "lovely",
+        "ings": [
+            {"ing": "apple", "count": 11},
+            {"ing": "milk", "count": 9},
+            {"ing": "honey", "count": 7},
+            {"ing": "cacao", "count": 8}
+        ],
+        "total": 35,
+        "strength": 4734
+    },
+    {
+        "type": "desserts",
+        "name": "lucky",
+        "ings": [
+            {"ing": "apple", "count": 12},
+            {"ing": "milk", "count": 4}
+        ],
+        "total": 16,
+        "strength": 1748
+    },
+    {
+        "type": "desserts",
+        "name": "neroli",
+        "ings": [
+            {"ing": "ginger", "count": 11},
+            {"ing": "apple", "count": 15},
+            {"ing": "mushroom", "count": 9}
+        ],
+        "total": 35,
+        "strength": 5065
+    },
+    {
+        "type": "desserts",
+        "name": "sweet",
+        "ings": [
+            {"ing": "honey", "count": 9},
+            {"ing": "cacao", "count": 8},
+            {"ing": "milk", "count": 7}
+        ],
+        "total": 24,
+        "strength": 3378
+    },
+    {
+        "type": "desserts",
+        "name": "warm",
+        "ings": [
+            {"ing": "milk", "count": 7}
+        ],
+        "total": 7,
+        "strength": 814
+    },
+    {
+        "type": "desserts",
+        "name": "cloud",
+        "ings": [
+            {"ing": "egg", "count": 8},
+            {"ing": "soy", "count": 7}
+        ],
+        "total": 15,
+        "strength": 1924
+    },
+    {
+        "type": "desserts",
+        "name": "hustle",
+        "ings": [
+            {"ing": "soy", "count": 15},
+            {"ing": "cacao", "count": 8}
+        ],
+        "total": 23,
+        "strength": 3263
+    },
+    {
+        "type": "desserts",
+        "name": "stalwart",
+        "ings": [
+            {"ing": "tomato", "count": 9},
+            {"ing": "apple", "count": 7}
+        ],
+        "total": 16,
+        "strength": 1924
+    },
+    {
+        "type": "desserts",
+        "name": "big",
+        "ings": [
+            {"ing": "oil", "count": 10},
+            {"ing": "milk", "count": 7},
+            {"ing": "honey", "count": 6}
+        ],
+        "total": 23,
+        "strength": 3015
+    },
+    {
+        "type": "desserts",
+        "name": "huge",
+        "ings": [
+            {"ing": "oil", "count": 12},
+            {"ing": "soy", "count": 16},
+            {"ing": "cacao", "count": 7}
+        ],
+        "total": 35,
+        "strength": 5547
+    },
+    {
+        "type": "desserts",
+        "name": "explosion",
+        "ings": [
+            {"ing": "corn", "count": 15},
+            {"ing": "oil", "count": 14},
+            {"ing": "milk", "count": 7}
+        ],
+        "total": 36,
+        "strength": 6048
+    },
+    {
+        "type": "desserts",
+        "name": "teatime",
+        "ings": [
+            {"ing": "apple", "count": 20},
+            {"ing": "ginger", "count": 20},
+            {"ing": "corn", "count": 18},
+            {"ing": "milk", "count": 9}
+        ],
+        "total": 67,
+        "strength": 10925
+    },
+    {
+        "type": "desserts",
+        "name": "petal",
+        "ings": [
+            {"ing": "cacao", "count": 11},
+            {"ing": "apple", "count": 11}
+        ],
+        "total": 22,
+        "strength": 3314
+    },
+    {
+        "type": "desserts",
+        "name": "flower",
+        "ings": [
+            {"ing": "cacao", "count": 25},
+            {"ing": "egg", "count": 25},
+            {"ing": "honey", "count": 17},
+            {"ing": "milk", "count": 10}
+        ],
+        "total": 77,
+        "strength": 13834
+    },
+    {
+        "type": "desserts",
+        "name": "early",
+        "ings": [
+            {"ing": "coffee", "count": 16},
+            {"ing": "milk", "count": 14},
+            {"ing": "honey", "count": 12}
+        ],
+        "total": 42,
+        "strength": 6793
+    },
+    {
+        "type": "desserts",
+        "name": "zing",
+        "ings": [
+            {"ing": "apple", "count": 35},
+            {"ing": "ginger", "count": 20},
+            {"ing": "leek", "count": 20},
+            {"ing": "coffee", "count": 12}
+        ],
+        "total": 87,
+        "strength": 17494
+    },
+    {
+        "type": "desserts",
+        "name": "mold",
+        "ings": [
+            {"ing": "coffee", "count": 14},
+            {"ing": "corn", "count": 14},
+            {"ing": "milk", "count": 12}
+        ],
+        "total": 40,
+        "strength": 7125
+    },
+    {
+        "type": "desserts",
+        "name": "clodsire",
+        "ings": [
+            {"ing": "cacao", "count": 30},
+            {"ing": "milk", "count": 26},
+            {"ing": "coffee", "count": 24},
+            {"ing": "honey", "count": 22}
+        ],
+        "total": 102,
+        "strength": 20885
+    },
+    {
+        "type": "desserts",
+        "name": "scary",
+        "ings": [
+            {"ing": "pumpkin", "count": 18},
+            {"ing": "egg", "count": 24},
+            {"ing": "honey", "count": 32},
+            {"ing": "tomato", "count": 29}
+        ],
+        "total": 103,
+        "strength": 24354
+    },
+    {
+        "type": "desserts",
+        "name": "leaf",
+        "ings": [
+            {"ing": "avocado", "count": 18},
+            {"ing": "tomato", "count": 16},
+            {"ing": "milk", "count": 14}
+        ],
+        "total": 48,
+        "strength": 8165
+    }
+]
