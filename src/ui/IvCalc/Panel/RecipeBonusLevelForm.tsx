@@ -1,9 +1,11 @@
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import {
 	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	FormControl,
+	IconButton,
 	MenuItem,
 	Select,
 	type SelectChangeEvent,
@@ -12,6 +14,7 @@ import {
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
+import RecipeDialog from "../Dialog/RecipeDialog";
 import InfoButton from "../InfoButton";
 import { LevelInput } from "../IvForm/LevelControl";
 
@@ -31,6 +34,13 @@ const RecipeBonusLevelForm = React.memo(
 		}, []);
 		const onRecipeBonusHelpClose = React.useCallback(() => {
 			setRecipeBonusHelpOpen(false);
+		}, []);
+		const [recipeDialogOpen, setRecipeDialogOpen] = React.useState(false);
+		const onRecipeDialogOpen = React.useCallback(() => {
+			setRecipeDialogOpen(true);
+		}, []);
+		const onRecipeDialogClose = React.useCallback(() => {
+			setRecipeDialogOpen(false);
 		}, []);
 		const onRecipeBonusChange = React.useCallback(
 			(e: SelectChangeEvent) => {
@@ -113,6 +123,9 @@ const RecipeBonusLevelForm = React.memo(
 							</MenuItem>
 						</Select>
 					</FormControl>
+					<IconButton size="small" onClick={onRecipeDialogOpen}>
+						<MenuBookOutlinedIcon fontSize="small" />
+					</IconButton>
 				</section>
 				<section>
 					<span className="lbl">{t("average recipe level")}:</span>
@@ -126,6 +139,12 @@ const RecipeBonusLevelForm = React.memo(
 				<RecipeBonusHelpDialog
 					open={recipeBonusHelpOpen}
 					onClose={onRecipeBonusHelpClose}
+				/>
+				<RecipeDialog
+					open={recipeDialogOpen}
+					value={value}
+					onChange={onChange}
+					onClose={onRecipeDialogClose}
 				/>
 			</>
 		);
