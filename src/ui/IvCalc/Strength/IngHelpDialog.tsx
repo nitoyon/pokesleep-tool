@@ -7,17 +7,17 @@ import PokemonStrength, { IngredientStrength, StrengthResult,
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { ingredientStrength } from '../../../util/PokemonRp';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle,
-    FormControl, Select, SelectChangeEvent, Typography,
+    FormControl, Select, SelectChangeEvent,
     MenuItem } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import InfoButton from '../InfoButton';
 import { IvAction } from '../IvState';
 import IngredientIcon from '../IngredientIcon';
 import IngredientCountIcon from '../IngredientCountIcon';
-import { LevelInput } from '../IvForm/LevelControl';
+import RecipeDialog from './RecipeDialog';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
-import { useTranslation, Trans } from 'react-i18next';
-import i18next from 'i18next'
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     open: boolean,
@@ -27,7 +27,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
-    const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
+    const [recipeDialogOpen, setRecipeBonusHelpOpen] = React.useState(false);
     const onChange = React.useCallback((value: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: {parameter: value}});
     }, [dispatch]);
@@ -168,7 +168,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
-        <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
+        <RecipeDialog open={recipeDialogOpen} onClose={onRecipeBonusHelpClose}/>
     </StyledInfoDialog>;
 });
 
@@ -220,29 +220,5 @@ function getIngDetail(strength: PokemonStrength, result: StrengthResult,
         </div>
     </>;
 }
-
-const RecipeBonusHelpDialog = React.memo(({open, onClose}: {
-    open: boolean,
-    onClose: () => void,
-}) => {
-    const { t } = useTranslation();
-
-    return <Dialog open={open} onClose={onClose}>
-        <DialogContent>
-            <Typography sx={{
-                marginBottom: "16px"
-            }}>
-                <Trans i18nKey="recipe bonus help"
-                    components={{
-                        raenonx: <a href={t('recipe bonus list')}>raenonx</a>,
-                    }}/>
-            </Typography>
-            <Typography variant="body2">{t('recipe strength help')}</Typography>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </Dialog>;
-});
 
 export default IngHelpDialog;
