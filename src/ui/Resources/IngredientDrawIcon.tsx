@@ -31,7 +31,7 @@ import { OilIconPaths } from './OilIcon';
 const IngredientDrawIcon = React.memo((props: SvgIconProps) => {
     return (
         <SvgIcon {...props} viewBox="0 0 200 200">
-            <g transform="translate(48,0) scale(0.11)">
+            <g transform="translate(48,0) scale(2)">
                 <AvocadoIconPaths />
             </g>
             <g transform="translate(0, 108) scale(0.5)">
