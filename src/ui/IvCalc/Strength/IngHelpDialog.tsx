@@ -4,11 +4,8 @@ import { round1, round2, formatNice, formatWithComma } from '../../../util/Numbe
 import PokemonStrength, { IngredientStrength, StrengthResult,
     recipeLevelBonus
 } from '../../../util/PokemonStrength';
-import { StrengthParameter } from '../../../util/PokemonStrength';
 import { ingredientStrength } from '../../../util/PokemonRp';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle,
-    FormControl, Select, SelectChangeEvent,
-    MenuItem } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import InfoButton from '../InfoButton';
 import { IvAction } from '../IvState';
@@ -28,15 +25,6 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
 }) => {
     const { t } = useTranslation();
     const [recipeDialogOpen, setRecipeBonusHelpOpen] = React.useState(false);
-    const onChange = React.useCallback((value: StrengthParameter) => {
-        dispatch({type: "changeParameter", payload: {parameter: value}});
-    }, [dispatch]);
-    const onRecipeBonusChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...strength.parameter, recipeBonus: parseInt(e.target.value)});
-    }, [onChange, strength.parameter]);
-    const onRecipeLevelChange = React.useCallback((recipeLevel: number) => {
-        onChange({...strength.parameter, recipeLevel});
-    }, [onChange, strength.parameter]);
     const onRecipeBonusInfoClick = React.useCallback(() => {
         setRecipeBonusHelpOpen(true);
     }, []);
@@ -142,33 +130,12 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                     <span>{t('event bonus')}</span>
                 </>}
             </article>
-            <section style={{marginTop: '1.8rem'}}>
-                <label>{t('recipe bonus')}:</label>
-                <FormControl size="small">
-                <Select variant="standard" value={strength.parameter.recipeBonus.toString()}
-                    onChange={onRecipeBonusChange}>
-                    <MenuItem value={0}>0% <small style={{paddingLeft: '0.3rem'}}>({t('mixed recipe')})</small></MenuItem>
-                    <MenuItem value={19}>19% <small style={{paddingLeft: '0.3rem'}}>(7{t('range separator')}16 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={20}>20% <small style={{paddingLeft: '0.3rem'}}>(20{t('range separator')}22 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={21}>21% <small style={{paddingLeft: '0.3rem'}}>(23{t('range separator')}26 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={25}>25% <small style={{paddingLeft: '0.3rem'}}>(17{t('range separator')}35 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={35}>35% <small style={{paddingLeft: '0.3rem'}}>(35{t('range separator')}56 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={48}>48% <small style={{paddingLeft: '0.3rem'}}>(49{t('range separator')}77 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={61}>61% <small style={{paddingLeft: '0.3rem'}}>(78{t('range separator')}102 {t('ingredients unit')})</small></MenuItem>
-                    <MenuItem value={78}>78% <small style={{paddingLeft: '0.3rem'}}>(103{t('range separator')}115 {t('ingredients unit')})</small></MenuItem>
-                </Select></FormControl>
-            </section>
-            <section>
-                <label>{t('average recipe level')}:</label>
-                <LevelInput value={strength.parameter.recipeLevel}
-                    onChange={onRecipeLevelChange}
-                    showSlider sx={{width: '2rem'}}/>
-            </section>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
-        <RecipeDialog open={recipeDialogOpen} onClose={onRecipeBonusHelpClose}/>
+        <RecipeDialog open={recipeDialogOpen} parameter={strength.parameter}
+            dispatch={dispatch} onClose={onRecipeBonusHelpClose}/>
     </StyledInfoDialog>;
 });
 
