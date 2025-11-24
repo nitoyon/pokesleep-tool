@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, Typography,
+import { styled } from '@mui/system';
+import { Button, Dialog, DialogActions, DialogContent,
     FormControl, Select, SelectChangeEvent, MenuItem } from '@mui/material';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import IngredientIcon from '../IngredientIcon';
 import { StrengthParameter } from '../../../util/PokemonStrength';
+import recipes, { Recipe } from '../../../data/recipes';
 import { IvAction } from '../IvState';
 
 const RecipeDialog = React.memo(({open, parameter, dispatch, onClose}: {
@@ -25,8 +28,13 @@ const RecipeDialog = React.memo(({open, parameter, dispatch, onClose}: {
         onChange({...parameter, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
     }, [onChange, parameter]);
 
+    const buttons = recipes.map(x => <RecipeButton key={x.key} recipe={x}/>);
+
     return <Dialog open={open} onClose={onClose}>
         <DialogContent>
+            <article>
+                {buttons}
+            </article>
             <section style={{marginBottom: '1rem'}}>
                 <label>{t('recipe bonus')}:</label>
                 <FormControl size="small">
@@ -58,20 +66,59 @@ const RecipeDialog = React.memo(({open, parameter, dispatch, onClose}: {
                     <MenuItem value={65}>65</MenuItem>
                 </Select>
             </section>
-            <Typography variant="body2" sx={{
-                marginBottom: "16px"
-            }}>
-                <Trans i18nKey="recipe bonus help"
-                    components={{
-                        raenonx: <a href={t('recipe bonus list')}>raenonx</a>,
-                    }}/>
-            </Typography>
-            <Typography variant="body2">{t('recipe strength help')}</Typography>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
     </Dialog>;
+});
+
+const RecipeButton = React.memo(({recipe}: {
+    recipe: Recipe,
+}) => {
+    const { t } = useTranslation();
+    const name = t(`recipe.${recipe.key}`);
+
+    const counts = React.useMemo(() => recipe.ings
+        .map(ing => <React.Fragment key={ing.ing}>
+            <IngredientIcon name={ing.ing}/>
+            {ing.count}
+        </React.Fragment>)
+    , [recipe]);
+
+    return <StyledRecipeButton>
+        <h2>{name}</h2>
+        <footer>{counts}</footer>
+    </StyledRecipeButton>;
+});
+
+const StyledRecipeButton = styled(Button)({
+    display: 'block',
+    margin: '0 0 8px 0',
+    padding: '0.2rem 0.4rem',
+    border: '1px solid #fec34e',
+    borderRadius: 8,
+    width: '100%',
+    textAlign: 'left',
+    color: '#000',
+    '& > h2': {
+        fontSize: '0.8rem',
+        fontWeight: 400,
+        margin: 0,
+    },
+    '& > footer': {
+        display: 'flex',
+        alignItems: 'center',
+        '& > svg': {
+            width: '0.7rem',
+            height: '0.7rem',
+            padding: '0 0.2rem 0 0.5rem',
+            '&:first-of-type': {
+                paddingLeft: 0,
+            },
+        },
+        fontSize: '0.7rem',
+    },
 });
 
 export default RecipeDialog;
