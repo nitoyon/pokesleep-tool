@@ -617,6 +617,19 @@ class PokemonStrength {
                 };
             }
 
+            case "Ingredient Magnet S (Present)": {
+                let candyCount = getSkillSubValue(mainSkill, skillLevel);
+                candyCount = Math.floor(candyCount * bonus.ingredientMagnet);
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+                    skillValuePerTrigger,
+                    skillValue2: candyCount * skillCount,
+                    skillStrength2: 0,
+                    skillValuePerTrigger2: candyCount,
+                };
+            }
+
             case "Cooking Power-Up S (Minus)": {
                 const energy = getSkillSubValue(mainSkill, skillLevel);
                 return {

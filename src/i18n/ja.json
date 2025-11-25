@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "v3.1.0": {
+                    "headline": "v3.1.0 での新スキル「$t(skills.Ingredient Magnet S (Present))」に対応しました。",
+                    "detail": "$t(rp collection)"
+                },
                 "add amber pokemons": {
                     "headline": "$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)たちのデータを追加しました。",
                     "detail": "$t(rp collection)"
@@ -577,6 +581,7 @@
         "strength skill info": {
             "Ingredient Magnet S": "スキルによる食材は、余剰食材として利用されるものと仮定して計算しています。",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)追加食材は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ取得します。",
+            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)",
             "Charge Energy S": "スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",
@@ -641,6 +646,7 @@
         "skills": {
             "Ingredient Magnet S": "食材ゲットS",
             "Ingredient Magnet S (Plus)": "プラス (食材ゲットS)",
+            "Ingredient Magnet S (Present)": "プレゼント (食材ゲットS)",
             "Charge Energy S": "げんきチャージS",
             "Charge Energy S (Moonlight)": "つきのひかり (げんきチャージS)",
             "Charge Strength S": "エナジーチャージS",
