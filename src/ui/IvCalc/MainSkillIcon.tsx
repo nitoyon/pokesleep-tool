@@ -9,6 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import IngredientIcon from './IngredientIcon';
+import CandyIcon from '../Resources/CandyIcon';
 import IngredientDrawIcon from '../Resources/IngredientDrawIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import HyperCutterIcon from '../Resources/HyperCutterIcon';
@@ -57,6 +58,12 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
                 return <IngredientsIcon fontSize="small"/>;
             } else {
                 return <IngredientIcon name={firstIngredient ?? "apple"}/>;
+            }
+        case "Ingredient Magnet S (Present)":
+            if (second !== true) {
+                return <IngredientsIcon fontSize="small"/>;
+            } else {
+                return <CandyIcon sx={{color: "#e7ba67"}} fontSize="small"/>;
             }
         case "Ingredient Magnet S":
             return <IngredientsIcon fontSize="small"/>;

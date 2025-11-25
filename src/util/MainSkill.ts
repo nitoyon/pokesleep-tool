@@ -3,6 +3,7 @@ import { IngredientName, PokemonData, toxelId } from '../data/pokemons';
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Magnet S (Plus)" |
+    "Ingredient Magnet S (Present)" |
     "Charge Energy S" |
     "Charge Energy S (Moonlight)" |
     "Charge Strength S" |
@@ -68,6 +69,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     }
     if (skill === "Ingredient Magnet S" ||
         skill === "Ingredient Magnet S (Plus)" ||
+        skill === "Ingredient Magnet S (Present)" ||
         skill === "Charge Strength M" ||
         skill === "Charge Strength M (Bad Dreams)" ||
         skill === "Charge Strength S" ||
@@ -109,6 +111,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
     }
     if (skill === "Ingredient Magnet S (Plus)") {
+        return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
+    }
+    if (skill === "Ingredient Magnet S (Present)") {
         return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
     }
     if (skill === "Charge Energy S" ||
@@ -220,6 +225,9 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
             return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
         }
         throw new Error(`invalid ingredient: ${firstIngredient}`);
+    }
+    if (skill === "Ingredient Magnet S (Present)") {
+        return [1, 1, 2, 2, 3, 3, 4][skillLevel - 1];
     }
     if (skill === "Cooking Power-Up S (Minus)") {
         // Get additional energy restore

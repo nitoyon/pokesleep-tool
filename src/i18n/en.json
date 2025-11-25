@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "v3.1.0": {
+                    "headline": "Supported the new skill '$t(skills.Ingredient Magnet S (Present))' in version 3.1.0.",
+                    "detail": "$t(rp collection)"
+                },
                 "add amber pokemons": {
                     "headline": "$t(pokemons.Trapinch), $t(pokemons.Bagon), $t(pokemons.Dwebble) and their evolutions have been added.",
                     "detail": "$t(rp collection)"
@@ -587,6 +591,7 @@
         "strength skill info": {
             "Ingredient Magnet S": "Ingredients from the skill are assumed to be surplus.",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) The additional ingredients will be obtainedr when there's one or more Pokémon on the team with the Plus or Minus main skill.",
+            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)",
             "Charge Energy S": "This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",
@@ -650,6 +655,7 @@
 
         "skills": {
             "Ingredient Magnet S": "Ingredient Magnet S",
+            "Ingredient Magnet S (Present)": "Present (Ingredient Magnet S)",
             "Ingredient Magnet S (Plus)": "Plus (Ingredient Magnet S)",
             "Charge Energy S": "Charge Energy S",
             "Charge Energy S (Moonlight)": "Moonlight (Charge Energy S)",
