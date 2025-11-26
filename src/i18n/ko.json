@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "v3.1.0": {
+                    "headline": "v3.1.0의 새로운 스킬 「$t(skills.Ingredient Magnet S (Present))」에 대응했습니다.",
+                    "detail": "$t(rp collection)"
+                },
                 "add amber pokemons": {
                     "headline": "$t(pokemons.Trapinch), $t(pokemons.Bagon), $t(pokemons.Dwebble)의 데이터를 추가했습니다.",
                     "detail": "$t(rp collection)"
@@ -498,7 +502,8 @@
         "lottery count": "추첨을 진행한 횟수",
         "always 81%+": "항상 81% 이상",
         "charge energy not implemented": "현재로서는, 기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
-        "plus assumption": "$t(skills.Ingredient Magnet S (Plus))에 $t(event bonus)가 적용되는 것으로 가정하여 계산합니다.",
+        "event bonus assumption": "$t(main skill)에 $t(event bonus)가 적용되는 것으로 가정하여 계산합니다.",
+        "present assumption": "$t(candy)를 획득할 확률은 50%로 가정하여 계산합니다.",
 
         "help yield": "$t(berry)$t(ingredient)수",
         "help yield description": "도움 {{n}}회당 획득하는 $t(berry)・$t(ingredient)의 평균 수량입니다.",
@@ -573,6 +578,7 @@
         "strength skill info": {
             "Ingredient Magnet S": "스킬로 획득한 식재료는 잉여 식재료로 간주됩니다.",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) 팀에 메인 스킬이 「플러스」나 「마이너스」인 포켓몬이 1마리 이상 있을 경우에만 추가 식재료를 획득할 수 있습니다.",
+            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)",
             "Charge Energy S": "이 값은 총 강도량에 포함되지 않습니다. 강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
             "Charge Strength S": "",
             "Charge Strength S (Stockpile)": "$t(base strength)의 기대값은 RaenonX의 집계 결과 (토해내기 확률: 26.5%)를 이용하여 산출하고 있습니다.",
@@ -635,6 +641,7 @@
         "skills": {
             "Ingredient Magnet S": "식재료 획득S",
             "Ingredient Magnet S (Plus)": "플러스 (식재료 획득S)",
+            "Ingredient Magnet S (Present)": "프레젠트 (식재료 획득S)",
             "Charge Energy S": "기력 차지S",
             "Charge Energy S (Moonlight)": "달빛 (기력 차지S)",
             "Charge Strength S": "에너지 차지S",
