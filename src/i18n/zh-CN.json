@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "v3.1.0": {
+                    "headline": "已对应 v3.1.0 的新技能「$t(skills.Ingredient Magnet S (Present))」。",
+                    "detail": "$t(rp collection)"
+                },
                 "add amber pokemons": {
                     "headline": "添加了$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)及其进化形态的数据。",
                     "detail": "$t(rp collection)"
@@ -500,7 +504,8 @@
         "lottery count": "抽选次数",
         "always 81%+": "始终超过81%",
         "charge energy not implemented": "目前不考虑活力填充 S 的带来的活力回复。",
-        "plus assumption": "计算时假设$t(event bonus)适用于$t(skills.Ingredient Magnet S (Plus))。",
+        "event bonus assumption": "计算时假设$t(event bonus)适用于$t(main skill)。",
+        "present assumption": "计算时假设获取$t(candy)的概率为50%。",
 
         "help yield": "$t(berry)$t(ingredient)数量",
         "help yield description": "每$t(help count)次可获得的$t(berry)和$t(ingredient)的平均数量。",
@@ -575,6 +580,7 @@
         "strength skill info": {
             "Ingredient Magnet S": "技能获取的食材假定作为剩余食材进行计算。",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)若队伍中除了自己以外还有1只以上主技能是「正电」或「负电」的宝可梦时，才会额外获得更多食材。",
+            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)",
             "Charge Energy S": "技能的效果没有换算成合计能量值。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "顯示可獲得的能量量。",
@@ -638,6 +644,8 @@
 
         "skills": {
             "Ingredient Magnet S": "食材获取S",
+            "Ingredient Magnet S (Plus)": "正电 (食材獲取S)",
+            "Ingredient Magnet S (Present)": "礼物 (食材获取S)",
             "Charge Energy S": "活力填充S",
             "Charge Energy S (Moonlight)": "月光 (活力填充S)",
             "Charge Strength S": "能量填充S",
@@ -653,6 +661,7 @@
             "Energy for Everyone S (Lunar Blessing)": "新月祈祷 (活力全体療愈S)",
             "Extra Helpful S": "帮手支援S",
             "Cooking Power-Up S": "料理强化S",
+            "Cooking Power-Up S (Minus)": "負電 (料理強化S)",
             "Tasty Chance S": "料理成功S",
             "Helper Boost": "帮手加速",
             "Berry Burst": "树果剧增",

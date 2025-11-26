@@ -3,6 +3,7 @@ import { IngredientName, PokemonData, toxelId } from '../data/pokemons';
 
 export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Magnet S (Plus)" |
+    "Ingredient Magnet S (Present)" |
     "Charge Energy S" |
     "Charge Energy S (Moonlight)" |
     "Charge Strength S" |
@@ -41,6 +42,9 @@ export const MainSkillNames: MainSkillName[] = [
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
 ];
 
+/** Candy probability for Present */
+export const presentCandyRate = 0.5;
+
 /**
  * Ingredient proberbility for Super Luck
  *
@@ -68,6 +72,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     }
     if (skill === "Ingredient Magnet S" ||
         skill === "Ingredient Magnet S (Plus)" ||
+        skill === "Ingredient Magnet S (Present)" ||
         skill === "Charge Strength M" ||
         skill === "Charge Strength M (Bad Dreams)" ||
         skill === "Charge Strength S" ||
@@ -110,6 +115,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
     }
     if (skill === "Ingredient Magnet S (Plus)") {
         return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
+    }
+    if (skill === "Ingredient Magnet S (Present)") {
+        return [4, 6, 8, 10, 12, 15, 17][skillLevel - 1];
     }
     if (skill === "Charge Energy S" ||
         skill === "Charge Energy S (Moonlight)"
@@ -220,6 +228,9 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
             return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
         }
         throw new Error(`invalid ingredient: ${firstIngredient}`);
+    }
+    if (skill === "Ingredient Magnet S (Present)") {
+        return 4;
     }
     if (skill === "Cooking Power-Up S (Minus)") {
         // Get additional energy restore

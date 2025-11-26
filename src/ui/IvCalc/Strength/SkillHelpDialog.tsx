@@ -9,7 +9,7 @@ import PokemonStrength, {
     StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam, whistlePeriod,
 } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
-    getSkillSubValue, hyperCutterSuccess,
+    getSkillSubValue, hyperCutterSuccess, presentCandyRate,
     superLuckIngRate, superLuckShardRate, superLuckShard5Rate,
     MainSkillName,
 } from '../../../util/MainSkill';
@@ -162,12 +162,12 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                         {formatNice(result.skillValue2, t)}
                     </article>
                     <footer>
-                        <span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span><> × </>
+                        <span className="box box4">{formatNice(result.skillValuePerTrigger2, t)}</span><> × </>
                         <span className="box box2">{round2(result.skillCount)}</span>
                     </footer>
                 </header>
                 <article>
-                    <div><span className="box box4">{formatWithComma(result.skillValuePerTrigger2)}</span></div>
+                    <div><span className="box box4">{formatNice(result.skillValuePerTrigger2, t)}</span></div>
                     <span>{skillValueText2}</span>
                     {skillValueFooter2 !== null && <footer>{skillValueFooter2}</footer>}
                 </article>
@@ -265,6 +265,9 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
     }
     if (skill === 'Ingredient Magnet S (Plus)') {
         return getPlusValueText(strength, skillLevel, t);
+    }
+    if (skill === 'Ingredient Magnet S (Present)') {
+        return getPresentValueText(strength, skillLevel, t);
     }
     if (skill === 'Cooking Power-Up S (Minus)') {
         const val = getSkillSubValue(skill, skillLevel);
@@ -460,6 +463,27 @@ function getPlusValueText(strength: PokemonStrength, skillLevel: number, t: type
         <> × </>
         {ingBonus}
         <small> ({t('event bonus')})</small>
+    </>];
+}
+
+function getPresentValueText(strength: PokemonStrength, skillLevel: number, t: typeof i18next.t):
+[React.ReactNode, React.ReactNode] {
+    const text = t('value per skill', { value: t('candy') });
+    const param = strength.parameter;
+    const ingBonus = getEventBonus(param.event, param.customEventBonus)?.ingredientMagnet ?? 1;
+
+    const val = getSkillSubValue(strength.pokemonIv.pokemon.skill,
+        skillLevel, strength.pokemonIv.pokemon.ing1.name);
+    return [text, <>
+        {val}
+        <small> ({t('base value', { value: t('candy')})})</small>
+        <> × </>
+        {presentCandyRate * 100}%
+        {ingBonus !== 1 && <>
+            <> × </>
+            {ingBonus}
+            <small> ({t('event bonus')})</small>
+        </>}
     </>];
 }
 
