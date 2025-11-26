@@ -42,6 +42,9 @@ export const MainSkillNames: MainSkillName[] = [
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
 ];
 
+/** Candy probability for Present */
+export const presentCandyRate = 0.5;
+
 /**
  * Ingredient proberbility for Super Luck
  *
