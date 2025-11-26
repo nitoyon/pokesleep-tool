@@ -516,7 +516,8 @@
         "lottery count": "Lottery count",
         "always 81%+": "Always 81%+",
         "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
-        "plus assumption": "This calculation assumes that the event bonus is applied to \"$t(skills.Ingredient Magnet S (Plus))\".",
+        "event bonus assumption": "Calculations assume that the event bonus is applied to the main skill.",
+        "present assumption": "Calculations assume a 50% probability of obtaining candy. ",
 
         "help yield": "Yield",
         "help yield description": "The average number of berries and ingredients collected over {{n}} helps.",

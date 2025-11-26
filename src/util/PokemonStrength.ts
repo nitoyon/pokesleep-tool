@@ -12,7 +12,8 @@ import PokemonRp, {
  } from './PokemonRp';
 import {
     getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount,
-    hyperCutterSuccess, superLuckIngRate, superLuckShardRate, superLuckShard5Rate,
+    hyperCutterSuccess, presentCandyRate,
+    superLuckIngRate, superLuckShardRate, superLuckShard5Rate,
  } from './MainSkill';
 
 /** Pseudo field index where all berries are favorites */
@@ -619,7 +620,7 @@ class PokemonStrength {
 
             case "Ingredient Magnet S (Present)": {
                 let candyCount = getSkillSubValue(mainSkill, skillLevel);
-                candyCount = Math.floor(candyCount * bonus.ingredientMagnet);
+                candyCount = Math.floor(candyCount * bonus.ingredientMagnet) * presentCandyRate;
                 return {
                     skillValue,
                     skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
