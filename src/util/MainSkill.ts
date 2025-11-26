@@ -117,7 +117,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
     }
     if (skill === "Ingredient Magnet S (Present)") {
-        return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
+        return [4, 6, 8, 10, 12, 15, 17][skillLevel - 1];
     }
     if (skill === "Charge Energy S" ||
         skill === "Charge Energy S (Moonlight)"
@@ -230,7 +230,7 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
         throw new Error(`invalid ingredient: ${firstIngredient}`);
     }
     if (skill === "Ingredient Magnet S (Present)") {
-        return [1, 1, 2, 2, 3, 3, 4][skillLevel - 1];
+        return 4;
     }
     if (skill === "Cooking Power-Up S (Minus)") {
         // Get additional energy restore

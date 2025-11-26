@@ -3438,7 +3438,7 @@
         "fp": 16,
         "frequency": 2500,
         "ingRatio": 18.8,
-        "skillRatio": 1.5,
+        "skillRatio": 3,
         "ancestor": null,
         "evolutionCount": -1,
         "evolutionLeft": 0,
