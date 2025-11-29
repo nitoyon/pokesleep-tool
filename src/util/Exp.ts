@@ -78,7 +78,7 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     const shardRate = (boost === "none" ? 1 : boost === "mini" ? 4 : 5);
     for (let i = srcLevel; i < dstLevel; i++) {
         const requiredExp = calcExp(i, i + 1, iv) - carry;
-        const expPerCandy = calcExpFromCandy(i, iv.nature, boost);
+        const expPerCandy = calcExpPerCandy(i, iv.nature, boost);
         const requiredCandy = Math.ceil(requiredExp / expPerCandy);
         shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
         candy += Math.ceil(requiredExp / expPerCandy);
@@ -95,7 +95,7 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
  * @param boost The boost event type, which can be "none", "mini", or "unlimited".
  * @return EXP.
  */
-function calcExpFromCandy(level: number, nature: Nature, boost: BoostEvent): number {
+function calcExpPerCandy(level: number, nature: Nature, boost: BoostEvent): number {
     const boostFactor = (boost !== "none" ? 2 : 1);
     if (level < 25) {
         return (nature.isExpGainsUp ? 41 :
