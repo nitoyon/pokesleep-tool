@@ -31,7 +31,7 @@ export type NatureType = NoCorrectionNatureType |
 export type NatureEffect = "No effect" | "Energy recovery" | "EXP gains" |
     "Main skill chance" | "Speed of help" | "Ingredient finding";
 
-type PlusMinusOneOrZero = -1|0|1;
+export type PlusMinusOneOrZero = -1|0|1;
 
 /**
  * Represents the nature of pokemon.

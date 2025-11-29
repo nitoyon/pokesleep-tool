@@ -5,7 +5,7 @@ import SelectEx from '../common/SelectEx';
 import SliderEx from '../common/SliderEx';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
-import Nature from '../../util/Nature';
+import Nature, { PlusMinusOneOrZero } from '../../util/Nature';
 import { clamp, formatWithComma } from '../../util/NumberUtil';
 import { maxLevel } from '../../util/PokemonRp';
 import { LevelInput } from './IvForm/LevelControl';
@@ -18,6 +18,14 @@ import { Button, Dialog, DialogActions, InputAdornment,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
+
+/** Configuration for candy dialog */
+type CandyConfig = {
+    /** EXP factor */
+    expFactor: PlusMinusOneOrZero;
+    /** Candy boost */
+    candyBoost: BoostEvent;
+};
 
 const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     iv: PokemonIv,
@@ -33,8 +41,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const [expGot, setExpGot] = React.useState(0);
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
     const [targetLevel, setTargetLevel] = React.useState(maxLevel);
-    const [expFactor, setExpFactor] = React.useState(0);
-    const [candyBoost, setCandyBoost] = React.useState<BoostEvent>("none");
+    const [config, setConfig] = React.useState<CandyConfig>({
+        expFactor: 0,
+        candyBoost: "none",
+    });
     const [shouldRender, setShouldRender] = React.useState(false);
 
     // Reset state when the the pokemon, level or nature has changed or
@@ -95,13 +105,19 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         setCurrentLevel(_currentLevel);
         setExpGot(0);
         setMaxExpLeft(calcExp(_currentLevel, _currentLevel + 1, iv));
-        setExpFactor(iv.nature.expGainsFactor);
+        setConfig({
+            ...config,
+            expFactor: iv.nature.expGainsFactor,
+        });
         setShouldRender(true);
-    }, [iv, shouldReset, dstLevel, open]);
+    }, [config, iv, shouldReset, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((value: string) => {
-        setExpFactor(parseInt(value, 10));
-    }, []);
+        setConfig({
+            ...config,
+            expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+        });
+    }, [config]);
 
     const onCurrentLevelChange = React.useCallback((level: number) => {
         setCurrentLevel(level);
@@ -122,7 +138,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         if (value === null) {
             return;
         }
-        setCandyBoost(value);
+        setConfig({
+            ...config,
+            candyBoost: value,
+        });
     }, []);
 
     if (!shouldRender) {
@@ -130,10 +149,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     }
 
     const iv2 = iv.changeLevel(currentLevel);
-    iv2.nature = expFactor === 1 ? new Nature('Timid') :
-        expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed'); 
+    iv2.nature = config.expFactor === 1 ? new Nature('Timid') :
+        config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
     const result: CalcExpAndCandyResult =
-        calcExpAndCandy(iv2, expGot, targetLevel, candyBoost);
+        calcExpAndCandy(iv2, expGot, targetLevel, config.candyBoost);
 
     return (<>
         <StyledDialog open={open} onClose={onClose}>
@@ -184,7 +203,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     </section>
                     <section>
                         <label>{t('nature')}:</label>
-                        <SelectEx onChange={onExpFactorChange} value={expFactor.toString()}>
+                        <SelectEx onChange={onExpFactorChange} value={config.expFactor.toString()}>
                             <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
                             <MenuItem value="0">{t('nature effect.EXP gains')} ーー</MenuItem>
                             <MenuItem value="-1"><StyledNatureDownEffect>{t('nature effect.EXP gains')}</StyledNatureDownEffect></MenuItem>
@@ -193,7 +212,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <section>
                         <label>{t('candy boost')}:</label>
                         <ToggleButtonGroup size="small" exclusive
-                            value={candyBoost} onChange={onCanyBoostChange}>
+                            value={config.candyBoost} onChange={onCanyBoostChange}>
                             <ToggleButton value="none">{t('none')}</ToggleButton>
                             <ToggleButton value="mini">{t('mini candy boost')}</ToggleButton>
                             <ToggleButton value="unlimited">{t('normal candy boost')}</ToggleButton>
