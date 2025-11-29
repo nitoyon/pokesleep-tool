@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import NumericInput from '../common/NumericInput';
+import SelectEx from '../common/SelectEx';
 import SliderEx from '../common/SliderEx';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
@@ -13,8 +14,7 @@ import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
 import { Button, Dialog, DialogActions, InputAdornment, 
-    MenuItem, Select, SelectChangeEvent,
-    ToggleButton, ToggleButtonGroup,
+    MenuItem, ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
@@ -99,9 +99,8 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         setShouldRender(true);
     }, [iv, shouldReset, dstLevel, open]);
 
-    const onExpFactorChange = React.useCallback((e: SelectChangeEvent) => {
-        const value = parseInt(e.target.value, 10);
-        setExpFactor(value);
+    const onExpFactorChange = React.useCallback((value: string) => {
+        setExpFactor(parseInt(value, 10));
     }, []);
 
     const onCurrentLevelChange = React.useCallback((level: number) => {
@@ -185,12 +184,11 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     </section>
                     <section>
                         <label>{t('nature')}:</label>
-                        <Select variant="standard" onChange={onExpFactorChange} value={expFactor.toString()}
-                            size="small">
-                            <MenuItem value={1}><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
-                            <MenuItem value={0}>{t('nature effect.EXP gains')} ーー</MenuItem>
-                            <MenuItem value={-1}><StyledNatureDownEffect>{t('nature effect.EXP gains')}</StyledNatureDownEffect></MenuItem>
-                        </Select>
+                        <SelectEx onChange={onExpFactorChange} value={expFactor.toString()}>
+                            <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
+                            <MenuItem value="0">{t('nature effect.EXP gains')} ーー</MenuItem>
+                            <MenuItem value="-1"><StyledNatureDownEffect>{t('nature effect.EXP gains')}</StyledNatureDownEffect></MenuItem>
+                        </SelectEx>
                     </section>
                     <section>
                         <label>{t('candy boost')}:</label>
