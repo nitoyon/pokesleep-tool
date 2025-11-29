@@ -112,13 +112,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         setShouldRender(true);
     }, [config, iv, shouldReset, dstLevel, open]);
 
-    const onExpFactorChange = React.useCallback((value: string) => {
-        setConfig({
-            ...config,
-            expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
-        });
-    }, [config]);
-
     const onCurrentLevelChange = React.useCallback((level: number) => {
         setCurrentLevel(level);
         setExpGot(0);
@@ -133,16 +126,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const onExpLeftChange = React.useCallback((value: number) => {
         setExpGot(maxExpLeft - value);
     }, [maxExpLeft]);
-
-    const onCanyBoostChange = React.useCallback((_: React.MouseEvent, value: BoostEvent) => {
-        if (value === null) {
-            return;
-        }
-        setConfig({
-            ...config,
-            candyBoost: value,
-        });
-    }, []);
 
     if (!shouldRender) {
         return null;
@@ -186,45 +169,74 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                         </div>
                     </div>
                 </div>
-                <div className="expResult">
-                    <section>
-                        <label>{t('required exp')}:</label>
-                        <div>{formatWithComma(result.exp)}</div>
-                    </section>
-                </div>
-                <div className="candyResult">
-                    <section>
-                        <label>{t('candy')}:</label>
-                        <div><CandyIcon sx={{color: '#e7ba67'}}/>{formatWithComma(result.candy)}</div>
-                    </section>
-                    <section>
-                        <label>{t('dream shard')}:</label>
-                        <div><DreamShardIcon/>{formatWithComma(result.shards)}</div>
-                    </section>
-                    <section>
-                        <label>{t('nature')}:</label>
-                        <SelectEx onChange={onExpFactorChange} value={config.expFactor.toString()}>
-                            <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
-                            <MenuItem value="0">{t('nature effect.EXP gains')} ーー</MenuItem>
-                            <MenuItem value="-1"><StyledNatureDownEffect>{t('nature effect.EXP gains')}</StyledNatureDownEffect></MenuItem>
-                        </SelectEx>
-                    </section>
-                    <section>
-                        <label>{t('candy boost')}:</label>
-                        <ToggleButtonGroup size="small" exclusive
-                            value={config.candyBoost} onChange={onCanyBoostChange}>
-                            <ToggleButton value="none">{t('none')}</ToggleButton>
-                            <ToggleButton value="mini">{t('mini candy boost')}</ToggleButton>
-                            <ToggleButton value="unlimited">{t('normal candy boost')}</ToggleButton>
-                        </ToggleButtonGroup>
-                    </section>
-                </div>
+                <NormalCandyForm config={config} result={result} onChange={setConfig}/>
             </article>
             <DialogActions>
                 <Button onClick={onClose}>{t("close")}</Button>
             </DialogActions>
         </StyledDialog>
     </>);
+});
+
+const NormalCandyForm = React.memo(({ config, result, onChange }: {
+    config: CandyConfig,
+    result: CalcExpAndCandyResult,
+    onChange: (config: CandyConfig) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const onExpFactorChange = React.useCallback((value: string) => {
+        onChange({
+            ...config,
+            expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+        });
+    }, [config, onChange]);
+
+    const onCanyBoostChange = React.useCallback((_: React.MouseEvent, value: BoostEvent) => {
+        if (value === null) {
+            return;
+        }
+        onChange({
+            ...config,
+            candyBoost: value,
+        });
+    }, [config, onChange]);
+
+    return <>
+        <div className="expResult">
+            <section>
+                <label>{t('required exp')}:</label>
+                <div>{formatWithComma(result.exp)}</div>
+            </section>
+        </div>
+        <div className="candyResult">
+            <section>
+                <label>{t('candy')}:</label>
+                <div><CandyIcon sx={{color: '#e7ba67'}}/>{formatWithComma(result.candy)}</div>
+            </section>
+            <section>
+                <label>{t('dream shard')}:</label>
+                <div><DreamShardIcon/>{formatWithComma(result.shards)}</div>
+            </section>
+            <section>
+                <label>{t('nature')}:</label>
+                <SelectEx onChange={onExpFactorChange} value={config.expFactor.toString()}>
+                    <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
+                    <MenuItem value="0">{t('nature effect.EXP gains')} ーー</MenuItem>
+                    <MenuItem value="-1"><StyledNatureDownEffect>{t('nature effect.EXP gains')}</StyledNatureDownEffect></MenuItem>
+                </SelectEx>
+            </section>
+            <section>
+                <label>{t('candy boost')}:</label>
+                <ToggleButtonGroup size="small" exclusive
+                    value={config.candyBoost} onChange={onCanyBoostChange}>
+                    <ToggleButton value="none">{t('none')}</ToggleButton>
+                    <ToggleButton value="mini">{t('mini candy boost')}</ToggleButton>
+                    <ToggleButton value="unlimited">{t('normal candy boost')}</ToggleButton>
+                </ToggleButtonGroup>
+            </section>
+        </div>
+    </>;
 });
 
 const StyledDialog = styled(Dialog)({
