@@ -497,11 +497,11 @@ class PokemonStrength {
         let mainSkillBase = getSkillValue(mainSkill, skillLevel);
         if (mainSkill.startsWith("Ingredient Magnet S")) {
             // This event bonus is floored.
-            // (ref) https://pbs.twimg.com/media/GtEYoG3bEAACPG6?format=jpg&name=large
+            // (ref) https://x.com/nitoyon/status/1995228758182383941
             mainSkillBase = Math.floor(mainSkillBase * bonus.ingredientMagnet);
         }
         if (mainSkill.startsWith("Ingredient Draw S")) {
-            // This event bonus is floored(?)
+            // This event bonus is floored
             mainSkillBase = Math.floor(mainSkillBase * bonus.ingredientDraw);
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
