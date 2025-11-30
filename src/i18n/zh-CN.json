@@ -504,7 +504,6 @@
         "lottery count": "抽选次数",
         "always 81%+": "始终超过81%",
         "charge energy not implemented": "目前不考虑活力填充 S 的带来的活力回复。",
-        "event bonus assumption": "计算时假设$t(event bonus)适用于$t(main skill)。",
         "present assumption": "计算时假设获取$t(candy)的概率为50%。",
 
         "help yield": "$t(berry)$t(ingredient)数量",

@@ -516,7 +516,6 @@
         "lottery count": "Lottery count",
         "always 81%+": "Always 81%+",
         "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
-        "event bonus assumption": "Calculations assume that the event bonus is applied to the main skill.",
         "present assumption": "Calculations assume a 50% probability of obtaining candy. ",
 
         "help yield": "Yield",

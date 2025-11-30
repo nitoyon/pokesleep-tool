@@ -329,8 +329,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <span>{t('required helper boost')}: {round1(getRequiredHelperBoost(settings, strength, result))}</span>
             <InfoButton onClick={onStockInfoClick}/>
         </footer>}
-        {(strength.pokemonIv.pokemon.skill === 'Ingredient Magnet S (Present)' ||
-        (result.bonus.ingredientDraw !== 1 && strength.pokemonIv.pokemon.skill === 'Ingredient Magnet S (Plus)')) &&
+        {strength.pokemonIv.pokemon.skill === 'Ingredient Magnet S (Present)' &&
             <div style={{
                 gridColumn: '1 / -1',
                 border: '1px solid red',
@@ -341,10 +340,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 margin: '.2rem .5rem 0',
                 padding: '0 0.3rem',
             }}>
-                {strength.pokemonIv.pokemon.skill === 'Ingredient Magnet S (Present)' &&
-                    t('present assumption')}
-                {result.bonus.ingredientDraw !== 1 &&
-                    t('event bonus assumption')}
+                {t('present assumption')}
             </div>
         }
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}

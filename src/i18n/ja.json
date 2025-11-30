@@ -506,7 +506,6 @@
         "lottery count": "抽選回数",
         "always 81%+": "常に81%以上",
         "charge energy not implemented": "現在、げんきチャージSによるげんき回復は考慮されていません。",
-        "event bonus assumption": "$t(main skill)に対して$t(event bonus)が適用されるものと仮定して計算しています。",
         "present assumption": "$t(candy)を取得する確率は50%と仮定して計算しています。",
 
         "help yield": "$t(berry)$t(ingredient)数",
