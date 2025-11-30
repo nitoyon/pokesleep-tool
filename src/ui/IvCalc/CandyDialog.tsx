@@ -204,12 +204,10 @@ const NormalCandyForm = React.memo(({ config, result, onChange }: {
 
     return <>
         <div className="expResult">
-            <section>
+            <section className="first">
                 <label>{t('required exp')}:</label>
                 <div>{formatWithComma(result.exp)}</div>
             </section>
-        </div>
-        <div className="candyResult">
             <section>
                 <label>{t('candy')}:</label>
                 <div><CandyIcon sx={{color: '#e7ba67'}}/>{formatWithComma(result.candy)}</div>
@@ -218,7 +216,9 @@ const NormalCandyForm = React.memo(({ config, result, onChange }: {
                 <label>{t('dream shard')}:</label>
                 <div><DreamShardIcon/>{formatWithComma(result.shards)}</div>
             </section>
-            <section>
+        </div>
+        <div className="form">
+            <section className="first">
                 <label>{t('nature')}:</label>
                 <SelectEx onChange={onExpFactorChange} value={config.expFactor.toString()}>
                     <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
@@ -308,12 +308,14 @@ const StyledDialog = styled(Dialog)({
                 },
             },
             '& > div.expResult': {
-                fontWeight: 'bold',
-                fontSize: '1.2rem',
-                margin: '2rem .5rem 0',
+                fontSize: '0.9rem',
+                margin: '1.2rem .2rem 0',
                 padding: '0.5rem',
+                '& > section': {
+                    paddingTop: '0.2rem',
+                },
             },
-            '& > div.candyResult': {
+            '& > div.form': {
                 background: '#f0f0f0',
                 padding: '0.5rem',
                 borderRadius: '0.9rem',
@@ -323,9 +325,9 @@ const StyledDialog = styled(Dialog)({
             '& section': {
                 display: 'flex',
                 flex: '0 auto',
-                marginTop: '0.5rem',
-                '&:first-of-type': {
-                    marginTop: 0,
+                paddingTop: '0.5rem',
+                '&.first': {
+                    paddingTop: 0,
                 },
                 '& > label': {
                     marginRight: 'auto',
