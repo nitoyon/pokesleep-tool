@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "add spiritomb": {
+                    "headline": "添加了$t(pokemons.Spiritomb)的数据。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.1.0": {
                     "headline": "已对应 v3.1.0 的新技能「$t(skills.Ingredient Magnet S (Present))」。",
                     "detail": "$t(rp collection)"

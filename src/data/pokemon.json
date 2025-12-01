@@ -5439,31 +5439,31 @@
         "sleepType": "dozing",
         "exp": 600,
         "type": "dark",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Extra Helpful S",
         "fp": 16,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3500,
+        "ingRatio": 19.8,
+        "skillRatio": 3.6,
         "ancestor": null,
         "evolutionCount": 0,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 27,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "mushroom",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "pumpkin",
+            "c2": 3,
+            "c3": 5
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "leek",
+            "c3": 6
         }
     },
     {
