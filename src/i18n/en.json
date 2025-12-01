@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "add spiritomb": {
+                    "headline": "Added data for Spiritomb.",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.1.0": {
                     "headline": "Supported the new skill '$t(skills.Ingredient Magnet S (Present))' in version 3.1.0.",
                     "detail": "$t(rp collection)"

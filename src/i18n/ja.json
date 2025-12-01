@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "add spiritomb": {
+                    "headline": "ミカルゲのデータを追加しました。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.1.0": {
                     "headline": "v3.1.0 での新スキル「$t(skills.Ingredient Magnet S (Present))」に対応しました。",
                     "detail": "$t(rp collection)"
