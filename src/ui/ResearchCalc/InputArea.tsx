@@ -3,7 +3,7 @@ import Rank from '../../util/Rank';
 import fields, { FieldData, MAX_STRENGTH } from '../../data/fields';
 import { getDrowsyBonus } from '../../data/events';
 import React, { useCallback, useState } from 'react';
-import { Button, Checkbox, Collapse, FormControlLabel, InputAdornment, MenuItem,
+import { Button, Checkbox, Collapse, FormControlLabel, Input, InputAdornment, MenuItem,
     TextField } from '@mui/material';
 import TrackingPanel from './TrackingPanel';
 import { InputAreaData } from './ResearchCalcAppConfig';
@@ -245,17 +245,15 @@ const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) 
         value.toString() : t("num", {n: value});
 
     return (
-        <StyledStrengthTextField variant="standard" size="small" type="tel"
+        <StyledStrengthInput size="small" type="tel"
             value={strengthValue}
             onChange={onChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
-            InputProps={{
-                inputProps: {step: 1000, inputMode: "numeric"},
-                startAdornment: StrengthAdornment,
-            }}/>
+            inputProps={{inputMode: "numeric"}}
+            startAdornment={StrengthAdornment}/>
     );
 });
 
-const StyledStrengthTextField = styled(TextField)({
+const StyledStrengthInput = styled(Input)({
     width: 'calc(100% - 5rem)',
     '& input': {
         fontWeight: 800,
