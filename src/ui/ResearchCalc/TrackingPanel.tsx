@@ -190,7 +190,7 @@ const TrackingPanel = React.memo(({data, onChange}: {
             }
         </div>
         <ScoreTableDialog open={isScoreTableDialogOpen}
-            onClose={onScoreTableDialogClose} bonus={data.bonus} strength={strength}/>
+            onClose={onScoreTableDialogClose} bonus={data.bonus} strength={data.strength}/>
         <TrackingDialog open={isTrackingDialogOpen} data={data}
             onClose={onTrackingDialogClose} onStart={onStartTracking}/>
         <ConfirmDialog open={isConfirmDialogOpen} onClose={onConfirmDialogClose}
