@@ -60,11 +60,13 @@ export const LevelInput = React.memo(({value, onChange}: {
         if (value !== null) {
             applyValue(value);
         }
+        setIsEmpty(value === "");
     }, [applyValue]);
     const onBlur = React.useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-        if (e !== null && typeof(e.target.value) !== 'string') {
+        if (e !== null && typeof(e.target.value) === 'string') {
             applyValue(e.target.value);
         }
+        setIsEmpty(false);
     }, [applyValue]);
     const onSelected = React.useCallback((_: React.SyntheticEvent, value: string|string[]) => {
         if (value !== null && typeof(value) === 'string') {
