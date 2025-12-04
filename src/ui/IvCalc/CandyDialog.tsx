@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import NumericInput from '../common/NumericInput';
 import SliderEx from '../common/SliderEx';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
@@ -11,7 +12,7 @@ import { StyledNatureUpEffect, StyledNatureDownEffect } from './IvForm/NatureTex
 import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
-import { Button, Dialog, DialogActions, Input, InputAdornment, 
+import { Button, Dialog, DialogActions, InputAdornment, 
     MenuItem, Select, SelectChangeEvent,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
@@ -30,7 +31,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const [currentIv, setCurrentIv] = React.useState(iv);
     const [currentLevel, setCurrentLevel] = React.useState(iv.level);
     const [expGot, setExpGot] = React.useState(0);
-    const [isEmpty, setIsEmpty] = React.useState(false);
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
     const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [expFactor, setExpFactor] = React.useState(0);
@@ -101,28 +101,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     }, [iv, onChange]);
 
     const onExpSliderChange = React.useCallback((value: number) => {
-        setIsEmpty(false);
         setExpGot(value);
     }, []);
 
-    const onExpLeftChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const rawText = e.target.value;
-
-        // Update isEmpty state
-        if (typeof(rawText) === "string" && rawText.trim() === "") {
-            setIsEmpty(true);
-            setExpGot(0);
-            return;
-        }
-
-        let value = parseInt(rawText, 10);
-        if (isNaN(value) || value < 0) {
-            value = 0;
-        }
-        if (value > maxExpLeft) {
-            value = maxExpLeft;
-        }
-        setIsEmpty(false);
+    const onExpLeftChange = React.useCallback((value: number) => {
         setExpGot(maxExpLeft - value);
     }, [maxExpLeft]);
 
@@ -143,8 +125,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const result: CalcExpAndCandyResult =
         calcExpAndCandy(iv2, expGot, targetLevel, candyBoost);
 
-    const valueText = isEmpty ? "" : maxExpLeft - expGot;
-
     return (<>
         <StyledDialog open={open} onClose={onClose}>
             <article>
@@ -160,21 +140,11 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                         <div className="expLeft">
                             <StyledSlider value={expGot}
                                 min={0} max={maxExpLeft - 1} onChange2={onExpSliderChange}/>
-                            <Input value={valueText} type="number" size="small"
+                            <NumericInput value={maxExpLeft - expGot} size="small"
                                 startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
                                 endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
-                                onChange={onExpLeftChange}
-                                inputProps={{
-                                    inputMode: "numeric",
-                                }}
-                                sx={{
-                                    '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-                                        WebkitAppearance: 'none',
-                                    },
-                                    '& input[type=number]': {
-                                        MozAppearance: 'textfield',
-                                    },
-                                }}/>
+                                min={1} max={maxExpLeft}
+                                onChange={onExpLeftChange}/>
                         </div>
                     </div>
                     <EastIcon/>
@@ -247,7 +217,7 @@ const StyledDialog = styled(Dialog)({
                 gap: '0.7rem',
                 margin: '0 auto',
                 '& > div.level': {
-                    width: '7rem',
+                    width: '7.2rem',
                     '& > div.levelInput': {
                         color: '#79d073',
                         fontSize: '1.2rem',
