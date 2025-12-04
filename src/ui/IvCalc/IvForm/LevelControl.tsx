@@ -14,14 +14,13 @@ const LevelControlContainer = styled('div')({
     height: '1.8rem',
 });
 
-const LevelControl = React.memo(({hideInput, max, value, onChange}: {
-    hideInput?: boolean,
+const LevelControl = React.memo(({max, value, onChange}: {
     max: number,
     value: number,
     onChange: (value: number) => void,
 }) => {
     return (<LevelControlContainer>
-            {!hideInput && <LevelInput value={value} onChange={onChange}/>}
+            <LevelInput value={value} onChange={onChange}/>
             <LevelSlider max={max} value={value} onChange={onChange}/>
         </LevelControlContainer>
     );

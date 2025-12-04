@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { maxLevel } from '../../../util/PokemonRp';
-import LevelControl from './LevelControl';
+import { LevelSlider } from './LevelControl';
 import PopperMenu from '../../common/PopperMenu';
 import TextLikeButton from '../../common/TextLikeButton';
 import { Button } from '@mui/material';
@@ -31,7 +31,7 @@ const LevelSelector = React.memo(({ value, onChange }: {
         </TextLikeButton>
         <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}>
             <LevelSelectorPopup style={{width: '10rem'}}>
-                <LevelControl max={maxLevel} hideInput value={value} onChange={onChange}/>
+                <LevelSlider max={maxLevel} value={value} onChange={onChange}/>
                 <div className="buttons">
                     <Button onClick={() => onButtonClick(10)}>10</Button>
                     <Button onClick={() => onButtonClick(25)}>25</Button>
