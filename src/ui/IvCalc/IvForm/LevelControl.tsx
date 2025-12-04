@@ -20,19 +20,9 @@ const LevelControl = React.memo(({hideInput, max, value, onChange}: {
     value: number,
     onChange: (value: number) => void,
 }) => {
-    const onLevelDownClick = React.useCallback(() => {
-        onChange(value - 1);
-    }, [value, onChange]);
-    const onLevelUpClick = React.useCallback(() => {
-        onChange(value + 1);
-    }, [value, onChange]);
-
     return (<LevelControlContainer>
             {!hideInput && <LevelInput value={value} onChange={onChange}/>}
-            <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <SliderEx min={1} max={max} size="small" style={{userSelect: "none"}}
-                value={value} onChange2={onChange}/>
-            <ArrowButton label="▶" disabled={value === max} onClick={onLevelUpClick}/>
+            <LevelSlider max={max} value={value} onChange={onChange}/>
         </LevelControlContainer>
     );
 });
@@ -86,7 +76,7 @@ export const LevelInput = React.memo(({value, onChange}: {
     const valueText = isEmpty ? "" : value.toString();
     return (<Autocomplete size="small" options={options}
                 freeSolo disableClearable
-                value={valueText} sx={{width: '3rem'}}
+                value={valueText}
                 onInputChange={onInputChange}
                 onChange={onSelected}
                 filterOptions={filterOptions}
@@ -153,5 +143,34 @@ const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref)
     const { sx, ...rest } = props;
     return <StyledPopup ref={ref} {...rest} />;
 });  
-  
+
+const LevelSliderContainer = styled('div')({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '.7rem',
+    height: '1.8rem',
+    flex: 1,
+});
+
+export const LevelSlider = React.memo(({max, value, onChange}: {
+    max: number,
+    value: number,
+    onChange: (value: number) => void,
+}) => {
+    const onLevelDownClick = React.useCallback(() => {
+        onChange(value - 1);
+    }, [value, onChange]);
+    const onLevelUpClick = React.useCallback(() => {
+        onChange(value + 1);
+    }, [value, onChange]);
+
+    return (<LevelSliderContainer>
+            <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
+            <SliderEx min={1} max={max} size="small" style={{userSelect: "none"}}
+                value={value} onChange2={onChange}/>
+            <ArrowButton label="▶" disabled={value === max} onClick={onLevelUpClick}/>
+        </LevelSliderContainer>
+    );
+});
+
 export default LevelControl;
