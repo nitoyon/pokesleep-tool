@@ -1,4 +1,4 @@
-import { round1, round2, formatWithComma } from './NumberUtil';
+import { round1, round2, formatWithComma, getFormatWithCommaPos } from './NumberUtil';
 
 describe('round1', () => {
     test('0', () => { expect(round1(0)).toBe("0.0"); });
@@ -22,4 +22,16 @@ describe('round2', () => {
 describe('formatWithComma', () => {
     test('1000', () => { expect(formatWithComma(1000)).toBe("1,000"); });
     test('12345678', () => { expect(formatWithComma(12345678)).toBe("12,345,678"); });
+});
+
+describe('getFormatWithCommaPos', () => {
+    // For 1234567 → "1,234,567" (9 chars with commas at positions 1 and 5)
+    test('1234567 at pos 0', () => { expect(getFormatWithCommaPos(1234567, 0)).toBe(0); }); // '1'
+    test('1234567 at pos 1', () => { expect(getFormatWithCommaPos(1234567, 1)).toBe(2); }); // '2' (skip comma at pos 1)
+    test('1234567 at pos 2', () => { expect(getFormatWithCommaPos(1234567, 2)).toBe(3); }); // '3'
+    test('1234567 at pos 3', () => { expect(getFormatWithCommaPos(1234567, 3)).toBe(4); }); // '4'
+    test('1234567 at pos 4', () => { expect(getFormatWithCommaPos(1234567, 4)).toBe(6); }); // '5' (skip comma at pos 5)
+    test('1234567 at pos 5', () => { expect(getFormatWithCommaPos(1234567, 5)).toBe(7); }); // '6'
+    test('1234567 at pos 6', () => { expect(getFormatWithCommaPos(1234567, 6)).toBe(8); }); // '7'
+    test('1234567 at pos 7', () => { expect(getFormatWithCommaPos(1234567, 7)).toBe(9); }); // beyond end
 });
