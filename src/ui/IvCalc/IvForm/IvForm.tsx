@@ -102,7 +102,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <PokemonTextField iv={pokemonIv} fixMode={fixMode}
                 onChange={onPokemonNameChange} onCandyClick={onCandyClick}/>
             <div>{t("level")}:</div>
-            <LevelControl max={100} value={pokemonIv.level} onChange={onLevelChange}/>
+            <LevelControl max100 value={pokemonIv.level} onChange={onLevelChange}/>
             <div>{t("ingredient")}:</div>
             <IngredientTextField iv={pokemonIv} onChange={onChange}/>
             <div>{t("frequency")}:</div>
