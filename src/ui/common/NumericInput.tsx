@@ -252,6 +252,84 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
         setCursorPos(Math.max(0, Math.min(max, currentCursorPos + diff)));
     }, []);
 
+    const onKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+        // Handle digit keys (0-9)
+        if (e.key >= '0' && e.key <= '9') {
+            e.preventDefault();
+            onDigitClick(parseInt(e.key, 10));
+            return;
+        }
+
+        // Handle Backspace
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            onBackspaceClick();
+            return;
+        }
+
+        // Handle Delete (forward delete)
+        if (e.key === 'Delete') {
+            e.preventDefault();
+            const currentCursorPos = cursorPosRef.current;
+            const currentText = valueRef.current.toString();
+            const currentIsEmpty = isEmptyRef.current;
+
+            if (currentCursorPos >= currentText.length) {
+                return; // Can't delete after the end
+            }
+
+            if (currentText.length === 1 || currentIsEmpty) {
+                setIsEmpty(true);
+                onChange(Math.max(0, minValue));
+                setCursorPos(0);
+            } else {
+                // Delete character at cursor position
+                const newText = currentText.slice(0, currentCursorPos) + currentText.slice(currentCursorPos + 1);
+                const val = parseInt(newText, 10);
+                if (!isNaN(val)) {
+                    onChange(Math.max(val, minValue));
+                }
+            }
+            return;
+        }
+
+        // Handle Arrow Left
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            onNavMove(-1);
+            return;
+        }
+
+        // Handle Arrow Right
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            onNavMove(1);
+            return;
+        }
+
+        // Handle Home (move cursor to start)
+        if (e.key === 'Home') {
+            e.preventDefault();
+            setCursorPos(0);
+            return;
+        }
+
+        // Handle End (move cursor to end)
+        if (e.key === 'End') {
+            e.preventDefault();
+            const max = isEmptyRef.current ? 0 : valueRef.current.toString().length;
+            setCursorPos(max);
+            return;
+        }
+
+        // Handle Enter or Escape to close
+        if (e.key === 'Enter' || e.key === 'Escape') {
+            e.preventDefault();
+            onClose();
+            return;
+        }
+    }, [onDigitClick, onBackspaceClick, onNavMove, onClose, minValue, onChange, setIsEmpty, setCursorPos]);
+
     // Use " " (space) to represent empty input to maintain input height
     const text = isEmpty ? " " : formatWithComma(value);
 
@@ -261,6 +339,7 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
                 ref={anchorRef} readOnly
                 className={`${props.className ?? ""} ${open ? "focused" : ""}`}
                 onClick={onClick}
+                onKeyDown={onKeyDown}
                 inputProps={{inputMode: "none"}}
                 value={text}/>
             {open && (
