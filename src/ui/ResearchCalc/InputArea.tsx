@@ -78,7 +78,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         </div>
         <div>{t("strength")}:</div>
         <div>
-            <div>
+            <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr'}}>
                 <RankTextField field={field}
                     value={rank.index} onChange={onRankChange}/>
                 <StrengthTextField max={MAX_STRENGTH}
@@ -233,7 +233,7 @@ const StrengthTextField = React.memo(({max, value, onChange}: StrengthTextFieldP
 );
 
 const StyledStrengthInput = styled(NumericInput)({
-    width: 'calc(100% - 5rem)',
+    width: '100%',
     '& input': {
         fontWeight: 800,
         fontSize: '1rem',
