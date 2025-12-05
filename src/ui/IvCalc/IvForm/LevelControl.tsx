@@ -1,10 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import {
-    Autocomplete, Paper, PaperProps,
-    Popper, PopperProps, TextField,
-} from '@mui/material';
+import { Button } from '@mui/material';
+import { maxLevel } from '../../../util/PokemonRp';
 import ArrowButton from '../../common/ArrowButton';
+import NumericInput, { NumericInputHandle } from '../../common/NumericInput';
 import SliderEx from '../../common/SliderEx';
 
 const LevelControlContainer = styled('div')({
@@ -12,136 +11,86 @@ const LevelControlContainer = styled('div')({
     alignItems: 'center',
     gap: '.7rem',
     height: '1.8rem',
+    '& > div.numeric': {
+        width: '2.2rem',
+        '& > div.MuiInput-root > input': {
+            fontSize: '0.9rem',
+        },
+    },
 });
 
-const LevelControl = React.memo(({max, value, onChange}: {
-    max: number,
+const LevelControl = React.memo(({max100, value, onChange}: {
+    max100?: boolean,
     value: number,
     onChange: (value: number) => void,
 }) => {
+    const max = max100 ? 100 : maxLevel;
     return (<LevelControlContainer>
-            <LevelInput value={value} onChange={onChange}/>
+            <LevelInput max100={max100} value={value} onChange={onChange}/>
             <LevelSlider max={max} value={value} onChange={onChange}/>
         </LevelControlContainer>
     );
 });
 
-export const LevelInput = React.memo(({value, onChange}: {
+export const LevelInput = React.memo(({max100, showSlider, value, onChange}: {
+    max100?: boolean,
+    showSlider?: boolean,
     value: number,
     onChange: (value: number) => void,
 }) => {
-    // Whether TextField is empty or not
-    const [isEmpty, setIsEmpty] = React.useState(false);
-    const inputRef = React.useRef<HTMLInputElement|null>(null);
+    const inputRef = React.useRef<NumericInputHandle>(null);
 
-    const applyValue = React.useCallback((rawText: string) => {
-        let value = parseInt(rawText, 10);
-        if (isNaN(value) || value < 1) {
-            value = 1;
-        }
-        if (value > 100) {
-            value = 100;
-        }
-        setIsEmpty(false);
-        onChange(value);
-    }, [onChange]);
-    const onInputChange = React.useCallback((_: React.SyntheticEvent, value: string) => {
-        if (value !== null) {
-            applyValue(value);
-        }
-        setIsEmpty(value === "");
-    }, [applyValue]);
-    const onBlur = React.useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-        if (e !== null && typeof(e.target.value) === 'string') {
-            applyValue(e.target.value);
-        }
-        setIsEmpty(false);
-    }, [applyValue]);
-    const onSelected = React.useCallback((_: React.SyntheticEvent, value: string|string[]) => {
-        if (value !== null && typeof(value) === 'string') {
-            onChange(parseInt(value, 10));
-            // fix unknown bug: selected level's is not displayed property.
-            // 1. When the level is 30, tap the textbox and tap level 25.
-            // 2. Tap the textbox, then level 25 should be selected, but
-            //    level 30 is selected.
-            // To avoid this bug, we use  setTimeout() function.
-            setTimeout(() => {inputRef.current?.blur();});
-        }
+    const onButtonClick = React.useCallback((num: number) => {
+        onChange(num);
+        inputRef.current?.close();
     }, [onChange]);
 
-    const options = ["10", "25", "30", "50", "60", "65", "75", "100"];
-    const filterOptions = React.useCallback((x: string[]) => x, []);
-
-    const valueText = isEmpty ? "" : value.toString();
-    return (<Autocomplete size="small" options={options}
-                freeSolo disableClearable
-                value={valueText}
-                onInputChange={onInputChange}
-                onChange={onSelected}
-                filterOptions={filterOptions}
-                renderInput={(params) => <TextField {...params}
-                    variant="standard" type="number"
-                    inputRef={inputRef}
-                    onBlur={onBlur}
-                    sx={{
-                        '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-                            WebkitAppearance: 'none',
-                        },
-                        '& input[type=number]': {
-                            MozAppearance: 'textfield',
-                        },
-                    }}
-                    slotProps={{
-                        htmlInput: {
-                            ...params.inputProps,
-                            min: 1,
-                            max: 100,
-                            inputMode: "numeric",
-                            style: {textOverflow: "clip", fontSize: '0.9rem'},
-                        }
-                    }}
-                />}
-                slots={{
-                    paper: StyledPopupRef,
-                    popper: PopperComponent,
-                }}
-            />
-    );
+    return <NumericInput
+        ref={inputRef}
+        value={value}
+        onChange={onChange}
+        min={1}
+        max={max100 ? 100 : maxLevel}>
+        <LevelSelectorPopup>
+            {showSlider &&
+                <LevelSlider max={100} value={value} onChange={onChange}/>
+            }
+            <div className="buttons">
+                <Button onClick={() => onButtonClick(10)}>10</Button>
+                <Button onClick={() => onButtonClick(25)}>25</Button>
+                <Button onClick={() => onButtonClick(30)}>30</Button>
+                {!max100 && <Button onClick={() => onButtonClick(40)}>40</Button>}
+                <Button onClick={() => onButtonClick(50)}>50</Button>
+                <Button onClick={() => onButtonClick(60)}>60</Button>
+                <Button onClick={() => onButtonClick(65)}>65</Button>
+                {max100 && <Button onClick={() => onButtonClick(75)}>75</Button>}
+                {max100 && <Button onClick={() => onButtonClick(100)}>100</Button>}
+            </div>
+        </LevelSelectorPopup>
+    </NumericInput>;
 });
 
-const PopperComponent = function (props: PopperProps) {
-    return (<Popper {...props} style={{zIndex: 2147483647}} placement='bottom-start'/>)
-}
-
-const StyledPopup = styled(Paper)<PaperProps>({
-    width: '14rem',
-    '& > ul': {
+const LevelSelectorPopup = styled('div')({
+    padding: '.3rem .7rem',
+    '& > div.buttons': {
+        paddingTop: '.4rem',
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 0,
-        padding: 0,
-        '& > li.MuiAutocomplete-option': {
-            display: 'inline-block',
-            width: '3.5rem',
-            textAlign: 'center',
-            height: '3rem',
+        gap: '0.3rem 0.5rem',
+        '& > button': {
+            color: '#79d073',
+            fontWeight: 'bold',
+            fontSize: '0.8rem',
             padding: 0,
-            verticalAlign: 'middle',
-            lineHeight: '2.8rem',
-            borderRight: '1px solid #ccc',
-            borderBottom: '1px solid #ccc',
+            width: '1.8rem',
+            height: '1.8rem',
+            minWidth: '1.8rem',
+            minHeight: '1.8rem',
+            borderRadius: '50%',
+            border: '1.5px solid #79d073',
         },
-    },
+    }
 });
-  
-const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
-    // Extract sx from props. (ESLint doesn't allow this...)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { sx, ...rest } = props;
-    return <StyledPopup ref={ref} {...rest} />;
-});  
 
 const LevelSliderContainer = styled('div')({
     display: 'flex',

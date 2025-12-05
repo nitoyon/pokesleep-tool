@@ -5,7 +5,7 @@ import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft';
-import { IconButton, Input, InputProps } from '@mui/material';
+import { Divider, IconButton, Input, InputProps } from '@mui/material';
 import PopperMenu from './PopperMenu';
 import { formatWithComma, getFormatWithCommaPos } from '../../util/NumberUtil';
 
@@ -18,6 +18,13 @@ const canUseKeyboard = window.matchMedia('(any-pointer: fine)').matches;
 type OmitProps = 'inputProps' | 'onBlur' | 'onChange' | 'onFocus' | 'type' | 'value';
 
 /**
+ * Handle for NumericInput component to control from parent.
+ */
+export interface NumericInputHandle {
+    close: () => void;
+}
+
+/**
  * Props for NumericInput component.
  */
 type NumericInputProps = Omit<InputProps, OmitProps> & {
@@ -25,31 +32,39 @@ type NumericInputProps = Omit<InputProps, OmitProps> & {
     max?: number,
     value: number,
     onChange: (value: number) => void,
+    children?: React.ReactNode,
 };
 
 /**
  * An Input component that accepts numeric values and provides type-safe
  * onChange handling with number type instead of string.
  */
-const NumericInput = React.memo(({min, max, value, onChange, ...props}: NumericInputProps) => {
+const NumericInput = React.memo(React.forwardRef<NumericInputHandle, NumericInputProps>(
+    ({min, max, value, onChange, children, ...props}, ref) => {
     if (canUseKeyboard) {
-        return <NumericInputKeyboard min={min} max={max} value={value}
-            onChange={onChange} {...props}/>;
+        return <NumericInputKeyboard ref={ref} min={min} max={max} value={value}
+            onChange={onChange} children={children} {...props}/>;
     } else {
-        return <NumericInputTouch min={min} max={max} value={value}
-            onChange={onChange} {...props}/>;
+        return <NumericInputTouch ref={ref} min={min} max={max} value={value}
+            onChange={onChange} children={children} {...props}/>;
     }
-});
+}));
 
 /**
  * An numeric input component for keyboard.
  */
-const NumericInputKeyboard = React.memo(({min, max, value, onChange, ...props}: NumericInputProps) => {
+const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, NumericInputProps>(
+    ({children, min, max, value, onChange, ...props}, ref) => {
+    const [open, setOpen] = React.useState(false);
     const [focused, setFocused] = React.useState(false);
     const [rawText, setRawText] = React.useState(value.toString());
+    const anchorRef = React.useRef<HTMLElement>(null);
 
     const minValue = min ?? 0;
     const maxValue = max ?? Number.MAX_SAFE_INTEGER;
+
+    // popup is enabled when children is provided
+    const popupEnabled = children !== undefined;
 
     const onChangeHandler = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value.replace(/,/g, "");
@@ -69,28 +84,49 @@ const NumericInputKeyboard = React.memo(({min, max, value, onChange, ...props}: 
 
     const onFocus = React.useCallback(() => {
         setFocused(true);
+        if (children !== undefined) {
+            setOpen(true);
+        }
         setRawText(value.toString());
-    }, [value]);
-    const onBlur = React.useCallback(() => {
+    }, [children, value]);
+    const onClose = React.useCallback(() => {
         setFocused(false);
+        setOpen(false);
     }, []);
+    const onBlur = React.useCallback(() => {
+        if (popupEnabled) {
+            return;
+        }
+        onClose();
+    }, [onClose, popupEnabled]);
+
+    // Expose close method to parent via ref
+    React.useImperativeHandle(ref, () => ({
+        close: onClose
+    }), [onClose]);
 
     const text = focused ? rawText : formatWithComma(value);
 
     return <div className="numeric keyboard">
         <Input {...props} type="tel"
             inputProps={{inputMode: "numeric"}}
-            value={text}
+            value={text} ref={anchorRef}
             onChange={onChangeHandler}
             onFocus={onFocus}
             onBlur={onBlur}/>
+        <PopperMenu open={open} anchorEl={anchorRef.current} onClose={onClose}>
+            <div>
+                {children}
+            </div>
+        </PopperMenu>
     </div>;
-});
+}));
 
 /**
  * An numeric input component for touch device.
  */
-const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: NumericInputProps) => {
+const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, NumericInputProps>(
+    ({children, min, max, value, onChange, ...props}, ref) => {
     const [open, setOpen] = React.useState(false);
     const [isEmpty, setIsEmpty] = React.useState(false);
     const [cursorPos, setCursorPos] = React.useState(0);
@@ -189,6 +225,11 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
         setIsEmpty(false);
         setOpen(false);
     }, []);
+
+    // Expose close method to parent via ref
+    React.useImperativeHandle(ref, () => ({
+        close: onClose
+    }), [onClose]);
 
     const onDigitClick = React.useCallback((digit: number) => {
         setIsEmpty(false);
@@ -359,6 +400,10 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
         </StyledInputContainer>
         <PopperMenu open={open} anchorEl={anchorRef.current} onClose={onClose}>
             <div>
+                {children && <>
+                    {children}
+                    <Divider/>
+                </>}
                 <StyledNumpad>
                     <IconButton onClick={() => onDigitClick(1)}>1</IconButton>
                     <IconButton onClick={() => onDigitClick(2)}>2</IconButton>
@@ -379,7 +424,7 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
             </div>
         </PopperMenu>
     </>;
-});
+}));
 
 const StyledInputContainer = styled('div')({
     position: 'relative',
