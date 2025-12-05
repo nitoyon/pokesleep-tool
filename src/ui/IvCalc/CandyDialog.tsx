@@ -240,8 +240,7 @@ const StyledDialog = styled(Dialog)({
                     },
                     '& > div.expLeft': {
                         paddingTop: '0.3rem',
-                        '& > div.MuiInput-root': {
-                            top: '-0.2rem',
+                        '& > div.numeric > div.MuiInput-root': {
                             '& > div.MuiInputAdornment-root > p': {
                                 color: '#79d073',
                                 fontSize: '0.7rem',
@@ -250,7 +249,6 @@ const StyledDialog = styled(Dialog)({
                             },
                             '& > input': {
                                 padding: 0,
-                                color: '#000000',
                                 fontSize: '0.9rem',
                                 fontWeight: 'bold',
                                 transform: 'scale(1, 0.9)',
