@@ -102,6 +102,21 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
     const minValue = min ?? 0;
     const maxValue = max ?? Number.MAX_SAFE_INTEGER;
 
+    // Use refs to always have access to the latest values.
+    // This is necessary to handle rapid consecutive taps on touch devices.
+    // Without refs, the callbacks would capture stale values from their closures,
+    // causing tap events to be dropped or processed incorrectly during rapid input.
+    const valueRef = React.useRef(value);
+    const cursorPosRef = React.useRef(cursorPos);
+    const isEmptyRef = React.useRef(isEmpty);
+
+    // Keep refs in sync with state
+    React.useEffect(() => {
+        valueRef.current = value;
+        cursorPosRef.current = cursorPos;
+        isEmptyRef.current = isEmpty;
+    }, [value, cursorPos, isEmpty]);
+
     // Extract input element's computed style and position when open
     React.useEffect(() => {
         if (!anchorRef.current) {
@@ -177,7 +192,8 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
 
     const onDigitClick = React.useCallback((digit: number) => {
         setIsEmpty(false);
-        const currentText = isEmpty ? "0" : value.toString();
+        const currentText = isEmptyRef.current ? "0" : valueRef.current.toString();
+        const currentCursorPos = cursorPosRef.current;
         const digitStr = digit.toString();
 
         // Insert digit at cursor position
@@ -186,8 +202,8 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
             newText = digitStr;
             setCursorPos(1);
         } else {
-            newText = currentText.slice(0, cursorPos) + digitStr + currentText.slice(cursorPos);
-            setCursorPos(cursorPos + 1);
+            newText = currentText.slice(0, currentCursorPos) + digitStr + currentText.slice(currentCursorPos);
+            setCursorPos(currentCursorPos + 1);
         }
 
         let val = parseInt(newText, 10);
@@ -199,28 +215,30 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
         if (val === maxValue) {
             setCursorPos(val.toString().length);
         }
-    }, [isEmpty, value, cursorPos, maxValue, minValue, onChange]);
+    }, [maxValue, minValue, onChange]);
 
     const onBackspaceClick = React.useCallback(() => {
-        if (cursorPos === 0) {
+        const currentCursorPos = cursorPosRef.current;
+        if (currentCursorPos === 0) {
             return; // Can't delete before the start
         }
 
-        const currentText = value.toString();
-        if (currentText.length <= 1 || isEmpty) {
+        const currentText = valueRef.current.toString();
+        const currentIsEmpty = isEmptyRef.current;
+        if (currentText.length <= 1 || currentIsEmpty) {
             setIsEmpty(true);
             onChange(Math.max(0, minValue));
             setCursorPos(0);
         } else {
             // Delete character before cursor
-            const newText = currentText.slice(0, cursorPos - 1) + currentText.slice(cursorPos);
+            const newText = currentText.slice(0, currentCursorPos - 1) + currentText.slice(currentCursorPos);
             const val = parseInt(newText, 10);
             if (!isNaN(val)) {
                 onChange(Math.max(val, minValue));
-                setCursorPos(cursorPos - 1);
+                setCursorPos(currentCursorPos - 1);
             }
         }
-    }, [isEmpty, value, cursorPos, minValue, onChange]);
+    }, [minValue, onChange]);
 
     const onClearClick = React.useCallback(() => {
         setIsEmpty(true);
@@ -229,9 +247,10 @@ const NumericInputTouch = React.memo(({min, max, value, onChange, ...props}: Num
     }, [minValue, onChange]);
 
     const onNavMove = React.useCallback((diff: number) => {
-        const max = isEmpty ? 0 : value.toString().length;
-        setCursorPos(Math.max(0, Math.min(max, cursorPos + diff)));
-    }, [cursorPos, isEmpty, value]);
+        const max = isEmptyRef.current ? 0 : valueRef.current.toString().length;
+        const currentCursorPos = cursorPosRef.current;
+        setCursorPos(Math.max(0, Math.min(max, currentCursorPos + diff)));
+    }, []);
 
     // Use " " (space) to represent empty input to maintain input height
     const text = isEmpty ? " " : formatWithComma(value);
