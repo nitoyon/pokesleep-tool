@@ -65,13 +65,11 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             return;
         }
 
-        setCurrentIv(iv);
-        setCurrentLevel(iv.level);
-        setExpGot(0);
-        setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
-        setExpFactor(iv.nature.expGainsFactor);
-        setShouldRender(true);
-
+        // Set target level
+        // * If dstLevel is specified, use it,
+        //   else set according to specialty
+        // * Do not set lower than current level and
+        //   not higher than max level
         let level = 0;
         if (dstLevel !== undefined) {
             level = Math.min(dstLevel, maxLevel);
@@ -87,7 +85,18 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         else {
             level = 50;
         }
-        setTargetLevel(Math.max(level, iv.level));
+        level = Math.min(maxLevel, Math.max(level, iv.level));
+        setTargetLevel(level);
+
+        // Reset other states
+        // current level should be less than or equal to iv.level
+        const _currentLevel = Math.min(iv.level, level);
+        setCurrentIv(iv);
+        setCurrentLevel(_currentLevel);
+        setExpGot(0);
+        setMaxExpLeft(calcExp(_currentLevel, _currentLevel + 1, iv));
+        setExpFactor(iv.nature.expGainsFactor);
+        setShouldRender(true);
     }, [iv, shouldReset, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((e: SelectChangeEvent) => {
