@@ -76,8 +76,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         if (dstLevel !== undefined) {
             level = Math.min(dstLevel, maxLevel);
         }
-        else if (iv.pokemon.specialty === "Berries") {
-            level = 65;
+        else if (iv.pokemon.specialty === "Berries" ||
+            iv.pokemon.specialty === "All"
+        ) {
+            level = maxLevel;
         }
         else if (iv.pokemon.specialty === "Ingredients") {
             level = 60;
