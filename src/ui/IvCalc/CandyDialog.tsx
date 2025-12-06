@@ -7,7 +7,7 @@ import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../
 import Nature from '../../util/Nature';
 import { formatWithComma } from '../../util/NumberUtil';
 import { maxLevel } from '../../util/PokemonRp';
-import LevelSelector from './IvForm/LevelSelector';
+import { LevelInput } from './IvForm/LevelControl';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from './IvForm/NatureTextField';
 import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
@@ -146,7 +146,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelSelector value={currentLevel} onChange={onCurrentLevelChange}/>
+                            <LevelInput value={currentLevel} onChange={onCurrentLevelChange}/>
                         </div>
                         <div className="expLeft">
                             <StyledSlider value={expGot}
@@ -162,7 +162,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelSelector value={targetLevel} onChange={setTargetLevel}/>
+                            <LevelInput value={targetLevel} onChange={setTargetLevel}/>
                         </div>
                     </div>
                 </div>
@@ -240,13 +240,17 @@ const StyledDialog = styled(Dialog)({
                             transform: 'scale(1, 0.9)',
                             paddingTop: '0.2rem'
                         },
-                        '& > button': {
-                            color: '#79d073',
+                        '& > div.numeric': {
                             width: '3rem',
-                            fontWeight: 'bold',
-                            fontSize: '1.3rem !important',
-                            paddingBottom: 0,
-                            transform: 'scale(1, 0.9)',
+                            '& > div.MuiInput-root': {
+                                color: '#79d073',
+                                fontWeight: 'bold',
+                                fontSize: '1.3rem !important',
+                                transform: 'scale(1, 0.9)',
+                                '& > input': {
+                                    padding: '2px 0',
+                                },
+                            },
                         },
                     },
                     '& > div.expLeft': {
