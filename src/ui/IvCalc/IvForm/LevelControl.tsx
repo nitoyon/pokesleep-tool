@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/system';
+import { styled, SxProps, Theme } from '@mui/system';
 import { Button } from '@mui/material';
 import { maxLevel } from '../../../util/PokemonRp';
 import ArrowButton from '../../common/ArrowButton';
@@ -32,9 +32,10 @@ const LevelControl = React.memo(({max100, value, onChange}: {
     );
 });
 
-export const LevelInput = React.memo(({max100, showSlider, value, onChange}: {
+export const LevelInput = React.memo(({max100, showSlider, sx, value, onChange}: {
     max100?: boolean,
     showSlider?: boolean,
+    sx?: SxProps<Theme>,
     value: number,
     onChange: (value: number) => void,
 }) => {
@@ -50,7 +51,8 @@ export const LevelInput = React.memo(({max100, showSlider, value, onChange}: {
         value={value}
         onChange={onChange}
         min={1}
-        max={max100 ? 100 : maxLevel}>
+        max={max100 ? 100 : maxLevel}
+        sx={sx}>
         <LevelSelectorPopup>
             {showSlider &&
                 <LevelSlider max={100} value={value} onChange={onChange}/>
