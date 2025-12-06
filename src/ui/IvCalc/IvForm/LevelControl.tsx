@@ -46,16 +46,17 @@ export const LevelInput = React.memo(({max100, showSlider, sx, value, onChange}:
         inputRef.current?.close();
     }, [onChange]);
 
+    const max = max100 ? 100 : maxLevel;
     return <NumericInput
         ref={inputRef}
         value={value}
         onChange={onChange}
         min={1}
-        max={max100 ? 100 : maxLevel}
+        max={max}
         sx={sx}>
         <LevelSelectorPopup>
             {showSlider &&
-                <LevelSlider max={100} value={value} onChange={onChange}/>
+                <LevelSlider max={max} value={value} onChange={onChange}/>
             }
             <div className="buttons">
                 <Button onClick={() => onButtonClick(10)}>10</Button>

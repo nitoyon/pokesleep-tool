@@ -105,6 +105,10 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
             onClose();
         }
     }, [onClose, open]);
+    // Sync rawText when value changes from outside
+    React.useEffect(() => {
+        setRawText(value.toString());
+    }, [value]);
 
     // Expose close method to parent via ref
     React.useImperativeHandle(ref, () => ({

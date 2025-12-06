@@ -637,7 +637,7 @@ function getBerryBurstConfigHtml(strength: PokemonStrength,
                     onChange={type => onBerryBurstTypeChange(i, type)}/>
                 <span style={{padding: '0 0.2rem 0 0.6rem'}}>Lv.</span>
                 {auto ? burstTeam[i].level : <LevelInput value={burstTeam[i].level}
-                    sx={{width: '1.2rem', fontSize: '0.9rem'}}
+                    sx={{width: '1.2rem', fontSize: '0.9rem'}} showSlider
                     onChange={level => onBerryBurstLevelChange(i, level)}/>}
                 <InfoButton onClick={() => onBerryInfoClick(burstTeam[i].type, burstTeam[i].level)}/>
             </span>
