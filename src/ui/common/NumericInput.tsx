@@ -99,6 +99,12 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
         }
         onClose();
     }, [onClose, popupEnabled]);
+    // Handle Tab key to close popup
+    const onKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Tab' && open) {
+            onClose();
+        }
+    }, [onClose, open]);
 
     // Expose close method to parent via ref
     React.useImperativeHandle(ref, () => ({
@@ -113,7 +119,8 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
             value={text} ref={anchorRef}
             onChange={onChangeHandler}
             onFocus={onFocus}
-            onBlur={onBlur}/>
+            onBlur={onBlur}
+            onKeyDown={onKeyDown}/>
         <PopperMenu open={open} anchorEl={anchorRef.current} onClose={onClose}>
             <div>
                 {children}
