@@ -146,7 +146,8 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelInput value={currentLevel} onChange={onCurrentLevelChange}/>
+                            <LevelInput value={currentLevel} onChange={onCurrentLevelChange}
+                                showSlider/>
                         </div>
                         <div className="expLeft">
                             <StyledSlider value={expGot}
@@ -162,7 +163,8 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelInput value={targetLevel} onChange={setTargetLevel}/>
+                            <LevelInput value={targetLevel} onChange={setTargetLevel}
+                                showSlider/>
                         </div>
                     </div>
                 </div>
