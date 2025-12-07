@@ -1,134 +1,58 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import {
-    Autocomplete, Paper, PaperProps,
-    Popper, PopperProps, TextField,
-} from '@mui/material';
+import { IconButton, InputAdornment } from '@mui/material';
+import NumericInput, { NumericInputHandle } from '../../common/NumericInput';
 
-const maxBonus = 100;
+const maxBonus = 85;
 
 const AreaBonusControl = React.memo(({value, onChange}: {
     value: number,
     onChange: (value: number) => void,
 }) => {
-    // Whether TextField is empty or not
-    const [isEmpty, setIsEmpty] = React.useState(false);
-    const [isFocused, setIsFocused] = React.useState(false);
-    const inputRef = React.useRef<HTMLInputElement|null>(null);
+    const inputRef = React.useRef<NumericInputHandle|null>(null);
 
-    const updateValue = React.useCallback((rawText: string) => {
-        let newValue = parseInt(rawText, 10);
-        if (isNaN(newValue) || newValue < 1) {
-            newValue = 0;
-        }
-        if (newValue > maxBonus) {
-            newValue = maxBonus;
-        }
-        setIsEmpty(false);
-        if (value !== newValue) {
-            onChange(newValue);
-        }
-    }, [onChange, value]);
-    const _onChange = React.useCallback((_: React.SyntheticEvent, value: string) => {
-        if (value === null) {
-            return;
-        }
-        const rawText = value;
-
-        // Update isEmpty state
-        if (typeof(rawText) === "string" && rawText.trim() === "") {
-            setIsEmpty(true);
-            onChange(0);
-            return;
-        }
-        updateValue(rawText);
-    }, [updateValue, onChange]);
-    const onFocus = React.useCallback(() => {
-        setIsFocused(true);
-    }, []);
-    const onBlur = React.useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-        setIsFocused(false);
-
-        if (e === null) {
-            return;
-        }
-        updateValue(e.target.value);
-    }, [updateValue]);
-    const onSelected = React.useCallback((_: React.SyntheticEvent, value: string|null) => {
-        if (value !== null) {
-            onChange(parseInt(value, 10));
-        }
+    const onPercentClick = React.useCallback((percent: number) => {
+        onChange(percent);
+        inputRef.current?.close();
     }, [onChange]);
 
-    const options = ["0%", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%",
-        "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"];
-    const filterOptions = React.useCallback((x: string[]) => x, []);
+    // Generate percentage options (0%, 5%, 10%, ..., 85%)
+    const percentages: number[] = [];
+    for (let i = 0; i <= maxBonus; i += 5) {
+        percentages.push(i);
+    }
 
-    const valueText = isEmpty ? "" :
-        value.toString() + (isFocused ? "" : "%");
-    const inputType = isFocused ? "number" : "text";
-    return (<Autocomplete size="small" options={options}
-                freeSolo disableClearable
-                value={valueText} sx={{width: '4rem'}}
-                onFocus={onFocus}
-                onInputChange={_onChange}
-                onChange={onSelected}
-                filterOptions={filterOptions}
-                renderInput={(params) => <TextField {...params}
-                    variant="standard" type={inputType}
-                    inputRef={inputRef}
-                    onBlur={onBlur}
-                    slotProps={{
-                        htmlInput: {
-                            ...params.inputProps,
-                            min: 0,
-                            max: maxBonus,
-                            inputMode: "numeric",
-                            style: {textOverflow: "clip"},
-                        }
-                    }}
-                />}
-                slots={{
-                    paper: StyledPopupRef,
-                    popper: PopperComponent,
-                }}
-            />
+    return (
+        <NumericInput ref={inputRef}
+            min={0} max={maxBonus}
+            value={value} onChange={onChange}
+            sx={{width: '2.5rem', fontSize: '0.9rem'}}
+            endAdornment={<InputAdornment position="end"
+                onClick={() => inputRef.current?.focus()}>
+                <span style={{fontSize: '0.8rem', color: '#888'}}>%</span>
+            </InputAdornment>}
+        >
+            <StyledPercentGrid>
+                {percentages.map(p => (
+                    <IconButton key={p} onClick={() => onPercentClick(p)}>
+                        {p}%
+                    </IconButton>
+                ))}
+            </StyledPercentGrid>
+        </NumericInput>
     );
 });
 
-const PopperComponent = function (props: PopperProps) {
-    return (<Popper {...props} style={{width: '17.5rem', zIndex: 2147483647}} placement='bottom-end' />)
-}
-
-const StyledPopup = styled(Paper)({
-    width: '17.5rem',
-    '& > ul': {
-        display: 'grid',
-        gridTemplateColumns: '3.5rem 3.5rem 3.5rem 3.5rem 3.5rem',
-        margin: 0,
-        padding: 0,
-        '& > li.MuiAutocomplete-option': {
-            display: 'inline-block',
-            width: '3.5rem',
-            textAlign: 'center',
-            height: '3rem',
-            padding: 0,
-            verticalAlign: 'middle',
-            lineHeight: '2.8rem',
-            borderRight: '1px solid #ccc',
-            borderBottom: '1px solid #ccc',
-        },
-        '& > li.MuiAutocomplete-option:nth-of-type(5n)': {
-            borderRight: 0,
-        },
+const StyledPercentGrid = styled('div')({
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 3.2rem)',
+    gap: 0,
+    '& > button': {
+        width: '3.2rem',
+        height: '2rem',
+        borderRadius: 0,
+        fontSize: '0.85rem',
     },
 });
-
-const StyledPopupRef = React.forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
-    // Extract sx from props. (ESLint doesn't allow this...)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { sx, ...rest } = props;
-    return <StyledPopup ref={ref} {...rest} />;
-});  
 
 export default AreaBonusControl;

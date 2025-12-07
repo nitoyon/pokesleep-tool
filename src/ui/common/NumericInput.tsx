@@ -21,6 +21,7 @@ type OmitProps = 'inputProps' | 'onBlur' | 'onChange' | 'onFocus' | 'type' | 'va
  * Handle for NumericInput component to control from parent.
  */
 export interface NumericInputHandle {
+    focus: () => void;
     close: () => void;
 }
 
@@ -110,8 +111,11 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
         setRawText(value.toString());
     }, [value]);
 
-    // Expose close method to parent via ref
+    // Expose focus and close methods to parent via ref
     React.useImperativeHandle(ref, () => ({
+        focus: () => {
+            anchorRef.current?.querySelector('input')?.focus();
+        },
         close: onClose
     }), [onClose]);
 
@@ -273,10 +277,18 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         setOpen(false);
     }, []);
 
-    // Expose close method to parent via ref
+    // Expose focus and close methods to parent via ref
     React.useImperativeHandle(ref, () => ({
+        focus: () => {
+            if (!open) {
+                setIsEmpty(false);
+                setCursorPos(value.toString().length);
+                setOpen(true);
+            }
+            anchorRef.current?.querySelector('input')?.focus();
+        },
         close: onClose
-    }), [onClose]);
+    }), [onClose, open, value]);
 
     const onDigitClick = React.useCallback((digit: number) => {
         setIsEmpty(false);
