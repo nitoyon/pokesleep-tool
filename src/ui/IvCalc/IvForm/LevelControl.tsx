@@ -2,9 +2,8 @@ import React from 'react';
 import { styled, SxProps, Theme } from '@mui/system';
 import { Button } from '@mui/material';
 import { maxLevel } from '../../../util/PokemonRp';
-import ArrowButton from '../../common/ArrowButton';
 import NumericInput, { NumericInputHandle } from '../../common/NumericInput';
-import SliderEx from '../../common/SliderEx';
+import SliderAndArrow from '../../common/SliderAndArrow';
 
 const LevelControlContainer = styled('div')({
     display: 'flex',
@@ -27,7 +26,7 @@ const LevelControl = React.memo(({max100, value, onChange}: {
     const max = max100 ? 100 : maxLevel;
     return (<LevelControlContainer>
             <LevelInput max100={max100} value={value} onChange={onChange}/>
-            <LevelSlider max={max} value={value} onChange={onChange}/>
+            <SliderAndArrow min={1} max={max} value={value} onChange={onChange}/>
         </LevelControlContainer>
     );
 });
@@ -56,7 +55,7 @@ export const LevelInput = React.memo(({max100, showSlider, sx, value, onChange}:
         sx={sx}>
         <LevelSelectorPopup>
             {showSlider &&
-                <LevelSlider max={max} value={value} onChange={onChange}/>
+                <SliderAndArrow min={1} max={max} value={value} onChange={onChange}/>
             }
             <div className="buttons">
                 <Button onClick={() => onButtonClick(10)}>10</Button>
@@ -93,35 +92,6 @@ const LevelSelectorPopup = styled('div')({
             border: '1.5px solid #79d073',
         },
     }
-});
-
-const LevelSliderContainer = styled('div')({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '.7rem',
-    height: '1.8rem',
-    flex: 1,
-});
-
-export const LevelSlider = React.memo(({max, value, onChange}: {
-    max: number,
-    value: number,
-    onChange: (value: number) => void,
-}) => {
-    const onLevelDownClick = React.useCallback(() => {
-        onChange(value - 1);
-    }, [value, onChange]);
-    const onLevelUpClick = React.useCallback(() => {
-        onChange(value + 1);
-    }, [value, onChange]);
-
-    return (<LevelSliderContainer>
-            <ArrowButton label="◀" disabled={value === 1} onClick={onLevelDownClick}/>
-            <SliderEx min={1} max={max} size="small" style={{userSelect: "none"}}
-                value={value} onChange2={onChange}/>
-            <ArrowButton label="▶" disabled={value === max} onClick={onLevelUpClick}/>
-        </LevelSliderContainer>
-    );
 });
 
 export default LevelControl;
