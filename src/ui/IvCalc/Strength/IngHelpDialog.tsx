@@ -162,7 +162,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                 <label>{t('average recipe level')}:</label>
                 <LevelInput value={strength.parameter.recipeLevel}
                     onChange={onRecipeLevelChange}
-                    sx={{width: '2rem'}}/>
+                    showSlider sx={{width: '2rem'}}/>
             </section>
         </DialogContent>
         <DialogActions>

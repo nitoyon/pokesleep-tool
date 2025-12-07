@@ -1,4 +1,4 @@
-import { round1, round2, formatWithComma, getFormatWithCommaPos } from './NumberUtil';
+import { round1, round2, formatWithComma, getFormatWithCommaPos, clamp } from './NumberUtil';
 
 describe('round1', () => {
     test('0', () => { expect(round1(0)).toBe("0.0"); });
@@ -34,4 +34,16 @@ describe('getFormatWithCommaPos', () => {
     test('1234567 at pos 5', () => { expect(getFormatWithCommaPos(1234567, 5)).toBe(7); }); // '6'
     test('1234567 at pos 6', () => { expect(getFormatWithCommaPos(1234567, 6)).toBe(8); }); // '7'
     test('1234567 at pos 7', () => { expect(getFormatWithCommaPos(1234567, 7)).toBe(9); }); // beyond end
+});
+
+describe('clamp', () => {
+    test('value within range', () => { expect(clamp(0, 5, 10)).toBe(5); });
+    test('value below min returns min', () => { expect(clamp(0, -5, 10)).toBe(0); });
+    test('value above max returns max', () => { expect(clamp(0, 15, 10)).toBe(10); });
+    test('value equals min', () => { expect(clamp(0, 0, 10)).toBe(0); });
+    test('value equals max', () => { expect(clamp(0, 10, 10)).toBe(10); });
+    test('negative range', () => { expect(clamp(-10, -5, -1)).toBe(-5); });
+    test('value below negative min', () => { expect(clamp(-10, -15, -1)).toBe(-10); });
+    test('value above negative max', () => { expect(clamp(-10, 5, -1)).toBe(-1); });
+    test('zero range', () => { expect(clamp(5, 3, 5)).toBe(5); });
 });
