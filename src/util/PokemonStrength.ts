@@ -106,7 +106,7 @@ export interface StrengthParameter extends EnergyParameter {
     /**
      * Average recipe level (1 - 65).
      */
-    recipeLevel: 1|10|20|30|40|50|55|60|65;
+    recipeLevel: RecipeLevel;
 
     /** Skill level of the 'Helper Boost' skill */
     helperBoostLevel: number;
@@ -238,17 +238,24 @@ export interface StrengthResult {
 }
 
 /** Recipe level bonus table  */
-export const recipeLevelBonus = {
-    1: 0,
-    10: 18,
-    20: 35,
-    30: 61,
-    40: 96,
-    50: 142,
-    55: 171,
-    60: 203,
-    65: 234,
+export const recipeLevelBonus: { [key: number]: number } = {
+    1: 0, 2: 2, 3: 4, 4: 6, 5: 8,
+    6: 9, 7: 11, 8: 13, 9: 16, 10: 18,
+    11: 19, 12: 21, 13: 23, 14: 24, 15: 26,
+    16: 28, 17: 30, 18: 31, 19: 33, 20: 35,
+    21: 37, 22: 40, 23: 42, 24: 45, 25: 47,
+    26: 50, 27: 52, 28: 55, 29: 58, 30: 61,
+    31: 64, 32: 67, 33: 70, 34: 74, 35: 77,
+    36: 81, 37: 84, 38: 88, 39: 92, 40: 96,
+    41: 100, 42: 104, 43: 108, 44: 113, 45: 117,
+    46: 122, 47: 127, 48: 132, 49: 137, 50: 142,
+    51: 148, 52: 153, 53: 159, 54: 165, 55: 171,
+    56: 177, 57: 183, 58: 190, 59: 197, 60: 203,
+    61: 209, 62: 215, 63: 221, 64: 227, 65: 234,
 };
+
+/** Valid recipe level values (1-65) */
+type RecipeLevel = number;
 
 /**
  * Represents BonusEffects and the source of each bonus.
@@ -1242,7 +1249,7 @@ export function loadStrengthParameter(): StrengthParameter {
         ret.recipeBonus = json.recipeBonus;
     }
     if (typeof(json.recipeLevel) === "number" &&
-        [1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)) {
+        1 <= json.recipeLevel && json.recipeLevel <= 65) {
         ret.recipeLevel = json.recipeLevel;
     }
     if (typeof(json.helperBoostLevel) === "number" &&
