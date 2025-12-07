@@ -225,12 +225,48 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         });
     }, [open, cursorPos, value, isEmpty]);
 
-    const onClick = React.useCallback(() => {
+    const onClick = React.useCallback((e: React.MouseEvent<HTMLInputElement>) => {
         setIsEmpty(false);
-        const text = value.toString();
-        setCursorPos(text.length); // Set cursor at the end
+        const text = formatWithComma(value);
+
+        // First time open or mirror not ready, set cursor to end
+        if (!(open && mirrorRef.current)) {
+            setCursorPos(text.length);
+            setOpen(true);
+            return;
+        }
+
+        // Find text node
+        const textNode = mirrorRef.current.firstChild;
+        if (textNode === null || textNode.nodeType !== Node.TEXT_NODE) {
+            setCursorPos(text.length);
+            setOpen(true);
+            return;
+        }
+
+        // Find the character position closest to the click using Range API
+        const clickX = e.clientX;
+        const range = document.createRange();
+        let closestPos = text.length;
+        let minDistance = Infinity;
+
+        for (let i = 0; i <= text.length; i++) {
+            range.setStart(textNode, 0);
+            range.setEnd(textNode, i);
+            const rect = range.getBoundingClientRect();
+            const distance = Math.abs(clickX - rect.right);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                // Convert display position to raw position (remove commas)
+                const rawPos = text.substring(0, i).replace(/,/g, '').length;
+                closestPos = rawPos;
+            }
+        }
+
+        setCursorPos(closestPos);
         setOpen(true);
-    }, [value]);
+    }, [open, value]);
 
     const onClose = React.useCallback(() => {
         setIsEmpty(false);
@@ -394,11 +430,11 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
                 onKeyDown={onKeyDown}
                 inputProps={{inputMode: "none"}}
                 value={text}/>
+            <MirrorSpan ref={mirrorRef} style={inputStyle}>
+                {text}
+            </MirrorSpan>
             {open && (
                 <>
-                    <MirrorSpan ref={mirrorRef} style={inputStyle}>
-                        {text}
-                    </MirrorSpan>
                     <Cursor style={{
                         ...inputStyle,
                         left: (inputStyle.left ?? 0) as number + cursorOffset.x,
