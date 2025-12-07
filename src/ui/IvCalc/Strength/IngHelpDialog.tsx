@@ -14,6 +14,7 @@ import InfoButton from '../InfoButton';
 import { IvAction } from '../IvState';
 import IngredientIcon from '../IngredientIcon';
 import IngredientCountIcon from '../IngredientCountIcon';
+import { LevelInput } from '../IvForm/LevelControl';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
 import { useTranslation, Trans } from 'react-i18next';
 import i18next from 'i18next'
@@ -33,8 +34,8 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     const onRecipeBonusChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...strength.parameter, recipeBonus: parseInt(e.target.value)});
     }, [onChange, strength.parameter]);
-    const onRecipeLevelChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...strength.parameter, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
+    const onRecipeLevelChange = React.useCallback((recipeLevel: number) => {
+        onChange({...strength.parameter, recipeLevel});
     }, [onChange, strength.parameter]);
     const onRecipeBonusInfoClick = React.useCallback(() => {
         setRecipeBonusHelpOpen(true);
@@ -159,18 +160,9 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
             </section>
             <section>
                 <label>{t('average recipe level')}:</label>
-                <Select variant="standard" value={strength.parameter.recipeLevel.toString()}
-                    onChange={onRecipeLevelChange}>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={30}>30</MenuItem>
-                    <MenuItem value={40}>40</MenuItem>
-                    <MenuItem value={50}>50</MenuItem>
-                    <MenuItem value={55}>55</MenuItem>
-                    <MenuItem value={60}>60</MenuItem>
-                    <MenuItem value={65}>65</MenuItem>
-                </Select>
+                <LevelInput value={strength.parameter.recipeLevel}
+                    onChange={onRecipeLevelChange}
+                    sx={{width: '2rem'}}/>
             </section>
         </DialogContent>
         <DialogActions>

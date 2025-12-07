@@ -11,6 +11,7 @@ import InfoButton from '../InfoButton';
 import PeriodSelect from './PeriodSelect';
 import EventConfigDialog from './EventConfigDialog';
 import FixedLevelSelect from './FixedLevelSelect';
+import { LevelInput } from '../IvForm/LevelControl';
 import { getActiveHelpBonus } from '../../../data/events';
 import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
@@ -108,8 +109,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onRecipeBonusChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, recipeBonus: parseInt(e.target.value)});
     }, [onChange, value]);
-    const onRecipeLevelChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, recipeLevel: parseInt(e.target.value) as 1|10|20|30|40|50|55});
+    const onRecipeLevelChange = React.useCallback((recipeLevel: number) => {
+        onChange({...value, recipeLevel});
     }, [onChange, value]);
     const onInitializeClick = React.useCallback(() => {
         setInitializeConfirmOpen(true);
@@ -219,18 +220,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         </section>
         <section>
             <label>{t('average recipe level')}:</label>
-            <Select variant="standard" value={value.recipeLevel.toString()}
-                onChange={onRecipeLevelChange}>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-                <MenuItem value={30}>30</MenuItem>
-                <MenuItem value={40}>40</MenuItem>
-                <MenuItem value={50}>50</MenuItem>
-                <MenuItem value={55}>55</MenuItem>
-                <MenuItem value={60}>60</MenuItem>
-                <MenuItem value={65}>65</MenuItem>
-            </Select>
+            <LevelInput value={value.recipeLevel}
+                onChange={onRecipeLevelChange}
+                sx={{width: '2rem'}}/>
         </section>
         <section className="mt">
             <Button onClick={onInitializeClick} variant="outlined">{t('initialize all parameters')}</Button>
