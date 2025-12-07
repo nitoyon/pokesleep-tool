@@ -24,7 +24,7 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
         const text = e.target.value.replace(/,/g, "");
         setRawText(text);
         if (text === "") {
-            onChange(Math.max(0, minValue));
+            onChange(minValue);
             return;
         }
 
@@ -44,9 +44,25 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
         setRawText(value.toString());
     }, [children, value]);
     const onClose = React.useCallback(() => {
+        // Parse and normalize the value when losing focus
+        let normalizedVal: number;
+        const text = rawText.replace(/,/g, "");
+        if (text === "") {
+            normalizedVal = minValue;
+        } else {
+            const val = parseInt(text, 10);
+            if (isNaN(val)) {
+                // If invalid, keep the current value
+                normalizedVal = value;
+            } else {
+                // Clamp to min/max range
+                normalizedVal = clamp(minValue, val, maxValue);
+            }
+        }
+        onChange(normalizedVal);
         setFocused(false);
         setOpen(false);
-    }, []);
+    }, [rawText, value, minValue, maxValue, onChange]);
     const onBlur = React.useCallback(() => {
         if (popupEnabled) {
             return;
@@ -61,8 +77,10 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
     }, [onClose, open]);
     // Sync rawText when value changes from outside
     React.useEffect(() => {
-        setRawText(value.toString());
-    }, [value]);
+        if (!focused) {
+            setRawText(value.toString());
+        }
+    }, [focused, value]);
 
     // Expose focus and close methods to parent via ref
     React.useImperativeHandle(ref, () => ({
