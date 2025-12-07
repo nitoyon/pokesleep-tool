@@ -15,7 +15,7 @@ import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
 } from '../../../util/MainSkill';
 import { Button, Collapse, Dialog, DialogActions, DialogContent, DialogTitle,
     FormControl, MenuItem, Switch, ToggleButtonGroup, ToggleButton } from '@mui/material';
-import LevelSelector from '../IvForm/LevelSelector';
+import { LevelInput } from '../IvForm/LevelControl';
 import InfoButton from '../InfoButton';
 import IngredientIcon from '../IngredientIcon';
 import TypeSelect from '../TypeSelect';
@@ -636,7 +636,8 @@ function getBerryBurstConfigHtml(strength: PokemonStrength,
                     type={burstTeam[i].type}
                     onChange={type => onBerryBurstTypeChange(i, type)}/>
                 <span style={{padding: '0 0.2rem 0 0.6rem'}}>Lv.</span>
-                {auto ? burstTeam[i].level : <LevelSelector value={burstTeam[i].level}
+                {auto ? burstTeam[i].level : <LevelInput value={burstTeam[i].level}
+                    sx={{width: '1.2rem', fontSize: '0.9rem'}} showSlider
                     onChange={level => onBerryBurstLevelChange(i, level)}/>}
                 <InfoButton onClick={() => onBerryInfoClick(burstTeam[i].type, burstTeam[i].level)}/>
             </span>

@@ -10,9 +10,14 @@ const PopperMenu = React.memo(({
     onClose: () => void,
 }) => {
     const onClickAway = React.useCallback((e: MouseEvent | TouchEvent) => {
+        // if clicking inside the anchor element, do nothing
+        if (anchorEl?.contains(e.target as Node)) {
+            return;
+        }
+
         // if anchorEl is clicked, we shouldn't reopen the popper
         if (e.target === anchorEl) {
-            e.preventDefault();
+            return;
         }
         onClose();
     }, [anchorEl, onClose]);
