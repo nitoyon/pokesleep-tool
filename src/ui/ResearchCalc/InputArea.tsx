@@ -9,6 +9,7 @@ import TrackingPanel from './TrackingPanel';
 import { InputAreaData } from './ResearchCalcAppConfig';
 import ArrowButton from '../common/ArrowButton';
 import SliderEx from '../common/SliderEx';
+import NumericInput from '../common/NumericInput';
 import ResearchAreaTextField from './ResearchAreaTextField';
 import RankBall from './RankBallLabel';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -51,13 +52,7 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         onchange?.({fieldIndex: value});
     }, [onchange]);
 
-    const onStrengthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        let strength = Number(e.target.value.replace(/,/g, ""));
-        if (isNaN(strength)) {
-            return;
-        }
-        strength = Math.max(0, strength);
-        strength = Math.min(strength, MAX_STRENGTH);
+    const onStrengthChange = useCallback((strength: number) => {
         onchange?.({strength});
     }, [onchange]);
 
@@ -83,10 +78,10 @@ function InputArea({data, onChange: onchange}:InputAreaProps) {
         </div>
         <div>{t("strength")}:</div>
         <div>
-            <div>
+            <div style={{display: 'grid', gridTemplateColumns: 'auto 1fr'}}>
                 <RankTextField field={field}
                     value={rank.index} onChange={onRankChange}/>
-                <StrengthTextField
+                <StrengthTextField max={MAX_STRENGTH}
                     value={strength} onChange={onStrengthChange}/>
             </div>
             <div className="strength_second_line">
@@ -224,39 +219,21 @@ const StyledRankMenuItem = styled(MenuItem)({
 });
 
 interface StrengthTextFieldProps {
+    max: number;
     value: number;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (value: number) => void;
 }
 
 const StrengthAdornment = <InputAdornment position="start" sx={{color: "#ff944b"}}><LocalFireDepartmentIcon/></InputAdornment>;
 
-const StrengthTextField = React.memo(({value, onChange}:StrengthTextFieldProps) => {
-    const { t } = useTranslation();
+const StrengthTextField = React.memo(({max, value, onChange}: StrengthTextFieldProps) => 
+    <StyledStrengthInput size="small"
+        max={max} value={value} onChange={onChange}
+        startAdornment={StrengthAdornment}/>
+);
 
-    const [strengthFocused, setStrengthFocused] = useState(false);
-    const onStrengthFocus = useCallback(() => {
-        setStrengthFocused(true);
-    }, []);
-    const onStrengthBlur = useCallback(() => {
-        setStrengthFocused(false);
-    }, []);
-
-    const strengthValue = strengthFocused ?
-        value.toString() : t("num", {n: value});
-
-    return (
-        <StyledStrengthTextField variant="standard" size="small" type="tel"
-            value={strengthValue}
-            onChange={onChange} onFocus={onStrengthFocus} onBlur={onStrengthBlur}
-            InputProps={{
-                inputProps: {step: 1000, inputMode: "numeric"},
-                startAdornment: StrengthAdornment,
-            }}/>
-    );
-});
-
-const StyledStrengthTextField = styled(TextField)({
-    width: 'calc(100% - 5rem)',
+const StyledStrengthInput = styled(NumericInput)({
+    width: '100%',
     '& input': {
         fontWeight: 800,
         fontSize: '1rem',

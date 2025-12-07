@@ -33,6 +33,28 @@ export function formatWithComma(n: number): string {
     return parts.join(",");
 }
 
+export function getFormatWithCommaPos(n :number, pos: number): number {
+    const text = formatWithComma(n);
+    let rawPos = 0;
+    let ret = 0;
+
+    while (rawPos < pos && ret < text.length) {
+        if (text[ret] === ',') {
+            ret++; // Skip comma in display text
+        } else {
+            rawPos++;
+            ret++;
+        }
+    }
+
+    // Skip any commas after reaching target position
+    while (ret < text.length && text[ret] === ',') {
+        ret++;
+    }
+
+    return ret;
+}
+
 export function formatNice(n: number, t: typeof i18next.t): string {
     if (n < 10) {
         return round2(n);

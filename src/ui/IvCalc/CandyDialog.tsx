@@ -1,17 +1,18 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import NumericInput from '../common/NumericInput';
 import SliderEx from '../common/SliderEx';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
 import Nature from '../../util/Nature';
 import { formatWithComma } from '../../util/NumberUtil';
 import { maxLevel } from '../../util/PokemonRp';
-import LevelSelector from './IvForm/LevelSelector';
+import { LevelInput } from './IvForm/LevelControl';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from './IvForm/NatureTextField';
 import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
-import { Button, Dialog, DialogActions, Input, InputAdornment, 
+import { Button, Dialog, DialogActions, InputAdornment, 
     MenuItem, Select, SelectChangeEvent,
     ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
@@ -30,7 +31,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const [currentIv, setCurrentIv] = React.useState(iv);
     const [currentLevel, setCurrentLevel] = React.useState(iv.level);
     const [expGot, setExpGot] = React.useState(0);
-    const [isEmpty, setIsEmpty] = React.useState(false);
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
     const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [expFactor, setExpFactor] = React.useState(0);
@@ -65,19 +65,19 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             return;
         }
 
-        setCurrentIv(iv);
-        setCurrentLevel(iv.level);
-        setExpGot(0);
-        setMaxExpLeft(calcExp(iv.level, iv.level + 1, iv));
-        setExpFactor(iv.nature.expGainsFactor);
-        setShouldRender(true);
-
+        // Set target level
+        // * If dstLevel is specified, use it,
+        //   else set according to specialty
+        // * Do not set lower than current level and
+        //   not higher than max level
         let level = 0;
         if (dstLevel !== undefined) {
             level = Math.min(dstLevel, maxLevel);
         }
-        else if (iv.pokemon.specialty === "Berries") {
-            level = 65;
+        else if (iv.pokemon.specialty === "Berries" ||
+            iv.pokemon.specialty === "All"
+        ) {
+            level = maxLevel;
         }
         else if (iv.pokemon.specialty === "Ingredients") {
             level = 60;
@@ -85,7 +85,18 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         else {
             level = 50;
         }
-        setTargetLevel(Math.max(level, iv.level));
+        level = Math.min(maxLevel, Math.max(level, iv.level));
+        setTargetLevel(level);
+
+        // Reset other states
+        // current level should be less than or equal to iv.level
+        const _currentLevel = Math.min(iv.level, level);
+        setCurrentIv(iv);
+        setCurrentLevel(_currentLevel);
+        setExpGot(0);
+        setMaxExpLeft(calcExp(_currentLevel, _currentLevel + 1, iv));
+        setExpFactor(iv.nature.expGainsFactor);
+        setShouldRender(true);
     }, [iv, shouldReset, dstLevel, open]);
 
     const onExpFactorChange = React.useCallback((e: SelectChangeEvent) => {
@@ -101,28 +112,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     }, [iv, onChange]);
 
     const onExpSliderChange = React.useCallback((value: number) => {
-        setIsEmpty(false);
         setExpGot(value);
     }, []);
 
-    const onExpLeftChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const rawText = e.target.value;
-
-        // Update isEmpty state
-        if (typeof(rawText) === "string" && rawText.trim() === "") {
-            setIsEmpty(true);
-            setExpGot(0);
-            return;
-        }
-
-        let value = parseInt(rawText, 10);
-        if (isNaN(value) || value < 0) {
-            value = 0;
-        }
-        if (value > maxExpLeft) {
-            value = maxExpLeft;
-        }
-        setIsEmpty(false);
+    const onExpLeftChange = React.useCallback((value: number) => {
         setExpGot(maxExpLeft - value);
     }, [maxExpLeft]);
 
@@ -143,8 +136,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const result: CalcExpAndCandyResult =
         calcExpAndCandy(iv2, expGot, targetLevel, candyBoost);
 
-    const valueText = isEmpty ? "" : maxExpLeft - expGot;
-
     return (<>
         <StyledDialog open={open} onClose={onClose}>
             <article>
@@ -155,33 +146,25 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelSelector value={currentLevel} onChange={onCurrentLevelChange}/>
+                            <LevelInput value={currentLevel} onChange={onCurrentLevelChange}
+                                showSlider/>
                         </div>
                         <div className="expLeft">
                             <StyledSlider value={expGot}
                                 min={0} max={maxExpLeft - 1} onChange2={onExpSliderChange}/>
-                            <Input value={valueText} type="number" size="small"
+                            <NumericInput value={maxExpLeft - expGot} size="small"
                                 startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
                                 endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
-                                onChange={onExpLeftChange}
-                                inputProps={{
-                                    inputMode: "numeric",
-                                }}
-                                sx={{
-                                    '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-                                        WebkitAppearance: 'none',
-                                    },
-                                    '& input[type=number]': {
-                                        MozAppearance: 'textfield',
-                                    },
-                                }}/>
+                                min={1} max={maxExpLeft}
+                                onChange={onExpLeftChange}/>
                         </div>
                     </div>
                     <EastIcon/>
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelSelector value={targetLevel} onChange={setTargetLevel}/>
+                            <LevelInput value={targetLevel} onChange={setTargetLevel}
+                                showSlider/>
                         </div>
                     </div>
                 </div>
@@ -247,7 +230,7 @@ const StyledDialog = styled(Dialog)({
                 gap: '0.7rem',
                 margin: '0 auto',
                 '& > div.level': {
-                    width: '7rem',
+                    width: '7.2rem',
                     '& > div.levelInput': {
                         color: '#79d073',
                         fontSize: '1.2rem',
@@ -259,19 +242,22 @@ const StyledDialog = styled(Dialog)({
                             transform: 'scale(1, 0.9)',
                             paddingTop: '0.2rem'
                         },
-                        '& > button': {
-                            color: '#79d073',
+                        '& > div.numeric': {
                             width: '3rem',
-                            fontWeight: 'bold',
-                            fontSize: '1.3rem !important',
-                            paddingBottom: 0,
-                            transform: 'scale(1, 0.9)',
+                            '& > div.MuiInput-root': {
+                                color: '#79d073',
+                                fontWeight: 'bold',
+                                fontSize: '1.3rem !important',
+                                transform: 'scale(1, 0.9)',
+                                '& > input': {
+                                    padding: '2px 0',
+                                },
+                            },
                         },
                     },
                     '& > div.expLeft': {
                         paddingTop: '0.3rem',
-                        '& > div.MuiInput-root': {
-                            top: '-0.2rem',
+                        '& > div.numeric > div.MuiInput-root': {
                             '& > div.MuiInputAdornment-root > p': {
                                 color: '#79d073',
                                 fontSize: '0.7rem',
@@ -280,7 +266,6 @@ const StyledDialog = styled(Dialog)({
                             },
                             '& > input': {
                                 padding: 0,
-                                color: '#000000',
                                 fontSize: '0.9rem',
                                 fontWeight: 'bold',
                                 transform: 'scale(1, 0.9)',
