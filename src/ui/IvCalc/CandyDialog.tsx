@@ -5,7 +5,7 @@ import SliderEx from '../common/SliderEx';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
 import Nature from '../../util/Nature';
-import { formatWithComma } from '../../util/NumberUtil';
+import { clamp, formatWithComma } from '../../util/NumberUtil';
 import { maxLevel } from '../../util/PokemonRp';
 import { LevelInput } from './IvForm/LevelControl';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from './IvForm/NatureTextField';
@@ -85,7 +85,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         else {
             level = 50;
         }
-        level = Math.min(maxLevel, Math.max(level, iv.level));
+        level = clamp(iv.level, level, maxLevel);
         setTargetLevel(level);
 
         // Reset other states

@@ -6,6 +6,7 @@ import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { EnergyResult } from '../../../util/Energy';
+import { clamp } from '../../../util/NumberUtil';
 import { useElementWidth } from '../../common/Hook';
 import { Collapse, Button, Dialog, DialogActions, MenuItem, Popper,
     Select, SelectChangeEvent, Switch, TextField } from '@mui/material';
@@ -47,7 +48,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
         if (isNaN(newVal)) {
             newVal = 0;
         }
-        newVal = Math.min(100, Math.max(0, newVal));
+        newVal = clamp(0, newVal, 100);
         dispatch({type: "changeParameter", payload: { parameter: {
             ...parameter,
             sleepScore: newVal,
@@ -464,7 +465,7 @@ const EnergyHover = React.memo(({width, height, x, gx, gy, result}: {
     if (x < -margin || x > width + margin) {
         return <></>;
     }
-    x = Math.max(0, Math.min(width, x));
+    x = clamp(0, x, width);
     const minute = Math.round(x / width * 1440 / 10) * 10;
     x = minute / 1440 * width;
 
