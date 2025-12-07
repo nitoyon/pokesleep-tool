@@ -75,3 +75,7 @@ export function formatNice(n: number, t: typeof i18next.t): string {
     }
     throw new Error('unknown short num digits: ' + digits);
 }
+
+export function clamp(min: number, value: number, max: number): number {
+    return Math.min(Math.max(value, min), max);
+}
