@@ -222,7 +222,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <label>{t('average recipe level')}:</label>
             <LevelInput value={value.recipeLevel}
                 onChange={onRecipeLevelChange}
-                sx={{width: '2rem'}}/>
+                showSlider sx={{width: '2rem'}}/>
         </section>
         <section className="mt">
             <Button onClick={onInitializeClick} variant="outlined">{t('initialize all parameters')}</Button>
