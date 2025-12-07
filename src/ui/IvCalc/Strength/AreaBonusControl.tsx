@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { IconButton, InputAdornment } from '@mui/material';
 import NumericInput, { NumericInputHandle } from '../../common/NumericInput';
+import SliderAndArrow from '../../common/SliderAndArrow';
 
 const maxBonus = 85;
 
@@ -32,13 +33,17 @@ const AreaBonusControl = React.memo(({value, onChange}: {
                 <span style={{fontSize: '0.8rem', color: '#888'}}>%</span>
             </InputAdornment>}
         >
-            <StyledPercentGrid>
-                {percentages.map(p => (
-                    <IconButton key={p} onClick={() => onPercentClick(p)}>
-                        {p}%
-                    </IconButton>
-                ))}
-            </StyledPercentGrid>
+            <div>
+                <SliderAndArrow min={0} max={maxBonus} value={value} onChange={onChange}
+                    sx={{padding: '0.5rem 1rem 0 1rem'}}/>
+                <StyledPercentGrid>
+                    {percentages.map(p => (
+                        <IconButton key={p} onClick={() => onPercentClick(p)}>
+                            {p}%
+                        </IconButton>
+                    ))}
+                </StyledPercentGrid>
+            </div>
         </NumericInput>
     );
 });
