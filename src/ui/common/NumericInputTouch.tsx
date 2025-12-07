@@ -8,7 +8,7 @@ import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft
 import { Divider, IconButton, Input } from '@mui/material';
 import PopperMenu from './PopperMenu';
 import { NumericInputHandle, NumericInputProps } from './NumericInput';
-import { formatWithComma, getFormatWithCommaPos } from '../../util/NumberUtil';
+import { clamp, formatWithComma, getFormatWithCommaPos } from '../../util/NumberUtil';
 
 /**
  * An numeric input component for touch device.
@@ -183,7 +183,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         if (isNaN(val)) {
             return;
         }
-        val = Math.max(minValue, Math.min(val, maxValue));
+        val = clamp(minValue, val, maxValue);
         onChange(val);
         if (val === maxValue) {
             setCursorPos(val.toString().length);
@@ -222,7 +222,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
     const onNavMove = React.useCallback((diff: number) => {
         const max = isEmptyRef.current ? 0 : valueRef.current.toString().length;
         const currentCursorPos = cursorPosRef.current;
-        setCursorPos(Math.max(0, Math.min(max, currentCursorPos + diff)));
+        setCursorPos(clamp(0, currentCursorPos + diff, max));
     }, []);
 
     const onKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {

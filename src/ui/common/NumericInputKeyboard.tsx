@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from '@mui/material';
 import PopperMenu from './PopperMenu';
 import { NumericInputHandle, NumericInputProps } from './NumericInput';
-import { formatWithComma } from '../../util/NumberUtil';
+import { clamp, formatWithComma } from '../../util/NumberUtil';
 
 /**
  * An numeric input component for keyboard.
@@ -32,7 +32,7 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
         if (isNaN(val)) {
             return;
         }
-        const clampedVal = Math.min(Math.max(val, minValue), maxValue);
+        const clampedVal = clamp(minValue, val, maxValue);
         onChange(clampedVal);
     }, [minValue, maxValue, onChange]);
 
