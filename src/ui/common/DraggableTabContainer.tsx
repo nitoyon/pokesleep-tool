@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { useSpring, animated } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
+import { clamp } from '../../util/NumberUtil';
 
 /** Gap between each tab (in pixels) */
 const gap = 20;
@@ -60,7 +61,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange}: {
         let newIndex = index;
         if (changed) {
             newIndex += mx > 0 ? -1 : 1;
-            newIndex = Math.max(0, Math.min(length - 1, newIndex));
+            newIndex = clamp(0, newIndex, length - 1);
         }
         if (newIndex !== index) {
             onChange(newIndex);

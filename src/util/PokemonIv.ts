@@ -5,6 +5,7 @@ import { IngredientType, IngredientTypes } from './PokemonRp';
 import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
+import { clamp } from './NumberUtil';
 
 /**
  * Represents Indivisual Values (IV) of the Pokemon.
@@ -165,7 +166,7 @@ class PokemonIv {
      */
     normalize() {
         const maxSkillLevel = getMaxSkillLevel(this.pokemon.skill);
-        this.skillLevel = Math.min(maxSkillLevel, Math.max(this.skillLevel, 1));
+        this.skillLevel = clamp(1, this.skillLevel, maxSkillLevel);
 
         if (this.ingredient.endsWith('C') && this.pokemon.ing3 === undefined) {
             this.ingredient = this.ingredient.replace('C', 'A') as IngredientType;
