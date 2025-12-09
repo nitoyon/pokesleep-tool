@@ -75,12 +75,12 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
             onClose();
         }
     }, [onClose, open]);
-    // Sync rawText when value changes from outside
+    // Sync rawText when value changes from outside or popup
     React.useEffect(() => {
-        if (!focused) {
+        if (!anchorRef.current?.querySelector('input')?.matches(':focus')) {
             setRawText(value.toString());
         }
-    }, [focused, value]);
+    }, [value]);
 
     // Expose focus and close methods to parent via ref
     React.useImperativeHandle(ref, () => ({

@@ -13,8 +13,11 @@ const AreaBonusControl = React.memo(({value, onChange}: {
     const inputRef = React.useRef<NumericInputHandle|null>(null);
 
     const onPercentClick = React.useCallback((percent: number) => {
-        onChange(percent);
         inputRef.current?.close();
+
+        // WARNING: It is important to call close() before onChange()
+        // to avoid focus-related issues on NumericInputKeyboard.
+        onChange(percent);
     }, [onChange]);
 
     // Generate percentage options (0%, 5%, 10%, ..., 85%)

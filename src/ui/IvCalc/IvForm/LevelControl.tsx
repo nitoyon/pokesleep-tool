@@ -41,8 +41,11 @@ export const LevelInput = React.memo(({max100, showSlider, sx, value, onChange}:
     const inputRef = React.useRef<NumericInputHandle>(null);
 
     const onButtonClick = React.useCallback((num: number) => {
-        onChange(num);
         inputRef.current?.close();
+
+        // WARNING: It is important to call close() before onChange()
+        // to avoid focus-related issues on NumericInputKeyboard.
+        onChange(num);
     }, [onChange]);
 
     const max = max100 ? 100 : maxLevel;
