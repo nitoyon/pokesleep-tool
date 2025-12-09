@@ -18,6 +18,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
     const [open, setOpen] = React.useState(false);
     const [isEmpty, setIsEmpty] = React.useState(false);
     const [cursorPos, setCursorPos] = React.useState(0);
+    const [clearNext, setClearNext] = React.useState(false);
     const anchorRef = React.useRef<HTMLElement>(null);
     const mirrorRef = React.useRef<HTMLSpanElement>(null);
     const [inputStyle, setInputStyle] = React.useState<React.CSSProperties>({});
@@ -110,6 +111,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         if (!(open && mirrorRef.current)) {
             setCursorPos(text.length);
             setOpen(true);
+            setClearNext(true);
             return;
         }
 
@@ -118,6 +120,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         if (textNode === null || textNode.nodeType !== Node.TEXT_NODE) {
             setCursorPos(text.length);
             setOpen(true);
+            setClearNext(true);
             return;
         }
 
@@ -141,13 +144,16 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
             }
         }
 
+        // Move cursor to the specified position
         setCursorPos(closestPos);
         setOpen(true);
+        setClearNext(false);
     }, [open, value]);
 
     const onClose = React.useCallback(() => {
         setIsEmpty(false);
         setOpen(false);
+        setClearNext(false);
     }, []);
 
     // Expose focus and close methods to parent via ref
@@ -157,6 +163,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
                 setIsEmpty(false);
                 setCursorPos(value.toString().length);
                 setOpen(true);
+                setClearNext(true);
             }
             anchorRef.current?.querySelector('input')?.focus();
         },
@@ -165,9 +172,19 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
 
     const onDigitClick = React.useCallback((digit: number) => {
         setIsEmpty(false);
+        const digitStr = digit.toString();
+
+        // If clearNext is true, replace entire value with the digit
+        if (clearNext) {
+            setClearNext(false);
+            const val = clamp(minValue, digit, maxValue);
+            onChange(val);
+            setCursorPos(val.toString().length);
+            return;
+        }
+
         const currentText = isEmptyRef.current ? "0" : valueRef.current.toString();
         const currentCursorPos = cursorPosRef.current;
-        const digitStr = digit.toString();
 
         // Insert digit at cursor position
         let newText: string;
@@ -188,9 +205,10 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         if (val === maxValue) {
             setCursorPos(val.toString().length);
         }
-    }, [maxValue, minValue, onChange]);
+    }, [maxValue, minValue, onChange, clearNext]);
 
     const onBackspaceClick = React.useCallback(() => {
+        setClearNext(false);
         const currentCursorPos = cursorPosRef.current;
         if (currentCursorPos === 0) {
             return; // Can't delete before the start
@@ -214,12 +232,14 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
     }, [minValue, onChange]);
 
     const onClearClick = React.useCallback(() => {
+        setClearNext(false);
         setIsEmpty(true);
         onChange(Math.max(0, minValue));
         setCursorPos(0);
     }, [minValue, onChange]);
 
     const onNavMove = React.useCallback((diff: number) => {
+        setClearNext(false);
         const max = isEmptyRef.current ? 0 : valueRef.current.toString().length;
         const currentCursorPos = cursorPosRef.current;
         setCursorPos(clamp(0, currentCursorPos + diff, max));
@@ -243,6 +263,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         // Handle Delete (forward delete)
         if (e.key === 'Delete') {
             e.preventDefault();
+            setClearNext(false);
             const currentCursorPos = cursorPosRef.current;
             const currentText = valueRef.current.toString();
             const currentIsEmpty = isEmptyRef.current;
@@ -283,6 +304,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         // Handle Home (move cursor to start)
         if (e.key === 'Home') {
             e.preventDefault();
+            setClearNext(false);
             setCursorPos(0);
             return;
         }
@@ -290,6 +312,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
         // Handle End (move cursor to end)
         if (e.key === 'End') {
             e.preventDefault();
+            setClearNext(false);
             const max = isEmptyRef.current ? 0 : valueRef.current.toString().length;
             setCursorPos(max);
             return;
