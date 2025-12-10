@@ -462,6 +462,7 @@
             "none": "None",
             "advanced": "Advanced",
             "custom": "Custom",
+            "holiday 2025": "Holiday 2025",
             "packed portion cooking week 2": "Packed Portions Cooking Week Part 2",
             "halloween 2025": "Halloween 2025",
             "sleep style discovery week part2": "Sleep Style Discovery Week Part 2",
@@ -604,6 +605,7 @@
             "Charge Strength M (Bad Dreams)": "The $t(energy) reduction effect (-12) against non-$t(types.dark) type Pokémon is not included in the evaluation of $t(strength).",
             "Dream Shard Magnet S": "",
             "Energizing Cheer S": "This value is not counted towards the total strength amount.",
+            "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
@@ -671,6 +673,7 @@
             "Dream Shard Magnet S": "Dream Shard Magnet S",
             "Dream Shard Magnet S (Random)": "Dream Shard Magnet S (Random)",
             "Energizing Cheer S": "Energizing Cheer S",
+            "Energizing Cheer S (Nuzzle)": "Nuzzle (Energizing Cheer S)",
             "Metronome": "Metronome",
             "Energy for Everyone S": "Energy for Everyone S",
             "Energy for Everyone S (Lunar Blessing)": "Lunar Blessing (Energy for Everyone S)",
@@ -937,6 +940,7 @@
             "Absol": "Absol",
             "Wynaut": "Wynaut",
             "Spheal": "Spheal",
+            "Spheal (Holiday)": "Spheal (Holiday)",
             "Sealeo": "Sealeo",
             "Walrein": "Walrein",
             "Bagon": "Bagon",
@@ -988,6 +992,7 @@
             "Stufful": "Stufful",
             "Bewear": "Bewear",
             "Comfey": "Comfey",
+            "Togedemaru": "Togedemaru",
             "Mimikyu": "Mimikyu",
             "Cramorant": "Cramorant",
             "Toxel": "Toxel",
@@ -1005,6 +1010,8 @@
             "Pawmi": "Pawmi",
             "Pawmo": "Pawmo",
             "Pawmot": "Pawmot",
+            "Cetoddle": "Cetoddle",
+            "Cetitan": "Cetitan",
             "Clodsire": "Clodsire"
          }
     }

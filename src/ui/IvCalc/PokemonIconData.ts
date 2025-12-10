@@ -902,6 +902,16 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#90c2fb'},
         {x: 0, y: 0.5, w: 1, h: 0.5, color: '#fff7dd'},
     ],
+    // Spheal (Holiday)
+    '8555': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#90c2fb'},
+        {x: 0, y: 0.5, w: 1, h: 0.5, color: '#fff7dd'},
+        {x: 0.58, y: 0.79, w: 0.5, h: 0.12, r: 0.05, color: '#aaaaaa'},
+        {x: 0.71, y: 0.47, w: 0.18, h: 0.17, r: 0.1, color: '#aaaaaa'},
+        {x: 0.65, y: 0.6, w: 0.3, h: 0.3, r: 0.15, color: '#cd5f59'},
+        {x: 0.59, y: 0.8, w: 0.48, h: 0.1, r: 0.05, color: '#fefcf3'},
+        {x: 0.72, y: 0.48, w: 0.16, h: 0.15, r: 0.1, color: '#fefcf3'}
+    ],
     // Sealeo
     '364': [
         {x: 0, y: 0, w: 1, h: 1, color: '#69defe'},
@@ -1271,6 +1281,12 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.66, y: 0, w: 0.34, h: 0.34, color: '#f5d266'},
         {x: 0.34, y: 0, w: 0.34, h: 0.34, color: '#feadd3'},
     ],
+    // Togedemaru
+    '777': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#c6c8c5'},
+        {x: 0.08, y: 0.3, w: 0.8, h: 0.74, r: 0.15, color: '#fafbfc'},
+        {x: 0, y: 0, w: 1, h: 0.05, color: '#f7ea68'},
+    ],
     // Mimikyu
     '778': [
         {x: 0, y: 0, w: 1, h: 1, color: '#f6f0a1'},
@@ -1430,6 +1446,18 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.38, y: 0.25, w: 0.24, h: 0.16, r: 0.2, color: '#feffe1'},
         {x: -0.1, y: 0.65, w: 0.3, h: 0.3, r: 0.2, color: '#feffe1'},
         {x: 0.8, y: 0.65, w: 0.3, h: 0.3, r: 0.2, color: '#feffe1'},
+    ],
+    // Cetoddle
+    '974': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#fbfbfb'},
+        {x: 0.8, y: 0, w: 0.3, h: 1, color: '#d8dce0'},
+        {x: 0.94, y: 0, w: 0.1, h: 1, color: '#e89ce0'},
+    ],
+    // Cetitan
+    '975': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#d8dce0'},
+        {x: 0, y: 0, w: 1, h: 0.5, color: '#f0f0f0'},
+        {x: 0.9, y: 0, w: 0.1, h: 1, color: '#e89ce0'},
     ],
     // Clodsire
     '980': [

@@ -452,6 +452,7 @@
             "none": "なし",
             "advanced": "詳細設定",
             "custom": "カスタム設定",
+            "holiday 2025": "ホリデー2025",
             "packed portion cooking week 2": "デカ盛り！料理ウィーク vol.2",
             "halloween 2025": "ハロウィン2025",
             "sleep style discovery week part2": "ポケモン寝顔発見ウィーク vol.2",
@@ -594,6 +595,7 @@
             "Charge Strength M (Bad Dreams)": "$t(types.dark)タイプ以外のポケモンに対する$t(energy)の減少効果 (-12) については、$t(strength)の評価に含めていません。",
             "Dream Shard Magnet S": "",
             "Energizing Cheer S": "スキルの効果は、合計エナジー量には換算していません。",
+            "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "回復によるエナジー量への影響を見積もるには、[$t(energy)] の設定を変更して確認してください。",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
@@ -661,6 +663,7 @@
             "Dream Shard Magnet S": "ゆめのかけらゲットS",
             "Dream Shard Magnet S (Random)": "ゆめのかけらゲットS (ランダム)",
             "Energizing Cheer S": "げんきエールS",
+            "Energizing Cheer S (Nuzzle)": "ほっぺすりすり (げんきエールS)",
             "Metronome": "ゆびをふる",
             "Energy for Everyone S": "げんきオールS",
             "Energy for Everyone S (Lunar Blessing)": "みかづきのいのり (げんきオールS)",
@@ -927,6 +930,7 @@
             "Absol": "アブソル",
             "Wynaut": "ソーナノ",
             "Spheal": "タマザラシ",
+            "Spheal (Holiday)": "タマザラシ (ホリデー)",
             "Sealeo": "トドグラー",
             "Walrein": "トドゼルガ",
             "Bagon": "タツベイ",
@@ -978,6 +982,7 @@
             "Stufful": "ヌイコグマ",
             "Bewear": "キテルグマ",
             "Comfey": "キュワワー",
+            "Togedemaru": "トゲデマル",
             "Mimikyu": "ミミッキュ",
             "Cramorant": "ウッウ",
             "Toxel": "エレズン",
@@ -995,6 +1000,8 @@
             "Pawmi": "パモ",
             "Pawmo": "パモット",
             "Pawmot": "パーモット",
+            "Cetoddle": "アルクジラ",
+            "Cetitan": "ハルクジラ",
             "Clodsire": "ドオー"
         }
     }

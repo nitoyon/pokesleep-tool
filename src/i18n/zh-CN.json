@@ -450,6 +450,7 @@
             "none": "无",
             "advanced": "详细设置",
             "custom": "自定义设置",
+            "holiday 2025": "佳节2025",
             "packed portion cooking week 2": "分量加大！料理周vol.2",
             "halloween 2025": "万圣节2025",
             "sleep style discovery week part2": "发现宝可梦睡姿周vol.2",
@@ -592,6 +593,7 @@
             "Charge Strength M (Bad Dreams)": "对非$t(types.dark)类型宝可梦的$t(energy)减少效果（-12）未包含在$t(strength)的评估中。",
             "Dream Shard Magnet S": "",
             "Energizing Cheer S": "技能的效果没有换算成合计能量值。",
+            "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
@@ -659,6 +661,7 @@
             "Dream Shard Magnet S": "梦之碎片获取S",
             "Dream Shard Magnet S (Random)": "梦之碎片获取S (随机)",
             "Energizing Cheer S": "活力疗愈S",
+            "Energizing Cheer S (Nuzzle)": "蹭蹭脸颊 (活力疗愈S)",
             "Metronome": "挥指",
             "Energy for Everyone S": "活力全体療愈S",
             "Energy for Everyone S (Lunar Blessing)": "新月祈祷 (活力全体療愈S)",
@@ -925,6 +928,7 @@
             "Absol": "阿勃梭鲁",
             "Wynaut": "小果然",
             "Spheal": "海豹球",
+            "Spheal (Holiday)": "海豹球 (佳节)",
             "Sealeo": "海魔狮",
             "Walrein": "帝牙海狮",
             "Bagon": "宝贝龙",
@@ -976,6 +980,7 @@
             "Stufful": "童偶熊",
             "Bewear": "穿着熊",
             "Comfey": "花疗环环",
+            "Togedemaru": "托戈德玛尔",
             "Mimikyu": "谜拟丘",
             "Cramorant": "古月鸟",
             "Toxel": "毒电婴",
@@ -993,6 +998,8 @@
             "Pawmi": "布拨",
             "Pawmo": "布土拨",
             "Pawmot": "巴布土拨",
+            "Cetoddle": "走鲸",
+            "Cetitan": "浩大鲸",
             "Clodsire": "土王"
         }
     }
