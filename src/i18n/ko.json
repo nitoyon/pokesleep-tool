@@ -924,6 +924,7 @@
             "Absol": "앱솔",
             "Wynaut": "마자",
             "Spheal": "대굴레오",
+            "Spheal (Holiday)": "대굴레오 (축제)",
             "Sealeo": "씨레오",
             "Walrein": "씨카이저",
             "Bagon": "아공이",
@@ -975,6 +976,7 @@
             "Stufful": "포곰곰",
             "Bewear": "이븐곰",
             "Comfey": "큐아링",
+            "Togedemaru": "토게데마루",
             "Mimikyu": "따라큐",
             "Cramorant": "윽우지",
             "Toxel": "일레즌",
@@ -992,6 +994,8 @@
             "Pawmi": "빠모",
             "Pawmo": "빠모트",
             "Pawmot": "빠르모트",
+            "Cetoddle": "터벅고래",
+            "Cetitan": "우락고래",
             "Clodsire": "토오"
          }
     }
