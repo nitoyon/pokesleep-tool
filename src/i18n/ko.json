@@ -448,6 +448,7 @@
             "none": "없음",
             "advanced": "고급 설정",
             "custom": "맞춤 설정",
+            "holiday 2025": "홀리데이 2025",
             "packed portion cooking week 2": "특곱빼기! 요리 위크 vol.2",
             "halloween 2025": "핼러윈 2025",
             "sleep style discovery week part2": "포켓몬 잠자는 모습 발견 위크 vol.2",
@@ -589,6 +590,7 @@
             "Charge Strength M (Bad Dreams)": "$t(types.dark) 타입이 아닌 포켓몬에게 적용되는 $t(energy) 감소 효과 (-12)는 $t(strength) 평가에 포함되지 않았습니다.",
             "Dream Shard Magnet S": "",
             "Energizing Cheer S": "이 값은 총 강도량에 포함되지 않습니다.",
+            "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
@@ -655,6 +657,7 @@
             "Dream Shard Magnet S": "꿈의조각 획득S",
             "Dream Shard Magnet S (Random)": "꿈의조각 획득S (랜덤)",
             "Energizing Cheer S": "기력 응원S",
+            "Energizing Cheer S (Nuzzle)": "볼부비부비 (기력 응원S)",
             "Metronome": "손가락흔들기",
             "Energy for Everyone S": "기력 올S",
             "Energy for Everyone S (Lunar Blessing)": "초승달의기도 (기력 올S)",
@@ -921,6 +924,7 @@
             "Absol": "앱솔",
             "Wynaut": "마자",
             "Spheal": "대굴레오",
+            "Spheal (Holiday)": "대굴레오 (축제)",
             "Sealeo": "씨레오",
             "Walrein": "씨카이저",
             "Bagon": "아공이",
@@ -972,6 +976,7 @@
             "Stufful": "포곰곰",
             "Bewear": "이븐곰",
             "Comfey": "큐아링",
+            "Togedemaru": "토게데마루",
             "Mimikyu": "따라큐",
             "Cramorant": "윽우지",
             "Toxel": "일레즌",
@@ -989,6 +994,8 @@
             "Pawmi": "빠모",
             "Pawmo": "빠모트",
             "Pawmot": "빠르모트",
+            "Cetoddle": "터벅고래",
+            "Cetitan": "우락고래",
             "Clodsire": "토오"
          }
     }
