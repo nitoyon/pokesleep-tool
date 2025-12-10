@@ -940,6 +940,7 @@
             "Absol": "Absol",
             "Wynaut": "Wynaut",
             "Spheal": "Spheal",
+            "Spheal (Holiday)": "Spheal (Holiday)",
             "Sealeo": "Sealeo",
             "Walrein": "Walrein",
             "Bagon": "Bagon",
@@ -991,6 +992,7 @@
             "Stufful": "Stufful",
             "Bewear": "Bewear",
             "Comfey": "Comfey",
+            "Togedemaru": "Togedemaru",
             "Mimikyu": "Mimikyu",
             "Cramorant": "Cramorant",
             "Toxel": "Toxel",
@@ -1008,6 +1010,8 @@
             "Pawmi": "Pawmi",
             "Pawmo": "Pawmo",
             "Pawmot": "Pawmot",
+            "Cetoddle": "Cetoddle",
+            "Cetitan": "Cetitan",
             "Clodsire": "Clodsire"
          }
     }

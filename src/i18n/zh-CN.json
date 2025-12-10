@@ -928,6 +928,7 @@
             "Absol": "阿勃梭鲁",
             "Wynaut": "小果然",
             "Spheal": "海豹球",
+            "Spheal (Holiday)": "海豹球 (佳节)",
             "Sealeo": "海魔狮",
             "Walrein": "帝牙海狮",
             "Bagon": "宝贝龙",
@@ -979,6 +980,7 @@
             "Stufful": "童偶熊",
             "Bewear": "穿着熊",
             "Comfey": "花疗环环",
+            "Togedemaru": "托戈德玛尔",
             "Mimikyu": "谜拟丘",
             "Cramorant": "古月鸟",
             "Toxel": "毒电婴",
@@ -996,6 +998,8 @@
             "Pawmi": "布拨",
             "Pawmo": "布土拨",
             "Pawmot": "巴布土拨",
+            "Cetoddle": "走鲸",
+            "Cetitan": "浩大鲸",
             "Clodsire": "土王"
         }
     }
