@@ -218,10 +218,10 @@ const LevelForm = React.memo(({ levelInfo, maxExpLeft, onLevelInfoChange }: {
     }, [levelInfo, maxExpLeft, onLevelInfoChange]);
 
     return <>
-        <div className="icon">
+        <StyledIcon>
             <PokemonIcon idForm={levelInfo.iv.idForm} size={80}/>
-        </div>
-        <div className="levels">
+        </StyledIcon>
+        <StyledLevel>
             <div className="level">
                 <div className="levelInput">
                     <label>Lv.</label>
@@ -249,8 +249,68 @@ const LevelForm = React.memo(({ levelInfo, maxExpLeft, onLevelInfoChange }: {
                         showSlider/>
                 </div>
             </div>
-        </div>
+        </StyledLevel>
     </>;
+});
+
+const StyledIcon = styled('div')({
+    margin: '0 auto .5rem',
+    width: '80px',
+});
+
+const StyledLevel = styled('div')({
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '0.7rem',
+    margin: '0 auto',
+    '& > div.level': {
+        width: '7.2rem',
+        '& > div.levelInput': {
+            color: '#79d073',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '0.2rem',
+            '& > label': {
+                transform: 'scale(1, 0.9)',
+                paddingTop: '0.2rem'
+            },
+            '& > div.numeric': {
+                width: '3rem',
+                '& > div.MuiInput-root': {
+                    color: '#79d073',
+                    fontWeight: 'bold',
+                    fontSize: '1.3rem !important',
+                    transform: 'scale(1, 0.9)',
+                    '& > input': {
+                        padding: '2px 0',
+                    },
+                },
+            },
+        },
+        '& > div.expLeft': {
+            paddingTop: '0.3rem',
+            '& > div.numeric > div.MuiInput-root': {
+                '& > div.MuiInputAdornment-root > p': {
+                    color: '#79d073',
+                    fontSize: '0.7rem',
+                    fontWeight: 'bold',
+                    transform: 'scale(1, 0.9)',
+                },
+                '& > input': {
+                    padding: 0,
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold',
+                    transform: 'scale(1, 0.9)',
+                },
+            },
+        },
+    },
+    '& > svg': {
+        paddingTop: '0.3rem',
+        color: '#888',
+    },
 });
 
 const NormalCandyForm = React.memo(({ config, result, onChange }: {
@@ -334,64 +394,6 @@ const StyledDialog = styled(Dialog)({
 
         '& > article': {
             padding: '.8rem .8rem 0 .8rem',
-            '& > div.icon': {
-                margin: '0 auto .5rem',
-                width: '80px',
-            },
-            '& > div.levels': {
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '0.7rem',
-                margin: '0 auto',
-                '& > div.level': {
-                    width: '7.2rem',
-                    '& > div.levelInput': {
-                        color: '#79d073',
-                        fontSize: '1.2rem',
-                        fontWeight: 'bold',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '0.2rem',
-                        '& > label': {
-                            transform: 'scale(1, 0.9)',
-                            paddingTop: '0.2rem'
-                        },
-                        '& > div.numeric': {
-                            width: '3rem',
-                            '& > div.MuiInput-root': {
-                                color: '#79d073',
-                                fontWeight: 'bold',
-                                fontSize: '1.3rem !important',
-                                transform: 'scale(1, 0.9)',
-                                '& > input': {
-                                    padding: '2px 0',
-                                },
-                            },
-                        },
-                    },
-                    '& > div.expLeft': {
-                        paddingTop: '0.3rem',
-                        '& > div.numeric > div.MuiInput-root': {
-                            '& > div.MuiInputAdornment-root > p': {
-                                color: '#79d073',
-                                fontSize: '0.7rem',
-                                fontWeight: 'bold',
-                                transform: 'scale(1, 0.9)',
-                            },
-                            '& > input': {
-                                padding: 0,
-                                fontSize: '0.9rem',
-                                fontWeight: 'bold',
-                                transform: 'scale(1, 0.9)',
-                            },
-                        },
-                    },
-                },
-                '& > svg': {
-                    paddingTop: '0.3rem',
-                    color: '#888',
-                },
-            },
             '& > .MuiTabs-root': {
                 marginTop: '0.4rem',
                 '& button.MuiButtonBase-root': {
