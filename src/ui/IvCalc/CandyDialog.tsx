@@ -1,11 +1,15 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import CollapseEx from '../common/CollapseEx';
-import NumericInput from '../common/NumericInput';
+import NumericSliderInput from '../common/NumericSliderInput';
 import SelectEx from '../common/SelectEx';
 import SliderEx from '../common/SliderEx';
+import { getCandyName } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
-import calcExpAndCandy, { BoostEvent, calcExp, CalcExpAndCandyResult } from '../../util/Exp';
+import calcExpAndCandy, {
+    BoostEvent, calcExp, CalcExpAndCandyResult, CalcLevelResult,
+    calcLevelByCandy,
+} from '../../util/Exp';
 import Nature, { PlusMinusOneOrZero } from '../../util/Nature';
 import { clamp, formatWithComma } from '../../util/NumberUtil';
 import { maxLevel } from '../../util/PokemonRp';
@@ -15,7 +19,7 @@ import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
 import { Button, Dialog, DialogActions, DialogContent, InputAdornment, 
-    MenuItem, Tab, Tabs, ToggleButton, ToggleButtonGroup,
+    MenuItem, Switch, Tab, Tabs, ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
@@ -32,14 +36,27 @@ type LevelInfo = {
     targetLevel: number;
 };
 
+/** Candy boost policy */
+type BoostPolicy = "all" | "candy" | "level";
+
 /** Configuration for candy dialog */
 type CandyConfig = {
     /** Tab index */
     tabIndex: number;
+    /** Count of Pokémon's candy */
+    pokemonCandy: number;
     /** EXP factor */
     expFactor: PlusMinusOneOrZero;
     /** Candy boost */
     candyBoost: BoostEvent;
+    /** Candy boost policy */
+    boostPolicy: BoostPolicy;
+    /** Count of candy to use candy boost */
+    boostCandyCount: number;
+    /** Target level to use candy boost */
+    boostLevel: number;
+    /** Dream shard cap to use candy boost */
+    boostShard: number;
 };
 
 const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
@@ -60,8 +77,13 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
     const [config, setConfig] = React.useState<CandyConfig>({
         tabIndex: 0,
+        pokemonCandy: 500,
         expFactor: 0,
         candyBoost: "none",
+        boostPolicy: "all",
+        boostCandyCount: 350,
+        boostLevel: 55,
+        boostShard: 300000,
     });
     const [shouldRender, setShouldRender] = React.useState(false);
 
@@ -227,7 +249,7 @@ const LevelForm = React.memo(({ levelInfo, maxExpLeft, onLevelInfoChange }: {
                     <StyledSlider value={levelInfo.expGot}
                         min={0} max={maxExpLeft - 1}
                         onChange2={handleExpGotChange}/>
-                    <NumericInput value={maxExpLeft - levelInfo.expGot} size="small"
+                    <NumericSliderInput value={maxExpLeft - levelInfo.expGot} size="small"
                         startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
                         endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
                         min={1} max={maxExpLeft}
@@ -379,8 +401,172 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
     levelInfo: LevelInfo,
     onChange: (config: CandyConfig) => void,
 }) => {
-    console.log(config, levelInfo, onChange);
+    const { t } = useTranslation();
+
+    const onPokemonCandyChange = React.useCallback((pokemonCandy: number) => {
+        onChange({...config, pokemonCandy});
+    }, [config, onChange]);
+
+    const onExpFactorChange = React.useCallback((value: string) => {
+        onChange({
+            ...config,
+            expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+        });
+    }, [config, onChange]);
+
+    const onCandyBoostEnabledChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({
+            ...config,
+            candyBoost: !e.target.checked ? "none" :
+                new Date().getMonth() === 11 ? "unlimited" : "mini",
+        });
+    }, [config, onChange]);
+
+    const onCandyBoostChange = React.useCallback((value: string) => {
+        onChange({...config, candyBoost: value as "mini" | "unlimited"});
+    }, [config, onChange]);
+
+    const onBoostPolicyChange = React.useCallback((value: string) => {
+        onChange({...config, boostPolicy: value as BoostPolicy});
+    }, [config, onChange]);
+
+    const onBoostCandyCountChange = React.useCallback((boostCandyCount: number) => {
+        onChange({...config, boostCandyCount});
+    }, [config, onChange]);
+
+    const onBoostLevelChange = React.useCallback((boostLevel: number) => {
+        onChange({...config, boostLevel});
+    }, [config, onChange]);
+
+    const id = levelInfo.iv.pokemon.id;
+    const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
+
+    let iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
+    iv.nature = config.expFactor === 1 ? new Nature('Timid') :
+        config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
+
+    const exp = calcExp(levelInfo.currentLevel, levelInfo.targetLevel, levelInfo.iv) -
+        levelInfo.expGot;
+    let candyBoostResult: CalcLevelResult = {
+        exp,
+        expGot: levelInfo.expGot,
+        expLeft: exp,
+        level: levelInfo.currentLevel,
+        shards: 0,
+        candyUsed: 0,
+        candyLeft: config.pokemonCandy,
+    };
+    if (config.candyBoost !== 'none') {
+        switch (config.boostPolicy) {
+            case 'all':
+                candyBoostResult = calcLevelByCandy(iv,
+                    levelInfo.expGot, levelInfo.targetLevel,
+                    config.pokemonCandy, config.candyBoost);
+                break;
+            case 'candy':
+                candyBoostResult = calcLevelByCandy(iv,
+                    levelInfo.expGot, levelInfo.targetLevel,
+                    Math.min(config.boostCandyCount, config.pokemonCandy),
+                    config.candyBoost);
+                candyBoostResult.candyLeft =
+                    config.pokemonCandy - candyBoostResult.candyUsed;
+                break;
+            case 'level': {
+                candyBoostResult = calcLevelByCandy(iv,
+                    levelInfo.expGot, config.boostLevel,
+                    config.pokemonCandy, config.candyBoost);
+                candyBoostResult.expLeft = calcExp(candyBoostResult.level,
+                    levelInfo.targetLevel, levelInfo.iv) -
+                    candyBoostResult.expGot;
+                break;
+            }
+        }
+        iv = levelInfo.iv.changeLevel(candyBoostResult.level);
+    }
+    const normalCandyResult: CalcLevelResult = calcLevelByCandy(iv,
+        candyBoostResult.expGot, levelInfo.targetLevel,
+        candyBoostResult.candyLeft, "none");
+
     return <>
+        <div className="expResult">
+            <section className="first">
+                <label>{t('required exp')}:</label>
+                <div>{formatWithComma(exp)}</div>
+            </section>
+            <CollapseEx show={candyBoostResult.candyUsed > 0}>
+                <section>
+                    <label>{t('candy boost')}:</label>
+                    <div>{formatWithComma(exp - candyBoostResult.expLeft)}</div>
+                </section>
+                <CandyResultPreview iv={iv} value={candyBoostResult}/>
+            </CollapseEx>
+            <CollapseEx show={normalCandyResult.candyUsed > 0}>
+                <section>
+                    <label>{t('candy-based training')}:</label>
+                    <div>{formatWithComma(candyBoostResult.expLeft - normalCandyResult.expLeft)}</div>
+                </section>
+                <CandyResultPreview iv={iv} value={normalCandyResult}/>
+            </CollapseEx>
+        </div>
+        <div className="form">
+            <section className="first">
+                <label>{t('pokemon candy', {name})}:</label>
+                <NumericSliderInput value={config.pokemonCandy} min={0} max={4000}
+                    sx={{width: '3rem', fontSize: '0.9rem'}}
+                    onChange={onPokemonCandyChange}/>
+            </section>
+            <section>
+                <label>{t('nature')}:</label>
+                <SelectEx onChange={onExpFactorChange} value={config.expFactor.toString()}>
+                    <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.EXP gains')}</StyledNatureUpEffect></MenuItem>
+                    <MenuItem value="0">{t('nature effect.EXP gains')} ーー</MenuItem>
+                    <MenuItem value="-1"><StyledNatureDownEffect>{t('nature effect.EXP gains')}</StyledNatureDownEffect></MenuItem>
+                </SelectEx>
+            </section>
+        </div>
+        <div className="form">
+            <section className="first">
+                <label>{t('candy boost')}:</label>
+                <Switch checked={config.candyBoost !== 'none'} size="small"
+                    onChange={onCandyBoostEnabledChange}/>
+            </section>
+            <CollapseEx show={config.candyBoost !== 'none'}>
+                <section>
+                    <label>{t('kind')}:</label>
+                    <SelectEx onChange={onCandyBoostChange} value={config.candyBoost}>
+                        <MenuItem value="mini">{t('mini candy boost')} </MenuItem>
+                        <MenuItem value="unlimited">{t('normal candy boost')}</MenuItem>
+                    </SelectEx>
+                </section>
+                <section>
+                    <label>
+                        <SelectEx onChange={onBoostPolicyChange} value={config.boostPolicy}>
+                            <MenuItem value="all">{t('all')} </MenuItem>
+                            <MenuItem value="candy">{t('number of uses')} </MenuItem>
+                            <MenuItem value="level">{t('up to specified level')}</MenuItem>
+                        </SelectEx>:
+                    </label>
+                    {config.boostPolicy === 'all' && <div>
+                        <CandyIcon/>{config.pokemonCandy}
+                    </div>}
+                    {config.boostPolicy === 'candy' && <div>
+                        <CandyIcon/>
+                        <NumericSliderInput
+                            sx={{width: '3rem', fontSize: '0.9rem'}}
+                            min={0} max={config.pokemonCandy}
+                            value={config.boostCandyCount}
+                            onChange={onBoostCandyCountChange}/>
+                    </div>}
+                    {config.boostPolicy === 'level' && <>
+                        <span style={{padding: '0.1rem 0.2rem 0 0'}}>Lv.</span>
+                        <LevelInput showSlider
+                            sx={{width: '2rem', fontSize: '0.9rem'}}
+                            value={config.boostLevel}
+                            onChange={onBoostLevelChange}/>
+                    </>}
+                </section>
+            </CollapseEx>
+        </div>
     </>;
 });
 
@@ -403,17 +589,17 @@ const StyledDialog = styled(Dialog)({
             '& div.expResult': {
                 fontSize: '0.9rem',
                 margin: '0 .2rem 0',
-                padding: '0.5rem',
+                padding: '0.5rem 0.5rem 0 0.5rem',
                 '& > section': {
                     paddingTop: '0.2rem',
                 },
             },
             '& div.form': {
                 background: '#f0f0f0',
-                padding: '0.5rem',
+                padding: '0.3rem 0.5rem',
                 borderRadius: '0.9rem',
                 fontSize: '0.9rem',
-                margin: '0 .5rem',
+                margin: '0.5rem .5rem 0',
             },
             '& section': {
                 display: 'flex',
@@ -429,11 +615,11 @@ const StyledDialog = styled(Dialog)({
                 '& > div': {
                     display: 'flex',
                     alignItems: 'center',
-                    '& > svg': {
-                        width: '1rem',
-                        height: '1rem',
-                        paddingRight: '0.2rem',
-                    }
+                },
+                '& svg': {
+                    width: '1rem',
+                    height: '1rem',
+                    paddingRight: '0.2rem',
                 },
                 '& > div > div.MuiSelect-select': {
                     fontSize: '0.9rem',
@@ -442,6 +628,9 @@ const StyledDialog = styled(Dialog)({
                 '& button.MuiToggleButtonGroup-grouped': {
                     padding: '0.2rem 0.4rem',
                     textTransform: 'none',
+                },
+                '& div.numeric input': {
+                    padding: '2px 0',
                 },
             },
         },
@@ -467,6 +656,62 @@ const StyledSlider = styled(SliderEx)({
     },
     '& .MuiSlider-rail': {
         backgroundColor: '#ccc',
+    },
+});
+
+const CandyResultPreview = React.memo(({ iv, value }: {
+    iv: PokemonIv,
+    value: CalcLevelResult,
+}) => {
+    const { t } = useTranslation();
+
+    const isMaxLevel = value.level === maxLevel;
+    let expToGo = "";
+    if (!isMaxLevel) {
+        const expToNextLevel = calcExp(value.level, value.level + 1, iv) - value.expGot;
+        expToGo = [t('exp to go1'), formatWithComma(expToNextLevel), t('exp to go2')]
+            .filter(x => x !== "")
+            .join(" ");
+    }
+
+    return <StyledCandyPreview>
+        <span className="level">
+            <span>Lv. {value.level}<br/>
+            {!isMaxLevel && <small>{`(${expToGo})`}</small>}
+            </span>
+        </span>
+        <span className="candy">
+            <CandyIcon/>
+            {formatWithComma(value.candyUsed)}
+        </span>
+        <span className="shard">
+            <DreamShardIcon/>
+            {formatWithComma(value.shards)}
+        </span>
+    </StyledCandyPreview>;
+});
+
+const StyledCandyPreview = styled('footer')({
+    color: '#666',
+    fontSize: '0.8rem',
+    paddingTop: '0.2rem',
+    paddingLeft: '1.2rem',
+    display: 'grid',
+    gridTemplateColumns: '6rem 3.5rem 1fr',
+    alignItems: 'start',
+    lineHeight: 1.1,
+    '& > span': {
+        display: 'flex',
+        alignItems: 'center',
+        '&.candy': { justifyContent: 'end' },
+        '&.shard': { justifyContent: 'end' },
+        '& > small': {
+            paddingLeft: '0.2rem',
+            fontSize: '0.6rem',
+        },
+        '& > svg': {
+            fontSize: '0.8rem',
+        },
     },
 });
 
