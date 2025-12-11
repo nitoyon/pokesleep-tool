@@ -584,7 +584,7 @@
         "nature": "Nature",
         "candy boost": "Candy boost",
         "mini candy boost": "Mini",
-        "normal candy boost": "Unlimited",
+        "normal candy boost": "Holiday",
 
         "strength of x": "Strength of {{x}}",
         "helping bonus addition": "$t(subskill.Helping Bonus) effect",
