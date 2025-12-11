@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import CollapseEx from '../common/CollapseEx';
 import NumericInput from '../common/NumericInput';
 import SelectEx from '../common/SelectEx';
 import SliderEx from '../common/SliderEx';
@@ -14,13 +15,15 @@ import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
 import { Button, Dialog, DialogActions, InputAdornment, 
-    MenuItem, ToggleButton, ToggleButtonGroup,
+    MenuItem, Tab, Tabs, ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
 
 /** Configuration for candy dialog */
 type CandyConfig = {
+    /** Tab index */
+    tabIndex: number;
     /** EXP factor */
     expFactor: PlusMinusOneOrZero;
     /** Candy boost */
@@ -42,6 +45,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
     const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [config, setConfig] = React.useState<CandyConfig>({
+        tabIndex: 0,
         expFactor: 0,
         candyBoost: "none",
     });
@@ -127,6 +131,13 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         setExpGot(maxExpLeft - value);
     }, [maxExpLeft]);
 
+    const onTabChange = React.useCallback((_: React.SyntheticEvent, tabIndex: number) => {
+        setConfig({
+            ...config,
+            tabIndex,
+        });
+    }, [config]);
+
     if (!shouldRender) {
         return null;
     }
@@ -169,7 +180,14 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                         </div>
                     </div>
                 </div>
-                <NormalCandyForm config={config} result={result} onChange={setConfig}/>
+                <Tabs value={config.tabIndex} onChange={onTabChange}>
+                    <Tab label={t('simple')} value={0}/>
+                    <Tab label={t('details')} value={1}/>
+                </Tabs>
+                {config.tabIndex === 0 && <NormalCandyForm
+                    config={config} result={result} onChange={setConfig}/>}
+                {config.tabIndex === 1 && <DetailCandyForm
+                    config={config} result={result} onChange={setConfig}/>}
             </article>
             <DialogActions>
                 <Button onClick={onClose}>{t("close")}</Button>
@@ -236,6 +254,16 @@ const NormalCandyForm = React.memo(({ config, result, onChange }: {
                 </ToggleButtonGroup>
             </section>
         </div>
+    </>;
+});
+
+const DetailCandyForm = React.memo(({ config, result, onChange }: {
+    config: CandyConfig,
+    result: CalcExpAndCandyResult,
+    onChange: (config: CandyConfig) => void,
+}) => {
+    console.log(config, result, onChange);
+    return <>
     </>;
 });
 
@@ -307,15 +335,21 @@ const StyledDialog = styled(Dialog)({
                     color: '#888',
                 },
             },
-            '& > div.expResult': {
+            '& > .MuiTabs-root': {
+                marginTop: '0.4rem',
+                '& button.MuiButtonBase-root': {
+                    paddingBottom: 0,
+                },
+            },
+            '& div.expResult': {
                 fontSize: '0.9rem',
-                margin: '1.2rem .2rem 0',
+                margin: '0 .2rem 0',
                 padding: '0.5rem',
                 '& > section': {
                     paddingTop: '0.2rem',
                 },
             },
-            '& > div.form': {
+            '& div.form': {
                 background: '#f0f0f0',
                 padding: '0.5rem',
                 borderRadius: '0.9rem',
