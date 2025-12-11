@@ -582,8 +582,12 @@
         "required exp": "Required EXP",
         "candy": "Candy",
         "dream shard": "Dream shard",
+        "pokemon candy": "{{name}} candy",
         "nature": "Nature",
         "candy boost": "Candy boost",
+        "kind": "Kind",
+        "candy count": "Candy count",
+        "up to specified level": "Up to specified level",
         "mini candy boost": "Mini",
         "normal candy boost": "Holiday",
 

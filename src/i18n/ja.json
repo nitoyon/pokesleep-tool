@@ -572,8 +572,12 @@
         "required exp": "必要 EXP",
         "candy": "アメ",
         "dream shard": "ゆめのかけら",
+        "pokemon candy": "{{name}}のアメ",
         "nature": "せいかく",
         "candy boost": "アメブースト",
+        "kind": "種類",
+        "candy count": "アメの個数",
+        "up to specified level": "指定レベルまで",
         "mini candy boost": "ミニ",
         "normal candy boost": "ホリデー",
 
