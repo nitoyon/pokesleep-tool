@@ -152,12 +152,6 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         return null;
     }
 
-    const iv2 = iv.changeLevel(levelInfo.currentLevel);
-    iv2.nature = config.expFactor === 1 ? new Nature('Timid') :
-        config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
-    const result: CalcExpAndCandyResult =
-        calcExpAndCandy(iv2, levelInfo.expGot, levelInfo.targetLevel, config.candyBoost);
-
     return (<>
         <StyledDialog open={open} onClose={onClose}>
             <article>
@@ -170,9 +164,9 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <Tab label={t('details')} value={1}/>
                 </Tabs>
                 {config.tabIndex === 0 && <NormalCandyForm
-                    config={config} result={result} onChange={setConfig}/>}
+                    config={config} levelInfo={levelInfo} onChange={setConfig}/>}
                 {config.tabIndex === 1 && <DetailCandyForm
-                    config={config} result={result} onChange={setConfig}/>}
+                    config={config} levelInfo={levelInfo} onChange={setConfig}/>}
             </article>
             <DialogActions>
                 <Button onClick={onClose}>{t("close")}</Button>
@@ -313,12 +307,18 @@ const StyledLevel = styled('div')({
     },
 });
 
-const NormalCandyForm = React.memo(({ config, result, onChange }: {
+const NormalCandyForm = React.memo(({ config, levelInfo, onChange }: {
     config: CandyConfig,
-    result: CalcExpAndCandyResult,
+    levelInfo: LevelInfo,
     onChange: (config: CandyConfig) => void,
 }) => {
     const { t } = useTranslation();
+
+    const iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
+    iv.nature = config.expFactor === 1 ? new Nature('Timid') :
+        config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
+    const result: CalcExpAndCandyResult =
+        calcExpAndCandy(iv, levelInfo.expGot, levelInfo.targetLevel, config.candyBoost);
 
     const onExpFactorChange = React.useCallback((value: string) => {
         onChange({
@@ -374,12 +374,12 @@ const NormalCandyForm = React.memo(({ config, result, onChange }: {
     </>;
 });
 
-const DetailCandyForm = React.memo(({ config, result, onChange }: {
+const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
     config: CandyConfig,
-    result: CalcExpAndCandyResult,
+    levelInfo: LevelInfo,
     onChange: (config: CandyConfig) => void,
 }) => {
-    console.log(config, result, onChange);
+    console.log(config, levelInfo, onChange);
     return <>
     </>;
 });
