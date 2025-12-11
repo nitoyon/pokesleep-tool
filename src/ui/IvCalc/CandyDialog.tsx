@@ -20,6 +20,18 @@ import { Button, Dialog, DialogActions, InputAdornment,
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
 
+/** IV and level information */
+type LevelInfo = {
+    /** IV of the Pokémon */
+    iv: PokemonIv;
+    /** EXP got */
+    expGot: number;
+    /** Current level */
+    currentLevel: number;
+    /** Target level */
+    targetLevel: number;
+};
+
 /** Configuration for candy dialog */
 type CandyConfig = {
     /** Tab index */
@@ -39,11 +51,13 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
 }
 ) => {
     const { t } = useTranslation();
-    const [currentIv, setCurrentIv] = React.useState(iv);
-    const [currentLevel, setCurrentLevel] = React.useState(iv.level);
-    const [expGot, setExpGot] = React.useState(0);
+    const [levelInfo, setLevelInfo] = React.useState<LevelInfo>({
+        iv,
+        expGot: 0,
+        currentLevel: iv.level,
+        targetLevel: maxLevel,
+    });
     const [maxExpLeft, setMaxExpLeft] = React.useState(0);
-    const [targetLevel, setTargetLevel] = React.useState(maxLevel);
     const [config, setConfig] = React.useState<CandyConfig>({
         tabIndex: 0,
         expFactor: 0,
@@ -59,14 +73,14 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             return true;
         }
 
-        if (iv.level === currentLevel &&
-            iv.idForm === currentIv.idForm &&
-            iv.nature.expGainsFactor === currentIv.nature.expGainsFactor
+        if (iv.level === levelInfo.currentLevel &&
+            iv.idForm === levelInfo.iv.idForm &&
+            iv.nature.expGainsFactor === levelInfo.iv.nature.expGainsFactor
         ) {
             return false;
         }
         return true;
-    }, [iv, currentLevel, currentIv, maxExpLeft]);
+    }, [iv, levelInfo, maxExpLeft]);
 
     React.useEffect(() => {
         if (!open) {
@@ -100,14 +114,16 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             level = 50;
         }
         level = clamp(iv.level, level, maxLevel);
-        setTargetLevel(level);
 
         // Reset other states
         // current level should be less than or equal to iv.level
         const _currentLevel = Math.min(iv.level, level);
-        setCurrentIv(iv);
-        setCurrentLevel(_currentLevel);
-        setExpGot(0);
+        setLevelInfo({
+            iv,
+            expGot: 0,
+            currentLevel: _currentLevel,
+            targetLevel: level,
+        });
         setMaxExpLeft(calcExp(_currentLevel, _currentLevel + 1, iv));
         setConfig({
             ...config,
@@ -117,19 +133,35 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     }, [config, iv, shouldReset, dstLevel, open]);
 
     const onCurrentLevelChange = React.useCallback((level: number) => {
-        setCurrentLevel(level);
-        setExpGot(0);
+        setLevelInfo({
+            ...levelInfo,
+            currentLevel: level,
+            expGot: 0,
+        });
         setMaxExpLeft(calcExp(level, level + 1, iv));
         onChange(iv.changeLevel(level));
-    }, [iv, onChange]);
+    }, [iv, levelInfo, onChange]);
+
+    const onTargetLevelChange = React.useCallback((level: number) => {
+        setLevelInfo({
+            ...levelInfo,
+            targetLevel: level,
+        });
+    }, [iv, levelInfo, onChange]);
 
     const onExpSliderChange = React.useCallback((value: number) => {
-        setExpGot(value);
-    }, []);
+        setLevelInfo({
+            ...levelInfo,
+            expGot: value,
+        });
+    }, [levelInfo]);
 
     const onExpLeftChange = React.useCallback((value: number) => {
-        setExpGot(maxExpLeft - value);
-    }, [maxExpLeft]);
+        setLevelInfo({
+            ...levelInfo,
+            expGot: maxExpLeft - value,
+        });
+    }, [levelInfo, maxExpLeft]);
 
     const onTabChange = React.useCallback((_: React.SyntheticEvent, tabIndex: number) => {
         setConfig({
@@ -142,11 +174,11 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         return null;
     }
 
-    const iv2 = iv.changeLevel(currentLevel);
+    const iv2 = iv.changeLevel(levelInfo.currentLevel);
     iv2.nature = config.expFactor === 1 ? new Nature('Timid') :
         config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
     const result: CalcExpAndCandyResult =
-        calcExpAndCandy(iv2, expGot, targetLevel, config.candyBoost);
+        calcExpAndCandy(iv2, levelInfo.expGot, levelInfo.targetLevel, config.candyBoost);
 
     return (<>
         <StyledDialog open={open} onClose={onClose}>
@@ -158,13 +190,13 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelInput value={currentLevel} onChange={onCurrentLevelChange}
+                            <LevelInput value={levelInfo.currentLevel} onChange={onCurrentLevelChange}
                                 showSlider/>
                         </div>
                         <div className="expLeft">
-                            <StyledSlider value={expGot}
+                            <StyledSlider value={levelInfo.expGot}
                                 min={0} max={maxExpLeft - 1} onChange2={onExpSliderChange}/>
-                            <NumericInput value={maxExpLeft - expGot} size="small"
+                            <NumericInput value={maxExpLeft - levelInfo.expGot} size="small"
                                 startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
                                 endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
                                 min={1} max={maxExpLeft}
@@ -175,7 +207,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     <div className="level">
                         <div className="levelInput">
                             <label>Lv.</label>
-                            <LevelInput value={targetLevel} onChange={setTargetLevel}
+                            <LevelInput value={levelInfo.targetLevel} onChange={onTargetLevelChange}
                                 showSlider/>
                         </div>
                     </div>
