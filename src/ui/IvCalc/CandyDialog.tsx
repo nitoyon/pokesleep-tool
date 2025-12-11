@@ -132,36 +132,14 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         setShouldRender(true);
     }, [config, iv, shouldReset, dstLevel, open]);
 
-    const onCurrentLevelChange = React.useCallback((level: number) => {
-        setLevelInfo({
-            ...levelInfo,
-            currentLevel: level,
-            expGot: 0,
-        });
-        setMaxExpLeft(calcExp(level, level + 1, iv));
-        onChange(iv.changeLevel(level));
+    const onLevelInfoChange = React.useCallback((value: LevelInfo) => {
+        // Check if currentLevel changed
+        if (value.currentLevel !== levelInfo.currentLevel) {
+            setMaxExpLeft(calcExp(value.currentLevel, value.currentLevel + 1, iv));
+            onChange(iv.changeLevel(value.currentLevel));
+        }
+        setLevelInfo(value);
     }, [iv, levelInfo, onChange]);
-
-    const onTargetLevelChange = React.useCallback((level: number) => {
-        setLevelInfo({
-            ...levelInfo,
-            targetLevel: level,
-        });
-    }, [iv, levelInfo, onChange]);
-
-    const onExpSliderChange = React.useCallback((value: number) => {
-        setLevelInfo({
-            ...levelInfo,
-            expGot: value,
-        });
-    }, [levelInfo]);
-
-    const onExpLeftChange = React.useCallback((value: number) => {
-        setLevelInfo({
-            ...levelInfo,
-            expGot: maxExpLeft - value,
-        });
-    }, [levelInfo, maxExpLeft]);
 
     const onTabChange = React.useCallback((_: React.SyntheticEvent, tabIndex: number) => {
         setConfig({
@@ -183,35 +161,10 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     return (<>
         <StyledDialog open={open} onClose={onClose}>
             <article>
-                <div className="icon">
-                    <PokemonIcon idForm={iv.idForm} size={80}/>
-                </div>
-                <div className="levels">
-                    <div className="level">
-                        <div className="levelInput">
-                            <label>Lv.</label>
-                            <LevelInput value={levelInfo.currentLevel} onChange={onCurrentLevelChange}
-                                showSlider/>
-                        </div>
-                        <div className="expLeft">
-                            <StyledSlider value={levelInfo.expGot}
-                                min={0} max={maxExpLeft - 1} onChange2={onExpSliderChange}/>
-                            <NumericInput value={maxExpLeft - levelInfo.expGot} size="small"
-                                startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
-                                endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
-                                min={1} max={maxExpLeft}
-                                onChange={onExpLeftChange}/>
-                        </div>
-                    </div>
-                    <EastIcon/>
-                    <div className="level">
-                        <div className="levelInput">
-                            <label>Lv.</label>
-                            <LevelInput value={levelInfo.targetLevel} onChange={onTargetLevelChange}
-                                showSlider/>
-                        </div>
-                    </div>
-                </div>
+                <LevelForm
+                    levelInfo={levelInfo}
+                    maxExpLeft={maxExpLeft}
+                    onLevelInfoChange={onLevelInfoChange}/>
                 <Tabs value={config.tabIndex} onChange={onTabChange}>
                     <Tab label={t('simple')} value={0}/>
                     <Tab label={t('details')} value={1}/>
@@ -226,6 +179,78 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
             </DialogActions>
         </StyledDialog>
     </>);
+});
+
+const LevelForm = React.memo(({ levelInfo, maxExpLeft, onLevelInfoChange }: {
+    levelInfo: LevelInfo,
+    maxExpLeft: number,
+    onLevelInfoChange: (value: LevelInfo) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const handleCurrentLevelChange = React.useCallback((level: number) => {
+        onLevelInfoChange({
+            ...levelInfo,
+            currentLevel: level,
+            expGot: 0,
+        });
+    }, [levelInfo, onLevelInfoChange]);
+
+    const handleTargetLevelChange = React.useCallback((level: number) => {
+        onLevelInfoChange({
+            ...levelInfo,
+            targetLevel: level,
+        });
+    }, [levelInfo, onLevelInfoChange]);
+
+    const handleExpGotChange = React.useCallback((value: number) => {
+        onLevelInfoChange({
+            ...levelInfo,
+            expGot: value,
+        });
+    }, [levelInfo, onLevelInfoChange]);
+
+    const handleExpLeftChange = React.useCallback((value: number) => {
+        onLevelInfoChange({
+            ...levelInfo,
+            expGot: maxExpLeft - value,
+        });
+    }, [levelInfo, maxExpLeft, onLevelInfoChange]);
+
+    return <>
+        <div className="icon">
+            <PokemonIcon idForm={levelInfo.iv.idForm} size={80}/>
+        </div>
+        <div className="levels">
+            <div className="level">
+                <div className="levelInput">
+                    <label>Lv.</label>
+                    <LevelInput value={levelInfo.currentLevel}
+                        onChange={handleCurrentLevelChange}
+                        showSlider/>
+                </div>
+                <div className="expLeft">
+                    <StyledSlider value={levelInfo.expGot}
+                        min={0} max={maxExpLeft - 1}
+                        onChange2={handleExpGotChange}/>
+                    <NumericInput value={maxExpLeft - levelInfo.expGot} size="small"
+                        startAdornment={<InputAdornment position="start">{t('exp to go1')}</InputAdornment>}
+                        endAdornment={<InputAdornment position="end">{t('exp to go2')}</InputAdornment>}
+                        min={1} max={maxExpLeft}
+                        onChange={handleExpLeftChange}/>
+                </div>
+            </div>
+            <EastIcon/>
+            <div className="level">
+                <div className="levelInput">
+                    <label>Lv.</label>
+                    <LevelInput value={levelInfo.targetLevel}
+                        onChange={handleTargetLevelChange}
+                        showSlider/>
+                </div>
+            </div>
+        </div>
+    </>;
 });
 
 const NormalCandyForm = React.memo(({ config, result, onChange }: {
