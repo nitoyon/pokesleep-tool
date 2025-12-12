@@ -93,7 +93,19 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
     const text = focused ? rawText : formatWithComma(value);
 
     return <div className="numeric keyboard">
-        <Input {...props} type="tel"
+        <Input {...props} type={focused ? "number" : "tel"}
+            slotProps={{
+                input: {
+                    sx: {
+                        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+                            '-webkit-appearance': 'none',
+                            margin: 0,
+                        },
+                        '-moz-appearance': 'textfield',
+                    },
+                    min, max
+                }
+            }}
             inputProps={{inputMode: "numeric"}}
             value={text} ref={anchorRef}
             onChange={onChangeHandler}
