@@ -107,7 +107,7 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 0.15, color: '#3d3532'},
         {x: 0, y: 0.15, w: 1, h: 0.85, color: '#ffe14f'},
         {x: 0.65, y: 0.6, w: 0.3, h: 0.3, r: 0.15, color: '#cd5f59'},
-        {x: 0.55, y: 0.8, w: 0.5, h: 0.1, r: 0.05, color: '#fefcf3'},
+        {x: 0.59, y: 0.8, w: 0.42, h: 0.1, r: 0.05, color: '#fefcf3'},
         {x: 0.72, y: 0.48, w: 0.15, h: 0.15, r: 0.1, color: '#fefcf3'}
     ],
     // Raichu
@@ -375,7 +375,7 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#e9b860'},
         {x: 0, y: 0.6, w: 1, h: 0.4, color: '#f8eabf'},
         {x: 0.65, y: 0.6, w: 0.3, h: 0.3, r: 0.15, color: '#cd5f59'},
-        {x: 0.55, y: 0.8, w: 0.5, h: 0.1, r: 0.05, color: '#fefcf3'},
+        {x: 0.59, y: 0.8, w: 0.42, h: 0.1, r: 0.05, color: '#fefcf3'},
         {x: 0.72, y: 0.48, w: 0.15, h: 0.15, r: 0.1, color: '#fefcf3'}
     ],
     // Vaporeon
@@ -906,10 +906,10 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
     '8555': [
         {x: 0, y: 0, w: 1, h: 1, color: '#90c2fb'},
         {x: 0, y: 0.5, w: 1, h: 0.5, color: '#fff7dd'},
-        {x: 0.58, y: 0.79, w: 0.5, h: 0.12, r: 0.05, color: '#aaaaaa'},
+        {x: 0.58, y: 0.79, w: 0.44, h: 0.12, r: 0.05, color: '#aaaaaa'},
         {x: 0.71, y: 0.47, w: 0.18, h: 0.17, r: 0.1, color: '#aaaaaa'},
         {x: 0.65, y: 0.6, w: 0.3, h: 0.3, r: 0.15, color: '#cd5f59'},
-        {x: 0.59, y: 0.8, w: 0.48, h: 0.1, r: 0.05, color: '#fefcf3'},
+        {x: 0.59, y: 0.8, w: 0.42, h: 0.1, r: 0.05, color: '#fefcf3'},
         {x: 0.72, y: 0.48, w: 0.16, h: 0.15, r: 0.1, color: '#fefcf3'}
     ],
     // Sealeo
