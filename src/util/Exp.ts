@@ -46,6 +46,24 @@ export type CalcExpAndCandyResult = {
     shards: number;
 };
 
+/** Result of calcLevelByCandy function. */
+export type CalcLevelResult = {
+    /** Required exp */
+    exp: number;
+    /** Remaining exp needed after using available candy */
+    expLeft: number;
+    /** Maximum level reachable with available candy */
+    level: number;
+    /** Exp within the current level */
+    expGot: number;
+    /** Required dream shards */
+    shards: number;
+    /** Used candy */
+    candyUsed: number;
+    /** Unused candy */
+    candyLeft: number;
+};
+
 /**
  * Calculate the experience and candy required to level up a Pokémon.
  * @param iv The Pokémon's IV containing the current level and nature.
@@ -86,6 +104,47 @@ export default function calcExpAndCandy(iv: PokemonIv, expGot: number,
     }
 
     return { exp, candy, shards };
+}
+
+/**
+ * Calculate how far a Pokémon can level up with available candy.
+ * @param iv The Pokémon's IV containing the current level and nature.
+ * @param expGot The experience already gained at the current level.
+ * @param dstLevel The maximum target level.
+ * @param candy Available candy count.
+ * @param boost The boost event type, which can be "none", "mini", or "unlimited".
+ * @returns Level progress achievable with available candy.
+ */
+export function calcLevelByCandy(iv: PokemonIv, expGot: number,
+    dstLevel: number, candy: number, boost: BoostEvent): CalcLevelResult {
+    const srcLevel = iv.level;
+
+    const exp = calcExp(srcLevel, dstLevel, iv) - expGot;
+    let expLeft = exp;
+
+    let shards = 0;
+    let carry = expGot;
+    const shardRate = (boost === "none" ? 1 : boost === "mini" ? 4 : 5);
+    let candyLeft = candy;
+    let level;
+    for (level = srcLevel; level < dstLevel; level++) {
+        const requiredExp = calcExp(level, level + 1, iv) - carry;
+        const expPerCandy = calcExpPerCandy(level, iv.nature, boost);
+        const requiredCandy = Math.ceil(requiredExp / expPerCandy);
+        const candyToUse = Math.min(requiredCandy, candyLeft);
+        shards += dreamShardsPerCandy[level + 1] * candyToUse * shardRate;
+        candyLeft -= candyToUse;
+        expLeft -= expPerCandy * candyToUse;
+        if (candyToUse < requiredCandy) {
+            // Out of candy before reaching next level
+            carry += expPerCandy * candyToUse;
+            break;
+        }
+        carry = expPerCandy * candyToUse - requiredExp;
+    }
+    const candyUsed = candy - candyLeft;
+
+    return { exp, expLeft, level, expGot: carry, shards, candyUsed, candyLeft };
 }
 
 /**
