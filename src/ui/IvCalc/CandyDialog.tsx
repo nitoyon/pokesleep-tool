@@ -396,51 +396,25 @@ const NormalCandyForm = React.memo(({ config, levelInfo, onChange }: {
     </>;
 });
 
-const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
-    config: CandyConfig,
+/**
+ * Calculate candy boost and normal candy results for the detail candy form.
+ *
+ * This function returns two results:
+ * - Candy boost result: When using candy boost (mini or unlimited) based on the policy
+ * - Normal candy result: Standard candy usage after boost is applied
+ *
+ * @param levelInfo - Current and target level information including IV.
+ * @param config - Candy configuration including boost settings,
+ *                 Pokemon candy count, and boost policy.
+ * @returns An object containing candyBoostResult and normalCandyResult.
+ */
+const calculateDetailCandy = (
     levelInfo: LevelInfo,
-    onChange: (config: CandyConfig) => void,
-}) => {
-    const { t } = useTranslation();
-
-    const onPokemonCandyChange = React.useCallback((pokemonCandy: number) => {
-        onChange({...config, pokemonCandy});
-    }, [config, onChange]);
-
-    const onExpFactorChange = React.useCallback((value: string) => {
-        onChange({
-            ...config,
-            expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
-        });
-    }, [config, onChange]);
-
-    const onCandyBoostEnabledChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({
-            ...config,
-            candyBoost: !e.target.checked ? "none" :
-                new Date().getMonth() === 11 ? "unlimited" : "mini",
-        });
-    }, [config, onChange]);
-
-    const onCandyBoostChange = React.useCallback((value: string) => {
-        onChange({...config, candyBoost: value as "mini" | "unlimited"});
-    }, [config, onChange]);
-
-    const onBoostPolicyChange = React.useCallback((value: string) => {
-        onChange({...config, boostPolicy: value as BoostPolicy});
-    }, [config, onChange]);
-
-    const onBoostCandyCountChange = React.useCallback((boostCandyCount: number) => {
-        onChange({...config, boostCandyCount});
-    }, [config, onChange]);
-
-    const onBoostLevelChange = React.useCallback((boostLevel: number) => {
-        onChange({...config, boostLevel});
-    }, [config, onChange]);
-
-    const id = levelInfo.iv.pokemon.id;
-    const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
-
+    config: CandyConfig
+): {
+    candyBoostResult: CalcLevelResult;
+    normalCandyResult: CalcLevelResult;
+} => {
     let iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
     iv.nature = config.expFactor === 1 ? new Nature('Timid') :
         config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
@@ -487,6 +461,57 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
         candyBoostResult.expGot, levelInfo.targetLevel,
         candyBoostResult.candyLeft, "none");
 
+    return { candyBoostResult, normalCandyResult };
+};
+
+const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
+    config: CandyConfig,
+    levelInfo: LevelInfo,
+    onChange: (config: CandyConfig) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const onPokemonCandyChange = React.useCallback((pokemonCandy: number) => {
+        onChange({...config, pokemonCandy});
+    }, [config, onChange]);
+
+    const onExpFactorChange = React.useCallback((value: string) => {
+        onChange({
+            ...config,
+            expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+        });
+    }, [config, onChange]);
+
+    const onCandyBoostEnabledChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({
+            ...config,
+            candyBoost: !e.target.checked ? "none" :
+                new Date().getMonth() === 11 ? "unlimited" : "mini",
+        });
+    }, [config, onChange]);
+
+    const onCandyBoostChange = React.useCallback((value: string) => {
+        onChange({...config, candyBoost: value as "mini" | "unlimited"});
+    }, [config, onChange]);
+
+    const onBoostPolicyChange = React.useCallback((value: string) => {
+        onChange({...config, boostPolicy: value as BoostPolicy});
+    }, [config, onChange]);
+
+    const onBoostCandyCountChange = React.useCallback((boostCandyCount: number) => {
+        onChange({...config, boostCandyCount});
+    }, [config, onChange]);
+
+    const onBoostLevelChange = React.useCallback((boostLevel: number) => {
+        onChange({...config, boostLevel});
+    }, [config, onChange]);
+
+    const id = levelInfo.iv.pokemon.id;
+    const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
+
+    const { candyBoostResult, normalCandyResult } = calculateDetailCandy(levelInfo, config);
+    const exp = candyBoostResult.exp;
+
     return <>
         <div className="expResult">
             <section className="first">
@@ -498,14 +523,14 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
                     <label>{t('candy boost')}:</label>
                     <div>{formatWithComma(exp - candyBoostResult.expLeft)}</div>
                 </section>
-                <CandyResultPreview iv={iv} value={candyBoostResult}/>
+                <CandyResultPreview iv={levelInfo.iv} value={candyBoostResult}/>
             </CollapseEx>
             <CollapseEx show={normalCandyResult.candyUsed > 0}>
                 <section>
                     <label>{t('candy-based training')}:</label>
                     <div>{formatWithComma(candyBoostResult.expLeft - normalCandyResult.expLeft)}</div>
                 </section>
-                <CandyResultPreview iv={iv} value={normalCandyResult}/>
+                <CandyResultPreview iv={levelInfo.iv} value={normalCandyResult}/>
             </CollapseEx>
         </div>
         <div className="form">
