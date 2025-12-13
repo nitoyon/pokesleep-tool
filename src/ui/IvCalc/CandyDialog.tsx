@@ -59,6 +59,15 @@ type CandyConfig = {
     boostShard: number;
 };
 
+/** Adds Candy Boost costs to CalcLevelResult */
+type CalcLevelBoostResult = CalcLevelResult & {
+    /** Additional Dream Shards required to use the Candy Boost
+     * (0 if BoostEvent is 'none') */
+    extraShards: number;
+    /** Candies saved by using the Candy Boost (0 if BoostEvent is 'none') */
+    candySaved: number;
+};
+
 const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
     iv: PokemonIv,
     dstLevel?: number,
@@ -412,8 +421,8 @@ const calculateDetailCandy = (
     levelInfo: LevelInfo,
     config: CandyConfig
 ): {
-    candyBoostResult: CalcLevelResult;
-    normalCandyResult: CalcLevelResult;
+    candyBoostResult: CalcLevelBoostResult;
+    normalCandyResult: CalcLevelBoostResult;
 } => {
     let iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
     iv.nature = config.expFactor === 1 ? new Nature('Timid') :
@@ -421,47 +430,71 @@ const calculateDetailCandy = (
 
     const exp = calcExp(levelInfo.currentLevel, levelInfo.targetLevel, levelInfo.iv) -
         levelInfo.expGot;
-    let candyBoostResult: CalcLevelResult = {
+    let candyBoostResult: CalcLevelBoostResult = {
         exp,
         expGot: levelInfo.expGot,
         expLeft: exp,
         level: levelInfo.currentLevel,
-        shards: 0,
-        candyUsed: 0,
+        shards: 0, extraShards: 0,
+        candyUsed: 0, candySaved: 0,
         candyLeft: config.pokemonCandy,
     };
     if (config.candyBoost !== 'none') {
+        let boosted: CalcLevelResult = {...candyBoostResult};
+        let notBoosted: CalcLevelResult = {...candyBoostResult};
         switch (config.boostPolicy) {
             case 'all':
-                candyBoostResult = calcLevelByCandy(iv,
+                boosted = calcLevelByCandy(iv,
                     levelInfo.expGot, levelInfo.targetLevel,
                     config.pokemonCandy, config.candyBoost);
+                notBoosted = calcLevelByCandy(iv,
+                    levelInfo.expGot, levelInfo.targetLevel,
+                    config.pokemonCandy * 2, 'none');
                 break;
             case 'candy':
-                candyBoostResult = calcLevelByCandy(iv,
+                boosted = calcLevelByCandy(iv,
                     levelInfo.expGot, levelInfo.targetLevel,
                     Math.min(config.boostCandyCount, config.pokemonCandy),
                     config.candyBoost);
-                candyBoostResult.candyLeft =
-                    config.pokemonCandy - candyBoostResult.candyUsed;
+                boosted.candyLeft =
+                    config.pokemonCandy - boosted.candyUsed;
+                notBoosted = calcLevelByCandy(iv,
+                    levelInfo.expGot, levelInfo.targetLevel,
+                    Math.min(config.boostCandyCount, config.pokemonCandy) * 2,
+                    'none');
                 break;
             case 'level': {
-                candyBoostResult = calcLevelByCandy(iv,
-                    levelInfo.expGot, config.boostLevel,
+                const boostLevel = clamp(levelInfo.currentLevel,
+                    config.boostLevel, levelInfo.targetLevel);
+                boosted = calcLevelByCandy(iv,
+                    levelInfo.expGot, boostLevel,
                     config.pokemonCandy, config.candyBoost);
-                candyBoostResult.expLeft = calcExp(candyBoostResult.level,
+                boosted.expLeft = calcExp(boosted.level,
                     levelInfo.targetLevel, levelInfo.iv) -
-                    candyBoostResult.expGot;
+                    boosted.expGot;
+                notBoosted = calcLevelByCandy(iv,
+                    levelInfo.expGot, config.boostLevel,
+                    config.pokemonCandy * 2, 'none');
                 break;
             }
         }
-        iv = levelInfo.iv.changeLevel(candyBoostResult.level);
+        iv = levelInfo.iv.changeLevel(boosted.level);
+
+        candyBoostResult = {
+            ...boosted, exp,
+            extraShards: boosted.shards - notBoosted.shards,
+            candySaved: notBoosted.candyUsed - boosted.candyUsed,
+        };
     }
+
     const normalCandyResult: CalcLevelResult = calcLevelByCandy(iv,
         candyBoostResult.expGot, levelInfo.targetLevel,
         candyBoostResult.candyLeft, "none");
 
-    return { candyBoostResult, normalCandyResult };
+    return {
+        candyBoostResult,
+        normalCandyResult: {...normalCandyResult, extraShards: 0, candySaved: 0 },
+    };
 };
 
 const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
@@ -503,8 +536,9 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
     }, [config, onChange]);
 
     const onBoostLevelChange = React.useCallback((boostLevel: number) => {
+        boostLevel = clamp(levelInfo.currentLevel, boostLevel, levelInfo.targetLevel);
         onChange({...config, boostLevel});
-    }, [config, onChange]);
+    }, [config, levelInfo, onChange]);
 
     const id = levelInfo.iv.pokemon.id;
     const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
@@ -686,7 +720,7 @@ const StyledSlider = styled(SliderEx)({
 
 const CandyResultPreview = React.memo(({ iv, value }: {
     iv: PokemonIv,
-    value: CalcLevelResult,
+    value: CalcLevelBoostResult,
 }) => {
     const { t } = useTranslation();
 
@@ -701,17 +735,16 @@ const CandyResultPreview = React.memo(({ iv, value }: {
 
     return <StyledCandyPreview>
         <span className="level">
-            <span>Lv. {value.level}<br/>
-            {!isMaxLevel && <small>{`(${expToGo})`}</small>}
-            </span>
+            <span>Lv. {value.level}</span>
+            {!isMaxLevel && <footer>{`(${expToGo})`}</footer>}
         </span>
         <span className="candy">
-            <CandyIcon/>
-            {formatWithComma(value.candyUsed)}
+            <span><CandyIcon/>{formatWithComma(value.candyUsed)}</span>
+            {value.candySaved > 0 && <footer>(-{value.candySaved})</footer>}
         </span>
         <span className="shard">
-            <DreamShardIcon/>
-            {formatWithComma(value.shards)}
+            <span><DreamShardIcon/>{formatWithComma(value.shards)}</span>
+            {value.extraShards > 0 && <footer>(+{formatWithComma(value.extraShards)})</footer>}
         </span>
     </StyledCandyPreview>;
 });
@@ -719,23 +752,23 @@ const CandyResultPreview = React.memo(({ iv, value }: {
 const StyledCandyPreview = styled('footer')({
     color: '#666',
     fontSize: '0.8rem',
-    paddingTop: '0.2rem',
     paddingLeft: '1.2rem',
     display: 'grid',
     gridTemplateColumns: '6rem 3.5rem 1fr',
     alignItems: 'start',
-    lineHeight: 1.1,
+    lineHeight: 1.3,
     '& > span': {
-        display: 'flex',
-        alignItems: 'center',
-        '&.candy': { justifyContent: 'end' },
-        '&.shard': { justifyContent: 'end' },
-        '& > small': {
-            paddingLeft: '0.2rem',
+        '&.candy': { justifySelf: 'end', textAlign: 'right' },
+        '&.shard': { justifySelf: 'end', textAlign: 'right' },
+        '& > footer': {
             fontSize: '0.6rem',
         },
-        '& > svg': {
-            fontSize: '0.8rem',
+        '& > span': {
+            display: 'flex',
+            alignItems: 'center',
+            '& > svg': {
+                fontSize: '0.8rem',
+            },
         },
     },
 });
