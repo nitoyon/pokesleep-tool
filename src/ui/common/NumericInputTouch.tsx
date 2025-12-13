@@ -5,10 +5,36 @@ import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft';
-import { Divider, IconButton, Input } from '@mui/material';
+import { Button, Divider, IconButton, Input } from '@mui/material';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import PopperMenu from './PopperMenu';
 import { NumericInputHandle, NumericInputProps } from './NumericInput';
 import { clamp, formatWithComma, getFormatWithCommaPos } from '../../util/NumberUtil';
+
+/**
+ * Wheather numpad is show or hidden
+ *
+ * This value is stored at global variable in order to keep the config
+ * until user reload the page.
+ */
+let globalIsNumpadVisible = true;
+
+/**
+ * Listeners for numpad visibility changes.
+ * This allows all instances to stay synchronized.
+ */
+const numpadVisibilityListeners = new Set<(visible: boolean) => void>();
+
+const subscribeToNumpadVisibility = (listener: (visible: boolean) => void) => {
+    numpadVisibilityListeners.add(listener);
+    return () => {
+        numpadVisibilityListeners.delete(listener);
+    };
+};
+
+const notifyNumpadVisibilityChange = (visible: boolean) => {
+    numpadVisibilityListeners.forEach(listener => listener(visible));
+};
 
 /**
  * An numeric input component for touch device.
@@ -17,6 +43,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
     ({children, min, max, value, onChange, ...props}, ref) => {
     const [open, setOpen] = React.useState(false);
     const [isEmpty, setIsEmpty] = React.useState(false);
+    const [isNumpadVisible, setIsNumpadVisible] = React.useState(globalIsNumpadVisible);
     const [cursorPos, setCursorPos] = React.useState(0);
     const [clearNext, setClearNext] = React.useState(false);
     const anchorRef = React.useRef<HTMLElement>(null);
@@ -26,6 +53,14 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
 
     const minValue = min ?? 0;
     const maxValue = max ?? Number.MAX_SAFE_INTEGER;
+
+    // Subscribe to global numpad visibility changes
+    React.useEffect(() => {
+        const unsubscribe = subscribeToNumpadVisibility((visible) => {
+            setIsNumpadVisible(visible);
+        });
+        return unsubscribe;
+    }, []);
 
     // Use refs to always have access to the latest values.
     // This is necessary to handle rapid consecutive taps on touch devices.
@@ -102,6 +137,11 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
             y: rect.top - mirrorRect.top,
         });
     }, [open, cursorPos, value, isEmpty]);
+
+    const onToggleClick = React.useCallback(() => {
+        globalIsNumpadVisible = !globalIsNumpadVisible;
+        notifyNumpadVisibilityChange(globalIsNumpadVisible);
+    }, []);
 
     const onClick = React.useCallback((e: React.MouseEvent<HTMLInputElement>) => {
         setIsEmpty(false);
@@ -358,8 +398,12 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
                 {children && <>
                     {children}
                     <Divider/>
+                    <CollapseButton className={isNumpadVisible ? '': 'toggle'}
+                        onClick={onToggleClick}>
+                        <ExpandLessIcon fontSize="small"/>
+                    </CollapseButton>
                 </>}
-                <StyledNumpad>
+                {isNumpadVisible && <StyledNumpad>
                     <IconButton onClick={() => onDigitClick(1)}>1</IconButton>
                     <IconButton onClick={() => onDigitClick(2)}>2</IconButton>
                     <IconButton onClick={() => onDigitClick(3)}>3</IconButton>
@@ -375,7 +419,7 @@ const NumericInputTouch = React.memo(React.forwardRef<NumericInputHandle, Numeri
                     <IconButton className="nav" onClick={() => onNavMove(-1)}><ArrowBackOutlinedIcon/></IconButton>
                     <IconButton onClick={() => onDigitClick(0)}>0</IconButton>
                     <IconButton className="nav" onClick={() => onNavMove(1)}><ArrowForwardOutlinedIcon/></IconButton>
-                </StyledNumpad>
+                </StyledNumpad>}
             </div>
         </PopperMenu>
     </>;
@@ -395,7 +439,10 @@ const StyledInput = styled(Input)({
 const StyledNumpad = styled('div')({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
-    padding: '0.6rem',
+    padding: '0 0.6rem 0.6rem 0.6rem',
+    '&:first-of-type': {
+        paddingTop: '0.6rem',
+    },
     gap: '0.4rem',
     '& > button': {
         width: '4.3rem',
@@ -457,6 +504,20 @@ const Cursor = styled('span')({
         '75%, 95%': {
             opacity: 0,
         },
+    },
+});
+
+const CollapseButton = styled(Button)({
+    width: '100%',
+    height: '18px',
+    '& > svg': {
+        color: '#ccc',
+        display: 'inline-block',
+        transition: 'transform 0.3s ease',
+        transform: 'rotate(0deg)',
+    },
+    '&.toggle > svg': {
+        transform: 'rotate(180deg)',
     },
 });
 
