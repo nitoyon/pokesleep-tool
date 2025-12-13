@@ -14,7 +14,7 @@ import { StyledNatureUpEffect, StyledNatureDownEffect } from './IvForm/NatureTex
 import PokemonIcon from './PokemonIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import CandyIcon from '../Resources/CandyIcon';
-import { Button, Dialog, DialogActions, InputAdornment, 
+import { Button, Dialog, DialogActions, DialogContent, InputAdornment, 
     MenuItem, Tab, Tabs, ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
@@ -154,7 +154,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
 
     return (<>
         <StyledDialog open={open} onClose={onClose}>
-            <article>
+            <DialogContent>
                 <LevelForm
                     levelInfo={levelInfo}
                     maxExpLeft={maxExpLeft}
@@ -167,7 +167,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     config={config} levelInfo={levelInfo} onChange={setConfig}/>}
                 {config.tabIndex === 1 && <DetailCandyForm
                     config={config} levelInfo={levelInfo} onChange={setConfig}/>}
-            </article>
+            </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>{t("close")}</Button>
             </DialogActions>
@@ -392,7 +392,7 @@ const StyledDialog = styled(Dialog)({
     '& .MuiPaper-root': {
         width: '100%',
 
-        '& > article': {
+        '& > div.MuiDialogContent-root': {
             padding: '.8rem .8rem 0 .8rem',
             '& > .MuiTabs-root': {
                 marginTop: '0.4rem',
