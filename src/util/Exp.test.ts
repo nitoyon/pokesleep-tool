@@ -1,4 +1,4 @@
-import calcExpAndCandy, { calcLevelByCandy } from './Exp';
+import calcExpAndCandy, { calcDayToGetSleepExp, calcLevelByCandy, getNextFullMoon } from './Exp';
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 
@@ -227,5 +227,165 @@ describe('calcLevelByCandy', () => {
         expect(res2.shards).toBe(122);
         expect(res2.candyUsed).toBe(1);
         expect(res2.candyLeft).toBe(0);
+    });
+});
+
+describe('getNextFullMoon', () => {
+    test('should return days until next full moon when current age is before full moon', () => {
+        // 2025-12-05 is full moon
+        expect(getNextFullMoon(new Date(Date.UTC(2025, 11, 4)))).toBe(1);
+        expect(getNextFullMoon(new Date(Date.UTC(2025, 11, 5)))).toBe(0);
+
+        // current approximation thinks 2026-01-04 is full moon (actual 2026-01-03)
+        expect(getNextFullMoon(new Date(Date.UTC(2025, 11, 6)))).toBe(29);
+        expect(getNextFullMoon(new Date(Date.UTC(2026, 0, 3)))).toBe(1);
+    });
+});
+
+describe('calcDayToGetSleepExp', () => {
+    test('should calculate GSD exp', () => {
+        const today = new Date(Date.UTC(2025, 11, 5)); // Full moon
+        const expBonus = 0;
+        const score = 100;
+        const expGainRate = 1;
+        const policy = "none";
+
+        // 2025-12-05 Get 300 exp (total 300exp)
+        let exp = 300;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(1);
+
+        // 2025-12-06 Get 200 exp (total 500exp)
+        exp = 301;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+        exp = 500;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+
+        // 2025-12-07 Get 200 exp (total 600exp)
+        exp = 501;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+        exp = 600;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+
+        // 2025-12-06 Get 100 exp (total 700exp)
+        exp = 601;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(4);
+        exp = 700;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(4);
+    });
+
+    test('should calculate GSD exp and GSD incense', () => {
+        const today = new Date(Date.UTC(2025, 11, 5)); // Full moon
+        const expBonus = 0;
+        const score = 100;
+        const expGainRate = 1;
+        const policy = "gsd";
+
+        // 2025-12-05 Get 600 exp (total 600exp)
+        let exp = 600;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(1);
+
+        // 2025-12-06 Get 400 exp (total 1000exp)
+        exp = 601;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+        exp = 1000;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+        exp = 1001;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+
+        // 2025-12-07 Get 100 exp (total 1100exp)
+        exp = 1100;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+        exp = 1101;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(4);
+    });
+
+    test('should calculate normal exp', () => {
+        const today = new Date(Date.UTC(2025, 11, 7)); // Normal day
+        const expBonus = 0;
+        const score = 100;
+        const expGainRate = 1;
+        const policy = "none";
+
+        // 2025-12-07 Get 100 exp
+        let exp = 100;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(1);
+
+        // 2025-12-07 Get 100 exp (total 200exp)
+        exp = 101;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+        exp = 200;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+
+        // 2025-12-07 Get 100 exp (total 300exp)
+        exp = 201;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+        exp = 300;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+    });
+
+    test('should calculate normal and GSD exp', () => {
+        const today = new Date(Date.UTC(2025, 11, 3)); // 2 days before Full moon
+        const expBonus = 0;
+        const score = 100;
+        const expGainRate = 1;
+        const policy = "none";
+
+        // 2025-12-03: Get 100 exp
+        let exp = 100;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(1);
+
+        // 2025-12-04: Get 200 exp (total 300 exp)
+        exp = 101;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+        exp = 300;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
+
+        // 2025-12-05: Get 300 exp (total 600 exp)
+        exp = 301;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+        exp = 600;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(3);
+        exp = 601;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(4);
+    });
+
+    test('should calculate exp bonus', () => {
+        const today = new Date(Date.UTC(2025, 11, 7)); // Normal day
+        const expBonus = 1;
+        const score = 100;
+        const expGainRate = 1.18;
+        const policy = "none";
+
+        // 2025-12-07 Get 134 exp
+        let exp = 134;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(1);
+        exp = 135;
+        expect(calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today).days)
+            .toBe(2);
     });
 });

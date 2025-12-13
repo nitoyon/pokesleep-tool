@@ -116,6 +116,11 @@ class Nature {
             -1 : 0;
     }
 
+    get expGainsRate(): number {
+        return this.isExpGainsUp ? 1.18 : this.isExpGainsDown ?
+            0.82 : 1;
+    }
+
     get upEffect(): NatureEffect {
         if (this.isEnergyRecoveryUp) {
             return "Energy recovery";
