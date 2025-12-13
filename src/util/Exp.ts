@@ -64,6 +64,22 @@ export type CalcLevelResult = {
     candyLeft: number;
 };
 
+/** Frequency pattern for using luck incense items. */
+export type LuckIncensePolicy = "none" | "fullMoon" |
+    "gsd" | "every2Days" | "everyDay";
+
+/** Result of calcDayToGetSleepExp function. */
+export type CalcDayToGetSleepExpResult = {
+    /** Required exp */
+    exp: number;
+    /** Exceeded exp */
+    expExceeded: number;
+    /** Days required to get sleep EXP */
+    days: number;
+    /** DateTime to get sleep EXP (local time) */
+    date: Date;
+};
+
 /**
  * Calculate the experience and candy required to level up a Pokémon.
  * @param iv The Pokémon's IV containing the current level and nature.
@@ -184,4 +200,154 @@ export function calcExp(level1: number, level2: number, iv: PokemonIv): number {
 
     return Math.round(totalExpToTheLevel[level2] * ratio) -
         Math.round(totalExpToTheLevel[level1] * ratio);
+}
+
+/**
+ * Calculate the number of days needed to earn the specified EXP through sleep sessions.
+ * @param exp Target EXP to earn.
+ * @param expBonus Number of Sleep EXP Bonus (0-5).
+ * @param score Expected average sleep score per day.
+ * @param expGainRate The Pokémon's exp gain rate by its nature.
+ * @param policy Usage pattern for luck incense.
+ * @param today Today.
+ * @returns The number of days.
+ */
+export function calcDayToGetSleepExp(exp: number, expBonus: number,
+    score: number, expGainRate: number, policy: LuckIncensePolicy,
+    today: Date = new Date()
+): CalcDayToGetSleepExpResult {
+    const ret: CalcDayToGetSleepExpResult = {
+        exp,
+        expExceeded: 0,
+        days: Number.POSITIVE_INFINITY,
+        date: new Date(8640000000000000),
+    };
+
+
+    const baseExp = Math.round(score * (1 + expBonus * 0.14));
+    if (baseExp <= 0) {
+        return ret;
+    }
+
+    // Loop with date variable d set to 1 day before
+    // to detect if the previous day was a full moon
+    ret.days = 0;
+    const utcToday = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+    let d = new Date(utcToday.setDate(utcToday.getDate() - 1));
+
+    while (true) {
+        // Get the number of days until the full moon (-1 to 29)
+        const dates = getNextFullMoon(d) - 1;
+
+        if (dates > 1) {
+            // If the full moon day is ahead
+            const expPerDay = Math.floor(baseExp *
+                getExpRateForDay("normal", policy) * expGainRate);
+
+            // If the accumulated experience meets the condition,
+            // find the day that satisfies it
+            if (expPerDay * dates >= exp) {
+                const days = Math.ceil(exp / expPerDay);
+                ret.days += days;
+                ret.expExceeded = expPerDay * days - exp;
+                break;
+            }
+
+            // Advance d to the day before the specified full moon
+            ret.days += dates - 1;
+            exp -= expPerDay * (dates - 1);
+            d = new Date(d.getTime() + (dates - 1) * 24 * 60 * 60 * 1000);
+            continue;
+        }
+        else if (dates === 0) {
+            // When it's a full moon day
+            const expPerDay = Math.floor(baseExp *
+                getExpRateForDay("fullmoon", policy) * expGainRate);
+            ret.days += 1;
+            if (expPerDay >= exp) {
+                ret.expExceeded = expPerDay - exp;
+                break;
+            }
+
+            exp -= expPerDay;
+            d = new Date(d.getTime() + 24 * 60 * 60 * 1000);
+            continue;
+        }
+        else {
+            // When it's the day before or after the full moon
+            const expPerDay = Math.floor(baseExp *
+                getExpRateForDay("gsd", policy) * expGainRate);
+            ret.days += 1;
+            if (expPerDay >= exp) {
+                ret.expExceeded += expPerDay - exp;
+                break;;
+            }
+
+            exp -= expPerDay;
+            d = new Date(d.getTime() + 24 * 60 * 60 * 1000);
+            continue;
+        }
+    }
+
+    ret.date = new Date();
+    ret.date.setDate(ret.date.getDate() + ret.days);
+    return ret;
+}
+
+function getExpRateForDay(date: "normal" | "gsd" | "fullmoon", policy: LuckIncensePolicy) {
+    const baseExp = date === "fullmoon" ? 3 :
+        date === "gsd" ? 2 : 1;
+    switch (policy) {
+        case "none": return baseExp;
+        case "fullMoon": return baseExp === 3 ? 6 : baseExp;
+        case "gsd": return baseExp > 1 ? baseExp * 2 : baseExp;
+        case "every2Days": return baseExp > 1 ? baseExp * 2 : baseExp * 1.5;
+        case "everyDay": return baseExp * 2;
+    }
+}
+
+const lunarCycle = 29.530588;
+
+/**
+ * Return days until next full moon (approximation)
+ * @param date date.
+ * @returns days.
+ */
+export function getNextFullMoon(date: Date): number {
+    const fullMoonStartRatio = 0.48;
+    const fullMoonEndRatio = 0.52;
+    const currentAge = getMoonAge(date);
+    const currentRatio = currentAge / lunarCycle;
+
+    if (currentRatio > fullMoonStartRatio && currentRatio < fullMoonEndRatio) {
+        // Currently in full moon range
+        return 0;
+    } else if (currentRatio < fullMoonStartRatio) {
+        // Next full moon is in this cycle
+        return Math.ceil(fullMoonStartRatio * lunarCycle - currentAge);
+    } else {
+        // Past full moon - next full moon is in the next cycle
+        return Math.ceil((1 + fullMoonStartRatio) * lunarCycle - currentAge);
+    }
+}
+
+/**
+ * Detect the day is full moon or not (approximation)
+ * @param date The date to be checked.
+ * @returns Full moon or not.
+ */
+export function isFullMoon(date: Date): boolean {
+    const age = getMoonAge(date) / lunarCycle;
+    return age > 0.48 && age < 0.52;
+}
+
+/**
+ * Get moon age (approximation)
+ * @param date The date to be checked.
+ * @returns Moon age.
+ */
+export function getMoonAge(date: Date): number {
+    const reference = new Date(Date.UTC(2000, 0, 6, 18, 14));
+    const days = (date.getTime() - reference.getTime()) / (1000 * 60 * 60 * 24);
+    return (days % lunarCycle + lunarCycle) % lunarCycle;
 }
