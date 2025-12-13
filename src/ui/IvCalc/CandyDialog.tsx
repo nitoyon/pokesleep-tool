@@ -345,7 +345,7 @@ const NormalCandyForm = React.memo(({ config, levelInfo, onChange }: {
             </section>
             <section>
                 <label>{t('candy')}:</label>
-                <div><CandyIcon sx={{color: '#e7ba67'}}/>{formatWithComma(result.candy)}</div>
+                <div><CandyIcon/>{formatWithComma(result.candy)}</div>
             </section>
             <section>
                 <label>{t('dream shard')}:</label>

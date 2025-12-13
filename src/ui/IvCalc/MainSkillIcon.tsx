@@ -64,7 +64,7 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
             if (second !== true) {
                 return <IngredientsIcon fontSize="small"/>;
             } else {
-                return <CandyIcon sx={{color: "#e7ba67"}} fontSize="small"/>;
+                return <CandyIcon fontSize="small"/>;
             }
         case "Ingredient Magnet S":
             return <IngredientsIcon fontSize="small"/>;
