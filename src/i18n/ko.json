@@ -550,6 +550,7 @@
         "times unit": "회",
         "help unit": "회",
         "berry unit": "개",
+        "day unit": "{{count}}일",
         "ingredients unit": "개",
 
         "evolved once": "한 번 진화함",
@@ -576,6 +577,11 @@
         "kind": "종류",
         "number of uses": "사용 횟수",
         "up to specified level": "지정 레벨까지",
+        "luck incense": "행운의향로",
+        "full moon": "보름달 날",
+        "gsd": "보름달 전후 1일",
+        "every 2 days": "2일에 1회",
+        "every day": "매일",
         "mini candy boost": "미니",
         "normal candy boost": "홀리데이",
 

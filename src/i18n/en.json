@@ -564,6 +564,8 @@
         "times unit": " times",
         "help unit": " helps",
         "berry unit": " drops",
+        "day unit_one": "{{count}} day",
+        "day unit_other": "{{count}} days",
         "ingredients unit": " ingredients",
 
         "evolved once": "Evolved once",
@@ -590,6 +592,11 @@
         "kind": "Kind",
         "number of uses": "Number of uses",
         "up to specified level": "Up to specified level",
+        "luck incense": "Luck incense",
+        "full moon": "Full moon",
+        "gsd": "Full moon ±1",
+        "every 2 days": "Every 2 days",
+        "every day": "Every day",
         "mini candy boost": "Mini",
         "normal candy boost": "Holiday",
 
