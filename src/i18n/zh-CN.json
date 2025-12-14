@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "大幅改进了糖果计算功能。",
+                    "detail": "在糖果计算功能中添加了 [$t(details)] 模式。\n另外，添加了 [$t(turn candy)] 功能。请从左下角的按钮使用。\n请用于规划 $t(events.holiday 2025) 期间的 $t(candy boost)。"
+                },
                 "add spiritomb": {
                     "headline": "添加了$t(pokemons.Spiritomb)的数据。",
                     "detail": "$t(rp collection)"

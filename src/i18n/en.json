@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "Major improvements to the candy calculator feature.",
+                    "detail": "Added [$t(details)] mode to the candy calculator feature.\nAlso added [$t(turn candy)] feature. Access it from the button at the bottom left.\nUse it to plan your $t(candy boost) during $t(events.holiday 2025)."
+                },
                 "add spiritomb": {
                     "headline": "Added data for Spiritomb.",
                     "detail": "$t(rp collection)"
