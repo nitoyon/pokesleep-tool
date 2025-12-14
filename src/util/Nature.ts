@@ -31,7 +31,7 @@ export type NatureType = NoCorrectionNatureType |
 export type NatureEffect = "No effect" | "Energy recovery" | "EXP gains" |
     "Main skill chance" | "Speed of help" | "Ingredient finding";
 
-type PlusMinusOneOrZero = -1|0|1;
+export type PlusMinusOneOrZero = -1|0|1;
 
 /**
  * Represents the nature of pokemon.
@@ -114,6 +114,11 @@ class Nature {
     get expGainsFactor(): PlusMinusOneOrZero {
         return this.isExpGainsUp ? 1 : this.isExpGainsDown ?
             -1 : 0;
+    }
+
+    get expGainsRate(): number {
+        return this.isExpGainsUp ? 1.18 : this.isExpGainsDown ?
+            0.82 : 1;
     }
 
     get upEffect(): NatureEffect {

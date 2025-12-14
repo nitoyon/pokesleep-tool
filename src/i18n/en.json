@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "Major improvements to the candy calculator feature.",
+                    "detail": "Added [$t(details)] mode to the candy calculator feature.\nAlso added [$t(turn candy)] feature. Access it from the button at the bottom left.\nUse it to plan your $t(candy boost) during $t(events.holiday 2025)."
+                },
                 "add spiritomb": {
                     "headline": "Added data for Spiritomb.",
                     "detail": "$t(rp collection)"
@@ -564,6 +568,8 @@
         "times unit": " times",
         "help unit": " helps",
         "berry unit": " drops",
+        "day unit_one": "{{count}} day",
+        "day unit_other": "{{count}} days",
         "ingredients unit": " ingredients",
 
         "evolved once": "Evolved once",
@@ -578,13 +584,32 @@
 
         "exp to go1": "",
         "exp to go2": "EXP to go",
+        "simple": "Simple",
         "required exp": "Required EXP",
         "candy": "Candy",
         "dream shard": "Dream shard",
+        "pokemon candy": "{{name}} candy",
         "nature": "Nature",
         "candy boost": "Candy boost",
+        "candy-based training": "Candy training",
+        "sleep-based training": "Sleep training",
+        "kind": "Kind",
+        "number of uses": "Number of uses",
+        "up to specified level": "Up to specified level",
+        "luck incense": "Luck incense",
+        "full moon": "Full moon",
+        "gsd": "Full moon ±1",
+        "every 2 days": "Every 2 days",
+        "every day": "Every day",
         "mini candy boost": "Mini",
-        "normal candy boost": "Unlimited",
+        "normal candy boost": "Holiday",
+
+        "turn candy": "Candy Table",
+        "required candy": "Required candy",
+        "handy candy": "Handy candy",
+        "type candy": "Type candy",
+        "sufficient candy": "You have enough Pokémon candies. No need to use handy candy or type candy.",
+        "insufficient n candy": "You are short {{n}} candies.",
 
         "strength of x": "Strength of {{x}}",
         "helping bonus addition": "$t(subskill.Helping Bonus) effect",
@@ -649,6 +674,7 @@
         "total count": "Total count",
         "total strength": "Total strength",
         "skill count": "Skill count",
+        "total": "Total",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
 

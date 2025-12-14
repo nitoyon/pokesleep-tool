@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "사탕 계산 기능을 대폭 개선했습니다.",
+                    "detail": "사탕 계산 기능에 [$t(details)] 모드를 추가했습니다.\n또한 [$t(turn candy)] 기능을 추가했습니다. 왼쪽 하단의 버튼을 통해 이용하세요.\n$t(events.holiday 2025)에서의 $t(candy boost) 계획에 활용하세요."
+                },
                 "add spiritomb": {
                     "headline": "$t(pokemons.Spiritomb)의 데이터를 추가했습니다.",
                     "detail": "$t(rp collection)"
@@ -550,6 +554,7 @@
         "times unit": "회",
         "help unit": "회",
         "berry unit": "개",
+        "day unit": "{{count}}일",
         "ingredients unit": "개",
 
         "evolved once": "한 번 진화함",
@@ -564,13 +569,32 @@
 
         "exp to go1": "앞으로 EXP",
         "exp to go2": "",
+        "simple": "간단",
         "required exp": "필요한 EXP",
         "candy": "사탕",
         "dream shard": "꿈의조각",
+        "pokemon candy": "{{name}}의사탕",
         "nature": "성격",
         "candy boost": "사탕 부스트",
+        "candy-based training": "사탕 육성",
+        "sleep-based training": "수면 육성",
+        "kind": "종류",
+        "number of uses": "사용 횟수",
+        "up to specified level": "지정 레벨까지",
+        "luck incense": "행운의향로",
+        "full moon": "보름달 날",
+        "gsd": "보름달 전후 1일",
+        "every 2 days": "2일에 1회",
+        "every day": "매일",
         "mini candy boost": "미니",
-        "normal candy boost": "무제한",
+        "normal candy boost": "홀리데이",
+
+        "turn candy": "사탕 변환표",
+        "required candy": "필요한 사탕",
+        "handy candy": "만능사탕",
+        "type candy": "타입사탕",
+        "sufficient candy": "포켓몬 사탕이 충분합니다. 만능사탕・타입사탕을 사용할 필요가 없습니다.",
+        "insufficient n candy": "사탕이 {{n}} 개 부족합니다.",
 
         "strength of x": "{{x}} 의 에너지",
         "helping bonus addition": "$t(subskill.Helping Bonus)의 효과",
@@ -633,6 +657,7 @@
         "total count": "총 개수",
         "total strength": "총 에너지",
         "skill count": "스킬 수",
+        "total": "합계",
 
         "select subskill at level xxx": "<level/>의 서브 스킬을 선택해주세요",
 

@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "大幅改進了糖果計算功能。",
+                    "detail": "在糖果計算功能中新增了 [$t(details)] 模式。\n另外，新增了 [$t(turn candy)] 功能。請從左下角的按鈕使用。\n請用於規劃 $t(events.holiday 2025) 期間的 $t(candy boost)。"
+                },
                 "add spiritomb": {
                     "headline": "新增了$t(pokemons.Spiritomb)的資料。",
                     "detail": "$t(rp collection)"
@@ -554,6 +558,7 @@
         "times unit": "次",
         "help unit": "次",
         "berry unit": "個",
+        "day unit": "{{count}}天",
         "ingredients unit": "食材",
 
         "evolved once": "進化一次",
@@ -568,13 +573,32 @@
 
         "exp to go1": "還需",
         "exp to go2": "EXP",
+        "simple": "簡單",
         "required exp": "所需 EXP",
         "candy": "糖果",
         "dream shard": "夢之碎片",
+        "pokemon candy": "{{name}}的糖果",
         "nature": "性格",
         "candy boost": "糖果增强",
+        "candy-based training": "糖果育成",
+        "sleep-based training": "睡眠育成",
+        "kind": "種類",
+        "number of uses": "使用次數",
+        "up to specified level": "至指定等級",
+        "luck incense": "幸運薰香",
+        "full moon": "滿月之日",
+        "gsd": "滿月前後1日",
+        "every 2 days": "每2日1次",
+        "every day": "每日",
         "mini candy boost": "迷你",
-        "normal candy boost": "无限制",
+        "normal candy boost": "佳節",
+
+        "turn candy": "糖果轉換表",
+        "required candy": "所需糖果",
+        "handy candy": "萬能糖果",
+        "type candy": "屬性的糖果",
+        "sufficient candy": "寶可夢糖果足夠。無需使用萬能糖果・屬性糖果。",
+        "insufficient n candy": "糖果不足 {{n}} 個。",
 
         "strength of x": "{{x}}的能量",
         "helping bonus addition": "$t(subskill.Helping Bonus)的效果",
@@ -639,6 +663,7 @@
         "total count": "總數",
         "total strength": "總能量",
         "skill count": "技能次數",
+        "total": "合計",
 
         "select subskill at level xxx": "請選擇 <level/> 的副技能",
 
