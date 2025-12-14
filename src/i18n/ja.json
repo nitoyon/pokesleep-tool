@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "アメ計算機能を大幅に改善しました。",
+                    "detail": "アメ計算機能に [$t(details)] モードを追加しました。\nまた、[$t(turn candy)] 機能を追加しました。左下のボタンからご利用ください。\n$t(events.holiday 2025)での$t(candy boost)の計画にご利用ください。"
+                },
                 "add spiritomb": {
                     "headline": "ミカルゲのデータを追加しました。",
                     "detail": "$t(rp collection)"
