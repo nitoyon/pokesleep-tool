@@ -7,8 +7,9 @@ import SliderEx from '../common/SliderEx';
 import { getCandyName } from '../../data/pokemons';
 import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, {
-    BoostEvent, calcExp, CalcExpAndCandyResult, CalcLevelResult,
-    calcLevelByCandy,
+    BoostEvent, calcExp, CalcDayToGetSleepExpResult, calcDayToGetSleepExp,
+    CalcExpAndCandyResult, CalcLevelResult,
+    calcLevelByCandy, LuckIncensePolicy,
 } from '../../util/Exp';
 import Nature, { PlusMinusOneOrZero } from '../../util/Nature';
 import { clamp, formatWithComma } from '../../util/NumberUtil';
@@ -57,6 +58,12 @@ type CandyConfig = {
     boostLevel: number;
     /** Dream shard cap to use candy boost */
     boostShard: number;
+    /** Number of Sleep EXP Bonus (0-5) */
+    expBonus: number;
+    /** Expected average sleep score per day */
+    score: number;
+    /** Usage pattern for luck incense */
+    luckIncense: LuckIncensePolicy;
 };
 
 /** Adds Candy Boost costs to CalcLevelResult */
@@ -93,6 +100,9 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         boostCandyCount: 350,
         boostLevel: 55,
         boostShard: 300000,
+        expBonus: iv.hasSleepExpBonusInActiveSubSkills ? 1 : 0,
+        score: 100,
+        luckIncense: "none",
     });
     const [shouldRender, setShouldRender] = React.useState(false);
 
@@ -406,11 +416,12 @@ const NormalCandyForm = React.memo(({ config, levelInfo, onChange }: {
 });
 
 /**
- * Calculate candy boost and normal candy results for the detail candy form.
+ * Calculate results for the detail candy form.
  *
- * This function returns two results:
+ * This function returns three results:
  * - Candy boost result: When using candy boost (mini or unlimited) based on the policy
  * - Normal candy result: Standard candy usage after boost is applied
+ * - Sleep result: The date to reach the level by sleep. `null` if sleep is not needed.
  *
  * @param levelInfo - Current and target level information including IV.
  * @param config - Candy configuration including boost settings,
@@ -423,6 +434,7 @@ const calculateDetailCandy = (
 ): {
     candyBoostResult: CalcLevelBoostResult;
     normalCandyResult: CalcLevelBoostResult;
+    sleepResult?: CalcDayToGetSleepExpResult;
 } => {
     let iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
     iv.nature = config.expFactor === 1 ? new Nature('Timid') :
@@ -491,9 +503,17 @@ const calculateDetailCandy = (
         candyBoostResult.expGot, levelInfo.targetLevel,
         candyBoostResult.candyLeft, "none");
 
+    let sleepResult = undefined;
+    if (normalCandyResult.expLeft > 0) {
+        sleepResult = calcDayToGetSleepExp(normalCandyResult.expLeft,
+            config.expBonus, config.score, levelInfo.iv.nature.expGainsRate,
+            config.luckIncense);
+    }
+
     return {
         candyBoostResult,
         normalCandyResult: {...normalCandyResult, extraShards: 0, candySaved: 0 },
+        sleepResult,
     };
 };
 
@@ -540,10 +560,23 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
         onChange({...config, boostLevel});
     }, [config, levelInfo, onChange]);
 
+    const onExpBonusChange = React.useCallback((expBonus: string) => {
+        onChange({...config, expBonus: parseInt(expBonus, 10)});
+    }, [config, onChange]);
+
+    const onScoreChange = React.useCallback((score: number) => {
+        onChange({...config, score});
+    }, [config, onChange]);
+
+    const onIncenseChange = React.useCallback((value: string) => {
+        onChange({...config, luckIncense: value as LuckIncensePolicy});
+    }, [config, onChange]);
+
     const id = levelInfo.iv.pokemon.id;
     const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
 
-    const { candyBoostResult, normalCandyResult } = calculateDetailCandy(levelInfo, config);
+    const { candyBoostResult, normalCandyResult, sleepResult } = calculateDetailCandy(
+        levelInfo, config);
     const exp = candyBoostResult.exp;
 
     return <>
@@ -565,6 +598,14 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
                     <div>{formatWithComma(candyBoostResult.expLeft - normalCandyResult.expLeft)}</div>
                 </section>
                 <CandyResultPreview iv={levelInfo.iv} value={normalCandyResult}/>
+            </CollapseEx>
+            <CollapseEx show={sleepResult !== undefined}>
+                <section>
+                    <label>{t('sleep-based training')}:</label>
+                    <div>{formatWithComma(normalCandyResult.expLeft + (sleepResult?.expExceeded ?? 0))}</div>
+                </section>
+                <SleepResultPreview iv={levelInfo.iv} level={levelInfo.targetLevel}
+                    value={sleepResult!}/>
             </CollapseEx>
         </div>
         <div className="form">
@@ -625,6 +666,38 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
                     </>}
                 </section>
             </CollapseEx>
+        </div>
+        <div className="form">
+            <section className="first">
+                <label>{t('subskill.Sleep EXP Bonus')}:</label>
+                <SelectEx value={config.expBonus} onChange={onExpBonusChange}
+                    sx={{width: '1.5rem'}}
+                >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                </SelectEx>
+            </section>
+            <section>
+                <label>{t('sleep score')}:</label>
+                <NumericSliderInput value={config.score} onChange={onScoreChange}
+                    sx={{width: '2rem', fontSize: '0.9rem'}}
+                    min={1} max={100}/>
+            </section>
+            <section>
+                <label>{t('luck incense')}:</label>
+                <SelectEx value={config.luckIncense} onChange={onIncenseChange}
+                    sx={{width: 'auto', fontSize: '0.9rem'}}>
+                    <MenuItem value="none">{t('none')}</MenuItem>
+                    <MenuItem value="fullMoon">{t('full moon')}</MenuItem>
+                    <MenuItem value="gsd">{t('gsd')}</MenuItem>
+                    <MenuItem value="every2Days">{t('every 2 days')}</MenuItem>
+                    <MenuItem value="everyDay">{t('every day')}</MenuItem>
+                </SelectEx>
+            </section>
         </div>
     </>;
 });
@@ -733,7 +806,7 @@ const CandyResultPreview = React.memo(({ iv, value }: {
             .join(" ");
     }
 
-    return <StyledCandyPreview>
+    return <StyledPreview>
         <span className="level">
             <span>Lv. {value.level}</span>
             {!isMaxLevel && <footer>{`(${expToGo})`}</footer>}
@@ -746,15 +819,52 @@ const CandyResultPreview = React.memo(({ iv, value }: {
             <span><DreamShardIcon/>{formatWithComma(value.shards)}</span>
             {value.extraShards > 0 && <footer>(+{formatWithComma(value.extraShards)})</footer>}
         </span>
-    </StyledCandyPreview>;
+    </StyledPreview>;
 });
 
-const StyledCandyPreview = styled('footer')({
+const SleepResultPreview = React.memo(({ iv, level, value }: {
+    iv: PokemonIv,
+    level: number,
+    value: CalcDayToGetSleepExpResult,
+}) => {
+    const { t, i18n } = useTranslation();
+    if (value === undefined) {
+        return null;
+    }
+
+    const isMaxLevel = level === maxLevel;
+    let expToGo = "";
+    if (!isMaxLevel) {
+        const expToNextLevel = calcExp(level, level + 1, iv) - value.expExceeded;
+        expToGo = [t('exp to go1'), formatWithComma(expToNextLevel), t('exp to go2')]
+            .filter(x => x !== "")
+            .join(" ");
+    }
+
+    const date = Intl.DateTimeFormat(i18n.language,
+         {year: "numeric",month: "short", day: "numeric"})
+         .format(value.date);
+    return <StyledPreview className="sleep">
+        <span className="level">
+            <span>Lv. {level}</span>
+            {!isMaxLevel && <footer>{`(${expToGo})`}</footer>}
+        </span>
+        <span className="shard">
+            <span>{date}</span>
+            <footer>({t('day unit', {count: value.days})})</footer>
+        </span>
+    </StyledPreview>;
+});
+
+const StyledPreview = styled('footer')({
     color: '#666',
     fontSize: '0.8rem',
     paddingLeft: '1.2rem',
     display: 'grid',
     gridTemplateColumns: '6rem 3.5rem 1fr',
+    '&.sleep': {
+        gridTemplateColumns: '6rem 1fr',
+    },
     alignItems: 'start',
     lineHeight: 1.3,
     '& > span': {

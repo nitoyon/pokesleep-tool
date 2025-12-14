@@ -552,6 +552,7 @@
         "times unit": "次",
         "help unit": "次",
         "berry unit": "个",
+        "day unit": "{{count}}天",
         "ingredients unit": "食材",
 
         "evolved once": "进化1次",
@@ -578,6 +579,11 @@
         "kind": "种类",
         "number of uses": "使用次数",
         "up to specified level": "至指定等级",
+        "luck incense": "幸运熏香",
+        "full moon": "满月之日",
+        "gsd": "满月前后1日",
+        "every 2 days": "每2日1次",
+        "every day": "每日",
         "mini candy boost": "迷你",
         "normal candy boost": "佳节",
 
