@@ -585,6 +585,13 @@
         "mini candy boost": "미니",
         "normal candy boost": "홀리데이",
 
+        "turn candy": "사탕 변환표",
+        "required candy": "필요한 사탕",
+        "handy candy": "만능사탕",
+        "type candy": "타입사탕",
+        "sufficient candy": "포켓몬 사탕이 충분합니다. 만능사탕・타입사탕을 사용할 필요가 없습니다.",
+        "insufficient n candy": "사탕이 {{n}} 개 부족합니다.",
+
         "strength of x": "{{x}} 의 에너지",
         "helping bonus addition": "$t(subskill.Helping Bonus)의 효과",
         "helping bonus addition label": "[$t(subskill.Helping Bonus)]에 의한 $t(other team member)의 $t(strength2) 증가분을 $t(total strength)에 포함",
@@ -646,6 +653,7 @@
         "total count": "총 개수",
         "total strength": "총 에너지",
         "skill count": "스킬 수",
+        "total": "합계",
 
         "select subskill at level xxx": "<level/>의 서브 스킬을 선택해주세요",
 

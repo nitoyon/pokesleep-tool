@@ -600,6 +600,13 @@
         "mini candy boost": "Mini",
         "normal candy boost": "Holiday",
 
+        "turn candy": "Candy Table",
+        "required candy": "Required candy",
+        "handy candy": "Handy candy",
+        "type candy": "Type candy",
+        "sufficient candy": "You have enough Pokémon candies. No need to use handy candy or type candy.",
+        "insufficient n candy": "You are short {{n}} candies.",
+
         "strength of x": "Strength of {{x}}",
         "helping bonus addition": "$t(subskill.Helping Bonus) effect",
         "helping bonus addition label": "Add other members' strength gained through this Pokémon's [Helping Bonus]",
@@ -663,6 +670,7 @@
         "total count": "Total count",
         "total strength": "Total strength",
         "skill count": "Skill count",
+        "total": "Total",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
 

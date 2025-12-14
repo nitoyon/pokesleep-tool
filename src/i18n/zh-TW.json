@@ -589,6 +589,13 @@
         "mini candy boost": "迷你",
         "normal candy boost": "佳節",
 
+        "turn candy": "糖果轉換表",
+        "required candy": "所需糖果",
+        "handy candy": "萬能糖果",
+        "type candy": "屬性的糖果",
+        "sufficient candy": "寶可夢糖果足夠。無需使用萬能糖果・屬性糖果。",
+        "insufficient n candy": "糖果不足 {{n}} 個。",
+
         "strength of x": "{{x}}的能量",
         "helping bonus addition": "$t(subskill.Helping Bonus)的效果",
         "helping bonus addition label": "將[$t(subskill.Helping Bonus)]帶來的$t(other team member)的$t(strength2)增加量包含在$t(total strength)中",
@@ -652,6 +659,7 @@
         "total count": "總數",
         "total strength": "總能量",
         "skill count": "技能次數",
+        "total": "合計",
 
         "select subskill at level xxx": "請選擇 <level/> 的副技能",
 

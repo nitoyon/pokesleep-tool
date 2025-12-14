@@ -24,6 +24,7 @@ import { Button, Dialog, DialogActions, DialogContent, InputAdornment,
 } from '@mui/material';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'react-i18next';
+import CandyTurnDialog from './CandyTurnDialog';
 
 /** IV and level information */
 type LevelInfo = {
@@ -105,6 +106,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         luckIncense: "none",
     });
     const [shouldRender, setShouldRender] = React.useState(false);
+    const [turnCandyOpen, setTurnCandyOpen] = React.useState(false);
 
     // Reset state when the the pokemon, level or nature has changed or
     // first time when this dialog is open
@@ -189,6 +191,19 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         });
     }, [config]);
 
+    const onTurnCandyClick = React.useCallback(() => {
+        // QUICK HACK: set candy count to config on simple tab
+        if (config.tabIndex === 0) {
+            const result: CalcExpAndCandyResult = calcExpAndCandy(
+                iv, levelInfo.expGot, levelInfo.targetLevel, config.candyBoost);
+            setConfig({...config, pokemonCandy: result.candy});
+        }
+        setTurnCandyOpen(true);
+    }, [config, iv, levelInfo]);
+    const onTurnCandyClose = React.useCallback(() => {
+        setTurnCandyOpen(false);
+    }, []);
+
     if (!shouldRender) {
         return null;
     }
@@ -210,9 +225,12 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
                     config={config} levelInfo={levelInfo} onChange={setConfig}/>}
             </DialogContent>
             <DialogActions>
+                <Button sx={{ mr: 'auto', textTransform: 'none'}} onClick={onTurnCandyClick}>{t('turn candy')}</Button>
                 <Button onClick={onClose}>{t("close")}</Button>
             </DialogActions>
         </StyledDialog>
+        <CandyTurnDialog count={config.pokemonCandy} iv={iv} open={turnCandyOpen}
+            onClose={onTurnCandyClose}/>
     </>);
 });
 

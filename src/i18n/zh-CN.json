@@ -587,6 +587,13 @@
         "mini candy boost": "迷你",
         "normal candy boost": "佳节",
 
+        "turn candy": "糖果转换表",
+        "required candy": "所需糖果",
+        "handy candy": "万能糖果",
+        "type candy": "属性的糖果",
+        "sufficient candy": "宝可梦糖果足够。无需使用万能糖果・属性糖果。",
+        "insufficient n candy": "糖果不足 {{n}} 个。",
+
         "strength of x": "{{x}}的能量",
         "helping bonus addition": "$t(subskill.Helping Bonus)的效果",
         "helping bonus addition label": "将[$t(subskill.Helping Bonus)]带来的$t(other team member)的$t(strength2)增加量包含在$t(total strength)中",
@@ -650,7 +657,8 @@
         "total count": "总数",
         "total strength": "总能量",
         "skill count": "技能次数",
-        
+        "total": "合计",
+
         "select subskill at level xxx": "请选择 <level/> 的副技能",
         
         "about1": "本工具非官方工具，由 <profile>nitoyon</profile> 个人制作开发。",

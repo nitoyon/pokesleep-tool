@@ -589,6 +589,13 @@
         "mini candy boost": "ミニ",
         "normal candy boost": "ホリデー",
 
+        "turn candy": "アメ変換表",
+        "required candy": "必要なアメ",
+        "handy candy": "ばんのうアメ",
+        "type candy": "タイプのアメ",
+        "sufficient candy": "ポケモンのアメは足りています。ばんのうアメ・タイプのアメを使う必要はありません。",
+        "insufficient n candy": "アメが {{n}} 個足りません。",
+
         "strength of x": "{{x}}のエナジー",
         "helping bonus addition": "$t(subskill.Helping Bonus)の効果",
         "helping bonus addition label": "[$t(subskill.Helping Bonus)]による$t(other team member)の$t(strength2)増加分を$t(total strength)に含める",
@@ -652,6 +659,7 @@
         "total count": "合計個数",
         "total strength": "合計エナジー",
         "skill count": "スキル回数",
+        "total": "合計",
 
         "select subskill at level xxx": "<level/> のサブスキルを選択してください",
 
