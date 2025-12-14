@@ -5434,40 +5434,6 @@
         }
     },
     {
-        "id": 447,
-        "name": "Riolu",
-        "arrival": "2023-07-17",
-        "sleepType": "slumbering",
-        "exp": 600,
-        "type": "fighting",
-        "specialty": "Skills",
-        "skill": "Dream Shard Magnet S",
-        "fp": 5,
-        "frequency": 4200,
-        "ingRatio": 12.6,
-        "skillRatio": 3.8,
-        "ancestor": 447,
-        "evolutionCount": 0,
-        "evolutionLeft": 1,
-        "isFullyEvolved": false,
-        "carryLimit": 9,
-        "ing1": {
-            "name": "oil",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "potato",
-            "c2": 2,
-            "c3": 4
-        },
-        "ing3": {
-            "name": "egg",
-            "c3": 4
-        }
-    },
-    {
         "id": 442,
         "name": "Spiritomb",
         "arrival": "2025-12-01",
@@ -5499,6 +5465,40 @@
         "ing3": {
             "name": "leek",
             "c3": 6
+        }
+    },
+    {
+        "id": 447,
+        "name": "Riolu",
+        "arrival": "2023-07-17",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "fighting",
+        "specialty": "Skills",
+        "skill": "Dream Shard Magnet S",
+        "fp": 5,
+        "frequency": 4200,
+        "ingRatio": 12.6,
+        "skillRatio": 3.8,
+        "ancestor": 447,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 9,
+        "ing1": {
+            "name": "oil",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "potato",
+            "c2": 2,
+            "c3": 4
+        },
+        "ing3": {
+            "name": "egg",
+            "c3": 4
         }
     },
     {

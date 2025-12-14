@@ -174,4 +174,56 @@ export function getDecendants(pokemon: PokemonData,
         .sort((a, b) => a.id === pokemon.ancestor ? -1 : a.id - b.id);
 }
 
+/**
+ * Gets the candy name for the specified Pokémon.
+ *
+ * In Pokémon Sleep, candies are used for evolution and are typically named after
+ * the base form of an evolutionary line. Most Pokémon use candy based on their
+ * ancestor (the first Pokémon in their evolutionary chain).
+ *
+ * Some baby Pokémon use their evolved form's candy instead of their own.
+ *
+ * @param id - The Pokémon ID to get the candy for
+ * @returns The name of the Pokémon whose candy is used,
+ *          or "" if the Pokémon is not found
+ *
+ * @example
+ * getCandyName(25);  // Pikachu returns "Pikachu"
+ * getCandyName(172); // Pichu returns "Pikachu"
+ * getCandyName(176); // Togetic returns "Togepi"
+ */
+export function getCandyName(id: number): string {
+    const pokemon = pokemons.find(p => p.id === id);
+    if (!pokemon) {
+        return "";
+    }
+
+    // Some baby Pokémon use their evolved form's candy instead of their own
+    const ancestorId = pokemon.ancestor ?? pokemon.id;
+    switch (ancestorId) {
+        case 172: // Pichu
+            return "Pikachu";
+        case 173: // Cleffa
+            return "Clefairy";
+        case 174: // Igglybuff
+            return "Jigglypuff";
+        case 360: // Wynaut
+            return "Wobbuffet";
+        case 438: // Bonsly
+            return "Sudowoodo";
+        case 439: // Mime Jr.
+            return "Mr. Mime";
+        case 440: // Happiny
+            return "Chansey";
+        case 447: // Riolu
+            return "Lucario";
+    }
+
+    // Default to the base form of the evolutionary line
+    // Note: Togepi and Toxel are exceptions that use their own candy despite being baby forms
+    const ancestorPokemon = id === ancestorId ? pokemon :
+        pokemons.find(p => p.id === ancestorId);
+    return ancestorPokemon?.name ?? "";
+}
+
 export default pokemons;

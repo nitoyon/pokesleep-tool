@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "大幅改进了糖果计算功能。",
+                    "detail": "在糖果计算功能中添加了 [$t(details)] 模式。\n另外，添加了 [$t(turn candy)] 功能。请从左下角的按钮使用。\n请用于规划 $t(events.holiday 2025) 期间的 $t(candy boost)。"
+                },
                 "add spiritomb": {
                     "headline": "添加了$t(pokemons.Spiritomb)的数据。",
                     "detail": "$t(rp collection)"
@@ -552,6 +556,7 @@
         "times unit": "次",
         "help unit": "次",
         "berry unit": "个",
+        "day unit": "{{count}}天",
         "ingredients unit": "食材",
 
         "evolved once": "进化1次",
@@ -566,13 +571,32 @@
 
         "exp to go1": "还需",
         "exp to go2": "EXP",
+        "simple": "简单",
         "required exp": "所需 EXP",
         "candy": "糖果",
         "dream shard": "梦之碎片",
+        "pokemon candy": "{{name}}的糖果",
         "nature": "性格",
         "candy boost": "糖果增強",
+        "candy-based training": "糖果育成",
+        "sleep-based training": "睡眠育成",
+        "kind": "种类",
+        "number of uses": "使用次数",
+        "up to specified level": "至指定等级",
+        "luck incense": "幸运熏香",
+        "full moon": "满月之日",
+        "gsd": "满月前后1日",
+        "every 2 days": "每2日1次",
+        "every day": "每日",
         "mini candy boost": "迷你",
-        "normal candy boost": "無限制",
+        "normal candy boost": "佳节",
+
+        "turn candy": "糖果转换表",
+        "required candy": "所需糖果",
+        "handy candy": "万能糖果",
+        "type candy": "属性的糖果",
+        "sufficient candy": "宝可梦糖果足够。无需使用万能糖果・属性糖果。",
+        "insufficient n candy": "糖果不足 {{n}} 个。",
 
         "strength of x": "{{x}}的能量",
         "helping bonus addition": "$t(subskill.Helping Bonus)的效果",
@@ -637,7 +661,8 @@
         "total count": "总数",
         "total strength": "总能量",
         "skill count": "技能次数",
-        
+        "total": "合计",
+
         "select subskill at level xxx": "请选择 <level/> 的副技能",
         
         "about1": "本工具非官方工具，由 <profile>nitoyon</profile> 个人制作开发。",

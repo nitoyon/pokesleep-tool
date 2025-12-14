@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "",
             "news": {
+                "candy2025": {
+                    "headline": "アメ計算機能を大幅に改善しました。",
+                    "detail": "アメ計算機能に [$t(details)] モードを追加しました。\nまた、[$t(turn candy)] 機能を追加しました。左下のボタンからご利用ください。\n$t(events.holiday 2025)での$t(candy boost)の計画にご利用ください。"
+                },
                 "add spiritomb": {
                     "headline": "ミカルゲのデータを追加しました。",
                     "detail": "$t(rp collection)"
@@ -554,6 +558,7 @@
         "times unit": "回",
         "help unit": "回",
         "berry unit": "個",
+        "day unit": "{{count}}日",
         "ingredients unit": "食材",
 
         "evolved once": "1回進化",
@@ -568,13 +573,32 @@
 
         "exp to go1": "あと EXP",
         "exp to go2": "",
+        "simple": "かんたん",
         "required exp": "必要 EXP",
         "candy": "アメ",
         "dream shard": "ゆめのかけら",
+        "pokemon candy": "{{name}}のアメ",
         "nature": "せいかく",
         "candy boost": "アメブースト",
+        "candy-based training": "アメ育成",
+        "sleep-based training": "睡眠育成",
+        "kind": "種類",
+        "number of uses": "使用回数",
+        "up to specified level": "指定レベルまで",
+        "luck incense": "こううんのおこう",
+        "full moon": "満月の日",
+        "gsd": "満月と前後1日",
+        "every 2 days": "2日に1回",
+        "every day": "毎日",
         "mini candy boost": "ミニ",
-        "normal candy boost": "無制限",
+        "normal candy boost": "ホリデー",
+
+        "turn candy": "アメ変換表",
+        "required candy": "必要なアメ",
+        "handy candy": "ばんのうアメ",
+        "type candy": "タイプのアメ",
+        "sufficient candy": "ポケモンのアメは足りています。ばんのうアメ・タイプのアメを使う必要はありません。",
+        "insufficient n candy": "アメが {{n}} 個足りません。",
 
         "strength of x": "{{x}}のエナジー",
         "helping bonus addition": "$t(subskill.Helping Bonus)の効果",
@@ -639,6 +663,7 @@
         "total count": "合計個数",
         "total strength": "合計エナジー",
         "skill count": "スキル回数",
+        "total": "合計",
 
         "select subskill at level xxx": "<level/> のサブスキルを選択してください",
 
