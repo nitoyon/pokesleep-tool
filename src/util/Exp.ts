@@ -64,8 +64,8 @@ export type CalcLevelResult = {
     candyLeft: number;
 };
 
-/** Frequency pattern for using luck incense items. */
-export type LuckIncensePolicy = "none" | "fullMoon" |
+/** Frequency pattern for using growth incense items. */
+export type GrowthIncensePolicy = "none" | "fullMoon" |
     "gsd" | "every2Days" | "everyDay";
 
 /** Result of calcDayToGetSleepExp function. */
@@ -208,12 +208,12 @@ export function calcExp(level1: number, level2: number, iv: PokemonIv): number {
  * @param expBonus Number of Sleep EXP Bonus (0-5).
  * @param score Expected average sleep score per day.
  * @param expGainRate The Pokémon's exp gain rate by its nature.
- * @param policy Usage pattern for luck incense.
+ * @param policy Usage pattern for growth incense.
  * @param today Today.
  * @returns The number of days.
  */
 export function calcDayToGetSleepExp(exp: number, expBonus: number,
-    score: number, expGainRate: number, policy: LuckIncensePolicy,
+    score: number, expGainRate: number, policy: GrowthIncensePolicy,
     today: Date = new Date()
 ): CalcDayToGetSleepExpResult {
     const ret: CalcDayToGetSleepExpResult = {
@@ -294,7 +294,7 @@ export function calcDayToGetSleepExp(exp: number, expBonus: number,
     return ret;
 }
 
-function getExpRateForDay(date: "normal" | "gsd" | "fullmoon", policy: LuckIncensePolicy) {
+function getExpRateForDay(date: "normal" | "gsd" | "fullmoon", policy: GrowthIncensePolicy) {
     const baseExp = date === "fullmoon" ? 3 :
         date === "gsd" ? 2 : 1;
     switch (policy) {

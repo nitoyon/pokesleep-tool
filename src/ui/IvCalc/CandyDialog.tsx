@@ -9,7 +9,7 @@ import PokemonIv from '../../util/PokemonIv';
 import calcExpAndCandy, {
     BoostEvent, calcExp, CalcDayToGetSleepExpResult, calcDayToGetSleepExp,
     CalcExpAndCandyResult, CalcLevelResult,
-    calcLevelByCandy, LuckIncensePolicy,
+    calcLevelByCandy, GrowthIncensePolicy,
 } from '../../util/Exp';
 import Nature, { PlusMinusOneOrZero } from '../../util/Nature';
 import { clamp, formatWithComma } from '../../util/NumberUtil';
@@ -63,8 +63,8 @@ type CandyConfig = {
     expBonus: number;
     /** Expected average sleep score per day */
     score: number;
-    /** Usage pattern for luck incense */
-    luckIncense: LuckIncensePolicy;
+    /** Usage pattern for growth incense */
+    growthIncense: GrowthIncensePolicy;
 };
 
 /** Adds Candy Boost costs to CalcLevelResult */
@@ -103,7 +103,7 @@ const CandyDialog = React.memo(({ iv, dstLevel, open, onChange, onClose }: {
         boostShard: 300000,
         expBonus: iv.hasSleepExpBonusInActiveSubSkills ? 1 : 0,
         score: 100,
-        luckIncense: "none",
+        growthIncense: "none",
     });
     const [shouldRender, setShouldRender] = React.useState(false);
     const [turnCandyOpen, setTurnCandyOpen] = React.useState(false);
@@ -525,7 +525,7 @@ const calculateDetailCandy = (
     if (normalCandyResult.expLeft > 0) {
         sleepResult = calcDayToGetSleepExp(normalCandyResult.expLeft,
             config.expBonus, config.score, levelInfo.iv.nature.expGainsRate,
-            config.luckIncense);
+            config.growthIncense);
     }
 
     return {
@@ -587,7 +587,7 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
     }, [config, onChange]);
 
     const onIncenseChange = React.useCallback((value: string) => {
-        onChange({...config, luckIncense: value as LuckIncensePolicy});
+        onChange({...config, growthIncense: value as GrowthIncensePolicy});
     }, [config, onChange]);
 
     const id = levelInfo.iv.pokemon.id;
@@ -706,8 +706,8 @@ const DetailCandyForm = React.memo(({ config, levelInfo, onChange }: {
                     min={1} max={100}/>
             </section>
             <section>
-                <label>{t('luck incense')}:</label>
-                <SelectEx value={config.luckIncense} onChange={onIncenseChange}
+                <label>{t('growth incense')}:</label>
+                <SelectEx value={config.growthIncense} onChange={onIncenseChange}
                     sx={{width: 'auto', fontSize: '0.9rem'}}>
                     <MenuItem value="none">{t('none')}</MenuItem>
                     <MenuItem value="fullMoon">{t('full moon')}</MenuItem>
