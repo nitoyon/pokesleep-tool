@@ -113,13 +113,11 @@ const CandyTurnDialog = React.memo(({ count, iv, open, onClose }: {
                 <NumericSliderInput min={0} max={99} value={config.typeM}
                     startAdornment={<InputAdornment position="start">M</InputAdornment>}
                     onChange={(v) => onChange('typeM', v)}/>
-                <NumericSliderInput min={0} max={99} value={config.typeL}
-                    startAdornment={<InputAdornment position="start">L</InputAdornment>}
-                    onChange={(v) => onChange('typeL', v)}/>
-                <span></span>
+                <span/>
+                <span/>
                 <span>×4</span>
                 <span>×25</span>
-                <span>×125</span>
+                <span/>
             </article>
             <CollapseEx show={add === 0}>
                 <Alert severity="info">
@@ -136,7 +134,7 @@ const CandyTurnDialog = React.memo(({ count, iv, open, onClose }: {
                     <thead>
                         <tr>
                             <th colSpan={3} className="handy">{t('handy candy')}</th>
-                            <th colSpan={3} className="type">{t('type candy')}</th>
+                            <th colSpan={2} className="type">{t('type candy')}</th>
                             <th rowSpan={2} className="sum">{t('total')}</th>
                         </tr>
                         <tr>
@@ -145,7 +143,6 @@ const CandyTurnDialog = React.memo(({ count, iv, open, onClose }: {
                             <th className="handy">L</th>
                             <th className="type">S</th>
                             <th className="type">M</th>
-                            <th className="type">L</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -157,7 +154,6 @@ const CandyTurnDialog = React.memo(({ count, iv, open, onClose }: {
                                 <td className={`handy${x.handyL === 0 ? ' empty' : ''}`}>{x.handyL}</td>
                                 <td className={`type${x.typeS === 0 ? ' empty' : ''}`}>{x.typeS}</td>
                                 <td className={`type${x.typeM === 0 ? ' empty' : ''}`}>{x.typeM}</td>
-                                <td className={`type${x.typeL === 0 ? ' empty' : ''}`}>{x.typeL}</td>
                                 <td className="sum">{formatWithComma(total)}<small> (+{total - add})</small></td>
                             </tr>);
                         })}
@@ -260,7 +256,7 @@ const StyledContent = styled('div')({
         borderSpacing: '2px',
         '& th, & td': {
             fontSize: '0.8rem',
-            width: '2rem',
+            width: '2.5rem',
             padding: '0 4px',
             '&.empty': {
                 color: '#aaa',
