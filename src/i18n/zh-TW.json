@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "",
             "news": {
+                "holiday2025": {
+                    "headline": "新增了$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)及其進化形態的資料。",
+                    "detail": "$t(rp collection)"
+                },
                 "candy2025": {
                     "headline": "大幅改進了糖果計算功能。",
                     "detail": "在糖果計算功能中新增了 [$t(details)] 模式。\n另外，新增了 [$t(turn candy)] 功能。請從左下角的按鈕使用。\n請用於規劃 $t(events.holiday 2025) 期間的 $t(candy boost)。"
