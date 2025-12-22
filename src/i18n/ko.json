@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "",
             "news": {
+                "holiday2025": {
+                    "headline": "$t(pokemons.Togedemaru), $t(pokemons.Cetoddle)의 데이터를 추가했습니다.",
+                    "detail": "$t(rp collection)"
+                },
                 "candy2025": {
                     "headline": "사탕 계산 기능을 대폭 개선했습니다.",
                     "detail": "사탕 계산 기능에 [$t(details)] 모드를 추가했습니다.\n또한 [$t(turn candy)] 기능을 추가했습니다. 왼쪽 하단의 버튼을 통해 이용하세요.\n$t(events.holiday 2025)에서의 $t(candy boost) 계획에 활용하세요."

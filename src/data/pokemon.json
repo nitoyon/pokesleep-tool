@@ -4929,30 +4929,30 @@
         "sleepType": "slumbering",
         "exp": 600,
         "type": "ice",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Skills",
+        "skill": "Tasty Chance S",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 3300,
+        "ingRatio": 21.4,
+        "skillRatio": 5,
         "ancestor": null,
         "evolutionCount": 0,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 20,
         "ing1": {
-            "name": "unknown1",
+            "name": "oil",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
+            "name": "sausage",
             "c2": 3,
             "c3": 4
         },
         "ing3": {
-            "name": "unknown3",
+            "name": "ginger",
             "c3": 4
         },
         "form": "Holiday"
@@ -6703,32 +6703,32 @@
         "arrival": "2025-12-22",
         "sleepType": "dozing",
         "exp": 600,
-        "type": "electric",
-        "specialty": "unknown",
+        "type": "steel",
+        "specialty": "Skills",
         "skill": "Energizing Cheer S (Nuzzle)",
         "fp": 16,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 2700,
+        "ingRatio": 16.9,
+        "skillRatio": 5.4,
         "ancestor": null,
         "evolutionCount": 0,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 18,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "milk",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "avocado",
+            "c2": 1,
+            "c3": 2
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "cacao",
+            "c3": 2
         }
     },
     {
@@ -7318,31 +7318,31 @@
         "sleepType": "dozing",
         "exp": 600,
         "type": "ice",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Charge Energy S",
         "fp": 5,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 5100,
+        "ingRatio": 4.2,
+        "skillRatio": 22.3,
         "ancestor": 974,
         "evolutionCount": 0,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 12,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "sausage",
+            "c2": 5,
+            "c3": 9
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "pumpkin",
+            "c3": 4
         }
     },
     {
@@ -7352,31 +7352,31 @@
         "sleepType": "dozing",
         "exp": 600,
         "type": "ice",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Charge Energy S",
         "fp": 20,
-        "frequency": 0,
-        "ingRatio": 0,
-        "skillRatio": 0,
+        "frequency": 2800,
+        "ingRatio": 20.9,
+        "skillRatio": 4.2,
         "ancestor": 974,
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 25,
         "ing1": {
-            "name": "unknown1",
-            "c1": 0,
-            "c2": 0,
-            "c3": 0
+            "name": "potato",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "sausage",
+            "c2": 5,
+            "c3": 9
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "pumpkin",
+            "c3": 4
         }
     },
     {

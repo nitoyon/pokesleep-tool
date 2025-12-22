@@ -150,7 +150,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [12, 15, 20, 25, 33, 44][skillLevel - 1];
     }
     if (skill === "Energizing Cheer S (Nuzzle)") {
-        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+        return [9, 12, 16, 20, 27, 35][skillLevel - 1];
     }
     if (skill === "Energy for Everyone S") {
         return [5, 7, 9, 11, 15, 18][skillLevel - 1];
