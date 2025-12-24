@@ -13,7 +13,7 @@
             "short title": "个体值计算器",
             "description": "使用方法非常简单！只需要输入宝可梦的等级和技能，就可以知道宝可梦的SP，可以获得的能量和能力。",
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
-            "notice detail2": "",
+            "notice detail2": "此外，我们在 <YouTube>YouTube 频道</YouTube> 上发布了使用方法的讲解视频。请务必观看。",
             "news": {
                 "holiday2025": {
                     "headline": "添加了$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)及其进化形态的数据。",

@@ -2,7 +2,7 @@ import React from 'react';
 import { AppType } from '../AppConfig';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent,
     Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 interface HowToDialogProps {
     app: AppType;
@@ -26,7 +26,12 @@ export default function HowToDialog({app, open, onClose}: HowToDialogProps) {
                 }}>{t(`${app}.notice detail1`)}</Typography>
                 <Typography sx={{
                     marginBottom: "16px"
-                }}>{t(`${app}.notice detail2`)}</Typography>
+                }}>
+                    <Trans i18nKey={`${app}.notice detail2`}
+                        components={{
+                            YouTube: <a href="https://www.youtube.com/@nitoyon-24">YouTube channel</a>,
+                        }}/>
+                </Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>{t('close')}</Button>

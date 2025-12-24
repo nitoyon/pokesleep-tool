@@ -13,7 +13,7 @@
             "short title": "IV Calc",
             "description": "Using this tool is easy! Simply enter your pokemon, level and skill. You will know its individual values such as RP and strength.",
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
-            "notice detail2": "",
+            "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
                 "holiday2025": {
                     "headline": "$t(pokemons.Togedemaru), $t(pokemons.Cetoddle) and their evolutions have been added.",

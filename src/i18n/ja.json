@@ -13,7 +13,7 @@
             "short title": "個体値計算機",
             "description": "使い方はかんたん！ ポケモンのレベルやスキルを入力すると、SP や稼ぐエナジー・強さが分かります。",
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
-            "notice detail2": "",
+            "notice detail2": "また、使い方の解説動画を <YouTube>YouTubeチャンネル</YouTube> で公開しています。ぜひご確認ください。",
             "news": {
                 "holiday2025": {
                     "headline": "$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)たちのデータを追加しました。",
