@@ -13,7 +13,7 @@
             "short title": "個體值計算器",
             "description": "使用方法非常簡單！ 只需要輸入寶可夢的等級和技能，就可以查看寶可夢的SP，可以獲取的能量和能力。",
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
-            "notice detail2": "",
+            "notice detail2": "此外，我們在 <YouTube>YouTube 頻道</YouTube> 上發佈了使用方法的講解影片。請務必觀看。",
             "news": {
                 "holiday2025": {
                     "headline": "新增了$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)及其進化形態的資料。",
