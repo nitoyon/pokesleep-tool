@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "candy movie": {
+                    "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>Video tutorial for candy calculation feature</a> has been published.",
+                    "detail": "$t(movie detail)"
+                },
                 "holiday2025": {
                     "headline": "$t(pokemons.Togedemaru), $t(pokemons.Cetoddle) and their evolutions have been added.",
                     "detail": "$t(rp collection)"
@@ -218,6 +222,7 @@
             }
         },
         "rp collection": "The ingredient% and skill% are based on RP Collection values.",
+        "movie detail": "Your subscriptions, likes, comments, and hypes are greatly appreciated!",
         "num": "{{n, number}}",
         "short num unit": "K",
         "short num unit digits": "3",

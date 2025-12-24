@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "また、使い方の解説動画を <YouTube>YouTubeチャンネル</YouTube> で公開しています。ぜひご確認ください。",
             "news": {
+                "candy movie": {
+                    "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>アメ計算機能の使い方動画</a>を公開しました。",
+                    "detail": "$t(movie detail)"
+                },
                 "holiday2025": {
                     "headline": "$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)たちのデータを追加しました。",
                     "detail": "$t(rp collection)"
@@ -32,7 +36,7 @@
                     "detail": "$t(rp collection)"
                 },
                 "add amber pokemons": {
-                    "headline": "$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)たちのデータを追加しました。",
+                    "headline": "$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)たちのデータを追加しました。また、",
                     "detail": "$t(rp collection)"
                 },
                 "add halloween eevee": {
@@ -218,6 +222,7 @@
             }
         },
         "rp collection": "食材確率・スキル確率については、RP Collection の情報を参照しています。",
+        "movie detail": "チャンネル登録・高評価・コメント・ハイプなどいただけると励みになります！",
         "num": "{{n, number}}",
         "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",
