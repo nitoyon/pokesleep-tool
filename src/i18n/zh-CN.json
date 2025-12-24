@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "此外，我们在 <YouTube>YouTube 频道</YouTube> 上发布了使用方法的讲解视频。请务必观看。",
             "news": {
+                "candy movie": {
+                    "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>糖果计算功能的使用方法视频</a>已发布。",
+                    "detail": "$t(movie detail)"
+                },
                 "holiday2025": {
                     "headline": "添加了$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)及其进化形态的数据。",
                     "detail": "$t(rp collection)"
@@ -218,6 +222,7 @@
             }
         },
         "rp collection": "食材几率、技能几率参照了 RP Collection 的数据。",
+        "movie detail": "订阅频道・点赞・评论・Hybe等都会给我带来很大的鼓励！",
         "num": "{{n, number}}",
         "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",

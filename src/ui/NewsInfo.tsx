@@ -43,7 +43,7 @@ const NewsInfo = React.memo(({appType, onAppConfigChange}: {
     return <StyledNewsInfo>
         <InfoOutlinedIcon/>
         <div>
-            <span>{t(`${appType}.news.${article.id}.headline`)}</span>
+            <span dangerouslySetInnerHTML={{__html: t(`${appType}.news.${article.id}.headline`)}}/>
             <Button onClick={onDetailClick}>[{t("details")}]</Button>
         </div>
         <IconButton onClick={onClose}><CloseIcon/></IconButton>
@@ -125,7 +125,7 @@ const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
     
     return <StyledNewsArticleDialog open={open} onClose={onClose}>
         <time>{date}</time>
-        <header>{title}</header>
+        <header dangerouslySetInnerHTML={{__html: title}}/>
         {lines.map((x, i) => <p key={i}>{x}</p>)}
         <DialogActions disableSpacing>
             <Button onClick={onClose}>{t('close')}</Button>
