@@ -524,7 +524,7 @@ const calculateDetailCandy = (
     let sleepResult = undefined;
     if (normalCandyResult.expLeft > 0) {
         sleepResult = calcDayToGetSleepExp(normalCandyResult.expLeft,
-            config.expBonus, config.score, levelInfo.iv.nature.expGainsRate,
+            config.expBonus, config.score, iv.nature.expGainsRate,
             config.growthIncense);
     }
 
