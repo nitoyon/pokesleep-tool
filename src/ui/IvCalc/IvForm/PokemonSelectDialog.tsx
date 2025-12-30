@@ -490,6 +490,7 @@ const PokemonSelectDialog = React.memo(({
             fullWidth
             open
             freeSolo
+            selectOnFocus
             value={options.find(x => x.name === selectedValue.name)}
             slots={{popper: PopperComponent}}
             filterOptions={filterOptions}
