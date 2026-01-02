@@ -204,11 +204,13 @@ describe('Energy', () => {
         iv.level = 1;
 
         // change pokemon parameter
-        iv.pokemon = {...iv.pokemon};
-        iv.pokemon.carryLimit = 10;
-        iv.pokemon.ingRatio = 10;
-        iv.pokemon.skillRatio = 10;
-        iv.pokemon.frequency = 1800; // 30min
+        iv.pokemon = {
+            ...iv.pokemon,
+            carryLimit: 10,
+            ingRatio: 10,
+            skillRatio: 10,
+            frequency: 1800, // 30min
+        };
 
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 0, sleepScore: 90}));
@@ -241,7 +243,10 @@ describe('Energy', () => {
         });
 
         // change pokemon's specialty to Berries
-        iv.pokemon.specialty = "Berries";
+        iv.pokemon = {
+            ...iv.pokemon,
+            specialty: "Berries",
+        };
         const energy2 = new Energy(iv);
         const result2 = energy2.calculate(createParam({e4eCount: 0, sleepScore: 90}));
 
@@ -257,11 +262,13 @@ describe('Energy', () => {
         iv.level = 1;
 
         // change pokemon parameter
-        iv.pokemon = {...iv.pokemon};
-        iv.pokemon.carryLimit = 10;
-        iv.pokemon.ingRatio = 10;
-        iv.pokemon.skillRatio = 10;
-        iv.pokemon.frequency = 1800; // 30min
+        iv.pokemon = {
+            ...iv.pokemon,
+            carryLimit: 10,
+            ingRatio: 10,
+            skillRatio: 10,
+            frequency: 1800, // 30min
+        };
 
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({
@@ -280,11 +287,13 @@ describe('Energy', () => {
         iv.level = 1;
 
         // change pokemon parameter
-        iv.pokemon = {...iv.pokemon};
-        iv.pokemon.carryLimit = 10;
-        iv.pokemon.ingRatio = 10;
-        iv.pokemon.skillRatio = 10;
-        iv.pokemon.frequency = 1800; // 30min
+        iv.pokemon = {
+            ...iv.pokemon,
+            carryLimit: 10,
+            ingRatio: 10,
+            skillRatio: 10,
+            frequency: 1800, // 30min
+        };
 
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({
