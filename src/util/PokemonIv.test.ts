@@ -1,6 +1,7 @@
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
+import SubSkillList from './SubSkillList';
 
 describe('PokemonIV', () => {
     describe('clone', () => {
@@ -66,6 +67,35 @@ describe('PokemonIV', () => {
 
         expect(iv.changeLevel(9).skillLevel).toBe(1);
         expect(iv.changeLevel(25).skillLevel).toBe(4);
+    });
+
+    describe('changeSubSkills', () => {
+        test('removing skill level up sub-skills decreases skill level', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            iv.level = 30;
+            iv.skillLevel = 5;
+            iv.subSkills.lv10 = new SubSkill('Skill Level Up M');  // +2
+            iv.subSkills.lv25 = new SubSkill('Skill Level Up S');  // +1
+
+            // Skill level should decrease by 2
+            const newSubskills = new SubSkillList()
+            newSubskills.lv10 = new SubSkill('Skill Level Up S');  // +1
+            const result = iv.changeSubSkills(newSubskills);
+            expect(result.skillLevel).toBe(3);
+        });
+
+        test('skill level overflow is handled', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            iv.level = 30;
+            iv.skillLevel = 6;
+
+            // Skill level should be at most 7
+            // because max skill level of 'Ingredient Magnet S' is 7
+            const newSubSkills = new SubSkillList();
+            newSubSkills.lv10 = new SubSkill('Skill Level Up M');  // +2
+            const result = iv.changeSubSkills(newSubSkills);
+            expect(result.skillLevel).toBe(7);
+        });
     });
 
     describe('decendants', () => {
