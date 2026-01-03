@@ -104,6 +104,77 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('toProps', () => {
+        test('extracts all properties correctly for normal pokemon', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            iv.level = 50;
+            iv.skillLevel = 5;
+            iv.ingredient = 'ABB';
+            iv.ribbon = 3;
+            iv.nature = new Nature('Adamant');
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill('Berry Finding S'),
+                lv25: new SubSkill('Helping Speed M'),
+            });
+
+            const params = iv.toProps();
+
+            expect(params.pokemonName).toBe('Bulbasaur');
+            expect(params.level).toBe(50);
+            expect(params.skillLevel).toBe(5);
+            expect(params.ingredient).toBe('ABB');
+            expect(params.ribbon).toBe(3);
+            expect(params.nature).toBe(iv.nature);
+            expect(params.subSkills).toBe(iv.subSkills);
+            expect(params.skillRatio).toBe(iv.pokemon.skillRatio);
+            expect(params.ingRatio).toBe(iv.pokemon.ingRatio);
+        });
+
+        test('extracts mythical pokemon ingredients correctly', () => {
+            const iv = new PokemonIv('Darkrai');
+            iv.mythIng1 = 'coffee';
+            iv.mythIng2 = 'apple';
+            iv.mythIng3 = 'soy';
+
+            const params = iv.toProps();
+
+            expect(params.mythIng1).toBe('coffee');
+            expect(params.mythIng2).toBe('apple');
+            expect(params.mythIng3).toBe('soy');
+        });
+
+        test('extracts all properties for pokemon with form', () => {
+            const iv = new PokemonIv('Pikachu (Halloween)');
+            iv.level = 75;
+            iv.skillLevel = 6;
+            iv.ribbon = 4;
+
+            const params = iv.toProps();
+
+            expect(params.pokemonName).toBe('Pikachu (Halloween)');
+            expect(params.level).toBe(75);
+            expect(params.skillLevel).toBe(6);
+            expect(params.ribbon).toBe(4);
+        });
+
+        test('returns same subSkills reference (not a clone)', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            const params = iv.toProps();
+
+            // Should be the same object reference
+            expect(params.subSkills).toBe(iv.subSkills);
+        });
+
+        test('returns same nature reference', () => {
+            const iv = new PokemonIv('Bulbasaur');
+            iv.nature = new Nature('Jolly');
+            const params = iv.toProps();
+
+            // Should be the same object reference
+            expect(params.nature).toBe(iv.nature);
+        });
+    });
+
     describe('decendants', () => {
         test('Bulbasaur', () => {
             const iv = new PokemonIv('Bulbasaur');
