@@ -124,16 +124,15 @@ class PokemonIv {
      * @return A new PokemonIv instance with the specified level.
      */
     changeLevel(level: number): PokemonIv {
-        const ret = this.clone();
-        ret.level = level;
+        const tmp = this.clone({level});
 
         const beforeSkillLevelUp = this.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        const afterSkillLevelUp = ret.activeSubSkills
+        const afterSkillLevelUp = tmp.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
-        ret.normalize();
-        return ret;
+        const skillLevel = this.skillLevel +
+            afterSkillLevelUp - beforeSkillLevelUp;
+        return tmp.clone({skillLevel});
     }
 
     /**
@@ -142,16 +141,15 @@ class PokemonIv {
      * @return A new PokemonIv instance with the specified sub-skills.
      */
     changeSubSkills(subSkills: SubSkillList): PokemonIv {
-        const ret = this.clone();
-        ret.subSkills = subSkills;
+        const tmp = this.clone({subSkills});
 
         const beforeSkillLevelUp = this.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        const afterSkillLevelUp = ret.activeSubSkills
+        const afterSkillLevelUp = tmp.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
-        ret.normalize();
-        return ret;
+        const skillLevel = this.skillLevel +
+            afterSkillLevelUp - beforeSkillLevelUp;
+        return tmp.clone({skillLevel});
     }
 
     /**
@@ -162,14 +160,10 @@ class PokemonIv {
      * @return A new PokemonIv instance.
      */
     changeRatio(skill: number, ing: number): PokemonIv {
-        const ret = this.clone();
-        ret.pokemon = {
-            ...this.pokemon,
+        return this.clone({
             skillRatio: skill,
             ingRatio: ing,
-        };
-        ret.normalize();
-        return ret;
+        });
     }
 
     /**
