@@ -2,6 +2,7 @@ import Energy, { EnergyParameter } from './Energy';
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
+import SubSkillList from './SubSkillList';
 
 const paramBase = {
     period: 24,
@@ -21,7 +22,7 @@ function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
 describe('Energy', () => {
     test('calculate (e4e x 0)', () => {
         const iv = new PokemonIv('Raichu');
-        iv.subSkills.lv10 = new SubSkill('Inventory Up L');
+        iv.subSkills = new SubSkillList({ lv10: new SubSkill('Inventory Up L') });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 0}));
 
@@ -47,7 +48,7 @@ describe('Energy', () => {
 
     test('calculate (e4e x 0, period 3)', () => {
         const iv = new PokemonIv('Raichu');
-        iv.subSkills.lv10 = new SubSkill('Inventory Up L');
+        iv.subSkills = new SubSkillList({ lv10: new SubSkill('Inventory Up L') });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 0, period: 3}));
 
@@ -75,7 +76,7 @@ describe('Energy', () => {
 
     test('calculate (e4e x 0, period 8, score: 0)', () => {
         const iv = new PokemonIv('Raichu');
-        iv.subSkills.lv10 = new SubSkill('Inventory Up L');
+        iv.subSkills = new SubSkillList({ lv10: new SubSkill('Inventory Up L') });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 0, period: 8, sleepScore: 0}));
 
@@ -117,7 +118,7 @@ describe('Energy', () => {
     test('calculate (e4e x 0, Energy Recovery Bonus)', () => {
         const iv = new PokemonIv('Raichu');
         iv.nature = new Nature('Bold'); // Energy Recovery Up
-        iv.subSkills.lv10 = new SubSkill('Energy Recovery Bonus');
+        iv.subSkills = new SubSkillList({ lv10: new SubSkill('Energy Recovery Bonus') });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 0}));
 

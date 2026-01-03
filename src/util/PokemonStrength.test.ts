@@ -241,7 +241,7 @@ describe('PokemonStrength', () => {
         test('does not calculates additional strength when addHelpingBonusEffect is false', () => {
             const iv = new PokemonIv('Raichu');
             iv.level = 10;
-            iv.subSkills = new SubSkillList([new SubSkill('Helping Bonus')]);
+            iv.subSkills = new SubSkillList({ lv10: new SubSkill('Helping Bonus') });
 
             const param = createParam({ helpBonusCount: 0, addHelpingBonusEffect: false });
             const strength = new PokemonStrength(iv, param);
@@ -256,7 +256,7 @@ describe('PokemonStrength', () => {
         test('calculates additional strength when Helping Bonus sub-skill is active', () => {
             const iv = new PokemonIv('Raichu');
             iv.level = 10;
-            iv.subSkills = new SubSkillList([new SubSkill('Helping Bonus')]);
+            iv.subSkills = new SubSkillList({ lv10: new SubSkill('Helping Bonus') });
 
             const param = createParam({ helpBonusCount: 0, addHelpingBonusEffect: true });
             const strength = new PokemonStrength(iv, param);
@@ -279,7 +279,7 @@ describe('PokemonStrength', () => {
         test('calculates correctly with different helpBonusCount values', () => {
             const iv = new PokemonIv('Raichu');
             iv.level = 10;
-            iv.subSkills = new SubSkillList([new SubSkill('Helping Bonus')]);
+            iv.subSkills = new SubSkillList({ lv10: new SubSkill('Helping Bonus') });
 
             // Test with helpBonusCount = 1
             const param = createParam({ helpBonusCount: 1, addHelpingBonusEffect: true });

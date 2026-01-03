@@ -62,8 +62,10 @@ describe('PokemonIV', () => {
         const iv = new PokemonIv('Bulbasaur');
         iv.level = 15;
         iv.skillLevel = 3;
-        iv.subSkills.lv10 = new SubSkill('Skill Level Up M');
-        iv.subSkills.lv25 = new SubSkill('Skill Level Up S');
+        iv.subSkills = new SubSkillList({
+            lv10: new SubSkill('Skill Level Up M'),
+            lv25: new SubSkill('Skill Level Up S'),
+        });
 
         expect(iv.changeLevel(9).skillLevel).toBe(1);
         expect(iv.changeLevel(25).skillLevel).toBe(4);
@@ -74,12 +76,15 @@ describe('PokemonIV', () => {
             const iv = new PokemonIv('Bulbasaur');
             iv.level = 30;
             iv.skillLevel = 5;
-            iv.subSkills.lv10 = new SubSkill('Skill Level Up M');  // +2
-            iv.subSkills.lv25 = new SubSkill('Skill Level Up S');  // +1
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill('Skill Level Up M'),  // +2
+                lv25: new SubSkill('Skill Level Up S'),  // +1
+            });
 
             // Skill level should decrease by 2
-            const newSubskills = new SubSkillList()
-            newSubskills.lv10 = new SubSkill('Skill Level Up S');  // +1
+            const newSubskills = new SubSkillList({
+                lv10: new SubSkill('Skill Level Up S'),  // +1
+            });
             const result = iv.changeSubSkills(newSubskills);
             expect(result.skillLevel).toBe(3);
         });
@@ -91,8 +96,9 @@ describe('PokemonIV', () => {
 
             // Skill level should be at most 7
             // because max skill level of 'Ingredient Magnet S' is 7
-            const newSubSkills = new SubSkillList();
-            newSubSkills.lv10 = new SubSkill('Skill Level Up M');  // +2
+            const newSubSkills = new SubSkillList({
+                lv10: new SubSkill('Skill Level Up M'),  // +2
+            });
             const result = iv.changeSubSkills(newSubSkills);
             expect(result.skillLevel).toBe(7);
         });
@@ -143,11 +149,13 @@ describe('PokemonIV', () => {
             iv.level = 24;
             iv.nature = new Nature("Impish");
             iv.skillLevel = 5;
-            iv.subSkills.lv10 = new SubSkill("Berry Finding S");
-            iv.subSkills.lv25 = new SubSkill("Helping Speed S");
-            iv.subSkills.lv50 = new SubSkill("Ingredient Finder M");
-            iv.subSkills.lv75 = new SubSkill("Inventory Up L");
-            iv.subSkills.lv100 = new SubSkill("Skill Level Up S");
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill("Berry Finding S"),
+                lv25: new SubSkill("Helping Speed S"),
+                lv50: new SubSkill("Ingredient Finder M"),
+                lv75: new SubSkill("Inventory Up L"),
+                lv100: new SubSkill("Skill Level Up S"),
+            });
             expect(iv.serialize()).toBe('gS8AppABDSUL');
 
             const ret = PokemonIv.deserialize('gS8AppABDSUL');
