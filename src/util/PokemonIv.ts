@@ -45,27 +45,41 @@ class PokemonIv {
     mythIng3: IngredientName;
 
     /** Initialize new instance. */
-    constructor(pokemonName: string) {
-        this.pokemonName = pokemonName;
-        const pokemon = pokemons.find(x => x.name === pokemonName);
-        if (pokemon === undefined) {
-            throw new Error(`Unknown name: ${pokemonName}`);
+    constructor(pokemonName: string);
+    constructor(params: Partial<PokemonIvProps>);
+    constructor(input: string | Partial<PokemonIvProps>) {
+        if (typeof input === 'string') {
+            input = { pokemonName: input };
         }
+        const params = PokemonIv.normalize(input);
+
+        // Apply normalized parameters to instance
+        this.pokemonName = params.pokemonName;
+        this.level = params.level;
+        this.skillLevel = params.skillLevel;
+        this.ingredient = params.ingredient;
+        this.subSkills = params.subSkills;
+        this.nature = params.nature;
+        this.ribbon = params.ribbon;
+        this.mythIng1 = params.mythIng1;
+        this.mythIng2 = params.mythIng2;
+        this.mythIng3 = params.mythIng3;
+
+        // Look up pokemon data (not in params)
+        const pokemon = pokemons.find(x => x.name === params.pokemonName);
+        if (pokemon === undefined) {
+            throw new Error(`Unknown name: ${params.pokemonName}`);
+        }
+
         this.pokemon = pokemon;
-
-        // set default value
-        this.level = 30;
-        this.skillLevel = Math.max(pokemon.evolutionCount + 1, 1);
-        this.ingredient = pokemon.ing3 !== undefined ? "ABC" : "ABB";
-        this.subSkills = new SubSkillList();
-        this.nature = new Nature(pokemonName === "Toxtricity (Amped)" ?
-            "Hardy" : "Serious");
-        this.ribbon = 0;
-        this.mythIng1 = this.mythIng2 = this.mythIng3 = "unknown";
-
-        // Darkrai
-        if (this.isMythical) {
-            this.mythIng1 = "sausage";
+        if (pokemon.skillRatio !== params.skillRatio ||
+            pokemon.ingRatio !== params.ingRatio
+        ) {
+            this.pokemon = {
+                ...pokemon,
+                skillRatio: params.skillRatio,
+                ingRatio: params.ingRatio,
+            };
         }
     }
 
@@ -271,38 +285,11 @@ class PokemonIv {
     }
 
     /**
-     * Normalize current state.
+     * Normalize current state (for backward compatibility).
      */
     normalize() {
-        const maxSkillLevel = getMaxSkillLevel(this.pokemon.skill);
-        this.skillLevel = clamp(1, this.skillLevel, maxSkillLevel);
-
-        if (this.ingredient.endsWith('C') && this.pokemon.ing3 === undefined) {
-            this.ingredient = this.ingredient.replace('C', 'A') as IngredientType;
-        }
-
-        if (this.isMythical && this.mythIng1 === "unknown") {
-            this.mythIng1 = "sausage";
-        }
-
-        if (this.pokemon.id === toxtricityId) {
-            if (this.pokemon.form === "Amped" &&
-                this.nature.isLowKey
-            ) {
-                this.nature = Nature.allNatures
-                    .filter(x => x.isAmped)
-                    .filter(x => x.upEffect === this.nature.upEffect)[0] ??
-                    new Nature("Hardy");
-            }
-            else if (this.pokemon.form === "Low Key" &&
-                this.nature.isAmped
-            ) {
-                this.nature = Nature.allNatures
-                    .filter(x => x.isLowKey)
-                    .filter(x => x.upEffect === this.nature.upEffect)[0] ??
-                    new Nature("Serious");
-            }
-        }
+        const normalized = PokemonIv.normalize(this.toProps());
+        Object.assign(this, normalized);
     }
 
     /**

@@ -4,6 +4,79 @@ import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 
 describe('PokemonIV', () => {
+    describe('constructor', () => {
+        test('with string parameter', () => {
+            const iv = new PokemonIv('Pikachu');
+
+            expect(iv.pokemonName).toBe('Pikachu');
+            expect(iv.level).toBe(30);
+            expect(iv.skillLevel).toBe(2);
+            expect(iv.ribbon).toBe(0);
+        });
+
+        test('with minimal object parameter', () => {
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
+
+            expect(iv.pokemonName).toBe('Pikachu');
+            expect(iv.level).toBe(30);
+            expect(iv.skillLevel).toBe(2);
+            expect(iv.ribbon).toBe(0);
+        });
+
+        test('with full object parameter', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+                skillLevel: 3,
+                ingredient: 'ABB',
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Berry Finding S'),
+                }),
+                nature: new Nature('Adamant'),
+                ribbon: 2,
+            });
+
+            expect(iv.pokemonName).toBe('Pikachu');
+            expect(iv.level).toBe(50);
+            expect(iv.skillLevel).toBe(3);
+            expect(iv.ingredient).toBe('ABB');
+            expect(iv.subSkills.lv10?.name).toBe('Berry Finding S');
+            expect(iv.nature.name).toBe('Adamant');
+            expect(iv.ribbon).toBe(2);
+        });
+
+        test('normalization happens automatically', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Feraligatr',
+                ingredient: 'ABC', // Feraligatr doesn't have ing3
+            });
+
+            expect(iv.ingredient).toBe('ABA'); // 'C' replaced with 'A'
+        });
+
+        test('overrides skillRatio and ingRatio when specified', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                skillRatio: 0.5,
+                ingRatio: 0.3,
+            });
+
+            expect(iv.pokemon.skillRatio).toBe(0.5);
+            expect(iv.pokemon.ingRatio).toBe(0.3);
+        });
+
+        test('uses default skillRatio and ingRatio when not specified', () => {
+            const iv1 = new PokemonIv('Pikachu');
+            const iv2 = new PokemonIv({ pokemonName: 'Pikachu' });
+
+            // Both should have the same default values from pokemon data
+            expect(iv1.pokemon.skillRatio).toBe(iv2.pokemon.skillRatio);
+            expect(iv1.pokemon.ingRatio).toBe(iv2.pokemon.ingRatio);
+            expect(iv1.pokemon.skillRatio).toBeGreaterThan(0);
+            expect(iv1.pokemon.ingRatio).toBeGreaterThan(0);
+        });
+    });
+
     describe('clone', () => {
         test('same pokemon', () => {
             const iv = new PokemonIv('Bulbasaur');
