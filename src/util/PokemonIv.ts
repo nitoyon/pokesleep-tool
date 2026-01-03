@@ -32,17 +32,17 @@ export interface PokemonIvProps {
  * Represents Indivisual Values (IV) of the Pokemon.
  */
 class PokemonIv {
-    pokemonName: string;
-    pokemon: PokemonData;
-    level: number;
-    skillLevel: number;
-    ingredient: IngredientType;
-    subSkills: SubSkillList;
-    nature: Nature;
-    ribbon: 0|1|2|3|4;
-    mythIng1: IngredientName;
-    mythIng2: IngredientName;
-    mythIng3: IngredientName;
+    readonly pokemonName: string;
+    readonly pokemon: PokemonData;
+    readonly level: number;
+    readonly skillLevel: number;
+    readonly ingredient: IngredientType;
+    readonly subSkills: SubSkillList;
+    readonly nature: Nature;
+    readonly ribbon: 0|1|2|3|4;
+    readonly mythIng1: IngredientName;
+    readonly mythIng2: IngredientName;
+    readonly mythIng3: IngredientName;
 
     /** Initialize new instance. */
     constructor(pokemonName: string);
