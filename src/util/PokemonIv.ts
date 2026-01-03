@@ -151,20 +151,6 @@ class PokemonIv {
     }
 
     /**
-     * Creates a new PokemonIv instance with a new skill ratio and
-     * ingredient ratio.
-     * @param skill The new skill ratio.
-     * @param ing The new ingredient ratio.
-     * @return A new PokemonIv instance.
-     */
-    changeRatio(skill: number, ing: number): PokemonIv {
-        return this.clone({
-            skillRatio: skill,
-            ingRatio: ing,
-        });
-    }
-
-    /**
      * Get IngredientName[] which the Pokemon can gather
      * @param unlockedOnly Unlocked ingredients only or not.
      * @returns Ingredients.
