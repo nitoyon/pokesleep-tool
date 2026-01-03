@@ -95,29 +95,27 @@ class PokemonIv {
 
     /**
      * Creates a deep copy of this instance.
-     * @param pokemonName Pokemon's name.
+     * @param input New properties.
      * @returns A cloned instance.
      */
-    clone(pokemonName?: string): PokemonIv {
-        const ret = new PokemonIv(pokemonName ?? this.pokemonName);
-        ret.level = this.level;
+    clone(input?: Partial<PokemonIvProps>): PokemonIv {
+        const params = this.toProps();
+        if (input) {
+            Object.assign(params, input);
 
-        ret.skillLevel = this.skillLevel;
-        if (this.pokemon.id !== ret.pokemon.id) {
-            const diff = Math.max(0, ret.pokemon.evolutionCount) -
-                Math.max(0, this.pokemon.evolutionCount);
-            ret.skillLevel += diff;
+            // Increase or decrease skill level
+            if (params.pokemonName !== this.pokemonName) {
+                const pokemon = pokemons.find(x => x.name === params.pokemonName);
+                if (pokemon === undefined) {
+                    throw new Error(`Unknown name: ${params.pokemonName}`);
+                }
+
+                const diff = pokemon.evolutionCount - this.pokemon.evolutionCount;
+                params.skillLevel += diff;
+            }
         }
 
-        ret.ingredient = this.ingredient;
-        ret.subSkills = this.subSkills.clone();
-        ret.nature = this.nature;
-        ret.ribbon = this.ribbon;
-        ret.mythIng1 = this.mythIng1;
-        ret.mythIng2 = this.mythIng2;
-        ret.mythIng3 = this.mythIng3;
-        ret.normalize();
-        return ret;
+        return new PokemonIv(params);
     }
 
     /**

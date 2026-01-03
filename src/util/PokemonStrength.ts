@@ -345,7 +345,7 @@ class PokemonStrength {
             showingPokemon = decendants[0];
         }
         if (showingPokemon.id !== pokemonIv.pokemon.id) {
-            pokemonIv = pokemonIv.clone(showingPokemon.name);
+            pokemonIv = pokemonIv.clone({pokemonName: showingPokemon.name});
         }
         return pokemonIv;
     }
