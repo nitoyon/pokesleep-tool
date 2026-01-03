@@ -1083,8 +1083,10 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
     ];
     const ret = { total: 0, members: [] as { total: number, perBerry: number, count: number}[] };
     for (let i = 0; i < 5; i++) {
-        const ivMember = new PokemonIv(pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur");
-        ivMember.level = levels[i];
+        const ivMember = new PokemonIv({
+            pokemonName: pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur",
+            level: levels[i],
+        });
         const berryRawStrength = new PokemonRp(ivMember).berryStrength;
         const perBerry = Math.ceil(
             Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100)) *

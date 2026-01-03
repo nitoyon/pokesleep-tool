@@ -32,12 +32,9 @@ describe('sortPokemonItems', () => {
         test('sorts by level in descending order by default', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 10;
-            const iv2 = new PokemonIv('Pikachu');
-            iv2.level = 25;
-            const iv3 = new PokemonIv('Pikachu');
-            iv3.level = 50;
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 10});
+            const iv2 = new PokemonIv({pokemonName: 'Pikachu', level: 25});
+            const iv3 = new PokemonIv({pokemonName: 'Pikachu', level: 50});
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -66,10 +63,8 @@ describe('sortPokemonItems', () => {
         test('sorts by pokemon ID as secondary sort when levels are equal', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Bulbasaur'); // ID 1
-            iv1.level = 25;
-            const iv2 = new PokemonIv('Pikachu'); // ID 25
-            iv2.level = 25;
+            const iv1 = new PokemonIv({pokemonName: 'Bulbasaur', level: 25}); // ID 1
+            const iv2 = new PokemonIv({pokemonName: 'Pikachu', level: 25}); // ID 25
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -161,10 +156,8 @@ describe('sortPokemonItems', () => {
         test('sorts by level as secondary sort when pokemon IDs are equal', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 10;
-            const iv2 = new PokemonIv('Pikachu');
-            iv2.level = 25;
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 10});
+            const iv2 = new PokemonIv({pokemonName: 'Pikachu', level: 25});
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -185,12 +178,9 @@ describe('sortPokemonItems', () => {
         test('sorts by RP', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 10;
-            const iv2 = new PokemonIv('Pikachu');
-            iv2.level = 50;
-            const iv3 = new PokemonIv('Pikachu');
-            iv3.level = 25;
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 10});
+            const iv2 = new PokemonIv({pokemonName: 'Pikachu', level: 50});
+            const iv3 = new PokemonIv({pokemonName: 'Pikachu', level: 25});
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -214,10 +204,8 @@ describe('sortPokemonItems', () => {
         test('sorts by total strength values', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 10;
-            const iv2 = new PokemonIv('Pikachu');
-            iv2.level = 50;
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 10});
+            const iv2 = new PokemonIv({pokemonName: 'Pikachu', level: 50});
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -239,10 +227,8 @@ describe('sortPokemonItems', () => {
         test('sorts by berry strength values', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 10;
-            const iv2 = new PokemonIv('Pikachu');
-            iv2.level = 50;
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 10});
+            const iv2 = new PokemonIv({pokemonName: 'Pikachu', level: 50});
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -373,10 +359,8 @@ describe('sortPokemonItems', () => {
         test('filters by main skill and sorts by skill', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu'); // Has Charge Strength S
-            iv1.level = 50;
-            const iv2 = new PokemonIv('Eevee'); // Different skill
-            iv2.level = 50;
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 50}); // Has Charge Strength S
+            const iv2 = new PokemonIv({pokemonName: 'Eevee', level: 50}); // Different skill
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -535,10 +519,8 @@ describe('sortPokemonItems', () => {
         test('filters out zero-strength items when `mainSkill` is "strength"', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            iv1.level = 50;
-            const iv2 = new PokemonIv('Pawmot');
-            iv2.level = 50; // Energy for Everyone, might have 0 strength
+            const iv1 = new PokemonIv({pokemonName: 'Pikachu', level: 50});
+            const iv2 = new PokemonIv({pokemonName: 'Pawmot', level: 50}); // Energy for Everyone, might have 0 strength
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -626,8 +608,10 @@ describe('sortPokemonItems', () => {
         test('uses skillValue2 for "Cooking Power-Up S (Minus)" when skillValue2 > 0', () => {
             const parameter = createStrengthParameter({evolved: true});
 
-            const iv1 = new PokemonIv('Toxel');
-            iv1.nature = new Nature('Bashful'); // Low Key nature
+            const iv1 = new PokemonIv({
+                pokemonName: 'Toxel',
+                nature: new Nature('Bashful'), // Low Key nature
+            });
             const iv2 = new PokemonIv('Slowking');
 
             const items = [
@@ -667,8 +651,10 @@ describe('sortPokemonItems', () => {
         test('handles Toxel with evolved=true and Amped', () => {
             const parameter = createStrengthParameter({evolved: true});
 
-            const toxel = new PokemonIv('Toxel');
-            toxel.nature = new Nature('Hardy'); // Amped nature
+            const toxel = new PokemonIv({
+                pokemonName: 'Toxel',
+                nature: new Nature('Hardy'), // Amped nature
+            });
             const pikachu = new PokemonIv('Pikachu'); // Different skill
 
             const items = [
@@ -690,8 +676,10 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
             parameter.evolved = true;
 
-            const toxel = new PokemonIv('Toxel');
-            toxel.nature = new Nature('Bashful'); // Low Key nature
+            const toxel = new PokemonIv({
+                pokemonName: 'Toxel',
+                nature: new Nature('Bashful'), // Low Key nature
+            });
             const pikachu = new PokemonIv('Pikachu'); // Different skill
 
             const items = [
