@@ -68,7 +68,7 @@ type IvStateCache = {
  */
 export function getInitialIvState(): IvState {
     const cache = loadInitialIvStateCache();
-    let iv = new PokemonIv("Venusaur");
+    let iv = new PokemonIv({ pokemonName: "Venusaur" });
     if (cache.iv !== "") {
         try {
             iv = PokemonIv.deserialize(cache.iv);

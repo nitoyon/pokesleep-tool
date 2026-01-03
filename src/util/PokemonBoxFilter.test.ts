@@ -70,8 +70,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
-                new PokemonBoxItem(new PokemonIv('Eevee'))
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }))
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -83,9 +83,9 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ name: "sp" });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Sparky'),
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Thunder'),
-                new PokemonBoxItem(new PokemonIv('Eevee'), 'Fluffy')
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Sparky'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Thunder'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }), 'Fluffy')
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -97,8 +97,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ name: "pika" });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'x'),
-                new PokemonBoxItem(new PokemonIv('Eevee'), 'y')
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'x'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }), 'y')
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -110,8 +110,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ name: "PIKA" });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'x'),
-                new PokemonBoxItem(new PokemonIv('Eevee'), 'y')
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'x'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }), 'y')
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -123,8 +123,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterTypes: ["electric"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
-                new PokemonBoxItem(new PokemonIv('Eevee'))
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }))
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -136,9 +136,9 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterTypes: ["electric", "normal"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Bulbasaur')),
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
-                new PokemonBoxItem(new PokemonIv('Eevee')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Bulbasaur' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' })),
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -151,9 +151,9 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterSpecialty: ["Berries"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Bulbasaur')),
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
-                new PokemonBoxItem(new PokemonIv('Eevee')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Bulbasaur' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' })),
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -410,8 +410,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterTypes: ["dragon"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
-                new PokemonBoxItem(new PokemonIv('Eevee'))
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }))
             ];
 
             const filtered = config.filter(items, false, mockT);

@@ -45,12 +45,7 @@ class PokemonIv {
     readonly mythIng3: IngredientName;
 
     /** Initialize new instance. */
-    constructor(pokemonName: string);
-    constructor(params: Partial<PokemonIvProps>);
-    constructor(input: string | Partial<PokemonIvProps>) {
-        if (typeof input === 'string') {
-            input = { pokemonName: input };
-        }
+    constructor(input: Partial<PokemonIvProps>) {
         const params = PokemonIv.normalize(input);
 
         // Apply normalized parameters to instance

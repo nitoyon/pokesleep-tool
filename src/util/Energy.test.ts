@@ -162,7 +162,7 @@ describe('Energy', () => {
     });
 
     test('calculate (e4e x 2)', () => {
-        const iv = new PokemonIv('Pikachu');
+        const iv = new PokemonIv({ pokemonName: 'Pikachu' });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 2}));
 
@@ -174,7 +174,7 @@ describe('Energy', () => {
     });
 
     test('calculate (e4e x 7)', () => {
-        const iv = new PokemonIv('Pikachu');
+        const iv = new PokemonIv({ pokemonName: 'Pikachu' });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 7}));
 
@@ -186,7 +186,7 @@ describe('Energy', () => {
     });
 
     test('calculate (score 0)', () => {
-        const iv = new PokemonIv('Pikachu');
+        const iv = new PokemonIv({ pokemonName: 'Pikachu' });
         const energy = new Energy(iv);
         const result = energy.calculate(createParam({e4eCount: 0, sleepScore: 0}));
 

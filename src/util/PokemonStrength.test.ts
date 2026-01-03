@@ -176,7 +176,7 @@ describe('PokemonStrength', () => {
 
     describe('isFavoriteBerry', () => {
         test('returns false for noFavoriteFieldIndex', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
             const param = createParam({ fieldIndex: -1 });
             const strength = new PokemonStrength(iv, param);
 
@@ -184,7 +184,7 @@ describe('PokemonStrength', () => {
         });
 
         test('returns true for allFavoriteFieldIndex', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
             const param = createParam({ fieldIndex: -2 });
             const strength = new PokemonStrength(iv, param);
 
@@ -194,7 +194,7 @@ describe('PokemonStrength', () => {
 
     describe('berryStrengthBonus', () => {
         test('returns 2 for favorite berry', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
             const param = createParam({
                 fieldIndex: -2, // allFavoriteFieldIndex
             });
@@ -204,7 +204,7 @@ describe('PokemonStrength', () => {
         });
 
         test('returns 1 for non-favorite berry', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
             const param = createParam({
                 fieldIndex: -1, // noFavoriteFieldIndex
             });
