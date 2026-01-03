@@ -615,7 +615,9 @@ class PokemonIv {
                 throw new Error(`Invalid form specified (${form})`);
             }
         }
-        const ret = new PokemonIv(pokemon.name);
+        const ret: Partial<PokemonIvProps> = {
+            pokemonName: pokemon.name
+        };
 
         // level
         ret.level = (array16[1] >> 6) & 0x7f;
@@ -667,17 +669,17 @@ class PokemonIv {
         }
 
         // mythical ingredients
-        if (ret.pokemon.mythIng !== undefined) {
-            const n = ret.pokemon.mythIng.length + 1; // 1 is unknown
+        if (pokemon.mythIng !== undefined) {
+            const n = pokemon.mythIng.length + 1; // 1 is unknown
             const ing1 = (array16[5] % n) - 1;
             const ing2 = (Math.floor(array16[5] / n) % n) - 1;
             const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
-            ret.mythIng1 = ing1 < 0 ? "sausage" : ret.pokemon.mythIng[ing1].name;
-            ret.mythIng2 = ing2 < 0 ? "unknown" : ret.pokemon.mythIng[ing2].name;
-            ret.mythIng3 = ing3 < 0 ? "unknown" : ret.pokemon.mythIng[ing3].name;
+            ret.mythIng1 = ing1 < 0 ? "sausage" : pokemon.mythIng[ing1].name;
+            ret.mythIng2 = ing2 < 0 ? "unknown" : pokemon.mythIng[ing2].name;
+            ret.mythIng3 = ing3 < 0 ? "unknown" : pokemon.mythIng[ing3].name;
         }
 
-        return ret;
+        return new PokemonIv(ret);
     }
 }
 
