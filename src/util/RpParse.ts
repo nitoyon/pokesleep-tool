@@ -1,6 +1,7 @@
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill, { SubSkillType } from './SubSkill';
+import SubSkillList from './SubSkillList';
 import { IngredientName } from '../data/pokemons';
 
 type CsvData = {
@@ -83,9 +84,11 @@ export function parseTsv(text: string): Record<string, RpData[]> {
         iv.level = datum.level;
         iv.nature = datum.nature;
         iv.skillLevel = datum.skillLevel;
-        iv.subSkills.set(10, datum.subSkill1);
-        iv.subSkills.set(25, datum.subSkill2);
-        iv.subSkills.set(50, datum.subSkill3);
+        iv.subSkills = new SubSkillList({
+            lv10: datum.subSkill1,
+            lv25: datum.subSkill2,
+            lv50: datum.subSkill3,
+        });
         if (iv.level >= 60) {
             if (datum.ing2 === "unknown" || datum.ing3 === "unknown") {
                 console.error(`unknown ing: ${line}`);

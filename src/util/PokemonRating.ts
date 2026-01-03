@@ -47,30 +47,32 @@ class PokemonRating {
         }
 
         const berryMaxRp = new PokemonRp(this.iv);
-        berryMaxRp.subSkills = new SubSkillList([
-            new SubSkill("Berry Finding S"),
-            new SubSkill("Helping Bonus"),
-            new SubSkill("Helping Speed M"),
-            new SubSkill("Helping Speed S"),
-            null]);
+        berryMaxRp.subSkills = new SubSkillList({
+            lv10: new SubSkill("Berry Finding S"),
+            lv25: new SubSkill("Helping Bonus"),
+            lv50: new SubSkill("Helping Speed M"),
+            lv75: new SubSkill("Helping Speed S"),
+        });
         berryMaxRp.nature = new Nature("Adamant");
 
         const ingMaxRp = new PokemonRp(this.iv);
-        ingMaxRp.subSkills = new SubSkillList([
-            new SubSkill("Ingredient Finder M"),
-            new SubSkill("Ingredient Finder S"),
-            new SubSkill("Helping Speed M"),
-            new SubSkill("Helping Speed S"),
-            new SubSkill("Helping Bonus")])
+        ingMaxRp.subSkills = new SubSkillList({
+            lv10: new SubSkill("Ingredient Finder M"),
+            lv25: new SubSkill("Ingredient Finder S"),
+            lv50: new SubSkill("Helping Speed M"),
+            lv75: new SubSkill("Helping Speed S"),
+            lv100: new SubSkill("Helping Bonus"),
+        });
         ingMaxRp.nature = new Nature("Quiet");
 
         const skillMaxRp = new PokemonRp(this.iv);
-        skillMaxRp.subSkills = new SubSkillList([
-            new SubSkill("Skill Trigger M"),
-            new SubSkill("Skill Trigger S"),
-            new SubSkill("Helping Speed M"),
-            new SubSkill("Helping Speed S"),
-            new SubSkill("Helping Bonus")])
+        skillMaxRp.subSkills = new SubSkillList({
+            lv10: new SubSkill("Skill Trigger M"),
+            lv25: new SubSkill("Skill Trigger S"),
+            lv50: new SubSkill("Helping Speed M"),
+            lv75: new SubSkill("Helping Speed S"),
+            lv100: new SubSkill("Helping Bonus"),
+        });
         skillMaxRp.nature = new Nature("Sassy");
 
         const berryCalc = (rp: PokemonRp) => {

@@ -16,7 +16,7 @@ describe('PokemonRP', () => {
         test('test with Helping Speed M', () => {
             const iv = new PokemonIv('Wigglytuff');
             iv.level = 50;
-            iv.subSkills.lv50 = new SubSkill("Helping Speed M");
+            iv.subSkills = new SubSkillList({ lv50: new SubSkill("Helping Speed M") });
             const rp = new PokemonRp(iv);
             expect(Math.floor(rp.frequency)).toBe(37 * 60 + 29);
         });
@@ -24,7 +24,7 @@ describe('PokemonRP', () => {
         test('test with Helping Speed M and nature', () => {
             const iv = new PokemonIv('Raichu');
             iv.level = 25;
-            iv.subSkills.lv25 = new SubSkill("Helping Speed M");
+            iv.subSkills = new SubSkillList({ lv25: new SubSkill("Helping Speed M") });
             iv.nature = new Nature("Brave");
             const rp = new PokemonRp(iv);
             expect(Math.floor(rp.frequency)).toBe(27 * 60);
@@ -56,10 +56,10 @@ describe('PokemonRP', () => {
             const iv = new PokemonIv('Magnezone');
             iv.level = 35;
             iv.ingredient = "ABA";
-            iv.subSkills = new SubSkillList([
-                new SubSkill('Helping Speed M'),
-                new SubSkill('Skill Level Up M')
-            ]);
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill('Helping Speed M'),
+                lv25: new SubSkill('Skill Level Up M'),
+            });
             iv.nature = new Nature('Adamant');
             iv.skillLevel = 5;
             const rp = new PokemonRp(iv);
@@ -73,9 +73,9 @@ describe('PokemonRP', () => {
             const iv = new PokemonIv('Sylveon');
             iv.level = 10;
             iv.ingredient = "AAA";
-            iv.subSkills = new SubSkillList([
-                new SubSkill('Helping Bonus'),
-            ]);
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill('Helping Bonus'),
+            });
             iv.nature = new Nature('Relaxed');
             iv.skillLevel = 2;
             const rp = new PokemonRp(iv);
@@ -89,11 +89,11 @@ describe('PokemonRP', () => {
             const iv = new PokemonIv('Blastoise');
             iv.level = 60;
             iv.ingredient = "AAA";
-            iv.subSkills = new SubSkillList([
-                new SubSkill('Helping Speed M'),
-                new SubSkill('Sleep EXP Bonus'),
-                new SubSkill('Ingredient Finder M'),
-            ]);
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill('Helping Speed M'),
+                lv25: new SubSkill('Sleep EXP Bonus'),
+                lv50: new SubSkill('Ingredient Finder M'),
+            });
             iv.nature = new Nature('Serious');
             iv.skillLevel = 3;
             const rp = new PokemonRp(iv);
@@ -105,10 +105,10 @@ describe('PokemonRP', () => {
             const iv = new PokemonIv('Absol');
             iv.level = 41;
             iv.ingredient = "ABA";
-            iv.subSkills = new SubSkillList([
-                new SubSkill('Inventory Up M'),
-                new SubSkill('Ingredient Finder M'),
-            ]);
+            iv.subSkills = new SubSkillList({
+                lv10: new SubSkill('Inventory Up M'),
+                lv25: new SubSkill('Ingredient Finder M'),
+            });
             iv.nature = new Nature('Adamant');
             iv.skillLevel = 1;
             const rp = new PokemonRp(iv);

@@ -1,7 +1,20 @@
 import SubSkill from './SubSkill';
 
 /**
+ * Properties for configuring a SubSkillList.
+ */
+export interface SubSkillListProps {
+    lv10: SubSkill|null;
+    lv25: SubSkill|null;
+    lv50: SubSkill|null;
+    lv75: SubSkill|null;
+    lv100: SubSkill|null;
+}
+
+/**
  * Represents a sub skill list for Pokemon.
+ *
+ * This class is immutable.
  */
 class SubSkillList {
     /**
@@ -12,50 +25,71 @@ class SubSkillList {
      * - value[3]: Level 75
      * - value[4]: Level 100
      */
-    private value: (SubSkill|null)[];
+    private readonly value: readonly (SubSkill|null)[];
 
     /**
      * Initialize a new sub skill list.
-     * @param value Create an empty list if value is undefined,
-     *              clone the given list if value is specified.
+     * @param props Create an empty list if undefined, or initialize with the given props.
      */
-    constructor(value?: SubSkillList|(SubSkill|null)[]) {
-        if (value === undefined) {
+    constructor(props?: Partial<SubSkillListProps>) {
+        if (props === undefined) {
             this.value = [null, null, null, null, null];
         }
-        else if (value instanceof Array) {
-            this.value = value;
-        }
         else {
-            this.value = [...value.value];
+            this.value = [
+                props.lv10 ?? null,
+                props.lv25 ?? null,
+                props.lv50 ?? null,
+                props.lv75 ?? null,
+                props.lv100 ?? null,
+            ];
         }
     }
 
     /**
-     * Set the sub skill at the specified level.
-     * @param level Level at which the sub skill is set.
-     * @param subSkill Sub skill to be set.
+     * Creates a new SubSkillList instance, optionally with modifications.
+     * When updates are provided, applies swap logic to prevent duplicate skills.
+     * @param updates Optional updates to apply to specific levels.
+     * @returns A new SubSkillList instance with updates applied.
      */
-    set(level: 10|25|50|75|100, subSkill: SubSkill|null) {
-        const curIndex = this.getIndex(level);
-        if (subSkill !== null) {
-            // swap sub skill if selected skill exists at other level
-            const prevIndex = this.getSubSkillIndex(subSkill);
-            if (prevIndex >= 0) {
-                this.value[prevIndex] = this.value[curIndex];
+    clone(updates?: Partial<SubSkillListProps>): SubSkillList {
+        if (!updates) {
+            return new SubSkillList(this.toProps());
+        }
+
+        // Start with current values (mutable copy for processing)
+        const newValue = [...this.value] as (SubSkill|null)[];
+
+        // Helper to apply a single skill update with swap logic
+        const applyUpdate = (index: number, subSkill: SubSkill|null) => {
+            if (subSkill !== null) {
+                // Find if this skill already exists at another level
+                const existingIndex = newValue.findIndex(
+                    (s, i) => i !== index && s?.name === subSkill.name
+                );
+
+                // If found, swap the skills
+                if (existingIndex >= 0) {
+                    newValue[existingIndex] = newValue[index];
+                }
             }
-        }
-        this.value[curIndex] = subSkill;
-    }
+            newValue[index] = subSkill;
+        };
 
-    /**
-     * Creates a deep copy of this instance.
-     * @returns A cloned instance.
-     */
-    clone(): SubSkillList {
-        const ret = new SubSkillList();
-        ret.value = [...this.value];
-        return ret;
+        // Apply updates in level order
+        if (updates.lv10 !== undefined) { applyUpdate(0, updates.lv10); }
+        if (updates.lv25 !== undefined) { applyUpdate(1, updates.lv25); }
+        if (updates.lv50 !== undefined) { applyUpdate(2, updates.lv50); }
+        if (updates.lv75 !== undefined) { applyUpdate(3, updates.lv75); }
+        if (updates.lv100 !== undefined) { applyUpdate(4, updates.lv100); }
+
+        return new SubSkillList({
+            lv10: newValue[0],
+            lv25: newValue[1],
+            lv50: newValue[2],
+            lv75: newValue[3],
+            lv100: newValue[4],
+        });
     }
 
     /**
@@ -70,7 +104,21 @@ class SubSkillList {
             this.lv75?.name === list.lv75?.name &&
             this.lv100?.name === list.lv100?.name;
     }
-    
+
+    /**
+     * Extract current sub skills as a SubSkillListProps object.
+     * @returns Current state as properties.
+     */
+    toProps(): SubSkillListProps {
+        return {
+            lv10: this.value[0],
+            lv25: this.value[1],
+            lv50: this.value[2],
+            lv75: this.value[3],
+            lv100: this.value[4],
+        };
+    }
+
     /**
      * Get the active sub skill list at the specified level.
      * @param level level of the Pokemon (1 - 100).
@@ -146,24 +194,14 @@ class SubSkillList {
     
     /** Get the sub skill for level 10. */
     get lv10(): SubSkill|null { return this.value[0]; }
-    /** Set the sub skill for level 10. */
-    set lv10(subSkill: SubSkill|null) { this.set(10, subSkill); }
     /** Get the sub skill for level 25. */
     get lv25(): SubSkill|null { return this.value[1]; }
-    /** Set the sub skill for level 25. */
-    set lv25(subSkill: SubSkill|null) { this.set(25, subSkill); }
     /** Get the sub skill for level 50. */
     get lv50(): SubSkill|null { return this.value[2]; }
-    /** Set the sub skill for level 50. */
-    set lv50(subSkill: SubSkill|null) { this.set(50, subSkill); }
     /** Get the sub skill for level 75. */
     get lv75(): SubSkill|null { return this.value[3]; }
-    /** Set the sub skill for level 75. */
-    set lv75(subSkill: SubSkill|null) { this.set(75, subSkill); }
     /** Get the sub skill for level 100. */
     get lv100(): SubSkill|null { return this.value[4]; }
-    /** Set the sub skill for level 100. */
-    set lv100(subSkill: SubSkill|null) { this.set(100, subSkill); }
 }
 
 export default SubSkillList;

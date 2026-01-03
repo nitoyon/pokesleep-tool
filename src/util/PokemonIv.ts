@@ -561,11 +561,13 @@ class PokemonIv {
             }
             return allSubSkills[index];
         };
-        ret.subSkills.lv10 = getSubSkill((array16[2] >> 11) & 31, 10);
-        ret.subSkills.lv25 = getSubSkill((array16[3] >> 0) & 31, 25);
-        ret.subSkills.lv50 = getSubSkill((array16[3] >> 5) & 31, 50);
-        ret.subSkills.lv75 = getSubSkill((array16[3] >> 10) & 31, 75);
-        ret.subSkills.lv100 = getSubSkill((array16[4] >> 0) & 31, 100);
+        ret.subSkills = new SubSkillList({
+            lv10: getSubSkill((array16[2] >> 11) & 31, 10),
+            lv25: getSubSkill((array16[3] >> 0) & 31, 25),
+            lv50: getSubSkill((array16[3] >> 5) & 31, 50),
+            lv75: getSubSkill((array16[3] >> 10) & 31, 75),
+            lv100: getSubSkill((array16[4] >> 0) & 31, 100),
+        });
 
         // ribbon
         ret.ribbon = ((array16[4] >> 5) & 7) as 0|1|2|3|4;

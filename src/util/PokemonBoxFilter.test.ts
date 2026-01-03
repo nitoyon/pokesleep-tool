@@ -4,6 +4,7 @@ import PokemonIv from './PokemonIv';
 import { PokemonBoxItem } from './PokemonBox';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
+import SubSkillList from './SubSkillList';
 import type { TFunction } from 'i18next';
 
 // Mock translation function
@@ -209,12 +210,14 @@ describe('BoxFilterConfig', () => {
 
             const iv1 = new PokemonIv('Pikachu');
             iv1.level = 100;
-            iv1.subSkills.lv10 = new SubSkill("Helping Speed M");
-            iv1.subSkills.lv25 = new SubSkill("Berry Finding S");
+            iv1.subSkills = new SubSkillList({
+                lv10: new SubSkill("Helping Speed M"),
+                lv25: new SubSkill("Berry Finding S"),
+            });
 
             const iv2 = new PokemonIv('Pikachu');
             iv2.level = 100;
-            iv2.subSkills.lv10 = new SubSkill("Helping Speed M");
+            iv2.subSkills = new SubSkillList({ lv10: new SubSkill("Helping Speed M") });
 
             const items = [
                 new PokemonBoxItem(iv1, 'HasBoth'),
@@ -235,15 +238,15 @@ describe('BoxFilterConfig', () => {
 
             const iv1 = new PokemonIv('Pikachu');
             iv1.level = 100;
-            iv1.subSkills.lv10 = new SubSkill("Helping Speed M");
+            iv1.subSkills = new SubSkillList({ lv10: new SubSkill("Helping Speed M") });
 
             const iv2 = new PokemonIv('Pikachu');
             iv2.level = 100;
-            iv2.subSkills.lv10 = new SubSkill("Berry Finding S");
+            iv2.subSkills = new SubSkillList({ lv10: new SubSkill("Berry Finding S") });
 
             const iv3 = new PokemonIv('Pikachu');
             iv3.level = 100;
-            iv3.subSkills.lv10 = new SubSkill("Skill Trigger M");
+            iv3.subSkills = new SubSkillList({ lv10: new SubSkill("Skill Trigger M") });
 
             const items = [
                 new PokemonBoxItem(iv1, 'HasFirst'),
@@ -264,11 +267,11 @@ describe('BoxFilterConfig', () => {
 
             const iv1 = new PokemonIv('Pikachu');
             iv1.level = 5;
-            iv1.subSkills.lv10 = new SubSkill("Helping Speed M");
+            iv1.subSkills = new SubSkillList({ lv10: new SubSkill("Helping Speed M") });
 
             const iv2 = new PokemonIv('Pikachu');
             iv2.level = 10;
-            iv2.subSkills.lv10 = new SubSkill("Helping Speed M");
+            iv2.subSkills = new SubSkillList({ lv10: new SubSkill("Helping Speed M") });
 
             const items = [
                 new PokemonBoxItem(iv1, 'Level5'),
