@@ -29,7 +29,10 @@ export interface PokemonIvProps {
 }
 
 /**
- * Represents Indivisual Values (IV) of the Pokemon.
+ * Represents Individual Values (IV) of a Pokémon.
+ *
+ * This class is immutable. Once created, instances cannot be modified.
+ * This immutability depends on Nature and SubSkillList also being immutable.
  */
 class PokemonIv {
     readonly pokemonName: string;
