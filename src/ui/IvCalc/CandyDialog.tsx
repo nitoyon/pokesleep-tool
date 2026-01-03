@@ -373,9 +373,11 @@ const NormalCandyForm = React.memo(({ config, levelInfo, onChange }: {
 }) => {
     const { t } = useTranslation();
 
-    const iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
-    iv.nature = config.expFactor === 1 ? new Nature('Timid') :
-        config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
+    const iv = levelInfo.iv.clone({
+        level: levelInfo.currentLevel,
+        nature: config.expFactor === 1 ? new Nature('Timid') :
+            config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed'),
+    });
     const result: CalcExpAndCandyResult =
         calcExpAndCandy(iv, levelInfo.expGot, levelInfo.targetLevel, config.candyBoost);
 
@@ -454,9 +456,11 @@ const calculateDetailCandy = (
     normalCandyResult: CalcLevelBoostResult;
     sleepResult?: CalcDayToGetSleepExpResult;
 } => {
-    let iv = levelInfo.iv.changeLevel(levelInfo.currentLevel);
-    iv.nature = config.expFactor === 1 ? new Nature('Timid') :
-        config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed');
+    let iv = levelInfo.iv.clone({
+        level: levelInfo.currentLevel,
+        nature: config.expFactor === 1 ? new Nature('Timid') :
+            config.expFactor === 0 ? new Nature('Serious') : new Nature('Relaxed'),
+    });
 
     const exp = calcExp(levelInfo.currentLevel, levelInfo.targetLevel, levelInfo.iv) -
         levelInfo.expGot;
@@ -508,7 +512,7 @@ const calculateDetailCandy = (
                 break;
             }
         }
-        iv = levelInfo.iv.changeLevel(boosted.level);
+        iv = levelInfo.iv.clone({ level: boosted.level });
 
         candyBoostResult = {
             ...boosted, exp,

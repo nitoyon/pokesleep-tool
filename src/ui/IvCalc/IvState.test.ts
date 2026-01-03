@@ -32,8 +32,10 @@ describe('normalizeState', () => {
 
     describe('PokemonIv normalization', () => {
         test('should call normalize on the PokemonIv', () => {
-            const iv = new PokemonIv('Pikachu');
-            iv.skillLevel = 0;
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                skillLevel: 0,
+            });
             const state = { ...baseState, pokemonIv: iv };
             const newState = normalizeState(state);
 
@@ -153,7 +155,7 @@ describe('ivStateReducer', () => {
     describe('changeParameter action', () => {
         test('should normalize PokemonIv when parameter changes', () => {
             const state = { ...baseState };
-            state.pokemonIv.skillLevel = 0; // Invalid skill level
+            state.pokemonIv = state.pokemonIv.clone({ skillLevel: 0 }); // Invalid skill level
 
             const newParameter = loadStrengthParameter();
             const action: IvAction = {
@@ -170,8 +172,10 @@ describe('ivStateReducer', () => {
 
     describe('updateIv action', () => {
         test('should normalize state when IV is updated', () => {
-            const newIv = new PokemonIv('Pikachu');
-            newIv.skillLevel = 0; // Invalid skill level
+            const newIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                skillLevel: 0, // Invalid skill level
+            });
 
             const action: IvAction = {
                 type: 'updateIv',
@@ -189,12 +193,16 @@ describe('ivStateReducer', () => {
     describe('restoreItem action', () => {
         test('should restore item change', () => {
             const box = new PokemonBox();
-            const iv = new PokemonIv('Venusaur');
-            iv.skillLevel = 1;
+            const iv = new PokemonIv({
+                pokemonName: 'Venusaur',
+                skillLevel: 1,
+            });
             const itemId = box.add(iv);
 
-            const pokemonIv = new PokemonIv('Venusaur');
-            pokemonIv.skillLevel = 3;
+            const pokemonIv = new PokemonIv({
+                pokemonName: 'Venusaur',
+                skillLevel: 3,
+            });
 
             const state = { ...baseState, box, pokemonIv, selectedItemId: itemId };
             const action: IvAction = {
@@ -221,8 +229,10 @@ describe('ivStateReducer', () => {
 
     describe('addOrEditDone action', () => {
         test('should normalize state when adding new item', () => {
-            const iv = new PokemonIv('Blastoise');
-            iv.skillLevel = 0; // Will be normalized
+            const iv = new PokemonIv({
+                pokemonName: 'Blastoise',
+                skillLevel: 0, // Will be normalized
+            });
 
             const item = new PokemonBoxItem(iv, 'MyBlastoise', -1);
 
@@ -246,8 +256,10 @@ describe('ivStateReducer', () => {
 
             const state = { ...baseState, box, selectedItemId: itemId };
 
-            const editedIv = new PokemonIv('Pikachu');
-            editedIv.skillLevel = 0; // Will be normalized
+            const editedIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                skillLevel: 0, // Will be normalized
+            });
 
             const item = new PokemonBoxItem(editedIv, 'EditedPikachu', itemId);
 
@@ -267,8 +279,10 @@ describe('ivStateReducer', () => {
     describe('select action', () => {
         test('should normalize state when selecting item from box', () => {
             const box = new PokemonBox();
-            const iv = new PokemonIv('Raichu');
-            iv.skillLevel = 0; // Will be normalized
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                skillLevel: 0, // Will be normalized
+            });
             const itemId = box.add(iv);
 
             const state = { ...baseState, box };

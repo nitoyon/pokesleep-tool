@@ -7,61 +7,62 @@ import SubSkillList from './SubSkillList';
 describe('PokemonRP', () => {
     describe('frequency', () => {
         test('test no subskill', () => {
-            const iv = new PokemonIv('Wigglytuff');
-            iv.level = 31;
+            const iv = new PokemonIv({
+                pokemonName: 'Wigglytuff',
+                level: 31,
+            });
             const rp = new PokemonRp(iv);
             expect(Math.floor(rp.frequency)).toBe(45 * 60 + 26);
         });
 
         test('test with Helping Speed M', () => {
-            const iv = new PokemonIv('Wigglytuff');
-            iv.level = 50;
-            iv.subSkills = new SubSkillList({ lv50: new SubSkill("Helping Speed M") });
+            const iv = new PokemonIv({
+                pokemonName: 'Wigglytuff',
+                level: 50,
+                subSkills: new SubSkillList({ lv50: new SubSkill("Helping Speed M") }),
+            });
             const rp = new PokemonRp(iv);
             expect(Math.floor(rp.frequency)).toBe(37 * 60 + 29);
         });
 
         test('test with Helping Speed M and nature', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 25;
-            iv.subSkills = new SubSkillList({ lv25: new SubSkill("Helping Speed M") });
-            iv.nature = new Nature("Brave");
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 25,
+                subSkills: new SubSkillList({ lv25: new SubSkill("Helping Speed M") }),
+                nature: new Nature("Brave"),
+            });
             const rp = new PokemonRp(iv);
             expect(Math.floor(rp.frequency)).toBe(27 * 60);
         });
 
         test('test with ribbon', () => {
-            const iv = new PokemonIv('Pichu');
-            iv.level = 1;
+            const iv = new PokemonIv({
+                pokemonName: 'Pichu',
+                level: 1,
+            });
 
-            iv.ribbon = 0;
-            expect(new PokemonRp(iv).frequency).toBe(4300);
-
-            iv.ribbon = 1;
-            expect(new PokemonRp(iv).frequency).toBe(4300);
-
-            iv.ribbon = 2;
-            expect(Math.floor(new PokemonRp(iv).frequency)).toBe(3827);
-
-            iv.ribbon = 3;
-            expect(Math.floor(new PokemonRp(iv).frequency)).toBe(3827);
-
-            iv.ribbon = 4;
-            expect(Math.floor(new PokemonRp(iv).frequency)).toBe(3225);
+            expect(new PokemonRp(iv.clone({ribbon: 0})).frequency).toBe(4300);
+            expect(new PokemonRp(iv.clone({ribbon: 1})).frequency).toBe(4300);
+            expect(Math.floor(new PokemonRp(iv.clone({ribbon: 2})).frequency)).toBe(3827);
+            expect(Math.floor(new PokemonRp(iv.clone({ribbon: 3})).frequency)).toBe(3827);
+            expect(Math.floor(new PokemonRp(iv.clone({ribbon: 4})).frequency)).toBe(3225);
         });
     });
 
     describe('RP', () => {
         test('Magnezone Lv35', () => {
-            const iv = new PokemonIv('Magnezone');
-            iv.level = 35;
-            iv.ingredient = "ABA";
-            iv.subSkills = new SubSkillList({
-                lv10: new SubSkill('Helping Speed M'),
-                lv25: new SubSkill('Skill Level Up M'),
+            const iv = new PokemonIv({
+                pokemonName: 'Magnezone',
+                level: 35,
+                ingredient: "ABA",
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Helping Speed M'),
+                    lv25: new SubSkill('Skill Level Up M'),
+                }),
+                nature: new Nature('Adamant'),
+                skillLevel: 5,
             });
-            iv.nature = new Nature('Adamant');
-            iv.skillLevel = 5;
             const rp = new PokemonRp(iv);
 
             expect(rp.frequency).toBe(2236.03);
@@ -70,14 +71,16 @@ describe('PokemonRP', () => {
         });
 
         test('Sylveon Lv10 (ugly hack)', () => {
-            const iv = new PokemonIv('Sylveon');
-            iv.level = 10;
-            iv.ingredient = "AAA";
-            iv.subSkills = new SubSkillList({
-                lv10: new SubSkill('Helping Bonus'),
+            const iv = new PokemonIv({
+                pokemonName: 'Sylveon',
+                level: 10,
+                ingredient: "AAA",
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Helping Bonus'),
+                }),
+                nature: new Nature('Relaxed'),
+                skillLevel: 2,
             });
-            iv.nature = new Nature('Relaxed');
-            iv.skillLevel = 2;
             const rp = new PokemonRp(iv);
 
             expect(rp.frequency).toBe(2553.1);
@@ -86,31 +89,35 @@ describe('PokemonRP', () => {
         });
 
         test('Blastoise Lv60 (floating-point error)', () => {
-            const iv = new PokemonIv('Blastoise');
-            iv.level = 60;
-            iv.ingredient = "AAA";
-            iv.subSkills = new SubSkillList({
-                lv10: new SubSkill('Helping Speed M'),
-                lv25: new SubSkill('Sleep EXP Bonus'),
-                lv50: new SubSkill('Ingredient Finder M'),
+            const iv = new PokemonIv({
+                pokemonName: 'Blastoise',
+                level: 60,
+                ingredient: "AAA",
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Helping Speed M'),
+                    lv25: new SubSkill('Sleep EXP Bonus'),
+                    lv50: new SubSkill('Ingredient Finder M'),
+                }),
+                nature: new Nature('Serious'),
+                skillLevel: 3,
             });
-            iv.nature = new Nature('Serious');
-            iv.skillLevel = 3;
             const rp = new PokemonRp(iv);
 
             expect(rp.Rp).toBe(4545);
         });
 
         test('Absol Lv41 (floating-point error)', () => {
-            const iv = new PokemonIv('Absol');
-            iv.level = 41;
-            iv.ingredient = "ABA";
-            iv.subSkills = new SubSkillList({
-                lv10: new SubSkill('Inventory Up M'),
-                lv25: new SubSkill('Ingredient Finder M'),
+            const iv = new PokemonIv({
+                pokemonName: 'Absol',
+                level: 41,
+                ingredient: "ABA",
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Inventory Up M'),
+                    lv25: new SubSkill('Ingredient Finder M'),
+                }),
+                nature: new Nature('Adamant'),
+                skillLevel: 1,
             });
-            iv.nature = new Nature('Adamant');
-            iv.skillLevel = 1;
             const rp = new PokemonRp(iv);
 
             expect(rp.Rp).toBe(1865);

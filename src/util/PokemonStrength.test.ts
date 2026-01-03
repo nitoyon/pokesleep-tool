@@ -16,10 +16,11 @@ function createParam(obj: Partial<StrengthParameter>): StrengthParameter {
 describe('PokemonStrength', () => {
     describe('calculate', () => {
         test('ingredient unlock levels', () => {
-            const iv = new PokemonIv('Raichu');
-
             // Level 1 - only ing1
-            iv.level = 1;
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 1,
+            });
             let param = createParam({});
             let strength = new PokemonStrength(iv, param);
             let result = strength.calculate();
@@ -28,18 +29,16 @@ describe('PokemonStrength', () => {
             expect(result.ing3?.count).toBe(0);
 
             // Level 30 - ing1 and ing2
-            iv.level = 30;
             param = createParam({});
-            strength = new PokemonStrength(iv, param);
+            strength = new PokemonStrength(iv.clone({level: 30}), param);
             result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
             expect(result.ing3?.count).toBe(0);
 
             // Level 60 - all ingredients
-            iv.level = 60;
             param = createParam({});
-            strength = new PokemonStrength(iv, param);
+            strength = new PokemonStrength(iv.clone({level: 60}), param);
             result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
@@ -47,8 +46,10 @@ describe('PokemonStrength', () => {
         });
 
         test('field bonus affects berry and ingredient strength', () => {
-            const iv = new PokemonIv('Pikachu');
-            iv.level = 50;
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
 
             const param0 = createParam({ fieldBonus: 0 });
             const strength0 = new PokemonStrength(iv, param0);
@@ -63,8 +64,10 @@ describe('PokemonStrength', () => {
         });
 
         test('evolved parameter changes pokemon', () => {
-            const iv = new PokemonIv('Pikachu');
-            iv.level = 50;
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
 
             const paramNotEvolved = createParam({ evolved: false });
             const strengthNotEvolved = new PokemonStrength(iv, paramNotEvolved);
@@ -76,8 +79,10 @@ describe('PokemonStrength', () => {
         });
 
         test('level parameter changes level', () => {
-            const iv = new PokemonIv('Pikachu');
-            iv.level = 10;
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 10,
+            });
 
             const param = createParam({ level: 50 });
             const strength = new PokemonStrength(iv, param);
@@ -85,8 +90,10 @@ describe('PokemonStrength', () => {
         });
 
         test('tapFrequency none disables skill', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 50;
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 50,
+            });
 
             const paramAlways = createParam({ tapFrequency: 'always' });
             const strengthAlways = new PokemonStrength(iv, paramAlways);
@@ -100,19 +107,20 @@ describe('PokemonStrength', () => {
         });
 
         test('nature affects results', () => {
-            const iv = new PokemonIv('Pikachu');
-            iv.level = 50;
-
             // Test with neutral nature
-            iv.nature = new Nature('Serious');
+            const iv1 = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+                nature: new Nature('Serious'),
+            });
             const paramSerious = createParam({});
-            const strengthSerious = new PokemonStrength(iv, paramSerious);
+            const strengthSerious = new PokemonStrength(iv1, paramSerious);
             const resultSerious = strengthSerious.calculate();
 
             // Test with Helping Speed down nature (Bold is Speed of Help down)
-            iv.nature = new Nature('Bold');
+            const iv2 = iv1.clone({nature: new Nature('Bold')});
             const paramBold = createParam({});
-            const strengthBold = new PokemonStrength(iv, paramBold);
+            const strengthBold = new PokemonStrength(iv2, paramBold);
             const resultBold = strengthBold.calculate();
 
             // Bold should have fewer helps due to slower helping speed
@@ -121,8 +129,10 @@ describe('PokemonStrength', () => {
         });
 
         test('ingredients summary', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 60;
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 60,
+            });
             const param = createParam({});
             const strength = new PokemonStrength(iv, param);
             const result = strength.calculate();
@@ -136,8 +146,10 @@ describe('PokemonStrength', () => {
         });
 
         test('calculates strength with whistle period', () => {
-            const iv = new PokemonIv('Pikachu');
-            iv.level = 50;
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
 
             // simulate whistle
             const paramWhistle = createParam({ period: whistlePeriod });
@@ -204,8 +216,10 @@ describe('PokemonStrength', () => {
 
     describe('totalFlags', () => {
         test('controls which components are included in total strength', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 50;
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 50,
+            });
 
             // [true, true, true] - all components
             let param = createParam({ totalFlags: [true, true, true] });
@@ -239,9 +253,11 @@ describe('PokemonStrength', () => {
 
     describe('helpingBonusStrength', () => {
         test('does not calculates additional strength when addHelpingBonusEffect is false', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 10;
-            iv.subSkills = new SubSkillList({ lv10: new SubSkill('Helping Bonus') });
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 10,
+                subSkills: new SubSkillList({ lv10: new SubSkill('Helping Bonus') }),
+            });
 
             const param = createParam({ helpBonusCount: 0, addHelpingBonusEffect: false });
             const strength = new PokemonStrength(iv, param);
@@ -254,9 +270,11 @@ describe('PokemonStrength', () => {
         });
 
         test('calculates additional strength when Helping Bonus sub-skill is active', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 10;
-            iv.subSkills = new SubSkillList({ lv10: new SubSkill('Helping Bonus') });
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 10,
+                subSkills: new SubSkillList({ lv10: new SubSkill('Helping Bonus') }),
+            });
 
             const param = createParam({ helpBonusCount: 0, addHelpingBonusEffect: true });
             const strength = new PokemonStrength(iv, param);
@@ -277,9 +295,11 @@ describe('PokemonStrength', () => {
         });
 
         test('calculates correctly with different helpBonusCount values', () => {
-            const iv = new PokemonIv('Raichu');
-            iv.level = 10;
-            iv.subSkills = new SubSkillList({ lv10: new SubSkill('Helping Bonus') });
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 10,
+                subSkills: new SubSkillList({ lv10: new SubSkill('Helping Bonus') }),
+            });
 
             // Test with helpBonusCount = 1
             const param = createParam({ helpBonusCount: 1, addHelpingBonusEffect: true });
@@ -310,9 +330,11 @@ describe('PokemonStrength', () => {
                 }
 
                 // Create IV and calculate strength
-                const iv = new PokemonIv(pokemon.name);
-                iv.level = 50;
-                iv.skillLevel = 6;
+                const iv = new PokemonIv({
+                    pokemonName: pokemon.name,
+                    level: 50,
+                    skillLevel: 6,
+                });
                 const param = createParam({ period: 24 });
                 const strength = new PokemonStrength(iv, param);
                 const result = strength.calculate();
