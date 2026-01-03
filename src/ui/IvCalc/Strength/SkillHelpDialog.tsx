@@ -54,8 +54,9 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         if (value === null) {
             return;
         }
-        const iv = strength.pokemonIv.clone();
-        iv.skillLevel = parseInt(value, 10);
+        const iv = strength.pokemonIv.clone({
+            skillLevel: parseInt(value, 10),
+        });
         dispatch({type: "updateIv", payload: {iv}});
     }, [dispatch, strength.pokemonIv]);
 
