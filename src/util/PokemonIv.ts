@@ -8,6 +8,27 @@ import SubSkillList from './SubSkillList';
 import { clamp } from './NumberUtil';
 
 /**
+ * Interface containing all configurable properties of
+ * a PokemonIv instance.
+ */
+export interface PokemonIvProps {
+    pokemonName: string;
+    level: number;
+    skillLevel: number;
+    ingredient: IngredientType;
+    subSkills: SubSkillList;
+    nature: Nature;
+    ribbon: 0|1|2|3|4;
+    mythIng1: IngredientName;
+    mythIng2: IngredientName;
+    mythIng3: IngredientName;
+    /** Use when overwrite skill ratio */
+    skillRatio: number;
+    /** Use when overwrite ingredient ratio */
+    ingRatio: number;
+}
+
+/**
  * Represents Indivisual Values (IV) of the Pokemon.
  */
 class PokemonIv {
@@ -400,6 +421,27 @@ class PokemonIv {
      */
     static getFormByIdForm(idForm: number): number {
         return idForm >> 12;
+    }
+
+    /**
+     * Extract current props as PokemonIvProps object.
+     * @returns Current state as props.
+     */
+    toProps(): PokemonIvProps {
+        return {
+            pokemonName: this.pokemonName,
+            level: this.level,
+            skillLevel: this.skillLevel,
+            ingredient: this.ingredient,
+            subSkills: this.subSkills,
+            nature: this.nature,
+            ribbon: this.ribbon,
+            mythIng1: this.mythIng1,
+            mythIng2: this.mythIng2,
+            mythIng3: this.mythIng3,
+            skillRatio: this.pokemon.skillRatio,
+            ingRatio: this.pokemon.ingRatio,
+        };
     }
 
     /**
