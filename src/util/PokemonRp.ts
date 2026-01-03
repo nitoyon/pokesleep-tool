@@ -1,8 +1,6 @@
 import {IngredientName, PokemonData, PokemonType} from '../data/pokemons';
 import PokemonIv from './PokemonIv';
-import Nature from './Nature';
 import SubSkill from './SubSkill';
-import SubSkillList from './SubSkillList';
 import {
     expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
     expertFavoriteIngredientBonus, expertFavoriteIngredientAdditionalBonus,
@@ -88,27 +86,6 @@ export interface RpStrengthResult {
  */
 class PokemonRp {
     readonly iv: PokemonIv;
-    /** Name of the pokemon (English). */
-    private _pokemonName: string;
-    private _pokemon: PokemonData;
-    /** Current level of the pokemon. */
-    level: number;
-    /** Current skill level of the pokemon. */
-    skillLevel: number;
-    ingredient: IngredientType;
-
-    /** Sub skill list. */
-    subSkills: SubSkillList;
-
-    /** Nature of the pokemon */
-    nature: Nature|null;
-
-    /** Ribbon level */
-    ribbon: 0|1|2|3|4;
-
-    mythIng1: IngredientName|undefined;
-    mythIng2: IngredientName|undefined;
-    mythIng3: IngredientName|undefined;
 
     get pokemonName(): string {
         return this.iv.pokemonName;
@@ -124,18 +101,6 @@ class PokemonRp {
 
     constructor(pokemonIv: PokemonIv) {
         this.iv = pokemonIv;
-        this._pokemonName = pokemonIv.pokemonName;
-        this._pokemon = pokemonIv.pokemon;
-
-        this.level = pokemonIv.level;
-        this.skillLevel = pokemonIv.skillLevel;
-        this.ingredient = pokemonIv.ingredient;
-        this.subSkills = pokemonIv.subSkills;
-        this.nature = pokemonIv.nature;
-        this.ribbon = pokemonIv.ribbon;
-        this.mythIng1 = pokemonIv.mythIng1;
-        this.mythIng2 = pokemonIv.mythIng2;
-        this.mythIng3 = pokemonIv.mythIng3;
     }
 
     calculate(): RpStrengthResult {

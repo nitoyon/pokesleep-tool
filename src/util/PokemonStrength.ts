@@ -353,7 +353,7 @@ class PokemonStrength {
     calculate(): StrengthResult {
         const param = this.param;
         const rp = new PokemonRp(this.iv);
-        const level = rp.level;
+        const level = this.iv.level;
         const countRatio = Math.ceil(param.period / 24);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
