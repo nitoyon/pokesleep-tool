@@ -95,9 +95,9 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
-                new PokemonBoxItem(new PokemonIv('Bulbasaur')),
-                new PokemonBoxItem(new PokemonIv('Eevee')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Bulbasaur' })),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' })),
             ];
 
             const [result, error] = sortPokemonItems(items, 'name', true, 'unknown',
@@ -115,9 +115,9 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Sparky'),
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Thunder'),
-                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Bolt'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Sparky'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Thunder'),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Bolt'),
             ];
 
             const [result, error] = sortPokemonItems(items, 'name', true, 'unknown',
@@ -137,9 +137,9 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')), // ID 25
-                new PokemonBoxItem(new PokemonIv('Bulbasaur')), // ID 1
-                new PokemonBoxItem(new PokemonIv('Charmander')), // ID 4
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })), // ID 25
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Bulbasaur' })), // ID 1
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Charmander' })), // ID 4
             ];
 
             const [result, error] = sortPokemonItems(items, 'pokedexno', true, 'unknown',
@@ -251,7 +251,7 @@ describe('sortPokemonItems', () => {
             parameter.tapFrequency = 'none';
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
             ];
 
             const [result, error] = sortPokemonItems(items, 'ingredient', true, 'unknown',
@@ -264,8 +264,8 @@ describe('sortPokemonItems', () => {
         test('sorts ingredient by "count" and "strength"', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Pikachu');
-            const iv2 = new PokemonIv('Eevee (Halloween)');
+            const iv1 = new PokemonIv({ pokemonName: 'Pikachu' });
+            const iv2 = new PokemonIv({ pokemonName: 'Eevee (Halloween)' });
 
             const calculator: StrengthCalculator = (iv: PokemonIv) => {
                 switch (iv.pokemon.name) {
@@ -312,7 +312,7 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
             ];
 
             const [result, error] = sortPokemonItems(items, 'ingredient', true, 'sausage',
@@ -331,7 +331,7 @@ describe('sortPokemonItems', () => {
             parameter.tapFrequency = 'none';
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
             ];
 
             const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
@@ -346,7 +346,7 @@ describe('sortPokemonItems', () => {
             parameter.period = 0; // whistlePeriod
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
             ];
 
             const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
@@ -379,7 +379,7 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
             ];
 
             const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
@@ -393,8 +393,8 @@ describe('sortPokemonItems', () => {
         test('returns different result wheather mainSkill is "count" or "strength"', () => {
             const parameter = createStrengthParameter({});
 
-            const iv1 = new PokemonIv('Golduck');
-            const iv2 = new PokemonIv('Drifblim');
+            const iv1 = new PokemonIv({ pokemonName: 'Golduck' });
+            const iv2 = new PokemonIv({ pokemonName: 'Drifblim' });
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -436,8 +436,8 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             // Pikachu (Holiday) has Dream Shard Magnet S skill
-            const iv1 = new PokemonIv('Lucario');
-            const iv2 = new PokemonIv('Swalot');
+            const iv1 = new PokemonIv({ pokemonName: 'Lucario' });
+            const iv2 = new PokemonIv({ pokemonName: 'Swalot' });
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -480,8 +480,8 @@ describe('sortPokemonItems', () => {
 
             // Murkrow has Ingredient Draw S (Super Luck) - should use skillValue2
             // Lucario has Dream Shard Magnet S - should use skillValue
-            const iv1 = new PokemonIv('Murkrow');
-            const iv2 = new PokemonIv('Lucario');
+            const iv1 = new PokemonIv({ pokemonName: 'Murkrow' });
+            const iv2 = new PokemonIv({ pokemonName: 'Lucario' });
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -540,10 +540,10 @@ describe('sortPokemonItems', () => {
             const parameter = createStrengthParameter({});
 
             // Create mock Pokémon with Energy for Everyone S skills
-            const iv1 = new PokemonIv('Cresselia');
-            const iv2 = new PokemonIv('Pawmot');
-            const iv3 = new PokemonIv('Braviary');
-            const iv4 = new PokemonIv('Sceptile');
+            const iv1 = new PokemonIv({ pokemonName: 'Cresselia' });
+            const iv2 = new PokemonIv({ pokemonName: 'Pawmot' });
+            const iv3 = new PokemonIv({ pokemonName: 'Braviary' });
+            const iv4 = new PokemonIv({ pokemonName: 'Sceptile' });
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -612,7 +612,7 @@ describe('sortPokemonItems', () => {
                 pokemonName: 'Toxel',
                 nature: new Nature('Bashful'), // Low Key nature
             });
-            const iv2 = new PokemonIv('Slowking');
+            const iv2 = new PokemonIv({ pokemonName: 'Slowking' });
 
             const items = [
                 new PokemonBoxItem(iv1),
@@ -655,7 +655,7 @@ describe('sortPokemonItems', () => {
                 pokemonName: 'Toxel',
                 nature: new Nature('Hardy'), // Amped nature
             });
-            const pikachu = new PokemonIv('Pikachu'); // Different skill
+            const pikachu = new PokemonIv({ pokemonName: 'Pikachu' }); // Different skill
 
             const items = [
                 new PokemonBoxItem(toxel),
@@ -680,7 +680,7 @@ describe('sortPokemonItems', () => {
                 pokemonName: 'Toxel',
                 nature: new Nature('Bashful'), // Low Key nature
             });
-            const pikachu = new PokemonIv('Pikachu'); // Different skill
+            const pikachu = new PokemonIv({ pokemonName: 'Pikachu' }); // Different skill
 
             const items = [
                 new PokemonBoxItem(toxel),

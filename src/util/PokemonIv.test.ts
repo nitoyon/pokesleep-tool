@@ -6,7 +6,7 @@ import SubSkillList from './SubSkillList';
 describe('PokemonIV', () => {
     describe('constructor', () => {
         test('with string parameter', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
 
             expect(iv.pokemonName).toBe('Pikachu');
             expect(iv.level).toBe(30);
@@ -66,7 +66,7 @@ describe('PokemonIV', () => {
         });
 
         test('uses default skillRatio and ingRatio when not specified', () => {
-            const iv1 = new PokemonIv('Pikachu');
+            const iv1 = new PokemonIv({ pokemonName: 'Pikachu' });
             const iv2 = new PokemonIv({ pokemonName: 'Pikachu' });
 
             // Both should have the same default values from pokemon data
@@ -79,7 +79,7 @@ describe('PokemonIV', () => {
 
     describe('clone', () => {
         test('same pokemon', () => {
-            const iv = new PokemonIv('Bulbasaur');
+            const iv = new PokemonIv({ pokemonName: 'Bulbasaur' });
             expect(iv.skillLevel).toBe(1);
 
             const iv2 = iv.clone({skillLevel: 2});
@@ -272,7 +272,7 @@ describe('PokemonIV', () => {
         });
 
         test('returns same subSkills reference (not a clone)', () => {
-            const iv = new PokemonIv('Bulbasaur');
+            const iv = new PokemonIv({ pokemonName: 'Bulbasaur' });
             const params = iv.toProps();
 
             // Should be the same object reference
@@ -293,7 +293,7 @@ describe('PokemonIV', () => {
 
     describe('decendants', () => {
         test('Bulbasaur', () => {
-            const iv = new PokemonIv('Bulbasaur');
+            const iv = new PokemonIv({ pokemonName: 'Bulbasaur' });
 
             const allDecendants = iv.allDecendants;
             expect(allDecendants.length).toBe(3);
@@ -382,7 +382,7 @@ describe('PokemonIV', () => {
         });
 
         test('idForm', () => {
-            const iv = new PokemonIv('Vulpix (Alola)');
+            const iv = new PokemonIv({ pokemonName: 'Vulpix (Alola)' });
             expect(iv.idForm).toBe(37 + 0x3000);
             expect(PokemonIv.getFormByIdForm(37 + 0x3000)).toBe(3);
             expect(PokemonIv.getIdByIdForm(37 + 0x3000)).toBe(37);
@@ -439,7 +439,7 @@ describe('PokemonIV', () => {
         });
 
         test('Toxtricity (Amped)', () => {
-            const iv = new PokemonIv('Toxtricity (Amped)');
+            const iv = new PokemonIv({ pokemonName: 'Toxtricity (Amped)' });
             expect(iv.serialize()).toBe('ETWFp0T4-38f');
 
             const ret = PokemonIv.deserialize('ETWFp0T4-38f');
@@ -447,7 +447,7 @@ describe('PokemonIV', () => {
         });
 
         test('Toxtricity (Low Key)', () => {
-            const iv = new PokemonIv('Toxtricity (Low Key)');
+            const iv = new PokemonIv({ pokemonName: 'Toxtricity (Low Key)' });
             expect(iv.serialize()).toBe('ETWGpwT5-38f');
 
             const ret = PokemonIv.deserialize('ETWGpwT5-38f');

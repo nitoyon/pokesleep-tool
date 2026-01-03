@@ -10,7 +10,7 @@ function createBaseState(): IvState {
     return {
         tabIndex: 0,
         lowerTabIndex: 0,
-        pokemonIv: new PokemonIv('Venusaur'),
+        pokemonIv: new PokemonIv({ pokemonName: 'Venusaur' }),
         parameter: loadStrengthParameter(),
         box: new PokemonBox(),
         selectedItemId: -1,
@@ -50,7 +50,7 @@ describe('normalizeState', () => {
             state.parameter.event = 'halloween 2024';
             state.parameter.fieldIndex = 0;
             state.parameter.favoriteType = ['normal', 'bug', 'rock'];
-            state.pokemonIv = new PokemonIv('Venusaur');
+            state.pokemonIv = new PokemonIv({ pokemonName: 'Venusaur' });
 
             const newState = normalizeState(state);
 
@@ -65,7 +65,7 @@ describe('normalizeState', () => {
             state.parameter.event = 'halloween2024';
             state.parameter.fieldIndex = 1;
             state.parameter.favoriteType = ['normal', 'normal', 'normal'];
-            state.pokemonIv = new PokemonIv('Venusaur');
+            state.pokemonIv = new PokemonIv({ pokemonName: 'Venusaur' });
 
             const newState = normalizeState(state);
 
@@ -78,7 +78,7 @@ describe('normalizeState', () => {
             state.parameter.event = 'raikou entei suicune research 1st week';
             state.parameter.fieldIndex = 0;
             state.parameter.favoriteType = ['normal', 'normal', 'normal'];
-            state.pokemonIv = new PokemonIv('Venusaur');
+            state.pokemonIv = new PokemonIv({ pokemonName: 'Venusaur' });
 
             const newState = normalizeState(state);
 
@@ -93,7 +93,7 @@ describe('normalizeState', () => {
         test('should count up species from 1 to 2 for Lunar Blessing Pokemon', () => {
             const state = { ...baseState };
             // Cresselia has "Energy for Everyone S (Lunar Blessing)" skill
-            state.pokemonIv = new PokemonIv('Cresselia');
+            state.pokemonIv = new PokemonIv({ pokemonName: 'Cresselia' });
             state.parameter.berryBurstTeam.auto = false;
             state.parameter.berryBurstTeam.members = [
                 { type: 'psychic', level: 50 },
@@ -111,7 +111,7 @@ describe('normalizeState', () => {
 
         test('should use min when species count > 2', () => {
             const state = { ...baseState };
-            state.pokemonIv = new PokemonIv('Cresselia'); // psychic type
+            state.pokemonIv = new PokemonIv({ pokemonName: 'Cresselia' }); // psychic type
             state.parameter.berryBurstTeam.auto = false;
             state.parameter.berryBurstTeam.members = [
                 { type: 'psychic', level: 50 },
@@ -129,7 +129,7 @@ describe('normalizeState', () => {
 
     describe('State immutability', () => {
         test('should return new state object', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
             const state = { ...baseState, pokemonIv: iv };
             const newState = normalizeState(state);
 
@@ -137,7 +137,7 @@ describe('normalizeState', () => {
         });
 
         test('should update pokemonIv reference', () => {
-            const iv = new PokemonIv('Pikachu');
+            const iv = new PokemonIv({ pokemonName: 'Pikachu' });
             const state = { ...baseState, pokemonIv: iv };
             const newState = normalizeState(state);
 
@@ -251,7 +251,7 @@ describe('ivStateReducer', () => {
 
         test('should normalize state when editing existing item', () => {
             const box = new PokemonBox();
-            const originalIv = new PokemonIv('Raichu');
+            const originalIv = new PokemonIv({ pokemonName: 'Raichu' });
             const itemId = box.add(originalIv);
 
             const state = { ...baseState, box, selectedItemId: itemId };
