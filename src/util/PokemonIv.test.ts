@@ -321,6 +321,185 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('normalize (static)', () => {
+        test('throws error when pokemonName is missing', () => {
+            expect(() => PokemonIv.normalize({}))
+                .toThrow('pokemonName is required');
+        });
+
+        test('throws error when pokemonName is invalid', () => {
+            expect(() => PokemonIv.normalize({ pokemonName: 'InvalidPokemon' }))
+                .toThrow('Unknown name: InvalidPokemon');
+        });
+
+        test('applies default values with minimal params (pokemonName only)', () => {
+            const result = PokemonIv.normalize({ pokemonName: 'Bulbasaur' });
+
+            expect(result.pokemonName).toBe('Bulbasaur');
+            expect(result.level).toBe(30);
+            expect(result.skillLevel).toBe(1); // evolutionCount=0, so max(0+1,1)=1
+            expect(result.ingredient).toBe('ABC'); // has ing3
+            expect(result.nature.name).toBe('Serious'); // default nature
+            expect(result.ribbon).toBe(0);
+            expect(result.mythIng1).toBe('unknown');
+            expect(result.mythIng2).toBe('unknown');
+            expect(result.mythIng3).toBe('unknown');
+            expect(result.subSkills).toBeInstanceOf(SubSkillList);
+        });
+
+        test('applies default ingredient "ABB" for pokemon without ing3', () => {
+            const result = PokemonIv.normalize({ pokemonName: 'Feraligatr' });
+
+            // Feraligatr doesn't have ing3
+            expect(result.ingredient).toBe('ABB');
+        });
+
+        test('preserves provided values (partial params)', () => {
+            const result = PokemonIv.normalize({
+                pokemonName: 'Bulbasaur',
+                level: 50,
+                skillLevel: 5,
+                ingredient: 'ABB',
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Berry Finding S'),
+                }),
+                nature: new Nature('Adamant'),
+                ribbon: 3,
+            });
+
+            expect(result.pokemonName).toBe('Bulbasaur');
+            expect(result.level).toBe(50);
+            expect(result.skillLevel).toBe(5);
+            expect(result.ingredient).toBe('ABB');
+            expect(result.subSkills.lv10?.name).toBe('Berry Finding S');
+            expect(result.nature?.name).toBe('Adamant');
+            expect(result.ribbon).toBe(3);
+        });
+
+        test('clamps skillLevel to valid range', () => {
+            // Bulbasaur has "Ingredient Magnet S" skill, max level is 7
+            const result1 = PokemonIv.normalize({
+                pokemonName: 'Bulbasaur',
+                skillLevel: 999,
+            });
+            expect(result1.skillLevel).toBe(7);
+
+            const result2 = PokemonIv.normalize({
+                pokemonName: 'Bulbasaur',
+                skillLevel: -5,
+            });
+
+            expect(result2.skillLevel).toBe(1);
+        });
+
+        test('handles mythical pokemon ingredient defaults', () => {
+            const result = PokemonIv.normalize({
+                pokemonName: 'Darkrai',
+            });
+
+            // mythIng1 should default to "sausage" for mythical pokemon
+            expect(result.mythIng1).toBe('sausage');
+            expect(result.mythIng2).toBe('unknown');
+            expect(result.mythIng3).toBe('unknown');
+        });
+
+        test('preserves mythical pokemon ingredients when provided', () => {
+            const result = PokemonIv.normalize({
+                pokemonName: 'Darkrai',
+                mythIng1: 'coffee',
+                mythIng2: 'apple',
+                mythIng3: 'soy',
+            });
+
+            expect(result.mythIng1).toBe('coffee');
+            expect(result.mythIng2).toBe('apple');
+            expect(result.mythIng3).toBe('soy');
+        });
+
+        test('normalizes nature for Toxtricity (Amped)', () => {
+            // Amped: default nature is Hardy
+            const result1 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Amped)',
+            });
+            expect(result1.nature.name).toBe('Hardy');
+
+            // Amped: Serious -> Hardy
+            const result2 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Amped)',
+                nature: new Nature('Serious'),
+            });
+            expect(result2.nature.isAmped).toBe(true);
+            expect(result2.nature.name).toBe('Hardy');
+
+            // Amped: Lonely -> Adamant
+            const result3 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Amped)',
+                nature: new Nature('Lonely'),
+            });
+            expect(result3.nature.isAmped).toBe(true);
+            expect(result3.nature.name).toBe('Adamant');
+
+            // Amped: keep valid Amped nature
+            const result4 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Amped)',
+                nature: new Nature('Adamant'),
+            });
+            expect(result4.nature.name).toBe('Adamant');
+        });
+
+        test('normalizes nature for Toxtricity (Low Key)', () => {
+            // Low Key: default nature is Serious
+            const result1 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Low Key)',
+            });
+            expect(result1.nature.name).toBe('Serious');
+
+            // Low Key: Hardy -> Bashful
+            const result2 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Low Key)',
+                nature: new Nature('Hardy'),
+            });
+            expect(result2.nature.isLowKey).toBe(true);
+            expect(result2.nature.name).toBe('Bashful');
+
+            // Low Key: Adamant -> Lonely
+            const result3 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Low Key)',
+                nature: new Nature('Adamant'),
+            });
+            expect(result3.nature.isLowKey).toBe(true);
+            expect(result3.nature.name).toBe('Lonely');
+
+            // Low Key: keep valid Low Key nature
+            const result4 = PokemonIv.normalize({
+                pokemonName: 'Toxtricity (Low Key)',
+                nature: new Nature('Lonely'),
+            });
+            expect(result4.nature.name).toBe('Lonely');
+        });
+
+        test('handles pokemon with forms correctly', () => {
+            const result = PokemonIv.normalize({
+                pokemonName: 'Pikachu (Halloween)',
+                level: 75,
+            });
+
+            expect(result.pokemonName).toBe('Pikachu (Halloween)');
+            expect(result.level).toBe(75);
+        });
+
+        test('preserves skillRatio and ingRatio when provided', () => {
+            const result = PokemonIv.normalize({
+                pokemonName: 'Bulbasaur',
+                skillRatio: 0.5,
+                ingRatio: 0.3,
+            });
+
+            expect(result.skillRatio).toBe(0.5);
+            expect(result.ingRatio).toBe(0.3);
+        });
+    });
+
     function compareIv(iv1: PokemonIv, iv2: PokemonIv) {
         expect(iv2.pokemon.name).toBe(iv1.pokemon.name);
         expect(iv2.idForm).toBe(iv1.idForm);
