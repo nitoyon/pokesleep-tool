@@ -88,12 +88,31 @@ describe('PokemonIV', () => {
             expect(iv.isEqual(iv2)).toBe(true);
         });
 
+        test('clone() verifies immutability - original unchanged', () => {
+            const iv = new PokemonIv('Pikachu');
+            iv.level = 30;
+            iv.skillLevel = 3;
+            iv.ribbon = 2;
+
+            const cloned = iv.clone({ level: 50, ribbon: 4 });
+
+            // Original should be unchanged
+            expect(iv.level).toBe(30);
+            expect(iv.skillLevel).toBe(3);
+            expect(iv.ribbon).toBe(2);
+
+            // Cloned should have new values
+            expect(cloned.level).toBe(50);
+            expect(cloned.skillLevel).toBe(3);
+            expect(cloned.ribbon).toBe(4);
+        });
+
         test('evolved pokemon (normal)', () => {
             const iv = new PokemonIv('Bulbasaur');
             expect(iv.skillLevel).toBe(1);
             iv.skillLevel = 2;
 
-            const iv2 = iv.clone('Venusaur');
+            const iv2 = iv.clone({pokemonName: 'Venusaur'});
             expect(iv2.skillLevel).toBe(4);
         });
 
@@ -102,7 +121,7 @@ describe('PokemonIV', () => {
             expect(iv.skillLevel).toBe(1);
             iv.skillLevel = 5;
 
-            const iv2 = iv.clone('Venusaur');
+            const iv2 = iv.clone({pokemonName: 'Venusaur'});
             expect(iv2.skillLevel).toBe(7);
         });
 
@@ -110,7 +129,7 @@ describe('PokemonIV', () => {
             const iv = new PokemonIv('Venusaur');
             iv.skillLevel = 2;
 
-            const iv2 = iv.clone('Bulbasaur');
+            const iv2 = iv.clone({pokemonName: 'Bulbasaur'});
             expect(iv2.skillLevel).toBe(1);
         });
 
@@ -118,7 +137,7 @@ describe('PokemonIV', () => {
             const iv = new PokemonIv('Toxel');
             iv.nature = new Nature("Relaxed")
 
-            const iv2 = iv.clone('Toxtricity (Amped)');
+            const iv2 = iv.clone({pokemonName: 'Toxtricity (Amped)'});
             expect(iv2.nature.name).toBe("Impish");
         });
 
@@ -126,7 +145,7 @@ describe('PokemonIV', () => {
             const iv = new PokemonIv('Toxel');
             iv.nature = new Nature("Impish")
 
-            const iv2 = iv.clone('Toxtricity (Low Key)');
+            const iv2 = iv.clone({pokemonName: 'Toxtricity (Low Key)'});
             expect(iv2.nature.name).toBe("Bold");
         });
     });

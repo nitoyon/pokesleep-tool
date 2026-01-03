@@ -50,7 +50,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
     const { t } = useTranslation();
 
     const onPokemonNameChange = React.useCallback((name: string) => {
-        onChange(pokemonIv.clone(name));
+        onChange(pokemonIv.clone({pokemonName: name}));
     }, [pokemonIv, onChange]);
     const onLevelChange = React.useCallback((level: number) => {
         const iv = pokemonIv.changeLevel(level);
