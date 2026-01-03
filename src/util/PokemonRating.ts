@@ -24,14 +24,11 @@ interface RatingStrengthResult {
  * Rating calculator.
  */
 class PokemonRating {
-    /** Name of the pokemon (English). */
-    private pokemonName: string;
     private pokemon: PokemonData;
     private iv: PokemonIv;
     private rp: PokemonRp;
 
     constructor(pokemonIv: PokemonIv) {
-        this.pokemonName = pokemonIv.pokemonName;
         this.pokemon = pokemonIv.pokemon;
         this.iv = pokemonIv;
         this.rp = new PokemonRp(pokemonIv);
@@ -46,34 +43,37 @@ class PokemonRating {
             };
         }
 
-        const berryMaxRp = new PokemonRp(this.iv);
-        berryMaxRp.subSkills = new SubSkillList({
-            lv10: new SubSkill("Berry Finding S"),
-            lv25: new SubSkill("Helping Bonus"),
-            lv50: new SubSkill("Helping Speed M"),
-            lv75: new SubSkill("Helping Speed S"),
-        });
-        berryMaxRp.nature = new Nature("Adamant");
+        const berryMaxRp = new PokemonRp(this.iv.clone({
+            subSkills: new SubSkillList({
+                lv10: new SubSkill("Berry Finding S"),
+                lv25: new SubSkill("Helping Bonus"),
+                lv50: new SubSkill("Helping Speed M"),
+                lv75: new SubSkill("Helping Speed S"),
+            }),
+            nature: new Nature("Adamant"),
+        }));
 
-        const ingMaxRp = new PokemonRp(this.iv);
-        ingMaxRp.subSkills = new SubSkillList({
-            lv10: new SubSkill("Ingredient Finder M"),
-            lv25: new SubSkill("Ingredient Finder S"),
-            lv50: new SubSkill("Helping Speed M"),
-            lv75: new SubSkill("Helping Speed S"),
-            lv100: new SubSkill("Helping Bonus"),
-        });
-        ingMaxRp.nature = new Nature("Quiet");
+        const ingMaxRp = new PokemonRp(this.iv.clone({
+            subSkills: new SubSkillList({
+                lv10: new SubSkill("Ingredient Finder M"),
+                lv25: new SubSkill("Ingredient Finder S"),
+                lv50: new SubSkill("Helping Speed M"),
+                lv75: new SubSkill("Helping Speed S"),
+                lv100: new SubSkill("Helping Bonus"),
+            }),
+            nature: new Nature("Quiet"),
+        }));
 
-        const skillMaxRp = new PokemonRp(this.iv);
-        skillMaxRp.subSkills = new SubSkillList({
-            lv10: new SubSkill("Skill Trigger M"),
-            lv25: new SubSkill("Skill Trigger S"),
-            lv50: new SubSkill("Helping Speed M"),
-            lv75: new SubSkill("Helping Speed S"),
-            lv100: new SubSkill("Helping Bonus"),
-        });
-        skillMaxRp.nature = new Nature("Sassy");
+        const skillMaxRp = new PokemonRp(this.iv.clone({
+            subSkills: new SubSkillList({
+                lv10: new SubSkill("Skill Trigger M"),
+                lv25: new SubSkill("Skill Trigger S"),
+                lv50: new SubSkill("Helping Speed M"),
+                lv75: new SubSkill("Helping Speed S"),
+                lv100: new SubSkill("Helping Bonus"),
+            }),
+            nature: new Nature("Sassy"),
+        }));
 
         const berryCalc = (rp: PokemonRp) => {
             let ret = (3600 / rp.frequencyWithHelpingBonus(0)) *
