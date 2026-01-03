@@ -272,14 +272,6 @@ class PokemonIv {
     }
 
     /**
-     * Normalize current state (for backward compatibility).
-     */
-    normalize() {
-        const normalized = PokemonIv.normalize(this.toProps());
-        Object.assign(this, normalized);
-    }
-
-    /**
      * Check whether given IV is equal to this IV.
      * @param iv IV to be compared.
      * @returns Whether two IV is equal or not.
