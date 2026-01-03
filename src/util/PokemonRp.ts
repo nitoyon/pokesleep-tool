@@ -83,6 +83,9 @@ export interface RpStrengthResult {
  * RP calculator.
  *
  * (ref) https://pks.raenonx.cc/en/docs/view/help/rp-model
+ *
+ * This class is immutable. Once created, instances cannot be modified.
+ * This immutability depends on PokemonIv also being immutable.
  */
 class PokemonRp {
     readonly iv: PokemonIv;
