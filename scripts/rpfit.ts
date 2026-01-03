@@ -31,8 +31,10 @@ function fit(data: RpData[]) {
 
     for (const datum of data) {
         candidates = candidates.filter(x => {
-            const iv = datum.iv.changeRatio(x.skill, x.ing);
-            const rp = new PokemonRp(iv);
+            const rp = new PokemonRp(datum.iv.clone({
+                skillRatio: x.skill,
+                ingRatio: x.ing,
+            }));
             return rp.Rp === datum.rp;
         });
     }

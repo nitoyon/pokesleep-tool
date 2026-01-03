@@ -37,8 +37,10 @@ function fit(data: RpData[], skillValue: number) {
 
     for (const datum of data) {
         skills = skills.filter(x => {
-            const iv = datum.iv.changeRatio(x, datum.iv.pokemon.ingRatio);
-            const rp = new PokemonRp(iv);
+            const rp = new PokemonRp(datum.iv.clone({
+                skillRatio: x,
+                ingRatio: datum.iv.pokemon.ingRatio,
+            }));
             Object.defineProperty(rp, "skillValue", {
                 get() {
                     return skillValue;
