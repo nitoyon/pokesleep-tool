@@ -18,32 +18,22 @@ export interface SubSkillListProps {
  */
 class SubSkillList {
     /**
-     * List of sub skills (length is 5).
-     * - value[0]: Level 10
-     * - value[1]: Level 25
-     * - value[2]: Level 50
-     * - value[3]: Level 75
-     * - value[4]: Level 100
+     * List of sub skills.
      */
-    private readonly value: readonly (SubSkill|null)[];
+    private readonly value: SubSkillListProps;
 
     /**
      * Initialize a new sub skill list.
      * @param props Create an empty list if undefined, or initialize with the given props.
      */
     constructor(props?: Partial<SubSkillListProps>) {
-        if (props === undefined) {
-            this.value = [null, null, null, null, null];
-        }
-        else {
-            this.value = [
-                props.lv10 ?? null,
-                props.lv25 ?? null,
-                props.lv50 ?? null,
-                props.lv75 ?? null,
-                props.lv100 ?? null,
-            ];
-        }
+        this.value = {
+            lv10: props?.lv10 ?? null,
+            lv25: props?.lv25 ?? null,
+            lv50: props?.lv50 ?? null,
+            lv75: props?.lv75 ?? null,
+            lv100: props?.lv100 ?? null,
+        };
     }
 
     /**
@@ -58,38 +48,31 @@ class SubSkillList {
         }
 
         // Start with current values (mutable copy for processing)
-        const newValue = [...this.value] as (SubSkill|null)[];
+        const newValue = { ...this.value };
 
         // Helper to apply a single skill update with swap logic
-        const applyUpdate = (index: number, subSkill: SubSkill|null) => {
+        const applyUpdate = (level: keyof SubSkillListProps, subSkill: SubSkill|null) => {
             if (subSkill !== null) {
                 // Find if this skill already exists at another level
-                const existingIndex = newValue.findIndex(
-                    (s, i) => i !== index && s?.name === subSkill.name
-                );
+                const existingLevel = (Object.keys(newValue) as (keyof SubSkillListProps)[])
+                    .find(key => key !== level && newValue[key]?.name === subSkill.name);
 
                 // If found, swap the skills
-                if (existingIndex >= 0) {
-                    newValue[existingIndex] = newValue[index];
+                if (existingLevel) {
+                    newValue[existingLevel] = newValue[level];
                 }
             }
-            newValue[index] = subSkill;
+            newValue[level] = subSkill;
         };
 
         // Apply updates in level order
-        if (updates.lv10 !== undefined) { applyUpdate(0, updates.lv10); }
-        if (updates.lv25 !== undefined) { applyUpdate(1, updates.lv25); }
-        if (updates.lv50 !== undefined) { applyUpdate(2, updates.lv50); }
-        if (updates.lv75 !== undefined) { applyUpdate(3, updates.lv75); }
-        if (updates.lv100 !== undefined) { applyUpdate(4, updates.lv100); }
+        if (updates.lv10 !== undefined) applyUpdate('lv10', updates.lv10);
+        if (updates.lv25 !== undefined) applyUpdate('lv25', updates.lv25);
+        if (updates.lv50 !== undefined) applyUpdate('lv50', updates.lv50);
+        if (updates.lv75 !== undefined) applyUpdate('lv75', updates.lv75);
+        if (updates.lv100 !== undefined) applyUpdate('lv100', updates.lv100);
 
-        return new SubSkillList({
-            lv10: newValue[0],
-            lv25: newValue[1],
-            lv50: newValue[2],
-            lv75: newValue[3],
-            lv100: newValue[4],
-        });
+        return new SubSkillList(newValue);
     }
 
     /**
@@ -110,13 +93,7 @@ class SubSkillList {
      * @returns Current state as properties.
      */
     toProps(): SubSkillListProps {
-        return {
-            lv10: this.value[0],
-            lv25: this.value[1],
-            lv50: this.value[2],
-            lv75: this.value[3],
-            lv100: this.value[4],
-        };
+        return { ...this.value };
     }
 
     /**
@@ -127,19 +104,19 @@ class SubSkillList {
     getActiveSubSkills(level: number): SubSkill[] {
         const ret: SubSkill[] = [];
         if (level < 10) { return ret; }
-        if (this.value[0] !== null) { ret.push(this.value[0]); }
+        if (this.value.lv10 !== null) { ret.push(this.value.lv10); }
 
         if (level < 25) { return ret; }
-        if (this.value[1] !== null) { ret.push(this.value[1]); }
+        if (this.value.lv25 !== null) { ret.push(this.value.lv25); }
 
         if (level < 50) { return ret; }
-        if (this.value[2] !== null) { ret.push(this.value[2]); }
+        if (this.value.lv50 !== null) { ret.push(this.value.lv50); }
 
         if (level < 75) { return ret; }
-        if (this.value[3] !== null) { ret.push(this.value[3]); }
+        if (this.value.lv75 !== null) { ret.push(this.value.lv75); }
 
         if (level < 100) { return ret; }
-        if (this.value[4] !== null) { ret.push(this.value[4]); }
+        if (this.value.lv100 !== null) { ret.push(this.value.lv100); }
 
         return ret;
     }
@@ -151,11 +128,11 @@ class SubSkillList {
      */
     getSubSkillIndex(subSkill: SubSkill|null) {
         if (subSkill === null) { return -1; }
-        if (this.value[0]?.name === subSkill.name) { return 0; }
-        if (this.value[1]?.name === subSkill.name) { return 1; }
-        if (this.value[2]?.name === subSkill.name) { return 2; }
-        if (this.value[3]?.name === subSkill.name) { return 3; }
-        if (this.value[4]?.name === subSkill.name) { return 4; }
+        if (this.value.lv10?.name === subSkill.name) { return 0; }
+        if (this.value.lv25?.name === subSkill.name) { return 1; }
+        if (this.value.lv50?.name === subSkill.name) { return 2; }
+        if (this.value.lv75?.name === subSkill.name) { return 3; }
+        if (this.value.lv100?.name === subSkill.name) { return 4; }
         return -1;
     }
 
@@ -193,15 +170,15 @@ class SubSkillList {
     }
     
     /** Get the sub skill for level 10. */
-    get lv10(): SubSkill|null { return this.value[0]; }
+    get lv10(): SubSkill|null { return this.value.lv10; }
     /** Get the sub skill for level 25. */
-    get lv25(): SubSkill|null { return this.value[1]; }
+    get lv25(): SubSkill|null { return this.value.lv25; }
     /** Get the sub skill for level 50. */
-    get lv50(): SubSkill|null { return this.value[2]; }
+    get lv50(): SubSkill|null { return this.value.lv50; }
     /** Get the sub skill for level 75. */
-    get lv75(): SubSkill|null { return this.value[3]; }
+    get lv75(): SubSkill|null { return this.value.lv75; }
     /** Get the sub skill for level 100. */
-    get lv100(): SubSkill|null { return this.value[4]; }
+    get lv100(): SubSkill|null { return this.value.lv100; }
 }
 
 export default SubSkillList;
