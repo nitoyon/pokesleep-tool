@@ -123,4 +123,53 @@ describe('PokemonRP', () => {
             expect(rp.Rp).toBe(1865);
         });
     });
+
+    describe('memoization', () => {
+        test('frequency is cached', () => {
+            const iv = new PokemonIv({pokemonName: 'Wigglytuff', level: 31});
+            const rp = new PokemonRp(iv);
+            const freq1 = rp.frequency;
+            const freq2 = rp.frequency;
+            expect(freq1).toBe(freq2);
+            expect(freq1).toBe(45 * 60 + 26);
+        });
+
+        test('calculate is not cached and returns same value', () => {
+            const iv = new PokemonIv({pokemonName: 'Magnezone', level: 35});
+            const rp = new PokemonRp(iv);
+            const result1 = rp.calculate();
+            const result2 = rp.calculate();
+            expect(result1).not.toBe(result2); // not same object reference
+            expect(result1).toEqual(result2);
+        });
+
+        test('skillValue is cached', () => {
+            const iv = new PokemonIv({pokemonName: 'Magnezone', level: 35, skillLevel: 5});
+            const rp = new PokemonRp(iv);
+            const val1 = rp.skillValue;
+            const val2 = rp.skillValue;
+            expect(val1).toBe(val2);
+        });
+
+        test('ingredientRatio is cached', () => {
+            const iv = new PokemonIv({pokemonName: 'Magnezone', level: 35});
+            const rp = new PokemonRp(iv);
+            const ratio1 = rp.ingredientRatio;
+            const ratio2 = rp.ingredientRatio;
+            expect(ratio1).toBe(ratio2);
+        });
+
+        test('each instance has its own cache', () => {
+            const iv = new PokemonIv({pokemonName: 'Wigglytuff', level: 31});
+            const rp1 = new PokemonRp(iv);
+            const rp2 = new PokemonRp(iv.clone({level: 30}));
+
+            // Each instance should compute independently
+            const freq1 = rp1.frequency;
+            const freq2 = rp2.frequency;
+
+            // Values should be not equal
+            expect(freq1).not.toBe(freq2);
+        });
+    });
 });
