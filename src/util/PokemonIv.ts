@@ -201,6 +201,76 @@ class PokemonIv {
     }
 
     /**
+     * Validates and normalizes Pokemon IV parameters.
+     * @param params Partial parameters to normalize.
+     * @returns Complete, validated PokemonIvProps.
+     */
+    static normalize(params: Partial<PokemonIvProps>): PokemonIvProps {
+        // 1. pokemonName is required
+        if (!params.pokemonName) {
+            throw new Error("pokemonName is required");
+        }
+
+        // 2. Look up pokemon data
+        const pokemon = pokemons.find(x => x.name === params.pokemonName);
+        if (!pokemon) {
+            throw new Error(`Unknown name: ${params.pokemonName}`);
+        }
+
+        // 3. Apply defaults
+        const ret: PokemonIvProps = {
+            pokemonName: params.pokemonName,
+            level: params.level ?? 30,
+            skillLevel: params.skillLevel ?? Math.max(pokemon.evolutionCount + 1, 1),
+            ingredient: params.ingredient ?? (pokemon.ing3 !== undefined ? "ABC" : "ABB"),
+            subSkills: params.subSkills ?? new SubSkillList(),
+            nature: params.nature ?? new Nature(
+                params.pokemonName === "Toxtricity (Amped)" ? "Hardy" : "Serious"
+            ),
+            ribbon: params.ribbon ?? 0,
+            mythIng1: params.mythIng1 ?? "unknown",
+            mythIng2: params.mythIng2 ?? "unknown",
+            mythIng3: params.mythIng3 ?? "unknown",
+            skillRatio: params.skillRatio ?? pokemon.skillRatio,
+            ingRatio: params.ingRatio ?? pokemon.ingRatio,
+        };
+
+        // 4. Validate and normalize values
+        // Clamp skillLevel to valid range
+        const maxSkillLevel = getMaxSkillLevel(pokemon.skill);
+        ret.skillLevel = clamp(1, ret.skillLevel, maxSkillLevel);
+
+        // Fix ingredient if ing3 doesn't exist
+        if (ret.ingredient.endsWith('C') && pokemon.ing3 === undefined) {
+            ret.ingredient = ret.ingredient.replace('C', 'A') as IngredientType;
+        }
+
+        // Handle mythical pokemon ingredient defaults
+        const isMythical = pokemon.mythIng !== undefined;
+        if (isMythical && ret.mythIng1 === "unknown") {
+            ret.mythIng1 = "sausage";
+        }
+
+        // Apply Toxtricity nature rules based on form
+        if (pokemon.id === toxtricityId) {
+            if (pokemon.form === "Amped" && ret.nature.isLowKey) {
+                ret.nature = Nature.allNatures
+                    .filter(x => x.isAmped)
+                    .filter(x => x.upEffect === ret.nature.upEffect)[0] ??
+                    new Nature("Hardy");
+            }
+            else if (pokemon.form === "Low Key" && ret.nature.isAmped) {
+                ret.nature = Nature.allNatures
+                    .filter(x => x.isLowKey)
+                    .filter(x => x.upEffect === ret.nature.upEffect)[0] ??
+                    new Nature("Serious");
+            }
+        }
+
+        return ret;
+    }
+
+    /**
      * Normalize current state.
      */
     normalize() {
