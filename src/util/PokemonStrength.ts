@@ -345,7 +345,7 @@ class PokemonStrength {
             showingPokemon = decendants[0];
         }
         if (showingPokemon.id !== pokemonIv.pokemon.id) {
-            pokemonIv = pokemonIv.clone(showingPokemon.name);
+            pokemonIv = pokemonIv.clone({pokemonName: showingPokemon.name});
         }
         return pokemonIv;
     }
@@ -353,7 +353,7 @@ class PokemonStrength {
     calculate(): StrengthResult {
         const param = this.param;
         const rp = new PokemonRp(this.iv);
-        const level = rp.level;
+        const level = this.iv.level;
         const countRatio = Math.ceil(param.period / 24);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
@@ -1083,8 +1083,10 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
     ];
     const ret = { total: 0, members: [] as { total: number, perBerry: number, count: number}[] };
     for (let i = 0; i < 5; i++) {
-        const ivMember = new PokemonIv(pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur");
-        ivMember.level = levels[i];
+        const ivMember = new PokemonIv({
+            pokemonName: pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur",
+            level: levels[i],
+        });
         const berryRawStrength = new PokemonRp(ivMember).berryStrength;
         const perBerry = Math.ceil(
             Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100)) *

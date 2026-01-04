@@ -8,11 +8,11 @@ import SubSkillList from './SubSkillList';
 import { clamp } from './NumberUtil';
 
 /**
- * Represents Indivisual Values (IV) of the Pokemon.
+ * Interface containing all configurable properties of
+ * a PokemonIv instance.
  */
-class PokemonIv {
+export interface PokemonIvProps {
     pokemonName: string;
-    pokemon: PokemonData;
     level: number;
     skillLevel: number;
     ingredient: IngredientType;
@@ -22,29 +22,62 @@ class PokemonIv {
     mythIng1: IngredientName;
     mythIng2: IngredientName;
     mythIng3: IngredientName;
+    /** Use when overwrite skill ratio */
+    skillRatio: number;
+    /** Use when overwrite ingredient ratio */
+    ingRatio: number;
+}
+
+/**
+ * Represents Individual Values (IV) of a Pokémon.
+ *
+ * This class is immutable. Once created, instances cannot be modified.
+ * This immutability depends on Nature and SubSkillList also being immutable.
+ */
+class PokemonIv {
+    readonly pokemonName: string;
+    readonly pokemon: PokemonData;
+    readonly level: number;
+    readonly skillLevel: number;
+    readonly ingredient: IngredientType;
+    readonly subSkills: SubSkillList;
+    readonly nature: Nature;
+    readonly ribbon: 0|1|2|3|4;
+    readonly mythIng1: IngredientName;
+    readonly mythIng2: IngredientName;
+    readonly mythIng3: IngredientName;
 
     /** Initialize new instance. */
-    constructor(pokemonName: string) {
-        this.pokemonName = pokemonName;
-        const pokemon = pokemons.find(x => x.name === pokemonName);
+    constructor(input: Partial<PokemonIvProps>) {
+        const params = PokemonIv.normalize(input);
+
+        // Apply normalized parameters to instance
+        this.pokemonName = params.pokemonName;
+        this.level = params.level;
+        this.skillLevel = params.skillLevel;
+        this.ingredient = params.ingredient;
+        this.subSkills = params.subSkills;
+        this.nature = params.nature;
+        this.ribbon = params.ribbon;
+        this.mythIng1 = params.mythIng1;
+        this.mythIng2 = params.mythIng2;
+        this.mythIng3 = params.mythIng3;
+
+        // Look up pokemon data (not in params)
+        const pokemon = pokemons.find(x => x.name === params.pokemonName);
         if (pokemon === undefined) {
-            throw new Error(`Unknown name: ${pokemonName}`);
+            throw new Error(`Unknown name: ${params.pokemonName}`);
         }
+
         this.pokemon = pokemon;
-
-        // set default value
-        this.level = 30;
-        this.skillLevel = Math.max(pokemon.evolutionCount + 1, 1);
-        this.ingredient = pokemon.ing3 !== undefined ? "ABC" : "ABB";
-        this.subSkills = new SubSkillList();
-        this.nature = new Nature(pokemonName === "Toxtricity (Amped)" ?
-            "Hardy" : "Serious");
-        this.ribbon = 0;
-        this.mythIng1 = this.mythIng2 = this.mythIng3 = "unknown";
-
-        // Darkrai
-        if (this.isMythical) {
-            this.mythIng1 = "sausage";
+        if (pokemon.skillRatio !== params.skillRatio ||
+            pokemon.ingRatio !== params.ingRatio
+        ) {
+            this.pokemon = {
+                ...pokemon,
+                skillRatio: params.skillRatio,
+                ingRatio: params.ingRatio,
+            };
         }
     }
 
@@ -60,29 +93,27 @@ class PokemonIv {
 
     /**
      * Creates a deep copy of this instance.
-     * @param pokemonName Pokemon's name.
+     * @param input New properties.
      * @returns A cloned instance.
      */
-    clone(pokemonName?: string): PokemonIv {
-        const ret = new PokemonIv(pokemonName ?? this.pokemonName);
-        ret.level = this.level;
+    clone(input?: Partial<PokemonIvProps>): PokemonIv {
+        const params = this.toProps();
+        if (input) {
+            Object.assign(params, input);
 
-        ret.skillLevel = this.skillLevel;
-        if (this.pokemon.id !== ret.pokemon.id) {
-            const diff = Math.max(0, ret.pokemon.evolutionCount) -
-                Math.max(0, this.pokemon.evolutionCount);
-            ret.skillLevel += diff;
+            // Increase or decrease skill level
+            if (params.pokemonName !== this.pokemonName) {
+                const pokemon = pokemons.find(x => x.name === params.pokemonName);
+                if (pokemon === undefined) {
+                    throw new Error(`Unknown name: ${params.pokemonName}`);
+                }
+
+                const diff = pokemon.evolutionCount - this.pokemon.evolutionCount;
+                params.skillLevel += diff;
+            }
         }
 
-        ret.ingredient = this.ingredient;
-        ret.subSkills = this.subSkills.clone();
-        ret.nature = this.nature;
-        ret.ribbon = this.ribbon;
-        ret.mythIng1 = this.mythIng1;
-        ret.mythIng2 = this.mythIng2;
-        ret.mythIng3 = this.mythIng3;
-        ret.normalize();
-        return ret;
+        return new PokemonIv(params);
     }
 
     /**
@@ -91,16 +122,15 @@ class PokemonIv {
      * @return A new PokemonIv instance with the specified level.
      */
     changeLevel(level: number): PokemonIv {
-        const ret = this.clone();
-        ret.level = level;
+        const tmp = this.clone({level});
 
         const beforeSkillLevelUp = this.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        const afterSkillLevelUp = ret.activeSubSkills
+        const afterSkillLevelUp = tmp.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
-        ret.normalize();
-        return ret;
+        const skillLevel = this.skillLevel +
+            afterSkillLevelUp - beforeSkillLevelUp;
+        return tmp.clone({skillLevel});
     }
 
     /**
@@ -109,16 +139,15 @@ class PokemonIv {
      * @return A new PokemonIv instance with the specified sub-skills.
      */
     changeSubSkills(subSkills: SubSkillList): PokemonIv {
-        const ret = this.clone();
-        ret.subSkills = subSkills;
+        const tmp = this.clone({subSkills});
 
         const beforeSkillLevelUp = this.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        const afterSkillLevelUp = ret.activeSubSkills
+        const afterSkillLevelUp = tmp.activeSubSkills
             .reduce((p, c) => p + c.skillLevelUp, 0);
-        ret.skillLevel += afterSkillLevelUp - beforeSkillLevelUp;
-        ret.normalize();
-        return ret;
+        const skillLevel = this.skillLevel +
+            afterSkillLevelUp - beforeSkillLevelUp;
+        return tmp.clone({skillLevel});
     }
 
     /**
@@ -162,38 +191,73 @@ class PokemonIv {
     }
 
     /**
-     * Normalize current state.
+     * Validates and normalizes Pokemon IV parameters.
+     * @param params Partial parameters to normalize.
+     * @returns Complete, validated PokemonIvProps.
      */
-    normalize() {
-        const maxSkillLevel = getMaxSkillLevel(this.pokemon.skill);
-        this.skillLevel = clamp(1, this.skillLevel, maxSkillLevel);
-
-        if (this.ingredient.endsWith('C') && this.pokemon.ing3 === undefined) {
-            this.ingredient = this.ingredient.replace('C', 'A') as IngredientType;
+    static normalize(params: Partial<PokemonIvProps>): PokemonIvProps {
+        // 1. pokemonName is required
+        if (!params.pokemonName) {
+            throw new Error("pokemonName is required");
         }
 
-        if (this.isMythical && this.mythIng1 === "unknown") {
-            this.mythIng1 = "sausage";
+        // 2. Look up pokemon data
+        const pokemon = pokemons.find(x => x.name === params.pokemonName);
+        if (!pokemon) {
+            throw new Error(`Unknown name: ${params.pokemonName}`);
         }
 
-        if (this.pokemon.id === toxtricityId) {
-            if (this.pokemon.form === "Amped" &&
-                this.nature.isLowKey
-            ) {
-                this.nature = Nature.allNatures
+        // 3. Apply defaults
+        const ret: PokemonIvProps = {
+            pokemonName: params.pokemonName,
+            level: params.level ?? 30,
+            skillLevel: params.skillLevel ?? Math.max(pokemon.evolutionCount + 1, 1),
+            ingredient: params.ingredient ?? (pokemon.ing3 !== undefined ? "ABC" : "ABB"),
+            subSkills: params.subSkills ?? new SubSkillList(),
+            nature: params.nature ?? new Nature(
+                params.pokemonName === "Toxtricity (Amped)" ? "Hardy" : "Serious"
+            ),
+            ribbon: params.ribbon ?? 0,
+            mythIng1: params.mythIng1 ?? "unknown",
+            mythIng2: params.mythIng2 ?? "unknown",
+            mythIng3: params.mythIng3 ?? "unknown",
+            skillRatio: params.skillRatio ?? pokemon.skillRatio,
+            ingRatio: params.ingRatio ?? pokemon.ingRatio,
+        };
+
+        // 4. Validate and normalize values
+        // Clamp skillLevel to valid range
+        const maxSkillLevel = getMaxSkillLevel(pokemon.skill);
+        ret.skillLevel = clamp(1, ret.skillLevel, maxSkillLevel);
+
+        // Fix ingredient if ing3 doesn't exist
+        if (ret.ingredient.endsWith('C') && pokemon.ing3 === undefined) {
+            ret.ingredient = ret.ingredient.replace('C', 'A') as IngredientType;
+        }
+
+        // Handle mythical pokemon ingredient defaults
+        const isMythical = pokemon.mythIng !== undefined;
+        if (isMythical && ret.mythIng1 === "unknown") {
+            ret.mythIng1 = "sausage";
+        }
+
+        // Apply Toxtricity nature rules based on form
+        if (pokemon.id === toxtricityId) {
+            if (pokemon.form === "Amped" && ret.nature.isLowKey) {
+                ret.nature = Nature.allNatures
                     .filter(x => x.isAmped)
-                    .filter(x => x.upEffect === this.nature.upEffect)[0] ??
+                    .filter(x => x.upEffect === ret.nature.upEffect)[0] ??
                     new Nature("Hardy");
             }
-            else if (this.pokemon.form === "Low Key" &&
-                this.nature.isAmped
-            ) {
-                this.nature = Nature.allNatures
+            else if (pokemon.form === "Low Key" && ret.nature.isAmped) {
+                ret.nature = Nature.allNatures
                     .filter(x => x.isLowKey)
-                    .filter(x => x.upEffect === this.nature.upEffect)[0] ??
+                    .filter(x => x.upEffect === ret.nature.upEffect)[0] ??
                     new Nature("Serious");
             }
         }
+
+        return ret;
     }
 
     /**
@@ -385,6 +449,27 @@ class PokemonIv {
     }
 
     /**
+     * Extract current props as PokemonIvProps object.
+     * @returns Current state as props.
+     */
+    toProps(): PokemonIvProps {
+        return {
+            pokemonName: this.pokemonName,
+            level: this.level,
+            skillLevel: this.skillLevel,
+            ingredient: this.ingredient,
+            subSkills: this.subSkills,
+            nature: this.nature,
+            ribbon: this.ribbon,
+            mythIng1: this.mythIng1,
+            mythIng2: this.mythIng2,
+            mythIng3: this.mythIng3,
+            skillRatio: this.pokemon.skillRatio,
+            ingRatio: this.pokemon.ingRatio,
+        };
+    }
+
+    /**
      * Serialize IV data to printable string.
      *
      * Format
@@ -506,7 +591,9 @@ class PokemonIv {
                 throw new Error(`Invalid form specified (${form})`);
             }
         }
-        const ret = new PokemonIv(pokemon.name);
+        const ret: Partial<PokemonIvProps> = {
+            pokemonName: pokemon.name
+        };
 
         // level
         ret.level = (array16[1] >> 6) & 0x7f;
@@ -543,11 +630,13 @@ class PokemonIv {
             }
             return allSubSkills[index];
         };
-        ret.subSkills.lv10 = getSubSkill((array16[2] >> 11) & 31, 10);
-        ret.subSkills.lv25 = getSubSkill((array16[3] >> 0) & 31, 25);
-        ret.subSkills.lv50 = getSubSkill((array16[3] >> 5) & 31, 50);
-        ret.subSkills.lv75 = getSubSkill((array16[3] >> 10) & 31, 75);
-        ret.subSkills.lv100 = getSubSkill((array16[4] >> 0) & 31, 100);
+        ret.subSkills = new SubSkillList({
+            lv10: getSubSkill((array16[2] >> 11) & 31, 10),
+            lv25: getSubSkill((array16[3] >> 0) & 31, 25),
+            lv50: getSubSkill((array16[3] >> 5) & 31, 50),
+            lv75: getSubSkill((array16[3] >> 10) & 31, 75),
+            lv100: getSubSkill((array16[4] >> 0) & 31, 100),
+        });
 
         // ribbon
         ret.ribbon = ((array16[4] >> 5) & 7) as 0|1|2|3|4;
@@ -556,17 +645,17 @@ class PokemonIv {
         }
 
         // mythical ingredients
-        if (ret.pokemon.mythIng !== undefined) {
-            const n = ret.pokemon.mythIng.length + 1; // 1 is unknown
+        if (pokemon.mythIng !== undefined) {
+            const n = pokemon.mythIng.length + 1; // 1 is unknown
             const ing1 = (array16[5] % n) - 1;
             const ing2 = (Math.floor(array16[5] / n) % n) - 1;
             const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
-            ret.mythIng1 = ing1 < 0 ? "sausage" : ret.pokemon.mythIng[ing1].name;
-            ret.mythIng2 = ing2 < 0 ? "unknown" : ret.pokemon.mythIng[ing2].name;
-            ret.mythIng3 = ing3 < 0 ? "unknown" : ret.pokemon.mythIng[ing3].name;
+            ret.mythIng1 = ing1 < 0 ? "sausage" : pokemon.mythIng[ing1].name;
+            ret.mythIng2 = ing2 < 0 ? "unknown" : pokemon.mythIng[ing2].name;
+            ret.mythIng3 = ing3 < 0 ? "unknown" : pokemon.mythIng[ing3].name;
         }
 
-        return ret;
+        return new PokemonIv(ret);
     }
 }
 

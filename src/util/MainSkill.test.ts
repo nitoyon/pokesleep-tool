@@ -76,8 +76,10 @@ describe('MainSkill', () => {
                 if (toxel === undefined) {
                     throw new Error('Toxel not found in pokemons data');
                 }
-                const iv = new PokemonIv('Toxel');
-                iv.nature = new Nature('Hardy'); // Amped nature
+                const iv = new PokemonIv({
+                    pokemonName: 'Toxel',
+                    nature: new Nature('Hardy'), // Amped nature
+                });
 
                 expect(matchMainSkillName(toxel, 'Ingredient Magnet S', true, iv)).toBe(true);
                 expect(matchMainSkillName(toxel, 'Cooking Power-Up S', true, iv)).toBe(false);
@@ -88,8 +90,10 @@ describe('MainSkill', () => {
                 if (toxel === undefined) {
                     throw new Error('Toxel not found in pokemons data');
                 }
-                const iv = new PokemonIv('Toxel');
-                iv.nature = new Nature('Bold'); // Low Key nature
+                const iv = new PokemonIv({
+                    pokemonName: 'Toxel',
+                    nature: new Nature('Bold'), // Low Key nature
+                });
 
                 expect(matchMainSkillName(toxel, 'Cooking Power-Up S', true, iv)).toBe(true);
                 expect(matchMainSkillName(toxel, 'Ingredient Magnet S', true, iv)).toBe(false);
@@ -100,8 +104,10 @@ describe('MainSkill', () => {
                 if (pikachu === undefined) {
                     throw new Error('Pikachu not found in pokemons data');
                 }
-                const iv = new PokemonIv('Pikachu');
-                iv.nature = new Nature('Hardy');
+                const iv = new PokemonIv({
+                    pokemonName: 'Pikachu',
+                    nature: new Nature('Hardy'),
+                });
 
                 // Should always match based on normal skill, regardless of evolved flag
                 expect(matchMainSkillName(pikachu, 'Charge Strength S', true, iv)).toBe(true);
