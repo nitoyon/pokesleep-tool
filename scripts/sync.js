@@ -242,25 +242,25 @@ function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
     const lines = rpCsv.toString().split(/\n/g);
     const prob = {};
     for (const line of lines.filter(x => x.match(/^[^,]+,\d+\.\d+%/))) {
-        let [pokemon, ingRatio, confidence, skillRatio] = line.split(',');
+        let [pokemon, ingRate, confidence, skillRate] = line.split(',');
         let unknown = false;
         if (confidence !== 'Very good') {
             unknown = true;
         }
         pokemon = pokemon.replace("Alolan Form", "Alola");
-        ingRatio = parseFloat(ingRatio.replace('%', ''));
-        skillRatio = parseFloat(skillRatio.replace('%', ''));
-        prob[pokemon] = {ingRatio, skillRatio, unknown};
+        ingRate = parseFloat(ingRate.replace('%', ''));
+        skillRate = parseFloat(skillRate.replace('%', ''));
+        prob[pokemon] = {ingRate, skillRate, unknown};
     }
     for (const pokemon of pokemonJson) {
         if (!(pokemon.name in prob)) {
             console.warn(`${pokemon.name} not in prob table`);
             continue;
         }
-        pokemon.ingRatio = prob[pokemon.name].ingRatio;
-        pokemon.skillRatio = prob[pokemon.name].skillRatio;
+        pokemon.ingRate = prob[pokemon.name].ingRate;
+        pokemon.skillRate = prob[pokemon.name].skillRate;
         if (prob[pokemon.name].unknown) {
-            pokemon.ratioNotFixed = true;
+            pokemon.rateNotFixed = true;
         }
     }
 }
@@ -405,7 +405,7 @@ function getPokemon(html, name, nameJa2en) {
 
     const ret = {
         id, name, sleepType, type, specialty, skill, fp, frequency,
-        ingRatio: 0, skillRatio: 0,
+        ingRate: 0, skillRate: 0,
         ancestor, evolutionCount, evolutionLeft, isFullyEvolved,
         carryLimit, ing1, ing2, ing3,
     };

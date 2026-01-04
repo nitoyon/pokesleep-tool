@@ -394,7 +394,7 @@
         "rp formula doc title": "RP Model Breakdown",
         "estimated beyond level": "레벨 {{level}} 이후의 값은 추정값입니다.",
         "estimated value": "추정치",
-        "ratio is not fixed": "이 포켓몬의 재료 확률과 스킬 확률은 아직 확정되지 않았기 때문에 임시 값을 표시하고 있습니다.",
+        "rate is not fixed": "이 포켓몬의 재료 확률과 스킬 확률은 아직 확정되지 않았기 때문에 임시 값을 표시하고 있습니다.",
 
         "box": "박스",
         "parameter": "매개변수",

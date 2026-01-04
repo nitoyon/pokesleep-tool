@@ -39,12 +39,12 @@ export interface PokemonData {
     readonly fp: number;
     /** Frequency of the help */
     readonly frequency: number;
-    /** Ratio for get ingredients */
-    readonly ingRatio: number;
-    /** Ratio for skill occurance. */
-    readonly skillRatio: number;
-    /** Whether ratio is not fixed or not */
-    readonly ratioNotFixed?: boolean;
+    /** Rate for get ingredients */
+    readonly ingRate: number;
+    /** Rate for skill occurance. */
+    readonly skillRate: number;
+    /** Whether rate is not fixed or not */
+    readonly rateNotFixed?: boolean;
     /** Ancestor pokemon id */
     readonly ancestor: number | null;
     /** Evolution count (-1, 0, 1, 2) */

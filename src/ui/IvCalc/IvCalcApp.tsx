@@ -87,7 +87,7 @@ const ResearchCalcApp = React.memo(() => {
             {state.tabIndex === 0 && <RpView state={state} width={width}/>}
             {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-            {state.pokemonIv.pokemon.ratioNotFixed && <div style={{
+            {state.pokemonIv.pokemon.rateNotFixed && <div style={{
                 border: '1px solid red',
                 background: '#ffeeee',
                 color: 'red',
@@ -95,7 +95,7 @@ const ResearchCalcApp = React.memo(() => {
                 borderRadius: '0.5rem',
                 marginTop: '3px',
                 padding: '0 0.3rem',
-            }}>{t('ratio is not fixed')}</div>}
+            }}>{t('rate is not fixed')}</div>}
             <LowerTabHeader state={state}
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>

@@ -216,8 +216,8 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Hasty'), // Energy recovery down
             level: 1,
-            skillRatio: 10,
-            ingRatio: 10,
+            skillRate: 10,
+            ingRate: 10,
         });
 
         // change pokemon parameter (type assertion for testing)
@@ -262,8 +262,8 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Hasty'), // Energy recovery down
             level: 1,
-            skillRatio: 10,
-            ingRatio: 10,
+            skillRate: 10,
+            ingRate: 10,
         });
         (iv2 as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
             ...iv2.pokemon,
@@ -285,8 +285,8 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Hasty'), // Energy recovery down
             level: 1,
-            skillRatio: 10,
-            ingRatio: 10,
+            skillRate: 10,
+            ingRate: 10,
         });
 
         // change pokemon parameter (type assertion for testing)
@@ -312,8 +312,8 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Serious'), // Neutral
             level: 1,
-            skillRatio: 10,
-            ingRatio: 10,
+            skillRate: 10,
+            ingRate: 10,
         });
 
         // change pokemon parameter (type assertion for testing)

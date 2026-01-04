@@ -31,7 +31,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     const hasBerryCountBonus = (result.bonus.berry > 0);
     const berryCountWithBonus = result.berryCount + result.bonus.berry;
     const helpCount = hasBerryCountBonus ? 
-        round1(result.notFullHelpCount * result.berryRatio) :
+        round1(result.notFullHelpCount * result.berryRate) :
         round1(result.berryHelpCount);
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
@@ -62,12 +62,12 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                 <span>{t('berry help count')}
                     <ul className="detail">
                         <li>
-                            <strong>{round1(result.notFullHelpCount * result.berryRatio)}</strong>{t('times unit')}: {t('berry picking count')}
+                            <strong>{round1(result.notFullHelpCount * result.berryRate)}</strong>{t('times unit')}: {t('berry picking count')}
                             <footer>
                                 {round1(result.notFullHelpCount)}
                                 <small> ({t('normal help count')})</small>
                                 <> × </>
-                                {round1(result.berryRatio * 100)}%
+                                {round1(result.berryRate * 100)}%
                                 <small> ({t('berry rate')})</small>
                             </footer>
                         </li>

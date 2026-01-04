@@ -9,15 +9,15 @@ interface RatingStrengthResult {
     berryScore: number;
     berryMax: number;
     berryCur: number;
-    berryRatio: number;
+    berryRate: number;
     ingScore: number;
     ingMax: number;
     ingCur: number;
-    ingRatio: number;
+    ingRate: number;
     skillScore: number;
     skillMax: number;
     skillCur: number;
-    skillRatio: number;
+    skillRate: number;
 }
 
 /**
@@ -37,9 +37,9 @@ class PokemonRating {
     calculate(): RatingStrengthResult {
         if (this.pokemon.frequency === 0) {
             return {
-                berryScore: 0, berryMax: 0, berryCur: 0, berryRatio: 0,
-                ingScore: 0, ingMax: 0, ingCur: 0, ingRatio: 0,
-                skillScore: 0, skillMax: 0, skillCur: 0, skillRatio: 0,
+                berryScore: 0, berryMax: 0, berryCur: 0, berryRate: 0,
+                ingScore: 0, ingMax: 0, ingCur: 0, ingRate: 0,
+                skillScore: 0, skillMax: 0, skillCur: 0, skillRate: 0,
             };
         }
 
@@ -77,7 +77,7 @@ class PokemonRating {
 
         const berryCalc = (rp: PokemonRp) => {
             let ret = (3600 / rp.frequencyWithHelpingBonus(0)) *
-                rp.berryRatio * rp.berryCount;
+                rp.berryRate * rp.berryCount;
             if (rp.hasHelpingBonusInActiveSubSkills) {
                 // Helping bonus add more energy (6 more berries * 5% bonus)
                 // 6 more = 2 berry * 2 pokemon + 1 berry * 2 pokemon
@@ -88,23 +88,23 @@ class PokemonRating {
         const berryMax = berryCalc(berryMaxRp);
         const berryCur = berryCalc(this.rp);
         const berryScore = berryCur / berryMax * 100;
-        const berryRatio = this.rp.berryRatio;
+        const berryRate = this.rp.berryRate;
 
-        const ingCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.ingredientRatio;
+        const ingCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.ingredientRate;
         const ingMax = ingCalc(ingMaxRp);
         const ingCur = ingCalc(this.rp);
         const ingScore = ingCur / ingMax * 100;
-        const ingRatio = this.rp.ingredientRatio;
+        const ingRate = this.rp.ingredientRate;
 
-        const skillCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.skillRatio;
+        const skillCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.skillRate;
         const skillMax = skillCalc(skillMaxRp);
         const skillCur = skillCalc(this.rp);
         const skillScore = skillCur / skillMax * 100;
-        const skillRatio = this.rp.skillRatio;
+        const skillRate = this.rp.skillRate;
         return {
-            berryScore, berryMax, berryCur, berryRatio,
-            ingScore, ingMax, ingCur, ingRatio,
-            skillScore, skillMax, skillCur, skillRatio,
+            berryScore, berryMax, berryCur, berryRate,
+            ingScore, ingMax, ingCur, ingRate,
+            skillScore, skillMax, skillCur, skillRate,
         };
     }
 }
