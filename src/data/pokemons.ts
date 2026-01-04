@@ -13,59 +13,59 @@ export type ExpType = 600|900|1080|1320;;
 
 export interface PokemonData {
     /** Pokemon ID */
-    id: number;
+    readonly id: number;
     /** Pokemon name in English */
-    name: string;
+    readonly name: string;
     /** Arrival date of the Pokémon */
-    arrival: string;
+    readonly arrival: string;
     /** Pokemon form */
-    form: undefined|'Halloween'|'Holiday'|'Alola'|'Paldea'|'Amped'|'Low Key';
+    readonly form: undefined|'Halloween'|'Holiday'|'Alola'|'Paldea'|'Amped'|'Low Key';
     /** Sleep type of the pokemon */
-    sleepType: SleepType;
+    readonly sleepType: SleepType;
     /** EXP type (600, 900, 1080, 1320) */
-    exp: ExpType;
+    readonly exp: ExpType;
     /** Type of the pokemon. */
-    type: PokemonType;
+    readonly type: PokemonType;
     /** Specialty of the pokemon. */
-    specialty: PokemonSpecialty;
+    readonly specialty: PokemonSpecialty;
     /** Skill of the pokemon */
-    skill: MainSkillName;
+    readonly skill: MainSkillName;
     /** Friend point */
-    fp: number;
+    readonly fp: number;
     /** Frequency of the help */
-    frequency: number;
+    readonly frequency: number;
     /** Ratio for get ingredients */
-    ingRatio: number;
+    readonly ingRatio: number;
     /** Ratio for skill occurance. */
-    skillRatio: number;
+    readonly skillRatio: number;
     /** Whether ratio is not fixed or not */
-    ratioNotFixed?: boolean;
+    readonly ratioNotFixed?: boolean;
     /** Ancestor pokemon id */
-    ancestor: number | null;
+    readonly ancestor: number | null;
     /** Evolution count (-1, 0, 1, 2) */
-    evolutionCount: -1|0|1|2;
+    readonly evolutionCount: -1|0|1|2;
     /** Number of remaining evolutions (0, 1, 2) */
-    evolutionLeft: 0|1|2;
+    readonly evolutionLeft: 0|1|2;
     /** true if Non-evolving pokemon or filal evolution pokemon */
-    isFullyEvolved: boolean;
+    readonly isFullyEvolved: boolean;
     /** Carry limit (excluding 5 * evolutionCount). */
-    carryLimit: number;
-    ing1: {
-        name: IngredientName,
-        c1: number,
-        c2: number,
-        c3: number,   
+    readonly carryLimit: number;
+    readonly ing1: {
+        readonly name: IngredientName,
+        readonly c1: number,
+        readonly c2: number,
+        readonly c3: number,   
     }
-    ing2: {
-        name: IngredientName,
-        c2: number;
-        c3: number;
+    readonly ing2: {
+        readonly name: IngredientName,
+        readonly c2: number;
+        readonly c3: number;
     },
-    ing3: {
-        name: IngredientName,
-        c3: number;
+    readonly ing3: {
+        readonly name: IngredientName,
+        readonly c3: number;
     } | undefined;
-    mythIng: MythIngredient[] | undefined;
+    readonly mythIng: readonly MythIngredient[] | undefined;
 }
 
 export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
@@ -99,13 +99,13 @@ export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
 /** Ingredient for mythical pokemon */
 export type MythIngredient = {
     /** Ingredient name */
-    name: IngredientName;
+    readonly name: IngredientName;
     /** First ingredient count */
-    c1: number;
+    readonly c1: number;
     /** Second ingredient count */
-    c2: number;
+    readonly c2: number;
     /** Third ingredient count */
-    c3: number;
+    readonly c3: number;
 }
 
 const pokemons = pokemon_ as PokemonData[];
