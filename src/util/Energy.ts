@@ -141,8 +141,8 @@ export type EnergyResult = {
     },
     /** Carry limit */
     carryLimit: number,
-    /** Skill ratio */
-    skillRatio: number,
+    /** Skill rate */
+    skillRate: number,
     /** Help count */
     helpCount: {
         /** Help count while awake */
@@ -195,7 +195,7 @@ class Energy {
                 canBeFullInventory: false, timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 carryLimit: Math.ceil(this._iv.carryLimit * (param.isGoodCampTicketSet ? 1.2 : 1)),
-                skillRatio: 0,
+                skillRate: 0,
                 helpCount: { awake: 0, asleepNotFull: 0, asleepFull: 0 },
                 averageEfficiency: { total: 0, awake: 0, asleep: 0 },
             };
@@ -252,14 +252,14 @@ class Energy {
             .filter(x => x.isInPeriod && !x.isAwake));
 
         // calculate Sneaky Snacking
-        const {carryLimit, skillRatio, timeToFullInventory,
+        const {carryLimit, skillRate, timeToFullInventory,
             helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param, bonus, isWhistle);
         const canBeFullInventory = (param.tapFrequency === "always" &&
             param.tapFrequencyAsleep === "none");
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
-            timeToFullInventory, carryLimit, skillRatio,
+            timeToFullInventory, carryLimit, skillRate,
             helpCount, skillProbabilityAfterWakeup,
             averageEfficiency: { total, awake, asleep },
         };
@@ -544,7 +544,7 @@ class Energy {
         param: EnergyParameter, bonus: BonusEffects, isWhistle: boolean):
     {
         carryLimit: number,
-        skillRatio: number,
+        skillRate: number,
         timeToFullInventory: number,
         skillProbabilityAfterWakeup: {
             once: number,
@@ -560,7 +560,7 @@ class Energy {
         if (this._iv.pokemon.frequency === 0) {
             return {
                 carryLimit: this._iv.pokemon.carryLimit,
-                skillRatio: 0,
+                skillRate: 0,
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
@@ -677,22 +677,22 @@ class Energy {
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
-        const skillRatio = rp.skillRatio * bonus.skillTrigger;
+        const skillRate = rp.skillRate * bonus.skillTrigger;
         if (lotteryCount > 0) {
-            const skillNone = Math.pow(1 - skillRatio, lotteryCount);
+            const skillNone = Math.pow(1 - skillRate, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills' &&
                 this._iv.pokemon.specialty !== 'All'
             ) {
                 skillProbabilityAfterWakeup.once = 1 - skillNone;
             }
             else {
-                const skillOnce = lotteryCount * skillRatio *
-                    Math.pow(1 - skillRatio, lotteryCount - 1);
+                const skillOnce = lotteryCount * skillRate *
+                    Math.pow(1 - skillRate, lotteryCount - 1);
                 skillProbabilityAfterWakeup.once = skillOnce;
                 skillProbabilityAfterWakeup.twice = 1 - skillNone - skillOnce;
             }
         }
-        return {carryLimit, skillRatio,
+        return {carryLimit, skillRate,
             timeToFullInventory, skillProbabilityAfterWakeup,
             helpCount: { total, awake, asleepNotFull, asleepFull }
         };

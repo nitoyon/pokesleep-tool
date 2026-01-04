@@ -92,9 +92,9 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
         }
     }
 
-    const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
+    const ingInRecipeStrengthRate = param.recipeBonus === 0 ? 1 :
         (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
-    const recipeRatio = ingInRecipeStrengthRatio * 0.8 + 0.2;
+    const recipeRate = ingInRecipeStrengthRate * 0.8 + 0.2;
     const dishBonus = getEventBonus(param.event, param.customEventBonus)?.dish ?? 1;
 
     return <StyledInfoDialog open={open} onClose={onClose}>
@@ -106,9 +106,9 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
         </DialogTitle>
         <DialogContent>
             <div className={`inggrid ings${ings.length}`}>
-                {getIngDetail(strength, result, recipeRatio, ingSlot, ings[0], t)}
-                {ings.length > 1 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[1], t)}
-                {ings.length > 2 && getIngDetail(strength, result, recipeRatio, ingSlot, ings[2], t)}
+                {getIngDetail(strength, result, recipeRate, ingSlot, ings[0], t)}
+                {ings.length > 1 && getIngDetail(strength, result, recipeRate, ingSlot, ings[1], t)}
+                {ings.length > 2 && getIngDetail(strength, result, recipeRate, ingSlot, ings[2], t)}
             </div>
             <article>
                 <div><span className="box box3">{round2(result.ingHelpCount)}</span></div>
@@ -117,14 +117,14 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                     {round1(result.notFullHelpCount)}
                     <small> ({t('normal help count')})</small>
                     <> × </>
-                    {round1(result.ingRatio * 100)}%
+                    {round1(result.ingRate * 100)}%
                     <small> ({t('ingredient rate')})</small>
                 </footer>
                 <div><span className="box box1">{round1(ings[0].reduce((p, c) => p + c.count, 0))}</span></div>
                 <span>{t('ing count')}</span>
                 <div><span className="box box2">{ingredientStrength[ings[0][0].name]}</span></div>
                 <span>{t('strength per ing')}</span>
-                <div><span className="box box5">{round2(recipeRatio)}</span></div>
+                <div><span className="box box5">{round2(recipeRate)}</span></div>
                 <span>{t('recipe multiplier')}<InfoButton onClick={onRecipeBonusInfoClick}/></span>
                 <footer>
                     <>(</>

@@ -60,20 +60,20 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
                 onClick={onRpInfoClick}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
-                berryProb={round1(rp.berryRatio * 100)}
+                berryProb={round1(rp.berryRate * 100)}
                 berrySubValue={<>
                     <LocalFireDepartmentIcon sx={{color: "#ff944b", width: '1rem', height: '1rem'}}/>
                     {formatWithComma(Math.round(strength.berryTotalStrength))}
                 </>}
                 onBerryInfoClick={onBerryInfoClick}
                 ingredientValue={round1(rpResult.ingredientRp)}
-                ingredientProb={round1(rp.ingredientRatio * 100)}
+                ingredientProb={round1(rp.ingredientRate * 100)}
                 ingredientSubValue={<>{strength.ingredients.map(x => <React.Fragment key={x.name}>
                     <IngredientIcon name={x.name}/>{round1(x.count)}
                 </React.Fragment>)}</>}
                 onIngredientInfoClick={onIngInfoClick}
                 skillValue={round1(rpResult.skillRp)}
-                skillProb={round1(rp.skillRatio * 100)}
+                skillProb={round1(rp.skillRate * 100)}
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
             <RpInfoDialog isError={isError} open={rpInfoOpen} onClose={onRpInfoClose}/>
@@ -249,7 +249,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     if (rpType === "berry") {
         color = '#24d76a';
         rpVal = round1(rpResult.berryRp);
-        param2 = round1(rp.berryRatio * 100) + '%';
+        param2 = round1(rp.berryRate * 100) + '%';
         desc2 = t('berry rate');
         param3 = rp.berryStrength.toString();
         desc3 = t('berry strength');
@@ -259,7 +259,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     else if (rpType === "ingredient") {
         color = '#fab855';
         rpVal = round1(rpResult.ingredientRp);
-        param2 = round1(rp.ingredientRatio * 100) + '%';
+        param2 = round1(rp.ingredientRate * 100) + '%';
         desc2 = t('ingredient rate');
         param3 = round1(rp.ingredientEnergy);
         desc3 = t('ingredient strength');
@@ -269,7 +269,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     else {
         color = '#44a2fd';
         rpVal = round1(rpResult.skillRp);
-        param2 = round1(rp.skillRatio * 100) + '%';
+        param2 = round1(rp.skillRate * 100) + '%';
         desc2 = t('skill rate');
         param3 = formatWithComma(rp.skillValue);
         desc3 = t('skill strength');

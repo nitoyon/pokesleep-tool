@@ -151,12 +151,12 @@ describe('PokemonRP', () => {
             expect(val1).toBe(val2);
         });
 
-        test('ingredientRatio is cached', () => {
+        test('ingredientRate is cached', () => {
             const iv = new PokemonIv({pokemonName: 'Magnezone', level: 35});
             const rp = new PokemonRp(iv);
-            const ratio1 = rp.ingredientRatio;
-            const ratio2 = rp.ingredientRatio;
-            expect(ratio1).toBe(ratio2);
+            const rate1 = rp.ingredientRate;
+            const rate2 = rp.ingredientRate;
+            expect(rate1).toBe(rate2);
         });
 
         test('each instance has its own cache', () => {

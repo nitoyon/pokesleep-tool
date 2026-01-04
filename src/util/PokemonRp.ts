@@ -287,16 +287,16 @@ class PokemonRp {
     get ingredientRp(): number {
         return this.getOrCache('ingredientRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.ingredientRatio *
+                this.helpCountPer5Hour * this.ingredientRate *
                 this.ingredientEnergy * this.ingredientG,
                 2);
         });
     }
 
-    get ingredientRatio(): number {
-        return this.getOrCache('ingredientRatio', () => {
+    get ingredientRate(): number {
+        return this.getOrCache('ingredientRate', () => {
             return trunc(
-                this.iv.pokemon.ingRatio / 100 *
+                this.iv.pokemon.ingRate / 100 *
                 // Nature Factor
                 (this.iv.nature?.ingredientFindingFactor ?? 1) *
                 // Sub-Skill Factor
@@ -403,7 +403,7 @@ class PokemonRp {
      *
      * This method calculates how many inventory slots are consumed on average
      * when the Pokemon helps, taking into account both berries and ingredients
-     * based on the ingredient ratio.
+     * based on the ingredient rate.
      *
      * @param berryBonus Berry count bonus from events (0 or 1)
      * @param ingredientBonus Ingredient count bonus from events (0 or 1)
@@ -416,7 +416,7 @@ class PokemonRp {
      */
     getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
         const berryCount = this.berryCount + berryBonus;
-        const ingRatio = this.ingredientRatio;
+        const ingRate = this.ingredientRate;
         let ingBonus = ingredientBonus;
         if (expertIngBonus) {
             ingBonus += expertFavoriteIngredientBonus;
@@ -427,20 +427,20 @@ class PokemonRp {
         const ingCount = this.iv.level < 30 ? (this.ingredient1.count + ingBonus) :
             this.iv.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus) / 2 :
             (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus) / 3;
-        return (1 - ingRatio) * berryCount + ingRatio * ingCount;
+        return (1 - ingRate) * berryCount + ingRate * ingCount;
     }
 
     get berryRp(): number {
         return this.getOrCache('berryRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.berryRatio *
+                this.helpCountPer5Hour * this.berryRate *
                 this.berryStrength * this.berryCount,
                 2);
         });
     }
     
-    get berryRatio(): number {
-        return this.ingredientRatio > 0 ? 1 - this.ingredientRatio : 0;
+    get berryRate(): number {
+        return this.ingredientRate > 0 ? 1 - this.ingredientRate : 0;
     }
 
     get berryCount(): number {
@@ -464,15 +464,15 @@ class PokemonRp {
     get skillRp(): number {
         return this.getOrCache('skillRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.skillRatio * this.skillValue,
+                this.helpCountPer5Hour * this.skillRate * this.skillValue,
                 2);
         });
     }
 
-    get skillRatio(): number {
-        return this.getOrCache('skillRatio', () => {
+    get skillRate(): number {
+        return this.getOrCache('skillRate', () => {
             return trunc(
-                this.iv.pokemon.skillRatio / 100 *
+                this.iv.pokemon.skillRate / 100 *
                 (this.iv.nature?.mainSkillChanceFactor ?? 1) *
                 (1 + this.activeSubSkills.reduce((p, c) => p + c.skillTrigger, 0) * 0.18),
                 4);
