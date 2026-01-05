@@ -452,6 +452,8 @@
         "calc with evolved (short)": "Evolved",
         "calc with max skill level": "Calculate with max skill level",
         "calc with max skill level (short)": "Max skill level",
+        "include pity proc": "Include consecutive failure ceiling",
+        "pity proc help": "Pokémon Sleep has a pity system where the main skill is guaranteed to trigger after a certain number of consecutive failures. When this flag is enabled, the number of main skill activations is calculated taking the pity system into account.",
         "current level": "Current level",
         "area bonus": "Area bonus",
         "favorite berry": "Favorite berry",

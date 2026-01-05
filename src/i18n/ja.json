@@ -443,6 +443,8 @@
         "calc with evolved (short)": "進化後",
         "calc with max skill level": "最大スキルレベルで計算",
         "calc with max skill level (short)": "最大スキレベ",
+        "include pity proc": "スキル連続不発天井の考慮",
+        "pity proc help": "ポケモンスリープには、メインスキルが一定回数以上連続で不発だったときに、メインスキルが確定で発動する仕様があります。このフラグを有効に設定すると、スキル連続不発天井を考慮して、メインスキルの発動回数を算出します。",
         "area bonus": "フィールドボーナス",
         "favorite berry": "好みきのみ",
         "helping bonus": "おてつだいボーナス",

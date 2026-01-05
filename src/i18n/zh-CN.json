@@ -441,6 +441,8 @@
         "calc with evolved (short)": "进化",
         "calc with max skill level": "根据最高技能等级計算",
         "calc with max skill level (short)": "最高技能等级",
+        "include pity proc": "考虑技能连续未发动保底",
+        "pity proc help": "宝可梦睡眠中有一个机制，当主技能连续一定次数以上未发动时，主技能会确定发动。启用此标志后，将考虑技能连续未发动保底机制来计算主技能发动次数。",
         "area bonus": "营地奖励",
         "favorite berry": "喜欢的树果",
         "helping bonus": "帮手奖励",
