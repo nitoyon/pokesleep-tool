@@ -149,7 +149,7 @@ class PokemonRp {
     }
 
     get activeSubSkills(): SubSkill[] {
-        return this.iv.subSkills.getActiveSubSkills(this.iv.level);
+        return this.iv.activeSubSkills;
     }
 
     get helpCountPer5Hour(): number {

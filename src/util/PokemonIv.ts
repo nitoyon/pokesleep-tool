@@ -46,6 +46,7 @@ class PokemonIv {
     readonly mythIng1: IngredientName;
     readonly mythIng2: IngredientName;
     readonly mythIng3: IngredientName;
+    private activeSubSkillsCache: undefined | SubSkill[] = undefined;
 
     /** Initialize new instance. */
     constructor(input: Partial<PokemonIvProps>) {
@@ -88,7 +89,13 @@ class PokemonIv {
 
     /** Get active sub-skills list. */
     get activeSubSkills(): SubSkill[] {
-        return this.subSkills.getActiveSubSkills(this.level);
+        if (this.activeSubSkillsCache !== undefined) {
+            return this.activeSubSkillsCache;
+        }
+
+        this.activeSubSkillsCache = this.subSkills
+            .getActiveSubSkills(this.level);
+        return this.activeSubSkillsCache;
     }
 
     /**
@@ -322,8 +329,7 @@ class PokemonIv {
      * Check whether the pokemon has an active sub-skill 'Helping Bonus'.
      */
     get hasHelpingBonusInActiveSubSkills(): boolean {
-        return this.subSkills
-            .getActiveSubSkills(this.level)
+        return this.activeSubSkills
             .some(x => x.name === "Helping Bonus");
     }
 
@@ -331,8 +337,7 @@ class PokemonIv {
      * Check whether the pokemon has an active sub-skill 'Energy Recovery Bonus'.
      */
     get hasEnergyRecoveryBonusInActiveSubSkills(): boolean {
-        return this.subSkills
-            .getActiveSubSkills(this.level)
+        return this.activeSubSkills
             .some(x => x.name === "Energy Recovery Bonus");
     }
 
@@ -340,8 +345,7 @@ class PokemonIv {
      * Check whether the pokemon has an active sub-skill 'Sleep EXP Bonus'.
      */
     get hasSleepExpBonusInActiveSubSkills(): boolean {
-        return this.subSkills
-            .getActiveSubSkills(this.level)
+        return this.activeSubSkills
             .some(x => x.name === "Sleep EXP Bonus");
     }
 
@@ -352,7 +356,7 @@ class PokemonIv {
         return this.pokemon.carryLimit +
             5 * Math.max(0, this.pokemon.evolutionCount) +
             this.ribbonCarryLimit +
-            this.subSkills.getActiveSubSkills(this.level).reduce((p, c) => p + c.inventory, 0) * 6;
+            this.activeSubSkills.reduce((p, c) => p + c.inventory, 0) * 6;
     }
 
     /**
