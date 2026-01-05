@@ -9,7 +9,12 @@ import { MainSkillName } from '../util/MainSkill';
  * * 900: Larvitar, Dratini
  * * 600: Other Pokémon
  */
-export type ExpType = 600|900|1080|1320;;
+export type ExpType = 600|900|1080|1320;
+
+export type ValidFormType = 'Halloween' | 'Holiday' | 'Alola' | 'Paldea' |
+    'Amped' | 'Low Key' | 'Small' | 'Medium' | 'Large' | 'Jumbo';
+
+export type FormType = undefined | ValidFormType;
 
 export interface PokemonData {
     /** Pokemon ID */
@@ -19,7 +24,7 @@ export interface PokemonData {
     /** Arrival date of the Pokémon */
     readonly arrival: string;
     /** Pokemon form */
-    readonly form: undefined|'Halloween'|'Holiday'|'Alola'|'Paldea'|'Amped'|'Low Key';
+    readonly form: FormType;
     /** Sleep type of the pokemon */
     readonly sleepType: SleepType;
     /** EXP type (600, 900, 1080, 1320) */

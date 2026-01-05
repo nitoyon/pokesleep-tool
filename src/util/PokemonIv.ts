@@ -1,6 +1,6 @@
 import Nature from './Nature';
 import pokemons, { getDecendants, IngredientName,
-    PokemonData, toxelId, toxtricityId } from '../data/pokemons';
+    PokemonData, ValidFormType, toxelId, toxtricityId } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
 import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
@@ -372,34 +372,23 @@ class PokemonIv {
      * Get form number.
      */
     get form(): number {
-        const m = this.pokemonName.match(/\(([^)]+)\)$/);
-        if (m === null) {
+        if (this.pokemon.form === undefined) {
             return 0;
         }
+        const formMap: Record<ValidFormType, number> = {
+            'Halloween': 1,
+            'Holiday': 2,
+            'Alola': 3,
+            'Paldea': 4,
+            'Amped': 5,
+            'Low Key': 6,
+            'Small': 7,
+            'Medium': 8,
+            'Large': 9,
+            'Jumbo': 10,
+        };
 
-        switch (m[1]) {
-            case 'Halloween':
-                return 1;
-            case 'Holiday':
-                return 2;
-            case 'Alola':
-                return 3;
-            case 'Paldea':
-                return 4;
-            case 'Amped':
-                return 5;
-            case 'Low Key':
-                return 6;
-            case 'Small':
-                return 7;
-            case 'Medium':
-                return 8;
-            case 'Large':
-                return 9;
-            case 'Jumbo':
-                return 10;
-        }
-        return 0;
+        return formMap[this.pokemon.form] ?? 0;
     }
 
     /**
@@ -407,20 +396,11 @@ class PokemonIv {
      * @param form    form number
      * @return        form name
      */
-    public static formToString(form: number): string {
-        switch (form) {
-            case 1: return 'Halloween';
-            case 2: return 'Holiday';
-            case 3: return 'Alola';
-            case 4: return 'Paldea';
-            case 5: return 'Amped';
-            case 6: return 'Low Key';
-            case 7: return 'Small';
-            case 8: return 'Medium';
-            case 9: return 'Large';
-            case 10: return 'Jumbo';
-            default: return '';
-        }
+    public static formToString(form: number): '' | ValidFormType {
+        const formNames: ('' | ValidFormType)[] = ['', 'Halloween', 'Holiday',
+            'Alola', 'Paldea', 'Amped', 'Low Key',
+            'Small', 'Medium', 'Large', 'Jumbo'];
+        return formNames[form] ?? '';
     }
 
     /**
