@@ -46,6 +46,7 @@ class PokemonIv {
     readonly mythIng1: IngredientName;
     readonly mythIng2: IngredientName;
     readonly mythIng3: IngredientName;
+    private readonly cache: Map<string, number> = new Map();
     private activeSubSkillsCache: undefined | SubSkill[] = undefined;
 
     /** Initialize new instance. */
@@ -96,6 +97,16 @@ class PokemonIv {
         this.activeSubSkillsCache = this.subSkills
             .getActiveSubSkills(this.level);
         return this.activeSubSkillsCache;
+    }
+
+    private getOrCache(key: string, compute: () => number): number {
+        const cached = this.cache.get(key);
+        if (cached !== undefined) {
+            return cached;
+        }
+        const value = compute();
+        this.cache.set(key, value);
+        return value;
     }
 
     /**
