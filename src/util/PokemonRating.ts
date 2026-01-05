@@ -90,17 +90,17 @@ class PokemonRating {
         const berryScore = berryCur / berryMax * 100;
         const berryRate = this.rp.berryRate;
 
-        const ingCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.ingredientRate;
+        const ingCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.iv.ingredientRate;
         const ingMax = ingCalc(ingMaxRp);
         const ingCur = ingCalc(this.rp);
         const ingScore = ingCur / ingMax * 100;
-        const ingRate = this.rp.ingredientRate;
+        const ingRate = this.rp.iv.ingredientRate;
 
-        const skillCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.skillRate;
+        const skillCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.iv.skillRate;
         const skillMax = skillCalc(skillMaxRp);
         const skillCur = skillCalc(this.rp);
         const skillScore = skillCur / skillMax * 100;
-        const skillRate = this.rp.skillRate;
+        const skillRate = this.rp.iv.skillRate;
         return {
             berryScore, berryMax, berryCur, berryRate,
             ingScore, ingMax, ingCur, ingRate,
