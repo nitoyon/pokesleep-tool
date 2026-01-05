@@ -78,6 +78,9 @@ export interface EnergyParameter {
      * Custom event bonus.
      */
     customEventBonus: HelpEventBonus;
+
+    /** Calculate with pity proc guarantee */
+    pityProc: boolean;
 }
 
 type EnergyEvent = {

@@ -938,6 +938,7 @@ export function createStrengthParameter(
         level: 0,
         evolved: false,
         maxSkillLevel: false,
+        pityProc: true,
         totalFlags: [true, true, true],
         addHelpingBonusEffect: true,
         tapFrequency: "always",
@@ -1206,6 +1207,9 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.maxSkillLevel) === "boolean") {
         ret.maxSkillLevel = json.maxSkillLevel;
+    }
+    if (typeof(json.pityProc) === "boolean") {
+        ret.pityProc = json.pityProc;
     }
     if (Array.isArray(json.totalFlags) && json.totalFlags.length === 3 &&
         json.totalFlags.every((x: unknown) => typeof(x) === "boolean")
