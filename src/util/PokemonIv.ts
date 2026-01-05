@@ -119,6 +119,32 @@ class PokemonIv {
         });
     }
 
+    /** Calculate help count for pity proc */
+    get pityProcHelpCount(): number {
+        return this.getOrCache('pityProc', () => {
+            if (this.pokemon.specialty !== "Skills" &&
+                this.pokemon.specialty !== "All"
+            ) {
+                return 78;
+            }
+
+            return Math.ceil(142000 / this.pokemon.frequency);
+        });
+    }
+
+    /**
+     * Calculate overall skill rate including pity proc
+     *
+     * (ref) https://pks.raenonx.cc/en/docs/view/mechanics/skill-pity
+     *
+     * @param rate Skill rate (including event bonus or area bonus).
+     * @return Overall skill proc rate.
+     */
+    calculateSkillRateWithPityProc(rate: number): number {
+        return rate /
+            (1 - Math.pow(1 - rate, this.pityProcHelpCount + 1));
+    }
+
     get ingredientRate(): number {
         return this.getOrCache('ingredientRate', () => {
             return trunc(

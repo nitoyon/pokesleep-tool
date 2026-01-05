@@ -176,6 +176,18 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('pity proc', () => {
+        test('Darkrai', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Darkrai',
+                skillRate: 2.3,
+            });
+            expect(iv.skillRate).toBe(0.023);
+            expect(iv.calculateSkillRateWithPityProc(iv.skillRate))
+                .toBeCloseTo(0.034);
+        });
+    });
+
     test('changeLevel', () => {
         const iv = new PokemonIv({
             pokemonName: 'Bulbasaur',
