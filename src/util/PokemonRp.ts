@@ -287,21 +287,9 @@ class PokemonRp {
     get ingredientRp(): number {
         return this.getOrCache('ingredientRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.ingredientRate *
+                this.helpCountPer5Hour * this.iv.ingredientRate *
                 this.ingredientEnergy * this.ingredientG,
                 2);
-        });
-    }
-
-    get ingredientRate(): number {
-        return this.getOrCache('ingredientRate', () => {
-            return trunc(
-                this.iv.pokemon.ingRate / 100 *
-                // Nature Factor
-                (this.iv.nature?.ingredientFindingFactor ?? 1) *
-                // Sub-Skill Factor
-                (1 + this.activeSubSkills.reduce((p, c) => p + c.ingredientFinder, 0) * 0.18),
-                4);
         });
     }
 
@@ -416,7 +404,7 @@ class PokemonRp {
      */
     getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
         const berryCount = this.berryCount + berryBonus;
-        const ingRate = this.ingredientRate;
+        const ingRate = this.iv.ingredientRate;
         let ingBonus = ingredientBonus;
         if (expertIngBonus) {
             ingBonus += expertFavoriteIngredientBonus;
@@ -440,7 +428,7 @@ class PokemonRp {
     }
     
     get berryRate(): number {
-        return this.ingredientRate > 0 ? 1 - this.ingredientRate : 0;
+        return this.iv.ingredientRate > 0 ? 1 - this.iv.ingredientRate : 0;
     }
 
     get berryCount(): number {
@@ -464,18 +452,8 @@ class PokemonRp {
     get skillRp(): number {
         return this.getOrCache('skillRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.skillRate * this.skillValue,
+                this.helpCountPer5Hour * this.iv.skillRate * this.skillValue,
                 2);
-        });
-    }
-
-    get skillRate(): number {
-        return this.getOrCache('skillRate', () => {
-            return trunc(
-                this.iv.pokemon.skillRate / 100 *
-                (this.iv.nature?.mainSkillChanceFactor ?? 1) *
-                (1 + this.activeSubSkills.reduce((p, c) => p + c.skillTrigger, 0) * 0.18),
-                4);
         });
     }
 

@@ -370,7 +370,7 @@ class PokemonStrength {
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
         const ingStrengthRate = (ingInRecipeStrengthRate * 0.8 + 0.2) *
             (1 + param.fieldBonus / 100) * bonus.dish;
-        const ingRate = rp.ingredientRate;
+        const ingRate = rp.iv.ingredientRate;
         const ingHelpCount = notFullHelpCount * ingRate;
         const ingUnlock = 1 +
             (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
