@@ -5,7 +5,7 @@ import { IngredientType, IngredientTypes } from './PokemonRp';
 import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
-import { clamp } from './NumberUtil';
+import { clamp, trunc } from './NumberUtil';
 
 /**
  * Interface containing all configurable properties of
@@ -107,6 +107,26 @@ class PokemonIv {
         const value = compute();
         this.cache.set(key, value);
         return value;
+    }
+
+    get skillRate(): number {
+        return this.getOrCache('skillRate', () => {
+            return trunc(
+                this.pokemon.skillRate / 100 *
+                (this.nature?.mainSkillChanceFactor ?? 1) *
+                (1 + this.activeSubSkills.reduce((p, c) => p + c.skillTrigger, 0) * 0.18),
+                4);
+        });
+    }
+
+    get ingredientRate(): number {
+        return this.getOrCache('ingredientRate', () => {
+            return trunc(
+                this.pokemon.ingRate / 100 *
+                (this.nature?.ingredientFindingFactor ?? 1) *
+                (1 + this.activeSubSkills.reduce((p, c) => p + c.ingredientFinder, 0) * 0.18),
+                4);
+        });
     }
 
     /**
