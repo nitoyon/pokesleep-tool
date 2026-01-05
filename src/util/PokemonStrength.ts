@@ -433,15 +433,16 @@ class PokemonStrength {
 
         // calc skill
         const skillRate = energy.skillRate;
+        const overallSkillRate = energy.overallSkillRate;
         let skillCount = 0, skillValue = 0, skillStrength = 0, skillValuePerTrigger = 0;
         let skillValue2 = 0, skillStrength2 = 0, skillValuePerTrigger2 = 0;
         if (param.period > 0 && !this.isWhistle && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
-                skillCount = helpCount * skillRate * countRate;
+                skillCount = helpCount * overallSkillRate * countRate;
             }
             else {
-                const skillCountAwake = energy.helpCount.awake * skillRate;
+                const skillCountAwake = energy.helpCount.awake * overallSkillRate;
                 const skillCountSleeping = energy.skillProbabilityAfterWakeup.once +
                     energy.skillProbabilityAfterWakeup.twice * 2;
                 skillCount = (skillCountAwake + skillCountSleeping) * countRate;
