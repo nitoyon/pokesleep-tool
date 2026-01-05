@@ -160,6 +160,22 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('rate', () => {
+        test('ingredientRate is cached', () => {
+            const iv = new PokemonIv({pokemonName: 'Magnezone', level: 35});
+            const rate1 = iv.ingredientRate;
+            const rate2 = iv.ingredientRate;
+            expect(rate1).toBe(rate2);
+        });
+
+        test('skillRate is cached', () => {
+            const iv = new PokemonIv({pokemonName: 'Magnezone', level: 35});
+            const rate1 = iv.skillRate;
+            const rate2 = iv.skillRate;
+            expect(rate1).toBe(rate2);
+        });
+    });
+
     test('changeLevel', () => {
         const iv = new PokemonIv({
             pokemonName: 'Bulbasaur',

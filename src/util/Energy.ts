@@ -677,7 +677,7 @@ class Energy {
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
         const lotteryCount = Math.ceil(asleepNotFull);
-        const skillRate = rp.skillRate * bonus.skillTrigger;
+        const skillRate = rp.iv.skillRate * bonus.skillTrigger;
         if (lotteryCount > 0) {
             const skillNone = Math.pow(1 - skillRate, lotteryCount);
             if (this._iv.pokemon.specialty !== 'Skills' &&
