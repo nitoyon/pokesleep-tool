@@ -213,7 +213,7 @@ describe('PokemonIV', () => {
         test('Darkrai', () => {
             const iv = new PokemonIv({
                 pokemonName: 'Darkrai',
-                skillRate: 2.3,
+                baseSkillRate: 2.3,
             });
             expect(iv.skillRate).toBe(0.023);
             expect(iv.calculateSkillRateWithPityProc(iv.skillRate))
