@@ -3,6 +3,7 @@ import pokemons from '../../../data/pokemons';
 import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
 import { PokemonType } from '../../../data/pokemons';
+import { NoTap } from '../../../util/Energy';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonStrength, {
@@ -63,7 +64,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     }, [dispatch, strength.pokemonIv]);
 
     const settings = strength.parameter;
-    if (settings.period <= whistlePeriod || settings.tapFrequencyAwake === 'none') {
+    if (settings.period <= whistlePeriod || settings.tapFrequencyAwake === NoTap) {
         return (
             <Dialog open={open} onClose={onClose}>
                 <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>

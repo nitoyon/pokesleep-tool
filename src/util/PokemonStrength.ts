@@ -4,7 +4,7 @@ import { IngredientName, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields, { isExpertField, getFavoriteBerries } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
-import Energy, { EnergyParameter, EnergyResult } from './Energy';
+import Energy, { EnergyParameter, EnergyResult, AlwaysTap, NoTap, isValidTapFrequency } from './Energy';
 import { MainSkillName } from './MainSkill';
 import PokemonIv from './PokemonIv';
 import PokemonRp, {
@@ -287,8 +287,8 @@ class PokemonStrength {
                 period: 3,
                 isEnergyAlwaysFull: true,
                 isGoodCampTicketSet: false,
-                tapFrequencyAwake: 'always',
-                tapFrequencyAsleep: 'always',
+                tapFrequencyAwake: AlwaysTap,
+                tapFrequencyAsleep: AlwaysTap,
             };
         }
 
@@ -358,10 +358,10 @@ class PokemonStrength {
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
         const notFullHelpCount = param.period < 0 ? -param.period :
-            param.tapFrequencyAwake === 'none' ? 0 :
+            param.tapFrequencyAwake === NoTap ? 0 :
             (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRate;
         const fullHelpCount = param.period < 0 ? 0 :
-            param.tapFrequencyAwake === 'none' ?
+            param.tapFrequencyAwake === NoTap ?
             (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRate :
             energy.helpCount.asleepFull * countRate;
 
@@ -436,8 +436,8 @@ class PokemonStrength {
         const overallSkillRate = energy.overallSkillRate;
         let skillCount = 0, skillValue = 0, skillStrength = 0, skillValuePerTrigger = 0;
         let skillValue2 = 0, skillStrength2 = 0, skillValuePerTrigger2 = 0;
-        if (param.period > 0 && !this.isWhistle && param.tapFrequencyAwake !== 'none') {
-            if (param.tapFrequencyAsleep === 'always') {
+        if (param.period > 0 && !this.isWhistle && param.tapFrequencyAwake !== NoTap) {
+            if (param.tapFrequencyAsleep === AlwaysTap) {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
                 skillCount = helpCount * overallSkillRate * countRate;
             }
@@ -942,8 +942,8 @@ export function createStrengthParameter(
         pityProc: true,
         totalFlags: [true, true, true],
         addHelpingBonusEffect: true,
-        tapFrequencyAwake: "always",
-        tapFrequencyAsleep: "none",
+        tapFrequencyAwake: 180,
+        tapFrequencyAsleep: NoTap,
         recipeBonus: 25,
         recipeLevel: 30,
         helperBoostLevel: 6,
@@ -1242,13 +1242,23 @@ export function loadStrengthParameter(): StrengthParameter {
         0 <= json.sleepScore && json.sleepScore <= 100) {
         ret.sleepScore = json.sleepScore;
     }
-    if (typeof(json.tapFrequency) === "string" &&
-        ["always", "none"].includes(json.tapFrequency)) {
-        ret.tapFrequencyAwake = json.tapFrequency;
+    // Migrate tapFrequencyAwake (with backward compatibility)
+    if (isValidTapFrequency(json.tapFrequencyAwake)) {
+        ret.tapFrequencyAwake = json.tapFrequencyAwake;
+    } else if (json.tapFrequency === "none") {
+        ret.tapFrequencyAwake = NoTap;
+    } else {
+        ret.tapFrequencyAwake = 180;  // Default to 3h
     }
-    if (typeof(json.tapFrequencyAsleep) === "string" &&
-        ["always", "none"].includes(json.tapFrequencyAsleep)) {
+    // Migrate tapFrequencyAsleep (with backward compatibility)
+    if (isValidTapFrequency(json.tapFrequencyAsleep)) {
         ret.tapFrequencyAsleep = json.tapFrequencyAsleep;
+    } else if (json.tapFrequencyAsleep === "always") {
+        ret.tapFrequencyAsleep = AlwaysTap;
+    } else if (json.tapFrequencyAsleep === "none") {
+        ret.tapFrequencyAsleep = NoTap;
+    } else {
+        ret.tapFrequencyAsleep = NoTap;
     }
     if (typeof(json.recipeBonus) === "number" &&
         [0, 6, 11, 17, 19, 20, 25, 35, 48, 61, 78].includes(json.recipeBonus)) {

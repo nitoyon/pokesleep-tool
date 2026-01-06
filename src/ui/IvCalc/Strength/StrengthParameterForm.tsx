@@ -14,6 +14,7 @@ import FixedLevelSelect from './FixedLevelSelect';
 import { LevelInput } from '../IvForm/LevelControl';
 import MessageDialog from '../../Dialog/MessageDialog';
 import { getActiveHelpBonus } from '../../../data/events';
+import { AlwaysTap, NoTap } from '../../../util/Energy';
 import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
 } from '../../../util/PokemonStrength';
@@ -109,10 +110,10 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         setEventDetailOpen(false);
     }, []);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, tapFrequencyAwake: e.target.value as "always"|"none"});
+        onChange({...value, tapFrequencyAwake: Number(e.target.value)});
     }, [onChange, value]);
     const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, tapFrequencyAsleep: e.target.value as "always"|"none"});
+        onChange({...value, tapFrequencyAsleep: Number(e.target.value)});
     }, [onChange, value]);
     const onEditEnergyClick = React.useCallback(() => {
         dispatch({type: 'openEnergyDialog'});
@@ -196,20 +197,20 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         <Collapse in={isNotWhistle}>
             <section>
                 <label>{t('tap frequency')} ({t('awake')}):</label>
-                <Select variant="standard" value={value.tapFrequencyAwake}
+                <Select variant="standard" value={String(value.tapFrequencyAwake)}
                     onChange={onTapFrequencyChange}>
-                    <MenuItem value="always">{t('every minute')}</MenuItem>
-                    <MenuItem value="none">{t('none')}</MenuItem>
+                    <MenuItem value={String(AlwaysTap)}>{t('every minute')}</MenuItem>
+                    <MenuItem value={String(NoTap)}>{t('none')}</MenuItem>
                 </Select>
             </section>
             <section>
                 <label>{t('tap frequency')} ({t('asleep')}):</label>
-                {value.tapFrequencyAwake === "none" ?
+                {value.tapFrequencyAwake === NoTap ?
                     <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
-                    <Select variant="standard" value={value.tapFrequencyAsleep}
+                    <Select variant="standard" value={String(value.tapFrequencyAsleep)}
                         onChange={onTapFrequencyAsleepChange}>
-                        <MenuItem value="always">{t('every minute')}</MenuItem>
-                        <MenuItem value="none">{t('none')}</MenuItem>
+                        <MenuItem value={String(AlwaysTap)}>{t('every minute')}</MenuItem>
+                        <MenuItem value={String(NoTap)}>{t('none')}</MenuItem>
                     </Select>}
             </section>
             <section className="mt">

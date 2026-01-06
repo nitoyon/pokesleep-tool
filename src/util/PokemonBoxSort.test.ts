@@ -3,6 +3,7 @@ import {
     SimpleStrengthResult, StrengthCalculator,
     sortPokemonItems, loadBoxSortConfig,
  } from './PokemonBoxSort';
+import { NoTap } from './Energy';
 import Nature from './Nature';
 import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
@@ -248,7 +249,7 @@ describe('sortPokemonItems', () => {
     describe('ingredient sort', () => {
         test('returns error when tapFrequency is none', () => {
             const parameter = createStrengthParameter({});
-            parameter.tapFrequencyAwake = 'none';
+            parameter.tapFrequencyAwake = NoTap;
 
             const items = [
                 new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
@@ -328,7 +329,7 @@ describe('sortPokemonItems', () => {
     describe('skill sort', () => {
         test('returns error when tapFrequency is none', () => {
             const parameter = createStrengthParameter({});
-            parameter.tapFrequencyAwake = 'none';
+            parameter.tapFrequencyAwake = NoTap;
 
             const items = [
                 new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),

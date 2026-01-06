@@ -1,5 +1,6 @@
 import React from 'react';
 import { getEventBonus } from '../../../data/events';
+import { NoTap } from '../../../util/Energy';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { IngredientStrength, StrengthResult,
     recipeLevelBonus
@@ -49,7 +50,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     }
 
     const param = strength.parameter;
-    if (param.tapFrequencyAwake === 'none') {
+    if (param.tapFrequencyAwake === NoTap) {
         return (
             <Dialog open={open} onClose={onClose}>
                 <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>
@@ -175,7 +176,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
 function getIngDetail(strength: PokemonStrength, result: StrengthResult,
     recipeRatio: number, ingSlot: number,
     ing: IngredientStrength[], t: typeof i18next.t): React.ReactNode {
-    if (strength.parameter.tapFrequencyAwake === 'none') {
+    if (strength.parameter.tapFrequencyAwake === NoTap) {
         return <article>ー</article>;
     }
 

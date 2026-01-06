@@ -2,6 +2,7 @@ import PokemonStrength, {
     createStrengthParameter, StrengthParameter, whistlePeriod,
     isSkillStrengthZero,
 } from './PokemonStrength';
+import { AlwaysTap, NoTap } from './Energy';
 import PokemonIv from './PokemonIv';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
@@ -95,12 +96,12 @@ describe('PokemonStrength', () => {
                 level: 50,
             });
 
-            const paramAlways = createParam({ tapFrequencyAwake: 'always' });
+            const paramAlways = createParam({ tapFrequencyAwake: AlwaysTap });
             const strengthAlways = new PokemonStrength(iv, paramAlways);
             const resultAlways = strengthAlways.calculate();
             expect(resultAlways.skillCount).toBeGreaterThan(0);
 
-            const paramNone = createParam({ tapFrequencyAwake: 'none' });
+            const paramNone = createParam({ tapFrequencyAwake: NoTap });
             const strengthNone = new PokemonStrength(iv, paramNone);
             const resultNone = strengthNone.calculate();
             expect(resultNone.skillCount).toBe(0);
@@ -157,7 +158,9 @@ describe('PokemonStrength', () => {
             const resultWhistle = strengthWhistle.calculate();
 
             // simulate 3 hours (always energy full)
-            const param3Hours = createParam({ period: 3, isEnergyAlwaysFull: true });
+            const param3Hours = createParam({
+                period: 3, isEnergyAlwaysFull: true, tapFrequencyAwake: AlwaysTap,
+            });
             const strength3Hours = new PokemonStrength(iv, param3Hours);
             const result3Hours = strength3Hours.calculate();
 
@@ -165,7 +168,7 @@ describe('PokemonStrength', () => {
             expect(strengthWhistle.parameter.period).toBe(3);
             expect(strengthWhistle.parameter.isEnergyAlwaysFull).toBe(true);
             expect(strengthWhistle.parameter.isGoodCampTicketSet).toBe(false);
-            expect(strengthWhistle.parameter.tapFrequencyAwake).toBe('always');
+            expect(strengthWhistle.parameter.tapFrequencyAwake).toBe(AlwaysTap);
 
             // Verify result
             expect(resultWhistle.skillCount).toBe(0);

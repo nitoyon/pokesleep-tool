@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
+import { NoTap } from '../../../util/Energy';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, {
     getRequiredHelperBoost, getHelpYield,
@@ -344,7 +345,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
 function getIngArticle(result: StrengthResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
-    if (settings.period !== whistlePeriod && settings.tapFrequencyAwake === 'none') {
+    if (settings.period !== whistlePeriod && settings.tapFrequencyAwake === NoTap) {
         return <article>ー</article>;
     }
 
@@ -366,7 +367,7 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t
 ): React.ReactNode {
-    if (settings.period <= whistlePeriod || settings.tapFrequencyAwake === 'none') {
+    if (settings.period <= whistlePeriod || settings.tapFrequencyAwake === NoTap) {
             return <article>ー</article>;
     }
 

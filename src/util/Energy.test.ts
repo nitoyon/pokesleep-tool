@@ -1,4 +1,4 @@
-import Energy, { EnergyParameter } from './Energy';
+import Energy, { EnergyParameter, AlwaysTap, NoTap } from './Energy';
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
@@ -9,7 +9,8 @@ const paramBase = {
     e4eEnergy: 18,
     e4eCount: 3,
     sleepScore: 100,
-    tapFrequencyAsleep: "none",
+    tapFrequencyAwake: AlwaysTap,
+    tapFrequencyAsleep: NoTap,
     helpBonusCount: 0,
     recoveryBonusCount: 0,
     isEnergyAlwaysFull: false,
@@ -301,7 +302,7 @@ describe('Energy', () => {
         const result = energy.calculate(createParam({
             e4eCount: 0,
             sleepScore: 90,
-            tapFrequencyAsleep: "always",
+            tapFrequencyAsleep: AlwaysTap,
         }));
         const snackEvent = result.events.find(x => x.type === 'snack');
         expect(snackEvent).toBe(undefined);

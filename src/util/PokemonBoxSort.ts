@@ -6,6 +6,7 @@ import PokemonStrength, {
 } from './PokemonStrength';
 import { IngredientName, IngredientNames } from '../data/pokemons';
 import { MainSkillName, MainSkillNames, matchMainSkillName } from './MainSkill';
+import { NoTap } from './Energy';
 import i18next from 'i18next';
 
 /** Subset of StrengthResult. */
@@ -123,7 +124,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
             b.id - a.id), ''];
     }
     else if (sort === "ingredient") {
-        if (parameter.tapFrequencyAwake === 'none') {
+        if (parameter.tapFrequencyAwake === NoTap) {
             return [[], t('no ingredient')];
         }
 
@@ -152,7 +153,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         return [ret, ret.length > 0 ? '' : t('no pokemon found')]
     }
     else if (sort === "skill") {
-        if (parameter.tapFrequencyAwake === 'none' ||
+        if (parameter.tapFrequencyAwake === NoTap ||
             parameter.period <= whistlePeriod) {
             return [[], t('no skill')];
         }

@@ -9,6 +9,25 @@ import { HelpEventBonus } from '../data/events';
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
+/** Tap frequency constants */
+export const AlwaysTap = 1;  // Special value: Tap continuously (collect immediately)
+export const NoTap = 0;      // Special value: Never tap during this period
+
+/** Tap frequency in minutes (2-1440), or AlwaysTap (1), or NoTap (0) */
+export type TapFrequency = number;
+
+/**
+ * Validates if a value is a valid TapFrequency.
+ * @param value Value to validate
+ * @returns True if valid TapFrequency
+ */
+export function isValidTapFrequency(value: unknown): value is TapFrequency {
+    return typeof value === 'number' && (
+        value === AlwaysTap || value === NoTap ||
+        (value >= 2 && value <= 1440 && Number.isInteger(value))
+    );
+}
+
 export interface EnergyParameter {
     /**
      * How many hours' worth of accumulated strength to calculate.
@@ -60,11 +79,11 @@ export interface EnergyParameter {
      */
     sleepScore: number;
 
-    /** How often tap the pokemon (awake) */
-    tapFrequencyAwake: "always"|"none";
+    /** How often tap the pokemon (awake) - in minutes, or AlwaysTap (1), or NoTap (0) */
+    tapFrequencyAwake: TapFrequency;
 
-    /** How often tap the pokemon (asleep) */
-    tapFrequencyAsleep: "always"|"none";
+    /** How often tap the pokemon (asleep) - in minutes, or AlwaysTap (1), or NoTap (0) */
+    tapFrequencyAsleep: TapFrequency;
 
     /** Whether good camp ticket is set or not */
     isGoodCampTicketSet: boolean;
@@ -261,8 +280,8 @@ class Energy {
         const {carryLimit, skillRate, overallSkillRate, timeToFullInventory,
             helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param, bonus, isWhistle);
-        const canBeFullInventory = (param.tapFrequencyAwake === "always" &&
-            param.tapFrequencyAsleep === "none");
+        const canBeFullInventory = (param.tapFrequencyAwake === AlwaysTap &&
+            param.tapFrequencyAsleep === NoTap);
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
             timeToFullInventory, carryLimit, skillRate, overallSkillRate: overallSkillRate,
@@ -580,8 +599,8 @@ class Energy {
         const helpBonusCount = param.helpBonusCount +
             (this._iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
         const isGoodCampTicketSet = param.isGoodCampTicketSet;
-        const alwaysSnacking = param.tapFrequencyAwake === "none";
-        const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
+        const alwaysSnacking = param.tapFrequencyAwake === NoTap;
+        const alwaysTapAsleep = param.tapFrequencyAsleep === AlwaysTap;
 
         // check if the field is expert mode
         const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
