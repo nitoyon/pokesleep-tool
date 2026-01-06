@@ -74,6 +74,10 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         );
     }
 
+    if (!open) {
+        return <></>;
+    }
+
     const iv = strength.pokemonIv;
     const skill = iv.pokemon.skill.replace(" (Random)", "");
     const footnote = t(`strength skill info.${skill}`);

@@ -536,7 +536,6 @@
         "lottery count": "Lottery count",
         "always 81%+": "Always 81%+",
         "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
-        "present assumption": "Calculations assume a 50% probability of obtaining candy. ",
 
         "help yield": "Yield",
         "help yield description": "The average number of berries and ingredients collected over {{n}} helps.",
@@ -632,7 +631,7 @@
         "strength skill info": {
             "Ingredient Magnet S": "Ingredients from the skill are assumed to be surplus.",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) The additional ingredients will be obtainedr when there's one or more Pokémon on the team with the Plus or Minus main skill.",
-            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)",
+            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S) The candy acquisition rate is based on RaenonX's data (33.4%).",
             "Charge Energy S": "This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",
