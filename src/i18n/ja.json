@@ -526,7 +526,6 @@
         "lottery count": "抽選回数",
         "always 81%+": "常に81%以上",
         "charge energy not implemented": "現在、げんきチャージSによるげんき回復は考慮されていません。",
-        "present assumption": "$t(candy)を取得する確率は50%と仮定して計算しています。",
 
         "help yield": "$t(berry)$t(ingredient)数",
         "help yield description": "おてつだい{{n}}回で拾う「$t(berry)・$t(ingredient)」の平均個数。",
@@ -621,7 +620,7 @@
         "strength skill info": {
             "Ingredient Magnet S": "スキルによる食材は、余剰食材として利用されるものと仮定して計算しています。",
             "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)追加食材は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ取得します。",
-            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)",
+            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)$t(candy)を取得する確率は RaenonX での集計結果 33.4% を利用しています。",
             "Charge Energy S": "スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
             "Charge Strength S": "",

@@ -44,7 +44,7 @@ export const MainSkillNames: MainSkillName[] = [
 ];
 
 /** Candy probability for Present */
-export const presentCandyRate = 0.5;
+export const presentCandyRate = 0.334;
 
 /**
  * Ingredient proberbility for Super Luck
