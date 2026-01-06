@@ -248,7 +248,7 @@ describe('sortPokemonItems', () => {
     describe('ingredient sort', () => {
         test('returns error when tapFrequency is none', () => {
             const parameter = createStrengthParameter({});
-            parameter.tapFrequency = 'none';
+            parameter.tapFrequencyAwake = 'none';
 
             const items = [
                 new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
@@ -328,7 +328,7 @@ describe('sortPokemonItems', () => {
     describe('skill sort', () => {
         test('returns error when tapFrequency is none', () => {
             const parameter = createStrengthParameter({});
-            parameter.tapFrequency = 'none';
+            parameter.tapFrequencyAwake = 'none';
 
             const items = [
                 new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),

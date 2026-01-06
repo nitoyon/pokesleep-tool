@@ -123,7 +123,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
             b.id - a.id), ''];
     }
     else if (sort === "ingredient") {
-        if (parameter.tapFrequency === 'none') {
+        if (parameter.tapFrequencyAwake === 'none') {
             return [[], t('no ingredient')];
         }
 
@@ -152,7 +152,7 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
         return [ret, ret.length > 0 ? '' : t('no pokemon found')]
     }
     else if (sort === "skill") {
-        if (parameter.tapFrequency === 'none' ||
+        if (parameter.tapFrequencyAwake === 'none' ||
             parameter.period <= whistlePeriod) {
             return [[], t('no skill')];
         }

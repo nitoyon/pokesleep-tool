@@ -287,7 +287,7 @@ class PokemonStrength {
                 period: 3,
                 isEnergyAlwaysFull: true,
                 isGoodCampTicketSet: false,
-                tapFrequency: 'always',
+                tapFrequencyAwake: 'always',
                 tapFrequencyAsleep: 'always',
             };
         }
@@ -358,10 +358,10 @@ class PokemonStrength {
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
         const notFullHelpCount = param.period < 0 ? -param.period :
-            param.tapFrequency === 'none' ? 0 :
+            param.tapFrequencyAwake === 'none' ? 0 :
             (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRate;
         const fullHelpCount = param.period < 0 ? 0 :
-            param.tapFrequency === 'none' ?
+            param.tapFrequencyAwake === 'none' ?
             (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRate :
             energy.helpCount.asleepFull * countRate;
 
@@ -436,7 +436,7 @@ class PokemonStrength {
         const overallSkillRate = energy.overallSkillRate;
         let skillCount = 0, skillValue = 0, skillStrength = 0, skillValuePerTrigger = 0;
         let skillValue2 = 0, skillStrength2 = 0, skillValuePerTrigger2 = 0;
-        if (param.period > 0 && !this.isWhistle && param.tapFrequency !== 'none') {
+        if (param.period > 0 && !this.isWhistle && param.tapFrequencyAwake !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
                 skillCount = helpCount * overallSkillRate * countRate;
@@ -942,7 +942,7 @@ export function createStrengthParameter(
         pityProc: true,
         totalFlags: [true, true, true],
         addHelpingBonusEffect: true,
-        tapFrequency: "always",
+        tapFrequencyAwake: "always",
         tapFrequencyAsleep: "none",
         recipeBonus: 25,
         recipeLevel: 30,
@@ -1244,7 +1244,7 @@ export function loadStrengthParameter(): StrengthParameter {
     }
     if (typeof(json.tapFrequency) === "string" &&
         ["always", "none"].includes(json.tapFrequency)) {
-        ret.tapFrequency = json.tapFrequency;
+        ret.tapFrequencyAwake = json.tapFrequency;
     }
     if (typeof(json.tapFrequencyAsleep) === "string" &&
         ["always", "none"].includes(json.tapFrequencyAsleep)) {

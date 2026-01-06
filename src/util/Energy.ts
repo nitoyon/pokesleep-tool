@@ -61,7 +61,7 @@ export interface EnergyParameter {
     sleepScore: number;
 
     /** How often tap the pokemon (awake) */
-    tapFrequency: "always"|"none";
+    tapFrequencyAwake: "always"|"none";
 
     /** How often tap the pokemon (asleep) */
     tapFrequencyAsleep: "always"|"none";
@@ -261,7 +261,7 @@ class Energy {
         const {carryLimit, skillRate, overallSkillRate, timeToFullInventory,
             helpCount, skillProbabilityAfterWakeup } =
             this.calculateSneakySnacking(events, efficiencies, param, bonus, isWhistle);
-        const canBeFullInventory = (param.tapFrequency === "always" &&
+        const canBeFullInventory = (param.tapFrequencyAwake === "always" &&
             param.tapFrequencyAsleep === "none");
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
@@ -580,7 +580,7 @@ class Energy {
         const helpBonusCount = param.helpBonusCount +
             (this._iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
         const isGoodCampTicketSet = param.isGoodCampTicketSet;
-        const alwaysSnacking = param.tapFrequency === "none";
+        const alwaysSnacking = param.tapFrequencyAwake === "none";
         const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
 
         // check if the field is expert mode

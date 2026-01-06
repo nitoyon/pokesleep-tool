@@ -109,7 +109,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         setEventDetailOpen(false);
     }, []);
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, tapFrequency: e.target.value as "always"|"none"});
+        onChange({...value, tapFrequencyAwake: e.target.value as "always"|"none"});
     }, [onChange, value]);
     const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
         onChange({...value, tapFrequencyAsleep: e.target.value as "always"|"none"});
@@ -196,7 +196,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         <Collapse in={isNotWhistle}>
             <section>
                 <label>{t('tap frequency')} ({t('awake')}):</label>
-                <Select variant="standard" value={value.tapFrequency}
+                <Select variant="standard" value={value.tapFrequencyAwake}
                     onChange={onTapFrequencyChange}>
                     <MenuItem value="always">{t('every minute')}</MenuItem>
                     <MenuItem value="none">{t('none')}</MenuItem>
@@ -204,7 +204,7 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             </section>
             <section>
                 <label>{t('tap frequency')} ({t('asleep')}):</label>
-                {value.tapFrequency === "none" ?
+                {value.tapFrequencyAwake === "none" ?
                     <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
                     <Select variant="standard" value={value.tapFrequencyAsleep}
                         onChange={onTapFrequencyAsleepChange}>

@@ -344,7 +344,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
 
 function getIngArticle(result: StrengthResult, settings: StrengthParameter,
     t: typeof i18next.t): React.ReactNode {
-    if (settings.period !== whistlePeriod && settings.tapFrequency === 'none') {
+    if (settings.period !== whistlePeriod && settings.tapFrequencyAwake === 'none') {
         return <article>ー</article>;
     }
 
@@ -366,7 +366,7 @@ function getIngArticle(result: StrengthResult, settings: StrengthParameter,
 function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
     settings: StrengthParameter, t: typeof i18next.t
 ): React.ReactNode {
-    if (settings.period <= whistlePeriod || settings.tapFrequency === 'none') {
+    if (settings.period <= whistlePeriod || settings.tapFrequencyAwake === 'none') {
             return <article>ー</article>;
     }
 
