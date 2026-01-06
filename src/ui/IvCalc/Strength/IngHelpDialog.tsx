@@ -49,7 +49,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     }
 
     const param = strength.parameter;
-    if (param.tapFrequency === 'none') {
+    if (param.tapFrequencyAwake === 'none') {
         return (
             <Dialog open={open} onClose={onClose}>
                 <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>
@@ -175,7 +175,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
 function getIngDetail(strength: PokemonStrength, result: StrengthResult,
     recipeRatio: number, ingSlot: number,
     ing: IngredientStrength[], t: typeof i18next.t): React.ReactNode {
-    if (strength.parameter.tapFrequency === 'none') {
+    if (strength.parameter.tapFrequencyAwake === 'none') {
         return <article>ー</article>;
     }
 

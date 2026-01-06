@@ -63,7 +63,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     }, [dispatch, strength.pokemonIv]);
 
     const settings = strength.parameter;
-    if (settings.period <= whistlePeriod || settings.tapFrequency === 'none') {
+    if (settings.period <= whistlePeriod || settings.tapFrequencyAwake === 'none') {
         return (
             <Dialog open={open} onClose={onClose}>
                 <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>

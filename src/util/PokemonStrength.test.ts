@@ -95,12 +95,12 @@ describe('PokemonStrength', () => {
                 level: 50,
             });
 
-            const paramAlways = createParam({ tapFrequency: 'always' });
+            const paramAlways = createParam({ tapFrequencyAwake: 'always' });
             const strengthAlways = new PokemonStrength(iv, paramAlways);
             const resultAlways = strengthAlways.calculate();
             expect(resultAlways.skillCount).toBeGreaterThan(0);
 
-            const paramNone = createParam({ tapFrequency: 'none' });
+            const paramNone = createParam({ tapFrequencyAwake: 'none' });
             const strengthNone = new PokemonStrength(iv, paramNone);
             const resultNone = strengthNone.calculate();
             expect(resultNone.skillCount).toBe(0);
@@ -165,7 +165,7 @@ describe('PokemonStrength', () => {
             expect(strengthWhistle.parameter.period).toBe(3);
             expect(strengthWhistle.parameter.isEnergyAlwaysFull).toBe(true);
             expect(strengthWhistle.parameter.isGoodCampTicketSet).toBe(false);
-            expect(strengthWhistle.parameter.tapFrequency).toBe('always');
+            expect(strengthWhistle.parameter.tapFrequencyAwake).toBe('always');
 
             // Verify result
             expect(resultWhistle.skillCount).toBe(0);

@@ -67,7 +67,7 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
     const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
         dispatch({type: "changeParameter", payload: { parameter: {
             ...parameter,
-            tapFrequency: e.target.value as "always"|"none",
+            tapFrequencyAwake: e.target.value as "always"|"none",
         }}});
     }, [dispatch, parameter]);
     const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
@@ -161,7 +161,7 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
         <section>
             <div>
                 <label>{t('tap frequency')} ({t('awake')}):</label>
-                <Select variant="standard" value={parameter.tapFrequency}
+                <Select variant="standard" value={parameter.tapFrequencyAwake}
                     onChange={onTapFrequencyChange}>
                     <MenuItem value="always">{t('every minute')}</MenuItem>
                     <MenuItem value="none">{t('none')}</MenuItem>
@@ -169,7 +169,7 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
             </div>
             <div>
                 <label>{t('tap frequency')} ({t('asleep')}):</label>
-                {parameter.tapFrequency === "none" ?
+                {parameter.tapFrequencyAwake === "none" ?
                     <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
                     <Select variant="standard" value={parameter.tapFrequencyAsleep}
                         onChange={onTapFrequencyAsleepChange}>
