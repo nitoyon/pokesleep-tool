@@ -88,9 +88,3 @@ export function formatNice(n: number, t: typeof i18next.t): string {
 export function clamp(min: number, value: number, max: number): number {
     return Math.min(Math.max(value, min), max);
 }
-
-export function trunc(v: number, n: number): number {
-    const N = Math.pow(10, n);
-    const d = parseFloat((v * N).toFixed(6));
-    return Math.floor(d) / N;
-}

@@ -276,7 +276,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
                 </div>
             </article>
             <footer>
-                <div>{round1(result.berryRate * 100)}%</div>
+                <div>{round1(result.berryRatio * 100)}%</div>
                 <div>{round1(result.berryHelpCount)}{t('times unit')}</div>
             </footer>
         </section>
@@ -286,7 +286,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </h3>
             {ingArticle}
             <footer>
-                <div>{round1(result.ingRate * 100)}%</div>
+                <div>{round1(result.ingRatio * 100)}%</div>
                 <div>{round1(result.ingHelpCount)}{t('times unit')}</div>
             </footer>
         </section>
@@ -296,7 +296,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </h3>
             {mainSkillArticle}
             <footer>
-                <div>{round1(result.skillRate * 100)}%</div>
+                <div>{round1(result.skillRatio * 100)}%</div>
                 <div>{round2(result.skillCount)}{t('times unit')}</div>
             </footer>
         </section>

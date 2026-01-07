@@ -1,8 +1,6 @@
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill, { SubSkillType } from './SubSkill';
-import { IngredientType } from './PokemonRp';
-import SubSkillList from './SubSkillList';
 import { IngredientName } from '../data/pokemons';
 
 type CsvData = {
@@ -81,20 +79,13 @@ export function parseTsv(text: string): Record<string, RpData[]> {
         };
 
         // Convert TSV data to PokemonIv
-        const iv = new PokemonIv({
-            pokemonName: datum.name,
-            level: datum.level,
-            nature: datum.nature,
-            skillLevel: datum.skillLevel,
-            subSkills: new SubSkillList({
-                lv10: datum.subSkill1,
-                lv25: datum.subSkill2,
-                lv50: datum.subSkill3,
-            }),
-        });
-
-        // Determine ingredient
-        let ingredient: IngredientType = 'AAA';
+        const iv = new PokemonIv(datum.name);
+        iv.level = datum.level;
+        iv.nature = datum.nature;
+        iv.skillLevel = datum.skillLevel;
+        iv.subSkills.set(10, datum.subSkill1);
+        iv.subSkills.set(25, datum.subSkill2);
+        iv.subSkills.set(50, datum.subSkill3);
         if (iv.level >= 60) {
             if (datum.ing2 === "unknown" || datum.ing3 === "unknown") {
                 console.error(`unknown ing: ${line}`);
@@ -102,13 +93,13 @@ export function parseTsv(text: string): Record<string, RpData[]> {
             }
             switch (datum.ing3) {
                 case iv.pokemon.ing3?.name:
-                    ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAC" : "ABC";
+                    iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAC" : "ABC";
                     break;
                 case iv.pokemon.ing2.name:
-                    ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAB" : "ABB";
+                    iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAB" : "ABB";
                     break;
                 case iv.pokemon.ing1.name:
-                    ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
+                    iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
                     break;
             }
         }
@@ -117,10 +108,10 @@ export function parseTsv(text: string): Record<string, RpData[]> {
                 console.error(`unknown ing: ${line}`);
                 continue;
             }
-            ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
+            iv.ingredient = iv.pokemon.ing1.name === datum.ing2 ? "AAA" : "ABA";
         }
 
-        ret[name].push({iv: iv.clone({ingredient}), rp: datum.rp});
+        ret[name].push({iv: iv, rp: datum.rp});
     }
     return ret;
 }

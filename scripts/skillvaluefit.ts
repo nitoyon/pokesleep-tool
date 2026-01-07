@@ -27,7 +27,7 @@ function checkSkillValue(data: Record<string, RpData[]>, skillValue: number) {
 function fit(data: RpData[], skillValue: number) {
     let skills: number[] = [];
     if (fitValueOnly) {
-        skills = [data[0].iv.pokemon.skillRate];
+        skills = [data[0].iv.pokemon.skillRatio];
     }
     else {
         for (let skill = 10; skill < 100; skill++) {
@@ -37,10 +37,9 @@ function fit(data: RpData[], skillValue: number) {
 
     for (const datum of data) {
         skills = skills.filter(x => {
-            const rp = new PokemonRp(datum.iv.clone({
-                skillRate: x,
-                ingRate: datum.iv.pokemon.ingRate,
-            }));
+            datum.iv.pokemon.skillRatio = x;
+            datum.iv.pokemon.ingRatio = datum.iv.pokemon.ingRatio;
+            const rp = new PokemonRp(datum.iv);
             Object.defineProperty(rp, "skillValue", {
                 get() {
                     return skillValue;

@@ -173,8 +173,8 @@ export interface StrengthResult {
     /** Sneaky snacking help count */
     fullHelpCount: number;
 
-    /** Berry rate */
-    berryRate: number;
+    /** Berry ratio */
+    berryRatio: number;
     /** Berry help count */
     berryHelpCount: number;
     /** Berry count per help */
@@ -186,8 +186,8 @@ export interface StrengthResult {
     /** Total strength gained by berry */
     berryTotalStrength: number;
 
-    /** Ingredient rate */
-    ingRate: number;
+    /** Ingredient ratio */
+    ingRatio: number;
     /** Ingredient help count */
     ingHelpCount: number;
     /** Ingredient strength */
@@ -201,8 +201,8 @@ export interface StrengthResult {
     /** Ing1 ~ Ing3 name, count, strength summary */
     ingredients: IngredientStrength[];
 
-    /** Skill rate */
-    skillRate: number;
+    /** Skill ratio */
+    skillRatio: number;
     /** Total skill count */
     skillCount: number;
     /**
@@ -345,7 +345,7 @@ class PokemonStrength {
             showingPokemon = decendants[0];
         }
         if (showingPokemon.id !== pokemonIv.pokemon.id) {
-            pokemonIv = pokemonIv.clone({pokemonName: showingPokemon.name});
+            pokemonIv = pokemonIv.clone(showingPokemon.name);
         }
         return pokemonIv;
     }
@@ -353,25 +353,25 @@ class PokemonStrength {
     calculate(): StrengthResult {
         const param = this.param;
         const rp = new PokemonRp(this.iv);
-        const level = this.iv.level;
-        const countRate = Math.ceil(param.period / 24);
+        const level = rp.level;
+        const countRatio = Math.ceil(param.period / 24);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
         const notFullHelpCount = param.period < 0 ? -param.period :
             param.tapFrequency === 'none' ? 0 :
-            (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRate;
+            (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRatio;
         const fullHelpCount = param.period < 0 ? 0 :
             param.tapFrequency === 'none' ?
-            (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRate :
-            energy.helpCount.asleepFull * countRate;
+            (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRatio :
+            energy.helpCount.asleepFull * countRatio;
 
         // calc ingredient
-        const ingInRecipeStrengthRate = param.recipeBonus === 0 ? 1 :
+        const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
-        const ingStrengthRate = (ingInRecipeStrengthRate * 0.8 + 0.2) *
+        const ingStrengthRatio = (ingInRecipeStrengthRatio * 0.8 + 0.2) *
             (1 + param.fieldBonus / 100) * bonus.dish;
-        const ingRate = rp.iv.ingredientRate;
-        const ingHelpCount = notFullHelpCount * ingRate;
+        const ingRatio = rp.ingredientRatio;
+        const ingHelpCount = notFullHelpCount * ingRatio;
         const ingUnlock = 1 +
             (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
             (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
@@ -380,19 +380,19 @@ class PokemonStrength {
         const ing1: IngredientStrength = {...rp.ingredient1, strength: 0,
             helpCount: rp.ingredient1.count + ingEventAdd};
         ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.helpCount;
-        ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRate;
+        ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRatio;
 
         const ing2 = {...rp.ingredient2, strength: 0,
             helpCount: rp.ingredient2.count + ingEventAdd};
         ing2.count = level < 30 || ing2.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * ing2.helpCount;
-            ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRate;
+            ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRatio;
         let ing3 = undefined;
         ing3 = {...rp.ingredient3, strength: 0,
             helpCount: rp.ingredient3.count + ingEventAdd};
         ing3.count = level < 60 || ing3.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * ing3.helpCount;
-        ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRate;
+        ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRatio;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
         const ing: {[name: string]: IngredientStrength} = {};
@@ -420,7 +420,7 @@ class PokemonStrength {
         const ingredients = ingNames.map(x => ing[x]);
     
         // calc berry
-        const berryRate = (this.iv.pokemon.frequency > 0 ? 1 - ingRate : 0);
+        const berryRatio = (this.iv.pokemon.frequency > 0 ? 1 - ingRatio : 0);
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
         const berryCount = rp.berryCount;
         const berryCountWithBonus = rp.berryCount + bonus.berry;
@@ -428,23 +428,23 @@ class PokemonStrength {
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryStrengthWithBonus = Math.ceil(berryStrength * this.berryStrengthBonus);
         const berryTotalStrength =
-            berryStrengthWithBonus * berryCountWithBonus * (notFullHelpCount * (1 - ingRate)) +  +
+            berryStrengthWithBonus * berryCountWithBonus * (notFullHelpCount * (1 - ingRatio)) +  +
             berryStrengthWithBonus * berryCount * fullHelpCount;
 
         // calc skill
-        const skillRate = energy.skillRate;
+        const skillRatio = energy.skillRatio;
         let skillCount = 0, skillValue = 0, skillStrength = 0, skillValuePerTrigger = 0;
         let skillValue2 = 0, skillStrength2 = 0, skillValuePerTrigger2 = 0;
         if (param.period > 0 && !this.isWhistle && param.tapFrequency !== 'none') {
             if (param.tapFrequencyAsleep === 'always') {
                 const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
-                skillCount = helpCount * skillRate * countRate;
+                skillCount = helpCount * skillRatio * countRatio;
             }
             else {
-                const skillCountAwake = energy.helpCount.awake * skillRate;
+                const skillCountAwake = energy.helpCount.awake * skillRatio;
                 const skillCountSleeping = energy.skillProbabilityAfterWakeup.once +
                     energy.skillProbabilityAfterWakeup.twice * 2;
-                skillCount = (skillCountAwake + skillCountSleeping) * countRate;
+                skillCount = (skillCountAwake + skillCountSleeping) * countRatio;
             }
             ({skillValue, skillStrength, skillValuePerTrigger,
                 skillValue2, skillStrength2, skillValuePerTrigger2} =
@@ -470,9 +470,9 @@ class PokemonStrength {
 
         return {
             bonus, energy, totalStrength, helpingBonusStrength, notFullHelpCount, fullHelpCount,
-            ingRate, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
-            berryRate, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
-            skillRate, skillCount, skillValue, skillStrength, skillValuePerTrigger,
+            ingRatio, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
+            berryRatio, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
+            skillRatio, skillCount, skillValue, skillStrength, skillValuePerTrigger,
             skillValue2, skillStrength2, skillValuePerTrigger2,
         };
     }
@@ -523,10 +523,10 @@ class PokemonStrength {
         const skillValue = skillValuePerTrigger * skillCount;
         const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
 
-        const ingInRecipeStrengthRate = param.recipeBonus === 0 ? 1 :
+        const ingInRecipeStrengthRatio = param.recipeBonus === 0 ? 1 :
             (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
         const rawIngFactor = (1 + param.fieldBonus / 100) * bonus.dish;
-        const ingFactor = (ingInRecipeStrengthRate * 0.8 + 0.2) * rawIngFactor;
+        const ingFactor = (ingInRecipeStrengthRatio * 0.8 + 0.2) * rawIngFactor;
 
         switch (mainSkill) {
             case "Charge Energy S":
@@ -1083,10 +1083,8 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
     ];
     const ret = { total: 0, members: [] as { total: number, perBerry: number, count: number}[] };
     for (let i = 0; i < 5; i++) {
-        const ivMember = new PokemonIv({
-            pokemonName: pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur",
-            level: levels[i],
-        });
+        const ivMember = new PokemonIv(pokemons.find(x => x.type === types[i])?.name ?? "Bulbasaur");
+        ivMember.level = levels[i];
         const berryRawStrength = new PokemonRp(ivMember).berryStrength;
         const perBerry = Math.ceil(
             Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100)) *

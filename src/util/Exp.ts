@@ -192,14 +192,14 @@ function calcExpPerCandy(level: number, nature: Nature, boost: BoostEvent): numb
  * @return The exp required to level up.
  */
 export function calcExp(level1: number, level2: number, iv: PokemonIv): number {
-    const rate = expTypeRate[iv.pokemon.exp];
+    const ratio = expTypeRate[iv.pokemon.exp];
     if (level1 < 0 || level1 > maxLevel ||
         level2 < 0 || level2 > maxLevel) {
         return 0;
     }
 
-    return Math.round(totalExpToTheLevel[level2] * rate) -
-        Math.round(totalExpToTheLevel[level1] * rate);
+    return Math.round(totalExpToTheLevel[level2] * ratio) -
+        Math.round(totalExpToTheLevel[level1] * ratio);
 }
 
 /**

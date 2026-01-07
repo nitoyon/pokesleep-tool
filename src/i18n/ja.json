@@ -398,7 +398,7 @@
         "rp formula doc title": "SP計算モデルの解説",
         "estimated beyond level": "レベル {{level}} 以降の値は推測値です。",
         "estimated value": "推測値",
-        "rate is not fixed": "このポケモンの食材確率・スキル確率は未確定であるため、暫定の値を表示しています。",
+        "ratio is not fixed": "このポケモンの食材確率・スキル確率は未確定であるため、暫定の値を表示しています。",
 
         "box": "ボックス",
         "parameter": "パラメーター",

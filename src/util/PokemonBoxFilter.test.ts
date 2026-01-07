@@ -4,7 +4,6 @@ import PokemonIv from './PokemonIv';
 import { PokemonBoxItem } from './PokemonBox';
 import Nature from './Nature';
 import SubSkill from './SubSkill';
-import SubSkillList from './SubSkillList';
 import type { TFunction } from 'i18next';
 
 // Mock translation function
@@ -70,8 +69,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({});
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }))
+                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv('Eevee'))
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -83,9 +82,9 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ name: "sp" });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Sparky'),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'Thunder'),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }), 'Fluffy')
+                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Sparky'),
+                new PokemonBoxItem(new PokemonIv('Pikachu'), 'Thunder'),
+                new PokemonBoxItem(new PokemonIv('Eevee'), 'Fluffy')
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -97,8 +96,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ name: "pika" });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'x'),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }), 'y')
+                new PokemonBoxItem(new PokemonIv('Pikachu'), 'x'),
+                new PokemonBoxItem(new PokemonIv('Eevee'), 'y')
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -110,8 +109,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ name: "PIKA" });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' }), 'x'),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }), 'y')
+                new PokemonBoxItem(new PokemonIv('Pikachu'), 'x'),
+                new PokemonBoxItem(new PokemonIv('Eevee'), 'y')
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -123,8 +122,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterTypes: ["electric"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }))
+                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv('Eevee'))
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -136,9 +135,9 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterTypes: ["electric", "normal"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Bulbasaur' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' })),
+                new PokemonBoxItem(new PokemonIv('Bulbasaur')),
+                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv('Eevee')),
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -151,9 +150,9 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterSpecialty: ["Berries"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Bulbasaur' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' })),
+                new PokemonBoxItem(new PokemonIv('Bulbasaur')),
+                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv('Eevee')),
             ];
 
             const filtered = config.filter(items, false, mockT);
@@ -165,15 +164,11 @@ describe('BoxFilterConfig', () => {
         test('filters by main skill (Toxel with evolved=true, Amped nature)', () => {
             const config = new BoxFilterConfig({ mainSkillNames: ["Ingredient Magnet S"] });
 
-            const toxelAmped = new PokemonIv({
-                pokemonName: 'Toxel',
-                nature: new Nature('Hardy'), // Amped nature -> Ingredient Magnet S
-            });
+            const toxelAmped = new PokemonIv('Toxel');
+            toxelAmped.nature = new Nature('Hardy'); // Amped nature -> Ingredient Magnet S
 
-            const toxelLowKey = new PokemonIv({
-                pokemonName: 'Toxel',
-                nature: new Nature('Bold'), // Low Key nature -> Cooking Power-Up S
-            });
+            const toxelLowKey = new PokemonIv('Toxel');
+            toxelLowKey.nature = new Nature('Bold'); // Low Key nature -> Cooking Power-Up S
 
             const items = [
                 new PokemonBoxItem(toxelAmped, 'AmpedForm'),
@@ -188,15 +183,11 @@ describe('BoxFilterConfig', () => {
         test('filters by main skill (Toxel with evolved=true, Low Key nature)', () => {
             const config = new BoxFilterConfig({ mainSkillNames: ["Cooking Power-Up S"] });
 
-            const toxelAmped = new PokemonIv({
-                pokemonName: 'Toxel',
-                nature: new Nature('Hardy'), // Amped nature -> Ingredient Magnet S
-            });
+            const toxelAmped = new PokemonIv('Toxel');
+            toxelAmped.nature = new Nature('Hardy'); // Amped nature -> Ingredient Magnet S
 
-            const toxelLowKey = new PokemonIv({
-                pokemonName: 'Toxel',
-                nature: new Nature('Bold'), // Low Key nature -> Cooking Power-Up S
-            });
+            const toxelLowKey = new PokemonIv('Toxel');
+            toxelLowKey.nature = new Nature('Bold'); // Low Key nature -> Cooking Power-Up S
 
             const items = [
                 new PokemonBoxItem(toxelAmped, 'AmpedForm'),
@@ -216,20 +207,14 @@ describe('BoxFilterConfig', () => {
                 subSkillUnlockedOnly: false
             });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 100,
-                subSkills: new SubSkillList({
-                    lv10: new SubSkill("Helping Speed M"),
-                    lv25: new SubSkill("Berry Finding S"),
-                }),
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.level = 100;
+            iv1.subSkills.lv10 = new SubSkill("Helping Speed M");
+            iv1.subSkills.lv25 = new SubSkill("Berry Finding S");
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 100,
-                subSkills: new SubSkillList({ lv10: new SubSkill("Helping Speed M") }),
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.level = 100;
+            iv2.subSkills.lv10 = new SubSkill("Helping Speed M");
 
             const items = [
                 new PokemonBoxItem(iv1, 'HasBoth'),
@@ -248,23 +233,17 @@ describe('BoxFilterConfig', () => {
                 subSkillUnlockedOnly: false
             });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 100,
-                subSkills: new SubSkillList({ lv10: new SubSkill("Helping Speed M") }),
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.level = 100;
+            iv1.subSkills.lv10 = new SubSkill("Helping Speed M");
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 100,
-                subSkills: new SubSkillList({ lv10: new SubSkill("Berry Finding S") }),
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.level = 100;
+            iv2.subSkills.lv10 = new SubSkill("Berry Finding S");
 
-            const iv3 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 100,
-                subSkills: new SubSkillList({ lv10: new SubSkill("Skill Trigger M") }),
-            });
+            const iv3 = new PokemonIv('Pikachu');
+            iv3.level = 100;
+            iv3.subSkills.lv10 = new SubSkill("Skill Trigger M");
 
             const items = [
                 new PokemonBoxItem(iv1, 'HasFirst'),
@@ -283,17 +262,13 @@ describe('BoxFilterConfig', () => {
                 subSkillUnlockedOnly: true
             });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 5,
-                subSkills: new SubSkillList({ lv10: new SubSkill("Helping Speed M") }),
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.level = 5;
+            iv1.subSkills.lv10 = new SubSkill("Helping Speed M");
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                level: 10,
-                subSkills: new SubSkillList({ lv10: new SubSkill("Helping Speed M") }),
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.level = 10;
+            iv2.subSkills.lv10 = new SubSkill("Helping Speed M");
 
             const items = [
                 new PokemonBoxItem(iv1, 'Level5'),
@@ -308,15 +283,11 @@ describe('BoxFilterConfig', () => {
         test('filters by neutral nature', () => {
             const config = new BoxFilterConfig({ neutralNature: true });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Bashful"), // Neutral nature
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.nature = new Nature("Bashful"); // Neutral nature
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Bold"), // Non-neutral nature
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.nature = new Nature("Bold"); // Non-neutral nature
 
             const items = [
                 new PokemonBoxItem(iv1, 'Neutral'),
@@ -331,15 +302,11 @@ describe('BoxFilterConfig', () => {
         test('filters by up nature', () => {
             const config = new BoxFilterConfig({ upNature: "Energy recovery" });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Bold"), // Energy recovery up
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.nature = new Nature("Bold"); // Energy recovery up
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Adamant"), // Speed of help up
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.nature = new Nature("Adamant"); // Speed of help up
 
             const items = [
                 new PokemonBoxItem(iv1, 'EnergyUp'),
@@ -354,15 +321,11 @@ describe('BoxFilterConfig', () => {
         test('filters by down nature', () => {
             const config = new BoxFilterConfig({ downNature: "Speed of help" });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Bold"), // Speed of help down
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.nature = new Nature("Bold"); // Speed of help down
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Adamant"), // EXP gains down
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.nature = new Nature("Adamant"); // EXP gains down
 
             const items = [
                 new PokemonBoxItem(iv1, 'SpeedDown'),
@@ -380,20 +343,14 @@ describe('BoxFilterConfig', () => {
                 neutralNature: true
             });
 
-            const iv1 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Bashful"), // Electric + Neutral
-            });
+            const iv1 = new PokemonIv('Pikachu');
+            iv1.nature = new Nature("Bashful"); // Electric + Neutral
 
-            const iv2 = new PokemonIv({
-                pokemonName: 'Pikachu',
-                nature: new Nature("Bold"), // Electric + Non-neutral
-            });
+            const iv2 = new PokemonIv('Pikachu');
+            iv2.nature = new Nature("Bold"); // Electric + Non-neutral
 
-            const iv3 = new PokemonIv({
-                pokemonName: 'Eevee',
-                nature: new Nature("Bashful"), // Non-electric + Neutral
-            });
+            const iv3 = new PokemonIv('Eevee');
+            iv3.nature = new Nature("Bashful"); // Non-electric + Neutral
 
             const items = [
                 new PokemonBoxItem(iv1, 'Match'),
@@ -410,8 +367,8 @@ describe('BoxFilterConfig', () => {
             const config = new BoxFilterConfig({ filterTypes: ["dragon"] });
 
             const items = [
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Pikachu' })),
-                new PokemonBoxItem(new PokemonIv({ pokemonName: 'Eevee' }))
+                new PokemonBoxItem(new PokemonIv('Pikachu')),
+                new PokemonBoxItem(new PokemonIv('Eevee'))
             ];
 
             const filtered = config.filter(items, false, mockT);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import SubSkill, { SubSkillType } from '../../../util/SubSkill';
-import SubSkillList, { SubSkillListProps } from '../../../util/SubSkillList';
+import SubSkillList from '../../../util/SubSkillList';
 import { Badge, Button, ButtonBase, Dialog, DialogActions } from '@mui/material';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -152,18 +152,13 @@ const EditSubSkillDialog = React.memo(({open, value, level, onChange, onClose, o
     const { t } = useTranslation();
 
     const onClick = React.useCallback((subSkillType: SubSkillType) => {
+        const newValue = new SubSkillList(value);
         const skill = new SubSkill(subSkillType);
-        const currentLevel = value.getSubSkillLevel(skill);
-
-        let newValue: SubSkillList;
+        const currentLevel = newValue.getSubSkillLevel(skill);
         if (currentLevel === -1) {
-            // Add skill at current level
-            const levelKey = `lv${level}` as keyof SubSkillListProps;
-            newValue = value.clone({ [levelKey]: skill });
+            newValue.set(level, skill);
         } else {
-            // Remove skill from its current level
-            const levelKey = `lv${currentLevel}` as keyof SubSkillListProps;
-            newValue = value.clone({ [levelKey]: null });
+            newValue.set(currentLevel, null);
         }
 
         onChange({value: newValue});

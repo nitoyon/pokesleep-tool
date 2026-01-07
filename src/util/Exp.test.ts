@@ -4,11 +4,9 @@ import PokemonIv from './PokemonIv';
 
 describe('calcExpAndCandy', () => {
     test('level 10->30 (EXP up)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            nature: new Nature('Timid'), // EXP up
-            level: 10,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.nature = new Nature('Timid'); // EXP up
+        iv.level = 10;
         expect(iv.nature.isExpGainsUp).toBe(true);
 
         const res = calcExpAndCandy(iv, 0, 30, "none");
@@ -17,11 +15,9 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 10->50 (EXP up)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            nature: new Nature('Timid'), // EXP up
-            level: 10,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.nature = new Nature('Timid'); // EXP up
+        iv.level = 10;
         expect(iv.nature.isExpGainsUp).toBe(true);
 
         const res = calcExpAndCandy(iv, 0, 50, "none");
@@ -30,11 +26,9 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 12->30 (EXP down)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            nature: new Nature('Relaxed'), // EXP down
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.nature = new Nature('Relaxed'); // EXP down
+        iv.level = 12;
         expect(iv.nature.isExpGainsUp).toBe(false);
 
         const res = calcExpAndCandy(iv, 0, 30, "none");
@@ -43,11 +37,9 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 12->50 (EXP down)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            nature: new Nature('Relaxed'), // EXP down
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.nature = new Nature('Relaxed'); // EXP down
+        iv.level = 12;
         expect(iv.nature.isExpGainsUp).toBe(false);
 
         const res = calcExpAndCandy(iv, 0, 50, "none");
@@ -56,10 +48,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 12->50', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const res = calcExpAndCandy(iv, 0, 50, "none");
         expect(res.candy).toBe(1014);
@@ -67,10 +57,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 12->50 (exp got)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const res = calcExpAndCandy(iv, 75, 50, "none");
         expect(res.candy).toBe(1011);
@@ -78,10 +66,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 12->50 (mini)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const res = calcExpAndCandy(iv, 0, 50, "mini");
         expect(res.candy).toBe(507);
@@ -89,10 +75,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 12->50 (unlimited)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const res = calcExpAndCandy(iv, 0, 50, "unlimited");
         expect(res.candy).toBe(507);
@@ -100,10 +84,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 14->31 (Dratini)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Dratini',
-            level: 14,
-        });
+        const iv = new PokemonIv('Dratini');
+        iv.level = 14;
 
         const res = calcExpAndCandy(iv, 0, 31, "none");
         expect(res.candy).toBe(449);
@@ -111,10 +93,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 28->35 (Entei)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Entei',
-            level: 28,
-        });
+        const iv = new PokemonIv('Entei');
+        iv.level = 28;
 
         const res = calcExpAndCandy(iv, 0, 35, "none");
         expect(res.candy).toBe(360);
@@ -122,10 +102,8 @@ describe('calcExpAndCandy', () => {
     });
 
     test('level 26->29 (Darkrai)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Darkrai',
-            level: 26,
-        });
+        const iv = new PokemonIv('Darkrai');
+        iv.level = 26;
 
         const res = calcExpAndCandy(iv, 0, 29, "none");
         expect(res.candy).toBe(147);
@@ -135,10 +113,8 @@ describe('calcExpAndCandy', () => {
 
 describe('calcLevelByCandy', () => {
     test('level 10->30 with enough candy (no boost)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 10,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 10;
 
         // Required candy: 314, Required shards: 26,131
         const res = calcLevelByCandy(iv, 0, 30, 350, "none");
@@ -152,10 +128,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('level 10->30 with insufficient candy (no boost)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 10,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 10;
 
         const res = calcLevelByCandy(iv, 0, 30, 100, "none");
         expect(res.exp).toBe(10432);
@@ -168,10 +142,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('level 10->30 with exact candy (no boost)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 10,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 10;
 
         const res = calcLevelByCandy(iv, 0, 30, 314, "none");
         expect(res.level).toBe(30);
@@ -184,10 +156,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('level 12->50 with enough candy (mini boost)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const res = calcLevelByCandy(iv, 0, 50, 1000, "mini");
         expect(res.exp).toBe(27712);
@@ -200,10 +170,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('level 12->50 with enough candy (unlimited boost)', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const res = calcLevelByCandy(iv, 0, 50, 1000, "unlimited");
         expect(res.exp).toBe(27712);
@@ -216,10 +184,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('mini boost uses correct shard multiplier', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const requirement = calcExpAndCandy(iv, 0, 50, "mini");
         const res = calcLevelByCandy(iv, 0, 50, requirement.candy, "mini");
@@ -228,10 +194,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('unlimited boost uses correct shard multiplier', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 12,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 12;
 
         const requirement = calcExpAndCandy(iv, 0, 50, "unlimited");
         const res = calcLevelByCandy(iv, 0, 50, requirement.candy, "unlimited");
@@ -240,10 +204,8 @@ describe('calcLevelByCandy', () => {
     });
 
     test('level border test', () => {
-        const iv = new PokemonIv({
-            pokemonName: 'Ralts',
-            level: 30,
-        });
+        const iv = new PokemonIv('Ralts');
+        iv.level = 30;
         const expToLevel31 = 729;
 
         // Required 26 exp, but we have only 1 candy

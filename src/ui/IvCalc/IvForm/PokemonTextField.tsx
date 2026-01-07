@@ -39,7 +39,7 @@ const PokemonTextField = React.memo(({iv, fixMode, onChange, onCandyClick}: {
         () => pokemons
             .map((pokemon) => ({
                 ...pokemon,
-                idForm: new PokemonIv({ pokemonName: pokemon.name }).idForm,
+                idForm: new PokemonIv(pokemon.name).idForm,
                 localName: t(`pokemons.${pokemon.name}`),
                 isNonEvolving: pokemon.evolutionCount === -1,
                 isFullyEvolved: pokemon.isFullyEvolved,

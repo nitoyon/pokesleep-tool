@@ -21,7 +21,7 @@ function fit(data: RpData[]) {
     let candidates: RateInfo[] = [];
     for (let skill = 10; skill < 100; skill++) {
         if (process.argv.some(x => x === '--fitSkillOnly')) {
-            candidates.push({skill: skill / 10, ing: data[0].iv.pokemon.ingRate});
+            candidates.push({skill: skill / 10, ing: data[0].iv.pokemon.ingRatio});
             continue;
         }
         for (let ing = 90; ing < 400; ing++) {
@@ -31,10 +31,9 @@ function fit(data: RpData[]) {
 
     for (const datum of data) {
         candidates = candidates.filter(x => {
-            const rp = new PokemonRp(datum.iv.clone({
-                skillRate: x.skill,
-                ingRate: x.ing,
-            }));
+            datum.iv.pokemon.skillRatio = x.skill;
+            datum.iv.pokemon.ingRatio = x.ing;
+            const rp = new PokemonRp(datum.iv);
             return rp.Rp === datum.rp;
         });
     }

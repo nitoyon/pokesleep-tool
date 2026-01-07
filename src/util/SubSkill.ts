@@ -20,11 +20,9 @@ export type SubSkillType = GoldSubSkillType | BlueSubSkillType | WhiteSubSkillTy
 
 /**
  * Represents the nature of the pokemon.
- *
- * This class is immutable.
  */
 class SubSkill {
-    private readonly value: SubSkillType;
+    private value: SubSkillType;
 
     private static goldSubSkillNames: GoldSubSkillType[] = [
         "Berry Finding S",

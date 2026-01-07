@@ -408,7 +408,7 @@
         "rp formula doc title": "RP Model Breakdown",
         "estimated beyond level": "The value beyond level {{level}} is estimated.",
         "estimated value": "Estimated",
-        "rate is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
+        "ratio is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
 
         "box": "Box",
         "parameter": "Parameter",

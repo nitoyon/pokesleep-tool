@@ -479,9 +479,9 @@ const EnergyHover = React.memo(({width, height, x, gx, gy, result}: {
     else {
         const curEvent = result.events[eventIndex - 1];
         const nextEvent = result.events[eventIndex];
-        const rate = (minute - curEvent.minutes) / (nextEvent.minutes - curEvent.minutes);
+        const ratio = (minute - curEvent.minutes) / (nextEvent.minutes - curEvent.minutes);
         energy = curEvent.energyAfter +
-            (nextEvent.energyBefore - curEvent.energyAfter) * rate;
+            (nextEvent.energyBefore - curEvent.energyAfter) * ratio;
     }
 
     // find efficiency

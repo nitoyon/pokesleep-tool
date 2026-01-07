@@ -12,38 +12,38 @@ describe('SubSkillList constructor', () => {
     });
 
     test('argument given', () => {
-        const b = new SubSkillList({ lv10: new SubSkill("Skill Trigger S") });
+        const b = new SubSkillList();
+        b.lv10 = new SubSkill("Skill Trigger S");
 
-        const s = new SubSkillList(b.toProps());
+        const s = new SubSkillList(b);
         expect(s.lv10?.name).toBe("Skill Trigger S");
-        const s2 = s.clone({ lv10: new SubSkill("Berry Finding S") });
-        expect(s2.lv10?.name).toBe("Berry Finding S");
+        s.lv10 = new SubSkill("Berry Finding S");
+        expect(s.lv10?.name).toBe("Berry Finding S");
 
-        // base objects should not be changed (immutability)
+        // base object should not be changed!
         expect(b.lv10?.name).toBe("Skill Trigger S");
-        expect(s.lv10?.name).toBe("Skill Trigger S");
     });
 });
 
-describe('SubSkillList.clone with swap logic', () => {
+describe('SubSkillList.set', () => {
     test('exclusive', () => {
-        let s = new SubSkillList();
-        s = s.clone({ lv10: new SubSkill("Berry Finding S") });
+        const s = new SubSkillList();
+        s.lv10 = new SubSkill("Berry Finding S");
         expect(s.lv10?.name).toBe("Berry Finding S");
 
-        s = s.clone({ lv25: new SubSkill("Berry Finding S") });
+        s.lv25 = new SubSkill("Berry Finding S");
         expect(s.lv10).toBe(null);
         expect(s.lv25?.name).toBe("Berry Finding S");
     });
 
     test('swap', () => {
-        let s = new SubSkillList();
-        s = s.clone({ lv10: new SubSkill("Berry Finding S") });
-        s = s.clone({ lv25: new SubSkill("Skill Trigger S") });
+        const s = new SubSkillList();
+        s.lv10 = new SubSkill("Berry Finding S");
+        s.lv25 = new SubSkill("Skill Trigger S");
         expect(s.lv10?.name).toBe("Berry Finding S");
         expect(s.lv25?.name).toBe("Skill Trigger S");
 
-        s = s.clone({ lv25: new SubSkill("Berry Finding S") });
+        s.lv25 = new SubSkill("Berry Finding S");
         expect(s.lv10?.name).toBe("Skill Trigger S");
         expect(s.lv25?.name).toBe("Berry Finding S");
     });

@@ -20,24 +20,24 @@ const IngredientTextField = React.memo(({iv, onChange}: {
     onChange: (value: PokemonIv) => void,
 }) => {
     const _onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(iv.clone({
-            ingredient: e.target.value as IngredientType,
-        }));
+        const value = iv.clone();
+        value.ingredient = e.target.value as IngredientType;
+        onChange(value);
     }, [iv, onChange]);
     const onChange1 = useCallback((ing: string) => {
-        onChange(iv.clone({
-            mythIng1: ing as IngredientName,
-        }));
+        const value = iv.clone();
+        value.mythIng1 = ing as IngredientName;
+        onChange(value);
     }, [iv, onChange]);
     const onChange2 = useCallback((ing: string) => {
-        onChange(iv.clone({
-            mythIng2: ing as IngredientName,
-        }));
+        const value = iv.clone();
+        value.mythIng2 = ing as IngredientName;
+        onChange(value);
     }, [iv, onChange]);
     const onChange3 = useCallback((ing: string) => {
-        onChange(iv.clone({
-            mythIng3: ing as IngredientName,
-        }));
+        const value = iv.clone();
+        value.mythIng3 = ing as IngredientName;
+        onChange(value);
     }, [iv, onChange]);
 
     if (iv.isMythical) {

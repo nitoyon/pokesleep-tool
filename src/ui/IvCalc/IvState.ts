@@ -68,7 +68,7 @@ type IvStateCache = {
  */
 export function getInitialIvState(): IvState {
     const cache = loadInitialIvStateCache();
-    let iv = new PokemonIv({ pokemonName: "Venusaur" });
+    let iv = new PokemonIv("Venusaur");
     if (cache.iv !== "") {
         try {
             iv = PokemonIv.deserialize(cache.iv);
@@ -330,6 +330,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 
 export function normalizeState(state: IvState): IvState {
     const selectedItem = state.box.getById(state.selectedItemId);
+    state.pokemonIv.normalize();
 
     // apply event fixedBerries type
     const event = getEventBonus(state.parameter.event,

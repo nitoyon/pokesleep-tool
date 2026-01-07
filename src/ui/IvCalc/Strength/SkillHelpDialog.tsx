@@ -41,10 +41,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     const [berryBonus, setBerryBonus] = React.useState(1);
     const onBerryInfoClick = React.useCallback((type: PokemonType, level: number) => {
         setBerryStrengthOpen(true);
-        const iv = new PokemonIv({
-            pokemonName: pokemons.find(x => x.type === type)?.name ?? "Bulbasaur",
-            level,
-        });
+        const iv = new PokemonIv(pokemons.find(x => x.type === type)?.name ?? "Bulbasaur");
+        iv.level = level;
         setBerryIv(iv);
         setBerryBonus(new PokemonStrength(iv, strength.parameter).berryStrengthBonus);
     }, [strength.parameter]);
@@ -56,9 +54,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         if (value === null) {
             return;
         }
-        const iv = strength.pokemonIv.clone({
-            skillLevel: parseInt(value, 10),
-        });
+        const iv = strength.pokemonIv.clone();
+        iv.skillLevel = parseInt(value, 10);
         dispatch({type: "updateIv", payload: {iv}});
     }, [dispatch, strength.pokemonIv]);
 
