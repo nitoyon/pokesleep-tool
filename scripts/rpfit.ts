@@ -9,6 +9,7 @@
 // See src/util/RpParse.tsv for details
 
 import parseTsv, { RpData } from '../src/util/RpParse';
+import PokemonIv from '../src/util/PokemonIv';
 import PokemonRp from '../src/util/PokemonRp';
 import * as fs from 'fs';
 
@@ -21,7 +22,7 @@ function fit(data: RpData[]) {
     let candidates: RateInfo[] = [];
     for (let skill = 10; skill < 100; skill++) {
         if (process.argv.some(x => x === '--fitSkillOnly')) {
-            candidates.push({skill: skill / 10, ing: data[0].iv.pokemon.ingRatio});
+            candidates.push({skill: skill / 10, ing: data[0].iv.pokemon.ingRate});
             continue;
         }
         for (let ing = 90; ing < 400; ing++) {
@@ -31,9 +32,14 @@ function fit(data: RpData[]) {
 
     for (const datum of data) {
         candidates = candidates.filter(x => {
-            datum.iv.pokemon.skillRatio = x.skill;
-            datum.iv.pokemon.ingRatio = x.ing;
-            const rp = new PokemonRp(datum.iv);
+            // [HACK] clone to clear cache
+            const iv = datum.iv.clone();
+            (iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+                ...iv.pokemon,
+                skillRate: x.skill,
+                ingRate: x.ing,
+            };
+            const rp = new PokemonRp(iv);
             return rp.Rp === datum.rp;
         });
     }

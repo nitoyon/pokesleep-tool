@@ -35,9 +35,11 @@ export type PlusMinusOneOrZero = -1|0|1;
 
 /**
  * Represents the nature of pokemon.
+ *
+ * This class is immutable.
  */
 class Nature {
-    private value: NatureType;
+    private readonly value: NatureType;
 
     private static allNatureNames: NatureType[] = [
         "Bashful", "Hardy", "Docile", "Quirky", "Serious",
