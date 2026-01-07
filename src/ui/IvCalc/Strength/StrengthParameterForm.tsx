@@ -12,6 +12,7 @@ import PeriodSelect from './PeriodSelect';
 import EventConfigDialog from './EventConfigDialog';
 import FixedLevelSelect from './FixedLevelSelect';
 import { LevelInput } from '../IvForm/LevelControl';
+import MessageDialog from '../../Dialog/MessageDialog';
 import { getActiveHelpBonus } from '../../../data/events';
 import {
     createStrengthParameter, StrengthParameter, whistlePeriod,
@@ -58,10 +59,17 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     hasHelpingBonus: boolean,
 }) => {
     const { t } = useTranslation();
+    const [pityProcHelpOpen, setPityProcHelpOpen] = React.useState(false);
     const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
     const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
     const [initializeConfirmOpen, setInitializeConfirmOpen] = React.useState(false);
 
+    const onPityProcHelpClick = React.useCallback(() => {
+        setPityProcHelpOpen(true);
+    }, []);
+    const onPityProcHelpClose = React.useCallback(() => {
+        setPityProcHelpOpen(false);
+    }, []);
     const onRecipeBonusInfoClick = React.useCallback(() => {
         setRecipeBonusHelpOpen(true);
     }, []);
@@ -81,6 +89,9 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     }, [onChange, value]);
     const onMaxSkillLevelChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...value, maxSkillLevel: e.target.checked});
+    }, [onChange, value]);
+    const onPityProcChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({...value, pityProc: e.target.checked});
     }, [onChange, value]);
     const onEventChange = React.useCallback((_: React.MouseEvent, val: string|null) => {
         if (val === null) {
@@ -167,6 +178,10 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             <label>{t('calc with max skill level')}:</label>
             <Switch checked={value.maxSkillLevel} onChange={onMaxSkillLevelChange}/>
         </section>
+        <section>
+            <label>{t('include pity proc')}:<InfoButton onClick={onPityProcHelpClick}/></label>
+            <Switch checked={value.pityProc} onChange={onPityProcChange}/>
+        </section>
         <section className="mt">
             <label>{t('helping bonus')}:</label>
             <Select variant="standard" value={value.helpBonusCount.toString()}
@@ -230,6 +245,8 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         <InitializeConfirmDialog open={initializeConfirmOpen} onClose={onInitializeConfirmClose}
             dispatch={dispatch}/>
         <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
+        <MessageDialog open={pityProcHelpOpen} onClose={onPityProcHelpClose}
+            message={t('pity proc help')}/>
         <EventConfigDialog open={eventDetailOpen} onClose={onEventDetailClose}
             value={value} onChange={onChange}/>
     </StyledSettingForm>;

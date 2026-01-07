@@ -438,6 +438,8 @@
         "calc with evolved (short)": "진화한",
         "calc with max skill level": "최대 기술 레벨로 계산하다",
         "calc with max skill level (short)": "최대 기술 레벨",
+        "include pity proc": "스킬 연속 불발 천장 고려",
+        "pity proc help": "포켓몬 슬립에는 메인 스킬이 일정 횟수 이상 연속으로 발동하지 않았을 때 메인 스킬이 확정적으로 발동하는 사양이 있습니다. 이 플래그를 활성화하면 스킬 연속 불발 천장을 고려하여 메인 스킬 발동 횟수를 산출합니다.",
         "current level": "현재 레벨",
         "area bonus": "필드 보너스",
         "favorite berry": "좋아하는 열매",

@@ -443,6 +443,8 @@
         "calc with evolved (short)": "進化后",
         "calc with max skill level": "根據最高技能等級計算",
         "calc with max skill level (short)": "最高技能等級",
+        "include pity proc": "考慮技能連續未發動保底",
+        "pity proc help": "寶可夢睡眠中有一個機制，當主技能連續一定次數以上未發動時，主技能會確定發動。啟用此標誌後，將考慮技能連續未發動保底機制來計算主技能發動次數。",
         "area bonus": "營地獎勵",
         "favorite berry": "喜歡的樹果",
         "helping bonus": "幫手獎勵",
