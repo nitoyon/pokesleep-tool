@@ -396,7 +396,7 @@
         "rp formula doc title": "SP计算模型的解说",
         "estimated beyond level": "级别 {{level}} 以后的值是估算值。",
         "estimated value": "推测值",
-        "ratio is not fixed": "该宝可梦的食材几率和技能几率尚未确定，因此显示的是临时值。",
+        "rate is not fixed": "该宝可梦的食材几率和技能几率尚未确定，因此显示的是临时值。",
 
         "box": "盒子",
         "parameter": "参数",

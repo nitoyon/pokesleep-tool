@@ -30,7 +30,7 @@ const BoxItemDialog = React.memo(({open, boxItem, isEdit, onClose, onChange}: {
     onChange: (value: PokemonBoxItem) => void,
 }) => {
     if (!isEdit) {
-        boxItem = new PokemonBoxItem(new PokemonIv("Venusaur"), undefined, -1);
+        boxItem = new PokemonBoxItem(new PokemonIv({ pokemonName: "Venusaur" }), undefined, -1);
     }
     if (boxItem === null) {
         return <></>;
