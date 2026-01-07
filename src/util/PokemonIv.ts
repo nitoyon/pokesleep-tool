@@ -22,10 +22,6 @@ export interface PokemonIvProps {
     mythIng1: IngredientName;
     mythIng2: IngredientName;
     mythIng3: IngredientName;
-    /** Use when overwrite skill rate */
-    skillRate: number;
-    /** Use when overwrite ingredient rate */
-    ingRate: number;
 }
 
 /**
@@ -72,15 +68,6 @@ class PokemonIv {
         }
 
         this.pokemon = pokemon;
-        if (pokemon.skillRate !== params.skillRate ||
-            pokemon.ingRate !== params.ingRate
-        ) {
-            this.pokemon = {
-                ...pokemon,
-                skillRate: params.skillRate,
-                ingRate: params.ingRate,
-            };
-        }
     }
 
     /** Returns true if the Pokémon is mythical. */
@@ -259,8 +246,6 @@ class PokemonIv {
             mythIng1: params.mythIng1 ?? "unknown",
             mythIng2: params.mythIng2 ?? "unknown",
             mythIng3: params.mythIng3 ?? "unknown",
-            skillRate: params.skillRate ?? pokemon.skillRate,
-            ingRate: params.ingRate ?? pokemon.ingRate,
         };
 
         // 4. Validate and normalize values
@@ -479,8 +464,6 @@ class PokemonIv {
             mythIng1: this.mythIng1,
             mythIng2: this.mythIng2,
             mythIng3: this.mythIng3,
-            skillRate: this.pokemon.skillRate,
-            ingRate: this.pokemon.ingRate,
         };
     }
 

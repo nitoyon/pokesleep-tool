@@ -54,17 +54,6 @@ describe('PokemonIV', () => {
             expect(iv.ingredient).toBe('ABA'); // 'C' replaced with 'A'
         });
 
-        test('overrides skillRate and ingRate when specified', () => {
-            const iv = new PokemonIv({
-                pokemonName: 'Pikachu',
-                skillRate: 0.5,
-                ingRate: 0.3,
-            });
-
-            expect(iv.pokemon.skillRate).toBe(0.5);
-            expect(iv.pokemon.ingRate).toBe(0.3);
-        });
-
         test('uses default skillRate and ingRate when not specified', () => {
             const iv1 = new PokemonIv({ pokemonName: 'Pikachu' });
             const iv2 = new PokemonIv({ pokemonName: 'Pikachu' });
@@ -252,8 +241,6 @@ describe('PokemonIV', () => {
             expect(params.ribbon).toBe(3);
             expect(params.nature).toBe(iv.nature);
             expect(params.subSkills).toBe(iv.subSkills);
-            expect(params.skillRate).toBe(iv.pokemon.skillRate);
-            expect(params.ingRate).toBe(iv.pokemon.ingRate);
         });
 
         test('extracts mythical pokemon ingredients correctly', () => {
@@ -636,17 +623,6 @@ describe('PokemonIV', () => {
 
             expect(result.pokemonName).toBe('Pikachu (Halloween)');
             expect(result.level).toBe(75);
-        });
-
-        test('preserves skillRate and ingRate when provided', () => {
-            const result = PokemonIv.normalize({
-                pokemonName: 'Bulbasaur',
-                skillRate: 0.5,
-                ingRate: 0.3,
-            });
-
-            expect(result.skillRate).toBe(0.5);
-            expect(result.ingRate).toBe(0.3);
         });
     });
 

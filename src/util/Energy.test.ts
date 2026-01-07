@@ -216,8 +216,6 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Hasty'), // Energy recovery down
             level: 1,
-            skillRate: 10,
-            ingRate: 10,
         });
 
         // change pokemon parameter (type assertion for testing)
@@ -225,6 +223,8 @@ describe('Energy', () => {
             ...iv.pokemon,
             carryLimit: 10,
             frequency: 1800, // 30min
+            skillRate: 10,
+            ingRate: 10,
         };
 
         const energy = new Energy(iv);
@@ -262,14 +262,14 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Hasty'), // Energy recovery down
             level: 1,
-            skillRate: 10,
-            ingRate: 10,
         });
         (iv2 as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
             ...iv2.pokemon,
             carryLimit: 10,
             frequency: 1800, // 30min
             specialty: "Berries",
+            skillRate: 10,
+            ingRate: 10,
         };
         const energy2 = new Energy(iv2);
         const result2 = energy2.calculate(createParam({e4eCount: 0, sleepScore: 90}));
@@ -285,8 +285,6 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Hasty'), // Energy recovery down
             level: 1,
-            skillRate: 10,
-            ingRate: 10,
         });
 
         // change pokemon parameter (type assertion for testing)
@@ -294,6 +292,8 @@ describe('Energy', () => {
             ...iv.pokemon,
             carryLimit: 10,
             frequency: 1800, // 30min
+            skillRate: 10,
+            ingRate: 10,
         };
 
         const energy = new Energy(iv);
@@ -312,8 +312,6 @@ describe('Energy', () => {
             pokemonName: 'Eevee',
             nature: new Nature('Serious'), // Neutral
             level: 1,
-            skillRate: 10,
-            ingRate: 10,
         });
 
         // change pokemon parameter (type assertion for testing)
@@ -321,6 +319,8 @@ describe('Energy', () => {
             ...iv.pokemon,
             carryLimit: 10,
             frequency: 1800, // 30min
+            skillRate: 10,
+            ingRate: 10,
         };
 
         const energy = new Energy(iv);
