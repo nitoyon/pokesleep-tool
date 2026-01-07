@@ -3529,6 +3529,40 @@
         }
     },
     {
+        "id": 231,
+        "name": "Shuckle",
+        "arrival": "2026-01-19",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "bug",
+        "specialty": "Skills",
+        "skill": "Energy for Everyone S (Berry Juice)",
+        "fp": 16,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": null,
+        "evolutionCount": 0,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 242,
         "name": "Blissey",
         "arrival": "2025-05-05",

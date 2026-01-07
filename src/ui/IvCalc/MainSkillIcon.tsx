@@ -3,6 +3,7 @@ import { IngredientName } from '../../data/pokemons';
 import { MainSkillName } from '../../util/MainSkill';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import SwipeOutlinedIcon from '@mui/icons-material/SwipeOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -35,6 +36,12 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
                 return <VolunteerActivismIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
             } else {
                 return <LocalFireDepartmentIcon sx={{color: "#ff944b"}}/>;
+            }
+        case "Energy for Everyone S (Berry Juice)":
+            if (second !== true) {
+                return <VolunteerActivismIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
+            } else {
+                return <LocalDrinkIcon sx={{color: "#39e17aff"}}/>;
             }
         case "Energizing Cheer S":
         case "Energizing Cheer S (Nuzzle)":

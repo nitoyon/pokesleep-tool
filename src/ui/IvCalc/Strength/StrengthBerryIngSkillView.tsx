@@ -372,7 +372,9 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
 
     const mainSkill = pokemonIv.pokemon.skill;
     const mainSkillValue: string = formatNice(result.skillValue, t);
-    const mainSkillValue2: string = result.skillValue2 === 0 ? "" :
+    const mainSkillValue2: string =
+        mainSkill === "Energy for Everyone S (Berry Juice)" ? "0.00" :
+        result.skillValue2 === 0 ? "" :
         formatNice(result.skillValue2, t);
 
     const skill1 = <div>
