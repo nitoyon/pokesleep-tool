@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "또한, 사용 방법 설명 동영상을 <YouTube>YouTube 채널</YouTube>에서 공개하고 있습니다. 꼭 확인해주세요.",
             "news": {
+                "clodsire bug": {
+                    "headline": "[$t(box)]에서 $t(pokemons.Clodsire)가 탈출했을 가능성이 있습니다. 확인해 주세요.",
+                    "detail": "1월 7일~9일 사이에 도구를 새로 연 경우, 박스 내 $t(pokemons.Clodsire)의 데이터가 사라진 상태였습니다. 불편을 끼쳐드려 죄송합니다."
+                },
                 "candy movie": {
                     "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>사탕 계산 기능 사용법 동영상</a>을 공개했습니다.",
                     "detail": "$t(movie detail)"

@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "此外，我们在 <YouTube>YouTube 频道</YouTube> 上发布了使用方法的讲解视频。请务必观看。",
             "news": {
+                "clodsire bug": {
+                    "headline": "$t(pokemons.Clodsire)可能从[$t(box)]中逃走了，请您确认。",
+                    "detail": "如果您在1月7日至9日期间首次打开工具，盒子中的$t(pokemons.Clodsire)数据可能已消失。对此造成的不便深表歉意。"
+                },
                 "candy movie": {
                     "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>糖果计算功能的使用方法视频</a>已发布。",
                     "detail": "$t(movie detail)"
