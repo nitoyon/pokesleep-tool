@@ -581,7 +581,9 @@ class PokemonIv {
 
         // get form
         const form = array16[1] & 0x3f;
-        if (form !== 0) {
+        if (form !== 0 &&
+            id !== 980 // treat `Clodsire` as special case
+        ) {
             const formStr = PokemonIv.formToString(form);
             const newName = `${pokemon.name.replace(/ \(.+/, '')} (${formStr})`;
             pokemon = pokemons.find(x => x.name === newName);

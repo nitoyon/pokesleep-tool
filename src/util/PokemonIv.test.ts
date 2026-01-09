@@ -2,6 +2,7 @@ import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
+import pokemons from '../data/pokemons';
 
 describe('PokemonIV', () => {
     describe('constructor', () => {
@@ -455,6 +456,16 @@ describe('PokemonIV', () => {
 
             const ret = PokemonIv.deserialize('ETWGpwT5-38f');
             compareIv(iv, ret);
+        });
+
+        test('all pokemon', () => {
+            for (const pokemon of pokemons) {
+                const iv = new PokemonIv({ pokemonName: pokemon.name });
+                const serialized = iv.serialize();
+
+                const ret = PokemonIv.deserialize(serialized);
+                compareIv(iv, ret);
+            }
         });
     });
 
