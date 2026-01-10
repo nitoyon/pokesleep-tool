@@ -11,6 +11,22 @@ import {
     expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
 } from './PokemonStrength';
 
+/** Bonus that affect inventory consumption */
+export interface InventoryBonus {
+    /** Berry count bonus from events (0 or 1) */
+    berryBonus: 0|1;
+    /** Ingredient count bonus from events (0 or 1) */
+    ingredientBonus: 0|1;
+    /**
+     * Whether expert mode ingredient bonus applies.
+     * True if following condition are all met.
+     * - Expert mode
+     * - ExpertEffects is `ing`
+     * - Favorite berry
+     */
+    expertIngBonus: boolean;
+}
+
 /**
  * Interface containing all configurable properties of
  * a PokemonIv instance.
@@ -272,18 +288,11 @@ class PokemonIv {
      * when the Pokemon helps, taking into account both berries and ingredients
      * based on the ingredient rate.
      *
-     * @param berryBonus Berry count bonus from events (0 or 1)
-     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
-     * @param expertIngBonus Whether expert mode ingredient bonus applies
-     *                       True if following condition are all met.
-     *                       - Expert mode
-     *                       - ExpertEffects is `ing`
-     *                       - Favorite berry
+     * @param bonus Bonus that affect inventory consumption.
      * @returns Average number of inventory slots used per help
      */
-    getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
-        const detail = this.getBagUsagePerHelpDetail(berryBonus,
-            ingredientBonus, expertIngBonus);
+    getBagUsagePerHelp(bonus?: Partial<InventoryBonus>): number {
+        const detail = this.getBagUsagePerHelpDetail(bonus);
         let ret = 0;
         for (const item of detail) {
             ret += item.count * item.p;
@@ -294,20 +303,20 @@ class PokemonIv {
     /**
      * Calculate the detail bag usage (inventory slots used) per help action.
      *
-     * @param berryBonus Berry count bonus from events (0 or 1)
-     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
-     * @param expertIngBonus Whether expert mode ingredient bonus applies
-     *                       True if following condition are all met.
-     *                       - Expert mode
-     *                       - ExpertEffects is `ing`
-     *                       - Favorite berry
+     * @param bonus Bonus that affect inventory consumption.
      * @returns Usage count and its probability.
      */
-    getBagUsagePerHelpDetail(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): {
+    getBagUsagePerHelpDetail(bonus?: Partial<InventoryBonus>): {
         count: number, p: number
     }[] {
         const ret: {count: number, p: number}[] = [];
 
+        // Fill bonus
+        const berryBonus = bonus?.berryBonus ?? 0;
+        const ingredientBonus = bonus?.ingredientBonus ?? 0;
+        const expertIngBonus = bonus?.expertIngBonus ?? false;
+
+        // Calculate ing bonus
         const ingRate = this.ingredientRate;
         let ingBonus = ingredientBonus;
         let hasExpertAdditionalBonus = false;

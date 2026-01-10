@@ -646,7 +646,7 @@ describe('PokemonIV', () => {
 
             // Should have 4 entries
             // berry, ingredient1, ingredient2, ingredient3
-            const result = iv.getBagUsagePerHelpDetail(0, 0, false);
+            const result = iv.getBagUsagePerHelpDetail({});
             expect(result.length).toBe(4);
 
             expect(result[0].count).toBe(1);
@@ -671,7 +671,9 @@ describe('PokemonIV', () => {
                 level: 25,
             });
 
-            const result = iv.getBagUsagePerHelpDetail(0, 0, true);
+            const result = iv.getBagUsagePerHelpDetail({
+                expertIngBonus: true,
+            });
             expect(result.length).toBe(2);
             expect(result[0].count).toBe(2);
             expect(result[1].count).toBe(iv.ingredient1.count + 1);
@@ -683,7 +685,9 @@ describe('PokemonIV', () => {
                 level: 30,
             });
 
-            const result = iv.getBagUsagePerHelpDetail(0, 0, true);
+            const result = iv.getBagUsagePerHelpDetail({
+                expertIngBonus: true,
+            });
 
             // Should have 5 entries
             // berry, ing1, ing2, ing1+1, ing2+1
@@ -714,7 +718,7 @@ describe('PokemonIV', () => {
                 level: 60,
                 mythIng1: 'sausage',
             });
-            const detail1 = iv1.getBagUsagePerHelpDetail(0, 0, false);
+            const detail1 = iv1.getBagUsagePerHelpDetail({});
             expect(detail1.length).toBe(2);
 
             const iv2 = new PokemonIv({
@@ -723,7 +727,7 @@ describe('PokemonIV', () => {
                 mythIng1: 'sausage',
                 mythIng2: 'honey',
             });
-            const detail2 = iv2.getBagUsagePerHelpDetail(0, 0, false);
+            const detail2 = iv2.getBagUsagePerHelpDetail({});
             expect(detail2.length).toBe(3);
 
             const iv3 = new PokemonIv({
@@ -733,7 +737,7 @@ describe('PokemonIV', () => {
                 mythIng2: 'honey',
                 mythIng3: 'coffee',
             });
-            const detail3 = iv3.getBagUsagePerHelpDetail(0, 0, false);
+            const detail3 = iv3.getBagUsagePerHelpDetail({});
             expect(detail3.length).toBe(4);
         });
     });
@@ -745,7 +749,7 @@ describe('PokemonIV', () => {
                 level: 25,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const result = iv.getBagUsagePerHelp();
             const expectedBerryPart = iv.berryRate * 2;
             const expectedIngPart = iv.ingredientRate * iv.ingredient1.count;
             expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
@@ -757,7 +761,7 @@ describe('PokemonIV', () => {
                 level: 25,
             });
 
-            const result = iv.getBagUsagePerHelp(1, 0, false);
+            const result = iv.getBagUsagePerHelp({berryBonus: 1});
             const expectedBerryPart = iv.berryRate * 3;
             const expectedIngPart = iv.ingredientRate * iv.ingredient1.count;
             expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
@@ -769,7 +773,7 @@ describe('PokemonIV', () => {
                 level: 25,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 1, false);
+            const result = iv.getBagUsagePerHelp({ingredientBonus: 1});
             const expectedBerryPart = iv.berryRate * 2;
             const expectedIngPart = iv.ingredientRate * (iv.ingredient1.count + 1);
             expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
@@ -781,7 +785,9 @@ describe('PokemonIV', () => {
                 level: 25,
             });
 
-            const result = iv.getBagUsagePerHelp(1, 1, false);
+            const result = iv.getBagUsagePerHelp({
+                berryBonus: 1, ingredientBonus: 1,
+            });
             const expectedBerryPart = iv.berryRate * 3;
             const expectedIngPart = iv.ingredientRate * (iv.ingredient1.count + 1);
             expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
@@ -793,7 +799,7 @@ describe('PokemonIV', () => {
                 level: 45,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const result = iv.getBagUsagePerHelp();
             const expectedBerryPart = iv.berryRate * 2;
             const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count) / 2;
             const expectedIngPart = iv.ingredientRate * avgIngCount;
@@ -806,7 +812,7 @@ describe('PokemonIV', () => {
                 level: 75,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const result = iv.getBagUsagePerHelp();
             const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count + iv.ingredient3.count) / 3;
             const expectedBerryPart = iv.berryRate * 1;
             const expectedIngPart = iv.ingredientRate * avgIngCount;
@@ -819,7 +825,9 @@ describe('PokemonIV', () => {
                 level: 25,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 0, true);
+            const result = iv.getBagUsagePerHelp({
+                expertIngBonus: true,
+            });
             const expectedBerryPart = iv.berryRate * 2;
             const expectedIngPart = iv.ingredientRate * (iv.ingredient1.count + 1);
             expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
@@ -831,7 +839,9 @@ describe('PokemonIV', () => {
                 level: 30,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 0, true);
+            const result = iv.getBagUsagePerHelp({
+                expertIngBonus: true,
+            });
             const expectedBerryPart = iv.berryRate * 1;
             const expectedIngPart = iv.ingredientRate *
                 (iv.ingredient1.count + 1.5 + iv.ingredient2.count + 1.5) / 2;
@@ -847,7 +857,7 @@ describe('PokemonIV', () => {
                 }),
             });
 
-            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const result = iv.getBagUsagePerHelp();
             const expectedBerryPart = iv.berryRate * 3;
             const expectedIngPart = iv.ingredientRate * iv.ingredient1.count;
             expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
@@ -859,7 +869,7 @@ describe('PokemonIV', () => {
                 level: 45,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 1, false);
+            const result = iv.getBagUsagePerHelp({ingredientBonus: 1});
 
             const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count + 2) / 2;
             const expectedBerryPart = iv.berryRate * 2;
@@ -873,7 +883,7 @@ describe('PokemonIV', () => {
                 level: 75,
             });
 
-            const result = iv.getBagUsagePerHelp(0, 1, false);
+            const result = iv.getBagUsagePerHelp({ingredientBonus: 1});
 
             const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count + iv.ingredient3.count + 3) / 3;
             const expectedBerryPart = iv.berryRate * 1;
