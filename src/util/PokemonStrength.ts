@@ -1112,7 +1112,8 @@ export function getHelpYield(param: StrengthParameter, strength: PokemonStrength
 ): number {
     // expertIngBonus is always false because we calculate based on regular help
     const rp = new PokemonRp(strength.pokemonIv);
-    const bagUsagePerHelp = rp.iv.getBagUsagePerHelp(rp.iv.berryCount, result.bonus.berry, result.bonus.ingredient, false);
+    const bagUsagePerHelp = rp.iv.getBagUsagePerHelp(result.bonus.berry,
+        result.bonus.ingredient, false);
     return bagUsagePerHelp * Math.abs(param.period);
 }
 
@@ -1128,7 +1129,8 @@ export function getHelpsForCap(strength: PokemonStrength,
 ): number {
     // expertIngBonus is always false because we calculate based on regular help
     const rp = new PokemonRp(strength.pokemonIv);
-    const bagUsagePerHelp = rp.iv.getBagUsagePerHelp(rp.iv.berryCount, result.bonus.berry, result.bonus.ingredient, false);
+    const bagUsagePerHelp = rp.iv.getBagUsagePerHelp(result.bonus.berry,
+        result.bonus.ingredient, false);
     return (999 - result.energy.carryLimit) / bagUsagePerHelp;
 }
 
