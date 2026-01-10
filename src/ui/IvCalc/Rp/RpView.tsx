@@ -60,7 +60,7 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
                 onClick={onRpInfoClick}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
-                berryProb={round1(rp.berryRate * 100)}
+                berryProb={round1(rp.iv.berryRate * 100)}
                 berrySubValue={<>
                     <LocalFireDepartmentIcon sx={{color: "#ff944b", width: '1rem', height: '1rem'}}/>
                     {formatWithComma(Math.round(strength.berryTotalStrength))}
@@ -249,7 +249,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     if (rpType === "berry") {
         color = '#24d76a';
         rpVal = round1(rpResult.berryRp);
-        param2 = round1(rp.berryRate * 100) + '%';
+        param2 = round1(rp.iv.berryRate * 100) + '%';
         desc2 = t('berry rate');
         param3 = rp.berryStrength.toString();
         desc3 = t('berry strength');
