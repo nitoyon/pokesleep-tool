@@ -4,7 +4,7 @@ on:
   # pushed to master
   push:
     branches:
-      - master
+      - main
 
   # pull request to master is closed
   pull_request:
@@ -15,6 +15,7 @@ on:
 
 jobs:
   build:
+    if: github.repository_owner == 'nitoyon'
     runs-on: ubuntu-latest
     permissions:
       contents: write
