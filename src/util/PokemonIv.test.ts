@@ -637,6 +637,107 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('getBagUsagePerHelpDetail', () => {
+        test('level 60+ includes all three ingredients', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Bulbasaur',
+                level: 60,
+            });
+
+            // Should have 4 entries
+            // berry, ingredient1, ingredient2, ingredient3
+            const result = iv.getBagUsagePerHelpDetail(0, 0, false);
+            expect(result.length).toBe(4);
+
+            expect(result[0].count).toBe(1);
+            expect(result[0].p).toBeCloseTo(iv.berryRate);
+
+            expect(result[1].count).toBe(iv.ingredient1.count);
+            expect(result[2].count).toBe(iv.ingredient2.count);
+            expect(result[3].count).toBe(iv.ingredient3.count);
+
+            expect(result[1].p).toBeCloseTo(iv.ingredientRate / 3);
+            expect(result[2].p).toBeCloseTo(iv.ingredientRate / 3);
+            expect(result[3].p).toBeCloseTo(iv.ingredientRate / 3);
+
+            // Probabilities should sum to 1
+            const totalP = result.reduce((sum, item) => sum + item.p, 0);
+            expect(totalP).toBeCloseTo(1);
+        });
+
+        test('with expert ingredient bonus (level = 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+
+            const result = iv.getBagUsagePerHelpDetail(0, 0, true);
+            expect(result.length).toBe(2);
+            expect(result[0].count).toBe(2);
+            expect(result[1].count).toBe(iv.ingredient1.count + 1);
+        });
+
+        test('with expert bonus for Ingredients specialty Pokemon', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Venusaur',
+                level: 30,
+            });
+
+            const result = iv.getBagUsagePerHelpDetail(0, 0, true);
+
+            // Should have 5 entries
+            // berry, ing1, ing2, ing1+1, ing2+1
+            expect(result.length).toBe(5);
+
+            expect(result[0].count).toBe(1);
+            expect(result[0].p).toBeCloseTo(iv.berryRate);
+
+            expect(result[1].count).toBe(iv.ingredient1.count + 1);
+            expect(result[2].count).toBe(iv.ingredient2.count + 1);
+
+            expect(result[3].count).toBe(iv.ingredient1.count + 2);
+            expect(result[4].count).toBe(iv.ingredient2.count + 2);
+
+            const expectedEachP = iv.ingredientRate / 4;
+            expect(result[1].p).toBeCloseTo(expectedEachP);
+            expect(result[2].p).toBeCloseTo(expectedEachP);
+            expect(result[3].p).toBeCloseTo(expectedEachP);
+            expect(result[4].p).toBeCloseTo(expectedEachP);
+
+            const totalP = result.reduce((sum, item) => sum + item.p, 0);
+            expect(totalP).toBeCloseTo(1);
+        });
+
+        test('Darkrai mythIng', () => {
+            const iv1 = new PokemonIv({
+                pokemonName: 'Darkrai',
+                level: 60,
+                mythIng1: 'sausage',
+            });
+            const detail1 = iv1.getBagUsagePerHelpDetail(0, 0, false);
+            expect(detail1.length).toBe(2);
+
+            const iv2 = new PokemonIv({
+                pokemonName: 'Darkrai',
+                level: 60,
+                mythIng1: 'sausage',
+                mythIng2: 'honey',
+            });
+            const detail2 = iv2.getBagUsagePerHelpDetail(0, 0, false);
+            expect(detail2.length).toBe(3);
+
+            const iv3 = new PokemonIv({
+                pokemonName: 'Darkrai',
+                level: 60,
+                mythIng1: 'sausage',
+                mythIng2: 'honey',
+                mythIng3: 'coffee',
+            });
+            const detail3 = iv3.getBagUsagePerHelpDetail(0, 0, false);
+            expect(detail3.length).toBe(4);
+        });
+    });
+
     describe('getBagUsagePerHelp', () => {
         test('basic case with no bonuses (level < 30)', () => {
             const iv = new PokemonIv({

@@ -282,20 +282,92 @@ class PokemonIv {
      * @returns Average number of inventory slots used per help
      */
     getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
-        const berryCount = this.berryCount;
-        const finalBerryCount = berryCount + berryBonus;
+        const detail = this.getBagUsagePerHelpDetail(berryBonus,
+            ingredientBonus, expertIngBonus);
+        let ret = 0;
+        for (const item of detail) {
+            ret += item.count * item.p;
+        }
+        return ret;
+    }
+
+    /**
+     * Calculate the detail bag usage (inventory slots used) per help action.
+     *
+     * @param berryBonus Berry count bonus from events (0 or 1)
+     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
+     * @param expertIngBonus Whether expert mode ingredient bonus applies
+     *                       True if following condition are all met.
+     *                       - Expert mode
+     *                       - ExpertEffects is `ing`
+     *                       - Favorite berry
+     * @returns Usage count and its probability.
+     */
+    getBagUsagePerHelpDetail(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): {
+        count: number, p: number
+    }[] {
+        const ret: {count: number, p: number}[] = [];
+
         const ingRate = this.ingredientRate;
         let ingBonus = ingredientBonus;
+        let hasExpertAdditionalBonus = false;
         if (expertIngBonus) {
             ingBonus += expertFavoriteIngredientBonus;
             if (this.pokemon.specialty === "Ingredients") {
-                ingBonus += expertFavoriteIngredientAdditionalBonus;
+                hasExpertAdditionalBonus = true;
             }
         }
-        const ingCount = this.level < 30 ? (this.ingredient1.count + ingBonus) :
-            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus * 2) / 2 :
-            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus * 3) / 3;
-        return (1 - ingRate) * finalBerryCount + ingRate * ingCount;
+
+        // Add ing1
+        ret.push({
+            count: this.ingredient1.count + ingBonus,
+            p: 0,
+        });
+
+        // Add ing2
+        if (this.level >= 30) {
+            const ing2 = this.ingredient2;
+            if (ing2.count > 0) {
+                ret.push({
+                    count: ing2.count + ingBonus,
+                    p: 0,
+                });
+            }
+        }
+
+        // Add ing3
+        if (this.level >= 60) {
+            const ing3 = this.ingredient3;
+            if (ing3.count > 0) {
+                ret.push({
+                    count: ing3.count + ingBonus,
+                    p: 0,
+                });
+            }
+        }
+
+        // Duplicate ret if hasExpertAdditionalBonus is true
+        const ings = ret.length;
+        if (hasExpertAdditionalBonus) {
+            if (expertFavoriteIngredientAdditionalBonus !== 0.5) {
+                throw new Error('expert bonus changed');
+            }
+            for (let i = 0; i < ings; i++) {
+                ret.push({count: ret[i].count + 1, p: 0});
+            }
+        }
+
+        // Divide ingRate equally across all ingredients
+        const eachIngRate = ingRate / ret.length;
+        for (const item of ret) {
+            item.p = eachIngRate;
+        }
+
+        // Add berry
+        const berryCount = this.berryCount;
+        ret.unshift({count: berryCount + berryBonus, p: this.berryRate});
+
+        return ret;
     }
 
     /**
