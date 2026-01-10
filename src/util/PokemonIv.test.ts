@@ -637,6 +637,150 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('getBagUsagePerHelp', () => {
+        test('basic case with no bonuses (level < 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const expectedBerryPart = iv.berryRate * 2;
+            const expectedIngPart = iv.ingredientRate * iv.ingredient1.count;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('with berry bonus (level < 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+
+            const result = iv.getBagUsagePerHelp(1, 0, false);
+            const expectedBerryPart = iv.berryRate * 3;
+            const expectedIngPart = iv.ingredientRate * iv.ingredient1.count;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('with ingredient bonus (level < 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 1, false);
+            const expectedBerryPart = iv.berryRate * 2;
+            const expectedIngPart = iv.ingredientRate * (iv.ingredient1.count + 1);
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('with both berry and ingredient bonuses (level < 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+
+            const result = iv.getBagUsagePerHelp(1, 1, false);
+            const expectedBerryPart = iv.berryRate * 3;
+            const expectedIngPart = iv.ingredientRate * (iv.ingredient1.count + 1);
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('level 30-59 uses average of ingredient1 and ingredient2', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 45,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const expectedBerryPart = iv.berryRate * 2;
+            const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count) / 2;
+            const expectedIngPart = iv.ingredientRate * avgIngCount;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('level 60+ uses average of all three ingredients', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Bulbasaur',
+                level: 75,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count + iv.ingredient3.count) / 3;
+            const expectedBerryPart = iv.berryRate * 1;
+            const expectedIngPart = iv.ingredientRate * avgIngCount;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('with expert ingredient bonus (level < 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 0, true);
+            const expectedBerryPart = iv.berryRate * 2;
+            const expectedIngPart = iv.ingredientRate * (iv.ingredient1.count + 1);
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('with expert bonus for Ingredients specialty Pokemon (level = 30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Venusaur',
+                level: 30,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 0, true);
+            const expectedBerryPart = iv.berryRate * 1;
+            const expectedIngPart = iv.ingredientRate *
+                (iv.ingredient1.count + 1.5 + iv.ingredient2.count + 1.5) / 2;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('Berry Finding S subskill increases berry count', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+                subSkills: new SubSkillList({
+                    lv10: new SubSkill('Berry Finding S'),
+                }),
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 0, false);
+            const expectedBerryPart = iv.berryRate * 3;
+            const expectedIngPart = iv.ingredientRate * iv.ingredient1.count;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('level 30-59 with ingredient bonus', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 45,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 1, false);
+
+            const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count + 2) / 2;
+            const expectedBerryPart = iv.berryRate * 2;
+            const expectedIngPart = iv.ingredientRate * avgIngCount;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+
+        test('level 60+ with ingredient bonus', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Bulbasaur',
+                level: 75,
+            });
+
+            const result = iv.getBagUsagePerHelp(0, 1, false);
+
+            const avgIngCount = (iv.ingredient1.count + iv.ingredient2.count + iv.ingredient3.count + 3) / 3;
+            const expectedBerryPart = iv.berryRate * 1;
+            const expectedIngPart = iv.ingredientRate * avgIngCount;
+            expect(result).toBeCloseTo(expectedBerryPart + expectedIngPart);
+        });
+    });
+
     function compareIv(iv1: PokemonIv, iv2: PokemonIv) {
         expect(iv2.pokemon.name).toBe(iv1.pokemon.name);
         expect(iv2.idForm).toBe(iv1.idForm);
