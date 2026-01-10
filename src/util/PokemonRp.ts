@@ -282,21 +282,13 @@ class PokemonRp {
         return this.getOrCache('berryRp', () => {
             return trunc(
                 this.helpCountPer5Hour * this.berryRate *
-                this.berryStrength * this.berryCount,
+                this.berryStrength * this.iv.berryCount,
                 2);
         });
     }
-    
+
     get berryRate(): number {
         return this.iv.ingredientRate > 0 ? 1 - this.iv.ingredientRate : 0;
-    }
-
-    get berryCount(): number {
-        return this.getOrCache('berryCount', () => {
-            const defaultTwoBerry = (this.iv.pokemon.specialty === "Berries" || this.iv.pokemon.specialty === "All");
-            return (defaultTwoBerry ? 2 : 1) +
-                (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
-        });
     }
 
     get berryStrength(): number {

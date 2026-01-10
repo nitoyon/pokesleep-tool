@@ -77,11 +77,11 @@ class PokemonRating {
 
         const berryCalc = (rp: PokemonRp) => {
             let ret = (3600 / rp.iv.frequencyWithHelpingBonus(0)) *
-                rp.berryRate * rp.berryCount;
+                rp.berryRate * rp.iv.berryCount;
             if (rp.hasHelpingBonusInActiveSubSkills) {
                 // Helping bonus add more energy (6 more berries * 5% bonus)
                 // 6 more = 2 berry * 2 pokemon + 1 berry * 2 pokemon
-                ret += ret / rp.berryCount * 6 * 0.0526;
+                ret += ret / rp.iv.berryCount * 6 * 0.0526;
             }
             return ret;
         }

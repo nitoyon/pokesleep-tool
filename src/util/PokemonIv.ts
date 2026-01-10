@@ -535,6 +535,17 @@ class PokemonIv {
     }
 
     /**
+     * Get berry count per help.
+     */
+    get berryCount(): number {
+        return this.getOrCache('berryCount', () => {
+            const defaultTwoBerry = (this.pokemon.specialty === "Berries" || this.pokemon.specialty === "All");
+            return (defaultTwoBerry ? 2 : 1) +
+                (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
+        });
+    }
+
+    /**
      * Get form number.
      */
     get form(): number {
