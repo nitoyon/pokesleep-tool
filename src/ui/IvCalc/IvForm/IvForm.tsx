@@ -225,7 +225,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
         return <></>;
     }
 
-    const baseFreq = rp.getBaseFrequency(helpingBonus, campTicket,
+    const baseFreq = rp.iv.getBaseFrequency(helpingBonus, campTicket,
         expertMode && expertBerry === 0,
         expertMode && expertBerry === 2);
     const convertToVal = (rate: number) => {

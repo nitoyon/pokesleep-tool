@@ -1,9 +1,6 @@
 import {IngredientName, PokemonData, PokemonType} from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
-import {
-    expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
-} from './PokemonStrength';
 
 export const maxLevel = 65;
 
@@ -173,75 +170,13 @@ class PokemonRp {
                     // Nature Factor
                     (this.iv.nature?.speedOfHelpFactor ?? 1) *
                     // Good-Night Ribbon Factor
-                    this.speedOfRibbonFactor *
+                    this.iv.speedOfRibbonFactor *
                     // Sub-Skill Factor
                     (1 - this.activeSubSkills.reduce((p, c) => p + c.helpingSpeed, 0) * 0.07)
                 , 4) -
                 // ugly hack to fix 2553.2 -> 2553.1
                 uglyHack;
         });
-    }
-
-    /**
-     * Get speed factor by the Good-Night Ribbon.
-     */
-    get speedOfRibbonFactor(): number {
-        return this.getOrCache('speedOfRibbonFactor', () => {
-            if (this.pokemon.evolutionLeft === 0) {
-                return 1;
-            }
-            if (this.iv.ribbon >= 4) {
-                switch (this.pokemon.evolutionLeft) {
-                    case 2: return 0.75;
-                    case 1: return 0.88;
-                }
-            }
-            if (this.iv.ribbon >= 2) {
-                switch (this.pokemon.evolutionLeft) {
-                    case 2: return 0.89;
-                    case 1: return 0.95;
-                }
-            }
-            return 1;
-        });
-    }
-
-    frequencyWithHelpingBonus(count: number): number {
-        const helpingSpeed = this.activeSubSkills
-            .reduce((p, c) => p + c.helpingSpeed, 0) * 0.07;
-        const subSkillFactor = Math.min(helpingSpeed + 0.05 * count, 0.35);
-
-        return this.iv.pokemon.frequency * // Base frequency
-            trunc(
-                // Level Factor
-                (501 - this.iv.level) / 500 *
-                // Nature Factor
-                (this.iv.nature?.speedOfHelpFactor ?? 1) *
-                // Good-Night Ribbon Factor
-                this.speedOfRibbonFactor *
-                // Sub-Skill Factor
-                (1 - subSkillFactor)
-            , 4);
-    }
-
-    /**
-     * Calculate base frequency with helping bonus and optional modifiers.
-     * @param helpBonusCount Number of other pokemon in the team with Helping Bonus sub-skill
-     * @param isGoodCampTicketSet Whether good camp ticket is set
-     * @param isMainBerry Whether this is the main berry in expert mode
-     * @param isNonFavoriteBerry Whether this is a non-favorite berry in expert mode
-     * @returns Base frequency
-     */
-    getBaseFrequency(
-        helpBonusCount: number,
-        isGoodCampTicketSet: boolean,
-        isMainBerry: boolean,
-        isNonFavoriteBerry: boolean
-    ): number {
-        return this.frequencyWithHelpingBonus(helpBonusCount) /
-            (isGoodCampTicketSet ? 1.2 : 1) *
-            (isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
-            (isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1);
     }
 
     get hasHelpingBonusInActiveSubSkills(): boolean {

@@ -76,7 +76,7 @@ class PokemonRating {
         }));
 
         const berryCalc = (rp: PokemonRp) => {
-            let ret = (3600 / rp.frequencyWithHelpingBonus(0)) *
+            let ret = (3600 / rp.iv.frequencyWithHelpingBonus(0)) *
                 rp.berryRate * rp.berryCount;
             if (rp.hasHelpingBonusInActiveSubSkills) {
                 // Helping bonus add more energy (6 more berries * 5% bonus)
@@ -90,13 +90,13 @@ class PokemonRating {
         const berryScore = berryCur / berryMax * 100;
         const berryRate = this.rp.berryRate;
 
-        const ingCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.iv.ingredientRate;
+        const ingCalc = (rp: PokemonRp) => (3600 / rp.iv.frequencyWithHelpingBonus(0)) * rp.iv.ingredientRate;
         const ingMax = ingCalc(ingMaxRp);
         const ingCur = ingCalc(this.rp);
         const ingScore = ingCur / ingMax * 100;
         const ingRate = this.rp.iv.ingredientRate;
 
-        const skillCalc = (rp: PokemonRp) => (3600 / rp.frequencyWithHelpingBonus(0)) * rp.iv.skillRate;
+        const skillCalc = (rp: PokemonRp) => (3600 / rp.iv.frequencyWithHelpingBonus(0)) * rp.iv.skillRate;
         const skillMax = skillCalc(skillMaxRp);
         const skillCur = skillCalc(this.rp);
         const skillScore = skillCur / skillMax * 100;
