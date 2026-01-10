@@ -293,8 +293,8 @@ class PokemonIv {
             }
         }
         const ingCount = this.level < 30 ? (this.ingredient1.count + ingBonus) :
-            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus) / 2 :
-            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus) / 3;
+            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus * 2) / 2 :
+            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus * 3) / 3;
         return (1 - ingRate) * finalBerryCount + ingRate * ingCount;
     }
 
