@@ -590,7 +590,7 @@ class Energy {
         const rp = new PokemonRp(this._iv);
         const baseFreq = this._iv.getBaseFrequency(helpBonusCount, isGoodCampTicketSet,
             isMainBerry, isNonFavoriteBerry);
-        const bagUsagePerHelp = rp.iv.getBagUsagePerHelp(rp.berryCount, bonus.berry, bonus.ingredient,
+        const bagUsagePerHelp = rp.iv.getBagUsagePerHelp(rp.iv.berryCount, bonus.berry, bonus.ingredient,
             isExpertMode && isFavoriteBerry && param.expertEffect === 'ing');
 
         // calculate timeToFullInventory & timeFullInventory

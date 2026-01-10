@@ -253,7 +253,7 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
         desc2 = t('berry rate');
         param3 = rp.berryStrength.toString();
         desc3 = t('berry strength');
-        param4 = rp.berryCount.toString()
+        param4 = rp.iv.berryCount.toString()
         desc4 = t('berry count');
     }
     else if (rpType === "ingredient") {
