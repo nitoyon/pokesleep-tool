@@ -268,7 +268,6 @@ class PokemonIv {
      * when the Pokemon helps, taking into account both berries and ingredients
      * based on the ingredient rate.
      *
-     * @param berryCount Number of berries collected per help (including bonuses)
      * @param berryBonus Berry count bonus from events (0 or 1)
      * @param ingredientBonus Ingredient count bonus from events (0 or 1)
      * @param expertIngBonus Whether expert mode ingredient bonus applies
@@ -278,7 +277,8 @@ class PokemonIv {
      *                       - Favorite berry
      * @returns Average number of inventory slots used per help
      */
-    getBagUsagePerHelp(berryCount: number, berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
+    getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
+        const berryCount = this.berryCount;
         const finalBerryCount = berryCount + berryBonus;
         const ingRate = this.ingredientRate;
         let ingBonus = ingredientBonus;
