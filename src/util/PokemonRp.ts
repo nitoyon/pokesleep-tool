@@ -281,14 +281,10 @@ class PokemonRp {
     get berryRp(): number {
         return this.getOrCache('berryRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.berryRate *
+                this.helpCountPer5Hour * this.iv.berryRate *
                 this.berryStrength * this.iv.berryCount,
                 2);
         });
-    }
-
-    get berryRate(): number {
-        return this.iv.ingredientRate > 0 ? 1 - this.iv.ingredientRate : 0;
     }
 
     get berryStrength(): number {

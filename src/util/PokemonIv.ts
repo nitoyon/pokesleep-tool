@@ -120,6 +120,10 @@ class PokemonIv {
         });
     }
 
+    get berryRate(): number {
+        return this.ingredientRate > 0 ? 1 - this.ingredientRate : 0;
+    }
+
     /**
      * Creates a deep copy of this instance.
      * @param input New properties.
