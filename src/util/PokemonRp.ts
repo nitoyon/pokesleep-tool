@@ -3,7 +3,6 @@ import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
 import {
     expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
-    expertFavoriteIngredientBonus, expertFavoriteIngredientAdditionalBonus,
 } from './PokemonStrength';
 
 export const maxLevel = 65;
@@ -295,14 +294,14 @@ class PokemonRp {
 
     get ingredientEnergy(): number {
         return this.getOrCache('ingredientEnergy', () => {
-            const ing1 = this.ingredient1;
+            const ing1 = this.iv.ingredient1;
             const e1 = ingredientStrength[ing1.name] * ing1.count;
             let count = 1;
             if (this.iv.level < 30) {
                 return e1;
             }
 
-            const ing2 = this.ingredient2;
+            const ing2 = this.iv.ingredient2;
             const e2 = ingredientStrength[ing2.name] * ing2.count;
             if (e2 > 0) {
                 count++;
@@ -311,55 +310,13 @@ class PokemonRp {
                 return Math.floor((e1 + e2) / count);
             }
 
-            const ing3 = this.ingredient3;
+            const ing3 = this.iv.ingredient3;
             const e3 = ingredientStrength[ing3.name] * ing3.count;
             if (e3 > 0) {
                 count++;
             }
             return Math.floor((e1 + e2 + e3) / count);
         });
-    }
-
-    get ingredient1() {
-        if (this.iv.pokemon.mythIng !== undefined) {
-            return {
-                name: this.iv.mythIng1 ?? "unknown",
-                count: this.iv.pokemon.mythIng.find(x => x.name === this.iv.mythIng1)?.c1 ?? 0,
-            };
-        }
-
-        return {
-            name: this.iv.pokemon.ing1.name ?? "unknown",
-            count: this.iv.pokemon.ing1.c1,
-        };
-    }
-
-    get ingredient2() {
-        if (this.iv.pokemon.mythIng !== undefined) {
-            return {
-                name: this.iv.mythIng2 ?? "unknown",
-                count: this.iv.pokemon.mythIng.find(x => x.name === this.iv.mythIng2)?.c2 ?? 0,
-            };
-        }
-
-        const ing2 = this.iv.ingredient.charAt(1) === 'A' ?
-            this.iv.pokemon.ing1 : this.iv.pokemon.ing2;
-        return { name: ing2.name, count: ing2.c2 };
-    }
-
-    get ingredient3() {
-        if (this.iv.pokemon.mythIng !== undefined) {
-            return {
-                name: this.iv.mythIng3 ?? "unknown",
-                count: this.iv.pokemon.mythIng.find(x => x.name === this.iv.mythIng3)?.c3 ?? 0,
-            };
-        }
-
-        const ing3 = this.iv.ingredient.charAt(2) === 'A' ? this.iv.pokemon.ing1 :
-            this.iv.ingredient.charAt(2) === 'B' ?
-            this.iv.pokemon.ing2 : this.iv.pokemon.ing3;
-        if (ing3 === undefined) { throw new Error("this pokemon doesn't have 3rd ing"); }
-        return { name: ing3.name, count: ing3.c3 };
     }
 
     get ingredientG(): number {
@@ -384,38 +341,6 @@ class PokemonRp {
                 0.000159 * Math.pow(this.iv.level, 2) +
                 0.00367 * this.iv.level - 0.00609 + 1;
         });
-    }
-
-    /**
-     * Calculate the average bag usage (inventory slots used) per help action.
-     *
-     * This method calculates how many inventory slots are consumed on average
-     * when the Pokemon helps, taking into account both berries and ingredients
-     * based on the ingredient rate.
-     *
-     * @param berryBonus Berry count bonus from events (0 or 1)
-     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
-     * @param expertIngBonus Whether expert mode ingredient bonus applies
-     *                       True if following condition are all met.
-     *                       - Expert mode
-     *                       - ExpertEffects is `ing`
-     *                       - Favorite berry
-     * @returns Average number of inventory slots used per help
-     */
-    getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
-        const berryCount = this.berryCount + berryBonus;
-        const ingRate = this.iv.ingredientRate;
-        let ingBonus = ingredientBonus;
-        if (expertIngBonus) {
-            ingBonus += expertFavoriteIngredientBonus;
-            if (this.pokemon.specialty === "Ingredients") {
-                ingBonus += expertFavoriteIngredientAdditionalBonus;
-            }
-        }
-        const ingCount = this.iv.level < 30 ? (this.ingredient1.count + ingBonus) :
-            this.iv.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus) / 2 :
-            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus) / 3;
-        return (1 - ingRate) * berryCount + ingRate * ingCount;
     }
 
     get berryRp(): number {
