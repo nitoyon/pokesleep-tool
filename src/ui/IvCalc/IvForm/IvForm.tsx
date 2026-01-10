@@ -237,8 +237,10 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
             case "full": {
                 const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
                 const mins = carryLimit /
-                    rp.iv.getBagUsagePerHelp(berryBonus, ingBonus,
-                        expertMode && expertBerry !== 2 && expertIngBonus === 1) *
+                    rp.iv.getBagUsagePerHelp({
+                        berryBonus, ingredientBonus: ingBonus,
+                        expertIngBonus: expertMode && expertBerry !== 2 && expertIngBonus === 1
+                    }) *
                     baseFreq * rate / 60;
                 return new AmountOfSleep(mins).toString(t);
             }
