@@ -6,6 +6,9 @@ import { getMaxSkillLevel } from './MainSkill';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 import { clamp, trunc } from './NumberUtil';
+import {
+    expertFavoriteIngredientBonus, expertFavoriteIngredientAdditionalBonus,
+} from './PokemonStrength';
 
 /**
  * Interface containing all configurable properties of
@@ -213,6 +216,81 @@ class PokemonIv {
             }
         }
         return ret;
+    }
+
+    get ingredient1() {
+        if (this.pokemon.mythIng !== undefined) {
+            return {
+                name: this.mythIng1 ?? "unknown",
+                count: this.pokemon.mythIng.find(x => x.name === this.mythIng1)?.c1 ?? 0,
+            };
+        }
+
+        return {
+            name: this.pokemon.ing1.name ?? "unknown",
+            count: this.pokemon.ing1.c1,
+        };
+    }
+
+    get ingredient2() {
+        if (this.pokemon.mythIng !== undefined) {
+            return {
+                name: this.mythIng2 ?? "unknown",
+                count: this.pokemon.mythIng.find(x => x.name === this.mythIng2)?.c2 ?? 0,
+            };
+        }
+
+        const ing2 = this.ingredient.charAt(1) === 'A' ?
+            this.pokemon.ing1 : this.pokemon.ing2;
+        return { name: ing2.name, count: ing2.c2 };
+    }
+
+    get ingredient3() {
+        if (this.pokemon.mythIng !== undefined) {
+            return {
+                name: this.mythIng3 ?? "unknown",
+                count: this.pokemon.mythIng.find(x => x.name === this.mythIng3)?.c3 ?? 0,
+            };
+        }
+
+        const ing3 = this.ingredient.charAt(2) === 'A' ? this.pokemon.ing1 :
+            this.ingredient.charAt(2) === 'B' ?
+            this.pokemon.ing2 : this.pokemon.ing3;
+        if (ing3 === undefined) { throw new Error("this pokemon doesn't have 3rd ing"); }
+        return { name: ing3.name, count: ing3.c3 };
+    }
+
+    /**
+     * Calculate the average bag usage (inventory slots used) per help action.
+     *
+     * This method calculates how many inventory slots are consumed on average
+     * when the Pokemon helps, taking into account both berries and ingredients
+     * based on the ingredient rate.
+     *
+     * @param berryCount Number of berries collected per help (including bonuses)
+     * @param berryBonus Berry count bonus from events (0 or 1)
+     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
+     * @param expertIngBonus Whether expert mode ingredient bonus applies
+     *                       True if following condition are all met.
+     *                       - Expert mode
+     *                       - ExpertEffects is `ing`
+     *                       - Favorite berry
+     * @returns Average number of inventory slots used per help
+     */
+    getBagUsagePerHelp(berryCount: number, berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
+        const finalBerryCount = berryCount + berryBonus;
+        const ingRate = this.ingredientRate;
+        let ingBonus = ingredientBonus;
+        if (expertIngBonus) {
+            ingBonus += expertFavoriteIngredientBonus;
+            if (this.pokemon.specialty === "Ingredients") {
+                ingBonus += expertFavoriteIngredientAdditionalBonus;
+            }
+        }
+        const ingCount = this.level < 30 ? (this.ingredient1.count + ingBonus) :
+            this.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus) / 2 :
+            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus) / 3;
+        return (1 - ingRate) * finalBerryCount + ingRate * ingCount;
     }
 
     /**
