@@ -6,6 +6,7 @@ import Nature from '../../../util/Nature';
 import PokemonIv from '../../../util/PokemonIv';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import PokemonRp from '../../../util/PokemonRp';
+import { frequencyToString } from '../../../util/TimeUtil';
 import CandyDialog from '../CandyDialog';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
@@ -17,7 +18,6 @@ import NatureTextField from './NatureTextField';
 import SleepingTimeControl from './SleepingTimeControl';
 import EnergyIcon from '../../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next'
 
 // Style for IvForm
 const StyledInputForm = styled('div')({
@@ -342,12 +342,5 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
         </DialogActions>
     </StyledFrequencyDialog>;
 });
-
-function frequencyToString(frequency: number, t: typeof i18next.t): string {
-    const h = Math.floor(frequency / 3600);
-    const m = Math.floor((frequency / 60) % 60);
-    const s = Math.floor(frequency % 60);
-    return t('freq hhmmss', {h, m, s});
-}
 
 export default IvForm;
