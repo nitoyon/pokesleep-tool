@@ -3,7 +3,7 @@ import PokemonRp, { RpStrengthResult, maxLevel } from '../../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthParameter, createStrengthParameter } from '../../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
-import RaderChart from '../RaderChart';
+import RaderChart from '../Chart/RaderChart';
 import RpLabel from './RpLabel';
 import IvState from '../IvState';
 import { Button, Dialog, DialogActions } from '@mui/material';
