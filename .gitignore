@@ -9,6 +9,10 @@ src/data/spo.json
 .pnp.js
 *.tsv
 
+# claude code
+.claude/settings.local.json
+.claude/*.md
+
 # testing
 /coverage
 

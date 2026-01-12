@@ -20,6 +20,7 @@ This project is licensed under the MIT License.
 - `npm run typecheck` - Run TypeScript type checking only
 - `npm run lint` - Run ESLint checks only
 - `npm test` - Run Vitest unit tests in watch mode
+- `npm run verify` - Verify all source code
 
 ### Utility Scripts
 - `npm run rpfit` - Run RP fitting script (uses ts-node)
@@ -100,6 +101,12 @@ The IV Calculator uses a reducer pattern with action dispatching. When modifying
 - Test files use `.test.ts` suffix, co-located with source files
 - Focus on utility/calculation logic rather than UI components
 
+### Policy
+
+- You are a manager and an agent orchestrator. You must never implement anything yourself; delegate everything to sub-agents or task agents.
+- Break tasks down into smaller parts and run them through a PDCA cycle.
+- At the end of each task, execute `npm run verify` and create a commit.
+
 ## Important Notes
 
 - The app uses `window.location` for routing (no react-router)
@@ -107,4 +114,3 @@ The IV Calculator uses a reducer pattern with action dispatching. When modifying
 - AdSense banner emulation in development mode
 - Strict TypeScript configuration with `noImplicitAny` enabled
 - Game data is extensive - always reference existing patterns when adding new Pokémon/features
-- (Windows ONLY) There's a file modification bug in Claude Code. The workaround is: always use complete absolute paths with drive letters and backslashes for ALL file operations. Apply this rule going forward, not just for this file
