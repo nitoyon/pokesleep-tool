@@ -8,13 +8,6 @@ import { frequencyToString } from '../../../util/TimeUtil';
 import EnergyIcon from '../../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
 
-const StyledFrequencyDialog = styled(Dialog)({
-    '& div.MuiPaper-root': {
-        // expand dialog width
-        margin: '20px',
-    },
-});
-
 /** Configuration for frequency info dialog display and calculation */
 type FrequencyInfoState = {
     /** Helping bonus level (0-5) */
@@ -63,6 +56,13 @@ const FrequencyInfoDialog = React.memo(({iv, open, onClose}: {
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
     </StyledFrequencyDialog>;
+});
+
+const StyledFrequencyDialog = styled(Dialog)({
+    '& div.MuiPaper-root': {
+        // expand dialog width
+        margin: '20px',
+    },
 });
 
 const EnergyPreview = React.memo(({iv, state}: {
