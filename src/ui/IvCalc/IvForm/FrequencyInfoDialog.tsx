@@ -4,7 +4,6 @@ import { Button, Collapse, Dialog, DialogActions,
     Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import PokemonIv from '../../../util/PokemonIv';
 import { AmountOfSleep } from '../../../util/TimeUtil';
-import PokemonRp from '../../../util/PokemonRp';
 import { frequencyToString } from '../../../util/TimeUtil';
 import EnergyIcon from '../../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
@@ -62,8 +61,7 @@ type FrequencyInfoState = {
     displayValue: "frequency"|"count"|"full";
 };
 
-const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
-    rp: PokemonRp,
+const FrequencyInfoDialog = React.memo(({iv, open, onClose}: {
     iv: PokemonIv,
     open: boolean,
     onClose: () => void
@@ -123,7 +121,7 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     }
 
     return <StyledFrequencyDialog open={open} onClose={onClose}>
-        <EnergyPreview rp={rp} iv={iv} state={state}/>
+        <EnergyPreview iv={iv} state={state}/>
         <section>
             <div className="line">
                 <label>{t('helping bonus')}:</label>
@@ -202,14 +200,13 @@ const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
     </StyledFrequencyDialog>;
 });
 
-const EnergyPreview = React.memo(({rp, iv, state}: {
-    rp: PokemonRp,
+const EnergyPreview = React.memo(({iv, state}: {
     iv: PokemonIv,
     state: FrequencyInfoState
 }) => {
     const { t } = useTranslation();
 
-    const baseFreq = rp.iv.getBaseFrequency(state.helpingBonus, state.campTicket,
+    const baseFreq = iv.getBaseFrequency(state.helpingBonus, state.campTicket,
         state.expertMode && state.expertBerry === 0,
         state.expertMode && state.expertBerry === 2);
     const convertToVal = (rate: number) => {
@@ -221,7 +218,7 @@ const EnergyPreview = React.memo(({rp, iv, state}: {
             case "full": {
                 const carryLimit = Math.ceil(iv.carryLimit * (state.campTicket ? 1.2 : 1));
                 const mins = carryLimit /
-                    rp.iv.getBagUsagePerHelp({
+                    iv.getBagUsagePerHelp({
                         berryBonus: state.berryBonus, ingredientBonus: state.ingBonus,
                         expertIngBonus: state.expertMode && state.expertBerry !== 2 && state.expertIngBonus === 1
                     }) *

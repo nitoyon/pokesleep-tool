@@ -98,7 +98,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <div>
                 {frequencyToString(rp.frequency, t)}
                 {rp.frequency > 0 && <InfoButton onClick={onFrequencyInfoClick}/>}
-                <FrequencyInfoDialog rp={rp} iv={pokemonIv}
+                <FrequencyInfoDialog iv={pokemonIv}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
             <div>{t("carry limit")}:</div>
