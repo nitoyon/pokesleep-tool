@@ -13,32 +13,6 @@ const StyledFrequencyDialog = styled(Dialog)({
         // expand dialog width
         margin: '20px',
     },
-    '& section': {
-        margin: '0.5rem 1rem 0 1rem',
-        '& div.line': {
-            fontSize: '.9rem',
-            paddingBottom: 2,
-            display: 'flex',
-            flex: '0 auto',
-            alignItems: 'center',
-            '& > label': {
-                '&.indent': {
-                    paddingLeft: '1rem',
-                },
-                marginRight: 'auto',
-            },
-            '& > div': {
-                paddingLeft: '.5rem',
-                '& > button': {
-                    padding: '2px 7px',
-                },
-            },
-        },
-        '& button.MuiToggleButton-root': {
-            lineHeight: 1.3,
-            textTransform: 'none',
-        },
-    },
 });
 
 /** Configuration for frequency info dialog display and calculation */
@@ -78,122 +52,13 @@ const FrequencyInfoDialog = React.memo(({iv, open, onClose}: {
         displayValue: "frequency",
     });
 
-    const onHelpingBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setState(prev => ({...prev, helpingBonus: parseInt(value, 10)}));
-        }
-    }, []);
-    const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setState(prev => ({...prev, campTicket: e.target.checked}));
-    }, []);
-    const onBerryBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setState(prev => ({...prev, berryBonus: parseInt(value, 10) as 0|1}));
-        }
-    }, []);
-    const onIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setState(prev => ({...prev, ingBonus: parseInt(value, 10) as 0|1}));
-        }
-    }, []);
-    const onExpertModeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setState(prev => ({...prev, expertMode: e.target.checked}));
-    }, []);
-    const onExpertBerryChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setState(prev => ({...prev, expertBerry: parseInt(value, 10)}));
-        }
-    }, []);
-    const onExpertIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setState(prev => ({...prev, expertIngBonus: parseInt(value, 10)}));
-        }
-    }, []);
-    const onValueChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value === null) {
-            return;
-        }
-        setState(prev => ({...prev, displayValue: value as "frequency"|"count"|"full"}));
-    }, []);
-
     if (!open) {
         return <></>;
     }
 
     return <StyledFrequencyDialog open={open} onClose={onClose}>
         <EnergyPreview iv={iv} state={state}/>
-        <section>
-            <div className="line">
-                <label>{t('helping bonus')}:</label>
-                <ToggleButtonGroup size="small" exclusive
-                    value={state.helpingBonus} onChange={onHelpingBonusChange}>
-                    <ToggleButton value={0}>0</ToggleButton>
-                    <ToggleButton value={1}>1</ToggleButton>
-                    <ToggleButton value={2}>2</ToggleButton>
-                    <ToggleButton value={3}>3</ToggleButton>
-                    <ToggleButton value={4}>4</ToggleButton>
-                    <ToggleButton value={5}>5</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-            <div className="line">
-                <label>{t('good camp ticket')}:</label>
-                <Switch checked={state.campTicket} onChange={onCampTicketChange}/>
-            </div>
-            <Collapse in={state.displayValue === "full"}>
-                <div className="line">
-                    <label>{t('berry bonus from event')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={state.berryBonus} onChange={onBerryBonusChange}>
-                        <ToggleButton value={0}>{t('none')}</ToggleButton>
-                        <ToggleButton value={1}>+1</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-                <div className="line">
-                    <label>{t('ingredient bonus from event')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={state.ingBonus} onChange={onIngBonusChange}>
-                        <ToggleButton value={0}>{t('none')}</ToggleButton>
-                        <ToggleButton value={1}>+1</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </Collapse>
-            <div className="line">
-                <label>{t('expert mode')}:</label>
-                <Switch checked={state.expertMode} onChange={onExpertModeChange}/>
-            </div>
-            <Collapse in={state.expertMode}>
-                <div className="line">
-                    <label className="indent">{t('berry')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={state.expertBerry} onChange={onExpertBerryChange}>
-                        <ToggleButton value={0}>{t('main')}</ToggleButton>
-                        <ToggleButton value={1}>{t('sub')}</ToggleButton>
-                        <ToggleButton value={2}>{t('others')}</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </Collapse>
-            <Collapse in={state.expertMode && state.expertBerry !== 2 && state.displayValue === "full"}>
-                <div className="line">
-                    <label className="indent">{t('expert effect')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={state.expertIngBonus} onChange={onExpertIngBonusChange}>
-                        <ToggleButton value={1}>{t('expert ing effect')}</ToggleButton>
-                        <ToggleButton value={0}>{t('others')}</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </Collapse>
-            <div className="line">
-                <label>{t('value')}:</label>
-            </div>
-            <div className="value">
-                <ToggleButtonGroup exclusive size="small" value={state.displayValue}
-                    onChange={onValueChange}>
-                    <ToggleButton value="frequency">{t('frequency')}</ToggleButton>
-                    <ToggleButton value="count">{t('help count')}</ToggleButton>
-                    <ToggleButton value="full">{t('time to full inventory')}</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-        </section>
+        <FrequencyForm state={state} setState={setState}/>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
@@ -259,6 +124,151 @@ const StyledEnergyPreview = styled('article')({
     '& > span.energy': {
         display: 'flex',
         alignItems: 'center',
+    },
+});
+
+const FrequencyForm = React.memo(({state, setState}: {
+    state: FrequencyInfoState,
+    setState: React.Dispatch<React.SetStateAction<FrequencyInfoState>>
+}) => {
+    const { t } = useTranslation();
+
+    const onHelpingBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setState(prev => ({...prev, helpingBonus: parseInt(value, 10)}));
+        }
+    }, [setState]);
+    const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setState(prev => ({...prev, campTicket: e.target.checked}));
+    }, [setState]);
+    const onBerryBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setState(prev => ({...prev, berryBonus: parseInt(value, 10) as 0|1}));
+        }
+    }, [setState]);
+    const onIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setState(prev => ({...prev, ingBonus: parseInt(value, 10) as 0|1}));
+        }
+    }, [setState]);
+    const onExpertModeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setState(prev => ({...prev, expertMode: e.target.checked}));
+    }, [setState]);
+    const onExpertBerryChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setState(prev => ({...prev, expertBerry: parseInt(value, 10)}));
+        }
+    }, [setState]);
+    const onExpertIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value !== null) {
+            setState(prev => ({...prev, expertIngBonus: parseInt(value, 10)}));
+        }
+    }, [setState]);
+    const onValueChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
+        if (value === null) {
+            return;
+        }
+        setState(prev => ({...prev, displayValue: value as "frequency"|"count"|"full"}));
+    }, [setState]);
+
+    return <StyledFrequencyControls>
+        <div className="line">
+            <label>{t('helping bonus')}:</label>
+            <ToggleButtonGroup size="small" exclusive
+                value={state.helpingBonus} onChange={onHelpingBonusChange}>
+                <ToggleButton value={0}>0</ToggleButton>
+                <ToggleButton value={1}>1</ToggleButton>
+                <ToggleButton value={2}>2</ToggleButton>
+                <ToggleButton value={3}>3</ToggleButton>
+                <ToggleButton value={4}>4</ToggleButton>
+                <ToggleButton value={5}>5</ToggleButton>
+            </ToggleButtonGroup>
+        </div>
+        <div className="line">
+            <label>{t('good camp ticket')}:</label>
+            <Switch checked={state.campTicket} onChange={onCampTicketChange}/>
+        </div>
+        <Collapse in={state.displayValue === "full"}>
+            <div className="line">
+                <label>{t('berry bonus from event')}:</label>
+                <ToggleButtonGroup size="small" exclusive
+                    value={state.berryBonus} onChange={onBerryBonusChange}>
+                    <ToggleButton value={0}>{t('none')}</ToggleButton>
+                    <ToggleButton value={1}>+1</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+            <div className="line">
+                <label>{t('ingredient bonus from event')}:</label>
+                <ToggleButtonGroup size="small" exclusive
+                    value={state.ingBonus} onChange={onIngBonusChange}>
+                    <ToggleButton value={0}>{t('none')}</ToggleButton>
+                    <ToggleButton value={1}>+1</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+        </Collapse>
+        <div className="line">
+            <label>{t('expert mode')}:</label>
+            <Switch checked={state.expertMode} onChange={onExpertModeChange}/>
+        </div>
+        <Collapse in={state.expertMode}>
+            <div className="line">
+                <label className="indent">{t('berry')}:</label>
+                <ToggleButtonGroup size="small" exclusive
+                    value={state.expertBerry} onChange={onExpertBerryChange}>
+                    <ToggleButton value={0}>{t('main')}</ToggleButton>
+                    <ToggleButton value={1}>{t('sub')}</ToggleButton>
+                    <ToggleButton value={2}>{t('others')}</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+        </Collapse>
+        <Collapse in={state.expertMode && state.expertBerry !== 2 && state.displayValue === "full"}>
+            <div className="line">
+                <label className="indent">{t('expert effect')}:</label>
+                <ToggleButtonGroup size="small" exclusive
+                    value={state.expertIngBonus} onChange={onExpertIngBonusChange}>
+                    <ToggleButton value={1}>{t('expert ing effect')}</ToggleButton>
+                    <ToggleButton value={0}>{t('others')}</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+        </Collapse>
+        <div className="line">
+            <label>{t('value')}:</label>
+        </div>
+        <div className="value">
+            <ToggleButtonGroup exclusive size="small" value={state.displayValue}
+                onChange={onValueChange}>
+                <ToggleButton value="frequency">{t('frequency')}</ToggleButton>
+                <ToggleButton value="count">{t('help count')}</ToggleButton>
+                <ToggleButton value="full">{t('time to full inventory')}</ToggleButton>
+            </ToggleButtonGroup>
+        </div>
+    </StyledFrequencyControls>;
+});
+
+const StyledFrequencyControls = styled('section')({
+    margin: '0.5rem 1rem 0 1rem',
+    '& div.line': {
+        fontSize: '.9rem',
+        paddingBottom: 2,
+        display: 'flex',
+        flex: '0 auto',
+        alignItems: 'center',
+        '& > label': {
+            '&.indent': {
+                paddingLeft: '1rem',
+            },
+            marginRight: 'auto',
+        },
+        '& > div': {
+            paddingLeft: '.5rem',
+            '& > button': {
+                padding: '2px 7px',
+            },
+        },
+    },
+    '& button.MuiToggleButton-root': {
+        lineHeight: 1.3,
+        textTransform: 'none',
     },
 });
 
