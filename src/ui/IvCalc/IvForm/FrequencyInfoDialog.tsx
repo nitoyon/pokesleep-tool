@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, Dialog, DialogActions,
+import { Button, Collapse, Dialog, DialogActions, DialogContent,
     Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import PokemonIv from '../../../util/PokemonIv';
 import { AmountOfSleep } from '../../../util/TimeUtil';
@@ -50,8 +50,10 @@ const FrequencyInfoDialog = React.memo(({iv, open, onClose}: {
     }
 
     return <StyledFrequencyDialog open={open} onClose={onClose}>
-        <EnergyPreview iv={iv} state={state}/>
-        <FrequencyForm state={state} setState={setState}/>
+        <DialogContent>
+            <EnergyPreview iv={iv} state={state}/>
+            <FrequencyForm state={state} setState={setState}/>
+        </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
@@ -62,6 +64,9 @@ const StyledFrequencyDialog = styled(Dialog)({
     '& div.MuiPaper-root': {
         // expand dialog width
         margin: '20px',
+        '& div.MuiDialogContent-root': {
+            padding: '1rem 1rem 0 1rem',
+        },
     },
 });
 
@@ -114,7 +119,7 @@ const EnergyPreview = React.memo(({iv, state}: {
 });
 
 const StyledEnergyPreview = styled('article')({
-    margin: '1rem',
+    marginBottom: '1rem',
     display: 'grid',
     gridTemplateColumns: 'max-content 1fr',
     gridGap: '1rem',
@@ -246,7 +251,6 @@ const FrequencyForm = React.memo(({state, setState}: {
 });
 
 const StyledFrequencyControls = styled('section')({
-    margin: '0.5rem 1rem 0 1rem',
     '& div.line': {
         fontSize: '.9rem',
         paddingBottom: 2,
