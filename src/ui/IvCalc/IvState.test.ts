@@ -311,4 +311,53 @@ describe('ivStateReducer', () => {
             expect(newState).toBe(baseState);
         });
     });
+
+    describe('saveItem action', () => {
+        test('should update selected item in box with current pokemonIv', () => {
+            const box = new PokemonBox();
+            const originalIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+            const itemId = box.add(originalIv, 'MyPikachu');
+
+            const updatedIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
+
+            const state = { ...baseState, box, pokemonIv: updatedIv, selectedItemId: itemId };
+            const action: IvAction = {type: 'saveItem'};
+            const newState = ivStateReducer(state, action);
+
+            // The item in the box should be updated
+            const savedItem = newState.box.getById(itemId);
+            expect(savedItem).not.toBeNull();
+            expect(savedItem!.iv.level).toBe(50);
+            expect(savedItem!.nickname).toBe('MyPikachu');
+
+            // Should create new instance
+            expect(newState.box).not.toBe(state.box);
+        });
+
+        test('should handle item without nickname', () => {
+            const box = new PokemonBox();
+            const originalIv = new PokemonIv({ pokemonName: 'Venusaur' });
+            const itemId = box.add(originalIv); // No nickname
+
+            const updatedIv = new PokemonIv({
+                pokemonName: 'Venusaur',
+                level: 100,
+            });
+
+            const state = { ...baseState, box, pokemonIv: updatedIv, selectedItemId: itemId };
+            const action: IvAction = {type: 'saveItem'};
+            const newState = ivStateReducer(state, action);
+
+            const savedItem = newState.box.getById(itemId);
+            expect(savedItem).not.toBeNull();
+            expect(savedItem!.iv.level).toBe(100);
+            expect(savedItem!.nickname).toBe('');
+        });
+    });
 });
