@@ -37,6 +37,7 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
     const [filterConfig, setFilterConfig] = React.useState<BoxFilterConfig>(boxFilterConfig);
     const [filterOpen, setFilterOpen] = React.useState(false);
     const [candyOpen, setCandyOpen] = React.useState(false);
+    const selectedRef = React.useRef<HTMLDivElement|null>(null);
 
     const onAddClick = React.useCallback(() => {
         dispatch({type: "add"});
@@ -88,12 +89,19 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
         [sortConfig.sort, sortConfig.descending, sortConfig.ingredient,
             sortConfig.mainSkill, filtered, parameter, t]);
 
-    let elms = sortedItems.map((item) => (
+    let elms = React.useMemo(() => sortedItems.map((item) => (
         <BoxLargeItem key={item.id} item={item} selected={item.id === selectedId}
-            dispatch={dispatch} onCandyClick={onCandyClick}/>));
+            dispatch={dispatch} onCandyClick={onCandyClick}
+            selectedRef={item.id === selectedId ? selectedRef : undefined}/>)),
+        [sortedItems, dispatch, onCandyClick, selectedId, selectedRef]);
     if (!sortConfig.descending) {
         elms = [...elms].reverse();
     }
+
+    React.useEffect(() => {
+        selectedRef.current?.scrollIntoView({block: 'center'});
+    }, []);
+
 
     const footerValue = React.useMemo(() => ({
         isFiltered: !filterConfig.isEmpty,
@@ -157,12 +165,15 @@ const BoxView = React.memo(({items, iv, selectedId, parameter, dispatch}: {
  */
 let boxFilterConfig = new BoxFilterConfig({});
 
-const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
-    item: PokemonBoxItem,
-    selected: boolean,
-    dispatch: (action: IvAction) => void,
-    onCandyClick: (item: PokemonBoxItem) => void,
-}) => {
+interface BoxLargeItemProps {
+    item: PokemonBoxItem;
+    selected: boolean;
+    dispatch: (action: IvAction) => void;
+    onCandyClick: (item: PokemonBoxItem) => void;
+    selectedRef?: React.RefObject<HTMLDivElement | null>;
+}
+
+const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick, selectedRef}: BoxLargeItemProps) => {
     const { t } = useTranslation();
     const [moreMenuAnchor, setMoreMenuAnchor] = React.useState<HTMLElement | null>(null);
     const isMenuOpen = Boolean(moreMenuAnchor);
@@ -195,7 +206,7 @@ const BoxLargeItem = React.memo(({item, selected, dispatch, onCandyClick}: {
     }, [item, onCandyClick]);
 
     return (
-        <StyledBoxLargeItem>
+        <StyledBoxLargeItem ref={selected ? selectedRef : null}>
             <ButtonBase onClick={clickHandler} className={selected ? 'selected' : ''}
                 ref={longPressRef}>
                 <header><span className="lv">Lv.</span>{item.iv.level}</header>

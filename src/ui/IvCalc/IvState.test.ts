@@ -5,6 +5,7 @@ import { normalizeState, ivStateReducer } from './IvState';
 import type IvState from './IvState';
 import type { IvAction } from './IvState';
 import { loadStrengthParameter } from '../../util/PokemonStrength';
+import i18n from '../../i18n';
 
 function createBaseState(): IvState {
     return {
@@ -309,6 +310,95 @@ describe('ivStateReducer', () => {
             const newState = ivStateReducer(baseState, action);
 
             expect(newState).toBe(baseState);
+        });
+    });
+
+    describe('saveItem action', () => {
+        test('should update selected item in box with current pokemonIv', () => {
+            const box = new PokemonBox();
+            const originalIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 25,
+            });
+            const itemId = box.add(originalIv, 'MyPikachu');
+
+            const updatedIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
+
+            const state = { ...baseState, box, pokemonIv: updatedIv, selectedItemId: itemId };
+            const action: IvAction = {type: 'saveItem'};
+            const newState = ivStateReducer(state, action);
+
+            // The item in the box should be updated
+            const savedItem = newState.box.getById(itemId);
+            expect(savedItem).not.toBeNull();
+            expect(savedItem!.iv.level).toBe(50);
+            expect(savedItem!.nickname).toBe('MyPikachu');
+
+            // Should create new instance
+            expect(newState.box).not.toBe(state.box);
+        });
+
+        test('should handle item without nickname', () => {
+            const box = new PokemonBox();
+            const originalIv = new PokemonIv({ pokemonName: 'Venusaur' });
+            const itemId = box.add(originalIv); // No nickname
+
+            const updatedIv = new PokemonIv({
+                pokemonName: 'Venusaur',
+                level: 100,
+            });
+
+            const state = { ...baseState, box, pokemonIv: updatedIv, selectedItemId: itemId };
+            const action: IvAction = {type: 'saveItem'};
+            const newState = ivStateReducer(state, action);
+
+            const savedItem = newState.box.getById(itemId);
+            expect(savedItem).not.toBeNull();
+            expect(savedItem!.iv.level).toBe(100);
+            expect(savedItem!.nickname).toBe('');
+        });
+
+        test('should clear nickname when it matches Pokemon name in English', async () => {
+            await i18n.changeLanguage("en");
+            const box = new PokemonBox();
+            const originalIv = new PokemonIv({ pokemonName: 'Pikachu' });
+            const itemId = box.add(originalIv, 'Pikachu');
+
+            const updatedIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
+
+            const state = { ...baseState, box, pokemonIv: updatedIv, selectedItemId: itemId };
+            const action: IvAction = {type: 'saveItem'};
+            const newState = ivStateReducer(state, action);
+
+            const savedItem = newState.box.getById(itemId);
+            expect(savedItem!.iv.level).toBe(50);
+            expect(savedItem!.nickname).toBe('');
+        });
+
+        test('should clear nickname when it matches Pokemon name in Japanese', async () => {
+            await i18n.changeLanguage("ja");
+            const box = new PokemonBox();
+            const originalIv = new PokemonIv({ pokemonName: 'Pikachu' });
+            const itemId = box.add(originalIv, 'ピカチュウ');
+
+            const updatedIv = new PokemonIv({
+                pokemonName: 'Pikachu',
+                level: 50,
+            });
+
+            const state = { ...baseState, box, pokemonIv: updatedIv, selectedItemId: itemId };
+            const action: IvAction = {type: 'saveItem'};
+            const newState = ivStateReducer(state, action);
+
+            const savedItem = newState.box.getById(itemId);
+            expect(savedItem!.iv.level).toBe(50);
+            expect(savedItem!.nickname).toBe('');
         });
     });
 });
