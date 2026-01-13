@@ -139,9 +139,12 @@ const AddToBoxConfirmDialog = React.memo(({
         }
     }, [open, initialNickname]);
 
+    const onFocus = React.useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.target?.select();
+    }, []);
     const handleConfirm = React.useCallback(() => {
-        onConfirm(nickname);
-    }, [nickname, onConfirm]);
+        onConfirm(nickname === initialNickname ? "" : nickname);
+    }, [initialNickname, nickname, onConfirm]);
 
     return (
         <Dialog open={open} onClose={onCancel}>
@@ -155,6 +158,7 @@ const AddToBoxConfirmDialog = React.memo(({
                     size="small"
                     fullWidth
                     value={nickname}
+                    onFocus={onFocus}
                     onChange={(e) => setNickname(e.target.value)}
                 />
             </DialogContent>
