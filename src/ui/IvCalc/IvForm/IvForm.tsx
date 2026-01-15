@@ -1,11 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Button, Collapse, Dialog, DialogActions,
-    Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Nature from '../../../util/Nature';
 import PokemonIv from '../../../util/PokemonIv';
-import { AmountOfSleep } from '../../../util/TimeUtil';
 import PokemonRp from '../../../util/PokemonRp';
+import { frequencyToString } from '../../../util/TimeUtil';
 import CandyDialog from '../CandyDialog';
 import PokemonTextField from './PokemonTextField';
 import LevelControl from './LevelControl';
@@ -15,9 +13,8 @@ import InfoButton from '../InfoButton';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
 import SleepingTimeControl from './SleepingTimeControl';
-import EnergyIcon from '../../Resources/EnergyIcon';
+import FrequencyInfoDialog from './FrequencyInfoDialog';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next'
 
 // Style for IvForm
 const StyledInputForm = styled('div')({
@@ -101,7 +98,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             <div>
                 {frequencyToString(rp.frequency, t)}
                 {rp.frequency > 0 && <InfoButton onClick={onFrequencyInfoClick}/>}
-                <FrequencyInfoDialog rp={rp} iv={pokemonIv}
+                <FrequencyInfoDialog iv={pokemonIv}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
             <div>{t("carry limit")}:</div>
@@ -120,232 +117,5 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
             onChange={onChange} onClose={onCloseCandyDialog}/>
     </StyledInputForm>;
 });
-
-const StyledFrequencyDialog = styled(Dialog)({
-    '& div.MuiPaper-root': {
-        // expand dialog width
-        margin: '20px',
-    },
-    '& article': {
-        margin: '1rem',
-        display: 'grid',
-        gridTemplateColumns: 'max-content 1fr',
-        gridGap: '1rem',
-        rowGap: '0.5rem',
-        fontSize: '0.9rem',
-        alignItems: 'start',
-        '& > span.energy': {
-            display: 'flex',
-            alignItems: 'center',
-        },
-    },
-    '& section': {
-        margin: '0.5rem 1rem 0 1rem',
-        '& div.line': {
-            fontSize: '.9rem',
-            paddingBottom: 2,
-            display: 'flex',
-            flex: '0 auto',
-            alignItems: 'center',
-            '& > label': {
-                '&.indent': {
-                    paddingLeft: '1rem',
-                },
-                marginRight: 'auto',
-            },
-            '& > div': {
-                paddingLeft: '.5rem',
-                '& > button': {
-                    padding: '2px 7px',
-                },
-            },
-        },
-        '& button.MuiToggleButton-root': {
-            lineHeight: 1.3,
-            textTransform: 'none',
-        },
-    },
-});
-
-const FrequencyInfoDialog = React.memo(({rp, iv, open, onClose}: {
-    rp: PokemonRp,
-    iv: PokemonIv,
-    open: boolean,
-    onClose: () => void
-}) => {
-    const { t } = useTranslation();
-    const [helpingBonus, setHelpingBonus] = React.useState(0);
-    const [campTicket, setCampTicket] = React.useState(false);
-    const [berryBonus, setBerryBonus] = React.useState<0|1>(0);
-    const [ingBonus, setIngBonus] = React.useState<0|1>(0);
-    const [expertMode, setExpertMode] = React.useState(false);
-    const [expertBerry, setExpertBerry] = React.useState(2);
-    const [expertIngBonus, setExpertIngBonus] = React.useState(0);
-    const [value, setValue] = React.useState<"frequency"|"count"|"full">("frequency");
-
-    const onHelpingBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setHelpingBonus(parseInt(value, 10));
-        }
-    }, []);
-    const onCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setCampTicket(e.target.checked);
-    }, []);
-    const onBerryBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setBerryBonus(parseInt(value, 10) as 0|1);
-        }
-    }, []);
-    const onIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setIngBonus(parseInt(value, 10) as 0|1);
-        }
-    }, []);
-    const onExpertModeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setExpertMode(e.target.checked);
-    }, []);
-    const onExpertBerryChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setExpertBerry(parseInt(value, 10));
-        }
-    }, []);
-    const onExpertIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            setExpertIngBonus(parseInt(value, 10));
-        }
-    }, []);
-    const onValueChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value === null) {
-            return;
-        }
-        setValue(value as "frequency"|"count"|"full");
-    }, []);
-
-    if (!open) {
-        return <></>;
-    }
-
-    const baseFreq = rp.getBaseFrequency(helpingBonus, campTicket,
-        expertMode && expertBerry === 0,
-        expertMode && expertBerry === 2);
-    const convertToVal = (rate: number) => {
-        switch (value) {
-            case "frequency":
-                return frequencyToString(Math.floor(baseFreq * rate), t);
-            case "count":
-                return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
-            case "full": {
-                const carryLimit = Math.ceil(iv.carryLimit * (campTicket ? 1.2 : 1));
-                const mins = carryLimit /
-                    rp.getBagUsagePerHelp(berryBonus, ingBonus,
-                        expertMode && expertBerry !== 2 && expertIngBonus === 1) *
-                    baseFreq * rate / 60;
-                return new AmountOfSleep(mins).toString(t);
-            }
-        }
-        return "";
-    };
-    const val0 = convertToVal(1);
-    const val40 = convertToVal(0.66);
-    const val60 = convertToVal(0.58);
-    const val80 = convertToVal(0.52);
-    const val100 = convertToVal(0.45);
-    return <StyledFrequencyDialog open={open} onClose={onClose}>
-        <article>
-            <span className="energy"><EnergyIcon energy={100}/>81{t('range separator')}150</span>
-            <span>{val100}</span>
-            <span className="energy"><EnergyIcon energy={80}/>61{t('range separator')}80</span>
-            <span>{val80}</span>
-            <span className="energy"><EnergyIcon energy={60}/>41{t('range separator')}60</span>
-            <span>{val60}</span>
-            <span className="energy"><EnergyIcon energy={40}/>1{t('range separator')}40</span>
-            <span>{val40}</span>
-            <span className="energy"><EnergyIcon  energy={20}/>0</span>
-            <span>{val0}</span>
-        </article>
-        <section>
-            <div className="line">
-                <label>{t('helping bonus')}:</label>
-                <ToggleButtonGroup size="small" exclusive
-                    value={helpingBonus} onChange={onHelpingBonusChange}>
-                    <ToggleButton value={0}>0</ToggleButton>
-                    <ToggleButton value={1}>1</ToggleButton>
-                    <ToggleButton value={2}>2</ToggleButton>
-                    <ToggleButton value={3}>3</ToggleButton>
-                    <ToggleButton value={4}>4</ToggleButton>
-                    <ToggleButton value={5}>5</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-            <div className="line">
-                <label>{t('good camp ticket')}:</label>
-                <Switch checked={campTicket} onChange={onCampTicketChange}/>
-            </div>
-            <Collapse in={value === "full"}>
-                <div className="line">
-                    <label>{t('berry bonus from event')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={berryBonus} onChange={onBerryBonusChange}>
-                        <ToggleButton value={0}>{t('none')}</ToggleButton>
-                        <ToggleButton value={1}>+1</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-                <div className="line">
-                    <label>{t('ingredient bonus from event')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={ingBonus} onChange={onIngBonusChange}>
-                        <ToggleButton value={0}>{t('none')}</ToggleButton>
-                        <ToggleButton value={1}>+1</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </Collapse>
-            <div className="line">
-                <label>{t('expert mode')}:</label>
-                <Switch checked={expertMode} onChange={onExpertModeChange}/>
-            </div>
-            <Collapse in={expertMode}>
-                <div className="line">
-                    <label className="indent">{t('berry')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={expertBerry} onChange={onExpertBerryChange}>
-                        <ToggleButton value={0}>{t('main')}</ToggleButton>
-                        <ToggleButton value={1}>{t('sub')}</ToggleButton>
-                        <ToggleButton value={2}>{t('others')}</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </Collapse>
-            <Collapse in={expertMode && expertBerry !== 2 && value === "full"}>
-                <div className="line">
-                    <label className="indent">{t('expert effect')}:</label>
-                    <ToggleButtonGroup size="small" exclusive
-                        value={expertIngBonus} onChange={onExpertIngBonusChange}>
-                        <ToggleButton value={1}>{t('expert ing effect')}</ToggleButton>
-                        <ToggleButton value={0}>{t('others')}</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </Collapse>
-            <div className="line">
-                <label>{t('value')}:</label>
-            </div>
-            <div className="value">
-                <ToggleButtonGroup exclusive size="small" value={value}
-                    onChange={onValueChange}>
-                    <ToggleButton value="frequency">{t('frequency')}</ToggleButton>
-                    <ToggleButton value="count">{t('help count')}</ToggleButton>
-                    <ToggleButton value="full">{t('time to full inventory')}</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-        </section>
-        <DialogActions>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </StyledFrequencyDialog>;
-});
-
-function frequencyToString(frequency: number, t: typeof i18next.t): string {
-    const h = Math.floor(frequency / 3600);
-    const m = Math.floor((frequency / 60) % 60);
-    const s = Math.floor(frequency % 60);
-    return t('freq hhmmss', {h, m, s});
-}
 
 export default IvForm;

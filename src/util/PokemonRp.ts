@@ -1,10 +1,6 @@
 import {IngredientName, PokemonData, PokemonType} from '../data/pokemons';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
-import {
-    expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
-    expertFavoriteIngredientBonus, expertFavoriteIngredientAdditionalBonus,
-} from './PokemonStrength';
 
 export const maxLevel = 65;
 
@@ -174,75 +170,13 @@ class PokemonRp {
                     // Nature Factor
                     (this.iv.nature?.speedOfHelpFactor ?? 1) *
                     // Good-Night Ribbon Factor
-                    this.speedOfRibbonFactor *
+                    this.iv.speedOfRibbonFactor *
                     // Sub-Skill Factor
                     (1 - this.activeSubSkills.reduce((p, c) => p + c.helpingSpeed, 0) * 0.07)
                 , 4) -
                 // ugly hack to fix 2553.2 -> 2553.1
                 uglyHack;
         });
-    }
-
-    /**
-     * Get speed factor by the Good-Night Ribbon.
-     */
-    get speedOfRibbonFactor(): number {
-        return this.getOrCache('speedOfRibbonFactor', () => {
-            if (this.pokemon.evolutionLeft === 0) {
-                return 1;
-            }
-            if (this.iv.ribbon >= 4) {
-                switch (this.pokemon.evolutionLeft) {
-                    case 2: return 0.75;
-                    case 1: return 0.88;
-                }
-            }
-            if (this.iv.ribbon >= 2) {
-                switch (this.pokemon.evolutionLeft) {
-                    case 2: return 0.89;
-                    case 1: return 0.95;
-                }
-            }
-            return 1;
-        });
-    }
-
-    frequencyWithHelpingBonus(count: number): number {
-        const helpingSpeed = this.activeSubSkills
-            .reduce((p, c) => p + c.helpingSpeed, 0) * 0.07;
-        const subSkillFactor = Math.min(helpingSpeed + 0.05 * count, 0.35);
-
-        return this.iv.pokemon.frequency * // Base frequency
-            trunc(
-                // Level Factor
-                (501 - this.iv.level) / 500 *
-                // Nature Factor
-                (this.iv.nature?.speedOfHelpFactor ?? 1) *
-                // Good-Night Ribbon Factor
-                this.speedOfRibbonFactor *
-                // Sub-Skill Factor
-                (1 - subSkillFactor)
-            , 4);
-    }
-
-    /**
-     * Calculate base frequency with helping bonus and optional modifiers.
-     * @param helpBonusCount Number of other pokemon in the team with Helping Bonus sub-skill
-     * @param isGoodCampTicketSet Whether good camp ticket is set
-     * @param isMainBerry Whether this is the main berry in expert mode
-     * @param isNonFavoriteBerry Whether this is a non-favorite berry in expert mode
-     * @returns Base frequency
-     */
-    getBaseFrequency(
-        helpBonusCount: number,
-        isGoodCampTicketSet: boolean,
-        isMainBerry: boolean,
-        isNonFavoriteBerry: boolean
-    ): number {
-        return this.frequencyWithHelpingBonus(helpBonusCount) /
-            (isGoodCampTicketSet ? 1.2 : 1) *
-            (isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
-            (isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1);
     }
 
     get hasHelpingBonusInActiveSubSkills(): boolean {
@@ -295,14 +229,14 @@ class PokemonRp {
 
     get ingredientEnergy(): number {
         return this.getOrCache('ingredientEnergy', () => {
-            const ing1 = this.ingredient1;
+            const ing1 = this.iv.ingredient1;
             const e1 = ingredientStrength[ing1.name] * ing1.count;
             let count = 1;
             if (this.iv.level < 30) {
                 return e1;
             }
 
-            const ing2 = this.ingredient2;
+            const ing2 = this.iv.ingredient2;
             const e2 = ingredientStrength[ing2.name] * ing2.count;
             if (e2 > 0) {
                 count++;
@@ -311,55 +245,13 @@ class PokemonRp {
                 return Math.floor((e1 + e2) / count);
             }
 
-            const ing3 = this.ingredient3;
+            const ing3 = this.iv.ingredient3;
             const e3 = ingredientStrength[ing3.name] * ing3.count;
             if (e3 > 0) {
                 count++;
             }
             return Math.floor((e1 + e2 + e3) / count);
         });
-    }
-
-    get ingredient1() {
-        if (this.iv.pokemon.mythIng !== undefined) {
-            return {
-                name: this.iv.mythIng1 ?? "unknown",
-                count: this.iv.pokemon.mythIng.find(x => x.name === this.iv.mythIng1)?.c1 ?? 0,
-            };
-        }
-
-        return {
-            name: this.iv.pokemon.ing1.name ?? "unknown",
-            count: this.iv.pokemon.ing1.c1,
-        };
-    }
-
-    get ingredient2() {
-        if (this.iv.pokemon.mythIng !== undefined) {
-            return {
-                name: this.iv.mythIng2 ?? "unknown",
-                count: this.iv.pokemon.mythIng.find(x => x.name === this.iv.mythIng2)?.c2 ?? 0,
-            };
-        }
-
-        const ing2 = this.iv.ingredient.charAt(1) === 'A' ?
-            this.iv.pokemon.ing1 : this.iv.pokemon.ing2;
-        return { name: ing2.name, count: ing2.c2 };
-    }
-
-    get ingredient3() {
-        if (this.iv.pokemon.mythIng !== undefined) {
-            return {
-                name: this.iv.mythIng3 ?? "unknown",
-                count: this.iv.pokemon.mythIng.find(x => x.name === this.iv.mythIng3)?.c3 ?? 0,
-            };
-        }
-
-        const ing3 = this.iv.ingredient.charAt(2) === 'A' ? this.iv.pokemon.ing1 :
-            this.iv.ingredient.charAt(2) === 'B' ?
-            this.iv.pokemon.ing2 : this.iv.pokemon.ing3;
-        if (ing3 === undefined) { throw new Error("this pokemon doesn't have 3rd ing"); }
-        return { name: ing3.name, count: ing3.c3 };
     }
 
     get ingredientG(): number {
@@ -386,56 +278,12 @@ class PokemonRp {
         });
     }
 
-    /**
-     * Calculate the average bag usage (inventory slots used) per help action.
-     *
-     * This method calculates how many inventory slots are consumed on average
-     * when the Pokemon helps, taking into account both berries and ingredients
-     * based on the ingredient rate.
-     *
-     * @param berryBonus Berry count bonus from events (0 or 1)
-     * @param ingredientBonus Ingredient count bonus from events (0 or 1)
-     * @param expertIngBonus Whether expert mode ingredient bonus applies
-     *                       True if following condition are all met.
-     *                       - Expert mode
-     *                       - ExpertEffects is `ing`
-     *                       - Favorite berry
-     * @returns Average number of inventory slots used per help
-     */
-    getBagUsagePerHelp(berryBonus: 0|1, ingredientBonus: 0|1, expertIngBonus: boolean): number {
-        const berryCount = this.berryCount + berryBonus;
-        const ingRate = this.iv.ingredientRate;
-        let ingBonus = ingredientBonus;
-        if (expertIngBonus) {
-            ingBonus += expertFavoriteIngredientBonus;
-            if (this.pokemon.specialty === "Ingredients") {
-                ingBonus += expertFavoriteIngredientAdditionalBonus;
-            }
-        }
-        const ingCount = this.iv.level < 30 ? (this.ingredient1.count + ingBonus) :
-            this.iv.level < 60 ? (this.ingredient1.count + this.ingredient2.count + ingBonus) / 2 :
-            (this.ingredient1.count + this.ingredient2.count + this.ingredient3.count + ingBonus) / 3;
-        return (1 - ingRate) * berryCount + ingRate * ingCount;
-    }
-
     get berryRp(): number {
         return this.getOrCache('berryRp', () => {
             return trunc(
-                this.helpCountPer5Hour * this.berryRate *
-                this.berryStrength * this.berryCount,
+                this.helpCountPer5Hour * this.iv.berryRate *
+                this.berryStrength * this.iv.berryCount,
                 2);
-        });
-    }
-    
-    get berryRate(): number {
-        return this.iv.ingredientRate > 0 ? 1 - this.iv.ingredientRate : 0;
-    }
-
-    get berryCount(): number {
-        return this.getOrCache('berryCount', () => {
-            const defaultTwoBerry = (this.iv.pokemon.specialty === "Berries" || this.iv.pokemon.specialty === "All");
-            return (defaultTwoBerry ? 2 : 1) +
-                (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
         });
     }
 

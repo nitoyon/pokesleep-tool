@@ -325,7 +325,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             <InfoButton onClick={onEfficiencyInfoClick}/>
         </footer>}
         {settings.period < 0 && <footer>
-            <span>{t('help yield')}: {round1(getHelpYield(settings, strength, result))}{t('berry unit')}/{Math.abs(settings.period)}{t('help unit')}</span>
+            <span>{t('help yield')}: {round1(getHelpYield(settings, strength))}{t('berry unit')}/{Math.abs(settings.period)}{t('help unit')}</span>
             <span>{t('required helper boost')}: {round1(getRequiredHelperBoost(settings, strength, result))}</span>
             <InfoButton onClick={onStockInfoClick}/>
         </footer>}

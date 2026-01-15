@@ -373,23 +373,23 @@ class PokemonStrength {
         const ingRate = rp.iv.ingredientRate;
         const ingHelpCount = notFullHelpCount * ingRate;
         const ingUnlock = 1 +
-            (level >= 30 && rp.ingredient2.count > 0 ? 1 : 0) +
-            (level >= 60 && rp.ingredient3.count > 0 ? 1 : 0);
+            (level >= 30 && rp.iv.ingredient2.count > 0 ? 1 : 0) +
+            (level >= 60 && rp.iv.ingredient3.count > 0 ? 1 : 0);
         const ingEventAdd: number = (param.period !== whistlePeriod ? bonus.ingredient : 0);
 
-        const ing1: IngredientStrength = {...rp.ingredient1, strength: 0,
-            helpCount: rp.ingredient1.count + ingEventAdd};
+        const ing1: IngredientStrength = {...rp.iv.ingredient1, strength: 0,
+            helpCount: rp.iv.ingredient1.count + ingEventAdd};
         ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.helpCount;
         ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRate;
 
-        const ing2 = {...rp.ingredient2, strength: 0,
-            helpCount: rp.ingredient2.count + ingEventAdd};
+        const ing2 = {...rp.iv.ingredient2, strength: 0,
+            helpCount: rp.iv.ingredient2.count + ingEventAdd};
         ing2.count = level < 30 || ing2.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * ing2.helpCount;
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRate;
         let ing3 = undefined;
-        ing3 = {...rp.ingredient3, strength: 0,
-            helpCount: rp.ingredient3.count + ingEventAdd};
+        ing3 = {...rp.iv.ingredient3, strength: 0,
+            helpCount: rp.iv.ingredient3.count + ingEventAdd};
         ing3.count = level < 60 || ing3.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * ing3.helpCount;
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRate;
@@ -418,12 +418,12 @@ class PokemonStrength {
             ing[ing3.name].strength += ing3.strength;
         }
         const ingredients = ingNames.map(x => ing[x]);
-    
+
         // calc berry
-        const berryRate = (this.iv.pokemon.frequency > 0 ? 1 - ingRate : 0);
+        const berryRate = this.iv.berryRate;
         const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
-        const berryCount = rp.berryCount;
-        const berryCountWithBonus = rp.berryCount + bonus.berry;
+        const berryCount = rp.iv.berryCount;
+        const berryCountWithBonus = rp.iv.berryCount + bonus.berry;
         const berryRawStrength = rp.berryStrength;
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryStrengthWithBonus = Math.ceil(berryStrength * this.berryStrengthBonus);
@@ -1107,12 +1107,12 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
  * @param result The current strength result containing bonus data.
  * @returns The total help yield over the specified period.
  */
-export function getHelpYield(param: StrengthParameter, strength: PokemonStrength,
-    result: StrengthResult
+export function getHelpYield(param: StrengthParameter,
+    strength: PokemonStrength,
 ): number {
-    // expertIngBonus is always false because we calculate based on regular help
-    const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
-        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient, false);
+    // Bonus is always empty because we calculate based on regular help
+    const rp = new PokemonRp(strength.pokemonIv);
+    const bagUsagePerHelp = rp.iv.getBagUsagePerHelp();
     return bagUsagePerHelp * Math.abs(param.period);
 }
 
@@ -1126,9 +1126,9 @@ export function getHelpYield(param: StrengthParameter, strength: PokemonStrength
 export function getHelpsForCap(strength: PokemonStrength,
     result: StrengthResult
 ): number {
-    // expertIngBonus is always false because we calculate based on regular help
-    const bagUsagePerHelp = new PokemonRp(strength.pokemonIv)
-        .getBagUsagePerHelp(result.bonus.berry, result.bonus.ingredient, false);
+    // Bonus is always empty because we calculate based on regular help
+    const rp = new PokemonRp(strength.pokemonIv);
+    const bagUsagePerHelp = rp.iv.getBagUsagePerHelp();
     return (999 - result.energy.carryLimit) / bagUsagePerHelp;
 }
 

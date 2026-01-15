@@ -3,7 +3,7 @@ import PokemonIv from '../../util/PokemonIv';
 import PokemonRating from '../../util/PokemonRating';
 import BerryIngSkillView from './Rp/BerryIngSkillView';
 import InfoButton from './InfoButton';
-import RaderChart from './RaderChart';
+import RaderChart from './Chart/RaderChart';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 

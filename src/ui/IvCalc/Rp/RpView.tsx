@@ -3,7 +3,7 @@ import PokemonRp, { RpStrengthResult, maxLevel } from '../../../util/PokemonRp';
 import { round1, round2, round3, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthParameter, createStrengthParameter } from '../../../util/PokemonStrength';
 import BerryIngSkillView from './BerryIngSkillView';
-import RaderChart from '../RaderChart';
+import RaderChart from '../Chart/RaderChart';
 import RpLabel from './RpLabel';
 import IvState from '../IvState';
 import { Button, Dialog, DialogActions } from '@mui/material';
@@ -60,7 +60,7 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
                 onClick={onRpInfoClick}/>
             <BerryIngSkillView
                 berryValue={round1(rpResult.berryRp)}
-                berryProb={round1(rp.berryRate * 100)}
+                berryProb={round1(rp.iv.berryRate * 100)}
                 berrySubValue={<>
                     <LocalFireDepartmentIcon sx={{color: "#ff944b", width: '1rem', height: '1rem'}}/>
                     {formatWithComma(Math.round(strength.berryTotalStrength))}
@@ -249,11 +249,11 @@ const RpValueDialog = React.memo(({open, onClose, rp, rpResult, rpType}: {
     if (rpType === "berry") {
         color = '#24d76a';
         rpVal = round1(rpResult.berryRp);
-        param2 = round1(rp.berryRate * 100) + '%';
+        param2 = round1(rp.iv.berryRate * 100) + '%';
         desc2 = t('berry rate');
         param3 = rp.berryStrength.toString();
         desc3 = t('berry strength');
-        param4 = rp.berryCount.toString()
+        param4 = rp.iv.berryCount.toString()
         desc4 = t('berry count');
     }
     else if (rpType === "ingredient") {
