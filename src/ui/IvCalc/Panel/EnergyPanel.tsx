@@ -218,7 +218,6 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
 const StyledEnergyPanel = styled('div')({
     width: '100%',
     '& section': {
-        padding: '0 1rem',
         '& > div': {
             display: 'flex',
             flex: '0 auto',
@@ -243,7 +242,7 @@ const StyledEnergyPanel = styled('div')({
         },
     },
     '& > footer': {
-        margin: '0.5rem 1rem 0 1rem',
+        margin: '0.5rem 0 0 0',
         fontSize: '0.9rem',
         background: '#eee',
         borderRadius: '0.9rem',
@@ -273,7 +272,7 @@ const StyledEnergyPanel = styled('div')({
     '& > div.warning': {
         fontSize: '0.8rem',
         color: '#666',
-        padding: '0.4rem 1rem 0 1rem',
+        padding: '0.4rem 0 0 0',
         marginLeft: '1.2rem',
     },
 });

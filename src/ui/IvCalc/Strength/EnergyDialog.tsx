@@ -7,7 +7,9 @@ import { EnergyResult } from '../../../util/Energy';
 import { EnergyChart } from '../Chart/EnergyChart';
 import EnergyPanel from '../Panel/EnergyPanel';
 import { useElementWidth } from '../../common/Hook';
-import { Button, Dialog, DialogActions } from '@mui/material';
+import {
+    Button, Dialog, DialogActions, DialogContent, DialogTitle,
+ } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch}: {
@@ -21,10 +23,14 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     const { t } = useTranslation();
     const [width, dialogRef] = useElementWidth();
 
-    return <StyledEnergyDialog open={open} onClose={onClose} ref={dialogRef}>
-        <EnergyChart width={width - 40} period={parameter.period} result={energy}/>
-        <EnergyPanel energy={energy} dispatch={dispatch}
-            iv={iv} parameter={parameter}/>
+    return <StyledEnergyDialog open={open} onClose={onClose}>
+        <DialogTitle ref={dialogRef}>
+            <EnergyChart width={width - 20} period={parameter.period} result={energy}/>
+        </DialogTitle>
+        <DialogContent>
+            <EnergyPanel energy={energy} dispatch={dispatch}
+                iv={iv} parameter={parameter}/>
+        </DialogContent>
         <DialogActions disableSpacing>
             <Button onClick={onClose}>{t('close')}</Button>
         </DialogActions>
@@ -37,10 +43,16 @@ const StyledEnergyDialog = styled(Dialog)({
         width: '100%',
         margin: '20px',
         maxHeight: 'calc(100% - 20px)',
-        '& > svg': {
-            padding: '0.5rem 0 1rem',
-            flexShrink: 0,
-            userSelect: 'none',
+        '& > .MuiDialogTitle-root': {
+            padding: '0.5rem 10px',
+            fontSize: '1rem',
+            '& > svg': {
+                flexShrink: 0,
+                userSelect: 'none',
+            },
+        },
+        '& > .MuiDialogContent-root': {
+            padding: '0 1rem',
         },
     },
 });
