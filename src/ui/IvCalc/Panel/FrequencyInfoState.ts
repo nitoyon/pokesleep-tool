@@ -3,6 +3,19 @@ import PokemonIv from '../../../util/PokemonIv';
 import PokemonStrength, { StrengthParameter } from '../../../util/PokemonStrength';
 import { IvAction } from '../IvState';
 
+type DisplayValue = "frequency"|"count"|"full";
+
+type EnergyValue = 1|2|3|4|5;
+
+type DistributionMode = "pmf"|"cdf";
+
+// These global variables persist across tab switches.
+let defaultDisplayValue: DisplayValue = "frequency";
+
+let defaultEnergy: EnergyValue = 5;
+
+let defaultDistributionMode: DistributionMode = "pmf";
+
 /** Configuration for frequency info dialog display and calculation */
 export type FrequencyInfoState = {
     /** Helping bonus level (0-5) */
@@ -20,11 +33,11 @@ export type FrequencyInfoState = {
     /** Expert ingredient bonus effect */
     expertIngBonus: number;
     /** Display value type */
-    displayValue: "frequency"|"count"|"full";
+    displayValue: DisplayValue;
     /** Distribution mode for chart */
-    distributionMode: "pmf"|"cdf";
+    distributionMode: DistributionMode;
     /** Energy (5: 81-150, 4: 61-80, 3: 41-60, 2: 1-40, 0: 0) */
-    energy: 1|2|3|4|5;
+    energy: EnergyValue;
     /** Highlighted interval (80%, 90%, 95%, 99%) */
     highlighted: number;
 };
@@ -38,9 +51,9 @@ export function createDefaultState(): FrequencyInfoState {
         expertMode: false,
         expertBerry: 2,
         expertIngBonus: 0,
-        displayValue: "frequency",
-        energy: 5,
-        distributionMode: "pmf",
+        displayValue: defaultDisplayValue,
+        energy: defaultEnergy,
+        distributionMode: defaultDistributionMode,
         highlighted: 90,
     };
 }
@@ -77,6 +90,9 @@ export function applyStateToParameter(parameter: StrengthParameter,
             isGoodCampTicketSet: current.campTicket,
         }}})
     }
+    defaultDisplayValue = current.displayValue;
+    defaultDistributionMode = current.distributionMode;
+    defaultEnergy = current.energy;
 }
 
 export default FrequencyInfoState;
