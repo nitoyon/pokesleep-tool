@@ -9,8 +9,11 @@ import EnergyPanel from '../Panel/EnergyPanel';
 import { useElementWidth } from '../../common/Hook';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
+    Tabs, Tab,
  } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+
+let defaultTabIndex = 0;
 
 const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch}: {
     open: boolean,
@@ -22,9 +25,18 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
 }) => {
     const { t } = useTranslation();
     const [width, dialogRef] = useElementWidth();
+    const [tabIndex, setTabIndex] = React.useState(defaultTabIndex);
+
+    const onTabChange = React.useCallback((_: React.SyntheticEvent, tabIndex: number) => {
+        setTabIndex(tabIndex);
+        defaultTabIndex = tabIndex;
+    }, [])
 
     return <StyledEnergyDialog open={open} onClose={onClose}>
         <DialogTitle ref={dialogRef}>
+            <Tabs value={tabIndex} onChange={onTabChange}>
+                <Tab label={t('energy')} value={0}/>
+            </Tabs>
             <EnergyChart width={width - 20} period={parameter.period} result={energy}/>
         </DialogTitle>
         <DialogContent>
@@ -49,6 +61,14 @@ const StyledEnergyDialog = styled(Dialog)({
             '& > svg': {
                 flexShrink: 0,
                 userSelect: 'none',
+            },
+            '& > .MuiTabs-root': {
+                minHeight: '36px',
+                marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
+                '& button': {
+                    minHeight: '36px',
+                    padding: '6px 16px',
+                },
             },
         },
         '& > .MuiDialogContent-root': {
