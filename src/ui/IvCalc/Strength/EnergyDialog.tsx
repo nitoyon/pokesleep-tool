@@ -75,7 +75,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
             {tabIndex === 0 && <EnergyPanel energy={energy} dispatch={dispatch}
                 iv={iv} parameter={parameter}/>
             }
-            {tabIndex === 1 && <FrequencyForm state={state}
+            {tabIndex === 1 && <FrequencyForm state={state} simple
                 onStateChange={onStateChange}/>
             }
         </DialogContent>

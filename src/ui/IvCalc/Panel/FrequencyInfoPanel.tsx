@@ -288,7 +288,8 @@ const StyledHover = styled('article')({
     },
 });
 
-export const FrequencyForm = React.memo(({state, onStateChange}: {
+export const FrequencyForm = React.memo(({simple, state, onStateChange}: {
+    simple?: boolean,
     state: FrequencyInfoState,
     onStateChange: (value: FrequencyInfoState) => void
 }) => {
@@ -383,48 +384,52 @@ export const FrequencyForm = React.memo(({state, onStateChange}: {
                     </ToggleButton>
                 </ToggleButtonGroup>
             </div>
-            <div className="line">
-                <label>{t('berry bonus from event')}:</label>
-                <ToggleButtonGroup size="small" exclusive
-                    value={state.berryBonus} onChange={onBerryBonusChange}>
-                    <ToggleButton value={0}>{t('none')}</ToggleButton>
-                    <ToggleButton value={1}>+1</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-            <div className="line">
-                <label>{t('ingredient bonus from event')}:</label>
-                <ToggleButtonGroup size="small" exclusive
-                    value={state.ingBonus} onChange={onIngBonusChange}>
-                    <ToggleButton value={0}>{t('none')}</ToggleButton>
-                    <ToggleButton value={1}>+1</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
+            {!simple && <>
+                <div className="line">
+                    <label>{t('berry bonus from event')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={state.berryBonus} onChange={onBerryBonusChange}>
+                        <ToggleButton value={0}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1}>+1</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+                <div className="line">
+                    <label>{t('ingredient bonus from event')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={state.ingBonus} onChange={onIngBonusChange}>
+                        <ToggleButton value={0}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1}>+1</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </>}
         </Collapse>
-        <div className="line">
-            <label>{t('expert mode')}:</label>
-            <Switch checked={state.expertMode} onChange={onExpertModeChange}/>
-        </div>
-        <Collapse in={state.expertMode}>
+        {!simple && <>
             <div className="line">
-                <label className="indent">{t('berry')}:</label>
-                <ToggleButtonGroup size="small" exclusive
-                    value={state.expertBerry} onChange={onExpertBerryChange}>
-                    <ToggleButton value={0}>{t('main')}</ToggleButton>
-                    <ToggleButton value={1}>{t('sub')}</ToggleButton>
-                    <ToggleButton value={2}>{t('others')}</ToggleButton>
-                </ToggleButtonGroup>
+                <label>{t('expert mode')}:</label>
+                <Switch checked={state.expertMode} onChange={onExpertModeChange}/>
             </div>
-        </Collapse>
-        <Collapse in={state.expertMode && state.expertBerry !== 2 && state.displayValue === "full"}>
-            <div className="line">
-                <label className="indent">{t('expert effect')}:</label>
-                <ToggleButtonGroup size="small" exclusive
-                    value={state.expertIngBonus} onChange={onExpertIngBonusChange}>
-                    <ToggleButton value={1}>{t('expert ing effect')}</ToggleButton>
-                    <ToggleButton value={0}>{t('others')}</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-        </Collapse>
+            <Collapse in={state.expertMode}>
+                <div className="line">
+                    <label className="indent">{t('berry')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={state.expertBerry} onChange={onExpertBerryChange}>
+                        <ToggleButton value={0}>{t('main')}</ToggleButton>
+                        <ToggleButton value={1}>{t('sub')}</ToggleButton>
+                        <ToggleButton value={2}>{t('others')}</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </Collapse>
+            <Collapse in={state.expertMode && state.expertBerry !== 2 && state.displayValue === "full"}>
+                <div className="line">
+                    <label className="indent">{t('expert effect')}:</label>
+                    <ToggleButtonGroup size="small" exclusive
+                        value={state.expertIngBonus} onChange={onExpertIngBonusChange}>
+                        <ToggleButton value={1}>{t('expert ing effect')}</ToggleButton>
+                        <ToggleButton value={0}>{t('others')}</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </Collapse>
+        </>}
         <div className="line">
             <label>{t('value')}:</label>
         </div>
