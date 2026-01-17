@@ -51,7 +51,7 @@ const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}
                 onStateChange={onStateChange}/>
         </DialogTitle>
         <DialogContent>
-            <FrequencyForm state={state} onStateChange={onStateChange}/>
+            <FrequencyForm iv={iv} state={state} onStateChange={onStateChange}/>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>

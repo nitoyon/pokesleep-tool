@@ -107,7 +107,9 @@ const FullPreview = React.memo(({iv, state, onStateChange}: {
     const { t } = useTranslation();
 
     // Calculate base frequency for time conversion
-    const baseFreq = iv.getBaseFrequency(state.helpingBonus, state.campTicket,
+    const baseFreq = iv.getBaseFrequency(
+        state.helpingBonus + (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0),
+        state.campTicket,
         state.expertMode && state.expertBerry === 0,
         state.expertMode && state.expertBerry === 2);
     const freq = baseFreq * [1, 1, 0.66, 0.58, 0.52, 0.45][state.energy];
@@ -288,7 +290,8 @@ const StyledHover = styled('article')({
     },
 });
 
-export const FrequencyForm = React.memo(({simple, state, onStateChange}: {
+export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
+    iv: PokemonIv,
     simple?: boolean,
     state: FrequencyInfoState,
     onStateChange: (value: FrequencyInfoState) => void
@@ -340,17 +343,17 @@ export const FrequencyForm = React.memo(({simple, state, onStateChange}: {
         onStateChange({...state, displayValue: value as "frequency"|"count"|"full"});
     }, [state, onStateChange]);
 
+    const hasHelpingBonus = iv.hasHelpingBonusInActiveSubSkills;
     return <StyledFrequencyControls>
         <div className="line">
             <label>{t('helping bonus')}:</label>
             <ToggleButtonGroup size="small" exclusive
                 value={state.helpingBonus} onChange={onHelpingBonusChange}>
-                <ToggleButton value={0}>0</ToggleButton>
-                <ToggleButton value={1}>1</ToggleButton>
-                <ToggleButton value={2}>2</ToggleButton>
-                <ToggleButton value={3}>3</ToggleButton>
-                <ToggleButton value={4}>4</ToggleButton>
-                <ToggleButton value={5}>5</ToggleButton>
+                <ToggleButton value={0}>{hasHelpingBonus ? '1' : '0'}</ToggleButton>
+                <ToggleButton value={1}>{hasHelpingBonus ? '2' : '1'}</ToggleButton>
+                <ToggleButton value={2}>{hasHelpingBonus ? '3' : '2'}</ToggleButton>
+                <ToggleButton value={3}>{hasHelpingBonus ? '4' : '3'}</ToggleButton>
+                <ToggleButton value={4}>{hasHelpingBonus ? '5' : '4'}</ToggleButton>
             </ToggleButtonGroup>
         </div>
         <div className="line">

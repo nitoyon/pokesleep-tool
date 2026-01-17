@@ -18,7 +18,7 @@ let defaultDistributionMode: DistributionMode = "pmf";
 
 /** Configuration for frequency info dialog display and calculation */
 export type FrequencyInfoState = {
-    /** Helping bonus level (0-5) */
+    /** Helping bonus count (0-4) */
     helpingBonus: number;
     /** Good camp ticket enabled */
     campTicket: boolean;
@@ -69,8 +69,7 @@ export function createFrequencyState(iv: PokemonIv,
         parameter.favoriteType.includes(iv.pokemon.type) ? 1 : 2;
     return({
         ...defaultState,
-        helpingBonus: parameter.helpBonusCount +
-            (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0),
+        helpingBonus: parameter.helpBonusCount,
         campTicket: parameter.isGoodCampTicketSet,
         berryBonus: effect.berry,
         ingBonus: effect.ingredient,
@@ -90,6 +89,15 @@ export function applyStateToParameter(parameter: StrengthParameter,
             isGoodCampTicketSet: current.campTicket,
         }}})
     }
+
+    // Sync helpBonusCount to parameter
+    if (prev.helpingBonus !== current.helpingBonus) {
+        dispatch({type: 'changeParameter', payload: { parameter: {
+            ...parameter,
+            helpBonusCount: current.helpingBonus as 0|1|2|3|4,
+        }}})
+    }
+
     defaultDisplayValue = current.displayValue;
     defaultDistributionMode = current.distributionMode;
     defaultEnergy = current.energy;
