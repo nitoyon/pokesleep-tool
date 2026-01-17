@@ -2,9 +2,11 @@ import React from 'react';
 import { styled } from '@mui/system';
 import IvForm from '../IvForm/IvForm';
 import RpLabel from '../Rp/RpLabel';
+import { IvAction } from '../IvState';
 import PokemonIcon from '../PokemonIcon';
 import { PokemonBoxItem } from '../../../util/PokemonBox';
 import PokemonIv from '../../../util/PokemonIv';
+import { StrengthParameter } from '../../../util/PokemonStrength';
 import PokemonRp from '../../../util/PokemonRp';
 import { Button, Dialog, DialogActions, TextField }  from '@mui/material';
 import Slide from '@mui/material/Slide';
@@ -22,10 +24,12 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const BoxItemDialog = React.memo(({open, boxItem, isEdit, onClose, onChange}: {
+const BoxItemDialog = React.memo(({open, boxItem, isEdit, parameter, dispatch, onClose, onChange}: {
     open: boolean,
     boxItem: PokemonBoxItem|null,
     isEdit: boolean,
+    parameter: StrengthParameter,
+    dispatch: (action: IvAction) => void,
     onClose: () => void,
     onChange: (value: PokemonBoxItem) => void,
 }) => {
@@ -38,13 +42,16 @@ const BoxItemDialog = React.memo(({open, boxItem, isEdit, onClose, onChange}: {
     return <StyledDialog open={open} onClose={onClose} fullScreen
         slots={{transition: Transition}}>
         <BoxItemDialogContent originalBoxItem={boxItem} isEdit={isEdit}
+            parameter={parameter} dispatch={dispatch}
             onClose={onClose} onChange={onChange}/>
     </StyledDialog>;
 });
 
-const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onClose}: {
+const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, parameter, dispatch, onClose, onChange}: {
     originalBoxItem: PokemonBoxItem,
     isEdit: boolean,
+    parameter: StrengthParameter,
+    dispatch: (action: IvAction) => void,
     onChange: (value: PokemonBoxItem) => void,
     onClose: () => void,
 }) => {
@@ -106,7 +113,8 @@ const BoxItemDialogContent = React.memo(({originalBoxItem, isEdit, onChange, onC
                     onFocus={onNickNameFocus}
                     onBlur={onNickNameBlur}/>
             </div>
-            <IvForm pokemonIv={boxItem.iv} fixMode={isEdit} onChange={onFormChange}/>
+            <IvForm parameter={parameter} pokemonIv={boxItem.iv} fixMode={isEdit}
+                dispatch={dispatch} onChange={onFormChange}/>
         </article>
         <DialogActions>
             <Button onClick={onCloseClick}>{t('close')}</Button>

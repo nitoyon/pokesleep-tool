@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import Nature from '../../../util/Nature';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonRp from '../../../util/PokemonRp';
+import { StrengthParameter } from '../../../util/PokemonStrength';
 import { frequencyToString } from '../../../util/TimeUtil';
 import CandyDialog from '../CandyDialog';
 import PokemonTextField from './PokemonTextField';
@@ -10,6 +11,7 @@ import LevelControl from './LevelControl';
 import IngredientTextField from './IngredientTextField';
 import SkillLevelControl from './SkillLevelControl';
 import InfoButton from '../InfoButton';
+import { IvAction } from '../IvState';
 import SubSkillControl, { SubSkillChangeEvent } from './SubSkillControl';
 import NatureTextField from './NatureTextField';
 import SleepingTimeControl from './SleepingTimeControl';
@@ -39,9 +41,11 @@ const StyledInputForm = styled('div')({
 /**
  * Represents Pokemon IV form.
  */
-const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
-    pokemonIv: PokemonIv,
+const IvForm = React.memo(({fixMode, parameter, pokemonIv, dispatch, onChange}: {
     fixMode?: boolean,
+    parameter: StrengthParameter,
+    pokemonIv: PokemonIv,
+    dispatch: (action: IvAction) => void,
     onChange: (value: PokemonIv) => void,
 }) => {
     const { t } = useTranslation();
@@ -99,6 +103,7 @@ const IvForm = React.memo(({pokemonIv, fixMode, onChange}: {
                 {frequencyToString(rp.frequency, t)}
                 {rp.frequency > 0 && <InfoButton onClick={onFrequencyInfoClick}/>}
                 <FrequencyInfoDialog iv={pokemonIv}
+                    dispatch={dispatch} parameter={parameter}
                     open={frequencyDialogOpen} onClose={onFrequencyDialogClose}/>
             </div>
             <div>{t("carry limit")}:</div>

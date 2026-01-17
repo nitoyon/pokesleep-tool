@@ -3,15 +3,19 @@ import { styled } from '@mui/system';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
 } from '@mui/material';
+import { IvAction } from '../IvState';
 import PokemonIv from '../../../util/PokemonIv';
+import { StrengthParameter } from '../../../util/PokemonStrength';
 import {
     FrequencyInfoState, FrequencyInfoPreview, FrequencyForm,
 } from '../Panel/FrequencyInfoPanel';
 import { useTranslation } from 'react-i18next';
 
-const FrequencyInfoDialog = React.memo(({iv, open, onClose}: {
+const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}: {
     iv: PokemonIv,
     open: boolean,
+    parameter: StrengthParameter,
+    dispatch: (action: IvAction) => void,
     onClose: () => void
 }) => {
     const { t } = useTranslation();
@@ -28,6 +32,9 @@ const FrequencyInfoDialog = React.memo(({iv, open, onClose}: {
         distributionMode: "pmf",
         highlighted: 90,
     });
+
+    // [FIXME] To avoid warning
+    console.log(parameter, dispatch);
 
     const onStateChange = React.useCallback((value: FrequencyInfoState) => {
         setState(value);

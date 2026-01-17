@@ -101,7 +101,8 @@ const ResearchCalcApp = React.memo(() => {
         </div>
         {state.lowerTabIndex === 0 &&
             <div style={{margin: '0 0.5rem 10rem 0.5rem'}}>
-                <IvForm pokemonIv={state.pokemonIv} onChange={onPokemonIvChange}/>
+                <IvForm parameter={state.parameter} pokemonIv={state.pokemonIv}
+                    dispatch={dispatch} onChange={onPokemonIvChange}/>
             </div>}
         {state.lowerTabIndex === 1 &&
             <BoxView items={state.box.items} iv={state.pokemonIv}
@@ -114,6 +115,7 @@ const ResearchCalcApp = React.memo(() => {
         <BoxItemDialog key={state.boxItemDialogKey}
             open={state.boxItemDialogOpen} boxItem={selectedItem}
             isEdit={state.boxItemDialogIsEdit}
+            parameter={state.parameter} dispatch={dispatch}
             onClose={onBoxItemEditDialogClose} onChange={onBoxItemDialogChange}/>
         <BoxExportDialog box={state.box}
             open={state.boxExportDialogOpen} onClose={onBoxExportDialogClose}/>
