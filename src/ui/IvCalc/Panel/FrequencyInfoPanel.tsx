@@ -11,6 +11,7 @@ import EnergyIcon from '../../Resources/EnergyIcon';
 import { calculateInventoryDistribution } from '../../../util/PokemonInventory';
 import { useElementWidth } from '../../common/Hook';
 import { BarChart } from '../Chart/BarChart';
+import FrequencyInfoState from './FrequencyInfoState';
 import { useTranslation } from 'react-i18next';
 
 // Convert CDF to PMF
@@ -31,32 +32,6 @@ function calculateExpectedHelps(cdf: number[]): number {
     }
     return expected;
 }
-
-/** Configuration for frequency info dialog display and calculation */
-export type FrequencyInfoState = {
-    /** Helping bonus level (0-5) */
-    helpingBonus: number;
-    /** Good camp ticket enabled */
-    campTicket: boolean;
-    /** Berry bonus from event */
-    berryBonus: 0|1;
-    /** Ingredient bonus from event */
-    ingBonus: 0|1;
-    /** Expert mode enabled */
-    expertMode: boolean;
-    /** Expert berry selection (0=main, 1=sub, 2=others) */
-    expertBerry: number;
-    /** Expert ingredient bonus effect */
-    expertIngBonus: number;
-    /** Display value type */
-    displayValue: "frequency"|"count"|"full";
-    /** Distribution mode for chart */
-    distributionMode: "pmf"|"cdf";
-    /** Energy (5: 81-150, 4: 61-80, 3: 41-60, 2: 1-40, 0: 0) */
-    energy: 1|2|3|4|5;
-    /** Highlighted interval (80%, 90%, 95%, 99%) */
-    highlighted: number;
-};
 
 export const FrequencyInfoPreview = React.memo(({iv, state, onStateChange}: {
     iv: PokemonIv,

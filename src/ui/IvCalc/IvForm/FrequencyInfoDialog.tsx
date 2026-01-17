@@ -3,12 +3,13 @@ import { styled } from '@mui/system';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
 } from '@mui/material';
-import { IvAction } from '../IvState';
 import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
-import {
-    FrequencyInfoState, FrequencyInfoPreview, FrequencyForm,
-} from '../Panel/FrequencyInfoPanel';
+import FrequencyInfoState, {
+    applyStateToParameter, createDefaultState, createFrequencyState,
+} from '../Panel/FrequencyInfoState';
+import { FrequencyInfoPreview, FrequencyForm } from '../Panel/FrequencyInfoPanel';
+import { IvAction } from '../IvState';
 import { useTranslation } from 'react-i18next';
 
 const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}: {
@@ -19,26 +20,26 @@ const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}
     onClose: () => void
 }) => {
     const { t } = useTranslation();
-    const [state, setState] = React.useState<FrequencyInfoState>({
-        helpingBonus: 0,
-        campTicket: false,
-        berryBonus: 0,
-        ingBonus: 0,
-        expertMode: false,
-        expertBerry: 2,
-        expertIngBonus: 0,
-        displayValue: "frequency",
-        energy: 5,
-        distributionMode: "pmf",
-        highlighted: 90,
-    });
+    const openRef = React.useRef(open);
+    const [state, setState] = React.useState<FrequencyInfoState>(
+        createDefaultState());
 
-    // [FIXME] To avoid warning
-    console.log(parameter, dispatch);
+    React.useEffect(() => {
+        // execute only after this dialog is opened
+        if (!(open && !openRef.current)) {
+            openRef.current = open;
+            return;
+        }
+        openRef.current = open;
+
+        // Initialize state from parameter
+        setState(createFrequencyState(iv, parameter, state))
+    }, [iv, open, state, parameter]);
 
     const onStateChange = React.useCallback((value: FrequencyInfoState) => {
+        applyStateToParameter(parameter, state, value, dispatch);
         setState(value);
-    }, []);
+    }, [dispatch, parameter, state]);
 
     if (!open) {
         return <></>;
@@ -50,7 +51,7 @@ const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}
                 onStateChange={onStateChange}/>
         </DialogTitle>
         <DialogContent>
-            <FrequencyForm state={state} onStateChange={setState}/>
+            <FrequencyForm state={state} onStateChange={onStateChange}/>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
