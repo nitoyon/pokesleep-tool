@@ -43,7 +43,8 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
         openRef.current = open;
 
         // Initialize state from parameter
-        setState(createFrequencyState(iv, parameter, state))
+        setState(createFrequencyState(iv, parameter,
+            createDefaultState()));
     }, [iv, open, state, parameter]);
 
     const onTabChange = React.useCallback((_: React.SyntheticEvent, tabIndex: number) => {

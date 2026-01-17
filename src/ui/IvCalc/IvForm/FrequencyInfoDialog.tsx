@@ -33,7 +33,8 @@ const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}
         openRef.current = open;
 
         // Initialize state from parameter
-        setState(createFrequencyState(iv, parameter, state))
+        setState(createFrequencyState(iv, parameter,
+            createDefaultState()));
     }, [iv, open, state, parameter]);
 
     const onStateChange = React.useCallback((value: FrequencyInfoState) => {
