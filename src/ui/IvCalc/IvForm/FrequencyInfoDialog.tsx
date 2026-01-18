@@ -1,14 +1,14 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle,
+    Button, Dialog, DialogActions, DialogContent,
 } from '@mui/material';
 import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import FrequencyInfoState, {
     applyStateToParameter, createDefaultState, createFrequencyState,
 } from '../Panel/FrequencyInfoState';
-import { FrequencyInfoPreview, FrequencyForm } from '../Panel/FrequencyInfoPanel';
+import FrequencyInfoPanel from '../Panel/FrequencyInfoPanel';
 import { IvAction } from '../IvState';
 import { useTranslation } from 'react-i18next';
 
@@ -47,12 +47,9 @@ const FrequencyInfoDialog = React.memo(({iv, open, parameter, dispatch, onClose}
     }
 
     return <StyledFrequencyDialog open={open} onClose={onClose}>
-        <DialogTitle>
-            <FrequencyInfoPreview iv={iv} state={state}
-                onStateChange={onStateChange}/>
-        </DialogTitle>
         <DialogContent>
-            <FrequencyForm iv={iv} state={state} onStateChange={onStateChange}/>
+            <FrequencyInfoPanel iv={iv} state={state}
+                onStateChange={onStateChange}/>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
@@ -65,12 +62,8 @@ const StyledFrequencyDialog = styled(Dialog)({
         // expand dialog width
         width: '100%',
         margin: '20px',
-        '& h2.MuiDialogTitle-root': {
-            padding: '1rem 1rem 0 1rem',
-            fontSize: '1rem',
-        },
         '& div.MuiDialogContent-root': {
-            padding: '0.2rem 1rem 0 1rem',
+            padding: '1rem 0 0',
         },
     },
 });

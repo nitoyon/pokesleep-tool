@@ -8,7 +8,7 @@ import EnergyPanel from '../Panel/EnergyPanel';
 import FrequencyInfoState, {
     applyStateToParameter, createDefaultState, createFrequencyState,
 } from '../Panel/FrequencyInfoState';
-import { FrequencyInfoPreview, FrequencyForm } from '../Panel/FrequencyInfoPanel';
+import FrequencyInfoPanel from '../Panel/FrequencyInfoPanel';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
     Tabs, Tab,
@@ -60,17 +60,12 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
                 <Tab label={t('energy')} value={0}/>
                 <Tab label={t('frequency')} value={1}/>
             </Tabs>
-            {tabIndex === 1 && <div style={{marginTop: 10}}>
-                <FrequencyInfoPreview
-                    iv={iv} state={state}
-                    onStateChange={onStateChange}/>
-            </div>}
         </DialogTitle>
         <DialogContent>
             {tabIndex === 0 && <EnergyPanel energy={energy} dispatch={dispatch}
                 iv={iv} parameter={parameter}/>
             }
-            {tabIndex === 1 && <FrequencyForm iv={iv} state={state} simple
+            {tabIndex === 1 && <FrequencyInfoPanel iv={iv} state={state} simple
                 onStateChange={onStateChange}/>
             }
         </DialogContent>

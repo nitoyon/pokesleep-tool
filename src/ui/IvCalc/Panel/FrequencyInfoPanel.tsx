@@ -14,6 +14,20 @@ import { BarChart } from '../Chart/BarChart';
 import FrequencyInfoState from './FrequencyInfoState';
 import { useTranslation } from 'react-i18next';
 
+export const FrequencyInfoPanel = React.memo(({iv, simple, state, onStateChange}: {
+    iv: PokemonIv,
+    simple?: boolean,
+    state: FrequencyInfoState
+    onStateChange: (value: FrequencyInfoState) => void
+}) => {
+    return <>
+        <FrequencyInfoPreview iv={iv} state={state}
+            onStateChange={onStateChange}/>
+        <FrequencyForm iv={iv} state={state} simple={simple}
+            onStateChange={onStateChange}/>
+    </>;
+});
+
 // Convert CDF to PMF
 function cdfToPmf(cdf: number[]): number[] {
     const pmf: number[] = [cdf[0]];
@@ -85,7 +99,7 @@ const EnergyPreview = React.memo(({iv, state}: {
 });
 
 const StyledEnergyPreview = styled('article')({
-    marginBottom: '1rem',
+    margin: '0 1rem 1rem',
     display: 'grid',
     gridTemplateColumns: 'max-content 1fr',
     gridGap: '1rem',
@@ -233,6 +247,7 @@ const StyledFullPreview = styled('article')({
     '& > header': {
         position: 'relative',
         lineHeight: 1,
+        margin: '0 1rem',
         '& > label': {
             fontSize: '0.7rem',
             color: '#666',
@@ -450,7 +465,7 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
 const StyledFrequencyControls = styled('section')({
     '& div.line': {
         fontSize: '.9rem',
-        paddingBottom: 2,
+        padding: '0 1rem 2px',
         display: 'flex',
         flex: '0 auto',
         alignItems: 'center',
@@ -478,8 +493,13 @@ const StyledFrequencyControls = styled('section')({
             },
         },
     },
+    '& div.value': {
+        padding: '0 1rem',
+    },
     '& button.MuiToggleButton-root': {
         lineHeight: 1.3,
         textTransform: 'none',
     },
 });
+
+export default FrequencyInfoPanel;
