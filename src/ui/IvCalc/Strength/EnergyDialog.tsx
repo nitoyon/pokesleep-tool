@@ -4,9 +4,7 @@ import { IvAction } from '../IvState';
 import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { EnergyResult } from '../../../util/Energy';
-import { EnergyChart } from '../Chart/EnergyChart';
 import EnergyPanel from '../Panel/EnergyPanel';
-import { useElementWidth } from '../../common/Hook';
 import FrequencyInfoState, {
     applyStateToParameter, createDefaultState, createFrequencyState,
 } from '../Panel/FrequencyInfoState';
@@ -28,7 +26,6 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
-    const [width, dialogRef] = useElementWidth();
     const [tabIndex, setTabIndex] = React.useState(defaultTabIndex);
     const openRef = React.useRef(open);
     const [state, setState] = React.useState<FrequencyInfoState>(
@@ -58,14 +55,11 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     }, [dispatch, parameter, state]);
 
     return <StyledEnergyDialog open={open} onClose={onClose}>
-        <DialogTitle ref={dialogRef}>
+        <DialogTitle>
             <Tabs value={tabIndex} onChange={onTabChange}>
                 <Tab label={t('energy')} value={0}/>
                 <Tab label={t('frequency')} value={1}/>
             </Tabs>
-            {tabIndex === 0 && <EnergyChart
-                width={width - 20} period={parameter.period} result={energy}/>
-            }
             {tabIndex === 1 && <div style={{marginTop: 10}}>
                 <FrequencyInfoPreview
                     iv={iv} state={state}
@@ -95,10 +89,6 @@ const StyledEnergyDialog = styled(Dialog)({
         '& > .MuiDialogTitle-root': {
             padding: '0.5rem 10px',
             fontSize: '1rem',
-            '& > svg': {
-                flexShrink: 0,
-                userSelect: 'none',
-            },
             '& > .MuiTabs-root': {
                 minHeight: '36px',
                 marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
@@ -109,7 +99,7 @@ const StyledEnergyDialog = styled(Dialog)({
             },
         },
         '& > .MuiDialogContent-root': {
-            padding: '0 1rem',
+            padding: 0,
         },
     },
 });

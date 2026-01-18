@@ -1,9 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { IvAction } from '../IvState';
+import { useElementWidth } from '../../common/Hook';
 import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
+import { EnergyChart } from '../Chart/EnergyChart';
 import { EnergyResult } from '../../../util/Energy';
 import { clamp } from '../../../util/NumberUtil';
 import { Collapse, MenuItem,
@@ -18,6 +20,7 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
 }) => {
     const { t } = useTranslation();
     const [isScoreEmpty, setIsScoreEmpty] = React.useState(false);
+    const [width, dialogRef] = useElementWidth();
 
     const onRestoreEnergyChange = React.useCallback((e: SelectChangeEvent) => {
         dispatch({type: "changeParameter", payload: { parameter: {
@@ -82,8 +85,9 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
     const carryLimit = energy.carryLimit;
 
     return <StyledEnergyPanel>
-        <Collapse in={!parameter.isEnergyAlwaysFull}>
-            <section>
+            <EnergyChart
+                width={width} period={parameter.period} result={energy}/>        <Collapse in={!parameter.isEnergyAlwaysFull}>
+            <section ref={dialogRef}>
                 <div>
                     <label>{t('skills.Energy for Everyone S')}:</label>
                     <div>
@@ -218,6 +222,7 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
 const StyledEnergyPanel = styled('div')({
     width: '100%',
     '& section': {
+        padding: '0 1rem',
         '& > div': {
             display: 'flex',
             flex: '0 auto',
@@ -242,7 +247,7 @@ const StyledEnergyPanel = styled('div')({
         },
     },
     '& > footer': {
-        margin: '0.5rem 0 0 0',
+        margin: '0.5rem 1rem 0',
         fontSize: '0.9rem',
         background: '#eee',
         borderRadius: '0.9rem',
@@ -272,8 +277,8 @@ const StyledEnergyPanel = styled('div')({
     '& > div.warning': {
         fontSize: '0.8rem',
         color: '#666',
-        padding: '0.4rem 0 0 0',
-        marginLeft: '1.2rem',
+        padding: '0.4rem 1rem 0',
+        marginLeft: '0.6rem',
     },
 });
 
