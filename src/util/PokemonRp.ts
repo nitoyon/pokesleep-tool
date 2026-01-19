@@ -482,6 +482,9 @@ class PokemonRp {
             if (this.iv.pokemon.skill === "Energy for Everyone S") {
                 return [1120, 1593, 2197, 3033, 4187, 5785][this.iv.skillLevel - 1];
             }
+            if (this.iv.pokemon.skill === "Energy for Everyone S (Berry Juice)") {
+                return [1220, 1735, 2392, 3303, 4559, 6299][this.iv.skillLevel - 1];
+            }
             if (this.iv.pokemon.skill === "Helper Boost") {
                 return [2800, 3902, 5273, 6975, 9317, 12438][this.iv.skillLevel - 1];
             }

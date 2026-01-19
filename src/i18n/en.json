@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "add shuckle": {
+                    "headline": "Added data for $t(pokemons.Shuckle).",
+                    "detail": "$t(rp collection)"
+                },
                 "clodsire bug": {
                     "headline": "$t(pokemons.Clodsire) may have escaped from [$t(box)]. Please check.",
                     "detail": "If you opened the tool between January 7-9, $t(pokemons.Clodsire) data may have disappeared from the box. We sincerely apologize for the inconvenience."
