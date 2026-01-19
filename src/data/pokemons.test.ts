@@ -178,3 +178,49 @@ describe('getCandyName', () => {
         expect(getCandyName(-1)).toBe("");
     });
 });
+
+describe('JSON data verification', () => {
+    test('evolutionCount is -1 if ancestor is null', () => {
+        for (const pokemon of pokemons) {
+            if (pokemon.ancestor === null) {
+                expect(pokemon.evolutionCount, `id=${pokemon.name}`).toBe(-1);
+            }
+        }
+    });
+
+    test('ancestor is null if evolution count and evolution left is 0', () => {
+        for (const pokemon of pokemons) {
+            if (pokemon.evolutionCount === 0 &&
+                pokemon.evolutionLeft === 0
+            ) {
+                expect(pokemon.ancestor).toBe(null);
+            }
+        }
+    });
+
+    test('ancestor id should be grouped', () => {
+        for (const pokemon of pokemons) {
+            if (pokemon.ancestor === null) {
+                continue;
+            }
+            const ancestor = pokemons.find(x => x.id === pokemon.ancestor);
+            expect(ancestor).toBeDefined();
+            if (ancestor === undefined) {
+                throw new Error('never comes here');
+            }
+            expect(ancestor.id, `id=${pokemon.name}`).toBe(pokemon.ancestor);
+            expect(pokemon.evolutionCount + pokemon.evolutionLeft, `id=${pokemon.id}`)
+                .toBe(ancestor.evolutionCount + ancestor.evolutionLeft);
+        }
+    });
+
+    test('isFullyEvolved and evolutionCount', () => {
+        for (const pokemon of pokemons) {
+            if (pokemon.isFullyEvolved) {
+                expect(pokemon.evolutionLeft).toBe(0);
+            } else {
+                expect(pokemon.evolutionLeft).not.toBe(0);
+            }
+        }
+    });
+});
