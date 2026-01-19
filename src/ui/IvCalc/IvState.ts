@@ -264,7 +264,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
         if (boxItem !== null) {
             nickName = boxItem.nickname;
             const translatedName = i18n.t(`pokemons.${boxItem.iv.pokemon.name}`);
-            console.log(i18n.language, translatedName);
             if (nickName === translatedName) {
                 nickName = "";
             }
