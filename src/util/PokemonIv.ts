@@ -581,9 +581,10 @@ class PokemonIv {
         }
 
         // get Pokedex ID
+        // Shuckle's ID was incorrectly written as 231, so it must
+        // be fixed when deserializing
         const id = array16[0] >> 4;
-        // Apply ID migration for backward compatibility
-        const migratedId = PokemonIv.idMigrations[id] ?? id;
+        const migratedId = id === 231 ? 213 : id;
         let pokemon = pokemons.find(x => x.id === migratedId);
         if (pokemon === undefined) {
             throw new Error(`Pokemon id ${id} not found`);

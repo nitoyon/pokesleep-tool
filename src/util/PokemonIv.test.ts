@@ -459,43 +459,10 @@ describe('PokemonIV', () => {
         });
 
         test('ID migration from 231 to 213 (Shuckle)', () => {
-            // Create a Shuckle and get its serialized form
-            const iv = new PokemonIv({ pokemonName: 'Shuckle' });
-            const serialized = iv.serialize();
-
-            // Decode the serialized string to get the raw bytes
-            const bin = atob(serialized.replace(/-/g, '/') + "AAAA");
-            const array8 = new Uint8Array(bin.length);
-            for (let i = 0; i < bin.length; i++) {
-                array8[i] = bin.charCodeAt(i);
-            }
-            const array16 = new Uint16Array(array8.buffer);
-
-            // Verify current encoding uses ID 213
-            // Formula: array16[0] = 1 + (id << 4)
-            // So for ID 213: 1 + (213 << 4) = 1 + 3408 = 3409 = 0xD51
-            expect(array16[0]).toBe(1 + (213 << 4));
-
-            // Modify the array to use old ID 231
-            // Formula: 1 + (231 << 4) = 1 + 3696 = 3697 = 0xE71
-            array16[0] = 1 + (231 << 4);
-
-            // Re-encode to create a serialized string with old ID 231
-            const modifiedArray8 = new Uint8Array(array16.buffer);
-            let modifiedBin = "";
-            for (let i = 0; i < modifiedArray8.length; i++) {
-                modifiedBin += String.fromCharCode(modifiedArray8[i]);
-            }
-            const oldIdSerialized = btoa(modifiedBin)
-                .replace(/\//g, '-')
-                .substring(0, 12);
-
-            // Deserialize the modified string - it should migrate ID 231 to 213
-            const ret = PokemonIv.deserialize(oldIdSerialized);
-
-            // Verify the deserialized Pokemon is Shuckle with ID 213
-            expect(ret.pokemon.id).toBe(213);
-            expect(ret.pokemon.name).toBe('Shuckle');
+            const iv = PokemonIv.deserialize('cQ7AqMw96H8f');
+            expect(iv.pokemon.id).toBe(213);
+            expect(iv.pokemon.name).toBe('Shuckle');
+            expect(iv.serialize()).toBe('UQ3AqMw96H8f');
         });
 
         test('all pokemon', () => {
