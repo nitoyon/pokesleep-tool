@@ -198,10 +198,10 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
                 return;
             }
 
-            // Special handling for "Lunar Blessing" to use skillValue
-            // is mainSkill is "Energy for Everyone S"
+            // Use skillValue for "Lunar Blessing" and "Berry Juice"
+            // when sorting by "Energy for Everyone S"
             if (mainSkill === "Energy for Everyone S" &&
-                item.iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
+                item.iv.pokemon.skill.startsWith("Energy for Everyone S")
             ) {
                 cache[item.id] = result.skillValue;
                 return;
