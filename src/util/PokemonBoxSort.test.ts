@@ -544,12 +544,14 @@ describe('sortPokemonItems', () => {
             const iv2 = new PokemonIv({ pokemonName: 'Pawmot' });
             const iv3 = new PokemonIv({ pokemonName: 'Braviary' });
             const iv4 = new PokemonIv({ pokemonName: 'Sceptile' });
+            const iv5 = new PokemonIv({ pokemonName: 'Shuckle' });
 
             const items = [
                 new PokemonBoxItem(iv1),
                 new PokemonBoxItem(iv2),
                 new PokemonBoxItem(iv3),
                 new PokemonBoxItem(iv4),
+                new PokemonBoxItem(iv5),
             ];
 
             const calculator: StrengthCalculator = (iv: PokemonIv) => {
@@ -562,6 +564,12 @@ describe('sortPokemonItems', () => {
                             skillValue: 30,
                             skillStrength: 0, // Strength is 0 for this skill
                             skillStrength2: 30000,
+                        });
+                    case 'Shuckle':
+                        return createStrengthResult({
+                            skillCount: 5.5,
+                            skillValue: 40,
+                            skillStrength: 0,
                         });
                     case 'Pawmot':
                         // Regular "Energy for Everyone S"
@@ -586,13 +594,15 @@ describe('sortPokemonItems', () => {
                 return createStrengthResult({});
             };
 
-            // When sorting by "Energy for Everyone S", Pawmot should be first
-            // because its skillValue (50) is higher than Cresselia's (30)
+            // When sorting by "Energy for Everyone S", result should be:
+            // Pawmot (50) > Shuckle (40) > Cresselia (30)
             const [result1, error1] = sortPokemonItems(items, 'skill', true, 'unknown',
                 'Energy for Everyone S', parameter, mockT, calculator);
             expect(error1).toBe('');
-            expect(result1.length).toBe(2);
-            expect(result1[1].iv.pokemon.name).toBe('Cresselia');
+            expect(result1.length).toBe(3);
+            expect(result1[0].iv.pokemon.name).toBe('Pawmot');
+            expect(result1[1].iv.pokemon.name).toBe('Shuckle');
+            expect(result1[2].iv.pokemon.name).toBe('Cresselia');
 
             // When sorting by "Berry Burst", Sceptile should be first,
             // Cresselia second, Braviary third

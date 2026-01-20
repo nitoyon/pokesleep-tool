@@ -281,6 +281,9 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
         return getEnergyRecoveryValueText(val, skillLevel, t,
             t('nature effect.Energy recovery'));
     }
+    if (skill === 'Energy for Everyone S (Berry Juice)') {
+        return getNormalSkillValueText(t, t('expected berry juice'));
+    }
     if (skill === 'Energy for Everyone S (Lunar Blessing)') {
         return getBerryBurstValueText(strength, t, t('berry strength per berry burst'));
     }

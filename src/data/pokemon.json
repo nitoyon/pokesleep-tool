@@ -3359,6 +3359,40 @@
         }
     },
     {
+        "id": 213,
+        "name": "Shuckle",
+        "arrival": "2026-01-19",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "bug",
+        "specialty": "Skills",
+        "skill": "Energy for Everyone S (Berry Juice)",
+        "fp": 16,
+        "frequency": 3600,
+        "ingRate": 20.5,
+        "skillRate": 5.9,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 16,
+        "ing1": {
+            "name": "oil",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "coffee",
+            "c2": 2,
+            "c3": 3
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 4
+        }
+    },
+    {
         "id": 214,
         "name": "Heracross",
         "arrival": "2023-07-17",
@@ -3526,40 +3560,6 @@
         "ing3": {
             "name": "leek",
             "c3": 3
-        }
-    },
-    {
-        "id": 231,
-        "name": "Shuckle",
-        "arrival": "2026-01-19",
-        "sleepType": "dozing",
-        "exp": 600,
-        "type": "bug",
-        "specialty": "Skills",
-        "skill": "Energy for Everyone S (Berry Juice)",
-        "fp": 16,
-        "frequency": 3600,
-        "ingRate": 20.5,
-        "skillRate": 5.9,
-        "ancestor": null,
-        "evolutionCount": -1,
-        "evolutionLeft": 0,
-        "isFullyEvolved": true,
-        "carryLimit": 16,
-        "ing1": {
-            "name": "oil",
-            "c1": 1,
-            "c2": 2,
-            "c3": 4
-        },
-        "ing2": {
-            "name": "coffee",
-            "c2": 2,
-            "c3": 3
-        },
-        "ing3": {
-            "name": "honey",
-            "c3": 4
         }
     },
     {

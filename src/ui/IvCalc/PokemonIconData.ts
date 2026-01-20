@@ -594,6 +594,17 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#b6bccd'},
         {x: 0, y: 0.6, w: 1, h: 0.4, color: '#858da5'},
     ],
+    // Shuckle
+    '213': [
+        {x: 0.35, y: 0, w: 0.3, h: 1, r: 0.15, color: '#ffe035'},
+        {x: 0.25, y: 0, w: 0.4, h: 0.4, r: 0.2, color: '#ffe035'},
+        {x: 0, y: 0.5, w: 1, h: 0.5, r: 0.4, color: '#ed5554'},
+        {x: 0.32, y: 0.4, w: 0.3, h: 0.2, r: 0.2, color: '#ffe035'},
+        {x: 0, y: 0.75, w: 1, h: 1, color: '#ed5554'},
+        {x: 0.75, y: 0.6, w: 0.13, h: 0.15, r: 0.1, color: '#f5e9ca'},
+        {x: 0, y: 0.83, w: 1, h: 0.2, color: '#e7cda5'},
+        {x: 0, y: 0.92, w: 1, h: 0.2, color: '#ffe035'},
+    ],
     // Heracross
     '214': [
         {x: 0, y: 0, w: 1, h: 1, color: '#5f87ae'},
@@ -622,16 +633,6 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#575045'},
         {x: 0, y: 0.7, w: 1, h: 0.3, color: '#d7d0c6'},
         {x: 0, y: 0.5, w: 1, h: 0.2, color: '#eb8c53'},
-    ],
-    '231': [
-        {x: 0.35, y: 0, w: 0.3, h: 1, r: 0.15, color: '#ffe035'},
-        {x: 0.25, y: 0, w: 0.4, h: 0.4, r: 0.2, color: '#ffe035'},
-        {x: 0, y: 0.5, w: 1, h: 0.5, r: 0.4, color: '#ed5554'},
-        {x: 0.32, y: 0.4, w: 0.3, h: 0.2, r: 0.2, color: '#ffe035'},
-        {x: 0, y: 0.75, w: 1, h: 1, color: '#ed5554'},
-        {x: 0.75, y: 0.6, w: 0.13, h: 0.15, r: 0.1, color: '#f5e9ca'},
-        {x: 0, y: 0.83, w: 1, h: 0.2, color: '#e7cda5'},
-        {x: 0, y: 0.92, w: 1, h: 0.2, color: '#ffe035'},
     ],
     // Blissey
     '242': [

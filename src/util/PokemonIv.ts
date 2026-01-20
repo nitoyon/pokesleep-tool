@@ -45,6 +45,14 @@ class PokemonIv {
     private readonly cache: Map<string, number> = new Map();
     private activeSubSkillsCache: undefined | SubSkill[] = undefined;
 
+    /**
+     * ID migration map for backward compatibility.
+     * Maps incorrect IDs to correct Pokedex IDs.
+     */
+    private static readonly idMigrations: Record<number, number> = {
+        231: 213,  // Shuckle: placeholder ID -> actual Pokedex ID
+    };
+
     /** Initialize new instance. */
     constructor(input: Partial<PokemonIvProps>) {
         const params = PokemonIv.normalize(input);
@@ -573,8 +581,11 @@ class PokemonIv {
         }
 
         // get Pokedex ID
+        // Shuckle's ID was incorrectly written as 231, so it must
+        // be fixed when deserializing
         const id = array16[0] >> 4;
-        let pokemon = pokemons.find(x => x.id === id);
+        const migratedId = id === 231 ? 213 : id;
+        let pokemon = pokemons.find(x => x.id === migratedId);
         if (pokemon === undefined) {
             throw new Error(`Pokemon id ${id} not found`);
         }

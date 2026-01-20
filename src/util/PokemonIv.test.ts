@@ -458,6 +458,13 @@ describe('PokemonIV', () => {
             compareIv(iv, ret);
         });
 
+        test('ID migration from 231 to 213 (Shuckle)', () => {
+            const iv = PokemonIv.deserialize('cQ7AqMw96H8f');
+            expect(iv.pokemon.id).toBe(213);
+            expect(iv.pokemon.name).toBe('Shuckle');
+            expect(iv.serialize()).toBe('UQ3AqMw96H8f');
+        });
+
         test('all pokemon', () => {
             for (const pokemon of pokemons) {
                 const iv = new PokemonIv({ pokemonName: pokemon.name });
