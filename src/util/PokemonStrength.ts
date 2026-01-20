@@ -537,6 +537,13 @@ class PokemonStrength {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
+            case "Energy for Everyone S (Berry Juice)":
+                // Use probability 20% at RaenonX
+                // https://pks.raenonx.cc/en/mainskill/info/32
+                return {
+                    skillValue, skillStrength: 0, skillValuePerTrigger,
+                    skillValue2: 0.2 * skillCount, skillStrength2: 0, skillValuePerTrigger2: 0.2,
+                };
             case "Energy for Everyone S (Lunar Blessing)": {
                 const ret = calculateBerryBurstStrength(this.iv, param,
                     bonus.berryBurst, skillLevel);
