@@ -532,6 +532,7 @@
         "lottery count": "추첨을 진행한 횟수",
         "always 81%+": "항상 81% 이상",
         "charge energy not implemented": "현재로서는, 기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
+        "berry juice assumption": "나무열매쥬스 획득 확률은 RaenonX의 잠정값 (20%)을 사용합니다.",
 
         "help yield": "$t(berry)$t(ingredient)수",
         "help yield description": "도움 {{n}}회당 획득하는 $t(berry)・$t(ingredient)의 평균 수량입니다.",
@@ -638,7 +639,7 @@
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "강도량에 대한 영향을 추정하려면 [$t(energy)] 값을 변경하십시오.",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)나무열매쥬스 획득 확률은 RaenonX의 값 (20%)을 사용합니다.",
+            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)$t(berry juice assumption)",
             "Extra Helpful S": "스킬에 의해 활성화된 도움 횟수를 표시합니다. 총 강도량에 미치는 영향은 도움 1회당 300 (필드 보너스 없음)으로 추정됩니다.",
             "Cooking Power-Up S": "",
             "Cooking Power-Up S (Minus)": "팀에 메인 스킬이 「플러스」나 「마이너스」인 포켓몬이 1마리 이상 있을 경우에만 팀 멤버 1마리의 기력을 회복합니다.",

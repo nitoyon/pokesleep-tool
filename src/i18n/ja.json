@@ -536,6 +536,7 @@
         "lottery count": "抽選回数",
         "always 81%+": "常に81%以上",
         "charge energy not implemented": "現在、げんきチャージSによるげんき回復は考慮されていません。",
+        "berry juice assumption": "きのみジュース取得確率は RaenonX の暫定値 (20%) を利用しています。",
 
         "help yield": "$t(berry)$t(ingredient)数",
         "help yield description": "おてつだい{{n}}回で拾う「$t(berry)・$t(ingredient)」の平均個数。",
@@ -643,7 +644,7 @@
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "回復によるエナジー量への影響を見積もるには、[$t(energy)] の設定を変更して確認してください。",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)きのみジュース取得確率は RaenonX の値 (20%) を利用しています。",
+            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)$t(berry juice assumption)",
             "Extra Helpful S": "スキルによって発動する [おてつだい回数] を表示してます。合計エナジー量へは、1おてつだいあたり 300 (フィールドボーナスなしのとき) として計算しています。",
             "Cooking Power-Up S": "",
             "Cooking Power-Up S (Minus)": "チーム内のポケモン1匹のげんき回復は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ発生します。",

@@ -546,6 +546,7 @@
         "lottery count": "Lottery count",
         "always 81%+": "Always 81%+",
         "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
+        "berry juice assumption": "The Berry Juice acquisition rate uses the RaenonX tentative value (20%).",
 
         "help yield": "Yield",
         "help yield description": "The average number of berries and ingredients collected over {{n}} helps.",
@@ -654,7 +655,7 @@
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S) The Berry Juice acquisition rate uses the RaenonX value (20%).",
+            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S) $t(berry juice assumption)",
             "Extra Helpful S": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
             "Cooking Power-Up S": "",
             "Cooking Power-Up S (Minus)": "Restores Energy to one random Pokémon on your team, but only if at least one teammate has the Plus or Minus main skill.",

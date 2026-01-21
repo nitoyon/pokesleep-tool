@@ -536,6 +536,7 @@
         "lottery count": "抽選次數",
         "always 81%+": "始終超過81%",
         "charge energy not implemented": "目前不考慮活力填充 S 帶來的活力回復。",
+        "berry juice assumption": "樹果汁獲取機率使用 RaenonX 的暫定值 (20%)。",
 
         "help yield": "$t(berry)$t(ingredient)數量",
         "help yield description": "每$t(help count)次可獲得的$t(berry)和$t(ingredient)的平均數量。",
@@ -643,7 +644,7 @@
             "Metronome": "$t(strength skill info.Skill Copy)",
             "Energy for Everyone S": "如需估計對能量的影響，請嘗試變更 [$t(energy)] 的值並進行確認。",
             "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)樹果汁獲取機率使用 RaenonX 的值 (20%)。",
+            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)$t(berry juice assumption)",
             "Extra Helpful S": "顯示技能發動帶來的 [幫助次數] 。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
             "Cooking Power-Up S": "",
             "Cooking Power-Up S (Minus)": "只有當隊伍中有至少一隻擁有「正電」或「負電」主技能的寶可夢時，才會回復一隻隊伍成員的活力。",
