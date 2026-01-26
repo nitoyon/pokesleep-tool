@@ -676,7 +676,7 @@ class Energy {
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
 
         const skillProbabilityAfterWakeup = {once: 0, twice: 0};
-        const lotteryCount = Math.ceil(asleepNotFull);
+        const lotteryCount = asleepNotFull;
         const skillRate = rp.iv.skillRate * bonus.skillTrigger;
         if (lotteryCount > 0) {
             const skillNone = Math.pow(1 - skillRate, lotteryCount);
