@@ -474,6 +474,7 @@
             "none": "なし",
             "advanced": "詳細設定",
             "custom": "カスタム設定",
+            "valentine 2026": "バレンタイン2026",
             "super skill week part 3": "$t(events.super skill week) vol.3",
             "new year 2026 2nd week": "ニューイヤー2026 (2週目)",
             "new year 2026 1st week": "ニューイヤー2026 (1週目)",
@@ -515,6 +516,7 @@
             "eevee week 2023": "イーブイウィーク2023"
         },
         "target": "対象",
+        "ingredients from main skills": "メインスキルの食材量",
         "dish": "料理",
         "energy from dish": "料理で回復するげんき",
         "recipe bonus help": "よく作る料理のレシピボーナスを指定してください。基本的には、料理のレシピボーナスは食材数によって変わりますが、一部のレシピは食材数よりも多いボーナス値となっています。詳しいボーナス値は <raenonx>レシピ一覧 (RaenonX)</raenonx> をご覧ください。",

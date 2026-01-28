@@ -505,11 +505,13 @@ class PokemonStrength {
         if (mainSkill.startsWith("Ingredient Magnet S")) {
             // This event bonus is floored.
             // (ref) https://x.com/nitoyon/status/1995228758182383941
-            mainSkillBase = Math.floor(mainSkillBase * bonus.ingredientMagnet);
+            mainSkillBase = Math.floor(mainSkillBase *
+                Math.max(bonus.ingredientMagnet, bonus.skillIngredient));
         }
         if (mainSkill.startsWith("Ingredient Draw S")) {
             // This event bonus is floored
-            mainSkillBase = Math.floor(mainSkillBase * bonus.ingredientDraw);
+            mainSkillBase = Math.floor(mainSkillBase *
+                Math.max(bonus.ingredientDraw, bonus.skillIngredient));
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
             mainSkillBase *= bonus.dreamShard;
@@ -621,7 +623,8 @@ class PokemonStrength {
             case "Ingredient Magnet S (Plus)": {
                 let ingCount = getSkillSubValue(mainSkill, skillLevel,
                     this.pokemonIv.pokemon.ing1.name);
-                ingCount = Math.floor(ingCount * bonus.ingredientMagnet);
+                ingCount = Math.floor(ingCount *
+                    Math.max(bonus.ingredientMagnet, bonus.skillIngredient));
                 return {
                     skillValue,
                     skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
@@ -802,6 +805,7 @@ class PokemonStrength {
             dreamShard: eventBonus?.dreamShard ?? 1,
             ingredientMagnet: eventBonus?.ingredientMagnet ?? 1,
             ingredientDraw: eventBonus?.ingredientDraw ?? 1,
+            skillIngredient: eventBonus?.skillIngredient ?? 1,
             berryBurst: eventBonus?.berryBurst ?? 1,
             dish: eventBonus?.dish ?? 1,
             energyFromDish: eventBonus?.energyFromDish ?? 0,
@@ -973,6 +977,7 @@ export function createStrengthParameter(
                 dreamShard: 1,
                 ingredientMagnet: 1,
                 ingredientDraw: 1,
+                skillIngredient: 1,
                 berryBurst: 1,
                 dish: 1,
                 energyFromDish: 0,

@@ -362,7 +362,18 @@ function getIngredientGetValueText(strength: PokemonStrength,
 [React.ReactNode, React.ReactNode] {
     const param = strength.parameter;
     const val = getSkillValue(strength.pokemonIv.pokemon.skill, skillLevel);
-    const ingBonus = getEventBonus(param.event, param.customEventBonus)?.ingredientMagnet ?? 1;
+    const bonus = getEventBonus(param.event, param.customEventBonus);
+    const skill = strength.pokemonIv.pokemon.skill;
+    let ingBonus = 1;
+    if (skill.startsWith("Ingredient Magnet S")) {
+        ingBonus = Math.max(bonus?.ingredientMagnet ?? 1,
+            bonus?.skillIngredient ?? 1);
+    } else if (skill.startsWith("Ingredient Draw S")) {
+        ingBonus = Math.max(bonus?.ingredientDraw ?? 1,
+            bonus?.skillIngredient ?? 1);
+    } else {
+        throw new Error(`invalid skill: ${skill}`);
+    }
 
     const text = t('value per skill', { value: t('ing count')});
     if (ingBonus === 1) {
@@ -459,7 +470,9 @@ function getPlusValueText(strength: PokemonStrength, skillLevel: number, t: type
 [React.ReactNode, React.ReactNode] {
     const text = t('value per skill', { value: t('additional ingredients') });
     const param = strength.parameter;
-    const ingBonus = getEventBonus(param.event, param.customEventBonus)?.ingredientMagnet ?? 1;
+    const bonus = getEventBonus(param.event, param.customEventBonus);
+    const ingBonus = Math.max(bonus?.ingredientMagnet ?? 1,
+        bonus?.skillIngredient ?? 1);
 
     if (ingBonus === 1) {
         return [text, null];

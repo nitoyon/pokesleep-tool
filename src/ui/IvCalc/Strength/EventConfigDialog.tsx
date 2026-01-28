@@ -156,6 +156,18 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
+    const onSkillIngredientChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
+        if (val === null) {
+            return;
+        }
+        onChange({...value, event: "custom", customEventBonus: {
+            ...value.customEventBonus,
+            effects: {
+                ...value.customEventBonus.effects,
+                skillIngredient: val as 1|1.25,
+            },
+        }});
+    }, [value, onChange]);
     const onBerryBurstChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
@@ -325,6 +337,16 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         value={value.customEventBonus.effects.ingredientDraw} onChange={onIngredientDrawChange}>
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
                         <ToggleButton value={1.5}>×1.5</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </section>
+            <section>
+                <label>{t('ingredients from main skills')}:</label>
+                <div>
+                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
+                        value={value.customEventBonus.effects.skillIngredient} onChange={onSkillIngredientChange}>
+                        <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.25}>×1.25</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>

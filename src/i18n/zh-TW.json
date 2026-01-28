@@ -474,6 +474,7 @@
             "none": "無",
             "advanced": "詳細設定",
             "custom": "自訂設定",
+            "valentine 2026": "情人節2026",
             "super skill week part 3": "$t(events.super skill week)vol.3",
             "new year 2026 2nd week": "新年2026 (第2週)",
             "new year 2026 1st week": "新年2026 (第1週)",
@@ -515,6 +516,7 @@
             "eevee week 2023": "伊布週2023"
         },
         "target": "目標",
+        "ingredients from main skills": "主技能的食材量",
         "dish": "料理",
         "energy from dish": "料理回復的活力",
         "recipe bonus help": "請指定經常做的料理的食譜獎勵。基本上，烹飪的食譜獎勵會根據食材的數量而變化，但有些食譜的獎勵值高於食材的數量。詳細獎勵值請參考 <raenonx>食譜一覧（RaenonX）</raenonx>。",

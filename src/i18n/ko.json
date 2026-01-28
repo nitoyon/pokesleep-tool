@@ -470,6 +470,7 @@
             "none": "없음",
             "advanced": "고급 설정",
             "custom": "맞춤 설정",
+            "valentine 2026": "밸런타인 2026",
             "super skill week part 3": "$t(events.super skill week) vol.3",
             "new year 2026 2nd week": "뉴 이어 2026 (2주간)",
             "new year 2026 1st week": "뉴 이어 2026 (1주간)",
@@ -511,6 +512,7 @@
             "eevee week 2023": "이브이 위크 2023"
         },
         "target": "대상",
+        "ingredients from main skills": "메인 스킬의 식재료 량",
         "dish": "요리",
         "energy from dish": "요리로 회복하는 기력",
         "recipe bonus help": "자주 만드는 식사의 레시피 보너스를 지정하세요. 레시피 보너스는 일반적으로 재료의 수에 따라 달라지지만, 일부 레시피는 더 높은 보너스 값을 가질 수 있습니다. 자세한 내용은 <raenonx>레시피 정보 (포슬립 위키)</raenonx>을 참조하세요.",
