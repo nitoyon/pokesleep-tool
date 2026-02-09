@@ -4,7 +4,7 @@
         "ResearchCalc": {
             "title": "研究數計算器 for Pokémon Sleep",
             "short title": "研究數計算器",
-            "description": "使用方法非常簡單！ 只需要輸入營地和總能量就可以知道每個睡眠分數出現的宝可梦數量。",
+            "description": "使用方法非常簡單！ 只需要輸入營地和總能量就可以知道每個睡眠分數出現的寶可夢數量。",
             "notice detail1": "不要忘記更改好睡眠日期間的 [$t(bonus)] 的倍數。",
             "notice detail2": "勾選 [$t(sleep twice)] 可以查看分次睡眠時可以遇到的寶可夢的總數。"
         },
@@ -88,11 +88,11 @@
                     "detail": "在糖果計算功能中，等級 30 以下的寶可夢所需的糖果數量已減少。"
                 },
                 "add farfetch'd": {
-                    "headline": "更新了$t(pokemons.Farfetch'd)的数据。",
+                    "headline": "更新了$t(pokemons.Farfetch'd)的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "add mawile & candy calc": {
-                    "headline": "更新了$t(pokemons.Mawile)的数据。另外，新增了糖果計算功能。",
+                    "headline": "更新了$t(pokemons.Mawile)的數據。另外，新增了糖果計算功能。",
                     "detail": "$t(rp collection)\n糖果計算功能可以透過點擊寶可夢名字右側的糖果圖示，或是在盒子中的寶可夢右上角點選︙後選擇 [糖果] 來使用。"
                 },
                 "v2.9.0": {
@@ -100,7 +100,7 @@
                     "detail": "已更新 $t(pokemons.Butterfree), $t(pokemons.Dodrio), $t(pokemons.Altaria) 的資料。"
                 },
                 "add murkrow": {
-                    "headline": "更新了$t(pokemons.Murkrow), $t(pokemons.Honchkrow)的数据。",
+                    "headline": "更新了$t(pokemons.Murkrow), $t(pokemons.Honchkrow)的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "darkrai ing": {
@@ -108,7 +108,7 @@
                     "detail": "第三個材料的數量是估算值，因此可能不準確。"
                 },
                 "add happiny": {
-                    "headline": "更新了$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)的数据。",
+                    "headline": "更新了$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "v2.7.0": {
@@ -116,11 +116,11 @@
                     "detail": "已支援至等級 65 的 SP 計算，並開放技能等級上限。"
                 },
                 "add darkrai": {
-                    "headline": "更新了達克萊伊的数据。",
+                    "headline": "更新了達克萊伊的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "add cresselia": {
-                    "headline": "更新了克雷色利亞的数据。",
+                    "headline": "更新了克雷色利亞的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "v2.6.0": {
@@ -128,11 +128,11 @@
                     "detail": "幫手速度▼▼的修正值已從1.1更改為1.075。"
                 },
                 "add munna": {
-                    "headline": "更新了食夢夢，夢夢蝕的数据。",
+                    "headline": "更新了食夢夢，夢夢蝕的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "add clodsire": {
-                    "headline": "更新了烏波 (帕底亞)，土王的数据。",
+                    "headline": "更新了烏波 (帕底亞)，土王的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "v2.5.0": {
@@ -140,7 +140,7 @@
                     "detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
                 },
                 "add rufflet": {
-                    "headline": "更新了毛頭小鷹，勇士雄鷹的数据。",
+                    "headline": "更新了毛頭小鷹，勇士雄鷹的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "v2.4.0": {
@@ -160,7 +160,7 @@
                     "detail": "在 [$t(strength2)] 選項卡的計算中，可以確認佳節活動中寶可夢的能力。"
                 },
                 "add sneasel": {
-                    "headline": "更新了狃拉，瑪狃拉的数据。",
+                    "headline": "更新了狃拉，瑪狃拉的數據。",
                     "detail": "$t(rp collection)"
                 },
                 "eevee week 2024": {
@@ -230,7 +230,7 @@
             }
         },
         "rp collection": "食材機率、技能機率參考了 RP Collection 的資料。",
-        "movie detail": "訂閱頻道・按讚・留言・Hybe等都會給我帶來很大的鼓勵！",
+        "movie detail": "訂閱頻道・按讚・留言・Hype等都會給我帶來很大的鼓勵！",
         "num": "{{n, number}}",
         "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",
@@ -258,7 +258,7 @@
         "tracked": "測量完成",
         "drowsy power": "睡意之力",
         "time range": "測量期間",
-        "remaining time": "剩余{{time}}",
+        "remaining time": "剩餘{{time}}",
         "sleep state": {
             "init": "為了在開始測量後立即進入入睡狀態，請在剩餘的<time/>內不要對測量設備施加振動。",
             "init2": "可能已經進入入睡狀態了，因此可以根據想要的睡眠類型搖動測量設備<detail/>。但為了保險起見，建議在<time/>內不要對測量設備施加振動。",
@@ -318,9 +318,9 @@
         "sub2": "副2",
         "sub": "副",
         "others": "其他",
-        "set for field": "随$t(research area)固定",
-        "set for event": "随$t(event)固定",
-        "random": "随机",
+        "set for field": "隨$t(research area)固定",
+        "set for event": "隨$t(event)固定",
+        "random": "隨機",
         "expert effect": "EX營地效果",
         "expert berry effect": "樹果能量2.4倍",
         "expert ing effect": "食材+1",
@@ -436,7 +436,7 @@
         "delete all message": "確定刪除盒子裏的所有寶可夢嗎？",
         "deleted all pokemon": "已刪除盒子裏的所有寶可夢。",
 
-        "period": "时期",
+        "period": "時期",
         "1hour": "1小時",
         "3hours": "3小時",
         "8hours": "8小時",
@@ -588,7 +588,7 @@
         "evolved twice": "進化兩次",
         "not evolved": "直接捕獲",
 
-        "200 hours-": "少於200小時不到",
+        "200 hours-": "200小時不到",
         "200 hours+": "200～500小時",
         "500 hours+": "500～1000小時",
         "1000 hours+": "1000～2000小時",
@@ -602,7 +602,7 @@
         "dream shard": "夢之碎片",
         "pokemon candy": "{{name}}的糖果",
         "nature": "性格",
-        "candy boost": "糖果增强",
+        "candy boost": "糖果增強",
         "candy-based training": "糖果育成",
         "sleep-based training": "睡眠育成",
         "kind": "種類",
@@ -639,7 +639,7 @@
             "Charge Strength S": "",
             "Charge Strength S (Stockpile)": "$t(base strength)的期望值使用 RaenonX 的彙總結果（吐出概率：26.5%）進行計算。",
             "Charge Strength M": "",
-            "Charge Strength M (Bad Dreams)": "对非$t(types.dark)类型宝可梦的$t(energy)减少效果（-12）未包含在$t(strength)的评估中。",
+            "Charge Strength M (Bad Dreams)": "對非$t(types.dark)類型寶可夢的$t(energy)減少效果（-12）未包含在$t(strength)的評估中。",
             "Dream Shard Magnet S": "",
             "Energizing Cheer S": "技能的效果沒有換算成合計能量值。",
             "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
@@ -718,8 +718,8 @@
             "Energy for Everyone S (Lunar Blessing)": "新月祈禱 (活力全體療癒S)",
             "Energy for Everyone S (Berry Juice)": "樹果汁 (活力全體療癒S)",
             "Extra Helpful S": "幫手支援S",
-            "Cooking Power-Up S": "料理强化S",
-            "Cooking Power-Up S (Minus)": "负电 (料理强化S)",
+            "Cooking Power-Up S": "料理強化S",
+            "Cooking Power-Up S (Minus)": "負電 (料理強化S)",
             "Tasty Chance S": "料理成功S",
             "Helper Boost": "幫手加速",
             "Berry Burst": "樹果遽增",

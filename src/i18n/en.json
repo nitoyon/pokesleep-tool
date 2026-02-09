@@ -201,7 +201,7 @@
                 },
                 "box filter and sort improvement": {
                     "headline": "Box filtering and sorting have significantly evolved.",
-                    "detail": "You can now filter the box by Spiecies Name, Nickname, $t(ingredient), $t(main skill), and $t(sub skills).\nAdditionally, sorting options have been expanded to include $t(berry), $t(ingredient), and $t(skill count)."
+                    "detail": "You can now filter the box by Species Name, Nickname, $t(ingredient), $t(main skill), and $t(sub skills).\nAdditionally, sorting options have been expanded to include $t(berry), $t(ingredient), and $t(skill count)."
                 },
                 "suicune event simmulation": {
                     "headline": "You can now simulate Suicune event.",
@@ -280,7 +280,7 @@
         "custom icon details": "Use @ID1@ to @ID4@ in the URL to specify the Pokédex number. For example, @ID3@.png will be replaced with 001.png when the Pokédex number is 1.",
         "custom icon details japanese only": "",
         "custom icon invalid url": "Please enter a valid URL.",
-        "custom icon id not found": "URL must include @ID1@, @ID2@, ID3@, or @ID4@.",
+        "custom icon id not found": "URL must include @ID1@, @ID2@, @ID3@, or @ID4@.",
         "custom icon invalid message": "The URL for the custom icon is not valid. Please leave it blank or set the correct value.",
 
         "ok": "OK",
@@ -529,7 +529,7 @@
         "ingredients from main skills": "Ingredients from main skills",
         "dish": "Dish",
         "energy from dish": "Energy recovery from dishes",
-        "recipe bonus help": "Please specify the recipe bonus for frequently made meals. Recipe bonuse typically depends on the number of ingredients, but some recipes may have higher bonus values. For details, see the <raenonx>Recipes / Dishes (RaenonX)</raenonx>.",
+        "recipe bonus help": "Please specify the recipe bonus for frequently made meals. Recipe bonus typically depends on the number of ingredients, but some recipes may have higher bonus values. For details, see the <raenonx>Recipes / Dishes (RaenonX)</raenonx>.",
         "recipe strength help": "This value is used to convert ingredients into strength amounts, assuming 80% are used in the recipe and 20% are surplus.",
         "recipe bonus list": "https://pks.raenonx.cc/en/meal",
 
@@ -619,7 +619,7 @@
         "kind": "Kind",
         "number of uses": "Number of uses",
         "up to specified level": "Up to specified level",
-        "growth incense": "Grouth incense",
+        "growth incense": "Growth incense",
         "full moon": "Full moon",
         "gsd": "Full moon ±1",
         "every 2 days": "Every 2 days",
@@ -643,7 +643,7 @@
         "strength restriction2": "Energy recovery via Charge Energy S is not included in the calculations.",
         "strength skill info": {
             "Ingredient Magnet S": "Ingredients from the skill are assumed to be surplus.",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) The additional ingredients will be obtainedr when there's one or more Pokémon on the team with the Plus or Minus main skill.",
+            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S) The additional ingredients will be obtained when there's one or more Pokémon on the team with the Plus or Minus main skill.",
             "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S) The candy acquisition rate is based on RaenonX's data (34.4%).",
             "Charge Energy S": "This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
@@ -904,7 +904,7 @@
             "Marowak": "Marowak",
             "Chansey": "Chansey",
             "Kangaskhan": "Kangaskhan",
-            "Natu": "Katu",
+            "Natu": "Natu",
             "Xatu": "Xatu",
             "Mr. Mime": "Mr. Mime",
             "Pinsir": "Pinsir",

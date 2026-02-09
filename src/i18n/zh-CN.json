@@ -52,7 +52,7 @@
                     "detail": "$t(rp collection)\n现在可以$t(helping bonus addition label)。"
                 },
                 "add pumpkaboo": {
-                    "headline": "已新增南瓜精與南瓜怪人的資料。",
+                    "headline": "已新增南瓜精与南瓜怪人的数据。",
                     "detail": "$t(rp collection)"
                 },
                 "v3.0.0": {
@@ -60,7 +60,7 @@
                     "detail": "$t(rp collection)"
                 },
                 "add natu": {
-                    "headline": "已新增$t(pokemons.Natu)與$t(pokemons.Xatu)的資料。",
+                    "headline": "已新增$t(pokemons.Natu)与$t(pokemons.Xatu)的数据。",
                     "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
@@ -68,7 +68,7 @@
                     "detail": "已更新 $t(pokemons.Braviary) 和 $t(pokemons.Mimikyu) 的技能概率。\n在计算 $t(skills.Berry Burst) 的期望值时，现在默认队伍中的宝可梦等级相同。此外，现在可以通过 [$t(strength2)] 标签中 [$t(skill)] 右侧的 [i] 按钮，更详细地自定义队伍中的宝可梦。"
                 },
                 "ex and toxel": {
-                    "headline": "已新增$t(pokemons.Toxel)與颤弦蠑螈的資料，同時也支援 $t(area.7)。",
+                    "headline": "已新增$t(pokemons.Toxel)与颤弦蝾螈的数据，同时也支持 $t(area.7)。",
                     "detail": "$t(rp collection)"
                 },
                 "v2.11.0": {
@@ -230,7 +230,7 @@
             }
         },
         "rp collection": "食材几率、技能几率参照了 RP Collection 的数据。",
-        "movie detail": "订阅频道・点赞・评论・Hybe等都会给我带来很大的鼓励！",
+        "movie detail": "订阅频道・点赞・评论・Hype等都会给我带来很大的鼓励！",
         "num": "{{n, number}}",
         "relativetime": "RT: {{val, relativetime}}",
         "short num unit": "万",
@@ -258,7 +258,7 @@
         "tracked": "测量完成",
         "drowsy power": "睡意之力",
         "time range": "测量期间",
-        "remaining time": "剩餘{{time}}",
+        "remaining time": "剩余{{time}}",
         "sleep state": {
             "init": "为了在开始测量后立即进入入睡状态，请在剩余的<time/>内不要对测量设备施加振动。",
             "init2": "可能已经进入入睡状态了，因此可以根据想要的睡眠类型摇动测量设备<detail/>。但为了保险起见，建议在<time/>内不要对测量设备施加振动。",
@@ -389,7 +389,7 @@
         "tasty chance increase": "大成功概率增加",
         "help count per pokemon": "每只宝可梦的$t(help count)",
         "berry strength per berry burst": "收集的浆果$t(strength2)",
-        "great success increasment": "대성공 (3배) 시 증가량",
+        "great success increasment": "大成功 (3倍) 时的增加量",
         "great success rate": "在达到研究前大成功的概率",
         "additional ingredient rate": "额外食材获取概率",
         "additional ingredients": "更多食材",
@@ -448,7 +448,7 @@
         "current level": "现在的等级",
         "calc with evolved": "使用进化后的宝可梦计算",
         "calc with evolved (short)": "进化",
-        "calc with max skill level": "根据最高技能等级計算",
+        "calc with max skill level": "根据最高技能等级计算",
         "calc with max skill level (short)": "最高技能等级",
         "area bonus": "营地奖励",
         "favorite berry": "喜欢的树果",
@@ -562,7 +562,7 @@
         "sleeping time shared": "一起睡觉的时间",
         "help count": "帮忙次数",
         "berry help count": "树果帮助次数",
-        "ing help count": "食材幫助次數",
+        "ing help count": "食材帮助次数",
         "ing count": "食材的数量",
         "strength per ing": "食材每个的能量",
         "normal help count": "普通帮助次数",
@@ -600,7 +600,7 @@
         "dream shard": "梦之碎片",
         "pokemon candy": "{{name}}的糖果",
         "nature": "性格",
-        "candy boost": "糖果增強",
+        "candy boost": "糖果增强",
         "candy-based training": "糖果育成",
         "sleep-based training": "睡眠育成",
         "kind": "种类",
@@ -634,7 +634,7 @@
             "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)根据 RaenonX 的汇总数据计算，获取$t(candy)的概率为 34.4%。",
             "Charge Energy S": "技能的效果没有换算成合计能量值。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
             "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
-            "Charge Strength S": "顯示可獲得的能量量。",
+            "Charge Strength S": "显示可获得的能量量。",
             "Charge Strength S (Stockpile)": "$t(base strength)的期望值使用 RaenonX 的汇总结果（吐出概率：26.5%）进行计算。",
             "Charge Strength M": "",
             "Charge Strength M (Bad Dreams)": "对非$t(types.dark)类型宝可梦的$t(energy)减少效果（-12）未包含在$t(strength)的评估中。",
@@ -698,7 +698,7 @@
 
         "skills": {
             "Ingredient Magnet S": "食材获取S",
-            "Ingredient Magnet S (Plus)": "正电 (食材獲取S)",
+            "Ingredient Magnet S (Plus)": "正电 (食材获取S)",
             "Ingredient Magnet S (Present)": "礼物 (食材获取S)",
             "Charge Energy S": "活力填充S",
             "Charge Energy S (Moonlight)": "月光 (活力填充S)",
@@ -712,12 +712,12 @@
             "Energizing Cheer S": "活力疗愈S",
             "Energizing Cheer S (Nuzzle)": "蹭蹭脸颊 (活力疗愈S)",
             "Metronome": "挥指",
-            "Energy for Everyone S": "活力全体療愈S",
-            "Energy for Everyone S (Lunar Blessing)": "新月祈祷 (活力全体療愈S)",
-            "Energy for Everyone S (Berry Juice)": "树果汁 (活力全体療愈S)",
+            "Energy for Everyone S": "活力全体疗愈S",
+            "Energy for Everyone S (Lunar Blessing)": "新月祈祷 (活力全体疗愈S)",
+            "Energy for Everyone S (Berry Juice)": "树果汁 (活力全体疗愈S)",
             "Extra Helpful S": "帮手支援S",
             "Cooking Power-Up S": "料理强化S",
-            "Cooking Power-Up S (Minus)": "負電 (料理強化S)",
+            "Cooking Power-Up S (Minus)": "负电 (料理强化S)",
             "Tasty Chance S": "料理成功S",
             "Helper Boost": "帮手加速",
             "Berry Burst": "树果剧增",
@@ -811,7 +811,7 @@
             "flying": "飞行",
             "psychic": "超能力",
             "bug": "虫",
-            "rock": "岩是",
+            "rock": "岩石",
             "ghost": "幽灵",
             "dragon": "龙",
             "dark": "恶",

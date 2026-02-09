@@ -68,7 +68,7 @@
                     "detail": "$t(pokemons.Braviary), $t(pokemons.Mimikyu)의 스킬 확률을 업데이트했습니다.\n$t(skills.Berry Burst)의 기대값 계산 시, 팀 내 포켓몬들은 동일한 레벨이라고 가정하도록 변경되었습니다. 또한 [$t(strength2)] 탭의 [$t(skill)] 오른쪽에 있는 [i] 버튼을 통해 팀 내 포켓몬들을 보다 상세하게 커스터마이즈할 수 있게 되었습니다."
                 },
                 "ex and toxel": {
-                    "headline": "$t(pokemons.Xatu) 그리고 $t(pokemons.Natu)의 데이터가 추가되었습니다.",
+                    "headline": "$t(pokemons.Toxel) 그리고 스트린더의 데이터가 추가되었습니다.",
                     "detail": "$t(rp collection)"
                 },
                 "v2.11.0": {
@@ -201,7 +201,7 @@
                 },
                 "suicune event simmulation": {
                     "headline": "스이쿤 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
-                    "detail": "[$t(strength2)] 탭에서 수이크닝 이벤트 중 물 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
+                    "detail": "[$t(strength2)] 탭에서 스이쿤 이벤트 중 물 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
                 },
                 "evolution count and ribbon": {
                     "headline": "진화 횟수와 굿나잇리본의 레벨이 이제 설정 가능합니다.",
@@ -276,7 +276,7 @@
         "custom icon details": "URL에서 포켓몬 도감 번호를 지정하려면 @ID1@부터 @ID4@까지 사용하세요. 예를 들어, 포켓몬 도감 번호가 1일 때 @ID3@.png는 001.png로 대체됩니다.",
         "custom icon details japanese only": "",
         "custom icon invalid url": "유효한 URL을 입력하세요.",
-        "custom icon id not found": "URL에는 @ID1@, @ID2@, ID3@ 또는 @ID4@가 포함되어야 합니다.",
+        "custom icon id not found": "URL에는 @ID1@, @ID2@, @ID3@ 또는 @ID4@가 포함되어야 합니다.",
         "custom icon invalid message": "사용자 지정 아이콘의 URL이 유효하지 않습니다. 비워 두거나 올바른 값을 설정하세요.",
 
         "close": "닫기",
@@ -329,7 +329,7 @@
         "range separator": "~",
         "text separator": ", ",
         "hhmm_short": "{{h}}시간 {{m}}분",
-        "mmss_short": "{{h}}분 {{s}}초",
+        "mmss_short": "{{m}}분 {{s}}초",
         "ss_short": "{{s}}초",
         "hhmm": "{{h}}시간 {{m}}분",
         "freq hhmmss": "$t(hour2, {\"count\": {{h}} }){{m}}분 {{s}}초 마다",
@@ -556,7 +556,7 @@
         "frequency": "도우미 시간",
         "carry limit": "최대 소지 수",
         "Main Skill & Sub Skills": "메인 스킬 & 서브 스킬",
-        "additional stats": "상세 수테이터스",
+        "additional stats": "상세 스테이터스",
         "sleeping time shared": "함께 잠든 시간",
         "help count": "도움 횟수",
         "berry help count": "열매 도움 횟수",
@@ -596,7 +596,7 @@
         "required exp": "필요한 EXP",
         "candy": "사탕",
         "dream shard": "꿈의조각",
-        "pokemon candy": "{{name}}의사탕",
+        "pokemon candy": "{{name}}의 사탕",
         "nature": "성격",
         "candy boost": "사탕 부스트",
         "candy-based training": "사탕 육성",
