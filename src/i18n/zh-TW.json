@@ -661,9 +661,9 @@
             "Skill Copy": "由於效果難以估計、顯示技能發動的次數。技能的效果沒有換算成合計能量值。",
             "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
             "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
-            "Ingredient Draw S": "$t(strength skill info.Ingredient Magnet S)",
-            "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Magnet S)撿取$t(dream shard)的機率使用 RaenonX 的彙總結果。",
-            "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Magnet S)$t(additional ingredient rate)使用 RaenonX 的彙總結果 (16.68%)。",
+            "Ingredient Draw S": "技能獲取的食材是通過將$t(recipe bonus)應用於$t(strength2)來計算的。",
+            "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S)撿取$t(dream shard)的機率使用 RaenonX 的彙總結果。",
+            "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S)$t(additional ingredient rate)使用 RaenonX 的彙總結果 (16.68%)。",
             "not triggered": "在此設定中，主技能未被觸發。",
             "unknown": "主技能還未確定。"
         },
