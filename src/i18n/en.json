@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "add cutiefly": {
+                    "headline": "Added data for $t(pokemons.Cutiefly) and $t(pokemons.Ribombee).",
+                    "detail": "$t(rp collection)"
+                },
                 "add shuckle": {
                     "headline": "Added data for $t(pokemons.Shuckle).",
                     "detail": "$t(rp collection)"

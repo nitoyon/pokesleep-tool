@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "また、使い方の解説動画を <YouTube>YouTubeチャンネル</YouTube> で公開しています。ぜひご確認ください。",
             "news": {
+                "add cutiefly": {
+                    "headline": "$t(pokemons.Cutiefly)、$t(pokemons.Ribombee)のデータを追加しました。",
+                    "detail": "$t(rp collection)"
+                },
                 "add shuckle": {
                     "headline": "$t(pokemons.Shuckle)のデータを追加しました。",
                     "detail": "$t(rp collection)"
