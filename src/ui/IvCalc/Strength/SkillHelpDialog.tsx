@@ -113,7 +113,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
             <article>
-                <MainSkillIcon mainSkill={skillName}/>
+                <MainSkillIcon mainSkill={skillName}
+                    firstIngredient={iv.pokemon.ing1.name}/>
                 {formatNice(result.skillValue, t)}
             </article>
             {!isCountOnly && <footer>

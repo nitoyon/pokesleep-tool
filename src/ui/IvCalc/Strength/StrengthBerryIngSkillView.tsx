@@ -392,7 +392,8 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
         formatNice(result.skillValue2, t);
 
     const skill1 = <div>
-        <MainSkillIcon mainSkill={mainSkill}/>
+        <MainSkillIcon mainSkill={mainSkill}
+            firstIngredient={pokemonIv.pokemon.ing1.name}/>
         <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue}</span>
     </div>;
 

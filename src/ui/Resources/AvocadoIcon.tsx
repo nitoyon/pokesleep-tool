@@ -27,14 +27,14 @@ import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 const AvocadoIcon = React.memo((props: SvgIconProps) => {
     return (
-        <SvgIcon {...props} viewBox="0 0 52.916669 52.916664">
+        <SvgIcon {...props} viewBox="0 0 200 200">
             <AvocadoIconPaths />
         </SvgIcon>
     );
 });
 
 export const AvocadoIconPaths = () => (
-    <>
+    <g transform="scale(3.8)">
         <path
             transform="translate(27.2342)"
             fill="#749f3e"
@@ -112,7 +112,7 @@ export const AvocadoIconPaths = () => (
             rx="3.1055665"
             ry="3.1567326"
         />
-    </>
+    </g>
 );
 
 export default AvocadoIcon;

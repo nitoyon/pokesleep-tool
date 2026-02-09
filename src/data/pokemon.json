@@ -6636,31 +6636,31 @@
         "sleepType": "snozing",
         "exp": 600,
         "type": "fairy",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Ingredient Draw S",
         "fp": 5,
-        "frequency": 0,
-        "ingRate": 0,
-        "skillRate": 0,
+        "frequency": 4500,
+        "ingRate": 19.9,
+        "skillRate": 1.9,
         "ancestor": 742,
         "evolutionCount": 0,
         "evolutionLeft": 1,
         "isFullyEvolved": false,
-        "carryLimit": 0,
+        "carryLimit": 9,
         "ing1": {
-            "name": "unknown1",
+            "name": "honey",
             "c1": 2,
             "c2": 5,
             "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "oil",
+            "c2": 4,
+            "c3": 6
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "corn",
+            "c3": 5
         }
     },
     {
@@ -6670,31 +6670,31 @@
         "sleepType": "snozing",
         "exp": 600,
         "type": "fairy",
-        "specialty": "unknown",
-        "skill": "unknown",
+        "specialty": "Ingredients",
+        "skill": "Ingredient Draw S",
         "fp": 12,
-        "frequency": 0,
-        "ingRate": 0,
-        "skillRate": 0,
+        "frequency": 2300,
+        "ingRate": 19.4,
+        "skillRate": 2.5,
         "ancestor": 742,
         "evolutionCount": 1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 19,
         "ing1": {
-            "name": "unknown1",
+            "name": "honey",
             "c1": 2,
             "c2": 5,
             "c3": 7
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "oil",
+            "c2": 4,
+            "c3": 6
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "corn",
+            "c3": 5
         }
     },
     {

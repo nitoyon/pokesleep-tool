@@ -25,20 +25,30 @@ SOFTWARE.
 import React from 'react';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 import { AvocadoIconPaths } from './AvocadoIcon';
+import { CornIconPaths } from './CornIcon';
+import { HoneyIconPaths } from './HoneyIcon';
 import { PotatoIconPaths } from './PotatoIcon';
 import { OilIconPaths } from './OilIcon';
+import { IngredientName } from '../../data/pokemons';
 
-const IngredientDrawIcon = React.memo((props: SvgIconProps) => {
+type IngredientDrawIconProps = SvgIconProps & {
+    firstIngredient: IngredientName;
+};
+
+const IngredientDrawIcon = React.memo((props: IngredientDrawIconProps) => {
     return (
         <SvgIcon {...props} viewBox="0 0 200 200">
-            <g transform="translate(48,0) scale(2)">
-                <AvocadoIconPaths />
+            <g transform="translate(48,0) scale(0.5)">
+                {props.firstIngredient === "avocado" && <AvocadoIconPaths/>}
+                {props.firstIngredient === "honey" && <HoneyIconPaths/>}
             </g>
-            <g transform="translate(0, 108) scale(0.5)">
-                <PotatoIconPaths />
+            <g transform="translate(0, 98) scale(0.5)">
+                {props.firstIngredient === "avocado" && <PotatoIconPaths />}
+                {props.firstIngredient === "honey" && <OilIconPaths/>}
             </g>
-            <g transform="translate(100,100) scale(0.5)">
-                <OilIconPaths />
+            <g transform="translate(100,98) scale(0.5)">
+                {props.firstIngredient === "avocado" && <OilIconPaths />}
+                {props.firstIngredient === "honey" && <CornIconPaths/>}
             </g>
         </SvgIcon>
     );
