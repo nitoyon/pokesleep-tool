@@ -42,6 +42,7 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange, fit
     fitHeight?: boolean,
 }) => {
     const isFirstTime = React.useRef(true);
+    const ignoreDragRef = React.useRef(false);
     const length = Array.isArray(children) ? children.length : 0;
     const widthGap = width + gap;
 
@@ -57,7 +58,15 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange, fit
         immediate: isFirstTime.current,
     }), [index, widthGap]);
 
-    const bind = useDrag(({ active, movement: [mx], velocity: [vx]}) => {
+    const bind = useDrag(({ active, movement: [mx], velocity: [vx], first, event}) => {
+        if (first) {
+            ignoreDragRef.current = !!(event.target instanceof Element &&
+                event.target.closest('svg'));
+        }
+        if (ignoreDragRef.current) {
+            return;
+        }
+
         if (active) {
             return api.start({
                 x: -index * widthGap + mx,
