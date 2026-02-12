@@ -71,7 +71,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
         </DialogTitle>
         <DialogContent>
             <DraggableTabContainer index={tabIndex} width={width + 20}
-                onChange={onDragChange}>
+                fitHeight onChange={onDragChange}>
                 <div className="tabChild">
                     <EnergyPanel energy={energy} dispatch={dispatch}
                         iv={iv} parameter={parameter}/>
