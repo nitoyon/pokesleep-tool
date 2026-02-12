@@ -4,11 +4,13 @@ import { IvAction } from '../IvState';
 import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { EnergyResult } from '../../../util/Energy';
+import DraggableTabContainer from '../../common/DraggableTabContainer';
 import EnergyPanel from '../Panel/EnergyPanel';
 import FrequencyInfoState, {
     applyStateToParameter, createDefaultState, createFrequencyState,
 } from '../Panel/FrequencyInfoState';
 import FrequencyInfoPanel from '../Panel/FrequencyInfoPanel';
+import { useElementWidth } from '../../common/Hook';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
     Tabs, Tab,
@@ -26,6 +28,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
     dispatch: React.Dispatch<IvAction>,
 }) => {
     const { t } = useTranslation();
+    const [width, elementRef] = useElementWidth();
     const [tabIndex, setTabIndex] = React.useState(defaultTabIndex);
     const openRef = React.useRef(open);
     const [state, setState] = React.useState<FrequencyInfoState>(
@@ -49,6 +52,11 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
         defaultTabIndex = tabIndex;
     }, [])
 
+    const onDragChange = React.useCallback((tabIndex: number) => {
+        setTabIndex(tabIndex);
+        defaultTabIndex = tabIndex;
+    }, []);
+
     const onStateChange = React.useCallback((value: FrequencyInfoState) => {
         applyStateToParameter(parameter, state, value, dispatch);
         setState(value);
@@ -56,18 +64,23 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
 
     return <StyledEnergyDialog open={open} onClose={onClose}>
         <DialogTitle>
-            <Tabs value={tabIndex} onChange={onTabChange}>
+            <Tabs value={tabIndex} onChange={onTabChange} ref={elementRef}>
                 <Tab label={t('energy')} value={0}/>
                 <Tab label={t('frequency')} value={1}/>
             </Tabs>
         </DialogTitle>
         <DialogContent>
-            {tabIndex === 0 && <EnergyPanel energy={energy} dispatch={dispatch}
-                iv={iv} parameter={parameter}/>
-            }
-            {tabIndex === 1 && <FrequencyInfoPanel iv={iv} state={state} simple
-                onStateChange={onStateChange}/>
-            }
+            <DraggableTabContainer index={tabIndex} width={width + 20}
+                onChange={onDragChange}>
+                <div className="tabChild">
+                    <EnergyPanel energy={energy} dispatch={dispatch}
+                        iv={iv} parameter={parameter}/>
+                </div>
+                <div className="tabChild">
+                    <FrequencyInfoPanel iv={iv} state={state} simple
+                        onStateChange={onStateChange}/>
+                </div>
+            </DraggableTabContainer>
         </DialogContent>
         <DialogActions disableSpacing>
             <Button onClick={onClose}>{t('close')}</Button>
