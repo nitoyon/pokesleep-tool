@@ -66,7 +66,9 @@ const EnergyPreview = React.memo(({iv, state}: {
 }) => {
     const { t } = useTranslation();
 
-    const baseFreq = iv.getBaseFrequency(state.helpingBonus, state.campTicket,
+    const helpBonusCount = state.helpingBonus +
+        (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
+    const baseFreq = iv.getBaseFrequency(helpBonusCount, state.campTicket,
         state.expertMode && state.expertBerry === 0,
         state.expertMode && state.expertBerry === 2);
     const convertToVal = (rate: number) => {
