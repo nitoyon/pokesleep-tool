@@ -6803,7 +6803,7 @@
         "id": 777,
         "name": "Togedemaru",
         "arrival": "2025-12-22",
-        "sleepType": "dozing",
+        "sleepType": "slumbering",
         "exp": 600,
         "type": "steel",
         "specialty": "Skills",
