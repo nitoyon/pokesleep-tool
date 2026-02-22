@@ -662,6 +662,8 @@
             "Ingredient Draw S": "技能获取的食材是通过将$t(recipe bonus)应用于$t(strength2)来计算的。",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S)通过 RaenonX 的汇总结果计算获取$t(dream shard)的概率。",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S)$t(additional ingredient rate)使用 RaenonX 的汇总结果 (16.68%)。",
+            "Cooking Assist": "",
+            "Cooking Assist (Bulk Up)": "$t(strength skill info.Ingredient Magnet S)大成功概率增加 % 不会换算为合计能量值。",
             "not triggered": "在此设置中，主技能未被触发。",
             "unknown": "主技能还未确定。"
         },
@@ -732,6 +734,8 @@
             "Ingredient Draw S": "食材精选S",
             "Ingredient Draw S (Super Luck)": "超幸运 (食材精选S)",
             "Ingredient Draw S (Hyper Cutter)": "怪力钳 (食材精选S)",
+            "Cooking Assist": "料理辅助S",
+            "Cooking Assist (Bulk Up)": "健美（料理辅助S）",
             "unknown": "(未知)"
         },
 

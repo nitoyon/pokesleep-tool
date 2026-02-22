@@ -24,30 +24,22 @@ SOFTWARE.
 
 import React from 'react';
 import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { MilkIconPaths } from './MilkIcon';
-import { PotatoIconPaths } from './PotatoIcon';
-import { AppleIconPaths } from './AppleIcon';
+import { IngredientsIconPaths } from './IngredientsIcon';
 
-const IngredientsIcon = React.memo((props: SvgIconProps) => {
+const IngredientDrawIcon = React.memo((props: SvgIconProps) => {
     return (
-        <SvgIcon {...props} viewBox="0 0 200 200">
+        <SvgIcon {...props} viewBox="0 0 300 300">
             <IngredientsIconPaths/>
+            <g transform="scale(8) translate(15,10)" stroke="#ffffff" strokeWidth="3">
+                <path d="M10 3h4v12h-4z"/>
+                <circle cx="12" cy="19" r="2"/>
+            </g>
+            <g transform="scale(8) translate(15,10)" fill="#da3122">
+                <path d="M10 3h4v12h-4z"/>
+                <circle cx="12" cy="19" r="2"/>
+            </g>
         </SvgIcon>
     );
 });
 
-export const IngredientsIconPaths = () => (
-    <g transform="scale(0.6)">
-        <g transform="translate(30, 0)">
-            <MilkIconPaths />
-        </g>
-        <g transform="translate(133, 130)">
-            <PotatoIconPaths />
-        </g>
-        <g transform="translate(0,140)">
-            <AppleIconPaths />
-        </g>
-    </g>
-);
-
-export default IngredientsIcon;
+export default IngredientDrawIcon;

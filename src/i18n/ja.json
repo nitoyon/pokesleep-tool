@@ -664,6 +664,8 @@
             "Ingredient Draw S": "スキルによる食材は$t(recipe bonus)を適用して$t(strength2)を計算しています。",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S)$t(dream shard)を取得する確率は RaenonX での集計結果を利用しています。",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S)$t(additional ingredient rate)は RaenonX での集計結果 (16.68%) を利用しています。",
+            "Cooking Assist": "",
+            "Cooking Assist (Bulk Up)": "$t(strength skill info.Ingredient Magnet S)大成功の確率増加 % は合計エナジー量には換算していません。",
             "not triggered": "この設定ではメインスキルは発動しません。",
             "unknown": "メインスキルはまだ判明していません。"
         },
@@ -734,6 +736,8 @@
             "Ingredient Draw S": "食材セレクトS",
             "Ingredient Draw S (Super Luck)": "きょううん (食材セレクトS)",
             "Ingredient Draw S (Hyper Cutter)": "かいりきバサミ (食材セレクトS)",
+            "Cooking Assist": "料理アシストS",
+            "Cooking Assist (Bulk Up)": "ビルドアップ(料理アシストS)",
             "unknown": "(不明)"
         },
 

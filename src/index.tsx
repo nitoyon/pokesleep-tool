@@ -58,7 +58,7 @@ import i18n from './i18n';
         ins.style.verticalAlign = 'baseline';
         ins.style.zIndex = '2147483647';
         ins.style.background = '#cccccc';
-        document.body.appendChild(ins);
+        //document.body.appendChild(ins);
     }
 
     window.addEventListener('load', () => {

@@ -11,6 +11,7 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import IngredientIcon from './IngredientIcon';
 import CandyIcon from '../Resources/CandyIcon';
+import CookingAssistIcon from '../Resources/CookingAssistIcon';
 import IngredientDrawIcon from '../Resources/IngredientDrawIcon';
 import DreamShardIcon from '../Resources/DreamShardIcon';
 import HyperCutterIcon from '../Resources/HyperCutterIcon';
@@ -85,6 +86,14 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
                 return <SuperLuckIcon fontSize="small"/>;
             } else {
                 return <DreamShardIcon/>;
+            }
+        case "Cooking Assist":
+            return <CookingAssistIcon/>;
+        case "Cooking Assist (Bulk Up)":
+            if (second !== true) {
+                return <IngredientsIcon/>;
+            } else {
+                return <PriorityHighIcon sx={{color: '#ff0000'}} fontSize="small"/>;
             }
         case "Cooking Power-Up S":
             return <PotIcon sx={{color: "#886666"}} fontSize="small"/>;

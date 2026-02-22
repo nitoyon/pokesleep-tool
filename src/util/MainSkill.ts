@@ -32,6 +32,8 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Draw S" |
     "Ingredient Draw S (Super Luck)" |
     "Ingredient Draw S (Hyper Cutter)" |
+    "Cooking Assist" |
+    "Cooking Assist (Bulk Up)" |
     "unknown";
 
 export const MainSkillNames: MainSkillName[] = [
@@ -42,6 +44,7 @@ export const MainSkillNames: MainSkillName[] = [
     "Extra Helpful S", "Helper Boost",
     "Dream Shard Magnet S", "Metronome",
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
+    "Cooking Assist",
 ];
 
 /** Candy probability for Present */
@@ -88,7 +91,10 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
         skill === "Skill Copy (Mimic)" ||
         skill === "Ingredient Draw S" ||
         skill === "Ingredient Draw S (Super Luck)" ||
-        skill === "Ingredient Draw S (Hyper Cutter)") {
+        skill === "Ingredient Draw S (Hyper Cutter)" ||
+        skill === "Cooking Assist" ||
+        skill === "Cooking Assist (Bulk Up)"
+    ) {
         return 7;
     }
     return 6;
@@ -196,6 +202,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
     ) {
         return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
     }
+    if (skill === "Cooking Assist (Bulk Up)") {
+        return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
+    }
 
     // Return 0 for 'Metronome' or 'Skill Copy' since
     // their value depends on the copied skill.
@@ -247,6 +256,9 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
     if (skill === "Ingredient Draw S (Super Luck)") {
         // Amount of Dream Shards (x1)
         return [500, 720, 1030, 1440, 2000, 2800, 4000][skillLevel - 1];
+    }
+    if (skill === "Cooking Assist (Bulk Up)") {
+        return [1, 2, 2, 3, 3, 4, 4, 5][skillLevel - 1];
     }
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
@@ -411,6 +423,14 @@ export function matchMainSkillName(pokemon: PokemonData, match: string,
     // Treat "Dream Shard Magnet S" as matching "Ingredient Draw S (Super Luck)"
     if (name === "Ingredient Draw S (Super Luck)" && match === "Dream Shard Magnet S") {
         return true;
+    }
+
+    // Treat "Bulk Up" as matching "Tasty Chance S" and "Ingredient Magnet S"
+    if (name === "Cooking Assist (Bulk Up)") {
+        if (match === "Tasty Chance S" ||
+            match === "Ingredient Magnet S") {
+            return true;
+        }
     }
 
     return false;
