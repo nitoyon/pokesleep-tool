@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "v3.3.0": {
+                    "headline": "Updated the data with balance adjustments in version 3.3.0",
+                    "detail": "If the $t(rp) is different, please let us know."
+                },
                 "add cutiefly": {
                     "headline": "Added data for $t(pokemons.Cutiefly) and $t(pokemons.Ribombee).",
                     "detail": "$t(rp collection)"
@@ -675,6 +679,8 @@
             "Ingredient Draw S": "The strength of ingredients is calculated by applying the recipe bonus.",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S) The probability of collecting $t(dream shard) is based on aggregated results from RaenonX.",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S) $t(additional ingredient rate) uses aggregated results from RaenonX (16.68%).",
+            "Cooking Assist S": "",
+            "Cooking Assist S (Bulk Up)": "$t(strength skill info.Ingredient Magnet S) The % increase in great success rate is not counted towards the total strength amount.",
             "not triggered": "The main skill is not triggered in this setting.",
             "unknown": "The main skill has not been determined yet."
         },
@@ -745,6 +751,8 @@
             "Ingredient Draw S": "Ingredient Draw S",
             "Ingredient Draw S (Super Luck)": "Super Luck (Ingredient Draw S)",
             "Ingredient Draw S (Hyper Cutter)": "Hyper Cutter (Ingredient Draw S)",
+            "Cooking Assist S": "Cooking Assist S",
+            "Cooking Assist S (Bulk Up)": "Bulk Up (Cooking Assist S)",
             "unknown": "(Unknown)"
         },
 

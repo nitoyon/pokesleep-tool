@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "또한, 사용 방법 설명 동영상을 <YouTube>YouTube 채널</YouTube>에서 공개하고 있습니다. 꼭 확인해주세요.",
             "news": {
+                "v3.3.0": {
+                    "headline": "v3.3.0의 밸런스 조정에 대응하였습니다.",
+                    "detail": "$t(rp)가 다르다면 알려주세요."
+                },
                 "add cutiefly": {
                     "headline": "$t(pokemons.Cutiefly)와 $t(pokemons.Ribombee)의 데이터를 추가했습니다.",
                     "detail": "$t(rp collection)"
@@ -659,6 +663,8 @@
             "Ingredient Draw S": "스킬로 획득한 식재료는 $t(recipe bonus)를 적용하여 $t(strength2)를 계산하고 있습니다.",
             "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S)$t(dream shard)를 획득할 확률은 RaenonX의 집계 결과를 사용합니다.",
             "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S)$t(additional ingredient rate)는 RaenonX의 집계 결과 (16.68%)를 사용합니다.",
+            "Cooking Assist S": "",
+            "Cooking Assist S (Bulk Up)": "$t(strength skill info.Ingredient Magnet S) 대성공 확률 증가 %는 총 강도량에 포함되지 않습니다.",
             "not triggered": "이 설정에서는 메인 스킬이 발동되지 않습니다.",
             "unknown": "메인 스킬은 아직 확정되지 않았습니다."
         },
@@ -728,6 +734,8 @@
             "Ingredient Draw S": "식재료 셀렉트S",
             "Ingredient Draw S (Super Luck)": "대운 (식재료 셀렉트S)",
             "Ingredient Draw S (Hyper Cutter)": "괴력집게 (식재료 셀렉트S)",
+            "Cooking Assist S": "요리 어시스트S",
+            "Cooking Assist S (Bulk Up)": "벌크업(요리 어시스트S)",
             "unknown": "(알 수 없음)"
         },
 

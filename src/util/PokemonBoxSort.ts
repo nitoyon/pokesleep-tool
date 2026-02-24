@@ -215,6 +215,13 @@ export function sortPokemonItems(filtered: PokemonBoxItem[],
                 return;
             }
 
+            // Special handing for "Tasty Chance S" to be compared with
+            // "Cooking Assist S"'s second effect
+            if (mainSkill === "Tasty Chance S" && result.skillValue2 > 0) {
+                cache[item.id] = result.skillValue2;
+                return;
+            }
+
             // Calculate by skill strength
             if (!isSkillStrengthZero(item.iv.pokemon.skill)) {
                 cache[item.id] = result.skillStrength + result.skillStrength2;

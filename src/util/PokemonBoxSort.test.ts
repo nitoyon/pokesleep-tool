@@ -615,6 +615,47 @@ describe('sortPokemonItems', () => {
             expect(result2[2].iv.pokemon.name).toBe('Braviary');
         });
 
+        test('uses skillValue2 for "Cooking Assist S (Bulk Up)" when sorting by "Tasty Chance S"', () => {
+            const parameter = createStrengthParameter({});
+
+            const iv1 = new PokemonIv({ pokemonName: 'Heracross' }); // Has Cooking Assist S (Bulk Up)
+            const iv2 = new PokemonIv({ pokemonName: 'Sneasel' });   // Has Tasty Chance S
+
+            const items = [
+                new PokemonBoxItem(iv1),
+                new PokemonBoxItem(iv2),
+            ];
+
+            const calculator: StrengthCalculator = (iv: PokemonIv) => {
+                switch (iv.pokemon.name) {
+                    case 'Heracross':
+                        // Cooking Assist S (Bulk Up) - Tasty Chance S is the second effect
+                        return createStrengthResult({
+                            skillCount: 5,
+                            skillValue: 100,  // main effect value
+                            skillValue2: 50,  // Tasty Chance S second effect
+                        });
+                    case 'Sneasel':
+                        // Tasty Chance S - value is in skillValue
+                        return createStrengthResult({
+                            skillCount: 5,
+                            skillValue: 40,
+                        });
+                }
+                return createStrengthResult({});
+            };
+
+            // Heracross uses skillValue2 (50), Sneasel uses skillValue (40)
+            // so Heracross should be ranked first
+            const [result, error] = sortPokemonItems(items, 'skill', true, 'unknown',
+                'Tasty Chance S', parameter, mockT, calculator);
+
+            expect(error).toBe('');
+            expect(result.length).toBe(2);
+            expect(result[0].iv.pokemon.name).toBe('Heracross');
+            expect(result[1].iv.pokemon.name).toBe('Sneasel');
+        });
+
         test('uses skillValue2 for "Cooking Power-Up S (Minus)" when skillValue2 > 0', () => {
             const parameter = createStrengthParameter({evolved: true});
 

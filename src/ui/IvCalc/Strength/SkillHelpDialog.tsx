@@ -228,7 +228,8 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
         return getChargeStrengthValueText(strength, skillLevel, t);
     }
     if (skill.startsWith('Ingredient Magnet S') ||
-        skill.startsWith("Ingredient Draw S")
+        skill.startsWith("Ingredient Draw S") ||
+        skill.startsWith("Cooking Assist")
     ) {
         return getIngredientGetValueText(strength, skillLevel, t);
     }
@@ -287,6 +288,9 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
     }
     if (skill === 'Energy for Everyone S (Lunar Blessing)') {
         return getBerryBurstValueText(strength, t, t('berry strength per berry burst'));
+    }
+    if (skill === 'Cooking Assist S (Bulk Up)') {
+        return getNormalSkillValueText(t, t('tasty chance increase'));
     }
     return [null, null];
 }
@@ -372,6 +376,8 @@ function getIngredientGetValueText(strength: PokemonStrength,
     } else if (skill.startsWith("Ingredient Draw S")) {
         ingBonus = Math.max(bonus?.ingredientDraw ?? 1,
             bonus?.skillIngredient ?? 1);
+    } else if (skill.startsWith("Cooking Assist S")) {
+        ingBonus = bonus?.skillIngredient ?? 1;
     } else {
         throw new Error(`invalid skill: ${skill}`);
     }

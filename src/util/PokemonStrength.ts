@@ -720,6 +720,17 @@ class PokemonStrength {
                     skillValue: skillCount, skillStrength: 0, skillValuePerTrigger: 1,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
+            case "Cooking Assist S (Bulk Up)": {
+                const skillValuePerTrigger2 = getSkillSubValue(mainSkill, skillLevel);
+                return {
+                    skillValue,
+                    skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+                    skillValuePerTrigger,
+                    skillValue2: skillValuePerTrigger2 * skillCount,
+                    skillStrength2: 0,
+                    skillValuePerTrigger2,
+                };
+            }
             default:
                 return {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
