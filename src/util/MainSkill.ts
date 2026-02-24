@@ -32,8 +32,8 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Draw S" |
     "Ingredient Draw S (Super Luck)" |
     "Ingredient Draw S (Hyper Cutter)" |
-    "Cooking Assist" |
-    "Cooking Assist (Bulk Up)" |
+    "Cooking Assist S" |
+    "Cooking Assist S (Bulk Up)" |
     "unknown";
 
 export const MainSkillNames: MainSkillName[] = [
@@ -44,7 +44,7 @@ export const MainSkillNames: MainSkillName[] = [
     "Extra Helpful S", "Helper Boost",
     "Dream Shard Magnet S", "Metronome",
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
-    "Cooking Assist",
+    "Cooking Assist S",
 ];
 
 /** Candy probability for Present */
@@ -92,8 +92,8 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
         skill === "Ingredient Draw S" ||
         skill === "Ingredient Draw S (Super Luck)" ||
         skill === "Ingredient Draw S (Hyper Cutter)" ||
-        skill === "Cooking Assist" ||
-        skill === "Cooking Assist (Bulk Up)"
+        skill === "Cooking Assist S" ||
+        skill === "Cooking Assist S (Bulk Up)"
     ) {
         return 7;
     }
@@ -118,7 +118,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
     }
 
-    if (skill === "Ingredient Magnet S") {
+    if (skill === "Ingredient Magnet S" ||
+        skill === "Cooking Assist S (Bulk Up)"
+    ) {
         return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
     }
     if (skill === "Ingredient Magnet S (Plus)") {
@@ -133,16 +135,16 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [12, 16, 21, 27, 34, 43][skillLevel - 1];
     }
     if (skill === "Charge Strength S") {
-        return [400, 569, 785, 1083, 1496, 2066, 3002][skillLevel - 1];
+        return [400, 569, 785, 1083, 1496, 2066, 3212][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Stockpile)") {
         return [644.3, 915.95, 1263.97, 1745.19, 2408.59, 3327.75, 4834.38][skillLevel - 1];
     }
     if (skill === "Charge Strength S (Random)") {
-        return [500, 711.5, 981.5, 1354, 1870, 2582.5, 3752.5][skillLevel - 1];
+        return [500, 711.5, 981.5, 1354, 1870, 2582.5, 4015][skillLevel - 1];
     }
     if (skill === "Charge Strength M") {
-        return [880, 1251, 1726, 2383, 3290, 4546, 6409][skillLevel - 1];
+        return [880, 1251, 1726, 2383, 3290, 4546, 6858][skillLevel - 1];
     }
     if (skill === "Charge Strength M (Bad Dreams)") {
         return [2640, 3753, 5178, 7149, 9870, 13638, 17304][skillLevel - 1];
@@ -202,9 +204,6 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
     ) {
         return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
     }
-    if (skill === "Cooking Assist (Bulk Up)") {
-        return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
-    }
 
     // Return 0 for 'Metronome' or 'Skill Copy' since
     // their value depends on the copied skill.
@@ -257,8 +256,8 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
         // Amount of Dream Shards (x1)
         return [500, 720, 1030, 1440, 2000, 2800, 4000][skillLevel - 1];
     }
-    if (skill === "Cooking Assist (Bulk Up)") {
-        return [1, 2, 2, 3, 3, 4, 4, 5][skillLevel - 1];
+    if (skill === "Cooking Assist S (Bulk Up)") {
+        return [1, 2, 2, 3, 3, 4, 5][skillLevel - 1];
     }
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
@@ -426,7 +425,7 @@ export function matchMainSkillName(pokemon: PokemonData, match: string,
     }
 
     // Treat "Bulk Up" as matching "Tasty Chance S" and "Ingredient Magnet S"
-    if (name === "Cooking Assist (Bulk Up)") {
+    if (name === "Cooking Assist S (Bulk Up)") {
         if (match === "Tasty Chance S" ||
             match === "Ingredient Magnet S") {
             return true;

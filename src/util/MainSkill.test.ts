@@ -17,7 +17,7 @@ describe('MainSkill', () => {
             expect(getMaxSkillLevel('Extra Helpful S')).toBe(7);
             expect(getMaxSkillLevel('Cooking Power-Up S')).toBe(7);
             expect(getMaxSkillLevel('Metronome')).toBe(7);
-            expect(getMaxSkillLevel('Cooking Assist (Bulk Up)')).toBe(7);
+            expect(getMaxSkillLevel('Cooking Assist S (Bulk Up)')).toBe(7);
         });
 
         test('returns 6 for most skills', () => {
@@ -60,13 +60,13 @@ describe('MainSkill', () => {
             expect(matchMainSkillName(minun, 'Cooking Power-Up S')).toBe(true);
         });
 
-        test('special case: Cooking Assist (Bulk Up) matches Tasty Chance S and Ingredient Magnet S', () => {
+        test('special case: Cooking Assist S (Bulk Up) matches Tasty Chance S and Ingredient Magnet S', () => {
             const heracross = pokemons.find(x => x.name === "Heracross");
             if (heracross === undefined) {
                 throw new Error('Heracross not found in pokemons data');
             }
 
-            expect(matchMainSkillName(heracross, 'Cooking Assist')).toBe(true);
+            expect(matchMainSkillName(heracross, 'Cooking Assist S')).toBe(true);
             expect(matchMainSkillName(heracross, 'Tasty Chance S')).toBe(true);
             expect(matchMainSkillName(heracross, 'Ingredient Magnet S')).toBe(true);
             expect(matchMainSkillName(heracross, 'Berry Burst')).toBe(false);

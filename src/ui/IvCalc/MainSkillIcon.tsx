@@ -87,9 +87,9 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
             } else {
                 return <DreamShardIcon/>;
             }
-        case "Cooking Assist":
+        case "Cooking Assist S":
             return <CookingAssistIcon/>;
-        case "Cooking Assist (Bulk Up)":
+        case "Cooking Assist S (Bulk Up)":
             if (second !== true) {
                 return <IngredientsIcon/>;
             } else {
