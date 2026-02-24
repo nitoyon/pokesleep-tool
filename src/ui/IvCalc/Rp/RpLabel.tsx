@@ -15,8 +15,7 @@ const RpLabel = React.memo(({rp, iv, showIcon, isError, onClick}: {
     const isEstimated = iv.level > maxLevel ||
         iv.pokemon.skill === "Cooking Assist S (Bulk Up)" ||
         (
-            iv.pokemon.skill.startsWith("Charge Strength") &&
-            iv.pokemon.skill !== "Charge Strength S (Stockpile)" &&
+            iv.pokemon.skill === "Charge Strength M (Bad Dreams)" &&
             iv.skillLevel === 7
         );
 

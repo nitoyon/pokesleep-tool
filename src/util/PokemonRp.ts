@@ -488,7 +488,10 @@ class PokemonRp {
                 return [1120, 1593, 2197, 3033, 4187, 5785][this.iv.skillLevel - 1];
             }
             if (this.iv.pokemon.skill === "Cooking Assist S (Bulk Up)") {
-                return [1145, 1627, 2243, 3098, 4277, 5910, 7596][this.iv.skillLevel - 1];
+                // SLv1: fixed to be 1144
+                // SLv3: 2244 or 2245
+                // Other SLv: Estimated
+                return [1144, 1627, 2244, 3098, 4277, 5910, 7596][this.iv.skillLevel - 1];
             }
             if (this.iv.pokemon.skill === "Energy for Everyone S (Berry Juice)") {
                 return [1220, 1735, 2392, 3303, 4559, 6299][this.iv.skillLevel - 1];
@@ -503,7 +506,8 @@ class PokemonRp {
                 return [1400, 1991, 2747, 3791, 5234, 7232][this.iv.skillLevel - 1];
             }
             if (this.iv.pokemon.skill === "Charge Strength M (Bad Dreams)") {
-                return [2400, 3313, 4643, 6441, 8864, 11878, 14060][this.iv.skillLevel - 1];
+                // SLv7: 14071 or 14072
+                return [2400, 3313, 4643, 6441, 8864, 11878, 14072][this.iv.skillLevel - 1];
             }
             if (this.iv.pokemon.skill === "Energizing Cheer S") {
                 return [766, 1089, 1502, 2074, 2863, 3956][this.iv.skillLevel - 1];
