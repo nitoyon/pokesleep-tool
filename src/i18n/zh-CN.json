@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "此外，我们在 <YouTube>YouTube 频道</YouTube> 上发布了使用方法的讲解视频。请务必观看。",
             "news": {
+                "v3.3.0": {
+                    "headline": "已因应 v3.3.0 的平衡性调整。",
+                    "detail": "如果$t(rp)有所不同，请告知我们。"
+                },
                 "add cutiefly": {
                     "headline": "添加了$t(pokemons.Cutiefly)和$t(pokemons.Ribombee)的数据。",
                     "detail": "$t(rp collection)"
