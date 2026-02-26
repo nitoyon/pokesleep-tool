@@ -12,12 +12,7 @@ const RpLabel = React.memo(({rp, iv, showIcon, isError, onClick}: {
     onClick?: () => void,
 }) => {
     const { t } = useTranslation();
-    const isEstimated = iv.level > maxLevel ||
-        iv.pokemon.skill === "Cooking Assist S (Bulk Up)" ||
-        (
-            iv.pokemon.skill === "Charge Strength M (Bad Dreams)" &&
-            iv.skillLevel === 7
-        );
+    const isEstimated = iv.level > maxLevel;
 
     const clickHandler = React.useCallback(() => {
         if (onClick !== undefined) {

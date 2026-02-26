@@ -14,7 +14,7 @@ import PokemonRp from '../src/util/PokemonRp';
 import * as fs from 'fs';
 
 const baseSkillValue = parseInt(process.argv[2], 10);
-const fitValueOnly = process.argv.some(x => x === '--fitValueOnly');
+const fitValueOnly = true;//process.argv.some(x => x === '--fitValueOnly');
 
 function checkSkillValue(data: Record<string, RpData[]>, skillValue: number) {
     for (const name of Object.keys(data)) {
@@ -62,6 +62,15 @@ const tsv = fs.readFileSync(0).toString();
 console.log("read done");
 
 const data = parseTsv(tsv);
+for (const name of Object.keys(data)) {
+    console.log(`- ${name}: ${data[name].length}`);
+    if (!data[name]
+        .every(x => data[name][0].iv.skillLevel === x.iv.skillLevel)) {
+        console.error("ERROR: skill level isn't equal!!!");
+        process.exit(1);
+    }
+}
+
 for (let skillValue = baseSkillValue - 500; skillValue < baseSkillValue; skillValue++) {
     checkSkillValue(data, skillValue);
 }
