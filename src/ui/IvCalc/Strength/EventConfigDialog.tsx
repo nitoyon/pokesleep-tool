@@ -18,9 +18,9 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
 }) => {
     const { t } = useTranslation();
     const [type, setType] = React.useState<PokemonType[]>(
-        value.customEventBonus?.target?.type ?? ["normal"]);
+        value.customEventBonus.target?.type ?? ["normal"]);
     const [specialty, setSpecialty] = React.useState<PokemonSpecialty>(
-        value.customEventBonus?.target?.specialty ?? "Berries");
+        value.customEventBonus.target?.specialty ?? "Berries");
 
     const onEventChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.value as string;

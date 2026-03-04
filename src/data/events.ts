@@ -160,9 +160,9 @@ export function getActiveHelpBonus(date: Date,
  * @returns Event bonus. `undefined` if not found or not target.
  */
 export function getEventBonusIfTarget(name: string, custom: HelpEventBonus,
-    pokemon: PokemonData): Partial<BonusEffects>|undefined {
+    pokemon: PokemonData): BonusEffects {
     const data = getEventBonusData(name, custom);
-    return data?.isTarget(pokemon) ? data.effects : undefined;
+    return fillBonusEffects(data?.isTarget(pokemon) ? data.effects : {});
 }
 
 /**
@@ -171,8 +171,8 @@ export function getEventBonusIfTarget(name: string, custom: HelpEventBonus,
  * @returns Event bonus. `undefined` if not found or not target.
  */
 export function getEventBonus(name: string, custom: HelpEventBonus):
-Partial<BonusEffects>|undefined {
-    return getEventBonusData(name, custom)?.effects;
+BonusEffects {
+    return fillBonusEffects(getEventBonusData(name, custom)?.effects ?? {});
 }
 
 /**

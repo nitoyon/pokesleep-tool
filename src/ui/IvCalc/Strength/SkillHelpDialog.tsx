@@ -371,13 +371,11 @@ function getIngredientGetValueText(strength: PokemonStrength,
     const skill = strength.pokemonIv.pokemon.skill;
     let ingBonus = 1;
     if (skill.startsWith("Ingredient Magnet S")) {
-        ingBonus = Math.max(bonus?.ingredientMagnet ?? 1,
-            bonus?.skillIngredient ?? 1);
+        ingBonus = Math.max(bonus.ingredientMagnet, bonus.skillIngredient);
     } else if (skill.startsWith("Ingredient Draw S")) {
-        ingBonus = Math.max(bonus?.ingredientDraw ?? 1,
-            bonus?.skillIngredient ?? 1);
+        ingBonus = Math.max(bonus.ingredientDraw, bonus.skillIngredient);
     } else if (skill.startsWith("Cooking Assist S")) {
-        ingBonus = bonus?.skillIngredient ?? 1;
+        ingBonus = bonus.skillIngredient;
     } else {
         throw new Error(`invalid skill: ${skill}`);
     }
@@ -403,8 +401,7 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
     const skill: MainSkillName = strength.pokemonIv.pokemon.skill;
 
     const bonus = getEventBonus(param.event, param.customEventBonus);
-    const shardBonus = Math.max(bonus?.dreamShard ?? 1,
-        bonus?.dreamShard2 ?? 1);
+    const shardBonus = Math.max(bonus.dreamShard, bonus.dreamShard2);
     const text = t('value per skill', { value: t('dream shard')});
     if (skill === 'Dream Shard Magnet S') {
         if (shardBonus === 1) {
@@ -453,8 +450,8 @@ function getSuperLuckShardText(strength: PokemonStrength, skillLevel: number,
 
     const param = strength.parameter;
     const bonus = getEventBonus(param.event, param.customEventBonus);
-    const ingBonus = Math.max(bonus?.ingredientMagnet ?? 1,
-        bonus?.dreamShard2 ?? 1);
+    const ingBonus = Math.max(bonus.ingredientMagnet,
+        bonus.dreamShard2);
 
     return [<>
         {text}<br/>
@@ -482,8 +479,8 @@ function getPlusValueText(strength: PokemonStrength, skillLevel: number, t: type
     const text = t('value per skill', { value: t('additional ingredients') });
     const param = strength.parameter;
     const bonus = getEventBonus(param.event, param.customEventBonus);
-    const ingBonus = Math.max(bonus?.ingredientMagnet ?? 1,
-        bonus?.skillIngredient ?? 1);
+    const ingBonus = Math.max(bonus.ingredientMagnet,
+        bonus.skillIngredient);
 
     if (ingBonus === 1) {
         return [text, null];
@@ -504,7 +501,7 @@ function getPresentValueText(strength: PokemonStrength, skillLevel: number, t: t
 [React.ReactNode, React.ReactNode] {
     const text = t('value per skill', { value: t('candy') });
     const param = strength.parameter;
-    const ingBonus = getEventBonus(param.event, param.customEventBonus)?.ingredientMagnet ?? 1;
+    const ingBonus = getEventBonus(param.event, param.customEventBonus).ingredientMagnet;
 
     const val = getSkillSubValue(strength.pokemonIv.pokemon.skill,
         skillLevel, strength.pokemonIv.pokemon.ing1.name);
@@ -554,7 +551,7 @@ function getBerryBurstValueText(strength: PokemonStrength,
     const text = t('value per skill', { value: valueText});
 
     const param = strength.parameter;
-    const bonus = getEventBonus(param.event, param.customEventBonus)?.berryBurst ?? 1;
+    const bonus = getEventBonus(param.event, param.customEventBonus).berryBurst;
     const result = calculateBerryBurstStrength(strength.pokemonIv,
         strength.parameter, bonus, strength.getSkillLevel());
     return [<>
