@@ -411,7 +411,7 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
             const val = getSkillValue(skill, skillLevel);
             return [text, <>
                 <>
-                    {val}
+                    {formatWithComma(val)}
                     <small> ({t('base value', { value: t('dream shard')})})</small>
                     <> × </>
                     {shardBonus}
@@ -421,7 +421,9 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
         }
     }
     else if (skill === 'Dream Shard Magnet S (Random)') {
-        const [min, max] = getSkillRange(skill, skillLevel);
+        const [minVal, maxVal] = getSkillRange(skill, skillLevel);
+        const min = formatWithComma(minVal);
+        const max = formatWithComma(maxVal);
         if (shardBonus === 1) {
             return [text, <>{t('range average', { min, max})}</>];
         }
@@ -429,7 +431,7 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
             const val = getSkillValue(skill, skillLevel);
             return [text,
                 <>
-                    {val}
+                    {formatWithComma(val)}
                     <small> ({t('range average', { min, max})})</small>
                     <> × </>
                     {shardBonus}
