@@ -514,7 +514,7 @@ class PokemonStrength {
                 Math.max(bonus.ingredientDraw, bonus.skillIngredient));
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
-            mainSkillBase *= bonus.dreamShard;
+            mainSkillBase *= bonus.dreamShard * bonus.dreamShard2;
         }
 
         let mainSkillFactor = 1;
@@ -680,7 +680,8 @@ class PokemonStrength {
                 const averageStrength = 123.75;
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);
                 const shardsPerSkill = (baseShards * superLuckShardRate +
-                    baseShards * 5 * superLuckShard5Rate) * bonus.ingredientDraw;
+                    baseShards * 5 * superLuckShard5Rate) *
+                    bonus.ingredientDraw * bonus.dreamShard2;
                 return {
                     skillValue: skillValue * superLuckIngRate,
                     skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
@@ -814,6 +815,7 @@ class PokemonStrength {
             ingredientReason: expertIngredient > eventIngredient ?
                 'ex' : 'event',
             dreamShard: eventBonus?.dreamShard ?? 1,
+            dreamShard2: eventBonus?.dreamShard2 ?? 1,
             ingredientMagnet: eventBonus?.ingredientMagnet ?? 1,
             ingredientDraw: eventBonus?.ingredientDraw ?? 1,
             skillIngredient: eventBonus?.skillIngredient ?? 1,
@@ -986,6 +988,7 @@ export function createStrengthParameter(
                 skillLevel: 0,
                 ingredient: 0,
                 dreamShard: 1,
+                dreamShard2: 1,
                 ingredientMagnet: 1,
                 ingredientDraw: 1,
                 skillIngredient: 1,

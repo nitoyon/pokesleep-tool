@@ -24,6 +24,16 @@
     ],
     "bonus": [
         {
+            "name": "dream shard week 2",
+            "start": "2026-03-16T04:00:00",
+            "end": "2026-03-23T04:00:00",
+            "target": {},
+            "effects": {
+                "skillTrigger": 1.25,
+                "dreamShard2": 1.5
+            }
+        },
+        {
             "name": "pokemon day celebration vol1",
             "start": "2026-03-02T04:00:00",
             "end": "2026-03-09T04:00:00",

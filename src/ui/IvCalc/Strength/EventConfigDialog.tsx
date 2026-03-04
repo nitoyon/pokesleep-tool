@@ -132,6 +132,18 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
+    const onDreamShard2Change = React.useCallback((_: React.MouseEvent, val: number|null) => {
+        if (val === null) {
+            return;
+        }
+        onChange({...value, event: "custom", customEventBonus: {
+            ...value.customEventBonus,
+            effects: {
+                ...value.customEventBonus.effects,
+                dreamShard2: val as 1|1.5,
+            },
+        }});
+    }, [value, onChange]);
     const onIngredientMagnetChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
@@ -317,6 +329,16 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
                         <ToggleButton value={1.5}>×1.5</ToggleButton>
                         <ToggleButton value={2}>×2</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </section>
+            <section>
+                <label>{t('dream shards from main skills')}:</label>
+                <div>
+                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
+                        value={value.customEventBonus.effects.dreamShard2} onChange={onDreamShard2Change}>
+                        <ToggleButton value={1}>{t('none')}</ToggleButton>
+                        <ToggleButton value={1.5}>×1.5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>

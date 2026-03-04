@@ -478,6 +478,7 @@
             "none": "없음",
             "advanced": "고급 설정",
             "custom": "맞춤 설정",
+            "dream shard week 2": "꿈의조각 GET 위크 vol.2",
             "pokemon day celebration vol1": "Pokémon Day 기념 캠페인 vol.1",
             "valentine 2026": "밸런타인 2026",
             "super skill week part 3": "$t(events.super skill week) vol.3",
@@ -521,6 +522,7 @@
             "eevee week 2023": "이브이 위크 2023"
         },
         "target": "대상",
+        "dream shards from main skills": "메인 스킬의 꿈의조각 량",
         "ingredients from main skills": "메인 스킬의 식재료 량",
         "dish": "요리",
         "energy from dish": "요리로 회복하는 기력",

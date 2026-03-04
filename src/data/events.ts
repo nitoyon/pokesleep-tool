@@ -114,6 +114,7 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         berry: data.berry ?? 0,
         ingredient: data.ingredient ?? 0,
         dreamShard: data.dreamShard ?? 1,
+        dreamShard2: data.dreamShard2 ?? 1,
         ingredientMagnet: data.ingredientMagnet ?? 1,
         ingredientDraw: data.ingredientDraw ?? 1,
         skillIngredient: data.skillIngredient ?? 1,
@@ -239,6 +240,8 @@ export interface BonusEffects {
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
     dreamShard: 1 | 1.5 | 2;
+    /** Dream Shard bonus obtained through main skills */
+    dreamShard2: 1 | 1.5;
     /** Ingredient Magnet S bonus */
     ingredientMagnet: 1 | 1.5;
     /** Ingredient Magnet S bonus */
@@ -276,6 +279,7 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
     skillLevel: 0,
     ingredient: 0,
     dreamShard: 1,
+    dreamShard2: 1,
     ingredientMagnet: 1,
     ingredientDraw: 1,
     skillIngredient: 1,
@@ -386,6 +390,10 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
         if (typeof(effects.dreamShard) === "number" &&
             [1, 1.5, 2].includes(effects.dreamShard)) {
             ret.effects.dreamShard = effects.dreamShard;
+        }
+        if (typeof(effects.dreamShard2) === "number" &&
+            [1, 1.5].includes(effects.dreamShard2)) {
+            ret.effects.dreamShard2 = effects.dreamShard2;
         }
         if (typeof(effects.ingredientMagnet) === "number" &&
             [1, 1.5].includes(effects.ingredientMagnet)) {

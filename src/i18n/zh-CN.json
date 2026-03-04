@@ -480,6 +480,7 @@
             "none": "无",
             "advanced": "详细设置",
             "custom": "自定义设置",
+            "dream shard week 2": "梦之碎片增量周vol.2",
             "pokemon day celebration vol1": "Pokémon Day纪念企划vol.1",
             "valentine 2026": "情人节2026",
             "super skill week part 3": "$t(events.super skill week)vol.3",
@@ -523,6 +524,7 @@
             "eevee week 2023": "伊布周2023"
         },
         "target": "目标",
+        "dream shards from main skills": "主技能的梦之碎片量",
         "ingredients from main skills": "主技能的食材量",
         "dish": "料理",
         "energy from dish": "料理恢复的活力",
