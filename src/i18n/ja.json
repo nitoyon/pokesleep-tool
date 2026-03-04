@@ -482,6 +482,7 @@
             "none": "なし",
             "advanced": "詳細設定",
             "custom": "カスタム設定",
+            "dream shard week 2": "ゆめのかけらGETウィーク vol.2",
             "pokemon day celebration vol1": "ポケモンデー記念キャンペーン vol.1",
             "valentine 2026": "バレンタイン2026",
             "super skill week part 3": "$t(events.super skill week) vol.3",
@@ -525,6 +526,7 @@
             "eevee week 2023": "イーブイウィーク2023"
         },
         "target": "対象",
+        "dream shards from main skills": "メインスキルのゆめのかけら量",
         "ingredients from main skills": "メインスキルの食材量",
         "dish": "料理",
         "energy from dish": "料理で回復するげんき",

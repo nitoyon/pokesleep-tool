@@ -514,7 +514,7 @@ class PokemonStrength {
                 Math.max(bonus.ingredientDraw, bonus.skillIngredient));
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
-            mainSkillBase *= bonus.dreamShard;
+            mainSkillBase *= bonus.dreamShard * bonus.dreamShard2;
         }
 
         let mainSkillFactor = 1;
@@ -680,7 +680,8 @@ class PokemonStrength {
                 const averageStrength = 123.75;
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);
                 const shardsPerSkill = (baseShards * superLuckShardRate +
-                    baseShards * 5 * superLuckShard5Rate) * bonus.ingredientDraw;
+                    baseShards * 5 * superLuckShard5Rate) *
+                    bonus.ingredientDraw * bonus.dreamShard2;
                 return {
                     skillValue: skillValue * superLuckIngRate,
                     skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
@@ -798,9 +799,9 @@ class PokemonStrength {
         );
 
         // event bonus
-        const eventSkillTrigger = targetEventBonus?.skillTrigger ?? 1;
-        const eventSkillLevel = targetEventBonus?.skillLevel ?? 0;
-        const eventIngredient = targetEventBonus?.ingredient ?? 0;
+        const eventSkillTrigger = targetEventBonus.skillTrigger;
+        const eventSkillLevel = targetEventBonus.skillLevel;
+        const eventIngredient = targetEventBonus.ingredient;
 
         return {
             skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger),
@@ -809,17 +810,18 @@ class PokemonStrength {
             skillLevel: expertSkillLevel + eventSkillLevel,
             skillLevelReason: expertSkillLevel * eventSkillLevel !== 0 ? "event+ex" :
                 expertSkillLevel > 0 ? "ex" : "event",
-            berry: targetEventBonus?.berry ?? 0,
+            berry: targetEventBonus.berry,
             ingredient: Math.max(expertIngredient, eventIngredient),
             ingredientReason: expertIngredient > eventIngredient ?
                 'ex' : 'event',
-            dreamShard: eventBonus?.dreamShard ?? 1,
-            ingredientMagnet: eventBonus?.ingredientMagnet ?? 1,
-            ingredientDraw: eventBonus?.ingredientDraw ?? 1,
-            skillIngredient: eventBonus?.skillIngredient ?? 1,
-            berryBurst: eventBonus?.berryBurst ?? 1,
-            dish: eventBonus?.dish ?? 1,
-            energyFromDish: eventBonus?.energyFromDish ?? 0,
+            dreamShard: eventBonus.dreamShard,
+            dreamShard2: eventBonus.dreamShard2,
+            ingredientMagnet: eventBonus.ingredientMagnet,
+            ingredientDraw: eventBonus.ingredientDraw,
+            skillIngredient: eventBonus.skillIngredient,
+            berryBurst: eventBonus.berryBurst,
+            dish: eventBonus.dish,
+            energyFromDish: eventBonus.energyFromDish,
         } as BonusEffectsWithReason;
     }
 
@@ -904,8 +906,8 @@ export function getCurrentFavoriteBerries(parameter: StrengthParameter):
     }
 {
     const eventBonus = getEventBonus(parameter.event, parameter.customEventBonus);
-    const eventFixedTypes = eventBonus?.fixedBerries ?? [];
-    const eventFixedAreas = eventBonus?.fixedAreas ?? [];
+    const eventFixedTypes = eventBonus.fixedBerries;
+    const eventFixedAreas = eventBonus.fixedAreas;
     const defaultAreaBerries = getFavoriteBerries(parameter.fieldIndex);
     let types: PokemonType[] = [];
     let reasons: BerryReason[] = ["random", "random", "random"];
@@ -986,6 +988,7 @@ export function createStrengthParameter(
                 skillLevel: 0,
                 ingredient: 0,
                 dreamShard: 1,
+                dreamShard2: 1,
                 ingredientMagnet: 1,
                 ingredientDraw: 1,
                 skillIngredient: 1,

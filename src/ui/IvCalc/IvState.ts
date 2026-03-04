@@ -346,10 +346,8 @@ export function normalizeState(state: IvState): IvState {
     // apply event fixedBerries type
     const event = getEventBonus(state.parameter.event,
         state.parameter.customEventBonus);
-    if (event !== undefined &&
-        event.fixedBerries !== undefined &&
-        event.fixedBerries?.length === 3 &&
-        event.fixedAreas?.includes(state.parameter.fieldIndex)
+    if (event.fixedBerries.length === 3 &&
+        event.fixedAreas.includes(state.parameter.fieldIndex)
     ) {
         let fixRequired = false;
         const isExpert = isExpertField(state.parameter.fieldIndex);

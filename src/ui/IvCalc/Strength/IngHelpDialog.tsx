@@ -95,7 +95,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
     const ingInRecipeStrengthRate = param.recipeBonus === 0 ? 1 :
         (1 + param.recipeBonus / 100) * (1 + recipeLevelBonus[param.recipeLevel] / 100);
     const recipeRate = ingInRecipeStrengthRate * 0.8 + 0.2;
-    const dishBonus = getEventBonus(param.event, param.customEventBonus)?.dish ?? 1;
+    const dishBonus = getEventBonus(param.event, param.customEventBonus).dish;
 
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
@@ -182,7 +182,7 @@ function getIngDetail(strength: PokemonStrength, result: StrengthResult,
     const count = ing.reduce((p, c) => p + c.count, 0);
     const ingName = ing[0].name;
     const param = strength.parameter;
-    const dishBonus = getEventBonus(param.event, param.customEventBonus)?.dish ?? 1;
+    const dishBonus = getEventBonus(param.event, param.customEventBonus).dish;
 
     return <>
         <span>

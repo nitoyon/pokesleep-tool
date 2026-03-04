@@ -492,6 +492,7 @@
             "none": "None",
             "advanced": "Advanced",
             "custom": "Custom",
+            "dream shard week 2": "Dream Shard Week Vol. 2",
             "pokemon day celebration vol1": "Pokémon Day Celebration Event Vol. 1",
             "valentine 2026": "Valentine's Day 2026",
             "super skill week part 3": "$t(events.super skill week) Part 3",
@@ -535,6 +536,7 @@
             "eevee week 2023": "Eevee Week 2023"
         },
         "target": "Target",
+        "dream shards from main skills": "Dream shards from main skills",
         "ingredients from main skills": "Ingredients from main skills",
         "dish": "Dish",
         "energy from dish": "Energy recovery from dishes",
