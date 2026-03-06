@@ -148,6 +148,49 @@ describe('PokemonIV', () => {
             const iv2 = iv.clone({pokemonName: 'Toxtricity (Low Key)'});
             expect(iv2.nature.name).toBe("Bold");
         });
+
+        test('mythIng is preserved when pokemon name is unchanged', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                mythIng1: 'leek',
+                mythIng2: 'oil',
+                mythIng3: 'tail',
+            });
+
+            const iv2 = iv.clone({ level: 50 });
+            expect(iv2.mythIng1).toBe('leek');
+            expect(iv2.mythIng2).toBe('oil');
+            expect(iv2.mythIng3).toBe('tail');
+        });
+
+        test('mythIng is reset when pokemon name changes to another mythical', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                mythIng1: 'leek',
+                mythIng2: 'oil',
+                mythIng3: 'tail',
+            });
+
+            // Switching to Darkrai should reset to Darkrai's defaults
+            const iv2 = iv.clone({ pokemonName: 'Darkrai' });
+            expect(iv2.mythIng1).toBe('sausage');
+            expect(iv2.mythIng2).not.toBe('leek');
+            expect(iv2.mythIng3).toBe('unknown');
+        });
+
+        test('mythIng is reset when pokemon name changes to non-mythical', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                mythIng1: 'leek',
+                mythIng2: 'oil',
+                mythIng3: 'tail',
+            });
+
+            const iv2 = iv.clone({ pokemonName: 'Bulbasaur' });
+            expect(iv2.mythIng1).toBe('unknown');
+            expect(iv2.mythIng2).toBe('unknown');
+            expect(iv2.mythIng3).toBe('unknown');
+        });
     });
 
     describe('rate', () => {

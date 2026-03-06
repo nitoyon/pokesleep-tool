@@ -134,15 +134,19 @@ class PokemonIv {
         if (input) {
             Object.assign(params, input);
 
-            // Increase or decrease skill level
+            // Handle when pokemon name has been changed
             if (params.pokemonName !== this.pokemonName) {
                 const pokemon = pokemons.find(x => x.name === params.pokemonName);
                 if (pokemon === undefined) {
                     throw new Error(`Unknown name: ${params.pokemonName}`);
                 }
 
+                // Increase or decrease skill level
                 const diff = pokemon.evolutionCount - this.pokemon.evolutionCount;
                 params.skillLevel += diff;
+
+                // Reset mythIng
+                params.mythIng1 = params.mythIng2 = params.mythIng3 = "unknown";
             }
         }
 
