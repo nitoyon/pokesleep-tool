@@ -742,9 +742,9 @@
             "Skill Copy (Mimic)": "ものまね (スキルコピー)",
             "Ingredient Draw S": "食材セレクトS",
             "Ingredient Draw S (Super Luck)": "きょううん (食材セレクトS)",
-            "Ingredient Draw S (Hyper Cutter)": "かいりきバサミ (食材セレクトS)",
             "Cooking Assist S": "料理アシストS",
             "Cooking Assist S (Bulk Up)": "ビルドアップ(料理アシストS)",
+            "Versatile": "オールマイティー",
             "unknown": "(不明)"
         },
 
@@ -922,6 +922,7 @@
             "Dratini": "ミニリュウ",
             "Dragonair": "ハクリュー",
             "Dragonite": "カイリュー",
+            "Mew": "ミュウ",
             "Chikorita": "チコリータ",
             "Bayleef": "ベイリーフ",
             "Meganium": "メガニウム",

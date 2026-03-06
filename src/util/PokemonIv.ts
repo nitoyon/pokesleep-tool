@@ -268,8 +268,13 @@ class PokemonIv {
 
         // Handle mythical pokemon ingredient defaults
         const isMythical = pokemon.mythIng !== undefined;
-        if (isMythical && ret.mythIng1 === "unknown") {
-            ret.mythIng1 = "sausage";
+        if (isMythical) {
+            if (ret.mythIng1 === "unknown") {
+                ret.mythIng1 = pokemon.ing1.name;
+            }
+            if (ret.mythIng2 === "unknown") {
+                ret.mythIng2 = pokemon.ing2.name;
+            }
         }
 
         // Apply Toxtricity nature rules based on form
@@ -507,8 +512,17 @@ class PokemonIv {
      * * 8bit  : reserved
      *
      * * 10bit : Ingredient for mythical pokemon
-     *           (0: unknown, 1: apple, 2: herb, 3: sausage, 4: milk,
-     *            5: honey, 6, soy, 7: corn, 8: coffee)
+     *           - 0: unknown
+     *                Darkrai    Mew
+     *           - 1: apple     leek
+     *           - 2: herb      egg
+     *           - 3: sausage   herb
+     *           - 4: milk      sausage
+     *           - 5: honey     oil
+     *           - 6: soy       tail (C)
+     *           - 7: corn      soy
+     *           - 8: coffee    avocado
+     *
      *           1st ingredient: value % 9
      *           2nd ingredient: Math.floor(value / 9)
      *           3rd ingredient: Math.floor(value / 81)
@@ -661,9 +675,9 @@ class PokemonIv {
             const ing1 = (array16[5] % n) - 1;
             const ing2 = (Math.floor(array16[5] / n) % n) - 1;
             const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
-            ret.mythIng1 = ing1 < 0 ? "sausage" : pokemon.mythIng[ing1].name;
-            ret.mythIng2 = ing2 < 0 ? "unknown" : pokemon.mythIng[ing2].name;
-            ret.mythIng3 = ing3 < 0 ? "unknown" : pokemon.mythIng[ing3].name;
+            ret.mythIng1 = ing1 < 0 ? pokemon.ing1.name : pokemon.mythIng[ing1].name;
+            ret.mythIng2 = ing2 < 0 ? pokemon.ing2.name : pokemon.mythIng[ing2].name;
+            ret.mythIng3 = ing3 < 0 ? pokemon.ing3?.name : pokemon.mythIng[ing3].name;
         }
 
         return new PokemonIv(ret);

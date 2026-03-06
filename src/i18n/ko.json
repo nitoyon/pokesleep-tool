@@ -739,6 +739,7 @@
             "Ingredient Draw S (Hyper Cutter)": "괴력집게 (식재료 셀렉트S)",
             "Cooking Assist S": "요리 어시스트S",
             "Cooking Assist S (Bulk Up)": "벌크업(요리 어시스트S)",
+            "Versatile": "올마이티",
             "unknown": "(알 수 없음)"
         },
 
@@ -916,6 +917,7 @@
             "Dratini": "미뇽",
             "Dragonair": "신뇽",
             "Dragonite": "망나뇽",
+            "Mew": "뮤",
             "Chikorita": "치코리타",
             "Bayleef": "베이리프",
             "Meganium": "메가니움",

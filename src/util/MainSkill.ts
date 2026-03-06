@@ -34,6 +34,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Draw S (Hyper Cutter)" |
     "Cooking Assist S" |
     "Cooking Assist S (Bulk Up)" |
+    "Versatile" |
     "unknown";
 
 export const MainSkillNames: MainSkillName[] = [
@@ -72,7 +73,9 @@ export const hyperCutterSuccess = 0.1668;
 
 export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     if (skill === "Dream Shard Magnet S" ||
-        skill === "Dream Shard Magnet S (Random)") {
+        skill === "Dream Shard Magnet S (Random)" ||
+        skill === "Versatile"
+    ) {
         return 8;
     }
     if (skill === "Ingredient Magnet S" ||

@@ -2396,6 +2396,50 @@
         }
     },
     {
+        "id": 151,
+        "name": "Mew",
+        "arrival": "2026-03-05",
+        "sleepType": "snoozing",
+        "exp": 1320,
+        "type": "psychic",
+        "specialty": "All",
+        "skill": "Versatile",
+        "fp": 25,
+        "frequency": 2900,
+        "ingRate": 20,
+        "skillRate": 4,
+        "ancestor": 151,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 26,
+        "ing1": {
+            "name": "egg",
+            "c1": 2,
+            "c2": 0,
+            "c3": 0
+        },
+        "ing2": {
+            "name": "herb",
+            "c2": 4,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown",
+            "c3": 0
+        },
+        "mythIng": [
+            { "name": "leek", "c1": 2, "c2": 4, "c3": 6 },
+            { "name": "egg", "c1": 2, "c2": 4, "c3": 6 },
+            { "name": "herb", "c1": 2, "c2": 4, "c3": 5 },
+            { "name": "sausage", "c1": 2, "c2": 4, "c3": 7 },
+            { "name": "oil", "c1": 2, "c2": 4, "c3": 6 },
+            { "name": "tail", "c1": 0, "c2": 0, "c3": 2 },
+            { "name": "soy", "c1": 2, "c2": 5, "c3": 7 },
+            { "name": "avocado", "c1": 2, "c2": 3, "c3": 4 }
+        ]
+    },
+    {
         "id": 152,
         "name": "Chikorita",
         "arrival": "2023-07-17",
@@ -5956,12 +6000,12 @@
             "c3": 0
         },
         "ing2": {
-            "name": "unknown2",
+            "name": "unknown",
             "c2": 0,
             "c3": 0
         },
         "ing3": {
-            "name": "unknown3",
+            "name": "unknown",
             "c3": 0
         },
         "mythIng": [

@@ -400,7 +400,7 @@ describe('PokemonIV', () => {
             expect(ret.mythIng3).toBe("unknown");
         });
 
-        test('mythical ingredients (coffee/apple/unknown)', () => {
+        test('Darkrai ingredients (coffee/apple/unknown)', () => {
             const iv = new PokemonIv({
                 pokemonName: 'Darkrai',
                 mythIng1: "coffee",
@@ -414,7 +414,7 @@ describe('PokemonIV', () => {
             expect(ret.mythIng3).toBe("unknown");
         });
 
-        test('mythical ingredients (coffee/apple/soy)', () => {
+        test('Darkrai ingredients (coffee/apple/soy)', () => {
             const iv = new PokemonIv({
                 pokemonName: 'Darkrai',
                 mythIng1: "coffee",
@@ -428,7 +428,7 @@ describe('PokemonIV', () => {
             expect(ret.mythIng3).toBe("soy");
         });
 
-        test('mythical ingredients (coffee/coffee/coffee)', () => {
+        test('Darkrai ingredients (coffee/coffee/coffee)', () => {
             const iv = new PokemonIv({
                 pokemonName: 'Darkrai',
                 mythIng1: "coffee",
@@ -440,6 +440,34 @@ describe('PokemonIV', () => {
             expect(ret.mythIng1).toBe("coffee");
             expect(ret.mythIng2).toBe("coffee");
             expect(ret.mythIng3).toBe("coffee");
+        });
+
+        test('Mew ingredients (egg/herb/unknown)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                mythIng1: "egg",
+                mythIng2: "herb",
+                mythIng3: "unknown",
+            });
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.mythIng1).toBe("egg");
+            expect(ret.mythIng2).toBe("herb");
+            expect(ret.mythIng3).toBe("unknown");
+        });
+
+        test('Mew ingredients (leek/oil/tail)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                mythIng1: "leek",
+                mythIng2: "oil",
+                mythIng3: "tail",
+            });
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.mythIng1).toBe("leek");
+            expect(ret.mythIng2).toBe("oil");
+            expect(ret.mythIng3).toBe("tail");
         });
 
         test('Toxtricity (Amped)', () => {
@@ -547,14 +575,23 @@ describe('PokemonIV', () => {
             expect(result2.skillLevel).toBe(1);
         });
 
-        test('handles mythical pokemon ingredient defaults', () => {
+        test('handles mythical pokemon ingredient defaults (Darkrai)', () => {
             const result = PokemonIv.normalize({
                 pokemonName: 'Darkrai',
             });
 
-            // mythIng1 should default to "sausage" for mythical pokemon
             expect(result.mythIng1).toBe('sausage');
             expect(result.mythIng2).toBe('unknown');
+            expect(result.mythIng3).toBe('unknown');
+        });
+
+        test('handles mythical pokemon ingredient defaults (Mew)', () => {
+            const result = PokemonIv.normalize({
+                pokemonName: 'Mew',
+            });
+
+            expect(result.mythIng1).toBe('egg');
+            expect(result.mythIng2).toBe('herb');
             expect(result.mythIng3).toBe('unknown');
         });
 
