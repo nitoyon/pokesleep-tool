@@ -37,7 +37,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Versatile" |
     "unknown";
 
-export const MainSkillNames: MainSkillName[] = [
+export const MainSkillNames: Readonly<MainSkillName[]> = [
     "Charge Strength S", "Charge Strength M",
     "Ingredient Magnet S", "Energy for Everyone S",
     "Charge Energy S", "Energizing Cheer S",
@@ -46,6 +46,22 @@ export const MainSkillNames: MainSkillName[] = [
     "Dream Shard Magnet S", "Metronome",
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
     "Cooking Assist S",
+];
+
+/** Versatile candidates */
+export const VersatileCandidates: Readonly<MainSkillName[]> = [
+    "Charge Strength S (Random)",
+    "Charge Strength M",
+    "Dream Shard Magnet S (Random)",
+    "Ingredient Magnet S",
+    "Charge Energy S",
+    "Energizing Cheer S",
+    "Energy for Everyone S",
+    "Tasty Chance S",
+    "Cooking Power-Up S",
+    "Extra Helpful S",
+    "Metronome",
+    "Berry Burst",
 ];
 
 /** Candy probability for Present */
