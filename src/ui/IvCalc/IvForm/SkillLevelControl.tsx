@@ -1,8 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
+import SelectEx from '../../common/SelectEx';
 import { PokemonData } from '../../../data/pokemons';
 import { getMaxSkillLevel } from '../../../util/MainSkill';
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
@@ -19,24 +20,15 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
         options.push(<MenuItem key={i} value={i} dense>Lv {i}</MenuItem>);
     }
 
-    const _onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(parseInt(e.target.value, 10));
+    const _onChange = React.useCallback((value: string) => {
+        onChange(parseInt(value, 10));
     }, [onChange]);
 
     return <StyledSkillLevel>
-        <span style={{marginRight: '1rem'}}>{t(`skills.${pokemon.skill}`)}</span>
-        <TextField variant="standard" size="small" select
-            value={value}
-            slotProps={{
-                select: { MenuProps: {
-                    sx: { height: "400px" },
-                    anchorOrigin: { vertical: "bottom", horizontal: "left" },
-                    transformOrigin: { vertical: "top", horizontal: "left" },
-                }}
-            }}
-            onChange={_onChange}>
+        <span style={{marginRight: '10px'}}>{t(`skills.${pokemon.skill}`)}</span>
+        <SelectEx value={value} onChange={_onChange} sx={{padding: '0 8px'}}>
             {options}
-        </TextField>
+        </SelectEx>
     </StyledSkillLevel>;
 });
 
