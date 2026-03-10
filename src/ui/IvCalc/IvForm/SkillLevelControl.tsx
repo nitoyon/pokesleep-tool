@@ -1,18 +1,17 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import SelectEx from '../../common/SelectEx';
-import { PokemonData } from '../../../data/pokemons';
 import { getMaxSkillLevel } from '../../../util/MainSkill';
+import PokemonIv from '../../../util/PokemonIv';
 import { MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
-    pokemon: PokemonData,
-    value: number,
-    onChange: (value: number) => void,
+const SkillLevelControl = React.memo(({iv, onChange}: {
+    iv: PokemonIv,
+    onChange: (value: PokemonIv) => void,
 }) => {
     const { t } = useTranslation();
-    const maxLevel = getMaxSkillLevel(pokemon.skill);
+    const maxLevel = getMaxSkillLevel(iv.pokemon.skill);
 
     // prepare menus
     const options = [];
@@ -20,13 +19,13 @@ const SkillLevelControl = React.memo(({pokemon, value, onChange}: {
         options.push(<MenuItem key={i} value={i} dense>Lv {i}</MenuItem>);
     }
 
-    const _onChange = React.useCallback((value: string) => {
-        onChange(parseInt(value, 10));
-    }, [onChange]);
+    const onSkillLevelChange = React.useCallback((value: string) => {
+        onChange(iv.clone({skillLevel: parseInt(value, 10)}));
+    }, [iv, onChange]);
 
     return <StyledSkillLevel>
-        <span style={{marginRight: '10px'}}>{t(`skills.${pokemon.skill}`)}</span>
-        <SelectEx value={value} onChange={_onChange} sx={{padding: '0 8px'}}>
+        <span style={{marginRight: '10px'}}>{t(`skills.${iv.pokemon.skill}`)}</span>
+        <SelectEx value={iv.skillLevel} onChange={onSkillLevelChange} sx={{padding: '0 8px'}}>
             {options}
         </SelectEx>
     </StyledSkillLevel>;
