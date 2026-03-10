@@ -26,6 +26,15 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
     second?: boolean,
     firstIngredient?: IngredientName,
 }) => {
+    // Handle Versatile
+    if (mainSkill === "Versatile") {
+        if (second) {
+            return <CandyIcon fontSize="small"/>;
+        }
+
+        throw new Error("Versatile couldn't be specified for first skill");
+    }
+
     switch (mainSkill) {
         case "Charge Energy S":
         case "Charge Energy S (Moonlight)":

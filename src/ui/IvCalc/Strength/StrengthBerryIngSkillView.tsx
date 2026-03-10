@@ -384,7 +384,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
             return <article>ー</article>;
     }
 
-    const mainSkill = pokemonIv.pokemon.skill;
+    const mainSkill = pokemonIv.versatileSkill;
     const mainSkillValue: string = formatNice(result.skillValue, t);
     const mainSkillValue2: string =
         //mainSkill === "Energy for Everyone S (Berry Juice)" ? "0.00" :
@@ -415,12 +415,15 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
 
     let skill2 = null;
     if (mainSkillValue2 !== "") {
+        // Set to `Versatile` for Mew
+        const mainSkill2 = pokemonIv.pokemon.skill;
+
         skill2 = <div style={skillStrength !== null && skillStrength2 === null ?
             {gridColumn: '1 / -1'} : {}
         }>
             {mainSkill === "Ingredient Magnet S (Plus)" ?
                 <IngredientIcon name={pokemonIv.pokemon.ing1.name}/> :
-                <MainSkillIcon mainSkill={mainSkill} second/>}
+                <MainSkillIcon mainSkill={mainSkill2} second/>}
             <span style={{paddingLeft: '0.2rem'}}>{mainSkillValue2}</span>
         </div>;
     }
