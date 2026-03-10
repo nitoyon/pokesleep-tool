@@ -2,7 +2,7 @@ import Nature from './Nature';
 import pokemons, { getDecendants, IngredientName,
     PokemonData, ValidFormType, toxelId, toxtricityId } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
-import { getMaxSkillLevel } from './MainSkill';
+import { getMaxSkillLevel, MainSkillName, VersatileCandidates } from './MainSkill';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 import { clamp, trunc } from './NumberUtil';
@@ -22,6 +22,7 @@ export interface PokemonIvProps {
     mythIng1: IngredientName;
     mythIng2: IngredientName;
     mythIng3: IngredientName;
+    versatileSkill: MainSkillName;
 }
 
 /**
@@ -42,6 +43,16 @@ class PokemonIv {
     readonly mythIng1: IngredientName;
     readonly mythIng2: IngredientName;
     readonly mythIng3: IngredientName;
+
+    /**
+     * Actual skill name for Versatile if pokemonName is Mew,
+     * otherwise same as pokemon.skill.
+     *
+     * (ex) Versatile (Charge Strength S)
+     * => Charge Strength S (Random)
+     */
+    readonly versatileSkill: MainSkillName;
+
     private readonly cache: Map<string, number> = new Map();
     private activeSubSkillsCache: undefined | SubSkill[] = undefined;
 
@@ -68,6 +79,7 @@ class PokemonIv {
         this.mythIng1 = params.mythIng1;
         this.mythIng2 = params.mythIng2;
         this.mythIng3 = params.mythIng3;
+        this.versatileSkill = params.versatileSkill;
 
         // Look up pokemon data (not in params)
         const pokemon = pokemons.find(x => x.name === params.pokemonName);
@@ -258,6 +270,7 @@ class PokemonIv {
             mythIng1: params.mythIng1 ?? "unknown",
             mythIng2: params.mythIng2 ?? "unknown",
             mythIng3: params.mythIng3 ?? "unknown",
+            versatileSkill: pokemon.skill,
         };
 
         // 4. Validate and normalize values
@@ -278,6 +291,17 @@ class PokemonIv {
             }
             if (ret.mythIng2 === "unknown") {
                 ret.mythIng2 = pokemon.ing2.name;
+            }
+        }
+
+        // Validate versatileSkill
+        if (pokemon.skill === "Versatile") {
+            if (params.versatileSkill !== undefined &&
+                VersatileCandidates.indexOf(params.versatileSkill) !== -1
+            ) {
+                ret.versatileSkill = params.versatileSkill;
+            } else {
+                ret.versatileSkill = "Metronome";
             }
         }
 
@@ -311,7 +335,8 @@ class PokemonIv {
             this.skillLevel === iv.skillLevel &&
             this.subSkills.isEqual(iv.subSkills) &&
             this.nature.name === iv.nature.name &&
-            this.ribbon === iv.ribbon;
+            this.ribbon === iv.ribbon &&
+            this.versatileSkill === iv.versatileSkill;
 
         if (this.isMythical) {
             return (isEqual &&
@@ -481,6 +506,7 @@ class PokemonIv {
             mythIng1: this.mythIng1,
             mythIng2: this.mythIng2,
             mythIng3: this.mythIng3,
+            versatileSkill: this.versatileSkill,
         };
     }
 
@@ -513,7 +539,8 @@ class PokemonIv {
      *
      * * 5bit  : Sub-skill Lv100
      * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
-     * * 8bit  : reserved
+     * * 4bit  : Versatile skill index (0: not set, 1-12: VersatileCandidates index)
+     * * 4bit  : reserved
      *
      * * 10bit : Ingredient for mythical pokemon
      *           - 0: unknown
@@ -548,8 +575,12 @@ class PokemonIv {
         array16[3] = (this.subSkills.lv25 === null ? 31 : this.subSkills.lv25.index) +
             ((this.subSkills.lv50 === null ? 31 : this.subSkills.lv50.index) << 5) +
             ((this.subSkills.lv75 === null ? 31 : this.subSkills.lv75.index) << 10);
+        const versatileIndex = this.pokemon.skill === "Versatile" ?
+            VersatileCandidates.indexOf(this.versatileSkill) + 1 :
+            0;
         array16[4] = (this.subSkills.lv100 === null ? 31 : this.subSkills.lv100.index) +
-            (this.ribbon << 5);
+            (this.ribbon << 5) +
+            (versatileIndex << 8);
 
         if (this.pokemon.mythIng !== undefined) {
             const ing1 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng1) + 1;
@@ -671,6 +702,15 @@ class PokemonIv {
         ret.ribbon = ((array16[4] >> 5) & 7) as 0|1|2|3|4;
         if (ret.ribbon >= 5) {
             throw new Error(`Invalid ribbon (${ret.ribbon})`);
+        }
+
+        // versatile skill
+        const versatileIndex = (array16[4] >> 8) & 0xf;
+        if (versatileIndex > 0 && pokemon.skill === "Versatile") {
+            if (versatileIndex > VersatileCandidates.length) {
+                throw new Error(`Invalid versatile skill index (${versatileIndex})`);
+            }
+            ret.versatileSkill = VersatileCandidates[versatileIndex - 1];
         }
 
         // mythical ingredients

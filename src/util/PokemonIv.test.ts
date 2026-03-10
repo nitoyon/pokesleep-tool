@@ -336,6 +336,26 @@ describe('PokemonIV', () => {
             // Should be the same object reference
             expect(params.nature).toBe(iv.nature);
         });
+
+        test('clears versatileSkill for non-Versatile pokemon', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Darkrai',
+                versatileSkill: 'Berry Burst',
+            });
+
+            const params = iv.toProps();
+            expect(params.versatileSkill).toBe('Charge Strength M (Bad Dreams)');
+        });
+
+        test('includes versatileSkill for Versatile pokemon', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                versatileSkill: 'Berry Burst',
+            });
+
+            const params = iv.toProps();
+            expect(params.versatileSkill).toBe('Berry Burst');
+        });
     });
 
     describe('decendants', () => {
@@ -511,6 +531,27 @@ describe('PokemonIV', () => {
             expect(ret.mythIng1).toBe("leek");
             expect(ret.mythIng2).toBe("oil");
             expect(ret.mythIng3).toBe("tail");
+        });
+
+        test('Mew versatileSkill (default: Metronome)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                versatileSkill: 'Metronome',
+            });
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.versatileSkill).toBe('Metronome');
+        });
+
+        test('Mew versatileSkill (Berry Burst)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                versatileSkill: 'Berry Burst',
+            });
+
+            const ret = PokemonIv.deserialize(iv.serialize());
+            expect(ret.versatileSkill).toBe('Berry Burst');
+            compareIv(iv, ret);
         });
 
         test('Toxtricity (Amped)', () => {
@@ -737,5 +778,6 @@ describe('PokemonIV', () => {
         expect(iv2.subSkills.lv75?.name).toBe(iv1.subSkills.lv75?.name);
         expect(iv2.subSkills.lv100?.name).toBe(iv1.subSkills.lv100?.name);
         expect(iv2.ribbon).toBe(iv1.ribbon);
+        expect(iv2.versatileSkill).toBe(iv1.versatileSkill);
     }
 });
