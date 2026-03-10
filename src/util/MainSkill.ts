@@ -416,6 +416,15 @@ export function matchMainSkillName(pokemon: PokemonData, match: string,
 ): boolean {
     let name: MainSkillName = pokemon.skill;
 
+    // Special case: Mew matches the versatileSkill
+    if (pokemon.skill === "Versatile") {
+        // Matches all VersatileCandidates
+        if (iv === undefined) {
+            return VersatileCandidates.some(x => x.startsWith(match));
+        }
+        name = iv.versatileSkill;
+    }
+
     // Special case: Toxel's main skill changes upon evolution
     if (evolved && pokemon.id === toxelId && iv !== undefined) {
         name = (iv.nature.isAmped ?
