@@ -246,6 +246,17 @@ const RateTextField = React.memo(({min, max, value, onChange}: {
         onFocus={onFocus} onBlur={onBlur} onChange={onChangeHandler}
         endAdornment={<InputAdornment position="end">%</InputAdornment>}
         sx={{width: '4rem'}}
+        slotProps={{
+            input: {
+                sx: {
+                    '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+                        '-webkit-appearance': 'none',
+                        margin: 0,
+                    },
+                    '-moz-appearance': 'textfield',
+                },
+            }
+        }}
         inputProps={{
             inputMode: "numeric",
             min: min,
