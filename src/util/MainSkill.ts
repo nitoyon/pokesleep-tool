@@ -34,9 +34,10 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Ingredient Draw S (Hyper Cutter)" |
     "Cooking Assist S" |
     "Cooking Assist S (Bulk Up)" |
+    "Versatile" |
     "unknown";
 
-export const MainSkillNames: MainSkillName[] = [
+export const MainSkillNames: Readonly<MainSkillName[]> = [
     "Charge Strength S", "Charge Strength M",
     "Ingredient Magnet S", "Energy for Everyone S",
     "Charge Energy S", "Energizing Cheer S",
@@ -45,6 +46,22 @@ export const MainSkillNames: MainSkillName[] = [
     "Dream Shard Magnet S", "Metronome",
     "Berry Burst", "Skill Copy", "Ingredient Draw S",
     "Cooking Assist S",
+];
+
+/** Versatile candidates */
+export const VersatileCandidates: Readonly<MainSkillName[]> = [
+    "Charge Strength S (Random)",
+    "Charge Strength M",
+    "Dream Shard Magnet S (Random)",
+    "Ingredient Magnet S",
+    "Charge Energy S",
+    "Energizing Cheer S",
+    "Energy for Everyone S",
+    "Tasty Chance S",
+    "Cooking Power-Up S",
+    "Extra Helpful S",
+    "Metronome",
+    "Berry Burst",
 ];
 
 /** Candy probability for Present */
@@ -72,7 +89,9 @@ export const hyperCutterSuccess = 0.1668;
 
 export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
     if (skill === "Dream Shard Magnet S" ||
-        skill === "Dream Shard Magnet S (Random)") {
+        skill === "Dream Shard Magnet S (Random)" ||
+        skill === "Versatile"
+    ) {
         return 8;
     }
     if (skill === "Ingredient Magnet S" ||
@@ -259,6 +278,9 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
     if (skill === "Cooking Assist S (Bulk Up)") {
         return [1, 2, 2, 3, 3, 4, 5][skillLevel - 1];
     }
+    if (skill === "Versatile") {
+        return [0, 0, 0, 1, 1, 2, 3, 4][skillLevel - 1];
+    }
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
 
@@ -393,6 +415,15 @@ export function matchMainSkillName(pokemon: PokemonData, match: string,
     evolved?: boolean, iv?: PokemonIv
 ): boolean {
     let name: MainSkillName = pokemon.skill;
+
+    // Special case: Mew matches the versatileSkill
+    if (pokemon.skill === "Versatile") {
+        // Matches all VersatileCandidates
+        if (iv === undefined) {
+            return VersatileCandidates.some(x => x.startsWith(match));
+        }
+        name = iv.versatileSkill;
+    }
 
     // Special case: Toxel's main skill changes upon evolution
     if (evolved && pokemon.id === toxelId && iv !== undefined) {

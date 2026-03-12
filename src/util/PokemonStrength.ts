@@ -43,6 +43,7 @@ export const expertFavoriteBerryBonus = 2.4;
 /** Ingredient bonus for the favorite berry in Expert Mode */
 export const expertFavoriteIngredientBonus = 1;
 
+
 /**
  * Additional ingredient bonus probability for favorite berry
  * (Specialty: Ingredients) in Expert Mode
@@ -128,6 +129,9 @@ export interface StrengthParameter extends EnergyParameter {
         /** Custom team members (0 - 4) */
         members: BerryBurstTeamMember[];
     },
+
+    /** Mew config overwrite */
+    mew: MewParameter,
 }
 
 /** Custom team member to calculate berry burst */
@@ -136,6 +140,20 @@ interface BerryBurstTeamMember {
     type: PokemonType;
     /** Pokemon's level */
     level: number;
+}
+
+/** Custom mew configuration */
+export interface MewParameter {
+    /** Ingredient Rate */
+    ing: number,
+    /** Skill rate (low) */
+    skill1: number,
+    /** Skill rate (normal) */
+    skill2: number,
+    /** Skill rate (high) */
+    skill3: number,
+    /** Candy success rate */
+    success: number,
 }
 
 /**
@@ -224,9 +242,6 @@ export interface StrengthResult {
     skillValuePerTrigger: number;
     /**
      * Skill value got from the second skill effect.
-     * If the skill is 'Dream Shard Magnet S', this value represents
-     * the strength provided by the skill.
-     * For other skills, this value is 0.
      */
     skillValue2: number;
     /** Strength got from the second skill effect */
@@ -269,6 +284,15 @@ export interface BonusEffectsWithReason extends BonusEffects {
     ingredientReason: 'event'|'ex'|'none';
 };
 
+function getMewSkillRate(versatileSkill: MainSkillName, mew: MewParameter): number {
+    if (versatileSkill === "Charge Strength S (Random)" || versatileSkill === "Charge Energy S") {
+        return mew.skill1;
+    } else if (versatileSkill === "Energy for Everyone S" || versatileSkill === "Berry Burst") {
+        return mew.skill3;
+    }
+    return mew.skill2;
+}
+
 /**
  * Strength calculator
  */
@@ -293,9 +317,13 @@ class PokemonStrength {
         }
 
         this.iv = this.changePokemonIv(iv, decendantId);
-        const pokemon = pokemons.find(x => x.name === iv.pokemonName);
-        if (pokemon === undefined) {
-            throw new Error(`Unknown name: ${iv.pokemonName}`);
+
+        // Apply Mew overrides
+        if (this.iv.pokemon.name === "Mew") {
+            this.iv = this.iv.clone({
+                baseIngRate: param.mew.ing,
+                baseSkillRate: getMewSkillRate(this.iv.versatileSkill, param.mew),
+            });
         }
     }
 
@@ -497,8 +525,51 @@ class PokemonStrength {
         skillValuePerTrigger2: number,
      }
      {
-        const mainSkill = this.iv.pokemon.skill;
         const skillLevel = this.getSkillLevel();
+
+        // Handle non-Versatile skills
+        if (this.iv.pokemon.skill !== "Versatile") {
+            return this.getSkillValueAndStrengthImpl(skillCount,
+                param, bonus, this.iv.pokemon.skill, skillLevel);
+        }
+
+        // Handle Versatile
+        const mainSkill = this.iv.versatileSkill;
+        const maxSkillLevel = getMaxSkillLevel(mainSkill);
+        const ret = this.getSkillValueAndStrengthImpl(skillCount,
+            param, bonus, mainSkill,
+            Math.min(skillLevel, maxSkillLevel)
+        );
+
+        const successCount = getSkillSubValue("Versatile", skillLevel);
+        ret.skillValuePerTrigger2 = (1 + successCount * param.mew.success / 100);
+        ret.skillValue2 = ret.skillValuePerTrigger2 * skillCount;
+        return ret;
+    }
+
+    /**
+     * Get skill value and skill strength.
+     * @param skillCount Skill count.
+     * @param param Strength paramter.
+     * @param bonus BonusEffects for this pokemon and StrengthParameter.
+     * @param mainSkill Main skill name.
+     * @param skillLevel Skill level.
+     * @returns {skillValue, skillStrength, skillValuePerTrigger,
+     *     skillValue2, skillStrength2, skillValuePerTrigger2}.
+     */
+    getSkillValueAndStrengthImpl(skillCount: number,
+        param: StrengthParameter,
+        bonus: BonusEffects,
+        mainSkill: MainSkillName,
+        skillLevel: number
+    ): {
+        skillValue: number,
+        skillStrength: number,
+        skillValuePerTrigger: number,
+        skillValue2: number,
+        skillStrength2: number,
+        skillValuePerTrigger2: number,
+     } {
         const days = Math.ceil(param.period / 24);
 
         let mainSkillBase = getSkillValue(mainSkill, skillLevel);
@@ -999,6 +1070,13 @@ export function createStrengthParameter(
                 fixedBerries: [],
             }
         },
+        mew: {
+            ing: 20,
+            skill1: 8,
+            skill2: 4,
+            skill3: 3.2,
+            success: 30,
+        },
     };
     return { ...defaultParameters, ...param };
 }
@@ -1073,18 +1151,20 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
     members: { total: number, perBerry: number, count: number}[],
 } {
     const _skillLevel = skillLevel ?? iv.skillLevel;
+    const skill = (iv.pokemon.skill === "Versatile" ?
+        "Berry Burst" : iv.pokemon.skill);
 
     // Get berry count
     // Bonus is ceiled.
     const team = getBerryBurstTeam(iv, param);
     let myBerryCount: number, othersBerryCount: number;
-    switch (iv.pokemon.skill) {
+    switch (skill) {
         case "Berry Burst":
         case "Berry Burst (Disguise)":
             myBerryCount = Math.ceil(bonus *
-                getSkillValue(iv.pokemon.skill, _skillLevel));
+                getSkillValue(skill, _skillLevel));
             othersBerryCount = Math.ceil(bonus *
-                getSkillSubValue(iv.pokemon.skill, _skillLevel));
+                getSkillSubValue(skill, _skillLevel));
             break;
         case "Energy for Everyone S (Lunar Blessing)": {
             const cnt = getLunarBlessingBerryCount(_skillLevel,
@@ -1327,6 +1407,25 @@ export function loadStrengthParameter(): StrengthParameter {
     if (typeof(json.customEventBonus) === "object") {
         ret.customEventBonus = loadHelpEventBonus(json.customEventBonus);
     }
+
+    if (typeof(json.mew) === "object" && json.mew !== null) {
+        if (typeof(json.mew.ing) === "number" && json.mew.ing >= 0 && json.mew.ing <= 100) {
+            ret.mew.ing = json.mew.ing;
+        }
+        if (typeof(json.mew.skill1) === "number" && json.mew.skill1 >= 0 && json.mew.skill1 <= 100) {
+            ret.mew.skill1 = json.mew.skill1;
+        }
+        if (typeof(json.mew.skill2) === "number" && json.mew.skill2 >= 0 && json.mew.skill2 <= 100) {
+            ret.mew.skill2 = json.mew.skill2;
+        }
+        if (typeof(json.mew.skill3) === "number" && json.mew.skill3 >= 0 && json.mew.skill3 <= 100) {
+            ret.mew.skill3 = json.mew.skill3;
+        }
+        if (typeof(json.mew.success) === "number" && json.mew.success >= 0 && json.mew.success <= 100) {
+            ret.mew.success = json.mew.success;
+        }
+    }
+
     return ret;
 }
 

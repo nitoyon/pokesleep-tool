@@ -84,6 +84,34 @@ describe('MainSkill', () => {
             expect(matchMainSkillName(murkrow, 'Energy for Everyone S')).toBe(false);
         });
 
+        describe('Mew versatile special cases', () => {
+            test('Mew with versatileSkill set matches that skill', () => {
+                const mew = pokemons.find(x => x.name === 'Mew');
+                if (mew === undefined) {
+                    throw new Error('Mew not found in pokemons data');
+                }
+                const iv = new PokemonIv({
+                    pokemonName: 'Mew',
+                    versatileSkill: 'Charge Strength M',
+                });
+
+                expect(matchMainSkillName(mew, 'Charge Strength M', false, iv)).toBe(true);
+                expect(matchMainSkillName(mew, 'Ingredient Magnet S', false, iv)).toBe(false);
+            });
+
+            test('Mew with no iv matches all VersatileCandidates', () => {
+                const mew = pokemons.find(x => x.name === 'Mew');
+                if (mew === undefined) {
+                    throw new Error('Mew not found in pokemons data');
+                }
+
+                expect(matchMainSkillName(mew, 'Metronome')).toBe(true);
+                expect(matchMainSkillName(mew, 'Charge Strength M')).toBe(true);
+                expect(matchMainSkillName(mew, 'Ingredient Magnet S')).toBe(true);
+                expect(matchMainSkillName(mew, 'Helper Boost')).toBe(false);
+            });
+        });
+
         describe('Toxel evolution special cases', () => {
             test('Toxel with Amped nature evolves to Ingredient Magnet S (Plus)', () => {
                 const toxel = pokemons.find(x => x.name === 'Toxel');

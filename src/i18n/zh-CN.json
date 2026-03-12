@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "此外，我们在 <YouTube>YouTube 频道</YouTube> 上发布了使用方法的讲解视频。请务必观看。",
             "news": {
+                "add mew": {
+                    "headline": "添加了$t(pokemons.Mew)的数据。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.3.0": {
                     "headline": "已因应 v3.3.0 的平衡性调整。",
                     "detail": "如果$t(rp)有所不同，请告知我们。"
@@ -414,6 +418,12 @@
         "estimated beyond level": "级别 {{level}} 以后的值是估算值。",
         "estimated value": "推测值",
         "rate is not fixed": "该宝可梦的食材几率和技能几率尚未确定，因此显示的是临时值。",
+        "rate is not fixed title": "{{name}}的性能尚未确定。可以修改临时值进行模拟。",
+        "low chance": "低",
+        "medium chance": "普通",
+        "high chance": "高",
+        "additional candy": "额外糖果获取概率",
+        "additional candy description": "获取额外糖果的概率（$t(skill level) 4 以上）",
 
         "box": "盒子",
         "parameter": "参数",
@@ -743,6 +753,7 @@
             "Ingredient Draw S (Hyper Cutter)": "怪力钳 (食材精选S)",
             "Cooking Assist S": "料理辅助S",
             "Cooking Assist S (Bulk Up)": "健美（料理辅助S）",
+            "Versatile": "十项全能",
             "unknown": "(未知)"
         },
 
@@ -920,6 +931,7 @@
             "Dratini": "迷你龙",
             "Dragonair": "哈克龙",
             "Dragonite": "快龙",
+            "Mew": "梦幻",
             "Chikorita": "菊草叶",
             "Bayleef": "月桂叶",
             "Meganium": "大竺葵",

@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "add mew": {
+                    "headline": "Added data for $t(pokemons.Mew).",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.3.0": {
                     "headline": "Updated the data with balance adjustments in version 3.3.0",
                     "detail": "If the $t(rp) is different, please let us know."
@@ -426,6 +430,12 @@
         "estimated beyond level": "The value beyond level {{level}} is estimated.",
         "estimated value": "Estimated",
         "rate is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
+        "rate is not fixed title": "{{name}}'s stats are not confirmed. You can simulate by changing the provisional values.",
+        "low chance": "Low",
+        "medium chance": "Medium",
+        "high chance": "High",
+        "additional candy": "Additional candy acquisition chance",
+        "additional candy description": "Chance to obtain additional candy (from $t(skill level) 4)",
 
         "box": "Box",
         "parameter": "Parameter",
@@ -756,6 +766,7 @@
             "Ingredient Draw S (Hyper Cutter)": "Hyper Cutter (Ingredient Draw S)",
             "Cooking Assist S": "Cooking Assist S",
             "Cooking Assist S (Bulk Up)": "Bulk Up (Cooking Assist S)",
+            "Versatile": "Versatile",
             "unknown": "(Unknown)"
         },
 
@@ -933,6 +944,7 @@
             "Dratini": "Dratini",
             "Dragonair": "Dragonair",
             "Dragonite": "Dragonite",
+            "Mew": "Mew",
             "Chikorita": "Chikorita",
             "Bayleef": "Bayleef",
             "Meganium": "Meganium",

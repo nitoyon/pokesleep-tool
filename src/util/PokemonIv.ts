@@ -2,7 +2,7 @@ import Nature from './Nature';
 import pokemons, { getDecendants, IngredientName,
     PokemonData, ValidFormType, toxelId, toxtricityId } from '../data/pokemons';
 import { IngredientType, IngredientTypes } from './PokemonRp';
-import { getMaxSkillLevel } from './MainSkill';
+import { getMaxSkillLevel, MainSkillName, VersatileCandidates } from './MainSkill';
 import SubSkill from './SubSkill';
 import SubSkillList from './SubSkillList';
 import { clamp, trunc } from './NumberUtil';
@@ -22,6 +22,11 @@ export interface PokemonIvProps {
     mythIng1: IngredientName;
     mythIng2: IngredientName;
     mythIng3: IngredientName;
+    versatileSkill: MainSkillName;
+    /** Override base ingredient rate (replaces pokemon.ingRate) */
+    baseIngRate?: number;
+    /** Override base skill rate (replaces pokemon.skillRate) */
+    baseSkillRate?: number;
 }
 
 /**
@@ -42,6 +47,18 @@ class PokemonIv {
     readonly mythIng1: IngredientName;
     readonly mythIng2: IngredientName;
     readonly mythIng3: IngredientName;
+
+    /**
+     * Actual skill name for Versatile if pokemonName is Mew,
+     * otherwise same as pokemon.skill.
+     *
+     * (ex) Versatile (Charge Strength S)
+     * => Charge Strength S (Random)
+     */
+    readonly versatileSkill: MainSkillName;
+    readonly baseIngRate?: number;
+    readonly baseSkillRate?: number;
+
     private readonly cache: Map<string, number> = new Map();
     private activeSubSkillsCache: undefined | SubSkill[] = undefined;
 
@@ -68,14 +85,25 @@ class PokemonIv {
         this.mythIng1 = params.mythIng1;
         this.mythIng2 = params.mythIng2;
         this.mythIng3 = params.mythIng3;
+        this.versatileSkill = params.versatileSkill;
+        this.baseIngRate = params.baseIngRate;
+        this.baseSkillRate = params.baseSkillRate;
 
         // Look up pokemon data (not in params)
         const pokemon = pokemons.find(x => x.name === params.pokemonName);
         if (pokemon === undefined) {
             throw new Error(`Unknown name: ${params.pokemonName}`);
         }
-
         this.pokemon = pokemon;
+
+        // Apply base rate overrides
+        if (params.baseIngRate !== undefined || params.baseSkillRate !== undefined) {
+            this.pokemon = {
+                ...this.pokemon,
+                ...(params.baseIngRate !== undefined && { ingRate: params.baseIngRate }),
+                ...(params.baseSkillRate !== undefined && { skillRate: params.baseSkillRate }),
+            };
+        }
     }
 
     /** Returns true if the Pokémon is mythical. */
@@ -134,15 +162,19 @@ class PokemonIv {
         if (input) {
             Object.assign(params, input);
 
-            // Increase or decrease skill level
+            // Handle when pokemon name has been changed
             if (params.pokemonName !== this.pokemonName) {
                 const pokemon = pokemons.find(x => x.name === params.pokemonName);
                 if (pokemon === undefined) {
                     throw new Error(`Unknown name: ${params.pokemonName}`);
                 }
 
+                // Increase or decrease skill level
                 const diff = pokemon.evolutionCount - this.pokemon.evolutionCount;
                 params.skillLevel += diff;
+
+                // Reset mythIng
+                params.mythIng1 = params.mythIng2 = params.mythIng3 = "unknown";
             }
         }
 
@@ -254,6 +286,9 @@ class PokemonIv {
             mythIng1: params.mythIng1 ?? "unknown",
             mythIng2: params.mythIng2 ?? "unknown",
             mythIng3: params.mythIng3 ?? "unknown",
+            versatileSkill: pokemon.skill,
+            baseIngRate: params.baseIngRate,
+            baseSkillRate: params.baseSkillRate,
         };
 
         // 4. Validate and normalize values
@@ -268,8 +303,24 @@ class PokemonIv {
 
         // Handle mythical pokemon ingredient defaults
         const isMythical = pokemon.mythIng !== undefined;
-        if (isMythical && ret.mythIng1 === "unknown") {
-            ret.mythIng1 = "sausage";
+        if (isMythical) {
+            if (ret.mythIng1 === "unknown") {
+                ret.mythIng1 = pokemon.ing1.name;
+            }
+            if (ret.mythIng2 === "unknown") {
+                ret.mythIng2 = pokemon.ing2.name;
+            }
+        }
+
+        // Validate versatileSkill
+        if (pokemon.skill === "Versatile") {
+            if (params.versatileSkill !== undefined &&
+                VersatileCandidates.indexOf(params.versatileSkill) !== -1
+            ) {
+                ret.versatileSkill = params.versatileSkill;
+            } else {
+                ret.versatileSkill = "Metronome";
+            }
         }
 
         // Apply Toxtricity nature rules based on form
@@ -302,7 +353,8 @@ class PokemonIv {
             this.skillLevel === iv.skillLevel &&
             this.subSkills.isEqual(iv.subSkills) &&
             this.nature.name === iv.nature.name &&
-            this.ribbon === iv.ribbon;
+            this.ribbon === iv.ribbon &&
+            this.versatileSkill === iv.versatileSkill;
 
         if (this.isMythical) {
             return (isEqual &&
@@ -472,6 +524,9 @@ class PokemonIv {
             mythIng1: this.mythIng1,
             mythIng2: this.mythIng2,
             mythIng3: this.mythIng3,
+            versatileSkill: this.versatileSkill,
+            baseIngRate: this.baseIngRate,
+            baseSkillRate: this.baseSkillRate,
         };
     }
 
@@ -504,11 +559,21 @@ class PokemonIv {
      *
      * * 5bit  : Sub-skill Lv100
      * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
-     * * 8bit  : reserved
+     * * 4bit  : Versatile skill index (0: not set, 1-12: VersatileCandidates index)
+     * * 4bit  : reserved
      *
      * * 10bit : Ingredient for mythical pokemon
-     *           (0: unknown, 1: apple, 2: herb, 3: sausage, 4: milk,
-     *            5: honey, 6, soy, 7: corn, 8: coffee)
+     *           - 0: unknown
+     *                Darkrai    Mew
+     *           - 1: apple     leek
+     *           - 2: herb      egg
+     *           - 3: sausage   herb
+     *           - 4: milk      sausage
+     *           - 5: honey     oil
+     *           - 6: soy       tail (C)
+     *           - 7: corn      soy
+     *           - 8: coffee    avocado
+     *
      *           1st ingredient: value % 9
      *           2nd ingredient: Math.floor(value / 9)
      *           3rd ingredient: Math.floor(value / 81)
@@ -530,8 +595,12 @@ class PokemonIv {
         array16[3] = (this.subSkills.lv25 === null ? 31 : this.subSkills.lv25.index) +
             ((this.subSkills.lv50 === null ? 31 : this.subSkills.lv50.index) << 5) +
             ((this.subSkills.lv75 === null ? 31 : this.subSkills.lv75.index) << 10);
+        const versatileIndex = this.pokemon.skill === "Versatile" ?
+            VersatileCandidates.indexOf(this.versatileSkill) + 1 :
+            0;
         array16[4] = (this.subSkills.lv100 === null ? 31 : this.subSkills.lv100.index) +
-            (this.ribbon << 5);
+            (this.ribbon << 5) +
+            (versatileIndex << 8);
 
         if (this.pokemon.mythIng !== undefined) {
             const ing1 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng1) + 1;
@@ -655,15 +724,24 @@ class PokemonIv {
             throw new Error(`Invalid ribbon (${ret.ribbon})`);
         }
 
+        // versatile skill
+        const versatileIndex = (array16[4] >> 8) & 0xf;
+        if (versatileIndex > 0 && pokemon.skill === "Versatile") {
+            if (versatileIndex > VersatileCandidates.length) {
+                throw new Error(`Invalid versatile skill index (${versatileIndex})`);
+            }
+            ret.versatileSkill = VersatileCandidates[versatileIndex - 1];
+        }
+
         // mythical ingredients
         if (pokemon.mythIng !== undefined) {
             const n = pokemon.mythIng.length + 1; // 1 is unknown
             const ing1 = (array16[5] % n) - 1;
             const ing2 = (Math.floor(array16[5] / n) % n) - 1;
             const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
-            ret.mythIng1 = ing1 < 0 ? "sausage" : pokemon.mythIng[ing1].name;
-            ret.mythIng2 = ing2 < 0 ? "unknown" : pokemon.mythIng[ing2].name;
-            ret.mythIng3 = ing3 < 0 ? "unknown" : pokemon.mythIng[ing3].name;
+            ret.mythIng1 = ing1 < 0 ? pokemon.ing1.name : pokemon.mythIng[ing1].name;
+            ret.mythIng2 = ing2 < 0 ? pokemon.ing2.name : pokemon.mythIng[ing2].name;
+            ret.mythIng3 = ing3 < 0 ? pokemon.ing3?.name : pokemon.mythIng[ing3].name;
         }
 
         return new PokemonIv(ret);

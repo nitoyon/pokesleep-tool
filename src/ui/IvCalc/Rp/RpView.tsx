@@ -44,8 +44,11 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
     const rp = new PokemonRp(pokemonIv);
     const rpResult: RpStrengthResult = rp.calculate();
 
+    // calculate using default config (note that we copy `mew` config
+    // because RateNotFixedDialog is shown in RpView for Mew)
     const strengthParameter: StrengthParameter = createStrengthParameter({
         helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
+        mew: {...state.parameter.mew},
     });
     const strength = new PokemonStrength(pokemonIv, strengthParameter).calculate();
 
@@ -67,13 +70,13 @@ const RpView = React.memo(({state, width}: {state: IvState, width: number}) => {
                 </>}
                 onBerryInfoClick={onBerryInfoClick}
                 ingredientValue={round1(rpResult.ingredientRp)}
-                ingredientProb={round1(rp.iv.ingredientRate * 100)}
+                ingredientProb={round1(strength.ingRate * 100)}
                 ingredientSubValue={<>{strength.ingredients.map(x => <React.Fragment key={x.name}>
                     <IngredientIcon name={x.name}/>{round1(x.count)}
                 </React.Fragment>)}</>}
                 onIngredientInfoClick={onIngInfoClick}
                 skillValue={round1(rpResult.skillRp)}
-                skillProb={round1(rp.iv.skillRate * 100)}
+                skillProb={round1(strength.skillRate * 100)}
                 skillSubValue={strength.skillCount.toFixed(2) + t('times unit')}
                 onSkillInfoClick={onSkillInfoClick}/>
             <RpInfoDialog isError={isError} open={rpInfoOpen} onClose={onRpInfoClose}/>

@@ -508,6 +508,9 @@ class PokemonRp {
             if (this.iv.pokemon.skill === "Energizing Cheer S") {
                 return [766, 1089, 1502, 2074, 2863, 3956][this.iv.skillLevel - 1];
             }
+            if (this.iv.pokemon.skill === "Versatile") {
+                return [1280, 1651, 2126, 2783, 3690, 5056, 6463, 8033][this.iv.skillLevel - 1];
+            }
             return [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303][this.iv.skillLevel - 1];
         });
     }

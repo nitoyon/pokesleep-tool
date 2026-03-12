@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "また、使い方の解説動画を <YouTube>YouTubeチャンネル</YouTube> で公開しています。ぜひご確認ください。",
             "news": {
+                "add mew": {
+                    "headline": "$t(pokemons.Mew)のデータを追加しました。",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.3.0": {
                     "headline": "v3.3.0 でのバランス調整に対応しました。",
                     "detail": "もし、$t(rp)が異なっている場合はお知らせください。"
@@ -416,6 +420,12 @@
         "estimated beyond level": "レベル {{level}} 以降の値は推測値です。",
         "estimated value": "推測値",
         "rate is not fixed": "このポケモンの食材確率・スキル確率は未確定であるため、暫定の値を表示しています。",
+        "rate is not fixed title": "{{name}}の性能は未確定です。暫定値を変更してシミュレーションできます。",
+        "low chance": "低め",
+        "medium chance": "ふつう",
+        "high chance": "高め",
+        "additional candy": "追加のアメ取得確率",
+        "additional candy description": "追加のアメを取得する確率 ($t(skill level)4以降)",
 
         "box": "ボックス",
         "parameter": "パラメーター",
@@ -742,9 +752,9 @@
             "Skill Copy (Mimic)": "ものまね (スキルコピー)",
             "Ingredient Draw S": "食材セレクトS",
             "Ingredient Draw S (Super Luck)": "きょううん (食材セレクトS)",
-            "Ingredient Draw S (Hyper Cutter)": "かいりきバサミ (食材セレクトS)",
             "Cooking Assist S": "料理アシストS",
             "Cooking Assist S (Bulk Up)": "ビルドアップ(料理アシストS)",
+            "Versatile": "オールマイティー",
             "unknown": "(不明)"
         },
 
@@ -922,6 +932,7 @@
             "Dratini": "ミニリュウ",
             "Dragonair": "ハクリュー",
             "Dragonite": "カイリュー",
+            "Mew": "ミュウ",
             "Chikorita": "チコリータ",
             "Bayleef": "ベイリーフ",
             "Meganium": "メガニウム",

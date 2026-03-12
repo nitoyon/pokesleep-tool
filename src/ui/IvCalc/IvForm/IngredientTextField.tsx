@@ -110,19 +110,25 @@ function MythicalIngredientTextField(iv: PokemonIv,
     const ing2Menus = [];
     const ing3Menus = [];
     for (const ing of iv.pokemon.mythIng) {
-        ing1Menus.push(<MenuItem key={ing.name} value={ing.name}>
-            <IngredientCountIcon count={ing.c1} name={ing.name}/>
-        </MenuItem>);
-        ing2Menus.push(<MenuItem key={ing.name} value={ing.name}>
-            <IngredientCountIcon count={ing.c2} name={ing.name}/>
-        </MenuItem>);
+        if (ing.c1 > 0) {
+            ing1Menus.push(<MenuItem key={ing.name} value={ing.name}>
+                <IngredientCountIcon count={ing.c1} name={ing.name}/>
+            </MenuItem>);
+        }
+        if (ing.c2 > 0) {
+            ing2Menus.push(<MenuItem key={ing.name} value={ing.name}>
+                <IngredientCountIcon count={ing.c2} name={ing.name}/>
+            </MenuItem>);
+        }
         ing3Menus.push(<MenuItem key={ing.name} value={ing.name}>
             <IngredientCountIcon count={ing.c3} name={ing.name}/>
         </MenuItem>);
     }
-    ing2Menus.push(<MenuItem key="unknown" value="unknown">
-            <IngredientCountIcon count={0} name="unknown"/>
-        </MenuItem>);
+    if (iv.pokemon.ing2.name === "unknown") {
+        ing2Menus.push(<MenuItem key="unknown" value="unknown">
+                <IngredientCountIcon count={0} name="unknown"/>
+            </MenuItem>);
+    }
     ing3Menus.push(<MenuItem key="unknown" value="unknown">
             <IngredientCountIcon count={0} name="unknown"/>
         </MenuItem>);

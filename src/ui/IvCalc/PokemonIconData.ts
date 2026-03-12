@@ -408,6 +408,11 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#faba50'},
         {x: 0.25, y: 0.55, w: 0.5, h: 1, r: 0.1, color: '#f7ecbf'},
     ],
+    // Mew
+    '151': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#faedf4'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#f4d6e6'},
+    ],
     // Chikorita
     '152': [
         {x: 0, y: 0, w: 1, h: 1, color: '#d6e1ae'},
