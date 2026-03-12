@@ -43,7 +43,6 @@ export const expertFavoriteBerryBonus = 2.4;
 /** Ingredient bonus for the favorite berry in Expert Mode */
 export const expertFavoriteIngredientBonus = 1;
 
-const versatileCandySuccessRate = 0.3;
 
 /**
  * Additional ingredient bonus probability for favorite berry
@@ -543,7 +542,7 @@ class PokemonStrength {
         );
 
         const successCount = getSkillSubValue("Versatile", skillLevel);
-        ret.skillValuePerTrigger2 = (1 + successCount * versatileCandySuccessRate);
+        ret.skillValuePerTrigger2 = (1 + successCount * param.mew.success / 100);
         ret.skillValue2 = ret.skillValuePerTrigger2 * skillCount;
         return ret;
     }
