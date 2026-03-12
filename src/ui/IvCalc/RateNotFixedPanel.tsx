@@ -258,7 +258,7 @@ const RateTextField = React.memo(({min, max, value, onChange}: {
             }
         }}
         inputProps={{
-            inputMode: "numeric",
+            inputMode: "decimal",
             min: min,
             max: max,
             step: 0.1,
