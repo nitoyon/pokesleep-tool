@@ -130,6 +130,9 @@ export interface StrengthParameter extends EnergyParameter {
         /** Custom team members (0 - 4) */
         members: BerryBurstTeamMember[];
     },
+
+    /** Mew config overwrite */
+    mew: MewParameter,
 }
 
 /** Custom team member to calculate berry burst */
@@ -138,6 +141,20 @@ interface BerryBurstTeamMember {
     type: PokemonType;
     /** Pokemon's level */
     level: number;
+}
+
+/** Custom mew configuration */
+export interface MewParameter {
+    /** Ingredient Rate */
+    ing: number,
+    /** Skill rate (low) */
+    skill1: number,
+    /** Skill rate (normal) */
+    skill2: number,
+    /** Skill rate (high) */
+    skill3: number,
+    /** Candy success rate */
+    success: number,
 }
 
 /**
@@ -1041,6 +1058,13 @@ export function createStrengthParameter(
                 fixedBerries: [],
             }
         },
+        mew: {
+            ing: 20,
+            skill1: 8,
+            skill2: 4,
+            skill3: 3.2,
+            success: 30,
+        },
     };
     return { ...defaultParameters, ...param };
 }
@@ -1371,6 +1395,25 @@ export function loadStrengthParameter(): StrengthParameter {
     if (typeof(json.customEventBonus) === "object") {
         ret.customEventBonus = loadHelpEventBonus(json.customEventBonus);
     }
+
+    if (typeof(json.mew) === "object" && json.mew !== null) {
+        if (typeof(json.mew.ing) === "number" && json.mew.ing >= 0 && json.mew.ing <= 100) {
+            ret.mew.ing = json.mew.ing;
+        }
+        if (typeof(json.mew.skill1) === "number" && json.mew.skill1 >= 0 && json.mew.skill1 <= 100) {
+            ret.mew.skill1 = json.mew.skill1;
+        }
+        if (typeof(json.mew.skill2) === "number" && json.mew.skill2 >= 0 && json.mew.skill2 <= 100) {
+            ret.mew.skill2 = json.mew.skill2;
+        }
+        if (typeof(json.mew.skill3) === "number" && json.mew.skill3 >= 0 && json.mew.skill3 <= 100) {
+            ret.mew.skill3 = json.mew.skill3;
+        }
+        if (typeof(json.mew.success) === "number" && json.mew.success >= 0 && json.mew.success <= 100) {
+            ret.mew.success = json.mew.success;
+        }
+    }
+
     return ret;
 }
 

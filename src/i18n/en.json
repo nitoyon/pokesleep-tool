@@ -426,6 +426,12 @@
         "estimated beyond level": "The value beyond level {{level}} is estimated.",
         "estimated value": "Estimated",
         "rate is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
+        "rate is not fixed title": "{{name}}'s stats are not confirmed. You can simulate by changing the provisional values.",
+        "low chance": "Low",
+        "medium chance": "Medium",
+        "high chance": "High",
+        "additional candy": "Additional candy acquisition chance",
+        "additional candy description": "Chance to obtain additional candy (from $t(skill level) 4)",
 
         "box": "Box",
         "parameter": "Parameter",

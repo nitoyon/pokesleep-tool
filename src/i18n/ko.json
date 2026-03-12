@@ -412,6 +412,12 @@
         "estimated beyond level": "레벨 {{level}} 이후의 값은 추정값입니다.",
         "estimated value": "추정치",
         "rate is not fixed": "이 포켓몬의 재료 확률과 스킬 확률은 아직 확정되지 않았기 때문에 임시 값을 표시하고 있습니다.",
+        "rate is not fixed title": "{{name}}의 성능은 미확정입니다. 임시값을 변경하여 시뮬레이션할 수 있습니다.",
+        "low chance": "낮음",
+        "medium chance": "보통",
+        "high chance": "높음",
+        "additional candy": "추가 사탕 획득 확률",
+        "additional candy description": "추가 사탕을 획득하는 확률 ($t(skill level) 4 이후)",
 
         "box": "박스",
         "parameter": "매개변수",

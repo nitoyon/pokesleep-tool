@@ -5,6 +5,7 @@ import PokemonIv from '../../util/PokemonIv';
 import { PokemonBoxItem } from '../../util/PokemonBox';
 import { getInitialIvState, ivStateReducer } from './IvState';
 import LowerTabHeader from './LowerTabHeader';
+import RateNotFixedPanel from './RateNotFixedPanel';
 import BoxView from './Box/BoxView';
 import IvForm from './IvForm/IvForm';
 import StrengthSettingForm from './Strength/StrengthParameterForm';
@@ -87,15 +88,8 @@ const ResearchCalcApp = React.memo(() => {
             {state.tabIndex === 0 && <RpView state={state} width={width}/>}
             {state.tabIndex === 1 && <StrengthView state={state} dispatch={dispatch}/>}
             {state.tabIndex === 2 && <RatingView pokemonIv={state.pokemonIv} width={width}/>}
-            {state.pokemonIv.pokemon.rateNotFixed && <div style={{
-                border: '1px solid red',
-                background: '#ffeeee',
-                color: 'red',
-                fontSize: '0.9rem',
-                borderRadius: '0.5rem',
-                marginTop: '3px',
-                padding: '0 0.3rem',
-            }}>{t('rate is not fixed')}</div>}
+            <RateNotFixedPanel state={state} dispatch={dispatch}/>
+
             <LowerTabHeader state={state}
                 dispatch={dispatch} isBoxEmpty={state.box.items.length === 0}/>
         </div>

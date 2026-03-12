@@ -414,6 +414,12 @@
         "estimated beyond level": "级别 {{level}} 以后的值是估算值。",
         "estimated value": "推测值",
         "rate is not fixed": "该宝可梦的食材几率和技能几率尚未确定，因此显示的是临时值。",
+        "rate is not fixed title": "{{name}}的性能尚未确定。可以修改临时值进行模拟。",
+        "low chance": "低",
+        "medium chance": "普通",
+        "high chance": "高",
+        "additional candy": "额外糖果获取概率",
+        "additional candy description": "获取额外糖果的概率（$t(skill level) 4 以上）",
 
         "box": "盒子",
         "parameter": "参数",

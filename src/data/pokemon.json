@@ -2437,7 +2437,8 @@
             { "name": "tail", "c1": 0, "c2": 0, "c3": 2 },
             { "name": "soy", "c1": 2, "c2": 5, "c3": 7 },
             { "name": "avocado", "c1": 2, "c2": 3, "c3": 4 }
-        ]
+        ],
+        "rateNotFixed": true
     },
     {
         "id": 152,
