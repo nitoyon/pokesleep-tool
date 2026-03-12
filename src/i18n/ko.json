@@ -421,7 +421,7 @@
         "medium chance": "보통",
         "high chance": "높음",
         "additional candy": "추가 사탕 획득 확률",
-        "additional candy description": "추가 사탕을 획득하는 확률 ($t(skill level) 4 이후)",
+        "additional candy description": "추가 사탕을 획득하는 확률 ($t(skill level) 6 이후)",
 
         "box": "박스",
         "parameter": "매개변수",

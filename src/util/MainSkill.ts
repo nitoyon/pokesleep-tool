@@ -279,7 +279,8 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
         return [1, 2, 2, 3, 3, 4, 5][skillLevel - 1];
     }
     if (skill === "Versatile") {
-        return [0, 0, 0, 1, 1, 2, 3, 4][skillLevel - 1];
+        // additional candy count
+        return [0, 0, 0, 0, 0, 1, 2, 3][skillLevel - 1];
     }
     throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }

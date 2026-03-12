@@ -435,7 +435,7 @@
         "medium chance": "Medium",
         "high chance": "High",
         "additional candy": "Additional candy acquisition chance",
-        "additional candy description": "Chance to obtain additional candy (from $t(skill level) 4)",
+        "additional candy description": "Chance to obtain additional candy (from $t(skill level) 6)",
 
         "box": "Box",
         "parameter": "Parameter",

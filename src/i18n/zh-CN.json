@@ -423,7 +423,7 @@
         "medium chance": "普通",
         "high chance": "高",
         "additional candy": "额外糖果获取概率",
-        "additional candy description": "获取额外糖果的概率（$t(skill level) 4 以上）",
+        "additional candy description": "获取额外糖果的概率（$t(skill level) 6 以上）",
 
         "box": "盒子",
         "parameter": "参数",
