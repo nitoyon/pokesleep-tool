@@ -346,5 +346,56 @@ describe('PokemonStrength', () => {
             });
         });
     });
+
+    describe('Mew base rate overrides', () => {
+        test('Mew uses param.mew', () => {
+            const param = createParam({
+                mew: { ing: 30, skill1: 8, skill2: 4, skill3: 3.2, success: 30 },
+            });
+
+            // skill1
+            const strength1 = new PokemonStrength(new PokemonIv({
+                pokemonName: 'Mew',
+                versatileSkill: "Charge Energy S",
+            }), param);
+            expect(strength1.pokemonIv.ingredientRate).toBeCloseTo(0.3);
+            expect(strength1.pokemonIv.skillRate).toBeCloseTo(0.08);
+
+            // skill2
+            const strength2 = new PokemonStrength(new PokemonIv({
+                pokemonName: 'Mew',
+                versatileSkill: "Charge Strength M",
+            }), param);
+            expect(strength2.pokemonIv.ingredientRate).toBeCloseTo(0.3);
+            expect(strength2.pokemonIv.skillRate).toBeCloseTo(0.04);
+
+            // skill3
+            const strength3 = new PokemonStrength(new PokemonIv({
+                pokemonName: 'Mew',
+                versatileSkill: "Berry Burst",
+            }), param);
+            expect(strength3.pokemonIv.ingredientRate).toBeCloseTo(0.3);
+            expect(strength3.pokemonIv.skillRate).toBeCloseTo(0.032);
+
+        });
+
+        test('Non-Mew pokemon is not affected by mew params', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+            });
+
+            // Use modified mew params
+            const param = createParam({
+                mew: { ing: 99, skill1: 50, skill2: 50, skill3: 50, success: 50 },
+            });
+            const strength = new PokemonStrength(iv, param);
+            const result = strength.calculate();
+
+            // Raichu should use its own ingRate, not mew's
+            // Raichu's ingRate is not 99/100
+            expect(result.ingRate).not.toBeCloseTo(0.99);
+            expect(result.skillRate).not.toBeCloseTo(0.5);
+        });
+    });
 });
 

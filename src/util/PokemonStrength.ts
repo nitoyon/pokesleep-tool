@@ -285,6 +285,15 @@ export interface BonusEffectsWithReason extends BonusEffects {
     ingredientReason: 'event'|'ex'|'none';
 };
 
+function getMewSkillRate(versatileSkill: MainSkillName, mew: MewParameter): number {
+    if (versatileSkill === "Charge Strength S (Random)" || versatileSkill === "Charge Energy S") {
+        return mew.skill1;
+    } else if (versatileSkill === "Energy for Everyone S" || versatileSkill === "Berry Burst") {
+        return mew.skill3;
+    }
+    return mew.skill2;
+}
+
 /**
  * Strength calculator
  */
@@ -309,9 +318,13 @@ class PokemonStrength {
         }
 
         this.iv = this.changePokemonIv(iv, decendantId);
-        const pokemon = pokemons.find(x => x.name === iv.pokemonName);
-        if (pokemon === undefined) {
-            throw new Error(`Unknown name: ${iv.pokemonName}`);
+
+        // Apply Mew overrides
+        if (this.iv.pokemon.name === "Mew") {
+            this.iv = this.iv.clone({
+                baseIngRate: param.mew.ing,
+                baseSkillRate: getMewSkillRate(this.iv.versatileSkill, param.mew),
+            });
         }
     }
 

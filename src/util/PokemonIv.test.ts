@@ -765,6 +765,99 @@ describe('PokemonIV', () => {
         });
     });
 
+    describe('baseIngRate and baseSkillRate', () => {
+        test('baseIngRate overrides ingredientRate calculation', () => {
+            const ivDefault = new PokemonIv({
+                pokemonName: 'Mew',
+            });
+            expect(ivDefault.ingredientRate).toBe(0.2); // 20/100
+
+            const ivOverride = new PokemonIv({
+                pokemonName: 'Mew',
+                baseIngRate: 30,
+            });
+            expect(ivOverride.ingredientRate).toBe(0.3); // 30/100
+        });
+
+        test('baseSkillRate overrides skillRate calculation', () => {
+            const ivDefault = new PokemonIv({
+                pokemonName: 'Mew',
+            });
+            expect(ivDefault.skillRate).toBe(0.04); // 4/100
+
+            const ivOverride = new PokemonIv({
+                pokemonName: 'Mew',
+                baseSkillRate: 8,
+            });
+            expect(ivOverride.skillRate).toBe(0.08); // 8/100
+        });
+
+        test('nature still applies with baseIngRate', () => {
+            // Quiet has ingredientFindingFactor = 1.2
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                nature: new Nature('Quiet'),
+                baseIngRate: 20,
+            });
+            // 20/100 * 1.2 = 0.24
+            expect(iv.ingredientRate).not.toBe(0.2);
+            expect(iv.ingredientRate).toBe(0.24);
+        });
+
+        test('clone preserves baseIngRate and baseSkillRate', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                nature: new Nature('Serious'),
+                baseIngRate: 30,
+                baseSkillRate: 8,
+            });
+
+            const cloned = iv.clone();
+            expect(cloned.baseIngRate).toBe(30);
+            expect(cloned.baseSkillRate).toBe(8);
+            expect(cloned.ingredientRate).toBe(0.3);
+            expect(cloned.skillRate).toBe(0.08);
+        });
+
+        test('clone can change baseIngRate', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                nature: new Nature('Serious'),
+                baseIngRate: 30,
+            });
+            expect(iv.ingredientRate).toBe(0.3);
+
+            const cloned = iv.clone({ baseIngRate: 40 });
+            expect(cloned.ingredientRate).toBe(0.4);
+            // Original unchanged
+            expect(iv.ingredientRate).toBe(0.3);
+        });
+
+        test('toProps includes baseIngRate and baseSkillRate', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                baseIngRate: 30,
+                baseSkillRate: 8,
+            });
+
+            const props = iv.toProps();
+            expect(props.baseIngRate).toBe(30);
+            expect(props.baseSkillRate).toBe(8);
+        });
+
+        test('undefined baseIngRate/baseSkillRate uses pokemon defaults', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Mew',
+                nature: new Nature('Serious'),
+            });
+
+            expect(iv.baseIngRate).toBeUndefined();
+            expect(iv.baseSkillRate).toBeUndefined();
+            expect(iv.ingredientRate).toBe(0.2); // default ingRate 20/100
+            expect(iv.skillRate).toBe(0.04); // default skillRate 4/100
+        });
+    });
+
     function compareIv(iv1: PokemonIv, iv2: PokemonIv) {
         expect(iv2.pokemon.name).toBe(iv1.pokemon.name);
         expect(iv2.idForm).toBe(iv1.idForm);

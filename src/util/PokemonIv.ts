@@ -23,6 +23,10 @@ export interface PokemonIvProps {
     mythIng2: IngredientName;
     mythIng3: IngredientName;
     versatileSkill: MainSkillName;
+    /** Override base ingredient rate (replaces pokemon.ingRate) */
+    baseIngRate?: number;
+    /** Override base skill rate (replaces pokemon.skillRate) */
+    baseSkillRate?: number;
 }
 
 /**
@@ -52,6 +56,8 @@ class PokemonIv {
      * => Charge Strength S (Random)
      */
     readonly versatileSkill: MainSkillName;
+    readonly baseIngRate?: number;
+    readonly baseSkillRate?: number;
 
     private readonly cache: Map<string, number> = new Map();
     private activeSubSkillsCache: undefined | SubSkill[] = undefined;
@@ -80,14 +86,24 @@ class PokemonIv {
         this.mythIng2 = params.mythIng2;
         this.mythIng3 = params.mythIng3;
         this.versatileSkill = params.versatileSkill;
+        this.baseIngRate = params.baseIngRate;
+        this.baseSkillRate = params.baseSkillRate;
 
         // Look up pokemon data (not in params)
         const pokemon = pokemons.find(x => x.name === params.pokemonName);
         if (pokemon === undefined) {
             throw new Error(`Unknown name: ${params.pokemonName}`);
         }
-
         this.pokemon = pokemon;
+
+        // Apply base rate overrides
+        if (params.baseIngRate !== undefined || params.baseSkillRate !== undefined) {
+            this.pokemon = {
+                ...this.pokemon,
+                ...(params.baseIngRate !== undefined && { ingRate: params.baseIngRate }),
+                ...(params.baseSkillRate !== undefined && { skillRate: params.baseSkillRate }),
+            };
+        }
     }
 
     /** Returns true if the Pokémon is mythical. */
@@ -271,6 +287,8 @@ class PokemonIv {
             mythIng2: params.mythIng2 ?? "unknown",
             mythIng3: params.mythIng3 ?? "unknown",
             versatileSkill: pokemon.skill,
+            baseIngRate: params.baseIngRate,
+            baseSkillRate: params.baseSkillRate,
         };
 
         // 4. Validate and normalize values
@@ -507,6 +525,8 @@ class PokemonIv {
             mythIng2: this.mythIng2,
             mythIng3: this.mythIng3,
             versatileSkill: this.versatileSkill,
+            baseIngRate: this.baseIngRate,
+            baseSkillRate: this.baseSkillRate,
         };
     }
 
