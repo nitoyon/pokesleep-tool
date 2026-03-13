@@ -22,11 +22,13 @@ const SkillLevelControl = React.memo(({iv, onChange}: {
             return [];
         }
         return VersatileCandidates.map((name) =>
-            <MenuItem
+            <VersatileMenuItem
                 key={name} value={name} dense
             >
-                {t('skills.Versatile')} ({t(`skills.${name.replace(" (Random)", "")}`)})
-            </MenuItem>
+                <span className="hide">{t('skills.Versatile')} (</span>
+                {t(`skills.${name.replace(" (Random)", "")}`)}
+                <span className="hide">)</span>
+            </VersatileMenuItem>
         );
     }, [isVersatile, t]);
 
@@ -54,6 +56,10 @@ const SkillLevelControl = React.memo(({iv, onChange}: {
         }
         {isVersatile &&
             <SelectEx sx={{marginRight: '10px'}}
+                menuSx={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                }}
                 value={iv.versatileSkill} onChange={onVersatileChange}>
                 {versatileOptions}
             </SelectEx>
@@ -62,6 +68,12 @@ const SkillLevelControl = React.memo(({iv, onChange}: {
             {levelOptions}
         </SelectEx>
     </StyledSkillLevel>;
+});
+
+const VersatileMenuItem = styled(MenuItem)({
+    '& .hide': {
+        display: 'none',
+    },
 });
 
 const StyledSkillLevel = styled('div')({
