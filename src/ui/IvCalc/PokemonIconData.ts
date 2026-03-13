@@ -1245,6 +1245,23 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.74, y: 0, w: 0.12, h: 0.6, r: 0.05, color: '#ebb3a0'},
         {x: 0.2, y: 0, w: 0.6, h: 0.1, r: 0.05, color: '#ebb3a0'}
     ],
+    // Noibat
+    '714': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ad64c9'},
+        {x: 0.1, y: 0.1, w: 0.8, h: 1.1, r: 0.15, color: '#e9d4f1'},
+        {x: 0.1, y: 0.8, w: 0.8, h: 0.1, color: '#6f625f'},
+        {x: 0.3, y: 0.3, w: 0.4, h: 0.42, r: 0.2, color: '#a860c5'},
+        {x: 0.35, y: 0.4, w: 0.3, h: 0.28, r: 0.2, color: '#6f625f'}
+    ],
+    // Noivern
+    '715': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#9d6fcd'},
+        {x: 0.08, y: 0, w: 0.84, h: 1.2, r: 0.1, color: '#5d5453'},
+        {x: 0.21, y: 0.04, w: 0.24, h: 0.28, r: 0.2, color: '#73bba7'},
+        {x: 0.55, y: 0.04, w: 0.24, h: 0.28, r: 0.2, color: '#73bba7'},
+        {x: 0, y: 0.9, w: 1, h: 0.05, color: '#e8e4dd'},
+        {x: 0, y: 0.95, w: 1, h: 0.05, color: '#b24246'}
+    ],
     // Grubbin
     '736': [
         {x: 0, y: 0, w: 1, h: 1, color: '#eff8fc'},

@@ -6607,6 +6607,74 @@
         }
     },
     {
+        "id": 714,
+        "name": "Noibat",
+        "arrival": "2026-03-23",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "dragon",
+        "specialty": "Skills",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": 714,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 715,
+        "name": "Noivern",
+        "arrival": "2026-03-23",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "dragon",
+        "specialty": "Skills",
+        "skill": "unknown",
+        "fp": 16,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": 714,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 737,
         "name": "Charjabug",
         "arrival": "2024-10-02",
