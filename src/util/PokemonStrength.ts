@@ -883,6 +883,7 @@ class PokemonStrength {
                 expertSkillLevel > 0 ? "ex" : "event",
             berry: targetEventBonus.berry,
             ingredient: Math.max(expertIngredient, eventIngredient),
+            carryLimit: targetEventBonus.carryLimit,
             ingredientReason: expertIngredient > eventIngredient ?
                 'ex' : 'event',
             dreamShard: eventBonus.dreamShard,

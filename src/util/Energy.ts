@@ -194,7 +194,8 @@ class Energy {
                 sleepTime: 0, events: [], efficiencies: [],
                 canBeFullInventory: false, timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
-                carryLimit: Math.ceil(this._iv.carryLimit * (param.isGoodCampTicketSet ? 1.2 : 1)),
+                carryLimit: Math.ceil((this._iv.carryLimit + bonus.carryLimit) *
+                    (param.isGoodCampTicketSet ? 1.2 : 1)),
                 skillRate: 0,
                 helpCount: { awake: 0, asleepNotFull: 0, asleepFull: 0 },
                 averageEfficiency: { total: 0, awake: 0, asleep: 0 },
@@ -557,9 +558,12 @@ class Energy {
             asleepFull: number,
         },
     } {
+        const isGoodCampTicketSet = param.isGoodCampTicketSet;
+        const carryLimit = Math.ceil((this._iv.carryLimit + bonus.carryLimit) *
+            (isGoodCampTicketSet ? 1.2 : 1));
         if (this._iv.pokemon.frequency === 0) {
             return {
-                carryLimit: this._iv.pokemon.carryLimit,
+                carryLimit,
                 skillRate: 0,
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
@@ -572,7 +576,6 @@ class Energy {
         const isEnergyAlwaysFull = param.isEnergyAlwaysFull;
         const helpBonusCount = param.helpBonusCount +
             (this._iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
-        const isGoodCampTicketSet = param.isGoodCampTicketSet;
         const alwaysSnacking = param.tapFrequency === "none";
         const alwaysTapAsleep = param.tapFrequencyAsleep === "always";
 
@@ -582,9 +585,6 @@ class Energy {
         const isMainBerry = isExpertMode &&
             (param.favoriteType[0] === this._iv.pokemon.type);
         const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
-
-        // get carry limit
-        const carryLimit = Math.ceil(this._iv.carryLimit * (isGoodCampTicketSet ? 1.2 : 1));
 
         // calculate the number of berries and ings per help
         const rp = new PokemonRp(this._iv);

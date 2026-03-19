@@ -139,6 +139,7 @@ const FullPreview = React.memo(({iv, state, onStateChange}: {
         const bonus = {
             berryBonus: state.berryBonus,
             ingredientBonus: state.ingBonus,
+            carryLimitBonus: state.carryLimitBonus,
             expertIngBonus: state.expertMode &&
                 state.expertBerry !== 2 && state.expertIngBonus === 1,
         };
