@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "此外，我們在 <YouTube>YouTube 頻道</YouTube> 上發佈了使用方法的講解影片。請務必觀看。",
             "news": {
+                "latias research": {
+                    "headline": "現在可以以圖表形式顯示$t(time to full inventory)了（<a href='https://youtu.be/C7Ik6U9JsEM'>講解影片</a>）。",
+                    "detail": "可以透過[$t(frequency)]右側的 [i] 標記或[$t(full inventory while sleeping (short))]右側的 [i] 標記來確認。詳情請觀看講解影片。\n此外，已支援拉帝亞斯調查的模擬。"
+                },
                 "add mew": {
                     "headline": "新增了$t(pokemons.Mew)的資料。",
                     "detail": "$t(rp collection)"
@@ -494,6 +498,8 @@
             "none": "無",
             "advanced": "詳細設定",
             "custom": "自訂設定",
+            "latias research 2nd week": "拉帝亞斯研究 (第2週)",
+            "latias research 1st week": "拉帝亞斯研究 (第1週)",
             "dream shard week 2": "夢之碎片增量週vol.2",
             "pokemon day celebration vol1": "Pokémon Day紀念企畫vol.1",
             "valentine 2026": "情人節2026",
@@ -596,8 +602,6 @@
         "recipe multiplier": "食譜倍率",
         "event bonus": "活動獎勵",
         "time to full inventory": "到持有溢出的時間",
-        "berry bonus from event": "來自活動的樹果加成",
-        "ingredient bonus from event": "來自活動的食材加成",
         "value": "顯示值",
         "help count per hour": "每小時 {{n}} 次",
         "probability": "機率",

@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "latias research": {
+                    "headline": "$t(time to full inventory) can now be displayed as a graph (<a href='https://youtu.be/C7Ik6U9JsEM'>tutorial video</a>).",
+                    "detail": "You can check it from the [i] mark to the right of [$t(frequency)] or the [i] mark to the right of [$t(full inventory while sleeping (short))]. See the tutorial video for details.\nAlso, simulation for the Latias Research event is now supported."
+                },
                 "add mew": {
                     "headline": "Added data for $t(pokemons.Mew).",
                     "detail": "$t(rp collection)"
@@ -503,6 +507,8 @@
             "none": "None",
             "advanced": "Advanced",
             "custom": "Custom",
+            "latias research 2nd week": "Latias Research (2nd week)",
+            "latias research 1st week": "Latias Research (1st week)",
             "dream shard week 2": "Dream Shard Week Vol. 2",
             "pokemon day celebration vol1": "Pokémon Day Celebration Event Vol. 1",
             "valentine 2026": "Valentine's Day 2026",
@@ -564,9 +570,9 @@
         "awake (full inventory)": "Awake (Full inventory)",
         "asleep": "Asleep",
         "asleep (full inventory)": "Asleep (Full inventory)",
-        "full inventory while sleeping": "Full inventory while sleeping",
+        "full inventory while sleeping": "Sleeping full inventory",
         "sneaky snacking": "Sneaky snacking",
-        "skill trigger after wake up": "Skill trigger% after wake up",
+        "skill trigger after wake up": "Skill% after waking",
         "lottery count": "Lottery count",
         "always 81%+": "Always 81%+",
         "charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
@@ -605,8 +611,6 @@
         "recipe multiplier": "Recipe multiplier",
         "event bonus": "Event bonus",
         "time to full inventory": "Time to full inventory",
-        "berry bonus from event": "Berry bonus from event",
-        "ingredient bonus from event": "Ingredient bonus from event",
         "value": "Value",
         "help count per hour": "{{n}} times/hour",
         "probability": "Prob",

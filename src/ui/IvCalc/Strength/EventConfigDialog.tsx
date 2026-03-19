@@ -92,7 +92,19 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             ...value.customEventBonus,
             effects: {
                 ...value.customEventBonus.effects,
-                skillLevel: val as 0|1|3,
+                skillLevel: val as 0|1|2|3,
+            },
+        }});
+    }, [value, onChange]);
+    const onCarryLimitChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
+        if (val === null) {
+            return;
+        }
+        onChange({...value, event: "custom", customEventBonus: {
+            ...value.customEventBonus,
+            effects: {
+                ...value.customEventBonus.effects,
+                carryLimit: val as 0|8|15,
             },
         }});
     }, [value, onChange]);
@@ -314,8 +326,20 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                         value={value.customEventBonus.effects.skillLevel} onChange={onSkillLevelChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={1}>+1</ToggleButton>
+                        <ToggleButton value={2}>+2</ToggleButton>
                         <ToggleButton value={3}>+3</ToggleButton>
                         <ToggleButton value={5}>+5</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+            </section>
+            <section>
+                <label>{t('carry limit')}:</label>
+                <div>
+                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
+                        value={value.customEventBonus.effects.carryLimit} onChange={onCarryLimitChange}>
+                        <ToggleButton value={0}>{t('none')}</ToggleButton>
+                        <ToggleButton value={8}>+8</ToggleButton>
+                        <ToggleButton value={15}>+15</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>
@@ -434,7 +458,11 @@ const StyledEventConfigDialog = styled(Dialog)({
                     marginRight: 'auto',
                     marginTop: 0,
                 },
-                '& > div': {
+                '& button': {
+                    padding: '2px 7px',
+                    display: 'inline',
+                    lineHeight: 1,
+                    textTransform: 'none',
                 },
             },
         },

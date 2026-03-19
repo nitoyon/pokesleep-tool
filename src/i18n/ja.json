@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "また、使い方の解説動画を <YouTube>YouTubeチャンネル</YouTube> で公開しています。ぜひご確認ください。",
             "news": {
+                "latias research": {
+                    "headline": "$t(time to full inventory)をグラフ表示できるようになりました (<a href='https://youtu.be/C7Ik6U9JsEM'>解説動画</a>)。",
+                    "detail": "[$t(frequency)] の右の [i] マークや [$t(full inventory while sleeping (short))] の右の [i] マークから確認できます。詳しくは解説動画をごらんください。\nまた、ラティアスリサーチのシミュレーションに対応しました。"
+                },
                 "add mew": {
                     "headline": "$t(pokemons.Mew)のデータを追加しました。",
                     "detail": "$t(rp collection)"
@@ -494,6 +498,8 @@
             "none": "なし",
             "advanced": "詳細設定",
             "custom": "カスタム設定",
+            "latias research 2nd week": "ラティアスリサーチ (2週目)",
+            "latias research 1st week": "ラティアスリサーチ (1週目)",
             "dream shard week 2": "ゆめのかけらGETウィーク vol.2",
             "pokemon day celebration vol1": "ポケモンデー記念キャンペーン vol.1",
             "valentine 2026": "バレンタイン2026",
@@ -596,8 +602,6 @@
         "recipe multiplier": "レシピ倍率",
         "event bonus": "イベントボーナス",
         "time to full inventory": "所持あふれまでの時間",
-        "berry bonus from event": "イベントでのきのみ追加",
-        "ingredient bonus from event": "イベントでの食材追加",
         "value": "表示する値",
         "help count per hour": "1時間に {{n}} 回",
         "probability": "確率",

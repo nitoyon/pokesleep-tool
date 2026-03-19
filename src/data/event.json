@@ -1,28 +1,57 @@
 {
     "drowsy": [
         {
-            "name": "PokemonDay",
-            "day": "2026-02-26",
+            "name": "LatiasResearch",
+            "day": "2026-04-19",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2026-03-02",
+            "day": "2026-04-01",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2026-03-03",
+            "day": "2026-04-02",
             "memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
-            "bonus": 3
+            "bonus": 2
         },
         {
             "name": "GSD",
-            "day": "2026-03-04",
+            "day": "2026-04-03",
             "bonus": 1.5
         }
     ],
     "bonus": [
+        {
+            "name": "latias research 2nd week",
+            "start": "2026-04-06T04:00:00",
+            "end": "2026-04-12T04:00:00",
+            "target": {
+                "specialty": "Skills"
+            },
+            "effects": {
+                "berry": 1,
+                "skillTrigger": 1.25,
+                "skillLevel": 5,
+                "ingredient": 1,
+                "carryLimit": 15
+            }
+        },
+        {
+            "name": "latias research 1st week",
+            "start": "2026-03-16T04:00:00",
+            "end": "2026-03-23T04:00:00",
+            "target": {
+                "specialty": "Skills"
+            },
+            "effects": {
+                "skillTrigger": 1.25,
+                "skillLevel": 2,
+                "ingredient": 1,
+                "carryLimit": 8
+            }
+        },
         {
             "name": "dream shard week 2",
             "start": "2026-03-16T04:00:00",
