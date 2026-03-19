@@ -24,6 +24,35 @@
     ],
     "bonus": [
         {
+            "name": "latias research 2nd week",
+            "start": "2026-04-06T04:00:00",
+            "end": "2026-04-12T04:00:00",
+            "target": {
+                "specialty": "Skills"
+            },
+            "effects": {
+                "berry": 1,
+                "skillTrigger": 1.25,
+                "skillLevel": 5,
+                "ingredient": 1,
+                "carryLimit": 15
+            }
+        },
+        {
+            "name": "latias research 1st week",
+            "start": "2026-03-16T04:00:00",
+            "end": "2026-03-23T04:00:00",
+            "target": {
+                "specialty": "Skills"
+            },
+            "effects": {
+                "skillTrigger": 1.25,
+                "skillLevel": 2,
+                "ingredient": 1,
+                "carryLimit": 8
+            }
+        },
+        {
             "name": "dream shard week 2",
             "start": "2026-03-16T04:00:00",
             "end": "2026-03-23T04:00:00",

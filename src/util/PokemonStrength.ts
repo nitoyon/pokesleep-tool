@@ -1066,6 +1066,7 @@ export function createStrengthParameter(
                 berryBurst: 1,
                 dish: 1,
                 energyFromDish: 0,
+                carryLimit: 0,
                 fixedAreas: [],
                 fixedBerries: [],
             }

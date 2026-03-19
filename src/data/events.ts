@@ -121,6 +121,7 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         berryBurst: data.berryBurst ?? 1,
         dish: data.dish ?? 1,
         energyFromDish: data.energyFromDish ?? 0,
+        carryLimit: data.carryLimit ?? 0,
         fixedBerries: data.fixedBerries ?? [],
         fixedAreas: data.fixedAreas ?? [],
     };
@@ -235,7 +236,7 @@ export interface BonusEffects {
     /** Skill probability bonus */
     skillTrigger: 1 | 1.25 | 1.5,
     /** Boosted main skill level */
-    skillLevel: 0 | 1 | 3 | 5,
+    skillLevel: 0 | 1 | 2 | 3 | 5,
     /** Boosted ingredient count */
     ingredient: 0 | 1,
     /** Dream Shard Magnet S bonus */
@@ -254,6 +255,8 @@ export interface BonusEffects {
     dish: 1 | 1.1 | 1.25 | 1.5;
     /** Energy recovery bonus by dish */
     energyFromDish: 0 | 5;
+    /** Carry limit bonus */
+    carryLimit: 0 | 8 | 15;
     /**
      * Types of berries that are fixed (i.e., not randomly selected).
      *
@@ -286,6 +289,7 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
     berryBurst: 1,
     dish: 1,
     energyFromDish: 0,
+    carryLimit: 0,
     fixedBerries: [],
     fixedAreas: [],
 };
@@ -376,7 +380,7 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
             ret.effects.berry = effects.berry;
         }
         if (typeof(effects.skillLevel) === "number" &&
-            [0, 1, 3, 5].includes(effects.skillLevel)) {
+            [0, 1, 2, 3, 5].includes(effects.skillLevel)) {
             ret.effects.skillLevel = effects.skillLevel;
         }
         if (typeof(effects.skillTrigger) === "number" &&
@@ -418,6 +422,10 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
         if (typeof(effects.energyFromDish) === "number" &&
             [0, 5].includes(effects.energyFromDish)) {
             ret.effects.energyFromDish = effects.energyFromDish;
+        }
+        if (typeof(effects.carryLimit) === "number" &&
+            [8, 15].includes(effects.carryLimit)) {
+            ret.effects.carryLimit = effects.carryLimit;
         }
     }
     return ret;
