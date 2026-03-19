@@ -194,7 +194,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                     </FormControl>
                 </section>
             }
-            <Collapse in={!isCountOnly &&
+            <Collapse in={(!isCountOnly || iv.pokemon.skill === "Versatile") &&
                 (bonus.skillLevel > 0 || settings.maxSkillLevel) &&
                 skillLevel !== iv.skillLevel}>
                 <div className="skillLevelNotice">
