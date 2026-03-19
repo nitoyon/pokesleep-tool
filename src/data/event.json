@@ -1,24 +1,24 @@
 {
     "drowsy": [
         {
-            "name": "PokemonDay",
-            "day": "2026-02-26",
+            "name": "LatiasResearch",
+            "day": "2026-04-19",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2026-03-02",
+            "day": "2026-04-01",
             "bonus": 1.5
         },
         {
             "name": "GSD",
-            "day": "2026-03-03",
+            "day": "2026-04-02",
             "memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
-            "bonus": 3
+            "bonus": 2
         },
         {
             "name": "GSD",
-            "day": "2026-03-04",
+            "day": "2026-04-03",
             "bonus": 1.5
         }
     ],
