@@ -1,5 +1,5 @@
 import React from 'react';
-import { PokemonSpecialty } from '../../data/pokemons';
+import { PokemonSpecialty } from '../../../data/pokemons';
 import { useTranslation } from 'react-i18next';
 
 interface RaderChartProps {

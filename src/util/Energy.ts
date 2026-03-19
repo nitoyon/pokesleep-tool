@@ -588,10 +588,13 @@ class Energy {
 
         // calculate the number of berries and ings per help
         const rp = new PokemonRp(this._iv);
-        const baseFreq = rp.getBaseFrequency(helpBonusCount, isGoodCampTicketSet,
+        const baseFreq = this._iv.getBaseFrequency(helpBonusCount, isGoodCampTicketSet,
             isMainBerry, isNonFavoriteBerry);
-        const bagUsagePerHelp = rp.getBagUsagePerHelp(bonus.berry, bonus.ingredient,
-            isExpertMode && isFavoriteBerry && param.expertEffect === 'ing');
+        const bagUsagePerHelp = rp.iv.getBagUsagePerHelp({
+            berryBonus: bonus.berry,
+            ingredientBonus: bonus.ingredient,
+            expertIngBonus: isExpertMode && isFavoriteBerry && param.expertEffect === 'ing',
+        });
 
         // calculate timeToFullInventory & timeFullInventory
         let carryLeft = carryLimit;

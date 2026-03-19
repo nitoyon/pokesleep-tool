@@ -43,7 +43,7 @@ const HelpStackDialog = React.memo(({open, onClose, parameter, strength, result,
         <article>
             <section className="first">
                 <h2>{t('help yield')}:</h2>
-                <span>{round1(getHelpYield(parameter, strength, result))}{t('berry unit')}/{Math.abs(parameter.period)}{t('help unit')}</span>
+                <span>{round1(getHelpYield(parameter, strength))}{t('berry unit')}/{Math.abs(parameter.period)}{t('help unit')}</span>
             </section>
             <footer>{t('help yield description', { n: Math.abs(parameter.period) })}</footer>
             <section>
