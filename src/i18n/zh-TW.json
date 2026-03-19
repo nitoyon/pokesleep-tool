@@ -598,8 +598,6 @@
         "recipe multiplier": "食譜倍率",
         "event bonus": "活動獎勵",
         "time to full inventory": "到持有溢出的時間",
-        "berry bonus from event": "來自活動的樹果加成",
-        "ingredient bonus from event": "來自活動的食材加成",
         "value": "顯示值",
         "help count per hour": "每小時 {{n}} 次",
         "probability": "機率",
