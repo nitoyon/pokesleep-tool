@@ -1,4 +1,7 @@
-import Energy, { EnergyParameter, AlwaysTap, NoTap } from './Energy';
+import Energy, {
+    EnergyParameter, AlwaysTap, NoTap, EfficiencyEvent,
+    calculateDiscreteHelpCount, getFrequencyRateByEnergy, getEfficiencyByEnergy,
+} from './Energy';
 import Nature from './Nature';
 import PokemonIv from './PokemonIv';
 import SubSkill from './SubSkill';
@@ -333,5 +336,107 @@ describe('Energy', () => {
         expect(result.helpCount.awake).toBe(180 * 60 / 1800 * 2.222);
         expect(result.helpCount.asleepFull).toBe(0);
         expect(result.helpCount.asleepNotFull).toBe(0);
+    });
+});
+
+describe('calculateDiscreteHelpCount', () => {
+    const makeEfficiency = ({start, end, energy}: {start: number, end: number, energy: number}): EfficiencyEvent => ({
+        start, end,
+        efficiency: getEfficiencyByEnergy(energy),
+        frequencyRate: getFrequencyRateByEnergy(energy),
+        isAwake: true, isSnacking: false, isInPeriod: true,
+    });
+
+    test('single efficiency rate=1', () => {
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 610, startSeconds: 0, duration: 1800,
+            efficiencies: [makeEfficiency({start: 0, end: 30, energy: 0})],
+        });
+        expect(result.helpCount).toBe(2);
+        expect(result.elapsed).toBe(580);
+    });
+
+    test('single efficiency (returns elapsed 0)', () => {
+        // 600 * 0.45 = 270
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 600, startSeconds: 0, duration: 270,
+            efficiencies: [makeEfficiency({start: 0, end: 30, energy: 100})],
+        });
+        expect(result.helpCount).toBe(1);
+        expect(result.elapsed).toBe(0);
+    });
+
+    test('single efficiency (start > 0)', () => {
+        // 600 * 0.45 = 270
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 600, startSeconds: 270, duration: 600,
+            efficiencies: [makeEfficiency({start: 0, end: 30, energy: 100})],
+        });
+        expect(result.helpCount).toBe(1);
+        expect(result.elapsed).toBe(60);
+        expect(result.frequency).toBe(270);
+    });
+
+    test('single efficiency (start > 0)', () => {
+        // 600 * 0.45 = 270
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 600, startSeconds: 200, duration: 600,
+            efficiencies: [makeEfficiency({start: 0, end: 30, energy: 100})],
+            elapsed: 200,
+        });
+        expect(result.helpCount).toBe(2);
+        expect(result.elapsed).toBe(60);
+        expect(result.frequency).toBe(270);
+    });
+
+    test('multiple intervals with different rates', () => {
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 610, startSeconds: 0, duration: 1800,
+            efficiencies: [
+                makeEfficiency({start: 0, end: 10, energy: 100}),   // 10 min = 600 sec
+                makeEfficiency({start: 10, end: 30, energy: 80}),  // 20 min = 1200 sec
+            ],
+        });
+        expect(result.helpCount).toBe(6);
+        expect(result.elapsed).toBeCloseTo(24.9, 0);
+    });
+
+    test('with elapsed waits for remaining freq then counts', () => {
+        // elapsed=580, frequency=610, so wait 610-580=30s, then 1st help at 30s
+        // helps at 30, 640, 1250 (3 helps), next at 1860 > 1800, elapsed=1800-1250=550
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 610, startSeconds: 0, duration: 1800,
+            efficiencies: [makeEfficiency({start: 0, end: 30, energy: 0})],
+            elapsed: 580,
+        });
+        expect(result.helpCount).toBe(3);
+        expect(result.elapsed).toBe(550);
+    });
+
+    test('elapsed exceeds duration returns accumulated elapsed', () => {
+        // elapsed=580, frequency=610, waitTime=30 > duration=20, no helps
+        // elapsed=580+20=600
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 610, startSeconds: 0, duration: 20,
+            efficiencies: [makeEfficiency({start: 0, end: 30, energy: 0})],
+            elapsed: 580,
+        });
+        expect(result.helpCount).toBe(0);
+        expect(result.elapsed).toBe(600);
+    });
+
+    test('help fires exactly at interval boundary', () => {
+        // freq=45 (100*0.45), helps at 45, 90, 135, 180, 225
+        // at 225s, boundary (200s) passed, rate changes to 1, freq=100
+        // help at 225+100=325, next at 425 > 350, elapsed=350-325=25
+        const result = calculateDiscreteHelpCount({
+            baseFreq: 100, startSeconds: 0, duration: 350,
+            efficiencies: [
+                makeEfficiency({start: 0, end: 200/60, energy: 100}),   // 200 sec
+                makeEfficiency({start: 200/60, end: 350/60, energy: 0}),   // 350 sec
+            ],
+        });
+        expect(result.helpCount).toBe(6);
+        expect(result.elapsed).toBe(25);
     });
 });

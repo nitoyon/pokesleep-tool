@@ -124,7 +124,7 @@ type EnergyEvent = {
 }
 
 /** Efficiency event. */
-type EfficiencyEvent = {
+export type EfficiencyEvent = {
     /** Start minutes since wake up */
     start: number;
     /** End minutes since wake up. */
@@ -746,6 +746,74 @@ export function getFrequencyRateByEnergy(energy: number): FrequencyRate {
     if (energy > 40) { return 0.58; }
     if (energy > 1) { return 0.66; }
     return 1;
+}
+
+/** Result of discrete help count calculation. */
+export type DiscreteHelpCountResult = {
+    /** Integer count of helps that occurred */
+    helpCount: number;
+    /** Time in seconds elapsed since the last help at end of period */
+    elapsed: number;
+    /** The last help frequency in seconds (baseFreq * frequencyRate) */
+    frequency: number;
+};
+
+/**
+ * Calculate discrete help count over a duration with varying frequency rates.
+ *
+ * Each help takes exactly `baseFreq * currentFrequencyRate` seconds.
+ * The rate that applies to a help is determined by the interval
+ * in which the help starts (not where it ends).
+ *
+ * @param params.baseFreq Base help frequency in seconds.
+ * @param params.startSeconds Start time in seconds.
+ * @param params.duration End time in seconds.
+ * @param params.efficiencies Sorted, contiguous EfficiencyEvent array
+ *                            (start/end in minutes).
+ * @param params.elapsed Time in seconds already elapsed toward the next help.
+ * @returns Discrete help count and remaining time since the last help in seconds.
+ */
+export function calculateDiscreteHelpCount({
+    baseFreq,
+    startSeconds,
+    duration,
+    efficiencies,
+    elapsed = 0,
+}: {
+    baseFreq: number;
+    startSeconds: number;
+    duration: number;
+    efficiencies: EfficiencyEvent[];
+    elapsed?: number;
+}): DiscreteHelpCountResult {
+    if (baseFreq <= 0 || efficiencies.length === 0) {
+        throw new Error('invalid argument')
+    }
+
+    let helpCount = 0;
+    let frequency = 0;
+    let currentTime = startSeconds - elapsed;
+    let intervalIndex = 0;
+
+    while (currentTime < duration) {
+        // advance intervalIndex to the interval containing currentTime
+        while (intervalIndex < efficiencies.length - 1 &&
+            efficiencies[intervalIndex].end * 60 <= currentTime) {
+            intervalIndex++;
+        }
+
+        // A help efficiency is determined by when it starts
+        frequency = baseFreq * efficiencies[intervalIndex].frequencyRate;
+        if (currentTime + frequency > duration) {
+            break;
+        }
+
+        // Done
+        currentTime += frequency;
+        helpCount++;
+    }
+
+    return { helpCount, elapsed: duration - currentTime, frequency };
 }
 
 export default Energy;
