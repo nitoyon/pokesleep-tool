@@ -9,6 +9,9 @@ import { HelpEventBonus } from '../data/events';
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 
+/** Frequency rate (1 / efficiency) */
+type FrequencyRate = 0.45 | 0.52 | 0.58 | 0.66 | 1;
+
 /** Tap frequency constants */
 export const AlwaysTap = 1;  // Special value: Tap continuously (collect immediately)
 export const NoTap = 0;      // Special value: Never tap during this period
@@ -128,6 +131,8 @@ type EfficiencyEvent = {
     end: number;
     /** Efficiency rating */
     efficiency: EfficiencyList;
+    /** Frequency rate (1 / efficiency) */
+    frequencyRate: FrequencyRate;
     /** Whether is awake or not */
     isAwake: boolean;
     /** Sneaky Snacking or not */
@@ -246,8 +251,8 @@ class Energy {
                 {minutes: 1440, type: 'wake', energyBefore: 100, energyAfter: 100, isSnacking: false, isInPeriod: true },
             ];
             efficiencies = [
-                {start: 0, end: sleepTime, isAwake: true, efficiency: 2.222, isSnacking: false, isInPeriod: true},
-                {start: sleepTime, end: 1440, isAwake: false, efficiency: 2.222, isSnacking: false, isInPeriod: true},
+                {start: 0, end: sleepTime, isAwake: true, efficiency: 2.222, frequencyRate: 0.45, isSnacking: false, isInPeriod: true},
+                {start: sleepTime, end: 1440, isAwake: false, efficiency: 2.222, frequencyRate: 0.45, isSnacking: false, isInPeriod: true},
             ];
         }
         else {
@@ -436,6 +441,7 @@ class Energy {
                 ret.push({
                     start, end,
                     efficiency: this.getEfficiencyByEnergy(energy),
+                    frequencyRate: this.getFrequencyRateByEnergy(energy),
                     isAwake: true, isSnacking: false, isInPeriod: true,
                 });
 
@@ -445,6 +451,7 @@ class Energy {
             ret.push({
                 start, end: curMinutes,
                 efficiency: this.getEfficiencyByEnergy(energy),
+                frequencyRate: this.getFrequencyRateByEnergy(energy),
                 isAwake: true, isSnacking: false, isInPeriod: true,
             });
         }
@@ -619,7 +626,7 @@ class Energy {
         for (const efficiency of sleepEfficiencies) {
             // calculate help count for this efficiency
             const time = efficiency.end - efficiency.start;
-            const freq = baseFreq / efficiency.efficiency;
+            const freq = baseFreq * efficiency.frequencyRate;
             const helpCount = time * 60 / freq;
 
             // calculate bag usage for this efficiency
@@ -669,6 +676,7 @@ class Energy {
                 efficiencies.splice(i + 1, 0, {
                     start: timeFullInventory, end,
                     efficiency: efficiency.efficiency,
+                    frequencyRate: efficiency.frequencyRate,
                     isAwake: efficiency.isAwake, isSnacking: true,
                     isInPeriod: efficiency.isInPeriod,
                 });
@@ -727,6 +735,14 @@ class Energy {
         if (energy > 60) { return 1.923; }
         if (energy > 40) { return 1.724; }
         if (energy > 1) { return 1.515; }
+        return 1;
+    }
+
+    getFrequencyRateByEnergy(energy: number): FrequencyRate {
+        if (energy > 80) { return 0.45; }
+        if (energy > 60) { return 0.52; }
+        if (energy > 40) { return 0.58; }
+        if (energy > 1) { return 0.66; }
         return 1;
     }
 }
