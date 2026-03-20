@@ -139,17 +139,14 @@ type EfficiencyEvent = {
     isInPeriod: boolean;
 }
 
-/** Result object for calculation. */
-export type EnergyResult = {
-    /** The time when going to bed. */
-    sleepTime: number;
-    /** Recovery event list */
-    events: EnergyEvent[];
-    /** Efficiency event list */
-    efficiencies: EfficiencyEvent[];
-    /** Whether inventory can be full
-     * (awake tap frequency == always && asleep tap frequency == none) */
-    canBeFullInventory: boolean;
+/** Result object for sneaky snacking calculation. */
+export type SneakySnackingResult = {
+    /** Carry limit */
+    carryLimit: number,
+    /** Skill rate */
+    skillRate: number,
+    /** Overall skill rate (with pity proc) */
+    overallSkillRate: number,
     /** Sleep time required to fulfill inventory. -1 when not fulfilled. */
     timeToFullInventory: number,
     /** Skill% after wakeup */
@@ -161,13 +158,6 @@ export type EnergyResult = {
          */
         twice: number,
     },
-    /** Carry limit */
-    carryLimit: number,
-    /** Skill rate */
-    skillRate: number,
-    /** Overall skill rate (with pity proc) */
-    overallSkillRate: number,
-
     /** Help count */
     helpCount: {
         /** Help count while awake */
@@ -177,6 +167,19 @@ export type EnergyResult = {
         /** Help count while asleep (after inventory full) */
         asleepFull: number,
     },
+}
+
+/** Result object for calculation. */
+export type EnergyResult = SneakySnackingResult & {
+    /** The time when going to bed. */
+    sleepTime: number,
+    /** Recovery event list */
+    events: EnergyEvent[],
+    /** Efficiency event list */
+    efficiencies: EfficiencyEvent[],
+    /** Whether inventory can be full
+     * (awake tap frequency == always && asleep tap frequency == none) */
+    canBeFullInventory: boolean,
     /** Average efficiency */
     averageEfficiency: {
         /** Total efficiency */
@@ -567,23 +570,8 @@ class Energy {
      * @return Help count and time to full inverntory.
      */
     calculateSneakySnacking(events: EnergyEvent[], efficiencies: EfficiencyEvent[],
-        param: EnergyParameter, bonus: BonusEffects, isWhistle: boolean):
-    {
-        carryLimit: number,
-        skillRate: number,
-        overallSkillRate: number,
-        timeToFullInventory: number,
-        skillProbabilityAfterWakeup: {
-            once: number,
-            twice: number,
-        },
-        helpCount: {
-            total: number,
-            awake: number,
-            asleepNotFull: number,
-            asleepFull: number,
-        },
-    } {
+        param: EnergyParameter, bonus: BonusEffects, isWhistle: boolean
+    ): SneakySnackingResult {
         const isGoodCampTicketSet = param.isGoodCampTicketSet;
         const carryLimit = Math.ceil((this._iv.carryLimit + bonus.carryLimit) *
             (isGoodCampTicketSet ? 1.2 : 1));
@@ -594,7 +582,7 @@ class Energy {
                 timeToFullInventory: -1,
                 skillProbabilityAfterWakeup: { once: 0, twice: 0 },
                 helpCount: {
-                    total: 0, awake: 0, asleepNotFull: 0, asleepFull: 0
+                    awake: 0, asleepNotFull: 0, asleepFull: 0
                 }
             };
         }
@@ -691,9 +679,6 @@ class Energy {
         }
 
         // calculate snacking count
-        const total = efficiencies
-            .filter(x => x.isInPeriod)
-            .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
         const awake = efficiencies
             .filter(x => x.isInPeriod && x.isAwake)
             .reduce((p, c) => p + (c.end - c.start) * 60 / baseFreq * c.efficiency, 0);
@@ -725,7 +710,7 @@ class Energy {
         }
         return {carryLimit, skillRate, overallSkillRate,
             timeToFullInventory, skillProbabilityAfterWakeup,
-            helpCount: { total, awake, asleepNotFull, asleepFull }
+            helpCount: { awake, asleepNotFull, asleepFull }
         };
     }
 
