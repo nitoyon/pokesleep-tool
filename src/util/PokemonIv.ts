@@ -30,6 +30,19 @@ export interface InventoryBonus {
 }
 
 /**
+ * An item returned by `getBagUsagePerHelpDetail`, representing
+ * the bag-space consumed by a single help outcome (berry or ingredient).
+ */
+export type BagUsagePerHelpDetailItem = {
+    /** The item produced: "berry" or a specific ingredient name */
+    name: "berry" | IngredientName;
+    /** Bag usage increase by the help */
+    count: number;
+    /** Probability of the usage */
+    p: number;
+};
+
+/**
  * Interface containing all configurable properties of
  * a PokemonIv instance.
  */
@@ -372,12 +385,10 @@ class PokemonIv {
      * Calculate the detail bag usage (inventory slots used) per help action.
      *
      * @param bonus Bonus that affect inventory consumption.
-     * @returns Usage count and its probability.
+     * @returns Usage name, count and its probability.
      */
-    getBagUsagePerHelpDetail(bonus?: Partial<InventoryBonus>): {
-        count: number, p: number
-    }[] {
-        const ret: {count: number, p: number}[] = [];
+    getBagUsagePerHelpDetail(bonus?: Partial<InventoryBonus>): BagUsagePerHelpDetailItem[] {
+        const ret: BagUsagePerHelpDetailItem[] = [];
 
         // Fill bonus
         const berryBonus = bonus?.berryBonus ?? 0;
@@ -397,6 +408,7 @@ class PokemonIv {
 
         // Add ing1
         ret.push({
+            name: this.ingredient1.name,
             count: this.ingredient1.count + ingBonus,
             p: 0,
         });
@@ -406,6 +418,7 @@ class PokemonIv {
             const ing2 = this.ingredient2;
             if (ing2.count > 0) {
                 ret.push({
+                    name: this.ingredient2.name,
                     count: ing2.count + ingBonus,
                     p: 0,
                 });
@@ -417,6 +430,7 @@ class PokemonIv {
             const ing3 = this.ingredient3;
             if (ing3.count > 0) {
                 ret.push({
+                    name: this.ingredient3.name,
                     count: ing3.count + ingBonus,
                     p: 0,
                 });
@@ -430,7 +444,7 @@ class PokemonIv {
                 throw new Error('expert bonus changed');
             }
             for (let i = 0; i < ings; i++) {
-                ret.push({count: ret[i].count + 1, p: 0});
+                ret.push({name: ret[i].name, count: ret[i].count + 1, p: 0});
             }
         }
 
@@ -442,7 +456,11 @@ class PokemonIv {
 
         // Add berry
         const berryCount = this.berryCount;
-        ret.unshift({count: berryCount + berryBonus, p: this.berryRate});
+        ret.unshift({
+            name: "berry",
+            count: berryCount + berryBonus,
+            p: this.berryRate,
+        });
 
         return ret;
     }

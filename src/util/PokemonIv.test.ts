@@ -896,9 +896,14 @@ describe('PokemonIV', () => {
             // Probabilities should sum to 1
             const totalP = result.reduce((sum, item) => sum + item.p, 0);
             expect(totalP).toBeCloseTo(1);
+
+            expect(result[0].name).toBe("berry");
+            expect(result[1].name).toBe(iv.ingredient1.name);
+            expect(result[2].name).toBe(iv.ingredient2.name);
+            expect(result[3].name).toBe(iv.ingredient3.name);
         });
 
-        test('with expert ingredient bonus (level = 30)', () => {
+        test('with expert ingredient bonus (level = 25)', () => {
             const iv = new PokemonIv({
                 pokemonName: 'Pikachu',
                 level: 25,
@@ -910,12 +915,16 @@ describe('PokemonIV', () => {
             expect(result.length).toBe(2);
             expect(result[0].count).toBe(2);
             expect(result[1].count).toBe(iv.ingredient1.count + 1);
+
+            expect(result[0].name).toBe("berry");
+            expect(result[1].name).toBe(iv.ingredient1.name);
         });
 
         test('with expert bonus for Ingredients specialty Pokemon', () => {
             const iv = new PokemonIv({
                 pokemonName: 'Venusaur',
                 level: 30,
+                ingredient: "ABC",
             });
 
             const result = iv.getBagUsagePerHelpDetail({
@@ -927,12 +936,17 @@ describe('PokemonIV', () => {
             expect(result.length).toBe(5);
 
             expect(result[0].count).toBe(1);
+            expect(result[0].name).toBe("berry");
             expect(result[0].p).toBeCloseTo(iv.berryRate);
 
+            expect(result[1].name).toBe(iv.ingredient1.name);
             expect(result[1].count).toBe(iv.ingredient1.count + 1);
             expect(result[2].count).toBe(iv.ingredient2.count + 1);
+            expect(result[2].name).toBe(iv.ingredient2.name);
 
+            expect(result[3].name).toBe(iv.ingredient1.name);
             expect(result[3].count).toBe(iv.ingredient1.count + 2);
+            expect(result[4].name).toBe(iv.ingredient2.name);
             expect(result[4].count).toBe(iv.ingredient2.count + 2);
 
             const expectedEachP = iv.ingredientRate / 4;
@@ -943,6 +957,7 @@ describe('PokemonIV', () => {
 
             const totalP = result.reduce((sum, item) => sum + item.p, 0);
             expect(totalP).toBeCloseTo(1);
+
         });
 
         test('Darkrai mythIng', () => {
@@ -953,6 +968,8 @@ describe('PokemonIV', () => {
             });
             const detail1 = iv1.getBagUsagePerHelpDetail({});
             expect(detail1.length).toBe(2);
+            expect(detail1[0].name).toBe("berry");
+            expect(detail1[1].name).toBe("sausage");
 
             const iv2 = new PokemonIv({
                 pokemonName: 'Darkrai',
@@ -962,6 +979,9 @@ describe('PokemonIV', () => {
             });
             const detail2 = iv2.getBagUsagePerHelpDetail({});
             expect(detail2.length).toBe(3);
+            expect(detail2[0].name).toBe("berry");
+            expect(detail2[1].name).toBe("sausage");
+            expect(detail2[2].name).toBe("honey");
 
             const iv3 = new PokemonIv({
                 pokemonName: 'Darkrai',
@@ -972,6 +992,10 @@ describe('PokemonIV', () => {
             });
             const detail3 = iv3.getBagUsagePerHelpDetail({});
             expect(detail3.length).toBe(4);
+            expect(detail3[0].name).toBe("berry");
+            expect(detail3[1].name).toBe("sausage");
+            expect(detail3[2].name).toBe("honey");
+            expect(detail3[3].name).toBe("coffee");
         });
     });
 
