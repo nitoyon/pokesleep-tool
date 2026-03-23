@@ -85,7 +85,7 @@ const StyledNewsInfo = styled('div')({
     }
 });
 
-const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
+export const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
     appType: string,
     article: NewsArticle,
     open: boolean,
@@ -104,7 +104,7 @@ const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
         const diff = Math.max(0, new Date().getTime() - article.date.getTime());
         const formatter = new Intl.RelativeTimeFormat(i18n.language, { style: 'long' });
         if (diff > 31536000000) {
-            date = formatter.format(-Math.floor(diff / 31536000000), 'year');
+            date = article.date.toLocaleDateString();
         }
         else if (diff > 2592000000) {
             date = formatter.format(-Math.floor(diff / 2592000000), 'month');
