@@ -440,8 +440,8 @@ class Energy {
                 }
                 ret.push({
                     start, end,
-                    efficiency: this.getEfficiencyByEnergy(energy),
-                    frequencyRate: this.getFrequencyRateByEnergy(energy),
+                    efficiency: getEfficiencyByEnergy(energy),
+                    frequencyRate: getFrequencyRateByEnergy(energy),
                     isAwake: true, isSnacking: false, isInPeriod: true,
                 });
 
@@ -450,8 +450,8 @@ class Energy {
             }
             ret.push({
                 start, end: curMinutes,
-                efficiency: this.getEfficiencyByEnergy(energy),
-                frequencyRate: this.getFrequencyRateByEnergy(energy),
+                efficiency: getEfficiencyByEnergy(energy),
+                frequencyRate: getFrequencyRateByEnergy(energy),
                 isAwake: true, isSnacking: false, isInPeriod: true,
             });
         }
@@ -730,21 +730,22 @@ class Energy {
         return 5;
     }
 
-    getEfficiencyByEnergy(energy: number): EfficiencyList {
-        if (energy > 80) { return 2.222; }
-        if (energy > 60) { return 1.923; }
-        if (energy > 40) { return 1.724; }
-        if (energy > 1) { return 1.515; }
-        return 1;
-    }
+}
 
-    getFrequencyRateByEnergy(energy: number): FrequencyRate {
-        if (energy > 80) { return 0.45; }
-        if (energy > 60) { return 0.52; }
-        if (energy > 40) { return 0.58; }
-        if (energy > 1) { return 0.66; }
-        return 1;
-    }
+export function getEfficiencyByEnergy(energy: number): EfficiencyList {
+    if (energy > 80) { return 2.222; }
+    if (energy > 60) { return 1.923; }
+    if (energy > 40) { return 1.724; }
+    if (energy > 1) { return 1.515; }
+    return 1;
+}
+
+export function getFrequencyRateByEnergy(energy: number): FrequencyRate {
+    if (energy > 80) { return 0.45; }
+    if (energy > 60) { return 0.52; }
+    if (energy > 40) { return 0.58; }
+    if (energy > 1) { return 0.66; }
+    return 1;
 }
 
 export default Energy;
