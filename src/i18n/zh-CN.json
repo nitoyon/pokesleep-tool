@@ -15,6 +15,10 @@
             "notice detail1": "可以确认将来的SP和能量，有助于制定养成的计划！",
             "notice detail2": "此外，我们在 <YouTube>YouTube 频道</YouTube> 上发布了使用方法的讲解视频。请务必观看。",
             "news": {
+                "add noibat": {
+                    "headline": "添加了$t(pokemons.Noibat)和$t(pokemons.Noivern)的数据。",
+                    "detail": "$t(rp collection)"
+                },
                 "latias research": {
                     "headline": "现在可以以图表形式显示$t(time to full inventory)了（<a href='https://youtu.be/C7Ik6U9JsEM'>讲解视频</a>）。",
                     "detail": "可以通过[$t(frequency)]右侧的 [i] 标记或[$t(full inventory while sleeping (short))]右侧的 [i] 标记来确认。详情请观看讲解视频。\n此外，已支持拉帝亚斯调查的模拟。"
@@ -254,6 +258,7 @@
 
         "how to use": "使用方法",
         "about": "关于本工具",
+        "news": "消息",
         "sleep score table": "睡眠分数表",
         "score is too low": "在分数 <score/> 时睡眠监测可能失败，建议在 17 分或更高分数时进行测量。",
         "tracking title": "按照以下步骤，可以在目标睡眠分数进行测量。",

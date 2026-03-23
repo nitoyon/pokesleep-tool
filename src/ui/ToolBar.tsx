@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { styled } from '@mui/system';
 import AboutDialog from './Dialog/AboutDialog';
 import HowToDialog from './Dialog/HowToDialog';
+import NewsListDialog from './Dialog/NewsListDialog';
 import SettingsDialog from './Dialog/SettingsDialog';
 import AppConfig, { AppType } from './AppConfig';
 import { Divider, Icon, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
@@ -9,6 +10,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useTranslation } from 'react-i18next'
 
@@ -61,6 +63,14 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
     const onLanguageDialogClose = () => {
         setIsLanguageDialogOpen(false);
     };
+    const [isNewsDialogOpen, setIsNewsDialogOpen] = useState(false);
+    const newsMenuClick = () => {
+        setIsNewsDialogOpen(true);
+        setMoreMenuAnchor(null);
+    };
+    const onNewsDialogClose = () => {
+        setIsNewsDialogOpen(false);
+    };
 
     return (
         <StyledAppBar>
@@ -79,6 +89,10 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
                     {t("IvCalc.short title")}
                 </MenuItem>
                 <Divider/>
+                {app === "IvCalc" && <MenuItem onClick={newsMenuClick}>
+                    <ListItemIcon><MailOutlineIcon/></ListItemIcon>
+                    {t('news')}
+                </MenuItem>}
                 <MenuItem onClick={howToMenuClick}>
                     <ListItemIcon><HelpOutlineIcon/></ListItemIcon>
                     {t('how to use')}
@@ -97,6 +111,7 @@ export default function ToolBar({app, onAppChange, onAppConfigChange}: ToolBarPr
             <SettingsDialog open={isLanguageDialogOpen} app={app}
                 onAppConfigChange={onAppConfigChange}
                 onClose={onLanguageDialogClose}/>
+            <NewsListDialog open={isNewsDialogOpen} onClose={onNewsDialogClose}/>
         </StyledAppBar>
     );
 }
