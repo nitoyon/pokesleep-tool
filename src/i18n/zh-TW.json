@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "此外，我們在 <YouTube>YouTube 頻道</YouTube> 上發佈了使用方法的講解影片。請務必觀看。",
             "news": {
+                "add noibat": {
+                    "headline": "新增了$t(pokemons.Noibat)和$t(pokemons.Noivern)的資料。",
+                    "detail": "$t(rp collection)"
+                },
                 "latias research": {
                     "headline": "現在可以以圖表形式顯示$t(time to full inventory)了（<a href='https://youtu.be/C7Ik6U9JsEM'>講解影片</a>）。",
                     "detail": "可以透過[$t(frequency)]右側的 [i] 標記或[$t(full inventory while sleeping (short))]右側的 [i] 標記來確認。詳情請觀看講解影片。\n此外，已支援拉帝亞斯調查的模擬。"

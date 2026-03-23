@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "add noibat": {
+                    "headline": "Added data for $t(pokemons.Noibat) and $t(pokemons.Noivern).",
+                    "detail": "$t(rp collection)"
+                },
                 "latias research": {
                     "headline": "$t(time to full inventory) can now be displayed as a graph (<a href='https://youtu.be/C7Ik6U9JsEM'>tutorial video</a>).",
                     "detail": "You can check it from the [i] mark to the right of [$t(frequency)] or the [i] mark to the right of [$t(full inventory while sleeping (short))]. See the tutorial video for details.\nAlso, simulation for the Latias Research event is now supported."
