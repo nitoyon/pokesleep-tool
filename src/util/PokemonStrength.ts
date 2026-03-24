@@ -6,6 +6,7 @@ import fields, { isExpertField, getFavoriteBerries } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
 import Energy, { EnergyParameter, EnergyResult, AlwaysTap, NoTap, isValidTapFrequency } from './Energy';
 import { MainSkillName } from './MainSkill';
+import { HelpCountResult, IngredientHelp } from './HelpCount';
 import PokemonIv from './PokemonIv';
 import PokemonRp, {
     averageIngredientStrength, ingredientStrength,
@@ -158,14 +159,9 @@ export interface MewParameter {
 
 /**
  * Respresents the result of ingredient strength calculation.
+ * IngredientHelp with strength.
  */
-export interface IngredientStrength {
-    /** Ingredient name. */
-    name: IngredientName;
-    /** Ingredient count. */
-    count: number;
-    /** Ingredient count by single help */
-    helpCount: number;
+export type IngredientStrength = IngredientHelp & {
     /** Ingredient strength. */
     strength: number;
 }
@@ -173,7 +169,7 @@ export interface IngredientStrength {
 /**
  * Represents the result of strength calculation.
  */
-export interface StrengthResult {
+export interface StrengthResult extends Omit<HelpCountResult, 'ing1' | 'ing2' | 'ing3' | 'ingredients'> {
     /** The bonus effect that was used to calculate this result */
     bonus: BonusEffectsWithReason;
     /** energy and help count */
@@ -186,17 +182,6 @@ export interface StrengthResult {
      */
     helpingBonusStrength: number;
 
-    /** Normal help count (not sneaky snacking) */
-    notFullHelpCount: number;
-    /** Sneaky snacking help count */
-    fullHelpCount: number;
-
-    /** Berry rate */
-    berryRate: number;
-    /** Berry help count */
-    berryHelpCount: number;
-    /** Berry count per help */
-    berryCount: number;
     /** Strength per 1 berry (area bonus not included) */
     berryRawStrength: number;
     /** Strength per 1 berry (area bonus included) */
@@ -204,10 +189,6 @@ export interface StrengthResult {
     /** Total strength gained by berry */
     berryTotalStrength: number;
 
-    /** Ingredient rate */
-    ingRate: number;
-    /** Ingredient help count */
-    ingHelpCount: number;
     /** Ingredient strength */
     ingStrength: number;
     /** Ing1 name and count */
@@ -218,11 +199,6 @@ export interface StrengthResult {
     ing3: IngredientStrength|undefined;
     /** Ing1 ~ Ing3 name, count, strength summary */
     ingredients: IngredientStrength[];
-
-    /** Skill rate */
-    skillRate: number;
-    /** Total skill count */
-    skillCount: number;
     /**
      * Skill value got from the skillCount skill occurance
      * If the skill is 'Dream Shard Magnet S', this value represents the number of Dream Shards.
