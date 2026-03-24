@@ -115,7 +115,7 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                 <div><span className="box box3">{round2(result.ingHelpCount)}</span></div>
                 <span>{t('ing help count')}</span>
                 <footer>
-                    {round1(result.notFullHelpCount)}
+                    {round1(result.total.normal)}
                     <small> ({t('normal help count')})</small>
                     <> × </>
                     {round1(result.ingRate * 100)}%

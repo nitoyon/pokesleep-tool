@@ -361,10 +361,10 @@ class PokemonStrength {
         const countRate = Math.ceil(param.period / 24);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
-        const notFullHelpCount = param.period < 0 ? -param.period :
+        const normal = param.period < 0 ? -param.period :
             param.tapFrequencyAwake === NoTap ? 0 :
             (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRate;
-        const fullHelpCount = param.period < 0 ? 0 :
+        const sneakySnacking = param.period < 0 ? 0 :
             param.tapFrequencyAwake === NoTap ?
             (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRate :
             energy.helpCount.asleepFull * countRate;
@@ -375,7 +375,7 @@ class PokemonStrength {
         const ingStrengthRate = (ingInRecipeStrengthRate * 0.8 + 0.2) *
             (1 + param.fieldBonus / 100) * bonus.dish;
         const ingRate = rp.iv.ingredientRate;
-        const ingHelpCount = notFullHelpCount * ingRate;
+        const ingHelpCount = normal * ingRate;
         const ingUnlock = 1 +
             (level >= 30 && rp.iv.ingredient2.count > 0 ? 1 : 0) +
             (level >= 60 && rp.iv.ingredient3.count > 0 ? 1 : 0);
@@ -425,15 +425,15 @@ class PokemonStrength {
 
         // calc berry
         const berryRate = this.iv.berryRate;
-        const berryHelpCount = (notFullHelpCount + fullHelpCount) - ingHelpCount;
+        const berryHelpCount = (normal + sneakySnacking) - ingHelpCount;
         const berryCount = rp.iv.berryCount;
         const berryCountWithBonus = rp.iv.berryCount + bonus.berry;
         const berryRawStrength = rp.berryStrength;
         const berryStrength = Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100));
         const berryStrengthWithBonus = Math.ceil(berryStrength * this.berryStrengthBonus);
         const berryTotalStrength =
-            berryStrengthWithBonus * berryCountWithBonus * (notFullHelpCount * (1 - ingRate)) +  +
-            berryStrengthWithBonus * berryCount * fullHelpCount;
+            berryStrengthWithBonus * berryCountWithBonus * (normal * (1 - ingRate)) +  +
+            berryStrengthWithBonus * berryCount * sneakySnacking;
 
         // calc skill
         const skillRate = energy.skillRate;
@@ -474,7 +474,8 @@ class PokemonStrength {
         }
 
         return {
-            bonus, energy, totalStrength, helpingBonusStrength, notFullHelpCount, fullHelpCount,
+            bonus, energy, totalStrength, helpingBonusStrength,
+            total: { all: normal + sneakySnacking, normal, sneakySnacking },
             ingRate, ingHelpCount, ingStrength, ing1, ing2, ing3, ingredients,
             berryRate, berryHelpCount, berryCount, berryStrength, berryRawStrength, berryTotalStrength,
             skillRate, skillCount, skillValue, skillStrength, skillValuePerTrigger,

@@ -1,6 +1,18 @@
 import { IngredientName } from "../data/pokemons";
 
 /**
+ * Represents help count split by normal and sneaky snacking.
+ */
+export type NormalAndSnackingHelpCount = {
+    /** Total help count (normal + sneakySnacking) */
+    all: number;
+    /** Help count stored in Pokemon's inventory */
+    normal: number;
+    /** Help count directly granted to Snorlax (all berries) */
+    sneakySnacking: number;
+};
+
+/**
  * Represents the result of ingredient help calculation.
  */
 export interface IngredientHelp {
@@ -16,10 +28,8 @@ export interface IngredientHelp {
  * Represents the help count breakdown by berry, ingredient, and skill.
  */
 export interface HelpCountResult {
-    /** Normal help count (not sneaky snacking) */
-    notFullHelpCount: number;
-    /** Sneaky snacking help count */
-    fullHelpCount: number;
+    /** Total help count during the specified period */
+    total: NormalAndSnackingHelpCount;
 
     /** Berry rate */
     berryRate: number;

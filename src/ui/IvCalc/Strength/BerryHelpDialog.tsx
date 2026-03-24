@@ -31,7 +31,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     const hasBerryCountBonus = (result.bonus.berry > 0);
     const berryCountWithBonus = result.berryCount + result.bonus.berry;
     const helpCount = hasBerryCountBonus ? 
-        round1(result.notFullHelpCount * result.berryRate) :
+        round1(result.total.normal * result.berryRate) :
         round1(result.berryHelpCount);
     return <StyledInfoDialog open={open} onClose={onClose}>
         <DialogTitle>
@@ -48,7 +48,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                     <> + </>
                     <span className="box box1">{berryStrength}</span><> × </>
                     <span className="box box2">{result.berryCount}</span><> × </>
-                    <span className="box box3">{round1(result.fullHelpCount)}</span>
+                    <span className="box box3">{round1(result.total.sneakySnacking)}</span>
                 </>}
             </footer>
         </DialogTitle>
@@ -62,9 +62,9 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                 <span>{t('berry help count')}
                     <ul className="detail">
                         <li>
-                            <strong>{round1(result.notFullHelpCount * result.berryRate)}</strong>{t('times unit')}: {t('berry picking count')}
+                            <strong>{round1(result.total.normal * result.berryRate)}</strong>{t('times unit')}: {t('berry picking count')}
                             <footer>
-                                {round1(result.notFullHelpCount)}
+                                {round1(result.total.normal)}
                                 <small> ({t('normal help count')})</small>
                                 <> × </>
                                 {round1(result.berryRate * 100)}%
@@ -72,7 +72,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                             </footer>
                         </li>
                         <li>
-                            <strong>{round1(result.fullHelpCount)}</strong>{t('times unit')}: {t('sneaky snacking')}
+                            <strong>{round1(result.total.sneakySnacking)}</strong>{t('times unit')}: {t('sneaky snacking')}
                         </li>
                     </ul>
                 </span>
