@@ -2,9 +2,8 @@ import React from 'react';
 import { Divider, MenuItem } from '@mui/material';
 import { IvAction } from '../IvState';
 import SelectEx from '../../common/SelectEx';
-import {
-    StrengthParameter, whistlePeriod,
-} from '../../../util/PokemonStrength';
+import { StrengthParameter } from '../../../util/PokemonStrength';
+import { whistlePeriod } from '../../../util/Energy';
 import { useTranslation } from 'react-i18next';
 
 const PeriodSelect = React.memo(({value, dispatch}: {

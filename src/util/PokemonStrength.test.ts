@@ -1,8 +1,8 @@
 import PokemonStrength, {
-    createStrengthParameter, StrengthParameter, whistlePeriod,
+    createStrengthParameter, StrengthParameter,
     isSkillStrengthZero,
 } from './PokemonStrength';
-import { AlwaysTap, NoTap } from './Energy';
+import { AlwaysTap, NoTap, whistlePeriod } from './Energy';
 import PokemonIv from './PokemonIv';
 import Nature from './Nature';
 import SubSkill from './SubSkill';

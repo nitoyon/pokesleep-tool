@@ -10,8 +10,9 @@ import TextLikeButton from '../../common/TextLikeButton';
 import { getActiveHelpBonus } from '../../../data/events';
 import { isExpertField } from '../../../data/fields';
 import {
-    allFavoriteFieldIndex, noFavoriteFieldIndex, StrengthParameter, whistlePeriod,
+    allFavoriteFieldIndex, noFavoriteFieldIndex, StrengthParameter,
 } from '../../../util/PokemonStrength';
+import { whistlePeriod } from '../../../util/Energy';
 import { Button, IconButton, MenuItem } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useTranslation } from 'react-i18next';

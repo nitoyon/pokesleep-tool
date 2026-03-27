@@ -12,6 +12,9 @@ type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
 /** Frequency rate (1 / efficiency) */
 type FrequencyRate = 0.45 | 0.52 | 0.58 | 0.66 | 1;
 
+/** Represents the period value for "whistle" calculations in EnergyParameter. */
+export const whistlePeriod = 0;
+
 /** Tap frequency constants */
 export const AlwaysTap = 1;  // Special value: Tap continuously (collect immediately)
 export const NoTap = 0;      // Special value: Never tap during this period

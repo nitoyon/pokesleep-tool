@@ -3,11 +3,11 @@ import pokemons from '../../../data/pokemons';
 import { getEventBonus } from '../../../data/events';
 import Nature from '../../../util/Nature';
 import { PokemonType } from '../../../data/pokemons';
-import { NoTap } from '../../../util/Energy';
+import { NoTap, whistlePeriod } from '../../../util/Energy';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonIv from '../../../util/PokemonIv';
 import PokemonStrength, {
-    StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam, whistlePeriod,
+    StrengthResult, calculateBerryBurstStrength, getBerryBurstTeam,
 } from '../../../util/PokemonStrength';
 import { getSkillRandomRange as getSkillRange, getMaxSkillLevel, getSkillValue,
     getSkillSubValue, hyperCutterSuccess, presentCandyRate,

@@ -2,11 +2,11 @@ import { PokemonBoxItem } from './PokemonBox';
 import PokemonIv from './PokemonIv';
 import PokemonRp from './PokemonRp';
 import PokemonStrength, {
-    IngredientStrength, isSkillStrengthZero, StrengthParameter, whistlePeriod,
+    IngredientStrength, isSkillStrengthZero, StrengthParameter,
 } from './PokemonStrength';
 import { IngredientName, IngredientNames } from '../data/pokemons';
 import { MainSkillName, MainSkillNames, matchMainSkillName } from './MainSkill';
-import { NoTap } from './Energy';
+import { NoTap, whistlePeriod } from './Energy';
 import i18next from 'i18next';
 
 /** Subset of StrengthResult. */

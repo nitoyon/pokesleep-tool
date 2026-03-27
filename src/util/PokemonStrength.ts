@@ -4,7 +4,10 @@ import { IngredientName, PokemonType, PokemonTypes
 } from '../data/pokemons';
 import fields, { isExpertField, getFavoriteBerries } from '../data/fields';
 import events, { loadHelpEventBonus } from '../data/events';
-import Energy, { EnergyParameter, EnergyResult, AlwaysTap, NoTap, isValidTapFrequency } from './Energy';
+import Energy, {
+    EnergyParameter, EnergyResult, AlwaysTap, NoTap, isValidTapFrequency,
+    whistlePeriod,
+} from './Energy';
 import { MainSkillName } from './MainSkill';
 import { HelpCountResult, IngredientHelp } from './HelpCount';
 import PokemonIv from './PokemonIv';
@@ -23,8 +26,6 @@ export const allFavoriteFieldIndex = -2;
 /** Pseudo field index where no berries are favorites */
 export const noFavoriteFieldIndex = -1;
 
-/** Represents the period value for "whistle" calculations in StrengthParameter. */
-export const whistlePeriod = 0;
 
 /** Expert mode effects */
 export type ExpertEffects = "berry"|"ing"|"skill";

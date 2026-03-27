@@ -2,11 +2,11 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { PokemonData } from '../../../data/pokemons';
 import PokemonIv from '../../../util/PokemonIv';
-import { NoTap } from '../../../util/Energy';
+import { NoTap, whistlePeriod } from '../../../util/Energy';
 import { round1, round2, formatNice, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, {
     getRequiredHelperBoost, getHelpYield,
-    StrengthResult, whistlePeriod,
+    StrengthResult,
 } from '../../../util/PokemonStrength';
 import { StrengthParameter } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';

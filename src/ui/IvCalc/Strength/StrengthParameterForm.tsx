@@ -14,9 +14,9 @@ import FixedLevelSelect from './FixedLevelSelect';
 import { LevelInput } from '../IvForm/LevelControl';
 import MessageDialog from '../../Dialog/MessageDialog';
 import { getActiveHelpBonus } from '../../../data/events';
-import { AlwaysTap, NoTap } from '../../../util/Energy';
+import { AlwaysTap, NoTap, whistlePeriod } from '../../../util/Energy';
 import {
-    createStrengthParameter, StrengthParameter, whistlePeriod,
+    createStrengthParameter, StrengthParameter,
 } from '../../../util/PokemonStrength';
 import { useTranslation, Trans } from 'react-i18next';
 

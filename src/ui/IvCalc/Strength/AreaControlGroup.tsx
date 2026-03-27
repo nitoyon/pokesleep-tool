@@ -3,7 +3,8 @@ import { Collapse, Switch } from '@mui/material';
 import AreaBonusControl from './AreaBonusControl';
 import FavoriteBerrySelect from './FavoriteBerrySelect';
 import ResearchAreaSelect from './ResearchAreaSelect';
-import { StrengthParameter, whistlePeriod } from '../../../util/PokemonStrength';
+import { StrengthParameter } from '../../../util/PokemonStrength';
+import { whistlePeriod } from '../../../util/Energy';
 import { useTranslation } from 'react-i18next';
 
 const AreaSelectControl = React.memo(({value, onChange}: {
