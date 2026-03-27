@@ -382,20 +382,20 @@ class PokemonStrength {
         const ingEventAdd: number = (param.period !== whistlePeriod ? bonus.ingredient : 0);
 
         const ing1: IngredientStrength = {...rp.iv.ingredient1, strength: 0,
-            helpCount: rp.iv.ingredient1.count + ingEventAdd};
-        ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.helpCount;
+            countPerHelp: rp.iv.ingredient1.count + ingEventAdd};
+        ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.countPerHelp;
         ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRate;
 
         const ing2 = {...rp.iv.ingredient2, strength: 0,
-            helpCount: rp.iv.ingredient2.count + ingEventAdd};
+            countPerHelp: rp.iv.ingredient2.count + ingEventAdd};
         ing2.count = level < 30 || ing2.count === 0 ? 0 :
-            ingHelpCount * (1 / ingUnlock) * ing2.helpCount;
+            ingHelpCount * (1 / ingUnlock) * ing2.countPerHelp;
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRate;
         let ing3 = undefined;
         ing3 = {...rp.iv.ingredient3, strength: 0,
-            helpCount: rp.iv.ingredient3.count + ingEventAdd};
+            countPerHelp: rp.iv.ingredient3.count + ingEventAdd};
         ing3.count = level < 60 || ing3.count === 0 ? 0 :
-            ingHelpCount * (1 / ingUnlock) * ing3.helpCount;
+            ingHelpCount * (1 / ingUnlock) * ing3.countPerHelp;
         ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRate;
         const ingStrength = ing1.strength + ing2.strength + ing3.strength;
 
@@ -405,20 +405,20 @@ class PokemonStrength {
         ingNames.push(ing1.name);
         if (ing2.count > 0) {
             if (!(ing2.name in ing)) {
-                ing[ing2.name] = {name: ing2.name, count: 0, helpCount: 0, strength: 0};
+                ing[ing2.name] = {name: ing2.name, count: 0, countPerHelp: 0, strength: 0};
                 ingNames.push(ing2.name);
             }
             ing[ing2.name].count += ing2.count;
-            ing[ing2.name].helpCount += ing2.helpCount;
+            ing[ing2.name].countPerHelp += ing2.countPerHelp;
             ing[ing2.name].strength += ing2.strength;
         }
         if (ing3 !== undefined && ing3.count > 0) {
             if (!(ing3.name in ing)) {
-                ing[ing3.name] = {name: ing3.name, count: 0, helpCount: 0, strength: 0};
+                ing[ing3.name] = {name: ing3.name, count: 0, countPerHelp: 0, strength: 0};
                 ingNames.push(ing3.name);
             }
             ing[ing3.name].count += ing3.count;
-            ing[ing3.name].helpCount += ing3.helpCount;
+            ing[ing3.name].countPerHelp += ing3.countPerHelp;
             ing[ing3.name].strength += ing3.strength;
         }
         const ingredients = ingNames.map(x => ing[x]);

@@ -21,7 +21,7 @@ export interface IngredientHelp {
     /** Ingredient count. */
     count: number;
     /** Ingredient count by single help */
-    helpCount: number;
+    countPerHelp: number;
 }
 
 /**

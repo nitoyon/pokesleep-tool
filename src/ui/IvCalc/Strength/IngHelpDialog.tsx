@@ -196,7 +196,7 @@ function getIngDetail(strength: PokemonStrength, result: StrengthResult,
             {ing.length > 1 ? '(' : ''}
             {ing.map((ing, i) => <span key={i}>
                 {i === 0 ? '' : ' + '}
-                <IngredientCountIcon count={ing.helpCount} name={ingName}/>
+                <IngredientCountIcon count={ing.countPerHelp} name={ingName}/>
             </span>)}
             {ing.length > 1 ? ')' : ''}
             <>{ingSlot > 1 ? ` / ${ingSlot}` : ''}</>
