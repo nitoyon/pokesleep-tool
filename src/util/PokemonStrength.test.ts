@@ -27,7 +27,7 @@ describe('PokemonStrength', () => {
             let result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBe(0);
-            expect(result.ing3?.count).toBe(0);
+            expect(result.ing3.count).toBe(0);
 
             // Level 30 - ing1 and ing2
             param = createParam({});
@@ -35,7 +35,7 @@ describe('PokemonStrength', () => {
             result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
-            expect(result.ing3?.count).toBe(0);
+            expect(result.ing3.count).toBe(0);
 
             // Level 60 - all ingredients
             param = createParam({});
@@ -43,7 +43,7 @@ describe('PokemonStrength', () => {
             result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
-            expect(result.ing3?.count).toBeGreaterThan(0);
+            expect(result.ing3.count).toBeGreaterThan(0);
         });
 
         test('field bonus affects berry and ingredient strength', () => {

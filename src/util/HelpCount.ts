@@ -46,7 +46,7 @@ export interface HelpCountResult {
     /** Ing2 name and count */
     ing2: IngredientHelp;
     /** Ing3 name and count */
-    ing3: IngredientHelp|undefined;
+    ing3: IngredientHelp;
     /** Ing1 ~ Ing3 name, count */
     ingredients: IngredientHelp[];
     /** Skill rate */

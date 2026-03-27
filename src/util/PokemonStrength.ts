@@ -197,7 +197,7 @@ export interface StrengthResult extends Omit<HelpCountResult, 'ing1' | 'ing2' | 
     /** Ing2 name and count */
     ing2: IngredientStrength;
     /** Ing3 name and count */
-    ing3: IngredientStrength|undefined;
+    ing3: IngredientStrength;
     /** Ing1 ~ Ing3 name, count, strength summary */
     ingredients: IngredientStrength[];
     /**
@@ -392,8 +392,7 @@ class PokemonStrength {
         ing2.count = level < 30 || ing2.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * ing2.countPerHelp;
             ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRate;
-        let ing3 = undefined;
-        ing3 = {...rp.iv.ingredient3, strength: 0,
+        const ing3 = {...rp.iv.ingredient3, strength: 0,
             countPerHelp: rp.iv.ingredient3.count + ingEventAdd};
         ing3.count = level < 60 || ing3.count === 0 ? 0 :
             ingHelpCount * (1 / ingUnlock) * ing3.countPerHelp;
