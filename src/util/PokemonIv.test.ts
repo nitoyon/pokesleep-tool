@@ -882,25 +882,93 @@ describe('PokemonIV', () => {
             const result = iv.getBagUsagePerHelpDetail({});
             expect(result.length).toBe(4);
 
+            expect(result[0].name).toBe("berry");
             expect(result[0].count).toBe(1);
             expect(result[0].p).toBeCloseTo(iv.berryRate);
+            expect(result[0].ingSlotIndex).toBe(-1);
+            expect(result[0].ingKindIndex).toBe(-1);
 
+            expect(result[1].name).toBe(iv.ingredient1.name);
             expect(result[1].count).toBe(iv.ingredient1.count);
-            expect(result[2].count).toBe(iv.ingredient2.count);
-            expect(result[3].count).toBe(iv.ingredient3.count);
-
             expect(result[1].p).toBeCloseTo(iv.ingredientRate / 3);
+            expect(result[1].ingSlotIndex).toBe(0);
+            expect(result[1].ingKindIndex).toBe(0);
+
+            expect(result[2].name).toBe(iv.ingredient2.name);
+            expect(result[2].count).toBe(iv.ingredient2.count);
             expect(result[2].p).toBeCloseTo(iv.ingredientRate / 3);
+            expect(result[2].ingSlotIndex).toBe(1);
+            expect(result[2].ingKindIndex).toBe(1);
+
+            expect(result[3].name).toBe(iv.ingredient3.name);
+            expect(result[3].count).toBe(iv.ingredient3.count);
             expect(result[3].p).toBeCloseTo(iv.ingredientRate / 3);
+            expect(result[3].ingSlotIndex).toBe(2);
+            expect(result[3].ingKindIndex).toBe(2);
 
             // Probabilities should sum to 1
             const totalP = result.reduce((sum, item) => sum + item.p, 0);
             expect(totalP).toBeCloseTo(1);
+        });
+
+        test('duplicate ingredient names (AAB pattern)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Bulbasaur',
+                level: 60,
+                ingredient: "AAB",
+            });
+
+            const result = iv.getBagUsagePerHelpDetail({});
+            expect(result.length).toBe(4);
 
             expect(result[0].name).toBe("berry");
+            expect(result[0].ingSlotIndex).toBe(-1);
+            expect(result[0].ingKindIndex).toBe(-1);
+
             expect(result[1].name).toBe(iv.ingredient1.name);
+            expect(result[1].ingSlotIndex).toBe(0);
+            expect(result[1].ingKindIndex).toBe(0);
+
             expect(result[2].name).toBe(iv.ingredient2.name);
+            expect(result[2].ingSlotIndex).toBe(1);
+            expect(result[2].ingKindIndex).toBe(0);
+
             expect(result[3].name).toBe(iv.ingredient3.name);
+            expect(result[3].ingSlotIndex).toBe(2);
+            expect(result[3].ingKindIndex).toBe(1);
+        });
+
+        test('duplicate ingredient names (AAA pattern)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Bulbasaur',
+                level: 60,
+                ingredient: "AAA",
+            });
+
+            // Should have 4 entries
+            // berry, ingredient1, ingredient2, ingredient3
+            const result = iv.getBagUsagePerHelpDetail({});
+            expect(result.length).toBe(4);
+
+            expect(result[0].name).toBe("berry");
+            expect(result[0].count).toBe(1);
+            expect(result[0].ingSlotIndex).toBe(-1);
+            expect(result[0].ingKindIndex).toBe(-1);
+
+            expect(result[1].name).toBe(iv.ingredient1.name);
+            expect(result[1].count).toBe(iv.ingredient1.count);
+            expect(result[1].ingSlotIndex).toBe(0);
+            expect(result[1].ingKindIndex).toBe(0);
+
+            expect(result[2].name).toBe(iv.ingredient2.name);
+            expect(result[2].count).toBe(iv.ingredient2.count);
+            expect(result[2].ingSlotIndex).toBe(1);
+            expect(result[2].ingKindIndex).toBe(0);
+
+            expect(result[3].name).toBe(iv.ingredient3.name);
+            expect(result[3].count).toBe(iv.ingredient3.count);
+            expect(result[3].ingSlotIndex).toBe(2);
+            expect(result[3].ingKindIndex).toBe(0);
         });
 
         test('with expert ingredient bonus (level = 25)', () => {
@@ -913,11 +981,44 @@ describe('PokemonIV', () => {
                 expertIngBonus: true,
             });
             expect(result.length).toBe(2);
-            expect(result[0].count).toBe(2);
-            expect(result[1].count).toBe(iv.ingredient1.count + 1);
 
             expect(result[0].name).toBe("berry");
+            expect(result[0].count).toBe(2);
+            expect(result[0].ingSlotIndex).toBe(-1);
+            expect(result[0].ingKindIndex).toBe(-1);
+
             expect(result[1].name).toBe(iv.ingredient1.name);
+            expect(result[1].count).toBe(iv.ingredient1.count + 1);
+            expect(result[1].ingSlotIndex).toBe(0);
+            expect(result[1].ingKindIndex).toBe(0);
+        });
+
+        test('Ingredients specialty Pokemon (Lv30)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Bulbasaur',
+                level: 30,
+                ingredient: "ABC",
+            });
+
+            // Should have 4 entries
+            // berry, ingredient1, ingredient2, ingredient3
+            const result = iv.getBagUsagePerHelpDetail({});
+            expect(result.length).toBe(3);
+
+            expect(result[0].name).toBe("berry");
+            expect(result[0].count).toBe(1);
+            expect(result[0].ingSlotIndex).toBe(-1);
+            expect(result[0].ingKindIndex).toBe(-1);
+
+            expect(result[1].name).toBe(iv.ingredient1.name);
+            expect(result[1].count).toBe(iv.ingredient1.count);
+            expect(result[1].ingSlotIndex).toBe(0);
+            expect(result[1].ingKindIndex).toBe(0);
+
+            expect(result[2].name).toBe(iv.ingredient2.name);
+            expect(result[2].count).toBe(iv.ingredient2.count);
+            expect(result[2].ingSlotIndex).toBe(1);
+            expect(result[2].ingKindIndex).toBe(1);
         });
 
         test('with expert bonus for Ingredients specialty Pokemon', () => {
@@ -934,30 +1035,40 @@ describe('PokemonIV', () => {
             // Should have 5 entries
             // berry, ing1, ing2, ing1+1, ing2+1
             expect(result.length).toBe(5);
+            const expectedEachP = iv.ingredientRate / 4;
 
-            expect(result[0].count).toBe(1);
             expect(result[0].name).toBe("berry");
+            expect(result[0].count).toBe(1);
             expect(result[0].p).toBeCloseTo(iv.berryRate);
+            expect(result[0].ingSlotIndex).toBe(-1);
+            expect(result[0].ingKindIndex).toBe(-1);
 
             expect(result[1].name).toBe(iv.ingredient1.name);
             expect(result[1].count).toBe(iv.ingredient1.count + 1);
-            expect(result[2].count).toBe(iv.ingredient2.count + 1);
+            expect(result[1].p).toBeCloseTo(expectedEachP);
+            expect(result[1].ingSlotIndex).toBe(0);
+            expect(result[1].ingKindIndex).toBe(0);
+
             expect(result[2].name).toBe(iv.ingredient2.name);
+            expect(result[2].count).toBe(iv.ingredient2.count + 1);
+            expect(result[2].p).toBeCloseTo(expectedEachP);
+            expect(result[2].ingSlotIndex).toBe(1);
+            expect(result[2].ingKindIndex).toBe(1);
 
             expect(result[3].name).toBe(iv.ingredient1.name);
             expect(result[3].count).toBe(iv.ingredient1.count + 2);
+            expect(result[3].p).toBeCloseTo(expectedEachP);
+            expect(result[3].ingSlotIndex).toBe(0);
+            expect(result[3].ingKindIndex).toBe(0);
+
             expect(result[4].name).toBe(iv.ingredient2.name);
             expect(result[4].count).toBe(iv.ingredient2.count + 2);
-
-            const expectedEachP = iv.ingredientRate / 4;
-            expect(result[1].p).toBeCloseTo(expectedEachP);
-            expect(result[2].p).toBeCloseTo(expectedEachP);
-            expect(result[3].p).toBeCloseTo(expectedEachP);
             expect(result[4].p).toBeCloseTo(expectedEachP);
+            expect(result[4].ingSlotIndex).toBe(1);
+            expect(result[4].ingKindIndex).toBe(1);
 
             const totalP = result.reduce((sum, item) => sum + item.p, 0);
             expect(totalP).toBeCloseTo(1);
-
         });
 
         test('Darkrai mythIng', () => {
@@ -969,7 +1080,11 @@ describe('PokemonIV', () => {
             const detail1 = iv1.getBagUsagePerHelpDetail({});
             expect(detail1.length).toBe(2);
             expect(detail1[0].name).toBe("berry");
+            expect(detail1[0].ingKindIndex).toBe(-1);
+            expect(detail1[0].ingSlotIndex).toBe(-1);
             expect(detail1[1].name).toBe("sausage");
+            expect(detail1[1].ingKindIndex).toBe(0);
+            expect(detail1[1].ingSlotIndex).toBe(0);
 
             const iv2 = new PokemonIv({
                 pokemonName: 'Darkrai',
@@ -980,8 +1095,14 @@ describe('PokemonIV', () => {
             const detail2 = iv2.getBagUsagePerHelpDetail({});
             expect(detail2.length).toBe(3);
             expect(detail2[0].name).toBe("berry");
+            expect(detail2[0].ingKindIndex).toBe(-1);
+            expect(detail2[0].ingSlotIndex).toBe(-1);
             expect(detail2[1].name).toBe("sausage");
+            expect(detail2[1].ingKindIndex).toBe(0);
+            expect(detail2[1].ingSlotIndex).toBe(0);
             expect(detail2[2].name).toBe("honey");
+            expect(detail2[2].ingKindIndex).toBe(1);
+            expect(detail2[2].ingSlotIndex).toBe(1);
 
             const iv3 = new PokemonIv({
                 pokemonName: 'Darkrai',
@@ -993,9 +1114,17 @@ describe('PokemonIV', () => {
             const detail3 = iv3.getBagUsagePerHelpDetail({});
             expect(detail3.length).toBe(4);
             expect(detail3[0].name).toBe("berry");
+            expect(detail3[0].ingKindIndex).toBe(-1);
+            expect(detail3[0].ingSlotIndex).toBe(-1);
             expect(detail3[1].name).toBe("sausage");
+            expect(detail3[1].ingKindIndex).toBe(0);
+            expect(detail3[1].ingSlotIndex).toBe(0);
             expect(detail3[2].name).toBe("honey");
+            expect(detail3[2].ingKindIndex).toBe(1);
+            expect(detail3[2].ingSlotIndex).toBe(1);
             expect(detail3[3].name).toBe("coffee");
+            expect(detail3[3].ingKindIndex).toBe(2);
+            expect(detail3[3].ingSlotIndex).toBe(2);
         });
     });
 
