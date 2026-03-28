@@ -40,6 +40,10 @@ export type BagUsagePerHelpDetailItem = {
     count: number;
     /** Probability of the usage */
     p: number;
+    /** Ingredient slot index: 0=ing1, 1=ing2, 2=ing3. -1 for berry. */
+    ingSlotIndex: number;
+    /** Unique ingredient kind index (by name). -1 for berry. */
+    ingKindIndex: number;
 };
 
 /**
@@ -389,6 +393,15 @@ class PokemonIv {
      */
     getBagUsagePerHelpDetail(bonus?: Partial<InventoryBonus>): BagUsagePerHelpDetailItem[] {
         const ret: BagUsagePerHelpDetailItem[] = [];
+        const ingKindIndexMap = new Map<string, number>();
+        const getIngKindIndex = (name: string): number => {
+            let idx = ingKindIndexMap.get(name);
+            if (idx === undefined) {
+                idx = ingKindIndexMap.size;
+                ingKindIndexMap.set(name, idx);
+            }
+            return idx;
+        };
 
         // Fill bonus
         const berryBonus = bonus?.berryBonus ?? 0;
@@ -410,6 +423,8 @@ class PokemonIv {
         ret.push({
             name: this.ingredient1.name,
             count: this.ingredient1.count + ingBonus,
+            ingKindIndex: getIngKindIndex(this.ingredient1.name),
+            ingSlotIndex: 0,
             p: 0,
         });
 
@@ -420,6 +435,8 @@ class PokemonIv {
                 ret.push({
                     name: this.ingredient2.name,
                     count: ing2.count + ingBonus,
+                    ingKindIndex: getIngKindIndex(this.ingredient2.name),
+                    ingSlotIndex: 1,
                     p: 0,
                 });
             }
@@ -432,6 +449,8 @@ class PokemonIv {
                 ret.push({
                     name: this.ingredient3.name,
                     count: ing3.count + ingBonus,
+                    ingKindIndex: getIngKindIndex(this.ingredient3.name),
+                    ingSlotIndex: 2,
                     p: 0,
                 });
             }
@@ -444,7 +463,8 @@ class PokemonIv {
                 throw new Error('expert bonus changed');
             }
             for (let i = 0; i < ings; i++) {
-                ret.push({name: ret[i].name, count: ret[i].count + 1, p: 0});
+                ret.push({name: ret[i].name, count: ret[i].count + 1, p: 0,
+                    ingSlotIndex: ret[i].ingSlotIndex, ingKindIndex: ret[i].ingKindIndex});
             }
         }
 
@@ -460,6 +480,8 @@ class PokemonIv {
             name: "berry",
             count: berryCount + berryBonus,
             p: this.berryRate,
+            ingSlotIndex: -1,
+            ingKindIndex: -1,
         });
 
         return ret;
