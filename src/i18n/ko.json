@@ -15,6 +15,10 @@
             "notice detail1": "미래의 SP와 벌어들이는 에너지를 확인하고, 육성 계획에 활용하세요!",
             "notice detail2": "또한, 사용 방법 설명 동영상을 <YouTube>YouTube 채널</YouTube>에서 공개하고 있습니다. 꼭 확인해주세요.",
             "news": {
+                "v3.4.0": {
+                    "headline": "v3.4.0의 밸런스 조정에 대응하였습니다.",
+                    "detail": "$t(own research note)"
+                },
                 "add noibat": {
                     "headline": "$t(pokemons.Noibat)・$t(pokemons.Noivern)의 데이터를 추가했습니다.",
                     "detail": "$t(rp collection)"
@@ -245,6 +249,7 @@
                 }
             }
         },
+        "own research note": "밸런스 조정 후의 확률은 독자적인 조사를 통해 산출하고 있습니다.",
         "rp collection": "식재료%와 기술%은 RP Collection 값에 기반합니다.",
         "movie detail": "채널 구독・좋아요・댓글・하이브 등을 주시면 큰 힘이 됩니다!",
         "num": "{{n, number}}",

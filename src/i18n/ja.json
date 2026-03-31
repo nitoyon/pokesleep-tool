@@ -15,6 +15,10 @@
             "notice detail1": "将来の SP やエナジーを確認して、育成の計画に役立ててください！",
             "notice detail2": "また、使い方の解説動画を <YouTube>YouTubeチャンネル</YouTube> で公開しています。ぜひご確認ください。",
             "news": {
+                "v3.4.0": {
+                    "headline": "v3.4.0 でのバランス調整に対応しました。",
+                    "detail": "$t(own research note)"
+                },
                 "add noibat": {
                     "headline": "$t(pokemons.Noibat)・$t(pokemons.Noivern)のデータを追加しました。",
                     "detail": "$t(rp collection)"
@@ -249,6 +253,7 @@
                 }
             }
         },
+        "own research note": "バランス調整後の確率は独自の調査で算出しています。",
         "rp collection": "食材確率・スキル確率については、RP Collection の情報を参照しています。",
         "movie detail": "チャンネル登録・高評価・コメント・ハイプなどいただけると励みになります！",
         "num": "{{n, number}}",

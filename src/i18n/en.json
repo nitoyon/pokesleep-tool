@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "v3.4.0": {
+                    "headline": "Updated the data with balance adjustments in version 3.4.0",
+                    "detail": "$t(own research note)"
+                },
                 "add noibat": {
                     "headline": "Added data for $t(pokemons.Noibat) and $t(pokemons.Noivern).",
                     "detail": "$t(rp collection)"
@@ -249,6 +253,7 @@
                 }
             }
         },
+        "own research note": "Probabilities after balance adjustments are calculated based on our own research.",
         "rp collection": "The ingredient% and skill% are based on RP Collection values.",
         "movie detail": "Your subscriptions, likes, comments, and hypes are greatly appreciated!",
         "num": "{{n, number}}",

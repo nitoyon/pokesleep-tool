@@ -15,6 +15,10 @@
             "notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
             "notice detail2": "此外，我們在 <YouTube>YouTube 頻道</YouTube> 上發佈了使用方法的講解影片。請務必觀看。",
             "news": {
+                "v3.4.0": {
+                    "headline": "已因應 v3.4.0 的平衡性調整。",
+                    "detail": "$t(own research note)"
+                },
                 "add noibat": {
                     "headline": "新增了$t(pokemons.Noibat)和$t(pokemons.Noivern)的資料。",
                     "detail": "$t(rp collection)"
@@ -249,6 +253,7 @@
                 }
             }
         },
+        "own research note": "平衡性調整後的概率是通過獨自的調查計算的。",
         "rp collection": "食材機率、技能機率參考了 RP Collection 的資料。",
         "movie detail": "訂閱頻道・按讚・留言・Hype等都會給我帶來很大的鼓勵！",
         "num": "{{n, number}}",
