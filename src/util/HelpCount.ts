@@ -186,6 +186,16 @@ export type HelpCountSimulationResult = {
     ingredientCount: number[];
     /** Expected overflow ingredient count per slot index (0=ing1, 1=ing2, 2=ing3) */
     overflowIngsPerSlot: number[];
+    /**
+     * Probability that skill triggered exactly once across normalHelpCount helps.
+     * For non-Skills/non-All specialty, this is P(at least 1 trigger).
+     */
+    skillOnce: number;
+    /**
+     * Probability that skill triggered twice or more across normalHelpCount helps.
+     * 0 for non-Skills/non-All specialty.
+     */
+    skillTwice: number;
 };
 
 /**
@@ -238,6 +248,10 @@ export class HelpCountSimulation {
     private numIngredientKinds: number;
     /** Cumulative overflow per ingredient slot at each step. */
     private cumulativeOverflowIngSlots: number[][];
+    /** Skill trigger rate per help. */
+    private skillRate: number;
+    /** Whether the Pokémon is Skills or All specialty (enables exact-once/twice split). */
+    private isSkillSpecialty: boolean;
 
     /**
      * Initializes the simulation with carry limit, ingredient index mapping,
@@ -266,6 +280,11 @@ export class HelpCountSimulation {
         // If the berry bonus is active, we consider that the berry count
         // from sneaky snacking is not increased by the bonus.
         this.sneakySnackingBerryCount = iv.berryCount;
+
+        // Initialize skill fields
+        this.skillRate = iv.skillRate;
+        this.isSkillSpecialty = (iv.pokemon.specialty === 'Skills' ||
+            iv.pokemon.specialty === 'All');
 
         // Initialize steps
         const initialState = new Map<number, number>();
@@ -324,11 +343,14 @@ export class HelpCountSimulation {
             }
         }
 
+        const { skillOnce, skillTwice } = this.calculateSkillProbability(n);
+
         return {
             normalHelpCount: n - sneakySnackingCount,
             sneakySnackingCount,
             berryCount, ingredientCount,
             overflowIngsPerSlot: [...this.cumulativeOverflowIngSlots[n]],
+            skillOnce, skillTwice,
         };
     }
 
@@ -415,6 +437,50 @@ export class HelpCountSimulation {
                 (v: number, i: number) => v + newOverflowIngSlots[i]
             )
         );
+    }
+
+    /**
+     * Calculates exact skill trigger probabilities after `n` help actions by
+     * weighting the binomial formula over the distribution of normalHelpCount
+     * derived from `cumulativeFullProb`.
+     *
+     * @param n - Number of help actions (must already be computed).
+     */
+    private calculateSkillProbability(n: number): {
+        skillOnce: number; skillTwice: number;
+    } {
+        const p = this.skillRate;
+        let skillOnce = 0;
+        let skillTwice = 0;
+
+        // For k  < n-1, P(normalHelpCount = k) =
+        //     cumulativeFullProb[k] - cumulativeFullProb[k-1]
+        for (let k = 1; k < n; k++) {
+            const prob = this.cumulativeFullProb[k] - this.cumulativeFullProb[k - 1];
+            if (prob === 0) { continue; }
+            const skillNoneK = Math.pow(1 - p, k);
+            if (this.isSkillSpecialty) {
+                const onceK = k * p * Math.pow(1 - p, k - 1);
+                skillOnce += prob * onceK;
+                skillTwice += prob * (1 - skillNoneK - onceK);
+            } else {
+                skillOnce += prob * (1 - skillNoneK);
+            }
+        }
+
+        // For n: P(normalHelpCount = n) = 1 - cumulativeFullProb[n-1]
+        const probNormalN = n > 0 ? 1 - this.cumulativeFullProb[n - 1] : 1;
+        if (probNormalN > 0) {
+            const skillNoneN = Math.pow(1 - p, n);
+            if (this.isSkillSpecialty) {
+                const onceN = n * p * Math.pow(1 - p, n - 1);
+                skillOnce += probNormalN * onceN;
+                skillTwice += probNormalN * (1 - skillNoneN - onceN);
+            } else {
+                skillOnce += probNormalN * (1 - skillNoneN);
+            }
+        }
+        return { skillOnce, skillTwice: Math.max(0, skillTwice) };
     }
 
     /**

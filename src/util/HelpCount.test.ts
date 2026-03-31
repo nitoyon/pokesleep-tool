@@ -36,6 +36,7 @@ describe('HelpCountSimulation', () => {
                 level: 60,
                 ingredient: 'ABB', // Apple x2 (Lv30), x4 (Lv60)
                 baseIngRate: 30,
+                baseSkillRate: 5,
             });
             expect(iv.carryLimit).toBe(6); // Assume carryLimit is 6
 
@@ -54,6 +55,9 @@ describe('HelpCountSimulation', () => {
             expect(result.normalHelpCount).toBe(1);
             expect(result.sneakySnackingCount).toBe(0);
             expect(result.overflowIngsPerSlot).toStrictEqual([0, 0, 0]);
+
+            expect(result.skillOnce).toBeCloseTo(0.05);
+            expect(result.skillTwice).toBeCloseTo(0);
         });
 
         test('Toxel 2 helps', () => {
@@ -62,6 +66,7 @@ describe('HelpCountSimulation', () => {
                 level: 60,
                 ingredient: 'ABB', // Apple x2 (Lv30), x4 (Lv60)
                 baseIngRate: 30,
+                baseSkillRate: 5,
             });
             expect(iv.carryLimit).toBe(6); // Assume carryLimit is 6
 
@@ -94,6 +99,10 @@ describe('HelpCountSimulation', () => {
             expect(result.overflowIngsPerSlot[1]).toBe(0);
             // Overflow 2 apples: (Apple x4) x 2
             expect(result.overflowIngsPerSlot[2]).toBeCloseTo(2 * 0.1 * 0.1);
+
+            const p = 0.05;
+            expect(result.skillOnce).toBeCloseTo(2 * p * (1 - p), 5);
+            expect(result.skillTwice).toBeCloseTo(p * p, 5);
         });
 
         test('Toxel 3 helps', () => {
@@ -102,6 +111,7 @@ describe('HelpCountSimulation', () => {
                 level: 60,
                 ingredient: 'ABB', // Apple x2 (Lv30), x4 (Lv60)
                 baseIngRate: 30,
+                baseSkillRate: 5,
             });
             expect(iv.carryLimit).toBe(6); // Assume carryLimit is 6
 
@@ -142,6 +152,18 @@ describe('HelpCountSimulation', () => {
             expect(result.overflowIngsPerSlot[0]).toBe(0);
             expect(result.overflowIngsPerSlot[1]).toBeCloseTo(0.016);
             expect(result.overflowIngsPerSlot[2]).toBeCloseTo(0.086);
+
+            const p = 0.05;
+            expect(result.skillOnce).toBeCloseTo(
+                snack3 * 2 * p * (1 - p) +
+                (1 - snack3) * 3 * p * Math.pow(1 - p, 2),
+                5
+            );
+            expect(result.skillTwice).toBeCloseTo(
+                snack3 * p * p +
+                (1 - snack3) * (1 - Math.pow(1 - p, 3) - 3 * p * Math.pow(1 - p, 2)),
+                5
+            );
         });
     });
 
@@ -270,6 +292,41 @@ describe('HelpCountSimulation', () => {
             const totalNormal = resultNormal.ingredientCount.reduce((a, b) => a + b, 0);
             const totalTicket = resultTicket.ingredientCount.reduce((a, b) => a + b, 0);
             expect(totalTicket).toBeGreaterThanOrEqual(totalNormal);
+        });
+    });
+
+    describe('skillTwice by specialty', () => {
+        test('Pikachu (Berries specialty): skillTwice is always 0', () => {
+            const iv = new PokemonIv({pokemonName: 'Pikachu', level: 30});
+            const sim = new HelpCountSimulation(iv);
+            for (let n = 1; n <= 10; n++) {
+                expect(sim.compute(n).skillTwice).toBe(0);
+            }
+        });
+
+        test('Bulbasaur (Ingredients specialty): skillTwice is always 0', () => {
+            const iv = new PokemonIv({pokemonName: 'Bulbasaur', level: 30});
+            const sim = new HelpCountSimulation(iv);
+            for (let n = 1; n <= 10; n++) {
+                expect(sim.compute(n).skillTwice).toBe(0);
+            }
+        });
+
+        test('Toxel (Skills specialty): skillTwice is non-zero for n >= 2', () => {
+            const iv = new PokemonIv({pokemonName: 'Toxel', level: 30});
+            const sim = new HelpCountSimulation(iv);
+            for (let n = 2; n <= 10; n++) {
+                expect(sim.compute(n).skillTwice).toBeGreaterThan(0);
+            }
+        });
+
+        test('Mew (All specialty): skillTwice is non-zero for n >= 2', () => {
+            const iv = new PokemonIv({pokemonName: 'Mew', level: 30});
+            const sim = new HelpCountSimulation(iv);
+            expect(sim.compute(1).skillTwice).toBeCloseTo(0);
+            for (let n = 2; n <= 10; n++) {
+                expect(sim.compute(n).skillTwice).toBeGreaterThan(0);
+            }
         });
     });
 
