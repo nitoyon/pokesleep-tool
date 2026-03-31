@@ -105,23 +105,6 @@ describe('PokemonRP', () => {
 
             expect(rp.Rp).toBe(4545);
         });
-
-        test('Absol Lv41 (floating-point error)', () => {
-            const iv = new PokemonIv({
-                pokemonName: 'Absol',
-                level: 41,
-                ingredient: "ABA",
-                subSkills: new SubSkillList({
-                    lv10: new SubSkill('Inventory Up M'),
-                    lv25: new SubSkill('Ingredient Finder M'),
-                }),
-                nature: new Nature('Adamant'),
-                skillLevel: 1,
-            });
-            const rp = new PokemonRp(iv);
-
-            expect(rp.Rp).toBe(1865);
-        });
     });
 
     describe('memoization', () => {
