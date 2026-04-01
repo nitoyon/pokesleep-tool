@@ -1,6 +1,7 @@
 import PokemonStrength, {
     createStrengthParameter, StrengthParameter,
     isSkillStrengthZero,
+    expertFavoriteBerryBonus,
 } from './PokemonStrength';
 import { AlwaysTap, NoTap, whistlePeriod } from './Energy';
 import PokemonIv from './PokemonIv';
@@ -346,6 +347,180 @@ describe('PokemonStrength', () => {
                 const isCalculatedAsZero = isSkillStrengthZero(skillName);
 
                 expect(hasZeroStrength).toBe(isCalculatedAsZero);
+            });
+        });
+    });
+
+    describe('expert mode', () => {
+        // Greengrass Isle (Expert)
+        const fieldIndex = 7;
+
+        describe('berryStrengthBonus', () => {
+            test('main berry + expertEffect berry => expertFavoriteBerryBonus', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const strength = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    expertEffect: 'berry',
+                }));
+                expect(strength.berryStrengthBonus).toBe(expertFavoriteBerryBonus);
+            });
+
+            test('sub berry + expertEffect berry => expertFavoriteBerryBonus', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const strength = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['fire', 'electric', 'water'],
+                    expertEffect: 'berry',
+                }));
+                expect(strength.berryStrengthBonus).toBe(expertFavoriteBerryBonus);
+            });
+
+            test('non-favorite + expertEffect berry => 1', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const strength = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['fire', 'water', 'grass'],
+                    expertEffect: 'berry',
+                }));
+                expect(strength.berryStrengthBonus).toBe(1);
+            });
+
+            test('favorite berry + expertEffect ing => 2 (isFavoriteBerry, not expert berry mode)', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const strength = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    expertEffect: 'ing',
+                }));
+                expect(strength.berryStrengthBonus).toBe(2);
+            });
+        });
+
+        describe('ExpertEffects', () => {
+            test('berry: favorite has higher berryStrengthBonus than non-favorite', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const strengthFav = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    expertEffect: 'berry',
+                }));
+                const strengthNonFav = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['fire', 'water', 'grass'],
+                    expertEffect: 'berry',
+                }));
+                expect(strengthFav.berryStrengthBonus).toBe(expertFavoriteBerryBonus);
+                expect(strengthNonFav.berryStrengthBonus).toBe(1);
+                expect(strengthFav.berryStrengthBonus).toBeGreaterThan(strengthNonFav.berryStrengthBonus);
+            });
+
+            test('ing: expertEffect ing', () => {
+                const param = createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    expertEffect: 'ing',
+                });
+
+                const berryIv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const resultBerry = new PokemonStrength(berryIv, param).calculate();
+                expect(resultBerry.ing1.countPerHelp).toBe(berryIv.pokemon.ing1.c1 + 1);
+
+                const ingIv = new PokemonIv({ pokemonName: 'Luxray', level: 50 });
+                const resultIng = new PokemonStrength(ingIv, param).calculate();
+                expect(resultIng.ing1.countPerHelp).toBe(ingIv.pokemon.ing1.c1 + 1.5);
+            });
+
+            test('skill: expertEffect skill gives higher skillCount than expertEffect berry', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const resultSkill = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    period: 8,
+                    pityProc: false,
+                    expertEffect: 'skill',
+                })).calculate();
+                const resultBerry = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    period: 8,
+                    pityProc: false,
+                    expertEffect: 'berry',
+                })).calculate();
+                expect(resultSkill.skillCount).toBeGreaterThan(0);
+                expect(resultBerry.skillCount).toBeGreaterThan(0);
+                expect(resultSkill.total.normal).toBe(resultSkill.total.normal);
+                expect(resultSkill.skillCount).toBeCloseTo(resultBerry.skillCount * 1.25);
+            });
+        });
+
+        describe('speed effects', () => {
+            test('main berry has more total helps than sub berry (10% speed bonus)', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const resultMain = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['electric', 'fire', 'water'],
+                    period: 8,
+                    tapFrequencyAwake: NoTap,
+                    expertEffect: 'skill',
+                })).calculate();
+                const resultSub = new PokemonStrength(iv, createParam({
+                    fieldIndex,
+                    favoriteType: ['fire', 'electric', 'water'],
+                    period: 8,
+                    tapFrequencyAwake: NoTap,
+                    expertEffect: 'skill',
+                })).calculate();
+                const totalMain = resultMain.berryHelpCount;
+                const totalSub = resultSub.berryHelpCount;
+                expect(totalMain).toBeCloseTo(totalSub / 0.9, 3);
+            });
+
+            test('non-favorite has fewer total helps than sub berry (15% speed penalty)', () => {
+                const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+                const resultSub = new PokemonStrength(iv, createParam({
+                    fieldIndex: 7,
+                    favoriteType: ['fire', 'electric', 'water'],
+                    period: 8,
+                    tapFrequencyAwake: NoTap,
+                    expertEffect: 'skill',
+                })).calculate();
+                const resultNonFav = new PokemonStrength(iv, createParam({
+                    fieldIndex: 7,
+                    favoriteType: ['fire', 'water', 'grass'],
+                    period: 8,
+                    tapFrequencyAwake: NoTap,
+                    expertEffect: 'skill',
+                })).calculate();
+                const totalSub = resultSub.berryHelpCount;
+                const totalNonFav = resultNonFav.berryHelpCount;
+                expect(totalNonFav).toBeCloseTo(totalSub / 1.15, 3);
+            });
+        });
+
+        describe('main berry skill level bonus', () => {
+            test('main berry pokemon has higher skillValuePerTrigger than sub berry (Slaking, Ingredient Magnet S)', () => {
+                // Slaking is normal type with "Ingredient Magnet S" (non-zero skill strength)
+                const slakingIv = new PokemonIv({ pokemonName: 'Slaking', level: 50, skillLevel: 5 });
+                // Verify Slaking has non-zero skill strength
+                expect(isSkillStrengthZero(
+                    pokemons.find(p => p.name === 'Slaking')!.skill
+                )).toBe(false);
+
+                const resultMain = new PokemonStrength(slakingIv,
+                    createParam({
+                        fieldIndex: 7,
+                        favoriteType: ['normal', 'fire', 'water'],
+                        expertEffect: 'skill',
+                    })).calculate();
+                const resultSub = new PokemonStrength(slakingIv,
+                    createParam({
+                        fieldIndex: 7,
+                        favoriteType: ['fire', 'normal', 'water'],
+                        expertEffect: 'skill',
+                    })).calculate();
+                // Main berry gets +1 skill level bonus, so skillValuePerTrigger should be higher
+                expect(resultMain.skillValuePerTrigger).toBeGreaterThan(resultSub.skillValuePerTrigger);
             });
         });
     });
