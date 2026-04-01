@@ -4,6 +4,7 @@ import {
     EnergyParameter, EnergyResult, AlwaysTap, NoTap, whistlePeriod,
 } from './Energy';
 import { BonusEffects } from '../data/events';
+import { isExpertField } from "../data/fields";
 
 /**
  * Represents help count split by normal and sneaky snacking.
@@ -155,8 +156,19 @@ export function calculateHelpCount(
         }
         else {
             const skillCountAwake = energy.helpCount.awake * overallSkillRate;
-            const skillCountSleeping = energy.skillProbabilityAfterWakeup.once +
-                energy.skillProbabilityAfterWakeup.twice * 2;
+
+            const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
+            const isFavoriteBerry = isExpertMode && param.favoriteType.includes(iv.pokemon.type);
+            const inventoryBonus = {
+                berryBonus: bonus.berry,
+                ingredientBonus: bonus.ingredient,
+                carryLimitBonus: bonus.carryLimit,
+                expertIngBonus: isFavoriteBerry && param.expertEffect === "ing",
+            };
+            const simulation = new HelpCountSimulation(iv, param.isGoodCampTicketSet,
+                overallSkillRate, inventoryBonus);
+            const result = simulation.compute(energy.helpCount.asleepNotFull);
+            const skillCountSleeping = result.skillOnce + result.skillTwice * 2;
             skillCount = (skillCountAwake + skillCountSleeping) * countRate;
         }
     }
@@ -259,9 +271,13 @@ export class HelpCountSimulation {
      *
      * @param iv - PokemonIv instance providing carry limit and item rates.
      * @param isGoodCampTicketSet - Whether the good camp ticket bonus (1.2x carry) is active.
+     * @param skillRate - Skill trigger rate per help.
      * @param bonus - Optional inventory bonuses from events and expert mode.
      */
-    constructor(iv: PokemonIv, isGoodCampTicketSet?: boolean, bonus?: Partial<InventoryBonus>) {
+    constructor(iv: PokemonIv, isGoodCampTicketSet?: boolean,
+        skillRate?: number,
+        bonus?: Partial<InventoryBonus>
+    ) {
         // calculate carryLimit and M
         this.carryLimit = Math.ceil(
             (iv.carryLimit + (bonus?.carryLimitBonus ?? 0)) *
@@ -282,7 +298,7 @@ export class HelpCountSimulation {
         this.sneakySnackingBerryCount = iv.berryCount;
 
         // Initialize skill fields
-        this.skillRate = iv.skillRate;
+        this.skillRate = skillRate ?? iv.skillRate;
         this.isSkillSpecialty = (iv.pokemon.specialty === 'Skills' ||
             iv.pokemon.specialty === 'All');
 
