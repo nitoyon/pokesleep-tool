@@ -305,6 +305,36 @@ export class HelpCountSimulation {
      * @returns Expected sneaky snacking count and expected ingredient counts.
      */
     compute(n: number): HelpCountSimulationResult {
+        // Handle integer n
+        if (Number.isInteger(n)) {
+            return this.computeN(n);
+        }
+
+        // Handle non-integer n via linear interpolation
+        const nFloor = Math.floor(n);
+        const nCeil = Math.ceil(n);
+        const frac = n - nFloor;
+        const lo = this.compute(nFloor);
+        const hi = this.compute(nCeil);
+        const lerp = (a: number, b: number) => a + (b - a) * frac;
+        return {
+            normalHelpCount: lerp(lo.normalHelpCount, hi.normalHelpCount),
+            sneakySnackingCount: lerp(lo.sneakySnackingCount, hi.sneakySnackingCount),
+            berryCount: lerp(lo.berryCount, hi.berryCount),
+            ingredientCount: lo.ingredientCount.map((v, i) => lerp(v, hi.ingredientCount[i])),
+            overflowIngsPerSlot: lo.overflowIngsPerSlot.map((v, i) => lerp(v, hi.overflowIngsPerSlot[i])),
+            skillOnce: lerp(lo.skillOnce, hi.skillOnce),
+            skillTwice: lerp(lo.skillTwice, hi.skillTwice),
+        };
+    }
+
+    /**
+     * Compute simulation results after `n` help actions. (integer version)
+     *
+     * @param n - Number of help actions to simulate (integer).
+     * @returns Expected sneaky snacking count and expected ingredient counts.
+     */
+    private computeN(n: number): HelpCountSimulationResult {
         // Extend computation if needed
         while (this.steps.length <= n) {
             this.computeStep();

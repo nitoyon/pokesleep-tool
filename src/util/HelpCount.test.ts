@@ -165,6 +165,41 @@ describe('HelpCountSimulation', () => {
                 5
             );
         });
+
+        test('Toxel float helps', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Toxel',
+                level: 60,
+                ingredient: 'ABB',
+            });
+
+            const sim = new HelpCountSimulation(iv);
+            const result2 = sim.compute(2);
+            const result3 = sim.compute(3);
+            const result26 = sim.compute(2.6);
+
+            // Check that 2.6 helps gives results between 2 and 3 helps
+            expect(result26.berryCount).toBeGreaterThan(result2.berryCount);
+            expect(result26.berryCount).toBeLessThan(result3.berryCount);
+            expect(result26.berryCount).toBeCloseTo(
+                (result3.berryCount - result2.berryCount) * 0.6 + result2.berryCount,
+                5
+            );
+            for (let i = 0; i < result26.ingredientCount.length; i++) {
+                expect(result26.ingredientCount[i]).toBeCloseTo(
+                    (result3.ingredientCount[i] - result2.ingredientCount[i]) * 0.6 +
+                    result2.ingredientCount[i],
+                    5
+                );
+            }
+            for (let i = 0; i < result26.overflowIngsPerSlot.length; i++) {
+                expect(result26.overflowIngsPerSlot[i]).toBeCloseTo(
+                    (result3.overflowIngsPerSlot[i] - result2.overflowIngsPerSlot[i]) * 0.6 +
+                    result2.overflowIngsPerSlot[i],
+                    5
+                );
+            }
+        });
     });
 
     describe('Probability conservation', () => {
