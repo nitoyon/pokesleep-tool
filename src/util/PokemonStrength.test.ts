@@ -525,6 +525,143 @@ describe('PokemonStrength', () => {
         });
     });
 
+    describe('energy.helpCount (asleepNotFull / asleepFull)', () => {
+        test('period=8 (shorter than sleep start at 15.5h): sleep counts are 0', () => {
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+            const result = new PokemonStrength(iv, createParam({ period: 8 })).calculate();
+
+            expect(result.energy.helpCount.asleepNotFull).toBe(0);
+            expect(result.energy.helpCount.asleepFull).toBe(0);
+        });
+
+        test('period=16 (beyond sleep start at 15.5h): asleepNotFull > 0', () => {
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+            const result = new PokemonStrength(iv, createParam({
+                period: 16,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+
+            expect(result.energy.helpCount.asleepNotFull).toBeGreaterThan(0);
+            expect(result.energy.helpCount.asleepFull).toBe(0);
+        });
+
+        test('period=24 with tapFrequencyAsleep=AlwaysTap: asleepFull is always 0', () => {
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+            const result = new PokemonStrength(iv, createParam({
+                period: 24,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+
+            expect(result.energy.helpCount.asleepNotFull).toBeGreaterThan(0);
+            expect(result.energy.helpCount.asleepFull).toBe(0);
+        });
+
+        test('period=24 with tapFrequencyAsleep=NoTap: total sleep helps > 0', () => {
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+            const result = new PokemonStrength(iv, createParam({
+                period: 24,
+                tapFrequencyAsleep: NoTap,
+            })).calculate();
+
+            const totalSleepHelps = result.energy.helpCount.asleepNotFull +
+                result.energy.helpCount.asleepFull;
+            expect(totalSleepHelps).toBeGreaterThan(0);
+        });
+
+        test('longer period covers more sleep time: period=24 has more sleep helps than period=16', () => {
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+
+            // period=16: sleep covered from 15.5h to 16h (0.5h of sleep)
+            const result16 = new PokemonStrength(iv, createParam({
+                period: 16,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+
+            // period=24: sleep covered from 15.5h to 24h (8.5h of sleep)
+            const result24 = new PokemonStrength(iv, createParam({
+                period: 24,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+
+            expect(result24.energy.helpCount.asleepNotFull).toBeGreaterThan(
+                result16.energy.helpCount.asleepNotFull
+            );
+        });
+
+        test('period=168 (1 week): energy.helpCount equals period=24 (single daily cycle)', () => {
+            // energy.helpCount covers one 24h cycle regardless of period >= 24.
+            // period > 24 scaling is applied via countRate in total/skill counts,
+            // but energy.helpCount itself does not change.
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+            const result24 = new PokemonStrength(iv, createParam({
+                period: 24,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+            const result168 = new PokemonStrength(iv, createParam({
+                period: 168,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+
+            expect(result168.energy.helpCount.asleepNotFull).toBeCloseTo(
+                result24.energy.helpCount.asleepNotFull
+            );
+            expect(result168.energy.helpCount.asleepFull).toBeCloseTo(
+                result24.energy.helpCount.asleepFull
+            );
+
+            // But the scaled totals (e.g. berryHelpCount) should be 7x larger
+            expect(result168.berryHelpCount).toBeCloseTo(result24.berryHelpCount * 7);
+        });
+
+        test('period=-10 (10 fixed helps): energy.helpCount all 0, total=10, skillCount=0', () => {
+            // Negative period means a fixed number of helps (-period), not time-based.
+            // Energy returns zeros; skillCount is 0; sneakySnacking is 0.
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
+            const result = new PokemonStrength(iv, createParam({ period: -10 })).calculate();
+
+            expect(result.energy.helpCount.awake).toBe(0);
+            expect(result.energy.helpCount.asleepNotFull).toBe(0);
+            expect(result.energy.helpCount.asleepFull).toBe(0);
+
+            // total helps = 10, all normal (no sneaky snacking)
+            expect(result.total.normal).toBe(10);
+            expect(result.total.sneakySnacking).toBe(0);
+            expect(result.total.all).toBe(10);
+
+            // berry + ingredient helps must sum to 10
+            expect(result.berryHelpCount + result.ingHelpCount).toBeCloseTo(10);
+
+            // skills never trigger with fixed-help mode
+            expect(result.skillCount).toBe(0);
+        });
+
+        test('inventory filling during sleep: NoTap splits into asleepNotFull and asleepFull', () => {
+            // Use level 1 (very small carry limit) to ensure inventory fills during sleep
+            const iv = new PokemonIv({ pokemonName: 'Raichu', level: 1 });
+            const resultNoTap = new PokemonStrength(iv, createParam({
+                period: 24,
+                tapFrequencyAwake: AlwaysTap,
+                tapFrequencyAsleep: NoTap,
+            })).calculate();
+            const resultAlwaysTap = new PokemonStrength(iv, createParam({
+                period: 24,
+                tapFrequencyAwake: AlwaysTap,
+                tapFrequencyAsleep: AlwaysTap,
+            })).calculate();
+
+            // With AlwaysTap, asleepFull must be 0
+            expect(resultAlwaysTap.energy.helpCount.asleepFull).toBe(0);
+
+            // With NoTap and small carry limit, inventory should fill → asleepFull > 0
+            expect(resultNoTap.energy.helpCount.asleepFull).toBeGreaterThan(0);
+
+            // asleepNotFull is smaller with NoTap (some time is spent in full-inventory sneaky snacking)
+            expect(resultNoTap.energy.helpCount.asleepNotFull).toBeLessThan(
+                resultAlwaysTap.energy.helpCount.asleepNotFull
+            );
+        });
+    });
+
     describe('Mew base rate overrides', () => {
         test('Mew uses param.mew', () => {
             const param = createParam({
