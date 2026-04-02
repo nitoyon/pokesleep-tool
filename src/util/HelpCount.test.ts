@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import PokemonIv from './PokemonIv';
-import { calculateNextHelpElapsed, HelpCountSimulation } from './HelpCount';
+import { calculateNextHelpElapsed, calculateHelpCountInInterval, HelpCountSimulation } from './HelpCount';
 
 describe('calculateNextHelpElapsed', () => {
     test('uses frequencyRate from matching event', () => {
@@ -26,6 +26,68 @@ describe('calculateNextHelpElapsed', () => {
             { start: 0, end: 60, efficiency: 2.222, frequencyRate: 0.45, isAwake: true, isSnacking: false, isInPeriod: true },
             { start: 60, end: 120, efficiency: 1.0, frequencyRate: 1, isAwake: false, isSnacking: false, isInPeriod: true },
         ], 8000, 1000)).toBe(8000 + 1000 * 1);
+    });
+});
+
+describe('calculateHelpCountInInterval', () => {
+    const efficiencies = [
+        { start: 0, end: 60, efficiency: 2.222 as const, frequencyRate: 0.45 as const, isAwake: true, isSnacking: false, isInPeriod: true },
+        { start: 60, end: 120, efficiency: 1.0 as const, frequencyRate: 1 as const, isAwake: false, isSnacking: false, isInPeriod: true },
+    ];
+
+    test('2 full helps within interval', () => {
+        // baseFreq=1000, frequencyRate=1 (no event matches elapsed=7200s) => each help takes 1000s
+        // interval=2000 => exactly 2 helps fit
+        const result = calculateHelpCountInInterval(efficiencies, 7200, 1000, 2000);
+        expect(result.count).toBe(2);
+        expect(result.fractionalCount).toBe(0);
+        expect(result.overflowSeconds).toBe(0);
+        expect(result.elapsed).toBe(9200);
+    });
+
+    test('fractional help at interval boundary', () => {
+        // baseFreq=1000, frequencyRate=1 (elapsed=7200s, no event) => each help takes 1000s
+        // interval=1500 => 1 full help (1000s), then 500/1000 = 0.5 fractional
+        const result = calculateHelpCountInInterval(efficiencies, 7200, 1000, 1500);
+        expect(result.count).toBe(1);
+        expect(result.fractionalCount).toBeCloseTo(0.5);
+        expect(result.overflowSeconds).toBeCloseTo(500);
+        expect(result.elapsed).toBe(8200);
+    });
+
+    test('zero interval returns count=0', () => {
+        // baseFreq=1000, frequencyRate=1 (elapsed=7200s) => first help takes 1000s
+        // interval=0 => no helps fit, fractionalCount=0
+        const result = calculateHelpCountInInterval(efficiencies, 7200, 1000, 0);
+        expect(result.count).toBe(0);
+        expect(result.fractionalCount).toBe(0);
+        expect(result.overflowSeconds).toBe(1000);
+        expect(result.elapsed).toBe(7200);
+    });
+
+    test('interval shorter than one help returns count=0', () => {
+        // baseFreq=1000, frequencyRate=1 (elapsed=7200s) => first help takes 1000s
+        // interval=500 < 1000 => 0 full helps, fractionalCount=500/1000=0.5
+        const result = calculateHelpCountInInterval(efficiencies, 7200, 1000, 500);
+        expect(result.count).toBe(0);
+        expect(result.fractionalCount).toBeCloseTo(0.5);
+        expect(result.overflowSeconds).toBeCloseTo(500);
+        expect(result.elapsed).toBe(7200);
+    });
+
+    test('crossing efficiency boundary', () => {
+        // elapsed=3300s (55min) => frequencyRate=0.45, baseFreq=1000
+        // 1st help: 3300 + 450 = 3750s (3750/60=62.5min => 2nd event, frequencyRate=1)
+        // 2nd help: 3750 + 1000 = 4750s
+        // interval=1500 => endTime=4800
+        // 3750 <= 4800 => count=1, currentElapsed=3750
+        // 4750 <= 4800 => count=2, currentElapsed=4750
+        // next: 5750 > 4800 => fractional=(4800-4750)/1000=0.05, overflow=950
+        const result = calculateHelpCountInInterval(efficiencies, 3300, 1000, 1500);
+        expect(result.count).toBe(2);
+        expect(result.fractionalCount).toBeCloseTo(0.05);
+        expect(result.overflowSeconds).toBeCloseTo(950);
+        expect(result.elapsed).toBe(4750);
     });
 });
 

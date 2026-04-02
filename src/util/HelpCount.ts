@@ -205,6 +205,53 @@ export function calculateNextHelpElapsed(
     return elapsed + baseFreq * frequencyRate;
 }
 
+/** Result of calculateHelpCountInInterval(). */
+export type HelpCountInIntervalResult = {
+    /** Number of complete helps within the interval (integer) */
+    count: number;
+    /** Fractional progress toward the next help (0 to <1) */
+    fractionalCount: number;
+    /** Seconds past the interval end when the next help would complete */
+    overflowSeconds: number;
+    /** Help start time of the next (incomplete) help, in seconds since wake up */
+    elapsed: number;
+};
+
+/**
+ * Calculate the number of helps that occur within a given time interval.
+ *
+ * @param efficiencies - Efficiency event list (start/end in minutes since wake up).
+ * @param elapsed - Help start time in seconds since wake up.
+ * @param baseFreq - Base help frequency in seconds.
+ * @param interval - Time window in seconds.
+ * @returns Help count breakdown for the interval.
+ */
+export function calculateHelpCountInInterval(
+    efficiencies: EfficiencyEvent[],
+    elapsed: number,
+    baseFreq: number,
+    interval: number
+): HelpCountInIntervalResult {
+    const endTime = elapsed + interval;
+    let currentElapsed = elapsed;
+    let count = 0;
+
+    while (true) {
+        const nextElapsed = calculateNextHelpElapsed(efficiencies, currentElapsed, baseFreq);
+        if (nextElapsed <= endTime) {
+            count++;
+            currentElapsed = nextElapsed;
+        }
+        if (nextElapsed >= endTime) {
+            const helpDuration = nextElapsed - currentElapsed;
+            const fractionalCount = (helpDuration === 0 ? 0 :
+                (endTime - currentElapsed) / helpDuration);
+            const overflowSeconds = nextElapsed - endTime;
+            return { count, fractionalCount, overflowSeconds, elapsed: currentElapsed };
+        }
+    }
+}
+
 /** Result of HelpCountSimulation.compute(). */
 export type HelpCountSimulationResult = {
     /** Expected number of normal helps (not sneaky snacking) */
