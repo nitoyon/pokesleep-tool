@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import PokemonIv from './PokemonIv';
-import { calculateNextHelpElapsed, calculateHelpCountInInterval, HelpCountSimulation } from './HelpCount';
+import { calculateNextHelpElapsed, calculateHelpCountInInterval, calculateHelpCountPerTap, HelpCountSimulation } from './HelpCount';
 
 describe('calculateNextHelpElapsed', () => {
     test('uses frequencyRate from matching event', () => {
@@ -88,6 +88,87 @@ describe('calculateHelpCountInInterval', () => {
         expect(result.fractionalCount).toBeCloseTo(0.05);
         expect(result.overflowSeconds).toBeCloseTo(950);
         expect(result.elapsed).toBe(4750);
+    });
+});
+
+describe('calculateHelpCountPerTap', () => {
+    test('returns empty array when duration is 0', () => {
+        // tap interval=100s, duration=100s, baseFreq=40s
+        expect(calculateHelpCountPerTap([], 0, 40, 100, 0)).toHaveLength(0);
+    });
+
+    test('tapInterval equals duration', () => {
+        // tap interval=100s, duration=100s, baseFreq=40s
+        expect(calculateHelpCountPerTap([], 0, 40, 100, 100)).toEqual([2.5]);
+    });
+
+    test('evenly divisible: 3 taps of 30s each, baseFreq=30s', () => {
+        // Each tap interval=30s, baseFreq=30s => exactly 1 help per tap
+        // tap1: [0,30): help at 30
+        // tap1: [30,60): help at 60
+        // tap1: [60,90): help at 90
+        expect(calculateHelpCountPerTap([], 0, 30, 30, 90)).toEqual([1, 1, 1]);
+    });
+
+    test('last tap is shorter than tapInterval', () => {
+        // tapInterval=60s, duration=100s, baseFreq=30s
+        // tap1: [0,60): help at 30 and 60
+        // tap2: [60,100): help at 90 and 1/3 help
+        const result = calculateHelpCountPerTap([], 0, 30, 60, 100);
+        expect(result).toHaveLength(2);
+        expect(result[0]).toBe(2);
+        expect(result[1]).toBeCloseTo(1 + 1 / 3);
+    });
+
+    test('overflow help counted in next tap', () => {
+        // tapInterval=50s, duration=150s, baseFreq=30s
+        // tap1: [0,50): help at 30
+        // tap2: [50,100): help at 60 and 90
+        // tap3: [100,150): helps at 120 and 150 exactly
+        const result = calculateHelpCountPerTap([], 0, 30, 50, 150);
+        expect(result).toHaveLength(3);
+        expect(result[0]).toBe(1);
+        expect(result[1]).toBe(2);
+        expect(result[2]).toBe(2);
+    });
+
+    test('overflow into last tap adds bonus count', () => {
+        // tapInterval=50s, duration=70s, baseFreq=30s
+        // tap1: [0,50): help at 30 
+        // tap2: [50,70): help at 60 and 1/3 help
+        const result = calculateHelpCountPerTap([], 0, 30, 50, 70);
+        expect(result).toHaveLength(2);
+        expect(result[0]).toBe(1);
+        expect(result[1]).toBeCloseTo(1 + 1 / 3);
+    });
+
+    test('duration equals tapInterval: single tap with fractional', () => {
+        // tapInterval=100s, duration=100s, baseFreq=30s
+        // tap1: [0,100): helps at 30, 60, 90 and 1/3 help
+        const result = calculateHelpCountPerTap([], 0, 30, 100, 100);
+        expect(result).toHaveLength(1);
+        expect(result[0]).toBeCloseTo(3 + 1 / 3);
+    });
+
+    test('elapsed offset is respected', () => {
+        // Start at elapsed=60s (1min), tapInterval=30s, duration=60s, baseFreq=30s
+        // tap1: [60,90): help at 90, count=1, overflow=0 → push 1, helpStart=90
+        // tap2 (last): [90,120): help at 120 exactly, count=1, fractional=0 → push 1
+        expect(calculateHelpCountPerTap([], 60, 30, 30, 60)).toEqual([1, 1]);
+    });
+
+    test('overflowSeconds larger than tapInterval yields empty intermediate taps', () => {
+        // baseFreq=200s, tapInterval=50s, duration=300s
+        // tap1: [0,50): no help
+        // tap2: [50,100): no help
+        // tap3: [100,150): no help
+        // tap4: [150,200): help at 200
+        // tap5: [200,250): no help
+        // tap6: [250,300): 1/2 help
+        const result = calculateHelpCountPerTap([], 0, 200, 50, 300);
+        expect(result).toHaveLength(2);
+        expect(result[0]).toBe(1);
+        expect(result[1]).toBeCloseTo(0.5);
     });
 });
 

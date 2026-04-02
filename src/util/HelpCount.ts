@@ -252,6 +252,90 @@ export function calculateHelpCountInInterval(
     }
 }
 
+/**
+ * Calculate the number of helps per tap interval over a total duration.
+ *
+ * @param efficiencies - Efficiency event list (start/end in minutes since wake up).
+ * @param elapsed - Help start time in seconds since wake up.
+ * @param baseFreq - Base help frequency in seconds.
+ * @param tapInterval - Length of each tap interval in seconds.
+ * @param duration - Total duration in seconds.
+ * @returns Array of help counts per tap. The last element may be fractional.
+ *   Taps with zero completed helps are omitted from the array.
+ */
+export function calculateHelpCountPerTap(
+    efficiencies: EfficiencyEvent[],
+    elapsed: number,
+    baseFreq: number,
+    tapInterval: number,
+    duration: number
+): number[] {
+    // Absolute seconds of the end of the duration
+    const endTime = elapsed + duration;
+    // Start of the next calculateHelpCountInInterval segment, or the time the
+    // in-progress overflow help completes.
+    let segmentStart = elapsed;
+    // 1 if an overflow help from the previous tap is still in progress; 0 otherwise.
+    let pendingHelp = 0;
+    // Start time of the currently in-progress overflow help (for fractional calculation).
+    let inProgressHelpStart = elapsed;
+    let tapEnd = elapsed + tapInterval;
+    const ret: number[] = [];
+
+    while (true) {
+        const isLast = tapEnd >= endTime;
+        const segmentEnd = isLast ? endTime : tapEnd;
+
+        // The in-progress overflow help hasn't completed by segmentEnd yet.
+        if (segmentStart > segmentEnd) {
+            if (isLast) {
+                // Push fractional progress of the overflow help through the last segment.
+                const helpDuration = segmentStart - inProgressHelpStart;
+                const fractional = helpDuration > 0 ?
+                    (segmentEnd - inProgressHelpStart) / helpDuration :
+                    0;
+                if (fractional > 0) {
+                    ret.push(fractional);
+                }
+                break;
+            }
+            // This tap is empty (overflow help still running); skip to next tap.
+            tapEnd += tapInterval;
+            continue;
+        }
+
+        const result = calculateHelpCountInInterval(
+            efficiencies, segmentStart, baseFreq, segmentEnd - segmentStart
+        );
+        const count = pendingHelp + result.count;
+
+        if (isLast) {
+            const total = count + result.fractionalCount;
+            if (total > 0) {
+                ret.push(total);
+            }
+            break;
+        }
+
+        // Handle overflow help
+        inProgressHelpStart = result.elapsed;
+        if (result.overflowSeconds > 0) {
+            pendingHelp = 1;
+            segmentStart = tapEnd + result.overflowSeconds;
+        } else {
+            pendingHelp = 0;
+            segmentStart = tapEnd;
+        }
+
+        if (count > 0) {
+            ret.push(count);
+        }
+        tapEnd += tapInterval;
+    }
+
+    return ret;
+}
+
 /** Result of HelpCountSimulation.compute(). */
 export type HelpCountSimulationResult = {
     /** Expected number of normal helps (not sneaky snacking) */
