@@ -942,6 +942,7 @@ export function isSkillStrengthZero(skillName: MainSkillName): boolean {
         skillName === "Charge Energy S (Moonlight)" ||
         skillName === "Energizing Cheer S" ||
         skillName === "Energizing Cheer S (Nuzzle)" ||
+        skillName === "Energizing Cheer S (Heal Pulse)" ||
         skillName === "Energy for Everyone S" ||
         skillName === "Dream Shard Magnet S" ||
         skillName === "Dream Shard Magnet S (Random)" ||

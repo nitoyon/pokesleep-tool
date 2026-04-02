@@ -15,6 +15,7 @@ export type MainSkillName = "Ingredient Magnet S" |
     "Dream Shard Magnet S (Random)" |
     "Energizing Cheer S" |
     "Energizing Cheer S (Nuzzle)" |
+    "Energizing Cheer S (Heal Pulse)" |
     "Metronome" |
     "Energy for Everyone S" |
     "Energy for Everyone S (Lunar Blessing)" |
@@ -179,6 +180,9 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
     }
     if (skill === "Energizing Cheer S (Nuzzle)") {
         return [9, 12, 16, 20, 27, 35][skillLevel - 1];
+    }
+    if (skill === "Energizing Cheer S (Heal Pulse)") {
+        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
     }
     if (skill === "Energy for Everyone S") {
         return [5, 7, 9, 11, 15, 18][skillLevel - 1];

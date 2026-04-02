@@ -652,7 +652,7 @@
         "name": "Raichu",
         "arrival": "2023-07-17",
         "sleepType": "snoozing",
-        "exp": 600,
+        "exp": 1080,
         "type": "electric",
         "specialty": "Berries",
         "skill": "Charge Strength S",
@@ -5204,6 +5204,40 @@
         "ing3": {
             "name": "sausage",
             "c3": 4
+        }
+    },
+    {
+        "id": 380,
+        "name": "Latias",
+        "arrival": "2026-04-06",
+        "sleepType": "dozing",
+        "exp": 900,
+        "type": "dragon",
+        "specialty": "Skills",
+        "skill": "Energizing Cheer S (Heal Pulse)",
+        "fp": 20,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": null,
+        "evolutionCount": -1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
         }
     },
     {

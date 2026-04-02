@@ -55,6 +55,7 @@ const MainSkillIcon = React.memo(({mainSkill, second, firstIngredient}: {
             }
         case "Energizing Cheer S":
         case "Energizing Cheer S (Nuzzle)":
+        case "Energizing Cheer S (Heal Pulse)":
             return <VolunteerActivismOutlinedIcon sx={{color: "#ff88aa"}} fontSize="small"/>;
         case "Charge Strength M":
         case "Charge Strength M (Bad Dreams)":
