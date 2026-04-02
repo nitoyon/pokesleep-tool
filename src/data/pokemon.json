@@ -6573,40 +6573,6 @@
         "form": "Jumbo"
     },
     {
-        "id": 736,
-        "name": "Grubbin",
-        "arrival": "2024-10-02",
-        "sleepType": "dozing",
-        "exp": 600,
-        "type": "bug",
-        "specialty": "Ingredients",
-        "skill": "Charge Strength S",
-        "fp": 5,
-        "frequency": 4600,
-        "ingRate": 15.5,
-        "skillRate": 2.9,
-        "ancestor": 736,
-        "evolutionCount": 0,
-        "evolutionLeft": 2,
-        "isFullyEvolved": false,
-        "carryLimit": 11,
-        "ing1": {
-            "name": "coffee",
-            "c1": 2,
-            "c2": 5,
-            "c3": 7
-        },
-        "ing2": {
-            "name": "mushroom",
-            "c2": 4,
-            "c3": 7
-        },
-        "ing3": {
-            "name": "honey",
-            "c3": 11
-        }
-    },
-    {
         "id": 714,
         "name": "Noibat",
         "arrival": "2026-03-23",
@@ -6672,6 +6638,40 @@
         "ing3": {
             "name": "sausage",
             "c3": 3
+        }
+    },
+    {
+        "id": 736,
+        "name": "Grubbin",
+        "arrival": "2024-10-02",
+        "sleepType": "dozing",
+        "exp": 600,
+        "type": "bug",
+        "specialty": "Ingredients",
+        "skill": "Charge Strength S",
+        "fp": 5,
+        "frequency": 4600,
+        "ingRate": 15.5,
+        "skillRate": 2.9,
+        "ancestor": 736,
+        "evolutionCount": 0,
+        "evolutionLeft": 2,
+        "isFullyEvolved": false,
+        "carryLimit": 11,
+        "ing1": {
+            "name": "coffee",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "mushroom",
+            "c2": 4,
+            "c3": 7
+        },
+        "ing3": {
+            "name": "honey",
+            "c3": 11
         }
     },
     {
