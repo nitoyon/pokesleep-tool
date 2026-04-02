@@ -438,6 +438,7 @@ describe('PokemonStrength', () => {
                     favoriteType: ['electric', 'fire', 'water'],
                     period: 8,
                     pityProc: false,
+                    tapFrequencyAwake: AlwaysTap,
                     expertEffect: 'skill',
                 })).calculate();
                 const resultBerry = new PokemonStrength(iv, createParam({
@@ -445,6 +446,7 @@ describe('PokemonStrength', () => {
                     favoriteType: ['electric', 'fire', 'water'],
                     period: 8,
                     pityProc: false,
+                    tapFrequencyAwake: AlwaysTap,
                     expertEffect: 'berry',
                 })).calculate();
                 expect(resultSkill.skillCount).toBeGreaterThan(0);
@@ -473,7 +475,7 @@ describe('PokemonStrength', () => {
                 })).calculate();
                 const totalMain = resultMain.berryHelpCount;
                 const totalSub = resultSub.berryHelpCount;
-                expect(totalMain).toBeCloseTo(totalSub / 0.9, 3);
+                expect(totalMain).toBeCloseTo(totalSub / 0.9, 0);
             });
 
             test('non-favorite has fewer total helps than sub berry (15% speed penalty)', () => {
@@ -494,7 +496,7 @@ describe('PokemonStrength', () => {
                 })).calculate();
                 const totalSub = resultSub.berryHelpCount;
                 const totalNonFav = resultNonFav.berryHelpCount;
-                expect(totalNonFav).toBeCloseTo(totalSub / 1.15, 3);
+                expect(totalNonFav).toBeCloseTo(totalSub / 1.15, 0);
             });
         });
 

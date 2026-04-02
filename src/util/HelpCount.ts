@@ -70,7 +70,7 @@ export interface HelpCountResult {
  * @param param The strength parameters, including team settings.
  * @param energy The energy calculation result.
  * @param bonus The help bonus.
- * @param isWhistle 
+ * @param isWhistle Whether the whistle is used.
  * @returns Help count calculated.
  */
 export function calculateHelpCount(
@@ -81,7 +81,7 @@ export function calculateHelpCount(
     isWhistle: boolean
 ): HelpCountResult {
     const level = iv.level;
-    const countRate = Math.ceil(param.period / 24);
+    const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
     const normal = param.period < 0 ? -param.period :
         param.tapFrequencyAwake === NoTap ? 0 :
         (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRate;
@@ -100,23 +100,76 @@ export function calculateHelpCount(
 
     const ing1: IngredientHelp = {
         ...iv.ingredient1,
-        countPerHelp: iv.ingredient1.count + ingEventAdd,
+        count: 0,
+        countPerHelp: iv.ingredient1.count,
     };
-    ing1.count = ingHelpCount * (1 / ingUnlock) * ing1.countPerHelp;
+    if (ing1.countPerHelp > 0) {
+        ing1.countPerHelp += ingEventAdd;
+    }
 
     const ing2: IngredientHelp = {
         ...iv.ingredient2,
-        countPerHelp: iv.ingredient2.count + ingEventAdd,
+        count: 0,
+        countPerHelp: iv.ingredient2.count,
     };
-    ing2.count = level < 30 || ing2.count === 0 ? 0 :
-        ingHelpCount * (1 / ingUnlock) * ing2.countPerHelp;
+    if (ing2.countPerHelp > 0) {
+        ing2.countPerHelp += ingEventAdd;
+    }
 
     const ing3 = {
         ...iv.ingredient3,
-        countPerHelp: iv.ingredient3.count + ingEventAdd,
+        count: 0,
+        countPerHelp: iv.ingredient3.count,
     };
-    ing3.count = level < 60 || ing3.count === 0 ? 0 :
-        ingHelpCount * (1 / ingUnlock) * ing3.countPerHelp;
+    if (ing3.countPerHelp > 0) {
+        ing3.countPerHelp += ingEventAdd;
+    }
+
+    // calc berry
+    const berryRate = iv.berryRate;
+    const berryCount = iv.berryCount;
+
+    // calc skill
+    const skillRate = energy.skillRate;
+    const overallSkillRate = energy.overallSkillRate;
+
+    // Calculate help count
+    const {baseFreq, inventoryBonus} = calculateBaseFreqAndBonus(iv, param,
+        bonus, isWhistle);
+    const sleepScoreSeconds = param.sleepScore * 510 * 60 / 100;
+    const awakeSeconds = Math.min(1440 * 60 - sleepScoreSeconds,
+        param.period * 60 * 60);
+    const sleepSeconds = Math.min(sleepScoreSeconds,
+        param.period * 60 * 60 - awakeSeconds);
+
+    const ret: HelpCountResult = {
+        total: {
+            all: normal + sneakySnacking,
+            normal,
+            sneakySnacking,
+        },
+
+        berryRate, berryHelpCount: 0, berryCount,
+        ingRate, ingHelpCount, ing1, ing2, ing3,
+        ingredients: [],
+        skillRate, overallSkillRate, skillCount: 0,
+    };
+
+    // Awake helps
+    const simulation = new HelpCountSimulation(iv, param.isGoodCampTicketSet,
+        overallSkillRate, inventoryBonus);
+    calculateAwakeHelpCount(ret, param, awakeSeconds, baseFreq,
+        energy, simulation, isWhistle, ingUnlock);
+    calculateAsleepHelpCount(ret, param, sleepSeconds, baseFreq,
+        energy, simulation, isWhistle, ingUnlock);
+
+    // multiply count rate
+    ret.berryHelpCount *= countRate;
+    ret.ingHelpCount *= countRate;
+    ret.ing1.count *= countRate;
+    ret.ing2.count *= countRate;
+    ret.ing3.count *= countRate;
+    ret.skillCount *= countRate;
 
     const ing: {[name: string]: IngredientHelp} = {};
     const ingNames: IngredientName[] = [];
@@ -138,51 +191,181 @@ export function calculateHelpCount(
         ing[ing3.name].count += ing3.count;
         ing[ing3.name].countPerHelp += ing3.countPerHelp;
     }
-    const ingredients = ingNames.map(x => ing[x]);
+    ret.ingredients = ingNames.map(x => ing[x]);
 
-    // calc berry
-    const berryRate = iv.berryRate;
-    const berryHelpCount = (normal + sneakySnacking) - ingHelpCount;
-    const berryCount = iv.berryCount;
+    return ret;
+}
 
-    // calc skill
-    const skillRate = energy.skillRate;
-    const overallSkillRate = energy.overallSkillRate;
-    let skillCount = 0;
-    if (param.period > 0 && !isWhistle && param.tapFrequencyAwake !== NoTap) {
-        if (param.tapFrequencyAsleep === AlwaysTap) {
-            const helpCount = energy.helpCount.awake + energy.helpCount.asleepNotFull;
-            skillCount = helpCount * overallSkillRate * countRate;
-        }
-        else {
-            const skillCountAwake = energy.helpCount.awake * overallSkillRate;
+/**
+ * Calculate base help frequency and inventory bonus.
+ * @param iv PokemonIv instance.
+ * @param param Strength parameters.
+ * @param bonus The help bonus.
+ * @param isWhistle Whether the whistle is used.
+ * @returns Base help frequency and inventory bonus.
+ */
+function calculateBaseFreqAndBonus(
+    iv: PokemonIv,
+    param: EnergyParameter,
+    bonus: BonusEffects,
+    isWhistle: boolean
+): {
+    baseFreq: number,
+    inventoryBonus: InventoryBonus,
+ } {
+    const helpBonusCount = param.helpBonusCount +
+        (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
+    const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
+    const isFavoriteBerry = isExpertMode && param.favoriteType.includes(iv.pokemon.type);
+    const isMainBerry = isExpertMode && (param.favoriteType[0] === iv.pokemon.type);
+    const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
 
-            const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
-            const isFavoriteBerry = isExpertMode && param.favoriteType.includes(iv.pokemon.type);
-            const inventoryBonus = {
-                berryBonus: bonus.berry,
-                ingredientBonus: bonus.ingredient,
-                carryLimitBonus: bonus.carryLimit,
-                expertIngBonus: isFavoriteBerry && param.expertEffect === "ing",
-            };
-            const simulation = new HelpCountSimulation(iv, param.isGoodCampTicketSet,
-                overallSkillRate, inventoryBonus);
-            const result = simulation.compute(energy.helpCount.asleepNotFull);
-            const skillCountSleeping = result.skillOnce + result.skillTwice * 2;
-            skillCount = (skillCountAwake + skillCountSleeping) * countRate;
-        }
+    const baseFreq = iv.getBaseFrequency(helpBonusCount,
+        param.isGoodCampTicketSet, isMainBerry, isNonFavoriteBerry);
+    const inventoryBonus = {
+        berryBonus: bonus.berry,
+        ingredientBonus: bonus.ingredient,
+        carryLimitBonus: bonus.carryLimit,
+        expertIngBonus: isFavoriteBerry && param.expertEffect === "ing",
+    };
+    return { baseFreq, inventoryBonus };
+}
+
+/**
+ * Calculate awake help count.
+ * @param ret HelpCountResult object.
+ * @param param The strength parameters, including team settings.
+ * @param awakeSeconds Awake seconds
+ * @param baseFreq Base frequency.
+ * @param energy The energy calculation result.
+ * @param simulation HelpCountSimulation object.
+ * @param isWhistle Whether the whistle is used.
+ * @param ingUnlock Ingredient count.
+ */
+function calculateAwakeHelpCount(
+    ret: HelpCountResult,
+    param: EnergyParameter,
+    awakeSeconds: number,
+    baseFreq: number,
+    energy: EnergyResult,
+    simulation: HelpCountSimulation,
+    isWhistle: boolean,
+    ingUnlock: number
+) {
+    // Specified help count
+    if (param.period < 0) {
+        const helpCount = -param.period;
+        ret.berryHelpCount = helpCount * ret.berryRate;
+        ret.ing1.count = helpCount * ret.ingRate / ingUnlock;
+        ret.ing2.count = helpCount * ret.ingRate / ingUnlock;
+        ret.ing3.count = helpCount * ret.ingRate / ingUnlock;
+        return;
     }
 
-    return {
-        total: {
-            all: normal + sneakySnacking,
-            normal,
-            sneakySnacking,
-        },
+    // Calculate help count
+    const tapIntervalAwake = (
+        param.tapFrequencyAwake === AlwaysTap ||
+        param.tapFrequencyAwake === NoTap
+    ) ? awakeSeconds : param.tapFrequencyAwake * 60;
+    const awakeHelpCounts = calculateHelpCountPerTap(energy.efficiencies, 0,
+        baseFreq, tapIntervalAwake, awakeSeconds);
 
-        berryRate, berryHelpCount, berryCount,
-        ingRate, ingHelpCount, ing1, ing2, ing3, ingredients,
-        skillRate, overallSkillRate, skillCount,
+    // Sneaky snacking
+    if (param.tapFrequencyAwake === NoTap) {
+        ret.berryHelpCount += awakeHelpCounts[0] * ret.berryCount;
+        return;
+    }
+    
+    // Always tap simulation
+    if (param.tapFrequencyAwake === AlwaysTap || isWhistle) {
+        const helpCount = awakeHelpCounts[0];
+        ret.berryHelpCount = helpCount * ret.berryRate;
+        ret.ing1.count += helpCount * ret.ingRate / ingUnlock * ret.ing1.countPerHelp;
+        ret.ing2.count += helpCount * ret.ingRate / ingUnlock * ret.ing2.countPerHelp;
+        ret.ing3.count += helpCount * ret.ingRate / ingUnlock * ret.ing3.countPerHelp;
+
+        if (!isWhistle) {
+            ret.skillCount += helpCount * ret.overallSkillRate;
+        }
+        return;
+    }
+
+    // Tap frequency simulation
+    for (const helpCount of awakeHelpCounts) {
+        const result = simulation.compute(helpCount);
+        ret.berryHelpCount = result.berryCount;
+        ret.ing1.count = result.ingredientCount[0];
+        ret.ing2.count = result.ingredientCount[1] ?? 0;
+        ret.ing3.count = result.ingredientCount[2] ?? 0;
+        if (param.tapFrequencyAwake !== NoTap && !isWhistle) {
+            ret.skillCount = result.skillOnce + result.skillTwice * 2;
+        }
+    }
+}
+
+/**
+ * Calculate sleep help count.
+ * @param ret HelpCountResult object.
+ * @param param The strength parameters, including team settings.
+ * @param sleepSeconds Sleep seconds
+ * @param baseFreq Base frequency.
+ * @param energy The energy calculation result.
+ * @param simulation HelpCountSimulation object.
+ * @param isWhistle Whether the whistle is used.
+ * @param ingUnlock Ingredient count.
+ */
+function calculateAsleepHelpCount(
+    ret: HelpCountResult,
+    param: EnergyParameter,
+    sleepSeconds: number,
+    baseFreq: number,
+    energy: EnergyResult,
+    simulation: HelpCountSimulation,
+    isWhistle: boolean,
+    ingUnlock: number
+) {
+    // Skip for help count and whistle
+    if (param.period < 0 || isWhistle) {
+        return;
+    }
+
+    if (sleepSeconds <= 0) {
+        return;
+    }
+
+    // Calculate help count
+    const tapIntervalAsleep = (
+        param.tapFrequencyAsleep === AlwaysTap ||
+        param.tapFrequencyAsleep === NoTap
+    ) ? sleepSeconds : param.tapFrequencyAsleep * 60;
+    const asleepHelpCounts = calculateHelpCountPerTap(energy.efficiencies,
+        sleepSeconds, baseFreq, tapIntervalAsleep, sleepSeconds);
+
+    // Always tap simulation
+    if (param.tapFrequencyAsleep === AlwaysTap) {
+        const helpCount = asleepHelpCounts[0];
+        ret.berryHelpCount = helpCount * ret.berryRate;
+        ret.ing1.count += helpCount * ret.ingRate / ingUnlock * ret.ing1.countPerHelp;
+        ret.ing2.count += helpCount * ret.ingRate / ingUnlock * ret.ing2.countPerHelp;
+        ret.ing3.count += helpCount * ret.ingRate / ingUnlock * ret.ing3.countPerHelp;
+        ret.skillCount += helpCount * ret.overallSkillRate;
+        return;
+    }
+
+    // Tap frequency simulation
+    for (const helpCount of asleepHelpCounts) {
+        const result = simulation.compute(helpCount);
+        ret.berryHelpCount += result.berryCount;
+        ret.ing1.count += result.ingredientCount[0];
+        ret.ing2.count += result.ingredientCount[1] ?? 0;
+        ret.ing3.count += result.ingredientCount[2] ?? 0;
+
+        // If no tap during the day, don't count skills at night
+        if (param.tapFrequencyAwake === NoTap &&
+            param.tapFrequencyAsleep === NoTap) {
+            continue;
+        }
+        ret.skillCount += result.skillOnce + result.skillTwice * 2;
     }
 }
 
@@ -270,6 +453,10 @@ export function calculateHelpCountPerTap(
     tapInterval: number,
     duration: number
 ): number[] {
+    if (tapInterval <= 0) {
+        throw new Error('tap interval must be positive');
+    }
+
     // Absolute seconds of the end of the duration
     const endTime = elapsed + duration;
     // Start of the next calculateHelpCountInInterval segment, or the time the
