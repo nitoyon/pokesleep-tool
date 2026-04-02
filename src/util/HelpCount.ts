@@ -1,7 +1,7 @@
 import { IngredientName } from "../data/pokemons";
 import PokemonIv, { BagUsagePerHelpDetailItem, InventoryBonus } from './PokemonIv';
 import {
-    EnergyParameter, EnergyResult, AlwaysTap, NoTap, whistlePeriod,
+    EfficiencyEvent, EnergyParameter, EnergyResult, AlwaysTap, NoTap, whistlePeriod,
 } from './Energy';
 import { BonusEffects } from '../data/events';
 import { isExpertField } from "../data/fields";
@@ -184,6 +184,25 @@ export function calculateHelpCount(
         ingRate, ingHelpCount, ing1, ing2, ing3, ingredients,
         skillRate, overallSkillRate, skillCount,
     }
+}
+
+/**
+ * Calculate the elapsed time (in seconds) when the next help will complete.
+ *
+ * @param efficiencies - Efficiency event list (start/end in minutes since wake up).
+ * @param elapsed - Help start time in seconds since wake up.
+ * @param baseFreq - Base help frequency in seconds.
+ * @returns Elapsed time in seconds when the next help completes.
+ */
+export function calculateNextHelpElapsed(
+    efficiencies: EfficiencyEvent[],
+    elapsed: number,
+    baseFreq: number
+): number {
+    const elapsedMin = elapsed / 60;
+    const event = efficiencies.find(e => e.start <= elapsedMin && elapsedMin < e.end);
+    const frequencyRate = event?.frequencyRate ?? 1;
+    return elapsed + baseFreq * frequencyRate;
 }
 
 /** Result of HelpCountSimulation.compute(). */

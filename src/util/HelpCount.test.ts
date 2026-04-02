@@ -1,6 +1,33 @@
 import { describe, test, expect } from 'vitest';
 import PokemonIv from './PokemonIv';
-import { HelpCountSimulation } from './HelpCount';
+import { calculateNextHelpElapsed, HelpCountSimulation } from './HelpCount';
+
+describe('calculateNextHelpElapsed', () => {
+    test('uses frequencyRate from matching event', () => {
+        // elapsed=1800s => elapsedMin=30 (2nd event)
+        // frequencyRate=0.52
+        expect(calculateNextHelpElapsed([
+            { start: 0, end: 20, efficiency: 2.222, frequencyRate: 0.45, isAwake: true, isSnacking: false, isInPeriod: true },
+            { start: 2, end: 40, efficiency: 1.923, frequencyRate: 0.52, isAwake: true, isSnacking: false, isInPeriod: true },
+            { start: 40, end: 120, efficiency: 1.0, frequencyRate: 1, isAwake: false, isSnacking: false, isInPeriod: true },
+        ], 1800, 1000)).toBe(1800 + 1000 * 0.52);
+    });
+
+    test('end boundary is exclusive, start boundary is inclusive', () => {
+        expect(calculateNextHelpElapsed([
+            { start: 0, end: 60, efficiency: 2.222, frequencyRate: 0.45, isAwake: true, isSnacking: false, isInPeriod: true },
+            { start: 60, end: 120, efficiency: 1.0, frequencyRate: 1, isAwake: false, isSnacking: false, isInPeriod: true },
+        ], 3600, 1000)).toBe(3600 + 1000 * 1);
+    });
+
+    test('falls back to frequencyRate=1 when no event matches', () => {
+        // elapsed=8000s => elapsedMin=133.3, not in any event
+        expect(calculateNextHelpElapsed([
+            { start: 0, end: 60, efficiency: 2.222, frequencyRate: 0.45, isAwake: true, isSnacking: false, isInPeriod: true },
+            { start: 60, end: 120, efficiency: 1.0, frequencyRate: 1, isAwake: false, isSnacking: false, isInPeriod: true },
+        ], 8000, 1000)).toBe(8000 + 1000 * 1);
+    });
+});
 
 describe('HelpCountSimulation', () => {
     describe('Basic', () => {
