@@ -29,7 +29,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     const param = strength.parameter;
     const berryStrength = Math.ceil(result.berryStrength * strength.berryStrengthBonus);
     const hasBerryCountBonus = (result.bonus.berry > 0);
-    const berryCountWithBonus = result.berryCount + result.bonus.berry;
+    const berryCountWithBonus = result.berryCountPerNormalHelp;
     const helpCount = hasBerryCountBonus ? 
         round1(result.total.normal * result.berryRate) :
         round1(result.berryHelpCount);

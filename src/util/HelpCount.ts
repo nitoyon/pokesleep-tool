@@ -1,7 +1,9 @@
 import { IngredientName } from "../data/pokemons";
-import PokemonIv, { BagUsagePerHelpDetailItem, InventoryBonus } from './PokemonIv';
+import PokemonIv, {
+    BagUsagePerHelpDetailItem, IngredientSlot, InventoryBonus
+} from './PokemonIv';
 import {
-    EfficiencyEvent, EnergyParameter, EnergyResult, AlwaysTap, NoTap, whistlePeriod,
+    EfficiencyEvent, EnergyParameter, EnergyResult, AlwaysTap, NoTap,
 } from './Energy';
 import { BonusEffects } from '../data/events';
 import { isExpertField } from "../data/fields";
@@ -26,8 +28,12 @@ export interface IngredientHelp {
     name: IngredientName;
     /** Ingredient count. */
     count: number;
-    /** Ingredient count by single help */
+    /** Help count. */
+    helpCount: number;
+    /** Ingredient count by single help (0 if locked) */
     countPerHelp: number;
+    /** Array of ingredient slot */
+    slots: IngredientSlot[];
 }
 
 /**
@@ -39,20 +45,39 @@ export interface HelpCountResult {
 
     /** Berry rate */
     berryRate: number;
-    /** Berry help count */
-    berryHelpCount: number;
-    /** Berry count per help */
+    /**
+     * The number of berries brought by the Pokémon.
+     * (berryNormalHelpCount * berryCountPerNormalHelp +
+     * berrySneakySnackingCount * berryCountPerSneakySnacking)
+     */
     berryCount: number;
+    /** Berry help count (normal help + sneaky snacking) */
+    berryHelpCount: number;
+    /** Berry help count (normal help) */
+    berryNormalHelpCount: number;
+    /** Berry help count (sneaky snacking) */
+    berrySneakySnackingCount: number;
+    /** Berry count per normal help */
+    berryCountPerNormalHelp: number;
+    /**
+     * Berry count per sneaky snacking
+     *
+     * This value is different from berryCountPerNormalHelp when
+     * an event bonus for berries is active.
+     */
+    berryCountPerSneakySnacking: number;
     /** Ingredient rate */
     ingRate: number;
+    /** Number of ingredient slots (e.g., AAA Lv60 → 3) */
+    ingSlotCount: number;
     /** Ingredient help count */
     ingHelpCount: number;
     /** Ing1 name and count */
-    ing1: IngredientHelp;
+    ing1: IngredientSlot;
     /** Ing2 name and count */
-    ing2: IngredientHelp;
+    ing2: IngredientSlot;
     /** Ing3 name and count */
-    ing3: IngredientHelp;
+    ing3: IngredientSlot;
     /** Ing1 ~ Ing3 name, count */
     ingredients: IngredientHelp[];
     /** Skill rate */
@@ -80,58 +105,7 @@ export function calculateHelpCount(
     bonus: BonusEffects,
     isWhistle: boolean
 ): HelpCountResult {
-    const level = iv.level;
     const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
-    const normal = param.period < 0 ? -param.period :
-        param.tapFrequencyAwake === NoTap ? 0 :
-        (energy.helpCount.awake + energy.helpCount.asleepNotFull) * countRate;
-    const sneakySnacking = param.period < 0 ? 0 :
-        param.tapFrequencyAwake === NoTap ?
-        (energy.helpCount.awake + energy.helpCount.asleepNotFull + energy.helpCount.asleepFull) * countRate :
-        energy.helpCount.asleepFull * countRate;
-
-    // calc ingredient
-    const ingRate = iv.ingredientRate;
-    const ingHelpCount = normal * ingRate;
-    const ingUnlock = 1 +
-        (level >= 30 && iv.ingredient2.count > 0 ? 1 : 0) +
-        (level >= 60 && iv.ingredient3.count > 0 ? 1 : 0);
-    const ingEventAdd: number = (param.period !== whistlePeriod ? bonus.ingredient : 0);
-
-    const ing1: IngredientHelp = {
-        ...iv.ingredient1,
-        count: 0,
-        countPerHelp: iv.ingredient1.count,
-    };
-    if (ing1.countPerHelp > 0) {
-        ing1.countPerHelp += ingEventAdd;
-    }
-
-    const ing2: IngredientHelp = {
-        ...iv.ingredient2,
-        count: 0,
-        countPerHelp: iv.ingredient2.count,
-    };
-    if (ing2.countPerHelp > 0) {
-        ing2.countPerHelp += ingEventAdd;
-    }
-
-    const ing3 = {
-        ...iv.ingredient3,
-        count: 0,
-        countPerHelp: iv.ingredient3.count,
-    };
-    if (ing3.countPerHelp > 0) {
-        ing3.countPerHelp += ingEventAdd;
-    }
-
-    // calc berry
-    const berryRate = iv.berryRate;
-    const berryCount = iv.berryCount;
-
-    // calc skill
-    const skillRate = energy.skillRate;
-    const overallSkillRate = energy.overallSkillRate;
 
     // Calculate help count
     const {baseFreq, inventoryBonus} = calculateBaseFreqAndBonus(iv, param,
@@ -142,56 +116,108 @@ export function calculateHelpCount(
     const sleepSeconds = Math.min(sleepScoreSeconds,
         param.period * 60 * 60 - awakeSeconds);
 
-    const ret: HelpCountResult = {
-        total: {
-            all: normal + sneakySnacking,
-            normal,
-            sneakySnacking,
-        },
-
-        berryRate, berryHelpCount: 0, berryCount,
-        ingRate, ingHelpCount, ing1, ing2, ing3,
-        ingredients: [],
-        skillRate, overallSkillRate, skillCount: 0,
-    };
+    // Initialize return value
+    const ret: HelpCountResult = initializeHelpCountResult(
+        iv, energy, bonus, isWhistle);
 
     // Awake helps
     const simulation = new HelpCountSimulation(iv, param.isGoodCampTicketSet,
-        overallSkillRate, inventoryBonus);
+        ret.overallSkillRate, inventoryBonus);
     calculateAwakeHelpCount(ret, param, awakeSeconds, baseFreq,
-        energy, simulation, isWhistle, ingUnlock);
+        energy, simulation, isWhistle);
     calculateAsleepHelpCount(ret, param, sleepSeconds, baseFreq,
-        energy, simulation, isWhistle, ingUnlock);
+        energy, simulation, isWhistle);
 
     // multiply count rate
     ret.berryHelpCount *= countRate;
     ret.ingHelpCount *= countRate;
-    ret.ing1.count *= countRate;
-    ret.ing2.count *= countRate;
-    ret.ing3.count *= countRate;
+    ret.ingredients.forEach(x => x.count *= countRate);
     ret.skillCount *= countRate;
 
-    const ing: {[name: string]: IngredientHelp} = {};
-    const ingNames: IngredientName[] = [];
-    ing[ing1.name] = {...ing1};
-    ingNames.push(ing1.name);
-    if (ing2.count > 0) {
-        if (!(ing2.name in ing)) {
-            ing[ing2.name] = {name: ing2.name, count: 0, countPerHelp: 0 };
-            ingNames.push(ing2.name);
-        }
-        ing[ing2.name].count += ing2.count;
-        ing[ing2.name].countPerHelp += ing2.countPerHelp;
+    return ret;
+}
+
+function initializeHelpCountResult(
+    iv: PokemonIv,
+    energy: EnergyResult,
+    bonus: BonusEffects,
+    isWhistle: boolean
+): HelpCountResult {
+    const level = iv.level;
+    const ingEventAdd: number = (isWhistle ? 0 : bonus.ingredient);
+
+    let ingSlotCount = 0;
+    const ing1 = { ...iv.ingredient1 };
+    if (iv.ingredient1.count > 0) {
+        ingSlotCount++;
+        ing1.count += ingEventAdd;
     }
-    if (ing3 !== undefined && ing3.count > 0) {
-        if (!(ing3.name in ing)) {
-            ing[ing3.name] = {name: ing3.name, count: 0, countPerHelp: 0 };
-            ingNames.push(ing3.name);
-        }
-        ing[ing3.name].count += ing3.count;
-        ing[ing3.name].countPerHelp += ing3.countPerHelp;
+
+    const ing2 = { ...iv.ingredient2, count: 0 };
+    if (level >= 30 && iv.ingredient2.count > 0) {
+        ingSlotCount++;
+        ing2.count = iv.ingredient2.count + ingEventAdd;
     }
-    ret.ingredients = ingNames.map(x => ing[x]);
+
+    const ing3 = { ...iv.ingredient3, count: 0 }
+    if (level >= 60 && iv.ingredient3.count > 0) {
+        ingSlotCount++;
+        ing3.count = iv.ingredient3.count + ingEventAdd;
+    }
+
+    const ret: HelpCountResult = {
+        total: {
+            all: 0,
+            normal: 0,
+            sneakySnacking: 0,
+        },
+
+        berryRate: iv.berryRate,
+        berryCount: 0,
+        berryHelpCount: 0,
+        berryNormalHelpCount: 0,
+        berrySneakySnackingCount: 0,
+        berryCountPerNormalHelp: iv.berryCount + bonus.berry,
+        berryCountPerSneakySnacking: iv.berryCount,
+        ingRate: iv.ingredientRate,
+        ingSlotCount,
+        ingHelpCount: 0,
+        ing1, ing2, ing3,
+        ingredients: [],
+        skillRate: energy.skillRate,
+        overallSkillRate: energy.overallSkillRate,
+        skillCount: 0,
+    };
+
+    // initialize ingredients
+    function addIngredients(ret: HelpCountResult, ing: IngredientSlot) {
+        const entry = ret.ingredients.find(x => x.name === ing.name);
+        if (entry !== undefined) {
+            entry.slots.push(ing);
+            return;
+        }
+        ret.ingredients.push({
+            name: ing.name,
+            count: 0,
+            countPerHelp: ing.count,
+            helpCount: 0,
+            slots: [ing],
+        });
+    }
+    addIngredients(ret, ret.ing1);
+    if (ret.ingSlotCount >= 2) {
+        addIngredients(ret, ret.ing2);
+    }
+    if (ret.ingSlotCount >= 3) {
+        addIngredients(ret, ret.ing3);
+    }
+
+    // Fix ingredients.countPerHelp to the average countPerHelp
+    for (const ing of ret.ingredients) {
+        ing.countPerHelp =
+            ing.slots.reduce((p, c) => p + c.count, 0) /
+            ing.slots.length;
+    }
 
     return ret;
 }
@@ -240,7 +266,6 @@ function calculateBaseFreqAndBonus(
  * @param energy The energy calculation result.
  * @param simulation HelpCountSimulation object.
  * @param isWhistle Whether the whistle is used.
- * @param ingUnlock Ingredient count.
  */
 function calculateAwakeHelpCount(
     ret: HelpCountResult,
@@ -249,16 +274,11 @@ function calculateAwakeHelpCount(
     baseFreq: number,
     energy: EnergyResult,
     simulation: HelpCountSimulation,
-    isWhistle: boolean,
-    ingUnlock: number
+    isWhistle: boolean
 ) {
     // Specified help count
     if (param.period < 0) {
-        const helpCount = -param.period;
-        ret.berryHelpCount = helpCount * ret.berryRate;
-        ret.ing1.count = helpCount * ret.ingRate / ingUnlock;
-        ret.ing2.count = helpCount * ret.ingRate / ingUnlock;
-        ret.ing3.count = helpCount * ret.ingRate / ingUnlock;
+        addAlwaysTapHelps(ret, -param.period, false);
         return;
     }
 
@@ -267,40 +287,45 @@ function calculateAwakeHelpCount(
         param.tapFrequencyAwake === AlwaysTap ||
         param.tapFrequencyAwake === NoTap
     ) ? awakeSeconds : param.tapFrequencyAwake * 60;
-    const awakeHelpCounts = calculateHelpCountPerTap(energy.efficiencies, 0,
+    const helpCounts = calculateHelpCountPerTap(energy.efficiencies, 0,
         baseFreq, tapIntervalAwake, awakeSeconds);
 
-    // Sneaky snacking
+    // NoTap: Sneaky snacking
     if (param.tapFrequencyAwake === NoTap) {
-        ret.berryHelpCount += awakeHelpCounts[0] * ret.berryCount;
+        ret.total.all = ret.total.sneakySnacking = helpCounts[0];
+        ret.berryHelpCount = helpCounts[0];
+        ret.berryCount = ret.berryHelpCount * ret.berryCountPerSneakySnacking;
+        ret.berrySneakySnackingCount = helpCounts[0];
         return;
     }
     
-    // Always tap simulation
+    // AlwaysTap or Whistle: Always tap simulation
     if (param.tapFrequencyAwake === AlwaysTap || isWhistle) {
-        const helpCount = awakeHelpCounts[0];
-        ret.berryHelpCount = helpCount * ret.berryRate;
-        ret.ing1.count += helpCount * ret.ingRate / ingUnlock * ret.ing1.countPerHelp;
-        ret.ing2.count += helpCount * ret.ingRate / ingUnlock * ret.ing2.countPerHelp;
-        ret.ing3.count += helpCount * ret.ingRate / ingUnlock * ret.ing3.countPerHelp;
-
-        if (!isWhistle) {
-            ret.skillCount += helpCount * ret.overallSkillRate;
-        }
+        addAlwaysTapHelps(ret, helpCounts[0], !isWhistle);
         return;
     }
 
     // Tap frequency simulation
-    for (const helpCount of awakeHelpCounts) {
+    for (const helpCount of helpCounts) {
         const result = simulation.compute(helpCount);
-        ret.berryHelpCount = result.berryCount;
-        ret.ing1.count = result.ingredientCount[0];
-        ret.ing2.count = result.ingredientCount[1] ?? 0;
-        ret.ing3.count = result.ingredientCount[2] ?? 0;
-        if (param.tapFrequencyAwake !== NoTap && !isWhistle) {
-            ret.skillCount = result.skillOnce + result.skillTwice * 2;
-        }
+        ret.total.all += helpCount;
+        ret.total.normal += result.normalHelpCount;
+        ret.total.sneakySnacking += result.sneakySnackingCount;
+        ret.berryCount += result.berryCount;
+        ret.berryNormalHelpCount += result.normalHelpCount * ret.berryRate;
+        ret.berrySneakySnackingCount += result.sneakySnackingCount;
+
+        const ingHelpCount = result.normalHelpCount * ret.ingRate;
+        ret.ingHelpCount += ingHelpCount;
+        ret.ingredients.forEach((ingredient, index) => {
+            ingredient.count += result.ingredientCount[index];
+            ingredient.helpCount += ingHelpCount / ret.ingSlotCount * ingredient.slots.length;
+        });
+
+        ret.skillCount += result.skillOnce + result.skillTwice * 2;
     }
+    ret.berryHelpCount = ret.berryNormalHelpCount +
+        ret.berrySneakySnackingCount;
 }
 
 /**
@@ -312,7 +337,6 @@ function calculateAwakeHelpCount(
  * @param energy The energy calculation result.
  * @param simulation HelpCountSimulation object.
  * @param isWhistle Whether the whistle is used.
- * @param ingUnlock Ingredient count.
  */
 function calculateAsleepHelpCount(
     ret: HelpCountResult,
@@ -321,14 +345,14 @@ function calculateAsleepHelpCount(
     baseFreq: number,
     energy: EnergyResult,
     simulation: HelpCountSimulation,
-    isWhistle: boolean,
-    ingUnlock: number
+    isWhistle: boolean
 ) {
     // Skip for help count and whistle
     if (param.period < 0 || isWhistle) {
         return;
     }
 
+    // Skip if sleep seconds is 0
     if (sleepSeconds <= 0) {
         return;
     }
@@ -343,22 +367,26 @@ function calculateAsleepHelpCount(
 
     // Always tap simulation
     if (param.tapFrequencyAsleep === AlwaysTap) {
-        const helpCount = asleepHelpCounts[0];
-        ret.berryHelpCount = helpCount * ret.berryRate;
-        ret.ing1.count += helpCount * ret.ingRate / ingUnlock * ret.ing1.countPerHelp;
-        ret.ing2.count += helpCount * ret.ingRate / ingUnlock * ret.ing2.countPerHelp;
-        ret.ing3.count += helpCount * ret.ingRate / ingUnlock * ret.ing3.countPerHelp;
-        ret.skillCount += helpCount * ret.overallSkillRate;
+        addAlwaysTapHelps(ret, asleepHelpCounts[0], true);
         return;
     }
 
-    // Tap frequency simulation
+    // Tap frequency simulation (Including NoTap)
     for (const helpCount of asleepHelpCounts) {
         const result = simulation.compute(helpCount);
-        ret.berryHelpCount += result.berryCount;
-        ret.ing1.count += result.ingredientCount[0];
-        ret.ing2.count += result.ingredientCount[1] ?? 0;
-        ret.ing3.count += result.ingredientCount[2] ?? 0;
+        ret.total.all += helpCount;
+        ret.total.normal += result.normalHelpCount;
+        ret.total.sneakySnacking += result.sneakySnackingCount;
+        ret.berryCount += result.berryCount;
+        ret.berryNormalHelpCount += result.normalHelpCount * ret.berryRate;
+        ret.berrySneakySnackingCount += result.sneakySnackingCount;
+
+        const ingHelpCount = result.normalHelpCount * ret.ingRate;
+        ret.ingHelpCount += ingHelpCount;
+        ret.ingredients.forEach((ingredient, index) => {
+            ingredient.count += result.ingredientCount[index];
+            ingredient.helpCount += ingHelpCount / ret.ingSlotCount * ingredient.slots.length;
+        });
 
         // If no tap during the day, don't count skills at night
         if (param.tapFrequencyAwake === NoTap &&
@@ -366,6 +394,44 @@ function calculateAsleepHelpCount(
             continue;
         }
         ret.skillCount += result.skillOnce + result.skillTwice * 2;
+    }
+    ret.berryHelpCount = ret.berryNormalHelpCount +
+        ret.berrySneakySnackingCount;
+}
+
+/**
+ * Add always tap help to HelpCountResult.
+ * @param ret HelpCountResult to be added.
+ * @param helpCount The number of helps.
+ * @param addSkillCount Wheather skill count is added or not.
+ */
+function addAlwaysTapHelps(
+    ret: HelpCountResult,
+    helpCount: number,
+    addSkillCount: boolean
+) {
+    // total
+    ret.total.all += helpCount;
+    ret.total.normal += helpCount;
+
+    // berry
+    const berryHelpCount = helpCount * ret.berryRate;
+    ret.berryHelpCount += berryHelpCount;
+    ret.berryCount += berryHelpCount * ret.berryCountPerNormalHelp;
+    ret.berryNormalHelpCount += berryHelpCount;
+
+    // ingredient
+    const ingHelpCount = helpCount * ret.ingRate;
+    ret.ingHelpCount += ingHelpCount;
+    for (const ing of ret.ingredients) {
+        const helpCount = ingHelpCount / ret.ingSlotCount * ing.slots.length;
+        ing.helpCount += helpCount;
+        ing.count += helpCount * ing.countPerHelp;
+    }
+
+    // skill
+    if (addSkillCount) {
+        ret.skillCount += helpCount * ret.overallSkillRate;
     }
 }
 

@@ -17,34 +17,91 @@ function createParam(obj: Partial<StrengthParameter>): StrengthParameter {
 
 describe('PokemonStrength', () => {
     describe('calculate', () => {
-        test('ingredient unlock levels', () => {
-            // Level 1 - only ing1
+        test('ingredient unlock levels (Lv 1)', () => {
+            // Level 1 - ing1
             const iv = new PokemonIv({
                 pokemonName: 'Raichu',
                 level: 1,
             });
-            let param = createParam({});
-            let strength = new PokemonStrength(iv, param);
-            let result = strength.calculate();
+            const param = createParam({});
+            const strength = new PokemonStrength(iv, param);
+
+            const result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBe(0);
             expect(result.ing3.count).toBe(0);
 
+            expect(result.ingredients).toHaveLength(1);
+            expect(result.ingHelpCount).toBe(
+                result.ingredients[0].helpCount);
+        });
+
+        test('ingredient unlock level (Lv 30)', () => {
             // Level 30 - ing1 and ing2
-            param = createParam({});
-            strength = new PokemonStrength(iv.clone({level: 30}), param);
-            result = strength.calculate();
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 30,
+                ingredient: 'ABC',
+            });
+            const param = createParam({});
+            const strength = new PokemonStrength(iv, param);
+
+            const result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
             expect(result.ing3.count).toBe(0);
 
+            expect(result.ingredients).toHaveLength(2);
+            expect(result.ingHelpCount).toBe(
+                result.ingredients[0].helpCount +
+                result.ingredients[1].helpCount);
+        });
+
+        test('ingredient unlock level (Lv 60 ABC)', () => {
             // Level 60 - all ingredients
-            param = createParam({});
-            strength = new PokemonStrength(iv.clone({level: 60}), param);
-            result = strength.calculate();
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 60,
+                ingredient: 'ABC',
+            });
+            const param = createParam({});
+            const strength = new PokemonStrength(iv, param);
+
+            const result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
             expect(result.ing3.count).toBeGreaterThan(0);
+
+            expect(result.ingredients).toHaveLength(3);
+            expect(result.ingHelpCount).toBeCloseTo(
+                result.ingredients[0].helpCount +
+                result.ingredients[1].helpCount +
+                result.ingredients[2].helpCount);
+        });
+
+        test('ingredient unlock level (Lv 60 ABB)', () => {
+            // Level 60 - all ingredients
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 60,
+                ingredient: 'ABB',
+            });
+            const param = createParam({});
+            const strength = new PokemonStrength(iv, param);
+
+            const result = strength.calculate();
+            expect(result.ing1.count).toBeGreaterThan(0);
+            expect(result.ing2.count).toBeGreaterThan(0);
+            console.log(result.ing3);
+            expect(result.ing3.count).toBeGreaterThan(0);
+
+            expect(result.ingredients).toHaveLength(2);
+            expect(result.ingredients[0].name).toBe(result.ing1.name);
+            expect(result.ingredients[1].name).toBe(result.ing2.name);
+            expect(result.ingredients[0].helpCount)
+                .toBeCloseTo(result.ingHelpCount / 3);
+            expect(result.ingredients[1].helpCount)
+                .toBeCloseTo(result.ingHelpCount * 2 / 3);
         });
 
         test('field bonus affects berry and ingredient strength', () => {
@@ -424,11 +481,11 @@ describe('PokemonStrength', () => {
 
                 const berryIv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
                 const resultBerry = new PokemonStrength(berryIv, param).calculate();
-                expect(resultBerry.ing1.countPerHelp).toBe(berryIv.pokemon.ing1.c1 + 1);
+                expect(resultBerry.ing1.count).toBe(berryIv.pokemon.ing1.c1 + 1);
 
                 const ingIv = new PokemonIv({ pokemonName: 'Luxray', level: 50 });
                 const resultIng = new PokemonStrength(ingIv, param).calculate();
-                expect(resultIng.ing1.countPerHelp).toBe(ingIv.pokemon.ing1.c1 + 1.5);
+                expect(resultIng.ing1.count).toBe(ingIv.pokemon.ing1.c1 + 1.5);
             });
 
             test('skill: expertEffect skill gives higher skillCount than expertEffect berry', () => {
@@ -661,6 +718,62 @@ describe('PokemonStrength', () => {
             expect(resultNoTap.energy.helpCount.asleepNotFull).toBeLessThan(
                 resultAlwaysTap.energy.helpCount.asleepNotFull
             );
+        });
+    });
+
+    describe('helpCount', () => {
+        test('period=-10 (10 fixed helps)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 60,
+                ingredient: 'ABC',
+            });
+            const param = createParam({period: -10});
+            const strength = new PokemonStrength(iv, param);
+            const result = strength.calculate();
+
+            expect(result.total.all).toBe(result.total.normal);
+            expect(result.total.sneakySnacking).toBe(0);
+            expect(result.total.all)
+                .toBeCloseTo(result.berryHelpCount + result.ingHelpCount, 4);
+            expect(result.berryHelpCount).toBe(result.berryNormalHelpCount);
+            expect(result.berrySneakySnackingCount).toBe(0);
+            expect(result.ing1.count).toBe(1);
+            expect(result.ingredients[0].count)
+                .toBe(result.ingHelpCount * result.ing1.count / 3);
+            expect(result.ing2.count).toBe(2);
+            expect(result.ingredients[1].count)
+                .toBe(result.ingHelpCount * result.ing2.count / 3);
+            expect(result.ing3.count).toBe(3);
+            expect(result.ingredients[2].count)
+                .toBe(result.ingHelpCount * result.ing3.count / 3);
+        });
+
+        test('AlwaysTap (8 hours)', () => {
+            const iv = new PokemonIv({
+                pokemonName: 'Raichu',
+                level: 60,
+            });
+            const param = createParam({period: 8, tapFrequencyAwake: AlwaysTap});
+            const strength = new PokemonStrength(iv, param);
+            const result = strength.calculate();
+
+            expect(result.total.all).toBe(result.total.normal);
+            expect(result.total.sneakySnacking).toBe(0);
+            expect(result.total.all)
+                .toBeCloseTo(result.berryHelpCount + result.ingHelpCount, 4);
+            expect(result.berryHelpCount).toBe(result.berryNormalHelpCount);
+            expect(result.berrySneakySnackingCount).toBe(0);
+            expect(result.berryCount).toBe(result.berryHelpCount * result.berryCountPerNormalHelp);
+            expect(result.ing1.count).toBe(1);
+            expect(result.ingredients[0].count)
+                .toBe(result.ingHelpCount * result.ing1.count / 3);
+            expect(result.ing2.count).toBe(2);
+            expect(result.ingredients[1].count)
+                .toBe(result.ingHelpCount * result.ing2.count / 3);
+            expect(result.ing3.count).toBe(3);
+            expect(result.ingredients[2].count)
+                .toBe(result.ingHelpCount * result.ing3.count / 3);
         });
     });
 

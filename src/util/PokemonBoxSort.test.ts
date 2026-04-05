@@ -273,14 +273,14 @@ describe('sortPokemonItems', () => {
                     case 'Pikachu':
                         return createStrengthResult({
                             ingredients: [
-                                {name: 'apple', count: 8, strength: 800, countPerHelp: 8},
-                                {name: 'ginger', count: 16, strength: 1600, countPerHelp: 16},
+                                {name: 'apple', count: 8, strength: 800, helpCount: 8, countPerHelp: 1, slots: []},
+                                {name: 'ginger', count: 16, strength: 1600, helpCount: 8, countPerHelp: 2, slots: []},
                             ],
                         });
                     case 'Eevee (Halloween)':
                         return createStrengthResult({
                             ingredients: [
-                                {name: 'pumpkin', count: 20, strength: 5000, countPerHelp: 20},
+                                {name: 'pumpkin', count: 20, strength: 5000, helpCount: 20, countPerHelp: 1, slots: []},
                             ],
                         });
                 }

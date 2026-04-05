@@ -9,7 +9,7 @@ import Energy, {
 } from './Energy';
 import { MainSkillName } from './MainSkill';
 import { calculateHelpCount, HelpCountResult, IngredientHelp } from './HelpCount';
-import PokemonIv from './PokemonIv';
+import PokemonIv, { IngredientSlot } from './PokemonIv';
 import PokemonRp, {
     averageIngredientStrength, ingredientStrength,
  } from './PokemonRp';
@@ -192,11 +192,11 @@ export interface StrengthResult extends Omit<HelpCountResult, 'ing1' | 'ing2' | 
     /** Ingredient strength */
     ingStrength: number;
     /** Ing1 name and count */
-    ing1: IngredientStrength;
+    ing1: IngredientSlot;
     /** Ing2 name and count */
-    ing2: IngredientStrength;
+    ing2: IngredientSlot;
     /** Ing3 name and count */
-    ing3: IngredientStrength;
+    ing3: IngredientSlot;
     /** Ing1 ~ Ing3 name, count, strength summary */
     ingredients: IngredientStrength[];
     /**
@@ -367,29 +367,15 @@ class PokemonStrength {
         const ingStrengthRate = (ingInRecipeStrengthRate * 0.8 + 0.2) *
             (1 + param.fieldBonus / 100) * bonus.dish;
 
-        const ing1: IngredientStrength = {
-            ...helpCount.ing1,
-            strength: 0,
-        };
-        ing1.strength = ingredientStrength[ing1.name] * ing1.count * ingStrengthRate;
-
-        const ing2: IngredientStrength = {
-            ...helpCount.ing2,
-            strength: 0,
-        };
-        ing2.strength = ingredientStrength[ing2.name] * ing2.count * ingStrengthRate;
-
-        const ing3 = {
-            ...helpCount.ing3,
-            strength: 0,
-        };
-        ing3.strength = ingredientStrength[ing3.name] * ing3.count * ingStrengthRate;
-        const ingStrength = ing1.strength + ing2.strength + ing3.strength;
+        const ing1 = helpCount.ing1;
+        const ing2 = helpCount.ing2;
+        const ing3 = helpCount.ing3;
 
         const ingredients = helpCount.ingredients.map(x => ({
             ...x,
             strength: x.count * ingredientStrength[x.name] * ingStrengthRate,
         }));
+        const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
 
         // calc berry
         const berryCountWithBonus = this.iv.berryCount + bonus.berry;

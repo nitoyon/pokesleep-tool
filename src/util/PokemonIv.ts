@@ -11,6 +11,16 @@ import {
     expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
 } from './PokemonStrength';
 
+/**
+ * Represents the slot of ingredient.
+ */
+export interface IngredientSlot {
+    /** Ingredient name. */
+    name: IngredientName;
+    /** Ingredient count by single help (0 if locked) */
+    count: number;
+}
+
 /** Bonus that affect inventory consumption */
 export interface InventoryBonus {
     /** Berry count bonus from events (0 or 1) */
@@ -324,7 +334,7 @@ class PokemonIv {
         return ret;
     }
 
-    get ingredient1() {
+    get ingredient1(): IngredientSlot {
         if (this.pokemon.mythIng !== undefined) {
             return {
                 name: this.mythIng1 ?? "unknown",
@@ -338,7 +348,7 @@ class PokemonIv {
         };
     }
 
-    get ingredient2() {
+    get ingredient2(): IngredientSlot {
         if (this.pokemon.mythIng !== undefined) {
             return {
                 name: this.mythIng2 ?? "unknown",
@@ -351,7 +361,7 @@ class PokemonIv {
         return { name: ing2.name, count: ing2.c2 };
     }
 
-    get ingredient3() {
+    get ingredient3(): IngredientSlot {
         if (this.pokemon.mythIng !== undefined) {
             return {
                 name: this.mythIng3 ?? "unknown",
