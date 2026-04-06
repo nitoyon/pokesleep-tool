@@ -14,7 +14,7 @@ import PokemonRp from '../src/util/PokemonRp';
 import * as fs from 'fs';
 
 const baseSkillValue = parseInt(process.argv[2], 10);
-const fitValueOnly = true;//process.argv.some(x => x === '--fitValueOnly');
+const fitValueOnly = false;//process.argv.some(x => x === '--fitValueOnly');
 
 function checkSkillValue(data: Record<string, RpData[]>, skillValue: number) {
     for (const name of Object.keys(data)) {

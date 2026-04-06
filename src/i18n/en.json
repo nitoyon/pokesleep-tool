@@ -15,6 +15,10 @@
             "notice detail1": "Let's check the future RP and Strength of the Pokémon.",
             "notice detail2": "Please check our tutorial videos on our <YouTube>YouTube channel</YouTube>.",
             "news": {
+                "add latias": {
+                    "headline": "Added data for $t(pokemons.Latias).",
+                    "detail": "$t(rp collection)"
+                },
                 "v3.4.0": {
                     "headline": "Updated the data with balance adjustments in version 3.4.0",
                     "detail": "$t(own research note)"
