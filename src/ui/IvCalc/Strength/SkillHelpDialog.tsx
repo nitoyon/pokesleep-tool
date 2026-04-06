@@ -243,6 +243,11 @@ function getSkillValueText(strength: PokemonStrength, skillLevel: number,
         return getEnergyRecoveryValueText(val, skillLevel, t,
             t('nature effect.Energy recovery'));
     }
+    if (skill === 'Energizing Cheer S (Heal Pulse)') {
+        const val = getSkillValue(skill, skillLevel);
+        return getEnergyRecoveryValueText(val, skillLevel, t,
+            t('e4e per pokemon'));
+    }
     if (skill.startsWith('Energy for Everyone S')) {
         const val = getSkillValue(skill, skillLevel);
         return getEnergyRecoveryValueText(val, skillLevel, t,
@@ -280,6 +285,9 @@ function getSkillValueText2(strength: PokemonStrength, skillLevel: number,
     }
     if (skill === 'Ingredient Magnet S (Present)') {
         return getPresentValueText(strength, skillLevel, t);
+    }
+    if (skill === 'Energizing Cheer S (Heal Pulse)') {
+        return getNormalSkillValueText(t, t('help count per pokemon'));
     }
     if (skill === 'Versatile') {
         return getVersatileCandyValueText(t);

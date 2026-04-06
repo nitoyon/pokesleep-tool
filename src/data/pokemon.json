@@ -5215,29 +5215,29 @@
         "type": "dragon",
         "specialty": "Skills",
         "skill": "Energizing Cheer S (Heal Pulse)",
-        "fp": 20,
-        "frequency": 0,
-        "ingRate": 0,
-        "skillRate": 0,
+        "fp": 30,
+        "frequency": 2800,
+        "ingRate": 11.4,
+        "skillRate": 4.9,
         "ancestor": null,
         "evolutionCount": -1,
         "evolutionLeft": 0,
         "isFullyEvolved": true,
-        "carryLimit": 0,
+        "carryLimit": 19,
         "ing1": {
-            "name": "unknown1",
+            "name": "tomato",
             "c1": 1,
             "c2": 2,
             "c3": 4
         },
         "ing2": {
-            "name": "unknown2",
-            "c2": 0,
-            "c3": 0
+            "name": "pumpkin",
+            "c2": 1,
+            "c3": 2
         },
         "ing3": {
-            "name": "unknown3",
-            "c3": 0
+            "name": "mushroom",
+            "c3": 2
         }
     },
     {

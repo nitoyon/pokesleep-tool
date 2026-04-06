@@ -12,7 +12,9 @@ const RpLabel = React.memo(({rp, iv, showIcon, isError, onClick}: {
     onClick?: () => void,
 }) => {
     const { t } = useTranslation();
-    const isEstimated = iv.level > maxLevel;
+    const isEstimated = iv.level > maxLevel ||
+        // RP for Latis is estimated value
+        (iv.pokemon.id === 380 && iv.skillLevel !== 2);
 
     const clickHandler = React.useCallback(() => {
         if (onClick !== undefined) {

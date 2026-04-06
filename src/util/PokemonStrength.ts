@@ -610,6 +610,16 @@ class PokemonStrength {
                     skillValue, skillStrength: 0, skillValuePerTrigger,
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
+            case "Energizing Cheer S (Heal Pulse)": {
+                const helpCount = getSkillSubValue(mainSkill, skillLevel);
+                const skillValuePerTrigger2 = helpCount;
+                const skillValue2 = helpCount * skillCount;
+                const skillStrength2 = skillValue2 * strengthPerHelp * 2;
+                return {
+                    skillValue, skillStrength: 0, skillValuePerTrigger,
+                    skillValue2, skillStrength2, skillValuePerTrigger2,
+                };
+            }
             case "Energy for Everyone S (Berry Juice)":
                 // Use probability 20% at RaenonX
                 // https://pks.raenonx.cc/en/mainskill/info/32

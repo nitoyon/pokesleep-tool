@@ -418,9 +418,7 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
         // Set to `Versatile` for Mew
         const mainSkill2 = pokemonIv.pokemon.skill;
 
-        skill2 = <div style={skillStrength !== null && skillStrength2 === null ?
-            {gridColumn: '1 / -1'} : {}
-        }>
+        skill2 = <div>
             {mainSkill === "Ingredient Magnet S (Plus)" ?
                 <IngredientIcon name={pokemonIv.pokemon.ing1.name}/> :
                 <MainSkillIcon mainSkill={mainSkill2} second/>}
@@ -428,14 +426,15 @@ function getMainSkillArticle(pokemonIv: PokemonIv, result: StrengthResult,
         </div>;
     }
 
-    const gridClass = skillStrength !== null || skillStrength2 !== null ?
-        " skillc" : "";
-
-    return <article className={mainSkillValue2 !== "" ? `skill2${gridClass}` : `skill1${gridClass}`}>
-        {skill1}
-        {skillStrength}
-        {skill2}
-        {skillStrength2}
+    return <article className={mainSkillValue2 !== "" ? `skill2 skillc` : `skill1 skillc`}>
+        {skillStrength === null ?
+            <div style={{gridColumn: '1 / -1'}}>{skill1}</div> :
+            <>{skill1}{skillStrength}</>
+        }
+        {skillStrength2 === null ?
+            <div style={{gridColumn: '1 / -1'}}>{skill2}</div> :
+            <>{skill2}{skillStrength2}</>
+        }
     </article>;
 }
 

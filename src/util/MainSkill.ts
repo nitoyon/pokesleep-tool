@@ -182,7 +182,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [9, 12, 16, 20, 27, 35][skillLevel - 1];
     }
     if (skill === "Energizing Cheer S (Heal Pulse)") {
-        return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+        return [6, 8, 10, 13, 17, 22][skillLevel - 1];
     }
     if (skill === "Energy for Everyone S") {
         return [5, 7, 9, 11, 15, 18][skillLevel - 1];
@@ -251,6 +251,10 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
     }
     if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
         throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
+    }
+
+    if (skill === "Energizing Cheer S (Heal Pulse)") {
+        return [1, 2, 2, 3, 4, 4][skillLevel - 1];
     }
 
     if (skill.startsWith("Berry Burst")) {
