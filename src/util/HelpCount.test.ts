@@ -1,6 +1,12 @@
 import { describe, test, expect } from 'vitest';
 import PokemonIv from './PokemonIv';
-import { calculateNextHelpElapsed, calculateHelpCountInInterval, calculateHelpCountPerTap, HelpCountSimulation } from './HelpCount';
+import {
+    calculateNextHelpElapsed,
+    calculateHelpCountInInterval,
+    calculateHelpCountPerTap,
+    HelpCountSimulation,
+} from './HelpCount';
+import { calculateInventoryDistribution } from './PokemonInventory';
 
 describe('calculateNextHelpElapsed', () => {
     test('uses frequencyRate from matching event', () => {
@@ -549,6 +555,23 @@ describe('HelpCountSimulation', () => {
                     expect(curr.ingredientCount[j]).toBeGreaterThanOrEqual(prev.ingredientCount[j]);
                 }
                 prev = curr;
+            }
+        });
+    });
+
+    describe('returns same result as calculateInventoryDistribution', () => {
+        test('Venusaur (Lv60 ABC)', () => {
+            const iv = new PokemonIv({pokemonName: 'Venusaur', level: 60});
+            const full = calculateInventoryDistribution(iv);
+
+            const sim = new HelpCountSimulation(iv);
+            let prev = 0;
+            for (let n = 2; n <= 20; n++) {
+                const res = sim.compute(n);
+                expect(res.sneakySnackingCount - prev).toBeCloseTo(full[n - 1]);
+                expect(res.normalHelpCount + res.sneakySnackingCount)
+                    .toBeCloseTo(n);
+                prev = res.sneakySnackingCount;
             }
         });
     });
