@@ -363,7 +363,7 @@ function calculateAsleepHelpCount(
         param.tapFrequencyAsleep === NoTap
     ) ? sleepSeconds : param.tapFrequencyAsleep * 60;
     const asleepHelpCounts = calculateHelpCountPerTap(energy.efficiencies,
-        sleepSeconds, baseFreq, tapIntervalAsleep, sleepSeconds);
+        1440 * 60 - sleepSeconds, baseFreq, tapIntervalAsleep, sleepSeconds);
 
     // Always tap simulation
     if (param.tapFrequencyAsleep === AlwaysTap) {
