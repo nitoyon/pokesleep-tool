@@ -359,7 +359,8 @@ class PokemonStrength {
         const rp = new PokemonRp(this.iv);
         const bonus = this.bonusEffects;
         const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
-        const helpCount = calculateHelpCount(this.iv, param, energy, bonus, this.isWhistle);
+        const helpCount: HelpCountResult = calculateHelpCount(this.iv, param,
+            energy, bonus, this.isWhistle);
 
         // calc ingredient
         const ingInRecipeStrengthRate = param.recipeBonus === 0 ? 1 :

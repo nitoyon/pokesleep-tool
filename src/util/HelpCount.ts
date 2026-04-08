@@ -42,6 +42,10 @@ export interface IngredientHelp {
 export interface HelpCountResult {
     /** Total help count during the specified period */
     total: NormalAndSnackingHelpCount;
+    /** Awake help count */
+    awake: NormalAndSnackingHelpCount;
+    /** Asleep help count */
+    asleep: NormalAndSnackingHelpCount;
 
     /** Berry rate */
     berryRate: number;
@@ -125,14 +129,33 @@ export function calculateHelpCount(
         ret.overallSkillRate, inventoryBonus);
     calculateAwakeHelpCount(ret, param, awakeSeconds, baseFreq,
         energy, simulation, isWhistle);
+    ret.awake = {...ret.total};
+
+    // Asleep helps
     calculateAsleepHelpCount(ret, param, sleepSeconds, baseFreq,
         energy, simulation, isWhistle);
+    ret.asleep = {
+        all: ret.total.all - ret.awake.all,
+        normal: ret.total.normal - ret.awake.normal,
+        sneakySnacking: ret.total.sneakySnacking - ret.awake.sneakySnacking,
+    };
 
     // multiply count rate
-    ret.berryHelpCount *= countRate;
-    ret.ingHelpCount *= countRate;
-    ret.ingredients.forEach(x => x.count *= countRate);
-    ret.skillCount *= countRate;
+    if (countRate > 1) {
+        ret.berryHelpCount *= countRate;
+        ret.ingHelpCount *= countRate;
+        ret.ingredients.forEach(x => x.count *= countRate);
+        ret.skillCount *= countRate;
+
+        function multiply(help: NormalAndSnackingHelpCount) {
+            help.all *= countRate;
+            help.normal *= countRate;
+            help.sneakySnacking *= countRate;
+        }
+        multiply(ret.total);
+        multiply(ret.awake);
+        multiply(ret.asleep);
+    }
 
     return ret;
 }
@@ -167,6 +190,16 @@ function initializeHelpCountResult(
 
     const ret: HelpCountResult = {
         total: {
+            all: 0,
+            normal: 0,
+            sneakySnacking: 0,
+        },
+        awake: {
+            all: 0,
+            normal: 0,
+            sneakySnacking: 0,
+        },
+        asleep: {
             all: 0,
             normal: 0,
             sneakySnacking: 0,
