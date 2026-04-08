@@ -47,7 +47,7 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                     <br/>
                     <> + </>
                     <span className="box box1">{berryStrength}</span><> × </>
-                    <span className="box box2">{result.berryCount}</span><> × </>
+                    <span className="box box2">{result.berryCountPerSneakySnacking}</span><> × </>
                     <span className="box box3">{round1(result.total.sneakySnacking)}</span>
                 </>}
             </footer>
