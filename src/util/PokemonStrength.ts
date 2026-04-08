@@ -368,10 +368,6 @@ class PokemonStrength {
         const ingStrengthRate = (ingInRecipeStrengthRate * 0.8 + 0.2) *
             (1 + param.fieldBonus / 100) * bonus.dish;
 
-        const ing1 = helpCount.ing1;
-        const ing2 = helpCount.ing2;
-        const ing3 = helpCount.ing3;
-
         const ingredients = helpCount.ingredients.map(x => ({
             ...x,
             strength: x.count * ingredientStrength[x.name] * ingStrengthRate,
@@ -416,7 +412,7 @@ class PokemonStrength {
         return {
             ...helpCount,
             bonus, energy, totalStrength, helpingBonusStrength,
-            ingStrength, ing1, ing2, ing3, ingredients,
+            ingStrength, ingredients,
             berryStrength, berryRawStrength, berryTotalStrength,
             skillValue, skillStrength, skillValuePerTrigger,
             skillValue2, skillStrength2, skillValuePerTrigger2,
