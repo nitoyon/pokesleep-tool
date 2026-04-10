@@ -11,10 +11,11 @@ import InfoButton from '../InfoButton';
 import PeriodSelect from './PeriodSelect';
 import EventConfigDialog from './EventConfigDialog';
 import FixedLevelSelect from './FixedLevelSelect';
+import TapFrequencyControl from './TapFrequencyControl';
 import { LevelInput } from '../IvForm/LevelControl';
 import MessageDialog from '../../Dialog/MessageDialog';
 import { getActiveHelpBonus } from '../../../data/events';
-import { AlwaysTap, NoTap, whistlePeriod } from '../../../util/Energy';
+import { NoTap, whistlePeriod } from '../../../util/Energy';
 import {
     createStrengthParameter, StrengthParameter,
 } from '../../../util/PokemonStrength';
@@ -109,11 +110,11 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
     const onEventDetailClose = React.useCallback(() => {
         setEventDetailOpen(false);
     }, []);
-    const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, tapFrequencyAwake: Number(e.target.value)});
+    const onTapFrequencyAwakeChange = React.useCallback((tapFrequencyAwake: number) => {
+        onChange({...value, tapFrequencyAwake});
     }, [onChange, value]);
-    const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
-        onChange({...value, tapFrequencyAsleep: Number(e.target.value)});
+    const onTapFrequencyAsleepChange = React.useCallback((tapFrequencyAsleep: number) => {
+        onChange({...value, tapFrequencyAsleep});
     }, [onChange, value]);
     const onEditEnergyClick = React.useCallback(() => {
         dispatch({type: 'openEnergyDialog'});
@@ -197,21 +198,16 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
         <Collapse in={isNotWhistle}>
             <section>
                 <label>{t('tap frequency')} ({t('awake')}):</label>
-                <Select variant="standard" value={String(value.tapFrequencyAwake)}
-                    onChange={onTapFrequencyChange}>
-                    <MenuItem value={String(AlwaysTap)}>{t('every minute')}</MenuItem>
-                    <MenuItem value={String(NoTap)}>{t('none')}</MenuItem>
-                </Select>
+                <TapFrequencyControl max={10} value={value.tapFrequencyAwake}
+                    onChange={onTapFrequencyAwakeChange}/>
             </section>
             <section>
                 <label>{t('tap frequency')} ({t('asleep')}):</label>
                 {value.tapFrequencyAwake === NoTap ?
                     <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
-                    <Select variant="standard" value={String(value.tapFrequencyAsleep)}
-                        onChange={onTapFrequencyAsleepChange}>
-                        <MenuItem value={String(AlwaysTap)}>{t('every minute')}</MenuItem>
-                        <MenuItem value={String(NoTap)}>{t('none')}</MenuItem>
-                    </Select>}
+                    <TapFrequencyControl max={8} value={value.tapFrequencyAsleep}
+                        onChange={onTapFrequencyAsleepChange}/>
+                }
             </section>
             <section className="mt">
                 <label>{t('energy')}:</label>

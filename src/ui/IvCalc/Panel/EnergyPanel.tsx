@@ -2,11 +2,12 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { IvAction } from '../IvState';
 import { useElementWidth } from '../../common/Hook';
+import TapFrequencyControl from '../Strength/TapFrequencyControl';
 import PokemonIv from '../../../util/PokemonIv';
 import { StrengthParameter, StrengthResult } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { EnergyChart } from '../Chart/EnergyChart';
-import { AlwaysTap, NoTap } from '../../../util/Energy';
+import { NoTap } from '../../../util/Energy';
 import { clamp } from '../../../util/NumberUtil';
 import { Collapse, MenuItem,
     Select, SelectChangeEvent, Switch, TextField } from '@mui/material';
@@ -64,16 +65,14 @@ const EnergyPanel = React.memo(({iv, result, parameter, dispatch}: {
             isGoodCampTicketSet: e.target.checked,
         }}});
     }, [dispatch, parameter]);
-    const onTapFrequencyChange = React.useCallback((e: SelectChangeEvent) => {
+    const onTapFrequencyAwakeChange = React.useCallback((tapFrequencyAwake: number) => {
         dispatch({type: "changeParameter", payload: { parameter: {
-            ...parameter,
-            tapFrequencyAwake: parseInt(e.target.value, 10),
+            ...parameter, tapFrequencyAwake,
         }}});
     }, [dispatch, parameter]);
-    const onTapFrequencyAsleepChange = React.useCallback((e: SelectChangeEvent) => {
+    const onTapFrequencyAsleepChange = React.useCallback((tapFrequencyAsleep: number) => {
         dispatch({type: "changeParameter", payload: { parameter: {
-            ...parameter,
-            tapFrequencyAsleep: parseInt(e.target.value, 10),
+            ...parameter, tapFrequencyAsleep,
         }}});
     }, [dispatch, parameter]);
 
@@ -163,21 +162,16 @@ const EnergyPanel = React.memo(({iv, result, parameter, dispatch}: {
         <section>
             <div>
                 <label>{t('tap frequency')} ({t('awake')}):</label>
-                <Select variant="standard" value={String(parameter.tapFrequencyAwake)}
-                    onChange={onTapFrequencyChange}>
-                    <MenuItem value={String(AlwaysTap)}>{t('every minute')}</MenuItem>
-                    <MenuItem value={String(NoTap)}>{t('none')}</MenuItem>
-                </Select>
+                <TapFrequencyControl max={10} value={parameter.tapFrequencyAwake}
+                    onChange={onTapFrequencyAwakeChange}/>
             </div>
             <div>
                 <label>{t('tap frequency')} ({t('asleep')}):</label>
                 {parameter.tapFrequencyAwake === NoTap ?
                     <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
-                    <Select variant="standard" value={String(parameter.tapFrequencyAsleep)}
-                        onChange={onTapFrequencyAsleepChange}>
-                        <MenuItem value={String(AlwaysTap)}>{t('every minute')}</MenuItem>
-                        <MenuItem value={String(NoTap)}>{t('none')}</MenuItem>
-                    </Select>}
+                    <TapFrequencyControl max={8} value={parameter.tapFrequencyAsleep}
+                        onChange={onTapFrequencyAsleepChange}/>
+                }
             </div>
         </section>
         <footer>
