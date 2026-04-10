@@ -61,7 +61,10 @@ const DraggableTabContainer = React.memo(({index, width, children, onChange, fit
     const bind = useDrag(({ active, movement: [mx], velocity: [vx], first, event}) => {
         if (first) {
             ignoreDragRef.current = !!(event.target instanceof Element &&
-                event.target.closest('svg'));
+                (
+                    event.target.closest('svg[width]') ||
+                    event.target.closest('span.MuiSlider-root')
+                ));
         }
         if (ignoreDragRef.current) {
             return;
