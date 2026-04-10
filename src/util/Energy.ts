@@ -250,7 +250,7 @@ class Energy {
             .filter(x => x.isInPeriod && !x.isAwake));
 
         // calculate Sneaky Snacking
-        const canBeFullInventory = (param.tapFrequencyAwake === AlwaysTap &&
+        const canBeFullInventory = (param.tapFrequencyAwake !== NoTap &&
             param.tapFrequencyAsleep === NoTap);
 
         return {sleepTime, events, efficiencies, canBeFullInventory,
