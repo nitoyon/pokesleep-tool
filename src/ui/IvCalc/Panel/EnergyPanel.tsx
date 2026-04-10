@@ -3,18 +3,18 @@ import { styled } from '@mui/system';
 import { IvAction } from '../IvState';
 import { useElementWidth } from '../../common/Hook';
 import PokemonIv from '../../../util/PokemonIv';
-import { StrengthParameter } from '../../../util/PokemonStrength';
+import { StrengthParameter, StrengthResult } from '../../../util/PokemonStrength';
 import { AmountOfSleep } from '../../../util/TimeUtil';
 import { EnergyChart } from '../Chart/EnergyChart';
-import { EnergyResult, AlwaysTap, NoTap } from '../../../util/Energy';
+import { AlwaysTap, NoTap } from '../../../util/Energy';
 import { clamp } from '../../../util/NumberUtil';
 import { Collapse, MenuItem,
     Select, SelectChangeEvent, Switch, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
+const EnergyPanel = React.memo(({iv, result, parameter, dispatch}: {
     iv: PokemonIv,
-    energy: EnergyResult,
+    result: StrengthResult,
     parameter: StrengthParameter,
     dispatch: React.Dispatch<IvAction>,
 }) => {
@@ -82,11 +82,13 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
     }
 
     const hasRecoveryBonus = iv.hasEnergyRecoveryBonusInActiveSubSkills;
-    const carryLimit = energy.carryLimit;
+    const energy = result.energy;
+    const carryLimit = result.carryLimit;
 
     return <StyledEnergyPanel>
-            <EnergyChart
-                width={width} period={parameter.period} result={energy}/>        <Collapse in={!parameter.isEnergyAlwaysFull}>
+        <EnergyChart
+            width={width} period={parameter.period} result={energy}/>
+        <Collapse in={!parameter.isEnergyAlwaysFull}>
             <section ref={dialogRef}>
                 <div>
                     <label>{t('skills.Energy for Everyone S')}:</label>
@@ -190,26 +192,26 @@ const EnergyPanel = React.memo(({iv, energy, parameter, dispatch}: {
             <Collapse in={energy.canBeFullInventory && parameter.period >= 24}>
                 <section>
                     <label>{t('full inventory while sleeping')}:</label>
-                    <div>{energy.timeToFullInventory < 0 ? t('none') :
-                        new AmountOfSleep(energy.timeToFullInventory).toString(t)}</div>
+                    <div>{result.timeToFullInventory < 0 ? t('none') :
+                        new AmountOfSleep(result.timeToFullInventory).toString(t)}</div>
                     <footer>
                         <span>{t('carry limit')}: {carryLimit}</span>
-                        <span>{t('sneaky snacking')}: {energy.timeToFullInventory < 0 ? t('none') :
-                            energy.helpCount.asleepFull.toFixed(1) + ' ' + t('times unit')}</span>
+                        <span>{t('sneaky snacking')}: {result.timeToFullInventory < 0 ? t('none') :
+                            result.total.sneakySnacking.toFixed(1) + ' ' + t('times unit')}</span>
                     </footer>
                 </section>
                 <section>
                     <label>{t('skill trigger after wake up')}:</label>
                     <div>
                         {iv.pokemon.specialty !== 'Skills' ?
-                        <>{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%</> :
+                        <>{(result.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%</> :
                         <>
-                            ❶{(energy.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%<> </>
-                            ❷{(energy.skillProbabilityAfterWakeup.twice * 100).toFixed(1)}%
+                            ❶{(result.skillProbabilityAfterWakeup.once * 100).toFixed(1)}%<> </>
+                            ❷{(result.skillProbabilityAfterWakeup.twice * 100).toFixed(1)}%
                         </>}
                     </div>
                     <footer>
-                        <span>{t('lottery count')}: {energy.helpCount.asleepNotFull.toFixed(2)}</span>
+                        <span>{t('lottery count')}: {result.asleep.normal.toFixed(2)}</span>
                     </footer>
                 </section>
             </Collapse>

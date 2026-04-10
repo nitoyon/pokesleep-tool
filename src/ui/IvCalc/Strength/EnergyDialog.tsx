@@ -2,8 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { IvAction } from '../IvState';
 import PokemonIv from '../../../util/PokemonIv';
-import { StrengthParameter } from '../../../util/PokemonStrength';
-import { EnergyResult } from '../../../util/Energy';
+import { StrengthParameter, StrengthResult } from '../../../util/PokemonStrength';
 import DraggableTabContainer from '../../common/DraggableTabContainer';
 import EnergyPanel from '../Panel/EnergyPanel';
 import FrequencyInfoState, {
@@ -19,10 +18,10 @@ import { useTranslation } from 'react-i18next';
 
 let defaultTabIndex = 0;
 
-const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch}: {
+const EnergyDialog = React.memo(({open, iv, result, parameter, onClose, dispatch}: {
     open: boolean,
     iv: PokemonIv,
-    energy: EnergyResult,
+    result: StrengthResult,
     parameter: StrengthParameter,
     onClose: () => void,
     dispatch: React.Dispatch<IvAction>,
@@ -73,7 +72,7 @@ const EnergyDialog = React.memo(({open, iv, energy, parameter, onClose, dispatch
             <DraggableTabContainer index={tabIndex} width={width + 20}
                 fitHeight onChange={onDragChange}>
                 <div className="tabChild">
-                    <EnergyPanel energy={energy} dispatch={dispatch}
+                    <EnergyPanel result={result} dispatch={dispatch}
                         iv={iv} parameter={parameter}/>
                 </div>
                 <div className="tabChild">

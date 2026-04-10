@@ -1,12 +1,149 @@
 import { describe, test, expect } from 'vitest';
 import PokemonIv from './PokemonIv';
+import { emptyBonusEffects } from '../data/events';
+import Energy, { AlwaysTap, EnergyParameter, NoTap } from './Energy';
+import Nature from './Nature';
 import {
+    calculateHelpCount,
     calculateNextHelpElapsed,
     calculateHelpCountInInterval,
     calculateHelpCountPerTap,
     HelpCountSimulation,
 } from './HelpCount';
 import { calculateInventoryDistribution } from './PokemonInventory';
+
+const paramBase = {
+    period: 24,
+    e4eEnergy: 18,
+    e4eCount: 3,
+    sleepScore: 100,
+    tapFrequencyAwake: AlwaysTap,
+    tapFrequencyAsleep: NoTap,
+    helpBonusCount: 0,
+    recoveryBonusCount: 0,
+    isEnergyAlwaysFull: false,
+    isGoodCampTicketSet: false,
+    pityProc: false,
+};
+function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
+    return Object.assign({fieldIndex: 0}, paramBase, obj) as EnergyParameter;
+}
+
+describe('calculateHelpCount', () => {
+    test('calculate timeToFullInventory and skillProbabilityAfterWakeup', () => {
+        const iv = new PokemonIv({
+            pokemonName: 'Eevee',
+            nature: new Nature('Hasty'), // Energy recovery down
+            level: 1,
+        });
+
+        // change pokemon parameter (type assertion for testing)
+        (iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+            ...iv.pokemon,
+            carryLimit: 10,
+            frequency: 1800, // 30min
+            skillRate: 10,
+            ingRate: 10,
+        };
+
+        const param = createParam({e4eCount: 0, sleepScore: 90});
+        const energy = new Energy(iv).calculate(param);
+        const result = calculateHelpCount(iv, param, energy,
+            emptyBonusEffects, false);
+
+        // sleep from 981 min
+        const sleepEvent = energy.events.find(x => x.type === 'sleep');
+        expect(sleepEvent).toEqual({
+            type: 'sleep', minutes: 981,
+            energyBefore: 0, energyAfter: 0, isSnacking: false, isInPeriod: true,
+        });
+
+        // snacking from 981 + 300 min (30min x 10)
+        expect(result.timeToFullInventory).toBe(300);
+        expect(result.asleep.normal).toBe(10);
+        expect(result.skillProbabilityAfterWakeup.once)
+            .toBeCloseTo(10 * 0.1 * Math.pow(0.9, 9));
+        expect(result.skillProbabilityAfterWakeup.twice)
+            .toBeCloseTo(1 - Math.pow(0.9, 10) - result.skillProbabilityAfterWakeup.once);
+
+        // change pokemon's specialty to Berries
+        const iv2 = new PokemonIv({
+            pokemonName: 'Eevee',
+            nature: new Nature('Hasty'), // Energy recovery down
+            level: 1,
+        });
+        (iv2 as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+            ...iv2.pokemon,
+            carryLimit: 10,
+            frequency: 1800, // 30min
+            specialty: "Berries",
+            skillRate: 10,
+            ingRate: 10,
+        };
+        const energy2 = new Energy(iv2).calculate(param);
+        const result2 = calculateHelpCount(iv2, param, energy2,
+            emptyBonusEffects, false);
+
+        // snacking earlier
+        expect(result2.timeToFullInventory).toBeLessThan(300);
+        expect(result2.asleep.normal).toBeLessThan(result.asleep.normal);
+    });
+
+    test('no snacking (always tap)', () => {
+        const iv = new PokemonIv({
+            pokemonName: 'Eevee',
+            nature: new Nature('Hasty'), // Energy recovery down
+            level: 1,
+        });
+
+        // change pokemon parameter (type assertion for testing)
+        (iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+            ...iv.pokemon,
+            carryLimit: 10,
+            frequency: 1800, // 30min
+            skillRate: 10,
+            ingRate: 10,
+        };
+
+        const param = createParam({
+            e4eCount: 0,
+            sleepScore: 90,
+            tapFrequencyAsleep: AlwaysTap,
+        });
+        const energy = new Energy(iv).calculate(param);
+        const result = calculateHelpCount(iv, param, energy,
+            emptyBonusEffects, false);
+        expect(result.timeToFullInventory).toBe(-1);
+    });
+
+    test('no snacking (3 hours)', () => {
+        const iv = new PokemonIv({
+            pokemonName: 'Eevee',
+            nature: new Nature('Serious'), // Neutral
+            level: 1,
+        });
+
+        // change pokemon parameter (type assertion for testing)
+        (iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+            ...iv.pokemon,
+            carryLimit: 10,
+            frequency: 1800, // 30min
+            skillRate: 10,
+            ingRate: 10,
+        };
+
+        const param = createParam({
+            sleepScore: 100,
+            period: 3,
+        });
+        const energy = new Energy(iv).calculate(param);
+        const result = calculateHelpCount(iv, param, energy,
+            emptyBonusEffects, false);
+        expect(result.awake.all).toBeCloseTo(180 * 60 / 1800 * 2.222);
+        expect(result.asleep.sneakySnacking).toBe(0);
+        expect(result.asleep.normal).toBe(0);
+    });
+});
 
 describe('calculateNextHelpElapsed', () => {
     test('uses frequencyRate from matching event', () => {

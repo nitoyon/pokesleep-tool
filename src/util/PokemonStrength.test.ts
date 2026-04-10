@@ -589,8 +589,8 @@ describe('PokemonStrength', () => {
             const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
             const result = new PokemonStrength(iv, createParam({ period: 8 })).calculate();
 
-            expect(result.energy.helpCount.asleepNotFull).toBe(0);
-            expect(result.energy.helpCount.asleepFull).toBe(0);
+            expect(result.asleep.normal).toBe(0);
+            expect(result.asleep.sneakySnacking).toBe(0);
         });
 
         test('period=16 (beyond sleep start at 15.5h): asleepNotFull > 0', () => {
@@ -600,8 +600,8 @@ describe('PokemonStrength', () => {
                 tapFrequencyAsleep: AlwaysTap,
             })).calculate();
 
-            expect(result.energy.helpCount.asleepNotFull).toBeGreaterThan(0);
-            expect(result.energy.helpCount.asleepFull).toBe(0);
+            expect(result.asleep.normal).toBeGreaterThan(0);
+            expect(result.asleep.sneakySnacking).toBe(0);
         });
 
         test('period=24 with tapFrequencyAsleep=AlwaysTap: asleepFull is always 0', () => {
@@ -611,8 +611,8 @@ describe('PokemonStrength', () => {
                 tapFrequencyAsleep: AlwaysTap,
             })).calculate();
 
-            expect(result.energy.helpCount.asleepNotFull).toBeGreaterThan(0);
-            expect(result.energy.helpCount.asleepFull).toBe(0);
+            expect(result.asleep.normal).toBeGreaterThan(0);
+            expect(result.asleep.sneakySnacking).toBe(0);
         });
 
         test('period=24 with tapFrequencyAsleep=NoTap: total sleep helps > 0', () => {
@@ -622,8 +622,7 @@ describe('PokemonStrength', () => {
                 tapFrequencyAsleep: NoTap,
             })).calculate();
 
-            const totalSleepHelps = result.energy.helpCount.asleepNotFull +
-                result.energy.helpCount.asleepFull;
+            const totalSleepHelps = result.asleep.all;
             expect(totalSleepHelps).toBeGreaterThan(0);
         });
 
@@ -642,8 +641,8 @@ describe('PokemonStrength', () => {
                 tapFrequencyAsleep: AlwaysTap,
             })).calculate();
 
-            expect(result24.energy.helpCount.asleepNotFull).toBeGreaterThan(
-                result16.energy.helpCount.asleepNotFull
+            expect(result24.asleep.normal).toBeGreaterThan(
+                result16.asleep.normal
             );
         });
 
@@ -661,11 +660,11 @@ describe('PokemonStrength', () => {
                 tapFrequencyAsleep: AlwaysTap,
             })).calculate();
 
-            expect(result168.energy.helpCount.asleepNotFull).toBeCloseTo(
-                result24.energy.helpCount.asleepNotFull
+            expect(result168.asleep.normal).toBeCloseTo(
+                result24.asleep.normal * 7
             );
-            expect(result168.energy.helpCount.asleepFull).toBeCloseTo(
-                result24.energy.helpCount.asleepFull
+            expect(result168.asleep.sneakySnacking).toBeCloseTo(
+                result24.asleep.sneakySnacking * 7
             );
 
             // But the scaled totals (e.g. berryHelpCount) should be 7x larger
@@ -678,9 +677,11 @@ describe('PokemonStrength', () => {
             const iv = new PokemonIv({ pokemonName: 'Raichu', level: 50 });
             const result = new PokemonStrength(iv, createParam({ period: -10 })).calculate();
 
-            expect(result.energy.helpCount.awake).toBe(0);
-            expect(result.energy.helpCount.asleepNotFull).toBe(0);
-            expect(result.energy.helpCount.asleepFull).toBe(0);
+            expect(result.awake.all).toBe(10);
+            expect(result.awake.normal).toBe(10);
+            expect(result.awake.sneakySnacking).toBe(0);
+            expect(result.asleep.normal).toBe(0);
+            expect(result.asleep.sneakySnacking).toBe(0);
 
             // total helps = 10, all normal (no sneaky snacking)
             expect(result.total.normal).toBe(10);
@@ -709,14 +710,14 @@ describe('PokemonStrength', () => {
             })).calculate();
 
             // With AlwaysTap, asleepFull must be 0
-            expect(resultAlwaysTap.energy.helpCount.asleepFull).toBe(0);
+            expect(resultAlwaysTap.asleep.sneakySnacking).toBe(0);
 
             // With NoTap and small carry limit, inventory should fill → asleepFull > 0
-            expect(resultNoTap.energy.helpCount.asleepFull).toBeGreaterThan(0);
+            expect(resultNoTap.asleep.sneakySnacking).toBeGreaterThan(0);
 
             // asleepNotFull is smaller with NoTap (some time is spent in full-inventory sneaky snacking)
-            expect(resultNoTap.energy.helpCount.asleepNotFull).toBeLessThan(
-                resultAlwaysTap.energy.helpCount.asleepNotFull
+            expect(resultNoTap.asleep.normal).toBeLessThan(
+                resultAlwaysTap.asleep.normal
             );
         });
     });

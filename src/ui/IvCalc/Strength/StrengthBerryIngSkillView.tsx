@@ -303,15 +303,15 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
         </section>
         {settings.period > whistlePeriod && <footer>
             {result.energy.canBeFullInventory && settings.period >= 24 ? <>
-                <span>{t('full inventory while sleeping (short)')}: {result.energy.timeToFullInventory < 0 ? t('none') :
-                        new AmountOfSleep(result.energy.timeToFullInventory).toString(t)}</span>
+                <span>{t('full inventory while sleeping (short)')}: {result.timeToFullInventory < 0 ? t('none') :
+                        new AmountOfSleep(result.timeToFullInventory).toString(t)}</span>
                 <span>
                     {t('skill trigger after wake up (short)')}<>: </>
                     {pokemonIv.pokemon.specialty !== "Skills" && pokemonIv.pokemon.specialty !== "All" ?
-                    round1(result.energy.skillProbabilityAfterWakeup.once * 100) + '%' :
+                    round1(result.skillProbabilityAfterWakeup.once * 100) + '%' :
                     <>
-                        ❶{round1(result.energy.skillProbabilityAfterWakeup.once * 100)}%<> </>
-                        ❷{round1(result.energy.skillProbabilityAfterWakeup.twice * 100)}%
+                        ❶{round1(result.skillProbabilityAfterWakeup.once * 100)}%<> </>
+                        ❷{round1(result.skillProbabilityAfterWakeup.twice * 100)}%
                     </>}
                 </span>
             </> :
@@ -351,7 +351,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}
             dispatch={dispatch} strength={strength} result={result}/>
         <EnergyDialog open={energyDialogOpen} onClose={onEfficiencyDialogClose}
-            iv={pokemonIv} energy={result.energy} parameter={settings} dispatch={dispatch}/>
+            iv={pokemonIv} result={result} parameter={settings} dispatch={dispatch}/>
         <HelpStackDialog open={helpStockDialogOpen} onClose={onHelpStockDialogClose}
             parameter={settings} strength={strength} result={result} dispatch={dispatch}/>
     </StyledBerryIngSkillStrengthView>;

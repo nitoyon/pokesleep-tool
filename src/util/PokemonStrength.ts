@@ -358,7 +358,7 @@ class PokemonStrength {
         const param = this.param;
         const rp = new PokemonRp(this.iv);
         const bonus = this.bonusEffects;
-        const energy = new Energy(this.iv).calculate(param, bonus, this.isWhistle);
+        const energy = new Energy(this.iv).calculate(param, bonus);
         const helpCount: HelpCountResult = calculateHelpCount(this.iv, param,
             energy, bonus, this.isWhistle);
 
@@ -1152,7 +1152,7 @@ export function getHelpsForCap(strength: PokemonStrength,
     // Bonus is always empty because we calculate based on regular help
     const rp = new PokemonRp(strength.pokemonIv);
     const bagUsagePerHelp = rp.iv.getBagUsagePerHelp();
-    return (999 - result.energy.carryLimit) / bagUsagePerHelp;
+    return (999 - result.carryLimit) / bagUsagePerHelp;
 }
 
 /**
