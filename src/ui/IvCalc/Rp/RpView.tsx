@@ -128,8 +128,9 @@ const RpInfoDialog = React.memo(({isError, open, onClose}: {
                 <li>{t('helping bonus other pokemon')}: {t('none')}</li>
                 <li>{t('skills.Energy for Everyone S')}: 18 × 3</li>
                 <li>{t('sleep score')}: 100</li>
-                <li>{t('tap frequency')} ({t('awake')}): {t('every minute')}</li>
+                <li>{t('tap frequency')} ({t('awake')}): {t('hour2', {count: 3})}</li>
                 <li>{t('tap frequency')} ({t('asleep')}): {t('none')}</li>
+                <li>{t('include pity proc')}: {t('enabled')}</li>
             </ul>
             <p>{t('use strength tab if you want to change these condition')}</p>
             <p>{t('estimated beyond level', {level: maxLevel})}</p>
