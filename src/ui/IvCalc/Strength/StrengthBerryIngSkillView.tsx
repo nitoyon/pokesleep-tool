@@ -645,6 +645,7 @@ export const StyledInfoDialog = styled(Dialog)({
     '& span.box4': { background: '#ce5052' },
     '& span.box5': { background: '#ce3fa3' },
     '& span.box6': { background: '#ff8822' },
+    '& span.box7': { background: '#5c6aff' },
 });
 
 export default StrengthBerryIngSkillStrengthView;

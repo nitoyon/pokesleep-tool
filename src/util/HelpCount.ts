@@ -28,6 +28,8 @@ export interface IngredientHelp {
     name: IngredientName;
     /** Ingredient count. */
     count: number;
+    /** Overflow ingredient count */
+    overflowCount: number;
     /** Help count. */
     helpCount: number;
     /** Ingredient count by single help (0 if locked) */
@@ -266,6 +268,7 @@ function initializeHelpCountResult(
         ret.ingredients.push({
             name: ing.name,
             count: 0,
+            overflowCount: 0,
             countPerHelp: ing.count,
             helpCount: 0,
             slots: [ing],
@@ -432,6 +435,9 @@ function calculateAwakeHelpCount(
         ret.ingredients.forEach((ingredient, index) => {
             ingredient.count += result.ingredientCount[index];
             ingredient.helpCount += ingHelpCount / ret.ingSlotCount * ingredient.slots.length;
+            ingredient.slots.forEach((slot) => {
+                ingredient.overflowCount += result.overflowIngsPerSlot[slot.index];
+            });
         });
 
         ret.skillCount += result.skillOnce + result.skillTwice * 2;
@@ -498,6 +504,9 @@ function calculateAsleepHelpCount(
         ret.ingredients.forEach((ingredient, index) => {
             ingredient.count += result.ingredientCount[index];
             ingredient.helpCount += ingHelpCount / ret.ingSlotCount * ingredient.slots.length;
+            ingredient.slots.forEach((slot) => {
+                ingredient.overflowCount += result.overflowIngsPerSlot[slot.index];
+            });
         });
 
         // If no tap during the day, don't count skills at night

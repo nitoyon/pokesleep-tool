@@ -19,6 +19,8 @@ export interface IngredientSlot {
     name: IngredientName;
     /** Ingredient count by single help (0 if locked) */
     count: number;
+    /** Slot index (ing1 -> 0, ing2 -> 1, ing3 -> 2) */
+    index: number;
 }
 
 /** Bonus that affect inventory consumption */
@@ -339,12 +341,14 @@ class PokemonIv {
             return {
                 name: this.mythIng1 ?? "unknown",
                 count: this.pokemon.mythIng.find(x => x.name === this.mythIng1)?.c1 ?? 0,
+                index: 0,
             };
         }
 
         return {
             name: this.pokemon.ing1.name ?? "unknown",
             count: this.pokemon.ing1.c1,
+            index: 0,
         };
     }
 
@@ -353,12 +357,13 @@ class PokemonIv {
             return {
                 name: this.mythIng2 ?? "unknown",
                 count: this.pokemon.mythIng.find(x => x.name === this.mythIng2)?.c2 ?? 0,
+                index: 1,
             };
         }
 
         const ing2 = this.ingredient.charAt(1) === 'A' ?
             this.pokemon.ing1 : this.pokemon.ing2;
-        return { name: ing2.name, count: ing2.c2 };
+        return { name: ing2.name, count: ing2.c2, index: 1 };
     }
 
     get ingredient3(): IngredientSlot {
@@ -366,6 +371,7 @@ class PokemonIv {
             return {
                 name: this.mythIng3 ?? "unknown",
                 count: this.pokemon.mythIng.find(x => x.name === this.mythIng3)?.c3 ?? 0,
+                index: 2,
             };
         }
 
@@ -373,7 +379,7 @@ class PokemonIv {
             this.ingredient.charAt(2) === 'B' ?
             this.pokemon.ing2 : this.pokemon.ing3;
         if (ing3 === undefined) { throw new Error("this pokemon doesn't have 3rd ing"); }
-        return { name: ing3.name, count: ing3.c3 };
+        return { name: ing3.name, count: ing3.c3, index: 2 };
     }
 
     /**

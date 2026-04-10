@@ -92,7 +92,6 @@ describe('PokemonStrength', () => {
             const result = strength.calculate();
             expect(result.ing1.count).toBeGreaterThan(0);
             expect(result.ing2.count).toBeGreaterThan(0);
-            console.log(result.ing3);
             expect(result.ing3.count).toBeGreaterThan(0);
 
             expect(result.ingredients).toHaveLength(2);

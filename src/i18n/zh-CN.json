@@ -602,6 +602,7 @@
         "help count": "帮忙次数",
         "berry help count": "树果帮助次数",
         "ing help count": "食材帮助次数",
+        "inventory full lost": "持有溢出被丢弃",
         "ing count": "食材的数量",
         "strength per ing": "食材每个的能量",
         "normal help count": "普通帮助次数",

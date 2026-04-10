@@ -613,6 +613,7 @@
         "help count": "Help count",
         "berry help count": "Berry help count",
         "ing help count": "Ingredient help count",
+        "inventory full lost": "Discarded (Inventory full)",
         "ing count": "Ingredient count",
         "strength per ing": "Strength per ingredient",
         "normal help count": "Regular help count",

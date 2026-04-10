@@ -604,6 +604,7 @@
         "help count": "おてつだい回数",
         "berry help count": "きのみ おてつだい回数",
         "ing help count": "食材おてつだい回数",
+        "inventory full lost": "所持あふれによる破棄",
         "ing count": "食材数",
         "strength per ing": "食材1個あたりのエナジー",
         "normal help count": "通常おてつだい回数",

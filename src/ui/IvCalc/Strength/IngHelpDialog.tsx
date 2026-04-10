@@ -93,7 +93,9 @@ const IngHelpDialog = React.memo(({open, strength, result, dispatch, onClose}: {
                     {round1(result.ingRate * 100)}%
                     <small> ({t('ingredient rate')})</small>
                 </footer>
-                <div><span className="box box1">{round1(ings[0].helpCount)}</span></div>
+                <div><span className="box box7">{round2(ings[0].overflowCount)}</span></div>
+                <span>{t('inventory full lost')}</span>
+                <div><span className="box box1">{round1(ings[0].count)}</span></div>
                 <span>{t('ing count')}</span>
                 <div><span className="box box2">{ingredientStrength[ings[0].name]}</span></div>
                 <span>{t('strength per ing')}</span>
@@ -153,7 +155,8 @@ function getIngDetail(strength: PokemonStrength, result: StrengthResult,
     }
 
     const count = ing.count;
-    const ingSlot = ing.slots.length;
+    const ingSlot = 1 + (result.ing2.count > 0 ? 1 : 0) +
+        (result.ing3.count > 0 ? 1 : 0);
     const ingName = ing.name;
     const param = strength.parameter;
     const dishBonus = getEventBonus(param.event, param.customEventBonus).dish;
@@ -173,6 +176,8 @@ function getIngDetail(strength: PokemonStrength, result: StrengthResult,
             </span>)}
             {ing.slots.length > 1 ? ')' : ''}
             <>{ingSlot > 1 ? ` / ${ingSlot}` : ''}</>
+            <> - </>
+            <span className="box box7">{round2(ing.overflowCount)}</span>
         </div>
         <span style={{marginTop: '-0.5rem'}}>
             <LocalFireDepartmentIcon sx={{color: "#ff944b"}} className="strength"/>
