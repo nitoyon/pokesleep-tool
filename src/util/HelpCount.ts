@@ -40,6 +40,15 @@ export interface IngredientHelp {
  * Represents the help count breakdown by berry, ingredient, and skill.
  */
 export interface HelpCountResult {
+    /** Base frequency per help (energy=0) */
+    baseFreq: number;
+    /** Carry limit with bonus (Good camp ticket & event bonus) */
+    carryLimit: number;
+    /** Bonus that affect inventory consumption. */
+    inventoryBonus: InventoryBonus;
+    /** Sleep time required to fulfill inventory. -1 when not fulfilled. */
+    timeToFullInventory: number,
+
     /** Total help count during the specified period */
     total: NormalAndSnackingHelpCount;
     /** Awake help count */
@@ -90,6 +99,15 @@ export interface HelpCountResult {
     overallSkillRate: number;
     /** Total skill count */
     skillCount: number;
+    /** Skill% after wakeup */
+    skillProbabilityAfterWakeup: {
+        /** Skill triggered once% after wakeup */
+        once: number,
+        /** Skill triggered twice% after wakeup.
+         * Always 0 if specialty is not skill.
+         */
+        twice: number,
+    },
 }
 
 /**
@@ -112,8 +130,6 @@ export function calculateHelpCount(
     const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
 
     // Calculate help count
-    const {baseFreq, inventoryBonus} = calculateBaseFreqAndBonus(iv, param,
-        bonus, isWhistle);
     const sleepScoreSeconds = param.sleepScore * 510 * 60 / 100;
     const awakeSeconds = Math.min(1440 * 60 - sleepScoreSeconds,
         param.period * 60 * 60);
@@ -122,17 +138,17 @@ export function calculateHelpCount(
 
     // Initialize return value
     const ret: HelpCountResult = initializeHelpCountResult(
-        iv, energy, bonus, isWhistle);
+        iv, param, energy, bonus, isWhistle);
 
     // Awake helps
     const simulation = new HelpCountSimulation(iv, param.isGoodCampTicketSet,
-        ret.overallSkillRate, inventoryBonus);
-    calculateAwakeHelpCount(ret, param, awakeSeconds, baseFreq,
+        ret.overallSkillRate, ret.inventoryBonus);
+    calculateAwakeHelpCount(ret, param, awakeSeconds, ret.baseFreq,
         energy, simulation, isWhistle);
     ret.awake = {...ret.total};
 
     // Asleep helps
-    calculateAsleepHelpCount(ret, param, sleepSeconds, baseFreq,
+    calculateAsleepHelpCount(ret, param, sleepSeconds, ret.baseFreq,
         energy, simulation, isWhistle);
     ret.asleep = {
         all: ret.total.all - ret.awake.all,
@@ -162,10 +178,16 @@ export function calculateHelpCount(
 
 function initializeHelpCountResult(
     iv: PokemonIv,
+    param: EnergyParameter,
     energy: EnergyResult,
     bonus: BonusEffects,
     isWhistle: boolean
 ): HelpCountResult {
+    const {baseFreq, inventoryBonus} = calculateBaseFreqAndBonus(iv, param,
+        bonus, isWhistle);
+    const carryLimit = Math.ceil((iv.carryLimit + bonus.carryLimit) *
+        (param.isGoodCampTicketSet ? 1.2 : 1));
+
     const level = iv.level;
     const ingEventAdd: number = (isWhistle ? 0 : bonus.ingredient);
 
@@ -189,6 +211,11 @@ function initializeHelpCountResult(
     }
 
     const ret: HelpCountResult = {
+        baseFreq,
+        carryLimit,
+        inventoryBonus,
+        timeToFullInventory: -1,
+    
         total: {
             all: 0,
             normal: 0,
@@ -220,6 +247,7 @@ function initializeHelpCountResult(
         skillRate: energy.skillRate,
         overallSkillRate: energy.overallSkillRate,
         skillCount: 0,
+        skillProbabilityAfterWakeup: energy.skillProbabilityAfterWakeup,
     };
 
     // initialize ingredients
