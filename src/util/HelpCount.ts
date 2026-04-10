@@ -210,11 +210,18 @@ function initializeHelpCountResult(
         ing3.count = iv.ingredient3.count + ingEventAdd;
     }
 
+    const skillRate = iv.skillRate * bonus.skillTrigger;
+    const overallSkillRate = !param.pityProc ? skillRate :
+        iv.calculateSkillRateWithPityProc(skillRate);
+
+    const timeToFullInventory = calculateTimeToFullInventory(
+        iv, baseFreq, inventoryBonus, param, carryLimit, energy);
+
     const ret: HelpCountResult = {
         baseFreq,
         carryLimit,
         inventoryBonus,
-        timeToFullInventory: -1,
+        timeToFullInventory,
     
         total: {
             all: 0,
@@ -244,8 +251,7 @@ function initializeHelpCountResult(
         ingHelpCount: 0,
         ing1, ing2, ing3,
         ingredients: [],
-        skillRate: energy.skillRate,
-        overallSkillRate: energy.overallSkillRate,
+        skillRate, overallSkillRate,
         skillCount: 0,
         skillProbabilityAfterWakeup: energy.skillProbabilityAfterWakeup,
     };
@@ -316,6 +322,51 @@ function calculateBaseFreqAndBonus(
         expertIngBonus: isFavoriteBerry && param.expertEffect === "ing",
     };
     return { baseFreq, inventoryBonus };
+}
+
+function calculateTimeToFullInventory(
+    iv: PokemonIv,
+    baseFreq: number,
+    inventoryBonus: InventoryBonus,
+    param: EnergyParameter,
+    carryLimit: number,
+    energy: EnergyResult
+) {
+    const alwaysSnacking = param.tapFrequencyAwake === NoTap;
+    const alwaysTapAsleep = param.tapFrequencyAsleep === AlwaysTap;
+    const bagUsagePerHelp = iv.getBagUsagePerHelp(inventoryBonus);
+
+        // calculate timeToFullInventory & timeFullInventory
+    let carryLeft = carryLimit;
+    let timeToFullInventory = 9999; // elapsed time since sleep start when bag becomes full
+    const sleepEfficiencies = alwaysSnacking || alwaysTapAsleep ? [] :
+        energy.efficiencies.filter(x => !x.isAwake);
+    for (const efficiency of sleepEfficiencies) {
+        // calculate help count for this efficiency
+        const time = efficiency.end - efficiency.start;
+        const freq = baseFreq * efficiency.frequencyRate;
+        const helpCount = time * 60 / freq;
+
+        // calculate bag usage for this efficiency
+        const bagUsage = bagUsagePerHelp * helpCount;
+        if (bagUsage < carryLeft) {
+            carryLeft -= bagUsage;
+            continue;
+        }
+
+        // If bag reaches full capacity at this frequency, calculate when the bag
+        // becomes full
+        const requiredHelpCount = carryLeft / bagUsagePerHelp;
+        timeToFullInventory = requiredHelpCount * freq / 60 +
+            efficiency.start - sleepEfficiencies[0].start;
+        break;
+    }
+
+    if (timeToFullInventory > 1440) {
+        timeToFullInventory = -1;
+    }
+
+    return timeToFullInventory;
 }
 
 /**
