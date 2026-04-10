@@ -1,24 +1,17 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import PokemonIv from '../../../util/PokemonIv';
 import { frequencyToString } from '../../../util/TimeUtil';
 import EnergyIcon from '../../Resources/EnergyIcon';
-import FrequencyInfoState from './FrequencyInfoState';
 import { useTranslation } from 'react-i18next';
 
-const EnergyPreviewPanel = React.memo(({iv, state}: {
-    iv: PokemonIv,
-    state: FrequencyInfoState
+const EnergyPreviewPanel = React.memo(({baseFreq, display}: {
+    baseFreq: number,
+    display: "frequency"|"count"|"full",
 }) => {
     const { t } = useTranslation();
 
-    const helpBonusCount = state.helpingBonus +
-        (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
-    const baseFreq = iv.getBaseFrequency(helpBonusCount, state.campTicket,
-        state.expertMode && state.expertBerry === 0,
-        state.expertMode && state.expertBerry === 2);
     const convertToVal = (rate: number) => {
-        switch (state.displayValue) {
+        switch (display) {
             case "frequency":
                 return frequencyToString(Math.floor(baseFreq * rate), t);
             case "count":

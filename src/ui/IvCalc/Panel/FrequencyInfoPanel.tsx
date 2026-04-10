@@ -56,7 +56,13 @@ export const FrequencyInfoPreview = React.memo(({iv, state, onStateChange}: {
         return <FullPreview iv={iv} state={state}
             onStateChange={onStateChange}/>;
     } else {
-        return <EnergyPreviewPanel iv={iv} state={state}/>;
+        const helpBonusCount = state.helpingBonus +
+            (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
+        const baseFreq = iv.getBaseFrequency(helpBonusCount, state.campTicket,
+            state.expertMode && state.expertBerry === 0,
+            state.expertMode && state.expertBerry === 2);
+        return <EnergyPreviewPanel baseFreq={baseFreq}
+            display={state.displayValue}/>;
     }
 });
 
