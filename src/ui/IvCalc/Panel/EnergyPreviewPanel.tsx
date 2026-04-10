@@ -1,12 +1,13 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { frequencyToString } from '../../../util/TimeUtil';
+import { frequencyToString, formatHoursLong } from '../../../util/TimeUtil';
 import EnergyIcon from '../../Resources/EnergyIcon';
 import { useTranslation } from 'react-i18next';
 
-const EnergyPreviewPanel = React.memo(({baseFreq, display}: {
+const EnergyPreviewPanel = React.memo(({baseFreq, pityProc, display}: {
     baseFreq: number,
-    display: "frequency"|"count"|"full",
+    pityProc?: number,
+    display: "frequency"|"count"|"full"|"pity",
 }) => {
     const { t } = useTranslation();
 
@@ -16,6 +17,10 @@ const EnergyPreviewPanel = React.memo(({baseFreq, display}: {
                 return frequencyToString(Math.floor(baseFreq * rate), t);
             case "count":
                 return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
+            case "pity":
+                return formatHoursLong(
+                    (pityProc ?? 0) * (baseFreq * rate / 3600),
+                    t);
         }
         return "";
     };

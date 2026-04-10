@@ -24,6 +24,7 @@ import MainSkillIcon from '../MainSkillIcon';
 import SelectEx from '../../common/SelectEx';
 import { StyledNatureUpEffect, StyledNatureDownEffect } from '../IvForm/NatureTextField';
 import { IvAction } from '../IvState';
+import SkillPityProcDialog from './SkillPityProcDialog';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
 import { useTranslation, Trans } from 'react-i18next';
 import i18next from 'i18next'
@@ -40,6 +41,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     const [berryStrengthOpen, setBerryStrengthOpen] = React.useState(false);
     const [berryIv, setBerryIv] = React.useState(strength.pokemonIv);
     const [berryBonus, setBerryBonus] = React.useState(1);
+    const [pityProcOpen, setPityProcOpen] = React.useState(false);
     const onBerryInfoClick = React.useCallback((type: PokemonType, level: number) => {
         setBerryStrengthOpen(true);
         const iv = new PokemonIv({
@@ -51,6 +53,12 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
     }, [strength.parameter]);
     const onBerryStrenthClose = React.useCallback(() => {
         setBerryStrengthOpen(false);
+    }, []);
+    const onPityProcClick = React.useCallback(() => {
+        setPityProcOpen(true);
+    }, [])
+    const onPityProcClose = React.useCallback(() => {
+        setPityProcOpen(false);
     }, []);
 
     const onSkillLevelChange = React.useCallback((e: React.MouseEvent, value: string|null) => {
@@ -185,7 +193,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
             </>}
 
             {(!isCountOnly || iv.pokemon.skill === "Versatile") &&
-                <section style={{marginTop: '1.8rem'}}>
+                <section style={{marginTop: '0.8rem'}}>
                     <label>{t('skill level')}:</label>
                     <FormControl size="small">
                         <ToggleButtonGroup exclusive
@@ -208,6 +216,14 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
                         }}/>
                 </div>
             </Collapse>
+            <section style={{marginTop: '0.8rem'}}>
+                <label>
+                    {t('skill rate')} ({strength.parameter.pityProc ? t('with pity proc') : t('without pity proc')}):
+                    <InfoButton onClick={onPityProcClick}/>
+                </label>
+                {round1(result.overallSkillRate * 100)}%
+            </section>
+
             {getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
             {footnote !== "" && <div className="footnote">{footnote}</div>}
         </DialogContent>
@@ -216,6 +232,8 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         </DialogActions>
         <BerryStrengthDialog open={berryStrengthOpen} onClose={onBerryStrenthClose}
             iv={berryIv} fieldBonus={settings.fieldBonus} berryBonus={berryBonus}/>
+        <SkillPityProcDialog open={pityProcOpen} onClose={onPityProcClose}
+            dispatch={dispatch} strength={strength} result={result}/>
     </StyledInfoDialog>;
 });
 

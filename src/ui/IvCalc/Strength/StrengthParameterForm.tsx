@@ -247,7 +247,10 @@ const StrengthSettingForm = React.memo(({dispatch, value, hasHelpingBonus}: {
             dispatch={dispatch}/>
         <RecipeBonusHelpDialog open={recipeBonusHelpOpen} onClose={onRecipeBonusHelpClose}/>
         <MessageDialog open={pityProcHelpOpen} onClose={onPityProcHelpClose}
-            message={t('pity proc help')}/>
+            message={<>
+                <p>{t('pity proc help')}</p>
+                <p>{t('pity proc help2')}</p>
+            </>}/>
         <EventConfigDialog open={eventDetailOpen} onClose={onEventDetailClose}
             value={value} onChange={onChange}/>
     </StyledSettingForm>;
