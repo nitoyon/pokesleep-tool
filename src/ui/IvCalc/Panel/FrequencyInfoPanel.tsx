@@ -4,13 +4,13 @@ import { Collapse,
     MenuItem, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import PokemonIv from '../../../util/PokemonIv';
 import { formatHoursLong, formatHoursShort } from '../../../util/TimeUtil';
-import { frequencyToString } from '../../../util/TimeUtil';
 import SelectEx from '../../common/SelectEx';
 import BarChartIcon from '../../Resources/BarChartIcon';
 import EnergyIcon from '../../Resources/EnergyIcon';
 import { calculateInventoryDistribution } from '../../../util/PokemonInventory';
 import { useElementWidth } from '../../common/Hook';
 import { BarChart } from '../Chart/BarChart';
+import EnergyPreviewPanel from './EnergyPreviewPanel';
 import FrequencyInfoState from './FrequencyInfoState';
 import { useTranslation } from 'react-i18next';
 
@@ -56,62 +56,8 @@ export const FrequencyInfoPreview = React.memo(({iv, state, onStateChange}: {
         return <FullPreview iv={iv} state={state}
             onStateChange={onStateChange}/>;
     } else {
-        return <EnergyPreview iv={iv} state={state}/>;
+        return <EnergyPreviewPanel iv={iv} state={state}/>;
     }
-});
-
-const EnergyPreview = React.memo(({iv, state}: {
-    iv: PokemonIv,
-    state: FrequencyInfoState
-}) => {
-    const { t } = useTranslation();
-
-    const helpBonusCount = state.helpingBonus +
-        (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
-    const baseFreq = iv.getBaseFrequency(helpBonusCount, state.campTicket,
-        state.expertMode && state.expertBerry === 0,
-        state.expertMode && state.expertBerry === 2);
-    const convertToVal = (rate: number) => {
-        switch (state.displayValue) {
-            case "frequency":
-                return frequencyToString(Math.floor(baseFreq * rate), t);
-            case "count":
-                return t('help count per hour', {n: (3600 / baseFreq / rate).toFixed(2)});
-        }
-        return "";
-    };
-    const val0 = convertToVal(1);
-    const val40 = convertToVal(0.66);
-    const val60 = convertToVal(0.58);
-    const val80 = convertToVal(0.52);
-    const val100 = convertToVal(0.45);
-
-    return <StyledEnergyPreview>
-        <span className="energy"><EnergyIcon energy={100}/>81{t('range separator')}150</span>
-        <span>{val100}</span>
-        <span className="energy"><EnergyIcon energy={80}/>61{t('range separator')}80</span>
-        <span>{val80}</span>
-        <span className="energy"><EnergyIcon energy={60}/>41{t('range separator')}60</span>
-        <span>{val60}</span>
-        <span className="energy"><EnergyIcon energy={40}/>1{t('range separator')}40</span>
-        <span>{val40}</span>
-        <span className="energy"><EnergyIcon  energy={20}/>0</span>
-        <span>{val0}</span>
-    </StyledEnergyPreview>;
-});
-
-const StyledEnergyPreview = styled('article')({
-    margin: '0 1rem 1rem',
-    display: 'grid',
-    gridTemplateColumns: 'max-content 1fr',
-    gridGap: '1rem',
-    rowGap: '0.5rem',
-    fontSize: '0.9rem',
-    alignItems: 'start',
-    '& > span.energy': {
-        display: 'flex',
-        alignItems: 'center',
-    },
 });
 
 const FullPreview = React.memo(({iv, state, onStateChange}: {
