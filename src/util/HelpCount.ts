@@ -253,7 +253,7 @@ function initializeHelpCountResult(
         ingredients: [],
         skillRate, overallSkillRate,
         skillCount: 0,
-        skillProbabilityAfterWakeup: energy.skillProbabilityAfterWakeup,
+        skillProbabilityAfterWakeup: { once: 0, twice: 0 },
     };
 
     // initialize ingredients
@@ -504,6 +504,13 @@ function calculateAsleepHelpCount(
         if (param.tapFrequencyAwake === NoTap &&
             param.tapFrequencyAsleep === NoTap) {
             continue;
+        }
+
+        // If tap during awake and no tap during sleep,
+        // add skill probability after wake up
+        if (param.tapFrequencyAsleep === NoTap) {
+            ret.skillProbabilityAfterWakeup.once = result.skillOnce;
+            ret.skillProbabilityAfterWakeup.twice = result.skillTwice;
         }
         ret.skillCount += result.skillOnce + result.skillTwice * 2;
     }
