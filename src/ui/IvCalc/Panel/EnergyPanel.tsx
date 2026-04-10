@@ -183,7 +183,7 @@ const EnergyPanel = React.memo(({iv, result, parameter, dispatch}: {
                     <span>{t('asleep')}: {energy.averageEfficiency.asleep}</span>
                 </footer>}
             </section>
-            <Collapse in={energy.canBeFullInventory && parameter.period >= 24}>
+            <Collapse in={energy.showSkillStock && parameter.period >= 24}>
                 <section>
                     <label>{t('full inventory while sleeping')}:</label>
                     <div>{result.timeToFullInventory < 0 ? t('none') :

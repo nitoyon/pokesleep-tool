@@ -153,9 +153,9 @@ export type EnergyResult = {
     events: EnergyEvent[],
     /** Efficiency event list */
     efficiencies: EfficiencyEvent[],
-    /** Whether inventory can be full
-     * (awake tap frequency == always && asleep tap frequency == none) */
-    canBeFullInventory: boolean,
+    /** Whether to show skill stock result
+     * (awake tap frequency != none && asleep tap frequency == none) */
+    showSkillStock: boolean,
     /** Average efficiency */
     averageEfficiency: {
         /** Total efficiency */
@@ -194,7 +194,7 @@ class Energy {
         if (param.period < 0) {
             return {
                 sleepTime: 0, events: [], efficiencies: [],
-                canBeFullInventory: false,
+                showSkillStock: false,
                 averageEfficiency: { total: 0, awake: 0, asleep: 0 },
             };
         }
@@ -250,10 +250,10 @@ class Energy {
             .filter(x => x.isInPeriod && !x.isAwake));
 
         // calculate Sneaky Snacking
-        const canBeFullInventory = (param.tapFrequencyAwake !== NoTap &&
+        const showSkillStock = (param.tapFrequencyAwake !== NoTap &&
             param.tapFrequencyAsleep === NoTap);
 
-        return {sleepTime, events, efficiencies, canBeFullInventory,
+        return {sleepTime, events, efficiencies, showSkillStock,
             averageEfficiency: { total, awake, asleep },
         };
     }

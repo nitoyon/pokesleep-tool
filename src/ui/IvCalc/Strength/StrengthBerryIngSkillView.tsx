@@ -302,7 +302,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </footer>
         </section>
         {settings.period > whistlePeriod && <footer>
-            {result.energy.canBeFullInventory && settings.period >= 24 ? <>
+            {result.energy.showSkillStock && settings.period >= 24 ? <>
                 <span>{t('full inventory while sleeping (short)')}: {result.timeToFullInventory < 0 ? t('none') :
                         new AmountOfSleep(result.timeToFullInventory).toString(t)}</span>
                 <span>
