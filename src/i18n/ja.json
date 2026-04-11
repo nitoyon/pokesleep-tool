@@ -487,6 +487,8 @@
         "without pity proc": "連続不発天井なし",
         "pity proc rate": "連続不発天井到達率",
         "time to pity proc": "連続不発天井までの時間",
+        "pity proc ref": "$t(pity proc)の計算手順は<raenonx>RaenonXの記事</raenonx>を参照させていただいています。",
+        "pity proc url": "https://pks.raenonx.cc/ja/docs/view/mechanics/skill-pity",
 
         "area bonus": "フィールドボーナス",
         "favorite berry": "好みきのみ",

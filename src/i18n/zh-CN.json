@@ -485,6 +485,8 @@
         "without pity proc": "无连续未发动保底",
         "pity proc rate": "连续未发动保底到达率",
         "time to pity proc": "距连续未发动保底的时间",
+        "pity proc ref": "$t(pity proc)的信息参考自<raenonx>RaenonX的文章</raenonx>。",
+        "pity proc url": "https://pks.raenonx.cc/zh/docs/view/mechanics/skill-pity",
 
         "area bonus": "营地奖励",
         "favorite berry": "喜欢的树果",

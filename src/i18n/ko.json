@@ -483,6 +483,8 @@
         "without pity proc": "연속 불발 천장 없음",
         "pity proc rate": "연속 불발 천장 도달률",
         "time to pity proc": "연속 불발 천장까지의 시간",
+        "pity proc ref": "$t(pity proc) 정보는 <raenonx>RaenonX의 기사</raenonx>를 참조하고 있습니다.",
+        "pity proc url": "https://pks.raenonx.cc/en/docs/view/mechanics/skill-pity",
 
         "area bonus": "필드 보너스",
         "favorite berry": "좋아하는 열매",

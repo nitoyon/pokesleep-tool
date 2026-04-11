@@ -495,6 +495,8 @@
         "without pity proc": "Without pity proc",
         "pity proc rate": "Pity proc hit rate",
         "time to pity proc": "Time to pity proc",
+        "pity proc ref": "The pity proc information is referenced from <raenonx>RaenonX's article</raenonx>.",
+        "pity proc url": "https://pks.raenonx.cc/en/docs/view/mechanics/skill-pity",
 
         "current level": "Current level",
         "area bonus": "Area bonus",

@@ -91,6 +91,11 @@ const SkillPityProcDialog = React.memo(({open, dispatch, onClose, strength, resu
                 <label>{t('good camp ticket')}:</label>
                 <Switch checked={param.isGoodCampTicketSet} onChange={onCampTicketChange} size="small"/>
             </section>
+            <footer>
+                <Trans i18nKey="pity proc ref" components={{
+                    raenonx: <a href={t('pity proc url')}>RaenonX</a>
+                }}/>
+            </footer>
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
@@ -144,6 +149,12 @@ const StyledDialog = styled(Dialog)({
             margin: 0,
             padding: '0 0.5rem',
         },
+    },
+
+    '& footer': {
+        fontSize: '0.8rem',
+        color: '#888',
+        marginTop: '0.7rem',
     },
 });
 
