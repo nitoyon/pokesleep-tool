@@ -483,6 +483,7 @@
         "pity proc": "技能连续未发动保底",
         "with pity proc": "有连续未发动保底",
         "without pity proc": "无连续未发动保底",
+        "pity proc rate": "连续未发动保底到达率",
         "time to pity proc": "距连续未发动保底的时间",
 
         "area bonus": "营地奖励",

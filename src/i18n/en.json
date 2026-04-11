@@ -493,6 +493,7 @@
         "pity proc": "Pity proc",
         "with pity proc": "With pity proc",
         "without pity proc": "Without pity proc",
+        "pity proc rate": "Pity proc hit rate",
         "time to pity proc": "Time to pity proc",
 
         "current level": "Current level",

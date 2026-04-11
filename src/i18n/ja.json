@@ -485,6 +485,7 @@
         "pity proc": "スキル連続不発天井",
         "with pity proc": "連続不発天井あり",
         "without pity proc": "連続不発天井なし",
+        "pity proc rate": "連続不発天井到達率",
         "time to pity proc": "連続不発天井までの時間",
 
         "area bonus": "フィールドボーナス",

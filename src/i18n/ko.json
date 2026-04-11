@@ -481,6 +481,7 @@
         "pity proc": "스킬 연속 불발 천장",
         "with pity proc": "연속 불발 천장 있음",
         "without pity proc": "연속 불발 천장 없음",
+        "pity proc rate": "연속 불발 천장 도달률",
         "time to pity proc": "연속 불발 천장까지의 시간",
 
         "area bonus": "필드 보너스",

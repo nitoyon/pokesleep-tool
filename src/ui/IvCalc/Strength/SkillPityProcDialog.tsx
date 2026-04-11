@@ -41,6 +41,7 @@ const SkillPityProcDialog = React.memo(({open, dispatch, onClose, strength, resu
     const overallSkillRate = iv.calculateSkillRateWithPityProc(result.skillRate);
     const param = strength.parameter;
     const hasHelpingBonus = iv.hasHelpingBonusInActiveSubSkills;
+    const pityProcRate = Math.pow(1 - result.skillRate, iv.pityProcHelpCount);
 
     return <StyledDialog open={open} onClose={onClose}>
         <DialogTitle>
@@ -55,6 +56,10 @@ const SkillPityProcDialog = React.memo(({open, dispatch, onClose, strength, resu
                     count1: <b>{iv.pityProcHelpCount + 1}</b>,
                 }}/></p>
             </header>
+            <section>
+                <label>{t('pity proc rate')}:</label>
+                <span>{round1(pityProcRate * 100)}%</span>
+            </section>
             <section>
                 <label>{t('skill rate')}:</label>
             </section>
