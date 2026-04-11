@@ -1,11 +1,12 @@
 import React from 'react';
-import { ClickAwayListener, Popper, Paper } from '@mui/material';
+import { ClickAwayListener, Popper, Paper, PopperPlacementType } from '@mui/material';
 
 const PopperMenu = React.memo(({
-    anchorEl, children, open, onClose,
+    anchorEl, children, placement, open, onClose,
 }: {
     anchorEl: HTMLElement|null,
     children: React.ReactElement,
+    placement?: PopperPlacementType,
     open: boolean,
     onClose: () => void,
 }) => {
@@ -23,7 +24,8 @@ const PopperMenu = React.memo(({
     }, [anchorEl, onClose]);
 
     return (
-        <Popper open={open} anchorEl={anchorEl} placement="bottom-start"
+        <Popper open={open} anchorEl={anchorEl}
+            placement={placement ?? "bottom-start"}
             style={{zIndex: 2147483647, maxWidth: '95vw'}}>
             <Paper elevation={10}>
                 <ClickAwayListener onClickAway={onClickAway}>

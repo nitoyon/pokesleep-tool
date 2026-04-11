@@ -5,6 +5,7 @@ import AreaControlDialog from './AreaControlDialog';
 import EventConfigDialog from './EventConfigDialog';
 import FixedLevelSelect from './FixedLevelSelect';
 import PeriodSelect from './PeriodSelect';
+import TapFrequencyControl from './TapFrequencyControl';
 import SelectEx from '../../common/SelectEx';
 import TextLikeButton from '../../common/TextLikeButton';
 import { getActiveHelpBonus } from '../../../data/events';
@@ -40,6 +41,13 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
     const onParameterChange = React.useCallback((parameter: StrengthParameter) => {
         dispatch({type: "changeParameter", payload: { parameter }});
     }, [dispatch]);
+
+    const onTapFrequencyAwakeChange = React.useCallback((tapFrequencyAwake: number) => {
+        dispatch({type: "changeParameter", payload: {parameter: {...parameter, tapFrequencyAwake}}});
+    }, [dispatch, parameter]);
+    const onTapFrequencyAsleepChange = React.useCallback((tapFrequencyAsleep: number) => {
+        dispatch({type: "changeParameter", payload: {parameter: {...parameter, tapFrequencyAsleep}}});
+    }, [dispatch, parameter]);
 
     const onMaxSkillLevelClick = React.useCallback(() => {
         dispatch({type: "changeParameter", payload: { parameter: {
@@ -125,6 +133,17 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
             </span>
             <span>
                 <PeriodSelect dispatch={dispatch} value={parameter}/>
+                {parameter.period > 0 && <>
+                    <> (</>
+                    <TapFrequencyControl max={10} value={parameter.tapFrequencyAwake}
+                        title={`${t('tap frequency')} (${t('awake')})`}
+                        onChange={onTapFrequencyAwakeChange}/>
+                    <> </>
+                    <TapFrequencyControl max={8} value={parameter.tapFrequencyAsleep}
+                        title={`${t('tap frequency')} (${t('asleep')})`}
+                        onChange={onTapFrequencyAsleepChange}/>
+                    <>)</>
+                </>}
             </span>
             {parameter.level !== 0 && <span className="level">
                 <FixedLevelSelect value={parameter} dispatch={dispatch}/>
@@ -173,6 +192,7 @@ const StrengthParameterPreview = styled('div')({
             },
             marginTop: '-2px',
             fontSize: '0.8rem',
+            padding: 0,
             lineHeight: 1.5,
             '& > svg': {
                 fontSize: '1rem',

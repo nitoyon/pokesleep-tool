@@ -6,8 +6,9 @@ import PopperMenu from '../../common/PopperMenu';
 import SliderAndArrow from '../../common/SliderAndArrow';
 import { useTranslation } from 'react-i18next';
 
-const TapFrequencyControl = React.memo(({max, value, onChange}: {
+const TapFrequencyControl = React.memo(({max, title, value, onChange}: {
     max: number,
+    title?: string,
     value: number,
     onChange: (value: number) => void,
 }) => {
@@ -43,12 +44,15 @@ const TapFrequencyControl = React.memo(({max, value, onChange}: {
 
     return (<>
         <TextLikeButton ref={anchorRef} onClick={onClick}
-            sx={{padding: '0 0.4rem'}}
+            sx={{minWidth: '3rem'}}
             className={open ? "focused" : ""}>
             {valueText}
         </TextLikeButton>
-        <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}>
+        <PopperMenu anchorEl={anchorRef.current} open={open} onClose={onClose}
+            placement="bottom-end"
+        >
             <StyledMenuDiv>
+                {title && <header>{title}</header>}
                 <SliderAndArrow min={0} max={max * 2 + 1} value={sliderVal} onChange={onSliderChange}/>
                 <div className="buttons">
                     <Button onClick={() => onButtonClick(1)}>{t('every minute')}</Button>
@@ -62,6 +66,11 @@ const TapFrequencyControl = React.memo(({max, value, onChange}: {
 const StyledMenuDiv = styled('div')({
     padding: '0.4rem',
     minWidth: '12rem',
+    '& > header': {
+        fontSize: '0.9rem',
+        paddingBottom: '0.4rem',
+        color: '#666',
+    },
     '& > div > button': {
         textTransform: 'none',
         color: '#000',
