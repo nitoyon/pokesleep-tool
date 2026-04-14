@@ -167,7 +167,7 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
         return [880, 1251, 1726, 2383, 3290, 4546, 6858][skillLevel - 1];
     }
     if (skill === "Charge Strength M (Bad Dreams)") {
-        return [2640, 3753, 5178, 7149, 9870, 13638, 17304][skillLevel - 1];
+        return [2640, 3753, 5178, 7149, 9870, 13638, 18515][skillLevel - 1];
     }
     if (skill === "Cooking Power-Up S") {
         return [7, 10, 12, 17, 22, 27, 31][skillLevel - 1];
