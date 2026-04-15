@@ -345,7 +345,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(({
             </div>
         }
         <BerryHelpDialog open={berryHelpOpen} onClose={onBerryHelpClose}
-            strength={strength} result={result}/>
+            dispatch={dispatch} strength={strength} result={result}/>
         <IngHelpDialog open={ingHelpOpen} onClose={onIngHelpClose}
             dispatch={dispatch} strength={strength} result={result}/>
         <SkillHelpDialog open={skillHelpOpen} onClose={onSkillHelpClose}

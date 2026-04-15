@@ -2,15 +2,19 @@ import React from 'react';
 import { round1, formatWithComma } from '../../../util/NumberUtil';
 import PokemonStrength, { StrengthResult } from '../../../util/PokemonStrength';
 import InfoButton from '../InfoButton';
+import { IvAction } from '../IvState';
 import BerryStrengthDialog from './BerryStrengthDialog';
 import { StyledInfoDialog } from './StrengthBerryIngSkillView';
+import TapFrequencyControl from './TapFrequencyControl';
+import { NoTap } from '../../../util/Energy';
 import { Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useTranslation } from 'react-i18next';
 
-const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
+const BerryHelpDialog = React.memo(({open, onClose, dispatch, strength, result}: {
     open: boolean,
     onClose: () => void,
+    dispatch: React.Dispatch<IvAction>,
     strength: PokemonStrength,
     result: StrengthResult,
 }) => {
@@ -22,6 +26,15 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
     const onBerryStrengthInfoClose = React.useCallback(() => {
         setBerryStrengthOpen(false);
     }, []);
+
+    const parameter = strength.parameter;
+    const onTapFrequencyAwakeChange = React.useCallback((tapFrequencyAwake: number) => {
+        dispatch({type: "changeParameter", payload: {parameter: {...parameter, tapFrequencyAwake}}});
+    }, [dispatch, parameter]);
+    const onTapFrequencyAsleepChange = React.useCallback((tapFrequencyAsleep: number) => {
+        dispatch({type: "changeParameter", payload: {parameter: {...parameter, tapFrequencyAsleep}}});
+    }, [dispatch, parameter]);
+
     if (!open) {
         return <></>;
     }
@@ -73,10 +86,29 @@ const BerryHelpDialog = React.memo(({open, onClose, strength, result}: {
                         </li>
                         <li>
                             <strong>{round1(result.total.sneakySnacking)}</strong>{t('times unit')}: {t('sneaky snacking')}
+                            <footer>
+                                {t('awake')}: {round1(result.awake.sneakySnacking)}{t('times unit')}<br/>
+                                {t('asleep')}: {round1(result.asleep.sneakySnacking)}{t('times unit')}<br/>
+                            </footer>
                         </li>
                     </ul>
                 </span>
             </article>
+            {parameter.period > 0 && <>
+                <section style={{marginTop: '1.8rem'}}>
+                    <label>{t('tap frequency')} ({t('awake')}):</label>
+                    <TapFrequencyControl max={10} value={parameter.tapFrequencyAwake}
+                        onChange={onTapFrequencyAwakeChange}/>
+                </section>
+                <section>
+                    <label>{t('tap frequency')} ({t('asleep')}):</label>
+                    {parameter.tapFrequencyAwake === NoTap ?
+                        <span style={{fontSize: '0.9rem'}}>{t('none')}</span> :
+                        <TapFrequencyControl max={8} value={parameter.tapFrequencyAsleep}
+                            onChange={onTapFrequencyAsleepChange}/>
+                    }
+                </section>
+            </>}
         </DialogContent>
         <DialogActions>
             <Button onClick={onClose}>{t('close')}</Button>
