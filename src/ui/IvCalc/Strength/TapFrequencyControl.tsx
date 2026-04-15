@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import TextLikeButton from '../../common/TextLikeButton';
 import PopperMenu from '../../common/PopperMenu';
 import SliderAndArrow from '../../common/SliderAndArrow';
+import { AlwaysTap, NoTap } from '../../../util/Energy';
 import { useTranslation } from 'react-i18next';
 
 const TapFrequencyControl = React.memo(({max, title, value, onChange}: {
@@ -23,9 +24,9 @@ const TapFrequencyControl = React.memo(({max, title, value, onChange}: {
     }, []);
     const onSliderChange = React.useCallback((val: number) => {
         // Convert sliderVal to value
-        onChange(val === 0 ? 1 :
-            val === max * 2 + 1 ? 0 : val * 30);
-    }, [onChange]);
+        onChange(val === 0 ? AlwaysTap :
+            val === max * 2 + 1 ? NoTap : val * 30);
+    }, [onChange, max]);
     const onButtonClick = React.useCallback((val: number) => {
         onChange(val);
         setOpen(false);
@@ -36,10 +37,11 @@ const TapFrequencyControl = React.memo(({max, title, value, onChange}: {
         value === 1 ? t('every minute') :
         t('hour2', {count: value / 60}));
 
-    // value === 0: Right side (max * 2 + 1)
-    // value === 1: Left side (0)
+    // value === NoTap: Right side (max * 2 + 1)
+    // value === AlwaysTap: Left side (0)
     // others: 0.5 hours -> 1, 1 hour -> 2, ...
-    const sliderVal = value === 0 ? (max * 2 + 1) :
+    const sliderVal = value === NoTap ? (max * 2 + 1) :
+        value === AlwaysTap ? 0 :
         Math.floor(value / 30);
 
     return (<>
