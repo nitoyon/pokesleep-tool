@@ -7,11 +7,12 @@ import SliderAndArrow from '../../common/SliderAndArrow';
 import { AlwaysTap, NoTap } from '../../../util/Energy';
 import { useTranslation } from 'react-i18next';
 
-const TapFrequencyControl = React.memo(({max, title, value, onChange}: {
+const TapFrequencyControl = React.memo(({max, title, value, onChange, sx}: {
     max: number,
     title?: string,
     value: number,
     onChange: (value: number) => void,
+    sx?: React.CSSProperties,
 }) => {
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
@@ -46,7 +47,7 @@ const TapFrequencyControl = React.memo(({max, title, value, onChange}: {
 
     return (<>
         <TextLikeButton ref={anchorRef} onClick={onClick}
-            sx={{minWidth: '3rem'}}
+            sx={sx ?? {padding: '0 4px'}}
             className={open ? "focused" : ""}>
             {valueText}
         </TextLikeButton>

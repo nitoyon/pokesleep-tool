@@ -137,11 +137,13 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
                     <> (</>
                     <TapFrequencyControl max={10} value={parameter.tapFrequencyAwake}
                         title={`${t('tap frequency')} (${t('awake')})`}
+                        sx={{minWidth: '3rem'}}
                         onChange={onTapFrequencyAwakeChange}/>
                     {parameter.tapFrequencyAwake !== NoTap && <>
                         <> </>
                         <TapFrequencyControl max={8} value={parameter.tapFrequencyAsleep}
                             title={`${t('tap frequency')} (${t('asleep')})`}
+                            sx={{minWidth: '3rem'}}
                             onChange={onTapFrequencyAsleepChange}/>
                     </>}
                     <>)</>
