@@ -13,7 +13,7 @@ import { isExpertField } from '../../../data/fields';
 import {
     allFavoriteFieldIndex, noFavoriteFieldIndex, StrengthParameter,
 } from '../../../util/PokemonStrength';
-import { whistlePeriod } from '../../../util/Energy';
+import { NoTap, whistlePeriod } from '../../../util/Energy';
 import { Button, IconButton, MenuItem } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useTranslation } from 'react-i18next';
@@ -138,10 +138,12 @@ const StrengthParameterSummary = React.memo(({state, dispatch}: {
                     <TapFrequencyControl max={10} value={parameter.tapFrequencyAwake}
                         title={`${t('tap frequency')} (${t('awake')})`}
                         onChange={onTapFrequencyAwakeChange}/>
-                    <> </>
-                    <TapFrequencyControl max={8} value={parameter.tapFrequencyAsleep}
-                        title={`${t('tap frequency')} (${t('asleep')})`}
-                        onChange={onTapFrequencyAsleepChange}/>
+                    {parameter.tapFrequencyAwake !== NoTap && <>
+                        <> </>
+                        <TapFrequencyControl max={8} value={parameter.tapFrequencyAsleep}
+                            title={`${t('tap frequency')} (${t('asleep')})`}
+                            onChange={onTapFrequencyAsleepChange}/>
+                    </>}
                     <>)</>
                 </>}
             </span>
