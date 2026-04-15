@@ -143,6 +143,25 @@ describe('calculateHelpCount', () => {
         expect(result.asleep.sneakySnacking).toBe(0);
         expect(result.asleep.normal).toBe(0);
     });
+
+    test('awake no tap (all sneaky snacking)', () => {
+        const iv = new PokemonIv({
+            pokemonName: 'Raichu',
+            level: 30,
+        });
+
+        const param = createParam({
+            tapFrequencyAwake: NoTap,
+        });
+        const energy = new Energy(iv).calculate(param);
+        const result = calculateHelpCount(iv, param, energy,
+            emptyBonusEffects, false);
+        expect(result.asleep.normal).toBe(0);
+        expect(result.total.normal).toBe(0);
+        expect(result.awake.normal).toBe(0);
+        expect(result.awake.sneakySnacking).not.toBe(0);
+    });
+
 });
 
 describe('calculateNextHelpElapsed', () => {

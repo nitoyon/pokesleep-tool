@@ -483,6 +483,16 @@ function calculateAsleepHelpCount(
     const asleepHelpCounts = calculateHelpCountPerTap(energy.efficiencies,
         1440 * 60 - sleepSeconds, baseFreq, tapIntervalAsleep, sleepSeconds);
 
+    // Always sneaky snacking simulation
+    if (param.tapFrequencyAwake === NoTap) {
+        ret.total.all += asleepHelpCounts[0];
+        ret.total.sneakySnacking += asleepHelpCounts[0];
+        ret.berryHelpCount = asleepHelpCounts[0];
+        ret.berryCount = ret.berryHelpCount * ret.berryCountPerSneakySnacking;
+        ret.berrySneakySnackingCount = asleepHelpCounts[0];
+        return;
+    }
+
     // Always tap simulation
     if (param.tapFrequencyAsleep === AlwaysTap) {
         addAlwaysTapHelps(ret, asleepHelpCounts[0], true);
