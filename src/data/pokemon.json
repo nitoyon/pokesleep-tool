@@ -682,6 +682,74 @@
         }
     },
     {
+        "id": 27,
+        "name": "Sandshrew",
+        "arrival": "2026-04-27",
+        "sleepType": "slumbering",
+        "exp": 1080,
+        "type": "ground",
+        "specialty": "Ingredients",
+        "skill": "unknown",
+        "fp": 5,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": 27,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 28,
+        "name": "Sandslash",
+        "arrival": "2026-04-27",
+        "sleepType": "slumbering",
+        "exp": 1080,
+        "type": "ground",
+        "specialty": "Ingredients",
+        "skill": "unknown",
+        "fp": 12,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": 27,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 2,
+            "c2": 5,
+            "c3": 7
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 35,
         "arrival": "2023-09-28",
         "name": "Clefairy",

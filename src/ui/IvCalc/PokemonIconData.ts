@@ -115,6 +115,17 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0, y: 0, w: 1, h: 1, color: '#f9cb60'},
         {x: 0.2, y: 0.55, w: 0.6, h: 0.6, r: 0.1, color: '#fefefd'},
     ],
+    // Sandshrew
+    '27': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#e6d559'},
+        {x: 0.2, y: 0.5, w: 0.6, h: 0.8, r: 0.3, color: '#f9edde'},
+    ],
+    // Sandslash
+    '28': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#e6d55b'},
+        {x: 0.3, y: 0.55, w: 0.4, h: 0.8, r: 0.3, color: '#f9edde'},
+        {x: 0, y: 0, w: 1, h: 0.2, color: '#af8242'},
+    ],
     // Clefairy
     '35': [
         {x: 0, y: 0, w: 1, h: 0.15, color: '#674328'},
