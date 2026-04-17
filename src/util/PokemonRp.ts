@@ -357,10 +357,7 @@ class PokemonRp {
                 return [766, 1089, 1502, 2074, 2863, 3956][this.iv.skillLevel - 1];
             }
             if (this.iv.pokemon.skill === "Energizing Cheer S (Heal Pulse)") {
-                // SLv1~3: Fixed
-                // SLv4: 4416 or 4417
-                // SLv5~: Estimated
-                return [1600, 2300, 3180, 4416, 6047, 8351][this.iv.skillLevel - 1];
+                return [1600, 2300, 3180, 4417, 6113, 8462][this.iv.skillLevel - 1];
             }
             if (this.iv.pokemon.skill === "Versatile") {
                 return [1280, 1651, 2126, 2783, 3690, 5056, 6463, 8033][this.iv.skillLevel - 1];
