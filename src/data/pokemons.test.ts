@@ -223,4 +223,34 @@ describe('JSON data verification', () => {
             }
         }
     });
+
+    test('exp should be valid', () => {
+        for (const pokemon of pokemons) {
+            // myth
+            if (pokemon.mythIng !== undefined) {
+                expect(pokemon.exp).toBe(1320);
+                continue;
+            }
+
+            // legendary
+            if (pokemon.skill === "Helper Boost" ||
+                pokemon.skill === "Energy for Everyone S (Lunar Blessing)" ||
+                pokemon.skill === "Energizing Cheer S (Heal Pulse)"
+            ) {
+                expect(pokemon.exp).toBe(1080);
+                continue;
+            }
+
+            // Pseudo-legendary Pokémon
+            if (pokemon.ancestor === 147 ||
+                pokemon.ancestor === 246 ||
+                pokemon.ancestor === 371
+            ) {
+                expect(pokemon.exp).toBe(900);
+                continue;
+            }
+
+            expect(pokemon.exp).toBe(600);
+        }
+    });
 });
