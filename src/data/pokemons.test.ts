@@ -224,6 +224,22 @@ describe('JSON data verification', () => {
         }
     });
 
+    test('specialty should not be changed by evolving', () => {
+        for (const pokemon of pokemons) {
+            if (pokemon.ancestor === null ||
+                pokemon.id === pokemon.ancestor
+            ) {
+                continue;
+            }
+            const ancestor = pokemons.find(x => x.id === pokemon.ancestor);
+            expect(ancestor).toBeDefined();
+            if (ancestor === undefined) {
+                throw new Error('never comes here');
+            }
+            expect(ancestor.specialty, `id=${pokemon.name}`).toBe(pokemon.specialty);
+        }
+    });
+
     test('exp should be valid', () => {
         for (const pokemon of pokemons) {
             // myth
