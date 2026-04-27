@@ -72,7 +72,7 @@
                     "detail": "$t(rp collection)"
                 },
                 "v3.1.0": {
-                    "headline": "Supported the new skill '$t(skills.Ingredient Magnet S (Present))' in version 3.1.0.",
+                    "headline": "Supported the new skill '$t(skills.Ingredient Magnet S (Present).name)' in version 3.1.0.",
                     "detail": "$t(rp collection)"
                 },
                 "add amber pokemons": {
@@ -96,8 +96,8 @@
                     "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
-                    "headline": "Adjusted for balance changes in v2.12.0 and improved simulation for $t(skills.Berry Burst).",
-                    "detail": "Updated skill probabilities for $t(pokemons.Braviary) and $t(pokemons.Mimikyu).\nWhen calculating the expected strength of $t(skills.Berry Burst), it is now assumed that all Pokémon in the team are at the same level. Additionally, from the [i] button next to [$t(skill)] on the [$t(strength2)] tab, you can now customize each Pokémon in the team in more detail."
+                    "headline": "Adjusted for balance changes in v2.12.0 and improved simulation for $t(skills.Berry Burst.name).",
+                    "detail": "Updated skill probabilities for $t(pokemons.Braviary) and $t(pokemons.Mimikyu).\nWhen calculating the expected strength of $t(skills.Berry Burst.name), it is now assumed that all Pokémon in the team are at the same level. Additionally, from the [i] button next to [$t(skill)] on the [$t(strength2)] tab, you can now customize each Pokémon in the team in more detail."
                 },
                 "ex and toxel": {
                     "headline": "Added data for Toxel and Toxtricity. Also added support for $t(area.7).",
@@ -105,7 +105,7 @@
                 },
                 "v2.11.0": {
                     "headline": "Updated the data with balance adjustments in version 2.11.0",
-                    "detail": "Data for $t(pokemons.Dugtrio), $t(pokemons.Marowak) and $t(skills.Extra Helpful S) have been updated."
+                    "detail": "Data for $t(pokemons.Dugtrio), $t(pokemons.Marowak) and $t(skills.Extra Helpful S.name) have been updated."
                 },
                 "sprigatito bug": {
                     "headline": "Bug Report: $t(pokemons.Sprigatito) may have disappeared from your box. We apologize for the trouble and kindly ask you to verify.",
@@ -615,9 +615,9 @@
         "help yield": "Yield",
         "help yield description": "The average number of berries and ingredients collected over {{n}} helps.",
         "helps for cap": "Required helps for cap",
-        "helps for cap description": "The average $t(help count) needed to reach the 999 $t(berry) and $t(ingredient) cap, with the effect of $t(skills.Helper Boost), after entering $t(sneaky snacking) mode due to a full $t(carry limit).",
+        "helps for cap description": "The average $t(help count) needed to reach the 999 $t(berry) and $t(ingredient) cap, with the effect of $t(skills.Helper Boost.name), after entering $t(sneaky snacking) mode due to a full $t(carry limit).",
         "required helper boost": "Helper boost for cap",
-        "required helper boost description": "The average number of $t(skills.Helper Boost) triggers needed to reach the 999 $t(berry) and $t(ingredient) cap, after entering $t(sneaky snacking) mode due to a full $t(carry limit).",
+        "required helper boost description": "The average number of $t(skills.Helper Boost.name) triggers needed to reach the 999 $t(berry) and $t(ingredient) cap, after entering $t(sneaky snacking) mode due to a full $t(carry limit).",
         "different species": "Different species of same type",
         "helps per skill": "$t(help count) per skill trigger",
 
@@ -780,42 +780,114 @@
         "about4": "The ingredient icon was created by ちゃんりわ.",
 
         "skills": {
-            "Ingredient Magnet S": "Ingredient Magnet S",
-            "Ingredient Magnet S (Present)": "Present (Ingredient Magnet S)",
-            "Ingredient Magnet S (Plus)": "Plus (Ingredient Magnet S)",
-            "Charge Energy S": "Charge Energy S",
-            "Charge Energy S (Moonlight)": "Moonlight (Charge Energy S)",
-            "Charge Strength S": "Charge Strength S",
-            "Charge Strength S (Random)": "Charge Strength S (Random)",
-            "Charge Strength S (Stockpile)": "Stockpile (Charge Strength S)",
-            "Charge Strength M": "Charge Strength M",
-            "Charge Strength M (Bad Dreams)": "Bad Dreams (Charge Strength M)",
-            "Dream Shard Magnet S": "Dream Shard Magnet S",
-            "Dream Shard Magnet S (Random)": "Dream Shard Magnet S (Random)",
-            "Energizing Cheer S": "Energizing Cheer S",
-            "Energizing Cheer S (Nuzzle)": "Nuzzle (Energizing Cheer S)",
-            "Energizing Cheer S (Heal Pulse)": "Heal Pulse (Energizing Cheer S)",
-            "Metronome": "Metronome",
-            "Energy for Everyone S": "Energy for Everyone S",
-            "Energy for Everyone S (Lunar Blessing)": "Lunar Blessing (Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "Berry Juice (Energy for Everyone S)",
-            "Extra Helpful S": "Extra Helpful S",
-            "Cooking Power-Up S": "Cooking Power-Up S",
-            "Cooking Power-Up S (Minus)": "Minus (Cooking Power-Up S)",
-            "Tasty Chance S": "Tasty Chance S",
-            "Helper Boost": "Helper Boost",
-            "Berry Burst": "Berry Burst",
-            "Berry Burst (Disguise)": "Disguise (Berry Burst)",
-            "Skill Copy": "Skill Copy",
-            "Skill Copy (Transform)": "Transform (Skill Copy)",
-            "Skill Copy (Mimic)": "Mimic (Skill Copy)",
-            "Ingredient Draw S": "Ingredient Draw S",
-            "Ingredient Draw S (Super Luck)": "Super Luck (Ingredient Draw S)",
-            "Ingredient Draw S (Hyper Cutter)": "Hyper Cutter (Ingredient Draw S)",
-            "Cooking Assist S": "Cooking Assist S",
-            "Cooking Assist S (Bulk Up)": "Bulk Up (Cooking Assist S)",
-            "Versatile": "Versatile",
-            "unknown": "(Unknown)"
+            "Ingredient Magnet S": {
+                "name": "Ingredient Magnet S"
+            },
+            "Ingredient Magnet S (Present)": {
+                "name": "Present (Ingredient Magnet S)"
+            },
+            "Ingredient Magnet S (Plus)": {
+                "name": "Plus (Ingredient Magnet S)"
+            },
+            "Charge Energy S": {
+                "name": "Charge Energy S"
+            },
+            "Charge Energy S (Moonlight)": {
+                "name": "Moonlight (Charge Energy S)"
+            },
+            "Charge Strength S": {
+                "name": "Charge Strength S"
+            },
+            "Charge Strength S (Random)": {
+                "name": "Charge Strength S (Random)"
+            },
+            "Charge Strength S (Stockpile)": {
+                "name": "Stockpile (Charge Strength S)"
+            },
+            "Charge Strength M": {
+                "name": "Charge Strength M"
+            },
+            "Charge Strength M (Bad Dreams)": {
+                "name": "Bad Dreams (Charge Strength M)"
+            },
+            "Dream Shard Magnet S": {
+                "name": "Dream Shard Magnet S"
+            },
+            "Dream Shard Magnet S (Random)": {
+                "name": "Dream Shard Magnet S (Random)"
+            },
+            "Energizing Cheer S": {
+                "name": "Energizing Cheer S"
+            },
+            "Energizing Cheer S (Nuzzle)": {
+                "name": "Nuzzle (Energizing Cheer S)"
+            },
+            "Energizing Cheer S (Heal Pulse)": {
+                "name": "Heal Pulse (Energizing Cheer S)"
+            },
+            "Metronome": {
+                "name": "Metronome"
+            },
+            "Energy for Everyone S": {
+                "name": "Energy for Everyone S"
+            },
+            "Energy for Everyone S (Lunar Blessing)": {
+                "name": "Lunar Blessing (Energy for Everyone S)"
+            },
+            "Energy for Everyone S (Berry Juice)": {
+                "name": "Berry Juice (Energy for Everyone S)"
+            },
+            "Extra Helpful S": {
+                "name": "Extra Helpful S"
+            },
+            "Cooking Power-Up S": {
+                "name": "Cooking Power-Up S"
+            },
+            "Cooking Power-Up S (Minus)": {
+                "name": "Minus (Cooking Power-Up S)"
+            },
+            "Tasty Chance S": {
+                "name": "Tasty Chance S"
+            },
+            "Helper Boost": {
+                "name": "Helper Boost"
+            },
+            "Berry Burst": {
+                "name": "Berry Burst"
+            },
+            "Berry Burst (Disguise)": {
+                "name": "Disguise (Berry Burst)"
+            },
+            "Skill Copy": {
+                "name": "Skill Copy"
+            },
+            "Skill Copy (Transform)": {
+                "name": "Transform (Skill Copy)"
+            },
+            "Skill Copy (Mimic)": {
+                "name": "Mimic (Skill Copy)"
+            },
+            "Ingredient Draw S": {
+                "name": "Ingredient Draw S"
+            },
+            "Ingredient Draw S (Super Luck)": {
+                "name": "Super Luck (Ingredient Draw S)"
+            },
+            "Ingredient Draw S (Hyper Cutter)": {
+                "name": "Hyper Cutter (Ingredient Draw S)"
+            },
+            "Cooking Assist S": {
+                "name": "Cooking Assist S"
+            },
+            "Cooking Assist S (Bulk Up)": {
+                "name": "Bulk Up (Cooking Assist S)"
+            },
+            "Versatile": {
+                "name": "Versatile"
+            },
+            "unknown": {
+                "name": "(Unknown)"
+            }
         },
 
         "subskill": {

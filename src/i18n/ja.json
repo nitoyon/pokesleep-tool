@@ -72,7 +72,7 @@
                     "detail": "$t(rp collection)"
                 },
                 "v3.1.0": {
-                    "headline": "v3.1.0 での新スキル「$t(skills.Ingredient Magnet S (Present))」に対応しました。",
+                    "headline": "v3.1.0 での新スキル「$t(skills.Ingredient Magnet S (Present).name)」に対応しました。",
                     "detail": "$t(rp collection)"
                 },
                 "add amber pokemons": {
@@ -96,8 +96,8 @@
                     "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
-                    "headline": "v2.12.0 でのバランス調整に対応し、$t(skills.Berry Burst)のシミュレーションを改善しました。",
-                    "detail": "$t(pokemons.Braviary)、$t(pokemons.Mimikyu)のスキル確率を更新しました。\n$t(skills.Berry Burst)のスキル期待値計算時、チーム内のポケモンは同レベルであると仮定するようになりました。また、[$t(strength2)]タブの[$t(skill)]の右側の [i] ボタンから、チーム内のポケモンを詳細にカスタマイズできるようになりました。"
+                    "headline": "v2.12.0 でのバランス調整に対応し、$t(skills.Berry Burst.name)のシミュレーションを改善しました。",
+                    "detail": "$t(pokemons.Braviary)、$t(pokemons.Mimikyu)のスキル確率を更新しました。\n$t(skills.Berry Burst.name)のスキル期待値計算時、チーム内のポケモンは同レベルであると仮定するようになりました。また、[$t(strength2)]タブの[$t(skill)]の右側の [i] ボタンから、チーム内のポケモンを詳細にカスタマイズできるようになりました。"
                 },
                 "ex and toxel": {
                     "headline": "エレズン、ストリンダーのデータを追加しました。また、$t(area.7)に対応しました。",
@@ -105,7 +105,7 @@
                 },
                 "v2.11.0": {
                     "headline": "v2.11.0 でのバランス調整に対応しました。",
-                    "detail": "$t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S)のデータを更新しました。"
+                    "detail": "$t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S.name)のデータを更新しました。"
                 },
                 "sprigatito bug": {
                     "headline": "バグ報告: $t(pokemons.Sprigatito)がボックスから消えている可能性があります。お手数ですがご確認ください。",
@@ -608,7 +608,7 @@
         "helps for cap": "最大貯め必要$t(help count)",
         "helps for cap description": "999 個まで$t(berry)・$t(ingredient)を貯めるために必要な平均$t(help count) ($t(sneaky snacking)になってからの$t(help count))。",
         "required helper boost": "最大貯め必要おてブ回数",
-        "required helper boost description": "999 個まで$t(berry)・$t(ingredient)を貯めるために必要な$t(skills.Helper Boost)のおおよその発動回数 ($t(sneaky snacking)になってからの$t(skill count))。",
+        "required helper boost description": "999 個まで$t(berry)・$t(ingredient)を貯めるために必要な$t(skills.Helper Boost.name)のおおよその発動回数 ($t(sneaky snacking)になってからの$t(skill count))。",
         "different species": "異なる種類の同タイプポケモン数",
         "helps per skill": "スキル1回の$t(help count)",
 
@@ -770,42 +770,114 @@
         "about4": "食材のアイコンは、ちゃんりわさんが作成してくれました。",
 
         "skills": {
-            "Ingredient Magnet S": "食材ゲットS",
-            "Ingredient Magnet S (Plus)": "プラス (食材ゲットS)",
-            "Ingredient Magnet S (Present)": "プレゼント (食材ゲットS)",
-            "Charge Energy S": "げんきチャージS",
-            "Charge Energy S (Moonlight)": "つきのひかり (げんきチャージS)",
-            "Charge Strength S": "エナジーチャージS",
-            "Charge Strength S (Random)": "エナジーチャージS (ランダム)",
-            "Charge Strength S (Stockpile)": "たくわえる (エナジーチャージS)",
-            "Charge Strength M": "エナジーチャージM",
-            "Charge Strength M (Bad Dreams)": "ナイトメア (エナジーチャージM)",
-            "Dream Shard Magnet S": "ゆめのかけらゲットS",
-            "Dream Shard Magnet S (Random)": "ゆめのかけらゲットS (ランダム)",
-            "Energizing Cheer S": "げんきエールS",
-            "Energizing Cheer S (Nuzzle)": "ほっぺすりすり (げんきエールS)",
-            "Energizing Cheer S (Heal Pulse)": "いやしのはどう (げんきエールS)",
-            "Metronome": "ゆびをふる",
-            "Energy for Everyone S": "げんきオールS",
-            "Energy for Everyone S (Lunar Blessing)": "みかづきのいのり (げんきオールS)",
-            "Energy for Everyone S (Berry Juice)": "きのみジュース (げんきオールS)",
-            "Extra Helpful S": "おてつだいサポートS",
-            "Cooking Power-Up S": "料理パワーアップS",
-            "Cooking Power-Up S (Minus)": "マイナス (料理パワーアップS)",
-            "Tasty Chance S": "料理チャンスS",
-            "Helper Boost": "おてつだいブースト",
-            "Berry Burst": "きのみバースト",
-            "Berry Burst (Disguise)": "ばけのかわ (きのみバースト)",
-            "Skill Copy": "スキルコピー",
-            "Skill Copy (Transform)": "へんしん (スキルコピー)",
-            "Skill Copy (Mimic)": "ものまね (スキルコピー)",
-            "Ingredient Draw S": "食材セレクトS",
-            "Ingredient Draw S (Super Luck)": "きょううん (食材セレクトS)",
-            "Ingredient Draw S (Hyper Cutter)": "かいりきバサミ (食材セレクトS)",
-            "Cooking Assist S": "料理アシストS",
-            "Cooking Assist S (Bulk Up)": "ビルドアップ(料理アシストS)",
-            "Versatile": "オールマイティー",
-            "unknown": "(不明)"
+            "Ingredient Magnet S": {
+                "name": "食材ゲットS"
+            },
+            "Ingredient Magnet S (Plus)": {
+                "name": "プラス (食材ゲットS)"
+            },
+            "Ingredient Magnet S (Present)": {
+                "name": "プレゼント (食材ゲットS)"
+            },
+            "Charge Energy S": {
+                "name": "げんきチャージS"
+            },
+            "Charge Energy S (Moonlight)": {
+                "name": "つきのひかり (げんきチャージS)"
+            },
+            "Charge Strength S": {
+                "name": "エナジーチャージS"
+            },
+            "Charge Strength S (Random)": {
+                "name": "エナジーチャージS (ランダム)"
+            },
+            "Charge Strength S (Stockpile)": {
+                "name": "たくわえる (エナジーチャージS)"
+            },
+            "Charge Strength M": {
+                "name": "エナジーチャージM"
+            },
+            "Charge Strength M (Bad Dreams)": {
+                "name": "ナイトメア (エナジーチャージM)"
+            },
+            "Dream Shard Magnet S": {
+                "name": "ゆめのかけらゲットS"
+            },
+            "Dream Shard Magnet S (Random)": {
+                "name": "ゆめのかけらゲットS (ランダム)"
+            },
+            "Energizing Cheer S": {
+                "name": "げんきエールS"
+            },
+            "Energizing Cheer S (Nuzzle)": {
+                "name": "ほっぺすりすり (げんきエールS)"
+            },
+            "Energizing Cheer S (Heal Pulse)": {
+                "name": "いやしのはどう (げんきエールS)"
+            },
+            "Metronome": {
+                "name": "ゆびをふる"
+            },
+            "Energy for Everyone S": {
+                "name": "げんきオールS"
+            },
+            "Energy for Everyone S (Lunar Blessing)": {
+                "name": "みかづきのいのり (げんきオールS)"
+            },
+            "Energy for Everyone S (Berry Juice)": {
+                "name": "きのみジュース (げんきオールS)"
+            },
+            "Extra Helpful S": {
+                "name": "おてつだいサポートS"
+            },
+            "Cooking Power-Up S": {
+                "name": "料理パワーアップS"
+            },
+            "Cooking Power-Up S (Minus)": {
+                "name": "マイナス (料理パワーアップS)"
+            },
+            "Tasty Chance S": {
+                "name": "料理チャンスS"
+            },
+            "Helper Boost": {
+                "name": "おてつだいブースト"
+            },
+            "Berry Burst": {
+                "name": "きのみバースト"
+            },
+            "Berry Burst (Disguise)": {
+                "name": "ばけのかわ (きのみバースト)"
+            },
+            "Skill Copy": {
+                "name": "スキルコピー"
+            },
+            "Skill Copy (Transform)": {
+                "name": "へんしん (スキルコピー)"
+            },
+            "Skill Copy (Mimic)": {
+                "name": "ものまね (スキルコピー)"
+            },
+            "Ingredient Draw S": {
+                "name": "食材セレクトS"
+            },
+            "Ingredient Draw S (Super Luck)": {
+                "name": "きょううん (食材セレクトS)"
+            },
+            "Ingredient Draw S (Hyper Cutter)": {
+                "name": "かいりきバサミ (食材セレクトS)"
+            },
+            "Cooking Assist S": {
+                "name": "料理アシストS"
+            },
+            "Cooking Assist S (Bulk Up)": {
+                "name": "ビルドアップ(料理アシストS)"
+            },
+            "Versatile": {
+                "name": "オールマイティー"
+            },
+            "unknown": {
+                "name": "(不明)"
+            }
         },
 
         "subskill": {

@@ -125,9 +125,9 @@ const RateNotFixedDialog = React.memo(({dispatch, state, open, onClose}: {
                         onChange={onSkill1Change}/>
                 </section>
                 <footer>
-                    {t('skills.Charge Strength S')}
+                    {t('skills.Charge Strength S.name')}
                     {t('text separator')}
-                    {t('skills.Charge Energy S')}
+                    {t('skills.Charge Energy S.name')}
                 </footer>
                 <section>
                     <label>{t('medium chance')}:</label>
@@ -135,19 +135,19 @@ const RateNotFixedDialog = React.memo(({dispatch, state, open, onClose}: {
                         onChange={onSkill2Change}/>
                 </section>
                 <footer>
-                    {t('skills.Metronome')}
+                    {t('skills.Metronome.name')}
                     {t('text separator')}
-                    {t('skills.Extra Helpful S')}
+                    {t('skills.Extra Helpful S.name')}
                     {t('text separator')}
-                    {t('skills.Dream Shard Magnet S')}
+                    {t('skills.Dream Shard Magnet S.name')}
                     {t('text separator')}
-                    {t('skills.Charge Strength M')}
+                    {t('skills.Charge Strength M.name')}
                     {t('text separator')}
-                    {t('skills.Energizing Cheer S')}
+                    {t('skills.Energizing Cheer S.name')}
                     {t('text separator')}
-                    {t('skills.Cooking Power-Up S')}
+                    {t('skills.Cooking Power-Up S.name')}
                     {t('text separator')}
-                    {t('skills.Tasty Chance S')}
+                    {t('skills.Tasty Chance S.name')}
                 </footer>
                 <section>
                     <label>{t('low chance')}:</label>
@@ -155,9 +155,9 @@ const RateNotFixedDialog = React.memo(({dispatch, state, open, onClose}: {
                         onChange={onSkill3Change}/>
                 </section>
                 <footer>
-                    {t('skills.Energy for Everyone S')}
+                    {t('skills.Energy for Everyone S.name')}
                     {t('text separator')}
-                    {t('skills.Berry Burst')}
+                    {t('skills.Berry Burst.name')}
                 </footer>
             </div>
             <section>

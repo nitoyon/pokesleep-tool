@@ -72,7 +72,7 @@
                     "detail": "$t(rp collection)"
                 },
                 "v3.1.0": {
-                    "headline": "v3.1.0의 새로운 스킬 「$t(skills.Ingredient Magnet S (Present))」에 대응했습니다.",
+                    "headline": "v3.1.0의 새로운 스킬 「$t(skills.Ingredient Magnet S (Present).name)」에 대응했습니다.",
                     "detail": "$t(rp collection)"
                 },
                 "add amber pokemons": {
@@ -96,8 +96,8 @@
                     "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
-                    "headline": "v2.12.0 밸런스 조정을 반영하고 $t(skills.Berry Burst)의 시뮬레이션을 개선했습니다.",
-                    "detail": "$t(pokemons.Braviary), $t(pokemons.Mimikyu)의 스킬 확률을 업데이트했습니다.\n$t(skills.Berry Burst)의 기대값 계산 시, 팀 내 포켓몬들은 동일한 레벨이라고 가정하도록 변경되었습니다. 또한 [$t(strength2)] 탭의 [$t(skill)] 오른쪽에 있는 [i] 버튼을 통해 팀 내 포켓몬들을 보다 상세하게 커스터마이즈할 수 있게 되었습니다."
+                    "headline": "v2.12.0 밸런스 조정을 반영하고 $t(skills.Berry Burst.name)의 시뮬레이션을 개선했습니다.",
+                    "detail": "$t(pokemons.Braviary), $t(pokemons.Mimikyu)의 스킬 확률을 업데이트했습니다.\n$t(skills.Berry Burst.name)의 기대값 계산 시, 팀 내 포켓몬들은 동일한 레벨이라고 가정하도록 변경되었습니다. 또한 [$t(strength2)] 탭의 [$t(skill)] 오른쪽에 있는 [i] 버튼을 통해 팀 내 포켓몬들을 보다 상세하게 커스터마이즈할 수 있게 되었습니다."
                 },
                 "ex and toxel": {
                     "headline": "$t(pokemons.Toxel) 그리고 스트린더의 데이터가 추가되었습니다.",
@@ -105,7 +105,7 @@
                 },
                 "v2.11.0": {
                     "headline": "v2.11.0의 밸런스 조정에 대응하였습니다.",
-                    "detail": "$t(pokemons.Dugtrio), $t(pokemons.Marowak), $t(skills.Extra Helpful S)의 데이터를 업데이트하였습니다."
+                    "detail": "$t(pokemons.Dugtrio), $t(pokemons.Marowak), $t(skills.Extra Helpful S.name)의 데이터를 업데이트하였습니다."
                 },
                 "sprigatito bug": {
                     "headline": "버그 보고: $t(pokemons.Sprigatito)가 박스에서 사라졌을 가능성이 있습니다. 번거로우시겠지만 확인 부탁드립니다.",
@@ -603,8 +603,8 @@
         "help yield description": "도움 {{n}}회당 획득하는 $t(berry)・$t(ingredient)의 평균 수량입니다.",
         "helps for cap": "최대 필요 $t(help count)",
         "helps for cap description": "$t(berry)・$t(ingredient)를 999개까지 모으기 위해 필요한 평균 $t(help count) (Sneaky Snacking 상태 이후의 $t(help count)).",
-        "required helper boost": "최대 필요 $t(skills.Helper Boost)수",
-        "required helper boost description": "$t(berry)・$t(ingredient)를 999개까지 모으기 위해 필요한 대략적인 $t(skills.Helper Boost) 발동 횟수 (Sneaky Snacking 상태 이후의 $t(skill count)).",
+        "required helper boost": "최대 필요 $t(skills.Helper Boost.name)수",
+        "required helper boost description": "$t(berry)・$t(ingredient)를 999개까지 모으기 위해 필요한 대략적인 $t(skills.Helper Boost.name) 발동 횟수 (Sneaky Snacking 상태 이후의 $t(skill count)).",
         "different species": "같은 타입의 서로 다른 포켓몬 수",
         "helps per skill": "스킬 1회당 $t(help count)",
 
@@ -764,42 +764,114 @@
         "about4": "식재료의 아이콘은 ちゃんりわ 씨가 만들었습니다.",
 
         "skills": {
-            "Ingredient Magnet S": "식재료 획득S",
-            "Ingredient Magnet S (Plus)": "플러스 (식재료 획득S)",
-            "Ingredient Magnet S (Present)": "프레젠트 (식재료 획득S)",
-            "Charge Energy S": "기력 차지S",
-            "Charge Energy S (Moonlight)": "달빛 (기력 차지S)",
-            "Charge Strength S": "에너지 차지S",
-            "Charge Strength S (Random)": "에너지 차지S (랜덤)",
-            "Charge Strength S (Stockpile)": "비축하기 (에너지 차지S)",
-            "Charge Strength M": "에너지 차지M",
-            "Charge Strength M (Bad Dreams)": "나이트메어 (에너지 차지M)",
-            "Dream Shard Magnet S": "꿈의조각 획득S",
-            "Dream Shard Magnet S (Random)": "꿈의조각 획득S (랜덤)",
-            "Energizing Cheer S": "기력 응원S",
-            "Energizing Cheer S (Nuzzle)": "볼부비부비 (기력 응원S)",
-            "Energizing Cheer S (Heal Pulse)": "치유파동 (기력 응원S)",
-            "Metronome": "손가락흔들기",
-            "Energy for Everyone S": "기력 올S",
-            "Energy for Everyone S (Lunar Blessing)": "초승달의기도 (기력 올S)",
-            "Energy for Everyone S (Berry Juice)": "나무열매쥬스 (기력 올S)",
-            "Extra Helpful S": "도우미 서포트S",
-            "Cooking Power-Up S": "요리 파워 업S",
-            "Cooking Power-Up S (Minus)": "마이너스 (요리 파워 업S)",
-            "Tasty Chance S": "요리 찬스S",
-            "Helper Boost": "도우미 부스트",
-            "Berry Burst": "나무열매 버스트",
-            "Berry Burst (Disguise)": "탈 (나무열매 버스트)",
-            "Skill Copy": "스킬 복사",
-            "Skill Copy (Transform)": "변신 (스킬 복사)",
-            "Skill Copy (Mimic)": "흉내내기 (스킬 복사)",
-            "Ingredient Draw S": "식재료 셀렉트S",
-            "Ingredient Draw S (Super Luck)": "대운 (식재료 셀렉트S)",
-            "Ingredient Draw S (Hyper Cutter)": "괴력집게 (식재료 셀렉트S)",
-            "Cooking Assist S": "요리 어시스트S",
-            "Cooking Assist S (Bulk Up)": "벌크업(요리 어시스트S)",
-            "Versatile": "올마이티",
-            "unknown": "(알 수 없음)"
+            "Ingredient Magnet S": {
+                "name": "식재료 획득S"
+            },
+            "Ingredient Magnet S (Plus)": {
+                "name": "플러스 (식재료 획득S)"
+            },
+            "Ingredient Magnet S (Present)": {
+                "name": "프레젠트 (식재료 획득S)"
+            },
+            "Charge Energy S": {
+                "name": "기력 차지S"
+            },
+            "Charge Energy S (Moonlight)": {
+                "name": "달빛 (기력 차지S)"
+            },
+            "Charge Strength S": {
+                "name": "에너지 차지S"
+            },
+            "Charge Strength S (Random)": {
+                "name": "에너지 차지S (랜덤)"
+            },
+            "Charge Strength S (Stockpile)": {
+                "name": "비축하기 (에너지 차지S)"
+            },
+            "Charge Strength M": {
+                "name": "에너지 차지M"
+            },
+            "Charge Strength M (Bad Dreams)": {
+                "name": "나이트메어 (에너지 차지M)"
+            },
+            "Dream Shard Magnet S": {
+                "name": "꿈의조각 획득S"
+            },
+            "Dream Shard Magnet S (Random)": {
+                "name": "꿈의조각 획득S (랜덤)"
+            },
+            "Energizing Cheer S": {
+                "name": "기력 응원S"
+            },
+            "Energizing Cheer S (Nuzzle)": {
+                "name": "볼부비부비 (기력 응원S)"
+            },
+            "Energizing Cheer S (Heal Pulse)": {
+                "name": "치유파동 (기력 응원S)"
+            },
+            "Metronome": {
+                "name": "손가락흔들기"
+            },
+            "Energy for Everyone S": {
+                "name": "기력 올S"
+            },
+            "Energy for Everyone S (Lunar Blessing)": {
+                "name": "초승달의기도 (기력 올S)"
+            },
+            "Energy for Everyone S (Berry Juice)": {
+                "name": "나무열매쥬스 (기력 올S)"
+            },
+            "Extra Helpful S": {
+                "name": "도우미 서포트S"
+            },
+            "Cooking Power-Up S": {
+                "name": "요리 파워 업S"
+            },
+            "Cooking Power-Up S (Minus)": {
+                "name": "마이너스 (요리 파워 업S)"
+            },
+            "Tasty Chance S": {
+                "name": "요리 찬스S"
+            },
+            "Helper Boost": {
+                "name": "도우미 부스트"
+            },
+            "Berry Burst": {
+                "name": "나무열매 버스트"
+            },
+            "Berry Burst (Disguise)": {
+                "name": "탈 (나무열매 버스트)"
+            },
+            "Skill Copy": {
+                "name": "스킬 복사"
+            },
+            "Skill Copy (Transform)": {
+                "name": "변신 (스킬 복사)"
+            },
+            "Skill Copy (Mimic)": {
+                "name": "흉내내기 (스킬 복사)"
+            },
+            "Ingredient Draw S": {
+                "name": "식재료 셀렉트S"
+            },
+            "Ingredient Draw S (Super Luck)": {
+                "name": "대운 (식재료 셀렉트S)"
+            },
+            "Ingredient Draw S (Hyper Cutter)": {
+                "name": "괴력집게 (식재료 셀렉트S)"
+            },
+            "Cooking Assist S": {
+                "name": "요리 어시스트S"
+            },
+            "Cooking Assist S (Bulk Up)": {
+                "name": "벌크업(요리 어시스트S)"
+            },
+            "Versatile": {
+                "name": "올마이티"
+            },
+            "unknown": {
+                "name": "(알 수 없음)"
+            }
         },
 
         "subskill": {

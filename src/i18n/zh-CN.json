@@ -72,7 +72,7 @@
                     "detail": "$t(rp collection)"
                 },
                 "v3.1.0": {
-                    "headline": "已对应 v3.1.0 的新技能「$t(skills.Ingredient Magnet S (Present))」。",
+                    "headline": "已对应 v3.1.0 的新技能「$t(skills.Ingredient Magnet S (Present).name)」。",
                     "detail": "$t(rp collection)"
                 },
                 "add amber pokemons": {
@@ -96,8 +96,8 @@
                     "detail": "$t(rp collection)"
                 },
                 "v2.12.0": {
-                    "headline": "已适配 v2.12.0 的平衡性调整，并改进了 $t(skills.Berry Burst) 的模拟。",
-                    "detail": "已更新 $t(pokemons.Braviary) 和 $t(pokemons.Mimikyu) 的技能概率。\n在计算 $t(skills.Berry Burst) 的期望值时，现在默认队伍中的宝可梦等级相同。此外，现在可以通过 [$t(strength2)] 标签中 [$t(skill)] 右侧的 [i] 按钮，更详细地自定义队伍中的宝可梦。"
+                    "headline": "已适配 v2.12.0 的平衡性调整，并改进了 $t(skills.Berry Burst.name) 的模拟。",
+                    "detail": "已更新 $t(pokemons.Braviary) 和 $t(pokemons.Mimikyu) 的技能概率。\n在计算 $t(skills.Berry Burst.name) 的期望值时，现在默认队伍中的宝可梦等级相同。此外，现在可以通过 [$t(strength2)] 标签中 [$t(skill)] 右侧的 [i] 按钮，更详细地自定义队伍中的宝可梦。"
                 },
                 "ex and toxel": {
                     "headline": "已新增$t(pokemons.Toxel)与颤弦蝾螈的数据，同时也支持 $t(area.7)。",
@@ -105,7 +105,7 @@
                 },
                 "v2.11.0": {
                     "headline": "已对应 v2.11.0 的平衡性调整。",
-                    "detail": "已更新 $t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S) 的数据。"
+                    "detail": "已更新 $t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S.name) 的数据。"
                 },
                 "sprigatito bug": {
                     "headline": "错误报告：$t(pokemons.Sprigatito) 可能已从盒子中消失，麻烦您确认一下。",
@@ -605,8 +605,8 @@
         "help yield description": "每$t(help count)次可获得的$t(berry)和$t(ingredient)的平均数量。",
         "helps for cap": "最大所需$t(help count)",
         "helps for cap description": "为了将$t(berry)和$t(ingredient)储存至999个所需的平均$t(help count)（进入Sneaky Snacking状态后的$t(help count)）。",
-        "required helper boost": "最大所需$t(skills.Helper Boost)数",
-        "required helper boost description": "为了将$t(berry)・$t(ingredient)储存至999个所需的大致$t(skills.Helper Boost)触发次数（进入Sneaky Snacking状态后的$t(skill count)）。",
+        "required helper boost": "最大所需$t(skills.Helper Boost.name)数",
+        "required helper boost description": "为了将$t(berry)・$t(ingredient)储存至999个所需的大致$t(skills.Helper Boost.name)触发次数（进入Sneaky Snacking状态后的$t(skill count)）。",
         "different species": "同类型不同种类的宝可梦数量",
         "helps per skill": "技能1次 $t(help count)",
 
@@ -768,42 +768,114 @@
         "about4": "食材图标由ちゃんりわさん制作。",
 
         "skills": {
-            "Ingredient Magnet S": "食材获取S",
-            "Ingredient Magnet S (Plus)": "正电 (食材获取S)",
-            "Ingredient Magnet S (Present)": "礼物 (食材获取S)",
-            "Charge Energy S": "活力填充S",
-            "Charge Energy S (Moonlight)": "月光 (活力填充S)",
-            "Charge Strength S": "能量填充S",
-            "Charge Strength S (Random)": "能量填充S (随机)",
-            "Charge Strength S (Stockpile)": "蓄力 (能量填充S)",
-            "Charge Strength M": "能量填充M",
-            "Charge Strength M (Bad Dreams)": "梦魇 (能量填充M)",
-            "Dream Shard Magnet S": "梦之碎片获取S",
-            "Dream Shard Magnet S (Random)": "梦之碎片获取S (随机)",
-            "Energizing Cheer S": "活力疗愈S",
-            "Energizing Cheer S (Nuzzle)": "蹭蹭脸颊 (活力疗愈S)",
-            "Energizing Cheer S (Heal Pulse)": "治愈波动 (活力疗愈S)",
-            "Metronome": "挥指",
-            "Energy for Everyone S": "活力全体疗愈S",
-            "Energy for Everyone S (Lunar Blessing)": "新月祈祷 (活力全体疗愈S)",
-            "Energy for Everyone S (Berry Juice)": "树果汁 (活力全体疗愈S)",
-            "Extra Helpful S": "帮手支援S",
-            "Cooking Power-Up S": "料理强化S",
-            "Cooking Power-Up S (Minus)": "负电 (料理强化S)",
-            "Tasty Chance S": "料理成功S",
-            "Helper Boost": "帮手加速",
-            "Berry Burst": "树果剧增",
-            "Berry Burst (Disguise)": "画皮 (树果剧增)",
-            "Skill Copy": "技能复制",
-            "Skill Copy (Transform)": "变身 (技能复制)",
-            "Skill Copy (Mimic)": "模仿 (技能复制)",
-            "Ingredient Draw S": "食材精选S",
-            "Ingredient Draw S (Super Luck)": "超幸运 (食材精选S)",
-            "Ingredient Draw S (Hyper Cutter)": "怪力钳 (食材精选S)",
-            "Cooking Assist S": "料理辅助S",
-            "Cooking Assist S (Bulk Up)": "健美（料理辅助S）",
-            "Versatile": "十项全能",
-            "unknown": "(未知)"
+            "Ingredient Magnet S": {
+                "name": "食材获取S"
+            },
+            "Ingredient Magnet S (Plus)": {
+                "name": "正电 (食材获取S)"
+            },
+            "Ingredient Magnet S (Present)": {
+                "name": "礼物 (食材获取S)"
+            },
+            "Charge Energy S": {
+                "name": "活力填充S"
+            },
+            "Charge Energy S (Moonlight)": {
+                "name": "月光 (活力填充S)"
+            },
+            "Charge Strength S": {
+                "name": "能量填充S"
+            },
+            "Charge Strength S (Random)": {
+                "name": "能量填充S (随机)"
+            },
+            "Charge Strength S (Stockpile)": {
+                "name": "蓄力 (能量填充S)"
+            },
+            "Charge Strength M": {
+                "name": "能量填充M"
+            },
+            "Charge Strength M (Bad Dreams)": {
+                "name": "梦魇 (能量填充M)"
+            },
+            "Dream Shard Magnet S": {
+                "name": "梦之碎片获取S"
+            },
+            "Dream Shard Magnet S (Random)": {
+                "name": "梦之碎片获取S (随机)"
+            },
+            "Energizing Cheer S": {
+                "name": "活力疗愈S"
+            },
+            "Energizing Cheer S (Nuzzle)": {
+                "name": "蹭蹭脸颊 (活力疗愈S)"
+            },
+            "Energizing Cheer S (Heal Pulse)": {
+                "name": "治愈波动 (活力疗愈S)"
+            },
+            "Metronome": {
+                "name": "挥指"
+            },
+            "Energy for Everyone S": {
+                "name": "活力全体疗愈S"
+            },
+            "Energy for Everyone S (Lunar Blessing)": {
+                "name": "新月祈祷 (活力全体疗愈S)"
+            },
+            "Energy for Everyone S (Berry Juice)": {
+                "name": "树果汁 (活力全体疗愈S)"
+            },
+            "Extra Helpful S": {
+                "name": "帮手支援S"
+            },
+            "Cooking Power-Up S": {
+                "name": "料理强化S"
+            },
+            "Cooking Power-Up S (Minus)": {
+                "name": "负电 (料理强化S)"
+            },
+            "Tasty Chance S": {
+                "name": "料理成功S"
+            },
+            "Helper Boost": {
+                "name": "帮手加速"
+            },
+            "Berry Burst": {
+                "name": "树果剧增"
+            },
+            "Berry Burst (Disguise)": {
+                "name": "画皮 (树果剧增)"
+            },
+            "Skill Copy": {
+                "name": "技能复制"
+            },
+            "Skill Copy (Transform)": {
+                "name": "变身 (技能复制)"
+            },
+            "Skill Copy (Mimic)": {
+                "name": "模仿 (技能复制)"
+            },
+            "Ingredient Draw S": {
+                "name": "食材精选S"
+            },
+            "Ingredient Draw S (Super Luck)": {
+                "name": "超幸运 (食材精选S)"
+            },
+            "Ingredient Draw S (Hyper Cutter)": {
+                "name": "怪力钳 (食材精选S)"
+            },
+            "Cooking Assist S": {
+                "name": "料理辅助S"
+            },
+            "Cooking Assist S (Bulk Up)": {
+                "name": "健美（料理辅助S）"
+            },
+            "Versatile": {
+                "name": "十项全能"
+            },
+            "unknown": {
+                "name": "(未知)"
+            }
         },
 
         "subskill": {
