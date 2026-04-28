@@ -161,6 +161,8 @@ export function calculateHelpCount(
     // multiply count rate
     if (countRate > 1) {
         ret.berryHelpCount *= countRate;
+        ret.berryNormalHelpCount *= countRate;
+        ret.berrySneakySnackingCount *= countRate;
         ret.ingHelpCount *= countRate;
         ret.ingredients.forEach(x => x.count *= countRate);
         ret.skillCount *= countRate;

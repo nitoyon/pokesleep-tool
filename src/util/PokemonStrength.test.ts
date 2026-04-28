@@ -668,6 +668,9 @@ describe('PokemonStrength', () => {
 
             // But the scaled totals (e.g. berryHelpCount) should be 7x larger
             expect(result168.berryHelpCount).toBeCloseTo(result24.berryHelpCount * 7);
+            expect(result168.berryTotalStrength).toBeCloseTo(result24.berryTotalStrength * 7);
+            expect(result168.ingHelpCount).toBeCloseTo(result24.ingHelpCount * 7);
+            expect(result168.skillCount).toBeCloseTo(result24.skillCount * 7);
         });
 
         test('period=-10 (10 fixed helps): energy.helpCount all 0, total=10, skillCount=0', () => {
