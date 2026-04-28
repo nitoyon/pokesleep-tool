@@ -698,42 +698,7 @@
         "strength detail1": "ポケモンが稼ぐエナジーや食材、スキルの発生回数を確認できます。",
         "strength detail2": "現時点の計算ロジックには次のような制約があります。",
         "strength restriction2": "げんきチャージSによるげんき回復は考慮されていません。",
-        "strength skill info": {
-            "Ingredient Magnet S": "スキルによる食材は、余剰食材として利用されるものと仮定して計算しています。",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)追加食材は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ取得します。",
-            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)$t(candy)を取得する確率は RaenonX での集計結果 34.4% を利用しています。",
-            "Charge Energy S": "スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。",
-            "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
-            "Charge Strength S": "",
-            "Charge Strength S (Stockpile)": "$t(base strength)の期待値は RaenonX での集計結果 (はきだす確率: 26.5%) を利用して算出しています。",
-            "Charge Strength M": "",
-            "Charge Strength M (Bad Dreams)": "$t(types.dark)タイプ以外のポケモンに対する$t(energy)の減少効果 (-12) については、$t(strength)の評価に含めていません。",
-            "Dream Shard Magnet S": "",
-            "Energizing Cheer S": "スキルによるげんき回復は、合計エナジー量には換算していません。",
-            "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
-            "Energizing Cheer S (Heal Pulse)": "$t(strength skill info.Energizing Cheer S)追加効果は、$t(strength skill info.Extra Helpful S)",
-            "Metronome": "$t(strength skill info.Skill Copy)",
-            "Energy for Everyone S": "回復によるエナジー量への影響を見積もるには、[$t(energy)] の設定を変更して確認してください。",
-            "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)$t(berry juice assumption)",
-            "Extra Helpful S": "スキルによって発動する [おてつだい回数] を表示してます。合計エナジー量へは、1おてつだいあたり 300 (フィールドボーナスなしのとき) として計算しています。",
-            "Cooking Power-Up S": "",
-            "Cooking Power-Up S (Minus)": "チーム内のポケモン1匹のげんき回復は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ発生します。",
-            "Helper Boost": "同タイプのポケモン 3 体と仮定しています。エナジー量への影響は、1おてつだいあたり 300 (フィールドボーナスなしのとき) として見積もっています。",
-            "Berry Burst (Disguise)": "大成功確率は RaenonX での集計結果 (18.5%) を利用しています。",
-            "Berry Burst": "",
-            "Tasty Chance S": "大成功の確率増加 % を表示しています。スキルの効果は、合計エナジー量には換算していません。",
-            "Skill Copy": "効果を見積もることが難しいため、スキル発生回数を表示しています。スキルの効果は、合計エナジー量には換算していません。",
-            "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
-            "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
-            "Ingredient Draw S": "スキルによる食材は$t(recipe bonus)を適用して$t(strength2)を計算しています。",
-            "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S)$t(dream shard)を取得する確率は RaenonX での集計結果を利用しています。",
-            "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S)$t(additional ingredient rate)は RaenonX での集計結果 (16.68%) を利用しています。",
-            "Cooking Assist S": "",
-            "Cooking Assist S (Bulk Up)": "$t(strength skill info.Ingredient Magnet S)大成功の確率増加 % は合計エナジー量には換算していません。",
-            "not triggered": "この設定ではメインスキルは発動しません。",
-            "unknown": "メインスキルはまだ判明していません。"
-        },
+        "skill not triggered": "この設定ではメインスキルは発動しません。",
 
         "rate subskill and nature": "サブスキル・性格の評価値",
         "rating detail1": "サブスキルと性格の傾向を 100 点満点で評価します。たとえば、「きのみ」の場合、きのみを一番多く拾うサブスキル・性格を 100 点とします。入力された性格・サブスキル構成で拾う「きのみ」の量が、100点に比べて何 % の量になるかで点数を算出します。",
@@ -771,112 +736,148 @@
 
         "skills": {
             "Ingredient Magnet S": {
-                "name": "食材ゲットS"
+                "name": "食材ゲットS",
+                "strength": "スキルによる食材は、余剰食材として利用されるものと仮定して計算しています。"
             },
             "Ingredient Magnet S (Plus)": {
-                "name": "プラス (食材ゲットS)"
+                "name": "プラス (食材ゲットS)",
+                "strength": "$t(skills.Ingredient Magnet S.strength)追加食材は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ取得します。"
             },
             "Ingredient Magnet S (Present)": {
-                "name": "プレゼント (食材ゲットS)"
+                "name": "プレゼント (食材ゲットS)",
+                "strength": "$t(skills.Ingredient Magnet S.strength)$t(candy)を取得する確率は RaenonX での集計結果 34.4% を利用しています。"
             },
             "Charge Energy S": {
-                "name": "げんきチャージS"
+                "name": "げんきチャージS",
+                "strength": "スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。"
             },
             "Charge Energy S (Moonlight)": {
-                "name": "つきのひかり (げんきチャージS)"
+                "name": "つきのひかり (げんきチャージS)",
+                "strength": "$t(skills.Charge Energy S.strength)"
             },
             "Charge Strength S": {
-                "name": "エナジーチャージS"
+                "name": "エナジーチャージS",
+                "strength": ""
             },
             "Charge Strength S (Random)": {
-                "name": "エナジーチャージS (ランダム)"
+                "name": "エナジーチャージS (ランダム)",
+                "strength": ""
             },
             "Charge Strength S (Stockpile)": {
-                "name": "たくわえる (エナジーチャージS)"
+                "name": "たくわえる (エナジーチャージS)",
+                "strength": "$t(base strength)の期待値は RaenonX での集計結果 (はきだす確率: 26.5%) を利用して算出しています。"
             },
             "Charge Strength M": {
-                "name": "エナジーチャージM"
+                "name": "エナジーチャージM",
+                "strength": ""
             },
             "Charge Strength M (Bad Dreams)": {
-                "name": "ナイトメア (エナジーチャージM)"
+                "name": "ナイトメア (エナジーチャージM)",
+                "strength": "$t(types.dark)タイプ以外のポケモンに対する$t(energy)の減少効果 (-12) については、$t(strength)の評価に含めていません。"
             },
             "Dream Shard Magnet S": {
-                "name": "ゆめのかけらゲットS"
+                "name": "ゆめのかけらゲットS",
+                "strength": ""
             },
             "Dream Shard Magnet S (Random)": {
-                "name": "ゆめのかけらゲットS (ランダム)"
+                "name": "ゆめのかけらゲットS (ランダム)",
+                "strength": ""
             },
             "Energizing Cheer S": {
-                "name": "げんきエールS"
+                "name": "げんきエールS",
+                "strength": "スキルによるげんき回復は、合計エナジー量には換算していません。"
             },
             "Energizing Cheer S (Nuzzle)": {
-                "name": "ほっぺすりすり (げんきエールS)"
+                "name": "ほっぺすりすり (げんきエールS)",
+                "strength": "$t(skills.Energizing Cheer S.strength)"
             },
             "Energizing Cheer S (Heal Pulse)": {
-                "name": "いやしのはどう (げんきエールS)"
+                "name": "いやしのはどう (げんきエールS)",
+                "strength": "$t(skills.Energizing Cheer S.strength)追加効果は、$t(skills.Extra Helpful S.strength)"
             },
             "Metronome": {
-                "name": "ゆびをふる"
+                "name": "ゆびをふる",
+                "strength": "$t(skills.Skill Copy.strength)"
             },
             "Energy for Everyone S": {
-                "name": "げんきオールS"
+                "name": "げんきオールS",
+                "strength": "回復によるエナジー量への影響を見積もるには、[$t(energy)] の設定を変更して確認してください。"
             },
             "Energy for Everyone S (Lunar Blessing)": {
-                "name": "みかづきのいのり (げんきオールS)"
+                "name": "みかづきのいのり (げんきオールS)",
+                "strength": "$t(skills.Energy for Everyone S.strength)"
             },
             "Energy for Everyone S (Berry Juice)": {
-                "name": "きのみジュース (げんきオールS)"
+                "name": "きのみジュース (げんきオールS)",
+                "strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)"
             },
             "Extra Helpful S": {
-                "name": "おてつだいサポートS"
+                "name": "おてつだいサポートS",
+                "strength": "スキルによって発動する [おてつだい回数] を表示してます。合計エナジー量へは、1おてつだいあたり 300 (フィールドボーナスなしのとき) として計算しています。"
             },
             "Cooking Power-Up S": {
-                "name": "料理パワーアップS"
+                "name": "料理パワーアップS",
+                "strength": ""
             },
             "Cooking Power-Up S (Minus)": {
-                "name": "マイナス (料理パワーアップS)"
+                "name": "マイナス (料理パワーアップS)",
+                "strength": "チーム内のポケモン1匹のげんき回復は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ発生します。"
             },
             "Tasty Chance S": {
-                "name": "料理チャンスS"
+                "name": "料理チャンスS",
+                "strength": "大成功の確率増加 % を表示しています。スキルの効果は、合計エナジー量には換算していません。"
             },
             "Helper Boost": {
-                "name": "おてつだいブースト"
+                "name": "おてつだいブースト",
+                "strength": "同タイプのポケモン 3 体と仮定しています。エナジー量への影響は、1おてつだいあたり 300 (フィールドボーナスなしのとき) として見積もっています。"
             },
             "Berry Burst": {
-                "name": "きのみバースト"
+                "name": "きのみバースト",
+                "strength": ""
             },
             "Berry Burst (Disguise)": {
-                "name": "ばけのかわ (きのみバースト)"
+                "name": "ばけのかわ (きのみバースト)",
+                "strength": "大成功確率は RaenonX での集計結果 (18.5%) を利用しています。"
             },
             "Skill Copy": {
-                "name": "スキルコピー"
+                "name": "スキルコピー",
+                "strength": "効果を見積もることが難しいため、スキル発生回数を表示しています。スキルの効果は、合計エナジー量には換算していません。"
             },
             "Skill Copy (Transform)": {
-                "name": "へんしん (スキルコピー)"
+                "name": "へんしん (スキルコピー)",
+                "strength": "$t(skills.Skill Copy.strength)"
             },
             "Skill Copy (Mimic)": {
-                "name": "ものまね (スキルコピー)"
+                "name": "ものまね (スキルコピー)",
+                "strength": "$t(skills.Skill Copy.strength)"
             },
             "Ingredient Draw S": {
-                "name": "食材セレクトS"
+                "name": "食材セレクトS",
+                "strength": "スキルによる食材は$t(recipe bonus)を適用して$t(strength2)を計算しています。"
             },
             "Ingredient Draw S (Super Luck)": {
-                "name": "きょううん (食材セレクトS)"
+                "name": "きょううん (食材セレクトS)",
+                "strength": "$t(skills.Ingredient Draw S.strength)$t(dream shard)を取得する確率は RaenonX での集計結果を利用しています。"
             },
             "Ingredient Draw S (Hyper Cutter)": {
-                "name": "かいりきバサミ (食材セレクトS)"
+                "name": "かいりきバサミ (食材セレクトS)",
+                "strength": "$t(skills.Ingredient Draw S.strength)$t(additional ingredient rate)は RaenonX での集計結果 (16.68%) を利用しています。"
             },
             "Cooking Assist S": {
-                "name": "料理アシストS"
+                "name": "料理アシストS",
+                "strength": ""
             },
             "Cooking Assist S (Bulk Up)": {
-                "name": "ビルドアップ(料理アシストS)"
+                "name": "ビルドアップ(料理アシストS)",
+                "strength": "$t(skills.Ingredient Magnet S.strength)大成功の確率増加 % は合計エナジー量には換算していません。"
             },
             "Versatile": {
-                "name": "オールマイティー"
+                "name": "オールマイティー",
+                "strength": ""
             },
             "unknown": {
-                "name": "(不明)"
+                "name": "(不明)",
+                "strength": "メインスキルはまだ判明していません。"
             }
         },
 

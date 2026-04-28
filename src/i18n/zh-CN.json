@@ -696,42 +696,7 @@
         "strength detail1": "可以确认宝可梦赚取的能量，食材，技能发动的次数。",
         "strength detail2": "目前的计算逻辑有以下局限性。",
         "strength restriction2": "没有考虑活力填充S所带来的活力回复。",
-        "strength skill info": {
-            "Ingredient Magnet S": "技能获取的食材假定作为剩余食材进行计算。",
-            "Ingredient Magnet S (Plus)": "$t(strength skill info.Ingredient Magnet S)若队伍中除了自己以外还有1只以上主技能是「正电」或「负电」的宝可梦时，才会额外获得更多食材。",
-            "Ingredient Magnet S (Present)": "$t(strength skill info.Ingredient Magnet S)根据 RaenonX 的汇总数据计算，获取$t(candy)的概率为 34.4%。",
-            "Charge Energy S": "技能的效果没有换算成合计能量值。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
-            "Charge Energy S (Moonlight)": "$t(strength skill info.Charge Energy S)",
-            "Charge Strength S": "显示可获得的能量量。",
-            "Charge Strength S (Stockpile)": "$t(base strength)的期望值使用 RaenonX 的汇总结果（吐出概率：26.5%）进行计算。",
-            "Charge Strength M": "",
-            "Charge Strength M (Bad Dreams)": "对非$t(types.dark)类型宝可梦的$t(energy)减少效果（-12）未包含在$t(strength)的评估中。",
-            "Dream Shard Magnet S": "",
-            "Energizing Cheer S": "技能造成的体力回复没有换算成合计能量值。",
-            "Energizing Cheer S (Nuzzle)": "$t(strength skill info.Energizing Cheer S)",
-            "Energizing Cheer S (Heal Pulse)": "$t(strength skill info.Energizing Cheer S) 附加效果为$t(strength skill info.Extra Helpful S)",
-            "Metronome": "$t(strength skill info.Skill Copy)",
-            "Energy for Everyone S": "如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。",
-            "Energy for Everyone S (Lunar Blessing)": "$t(strength skill info.Energy for Everyone S)",
-            "Energy for Everyone S (Berry Juice)": "$t(strength skill info.Energy for Everyone S)$t(berry juice assumption)",
-            "Extra Helpful S": "显示为技能发动带来的 [帮助次数] 。总能量按照1次帮助 300 能量 (不含营地奖励) 进行预估。",
-            "Cooking Power-Up S": "",
-            "Cooking Power-Up S (Minus)": "只有当队伍中有至少一只拥有「正电」或「负电」主技能的宝可梦时，才会恢复一只队伍成员的活力。",
-            "Helper Boost": "显示为1只宝可梦的帮手次数 (有 3 只同类型宝可梦的情况) 。总能量按照1次帮助 300 (不含营地奖励) 进行预估。",
-            "Berry Burst (Disguise)": "大成功概率基于 RaenonX 的统计数据 (18.5%)。",
-            "Berry Burst": "",
-            "Tasty Chance S": "显示为漂亮成功的几率増加百分比。技能的效果没有换算成合计能量值。",
-            "Skill Copy": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。",
-            "Skill Copy (Transform)": "$t(strength skill info.Skill Copy)",
-            "Skill Copy (Mimic)": "$t(strength skill info.Skill Copy)",
-            "Ingredient Draw S": "技能获取的食材是通过将$t(recipe bonus)应用于$t(strength2)来计算的。",
-            "Ingredient Draw S (Super Luck)": "$t(strength skill info.Ingredient Draw S)通过 RaenonX 的汇总结果计算获取$t(dream shard)的概率。",
-            "Ingredient Draw S (Hyper Cutter)": "$t(strength skill info.Ingredient Draw S)$t(additional ingredient rate)使用 RaenonX 的汇总结果 (16.68%)。",
-            "Cooking Assist S": "",
-            "Cooking Assist S (Bulk Up)": "$t(strength skill info.Ingredient Magnet S)大成功概率增加 % 不会换算为合计能量值。",
-            "not triggered": "在此设置中，主技能未被触发。",
-            "unknown": "主技能还未确定。"
-        },
+        "skill not triggered": "在此设置中，主技能未被触发。",
 
         "rate subskill and nature": "副技能・性格的评估值",
         "rating detail1": "以 100 分制评估副技能和性格倾向。例如，树果类型的情况下、拾取最多树果的副技能和性格按 100 分评估。分数将根据根据输入的性格和副技能构成计算所拾取的树果数量的100分的百分比来计算。。",
@@ -769,112 +734,148 @@
 
         "skills": {
             "Ingredient Magnet S": {
-                "name": "食材获取S"
+                "name": "食材获取S",
+                "strength": "技能获取的食材假定作为剩余食材进行计算。"
             },
             "Ingredient Magnet S (Plus)": {
-                "name": "正电 (食材获取S)"
+                "name": "正电 (食材获取S)",
+                "strength": "$t(skills.Ingredient Magnet S.strength)若队伍中除了自己以外还有1只以上主技能是「正电」或「负电」的宝可梦时，才会额外获得更多食材。"
             },
             "Ingredient Magnet S (Present)": {
-                "name": "礼物 (食材获取S)"
+                "name": "礼物 (食材获取S)",
+                "strength": "$t(skills.Ingredient Magnet S.strength)根据 RaenonX 的汇总数据计算，获取$t(candy)的概率为 34.4%。"
             },
             "Charge Energy S": {
-                "name": "活力填充S"
+                "name": "活力填充S",
+                "strength": "技能的效果没有换算成合计能量值。如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。"
             },
             "Charge Energy S (Moonlight)": {
-                "name": "月光 (活力填充S)"
+                "name": "月光 (活力填充S)",
+                "strength": "$t(skills.Charge Energy S.strength)"
             },
             "Charge Strength S": {
-                "name": "能量填充S"
+                "name": "能量填充S",
+                "strength": "显示可获得的能量量。"
             },
             "Charge Strength S (Random)": {
-                "name": "能量填充S (随机)"
+                "name": "能量填充S (随机)",
+                "strength": ""
             },
             "Charge Strength S (Stockpile)": {
-                "name": "蓄力 (能量填充S)"
+                "name": "蓄力 (能量填充S)",
+                "strength": "$t(base strength)的期望值使用 RaenonX 的汇总结果（吐出概率：26.5%）进行计算。"
             },
             "Charge Strength M": {
-                "name": "能量填充M"
+                "name": "能量填充M",
+                "strength": ""
             },
             "Charge Strength M (Bad Dreams)": {
-                "name": "梦魇 (能量填充M)"
+                "name": "梦魇 (能量填充M)",
+                "strength": "对非$t(types.dark)类型宝可梦的$t(energy)减少效果（-12）未包含在$t(strength)的评估中。"
             },
             "Dream Shard Magnet S": {
-                "name": "梦之碎片获取S"
+                "name": "梦之碎片获取S",
+                "strength": ""
             },
             "Dream Shard Magnet S (Random)": {
-                "name": "梦之碎片获取S (随机)"
+                "name": "梦之碎片获取S (随机)",
+                "strength": ""
             },
             "Energizing Cheer S": {
-                "name": "活力疗愈S"
+                "name": "活力疗愈S",
+                "strength": "技能造成的体力回复没有换算成合计能量值。"
             },
             "Energizing Cheer S (Nuzzle)": {
-                "name": "蹭蹭脸颊 (活力疗愈S)"
+                "name": "蹭蹭脸颊 (活力疗愈S)",
+                "strength": "$t(skills.Energizing Cheer S.strength)"
             },
             "Energizing Cheer S (Heal Pulse)": {
-                "name": "治愈波动 (活力疗愈S)"
+                "name": "治愈波动 (活力疗愈S)",
+                "strength": "$t(skills.Energizing Cheer S.strength) 附加效果为$t(skills.Extra Helpful S.strength)"
             },
             "Metronome": {
-                "name": "挥指"
+                "name": "挥指",
+                "strength": "$t(skills.Skill Copy.strength)"
             },
             "Energy for Everyone S": {
-                "name": "活力全体疗愈S"
+                "name": "活力全体疗愈S",
+                "strength": "如需预估对能量值的影响，请修改 [$t(energy)] 值后进行确认。"
             },
             "Energy for Everyone S (Lunar Blessing)": {
-                "name": "新月祈祷 (活力全体疗愈S)"
+                "name": "新月祈祷 (活力全体疗愈S)",
+                "strength": "$t(skills.Energy for Everyone S.strength)"
             },
             "Energy for Everyone S (Berry Juice)": {
-                "name": "树果汁 (活力全体疗愈S)"
+                "name": "树果汁 (活力全体疗愈S)",
+                "strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)"
             },
             "Extra Helpful S": {
-                "name": "帮手支援S"
+                "name": "帮手支援S",
+                "strength": "显示为技能发动带来的 [帮助次数] 。总能量按照1次帮助 300 能量 (不含营地奖励) 进行预估。"
             },
             "Cooking Power-Up S": {
-                "name": "料理强化S"
+                "name": "料理强化S",
+                "strength": ""
             },
             "Cooking Power-Up S (Minus)": {
-                "name": "负电 (料理强化S)"
+                "name": "负电 (料理强化S)",
+                "strength": "只有当队伍中有至少一只拥有「正电」或「负电」主技能的宝可梦时，才会恢复一只队伍成员的活力。"
             },
             "Tasty Chance S": {
-                "name": "料理成功S"
+                "name": "料理成功S",
+                "strength": "显示为漂亮成功的几率増加百分比。技能的效果没有换算成合计能量值。"
             },
             "Helper Boost": {
-                "name": "帮手加速"
+                "name": "帮手加速",
+                "strength": "显示为1只宝可梦的帮手次数 (有 3 只同类型宝可梦的情况) 。总能量按照1次帮助 300 (不含营地奖励) 进行预估。"
             },
             "Berry Burst": {
-                "name": "树果剧增"
+                "name": "树果剧增",
+                "strength": ""
             },
             "Berry Burst (Disguise)": {
-                "name": "画皮 (树果剧增)"
+                "name": "画皮 (树果剧增)",
+                "strength": "大成功概率基于 RaenonX 的统计数据 (18.5%)。"
             },
             "Skill Copy": {
-                "name": "技能复制"
+                "name": "技能复制",
+                "strength": "由于难以估计效果，因此显示技能发生的次数。技能的效果没有换算成合计能量值。"
             },
             "Skill Copy (Transform)": {
-                "name": "变身 (技能复制)"
+                "name": "变身 (技能复制)",
+                "strength": "$t(skills.Skill Copy.strength)"
             },
             "Skill Copy (Mimic)": {
-                "name": "模仿 (技能复制)"
+                "name": "模仿 (技能复制)",
+                "strength": "$t(skills.Skill Copy.strength)"
             },
             "Ingredient Draw S": {
-                "name": "食材精选S"
+                "name": "食材精选S",
+                "strength": "技能获取的食材是通过将$t(recipe bonus)应用于$t(strength2)来计算的。"
             },
             "Ingredient Draw S (Super Luck)": {
-                "name": "超幸运 (食材精选S)"
+                "name": "超幸运 (食材精选S)",
+                "strength": "$t(skills.Ingredient Draw S.strength)通过 RaenonX 的汇总结果计算获取$t(dream shard)的概率。"
             },
             "Ingredient Draw S (Hyper Cutter)": {
-                "name": "怪力钳 (食材精选S)"
+                "name": "怪力钳 (食材精选S)",
+                "strength": "$t(skills.Ingredient Draw S.strength)$t(additional ingredient rate)使用 RaenonX 的汇总结果 (16.68%)。"
             },
             "Cooking Assist S": {
-                "name": "料理辅助S"
+                "name": "料理辅助S",
+                "strength": ""
             },
             "Cooking Assist S (Bulk Up)": {
-                "name": "健美（料理辅助S）"
+                "name": "健美（料理辅助S）",
+                "strength": "$t(skills.Ingredient Magnet S.strength)大成功概率增加 % 不会换算为合计能量值。"
             },
             "Versatile": {
-                "name": "十项全能"
+                "name": "十项全能",
+                "strength": ""
             },
             "unknown": {
-                "name": "(未知)"
+                "name": "(未知)",
+                "strength": "主技能还未确定。"
             }
         },
 

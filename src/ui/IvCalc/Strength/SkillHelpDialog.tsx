@@ -76,7 +76,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
         return (
             <Dialog open={open} onClose={onClose}>
                 <DialogContent style={{fontSize: '0.95rem', whiteSpace: 'pre-wrap'}}>
-                    {t('strength skill info.not triggered')}
+                    {t('skill not triggered')}
                 </DialogContent>
 
                 <DialogActions>
@@ -92,7 +92,7 @@ const SkillHelpDialog = React.memo(({open, dispatch, onClose, strength, result}:
 
     const iv = strength.pokemonIv;
     const skill = iv.versatileSkill.replace(" (Random)", "");
-    const footnote = t(`strength skill info.${skill}`);
+    const footnote = t(`skills.${skill}.strength`, { defaultValue: "" });
     const skillName = iv.versatileSkill;
     const isCountOnly = skillName === "Metronome" ||
         skillName.startsWith("Skill Copy");
