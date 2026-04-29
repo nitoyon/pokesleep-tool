@@ -98,10 +98,10 @@ const NumericInputKeyboard = React.memo(React.forwardRef<NumericInputHandle, Num
                 input: {
                     sx: {
                         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-                            '-webkit-appearance': 'none',
+                            WebkitAppearance: 'none',
                             margin: 0,
                         },
-                        '-moz-appearance': 'textfield',
+                        MozAppearance: 'textfield',
                     },
                     min, max
                 }

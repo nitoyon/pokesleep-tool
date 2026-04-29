@@ -104,7 +104,8 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             ...value.customEventBonus,
             effects: {
                 ...value.customEventBonus.effects,
-                carryLimit: val as 0|8|15,
+                carryLimitAdd: (val === 1.5 ? 0 : val as 0|8|15),
+                carryLimitMul: (val === 1.5 ? val : 1),
             },
         }});
     }, [value, onChange]);
@@ -141,18 +142,6 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             effects: {
                 ...value.customEventBonus.effects,
                 dreamShard: val as 1|1.5|2,
-            },
-        }});
-    }, [value, onChange]);
-    const onDreamShard2Change = React.useCallback((_: React.MouseEvent, val: number|null) => {
-        if (val === null) {
-            return;
-        }
-        onChange({...value, event: "custom", customEventBonus: {
-            ...value.customEventBonus,
-            effects: {
-                ...value.customEventBonus.effects,
-                dreamShard2: val as 1|1.5,
             },
         }});
     }, [value, onChange]);
@@ -240,6 +229,9 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
     const targetName = typeof(value.customEventBonus.target.type) !== "undefined" ? "type" :
         typeof(value.customEventBonus.target.specialty) !== "undefined" ? "specialty" : "all";
 
+    const carryLimit = value.customEventBonus.effects.carryLimitMul > 1 ?
+        value.customEventBonus.effects.carryLimitMul :
+        value.customEventBonus.effects.carryLimitAdd;
     return (<StyledEventConfigDialog open={open} onClose={onClose}>
         <header>
             <section>
@@ -336,33 +328,24 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                 <label>{t('carry limit')}:</label>
                 <div>
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
-                        value={value.customEventBonus.effects.carryLimit} onChange={onCarryLimitChange}>
+                        value={carryLimit} onChange={onCarryLimitChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={8}>+8</ToggleButton>
                         <ToggleButton value={15}>+15</ToggleButton>
+                        <ToggleButton value={1.5}>x1.5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>
         </article>
         <article className="transparent">
             <section>
-                <label>{t('skills.Dream Shard Magnet S')}:</label>
+                <label>{t('dream shards from main skills')}:</label>
                 <div>
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
                         value={value.customEventBonus.effects.dreamShard} onChange={onDreamShardChange}>
                         <ToggleButton value={1}>{t('none')}</ToggleButton>
                         <ToggleButton value={1.5}>×1.5</ToggleButton>
                         <ToggleButton value={2}>×2</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-            </section>
-            <section>
-                <label>{t('dream shards from main skills')}:</label>
-                <div>
-                    <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
-                        value={value.customEventBonus.effects.dreamShard2} onChange={onDreamShard2Change}>
-                        <ToggleButton value={1}>{t('none')}</ToggleButton>
-                        <ToggleButton value={1.5}>×1.5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </section>

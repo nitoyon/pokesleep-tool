@@ -114,14 +114,14 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         berry: data.berry ?? 0,
         ingredient: data.ingredient ?? 0,
         dreamShard: data.dreamShard ?? 1,
-        dreamShard2: data.dreamShard2 ?? 1,
         ingredientMagnet: data.ingredientMagnet ?? 1,
         ingredientDraw: data.ingredientDraw ?? 1,
         skillIngredient: data.skillIngredient ?? 1,
         berryBurst: data.berryBurst ?? 1,
         dish: data.dish ?? 1,
         energyFromDish: data.energyFromDish ?? 0,
-        carryLimit: data.carryLimit ?? 0,
+        carryLimitAdd: data.carryLimitAdd ?? 0,
+        carryLimitMul: data.carryLimitMul ?? 1,
         fixedBerries: data.fixedBerries ?? [],
         fixedAreas: data.fixedAreas ?? [],
     };
@@ -239,10 +239,8 @@ export interface BonusEffects {
     skillLevel: 0 | 1 | 2 | 3 | 5,
     /** Boosted ingredient count */
     ingredient: 0 | 1,
-    /** Dream Shard Magnet S bonus */
-    dreamShard: 1 | 1.5 | 2;
     /** Dream Shard bonus obtained through main skills */
-    dreamShard2: 1 | 1.5;
+    dreamShard: 1 | 1.5 | 2;
     /** Ingredient Magnet S bonus */
     ingredientMagnet: 1 | 1.5;
     /** Ingredient Magnet S bonus */
@@ -255,8 +253,10 @@ export interface BonusEffects {
     dish: 1 | 1.1 | 1.25 | 1.5;
     /** Energy recovery bonus by dish */
     energyFromDish: 0 | 5;
-    /** Carry limit bonus */
-    carryLimit: 0 | 8 | 15;
+    /** Carry limit bonus (add) */
+    carryLimitAdd: 0 | 8 | 15;
+    /** Carry limit bonus (multiply) */
+    carryLimitMul: 1 | 1.5;
     /**
      * Types of berries that are fixed (i.e., not randomly selected).
      *
@@ -282,14 +282,14 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
     skillLevel: 0,
     ingredient: 0,
     dreamShard: 1,
-    dreamShard2: 1,
     ingredientMagnet: 1,
     ingredientDraw: 1,
     skillIngredient: 1,
     berryBurst: 1,
     dish: 1,
     energyFromDish: 0,
-    carryLimit: 0,
+    carryLimitAdd: 0,
+    carryLimitMul: 1,
     fixedBerries: [],
     fixedAreas: [],
 };
@@ -395,10 +395,6 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
             [1, 1.5, 2].includes(effects.dreamShard)) {
             ret.effects.dreamShard = effects.dreamShard;
         }
-        if (typeof(effects.dreamShard2) === "number" &&
-            [1, 1.5].includes(effects.dreamShard2)) {
-            ret.effects.dreamShard2 = effects.dreamShard2;
-        }
         if (typeof(effects.ingredientMagnet) === "number" &&
             [1, 1.5].includes(effects.ingredientMagnet)) {
             ret.effects.ingredientMagnet = effects.ingredientMagnet;
@@ -423,9 +419,13 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
             [0, 5].includes(effects.energyFromDish)) {
             ret.effects.energyFromDish = effects.energyFromDish;
         }
-        if (typeof(effects.carryLimit) === "number" &&
-            [8, 15].includes(effects.carryLimit)) {
-            ret.effects.carryLimit = effects.carryLimit;
+        if (typeof(effects.carryLimitAdd) === "number" &&
+            [8, 15].includes(effects.carryLimitAdd)) {
+            ret.effects.carryLimitAdd = effects.carryLimitAdd;
+        }
+        if (typeof(effects.carryLimitMul) === "number" &&
+            [1, 1.5].includes(effects.carryLimitMul)) {
+            ret.effects.carryLimitMul = effects.carryLimitMul;
         }
     }
     return ret;

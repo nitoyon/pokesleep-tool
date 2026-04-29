@@ -143,7 +143,7 @@ describe('PokemonInventory', () => {
                 5);
 
             // Fills quickly when brings 4 berries x3 times
-            const dist2 = calculateInventoryDistribution(iv, false, {berryBonus: 1});
+            const dist2 = calculateInventoryDistribution(iv, false, {berry: 1});
             expect(dist2[0]).toBe(0);
             expect(dist2[2]).toBe(0);
             expect(dist2[3]).toBeCloseTo(Math.pow(iv.berryRate, 3), 5);
@@ -153,7 +153,7 @@ describe('PokemonInventory', () => {
             const iv = new PokemonIv({pokemonName: 'Bulbasaur', level: 60});
 
             const dist1 = calculateInventoryDistribution(iv, false, {});
-            const dist2 = calculateInventoryDistribution(iv, false, {ingredientBonus: 1});
+            const dist2 = calculateInventoryDistribution(iv, false, {ingredient: 1});
 
             // Both should be valid distributions
             expect(dist1.length).toBeGreaterThanOrEqual(2);
@@ -169,7 +169,7 @@ describe('PokemonInventory', () => {
             const iv = new PokemonIv({pokemonName: 'Bulbasaur', level: 10});
 
             const dist = calculateInventoryDistribution(iv, false, {
-                expertIngBonus: true,
+                expertIng: true,
             });
             expect(dist[0]).toBe(0);
             expect(dist[2]).toBe(0);

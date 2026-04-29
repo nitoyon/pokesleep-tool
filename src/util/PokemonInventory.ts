@@ -51,7 +51,8 @@ export function calculateInventoryDistribution(
     }
 
     // Find minimum item count for array length calculation
-    const carryLimit = Math.ceil((iv.carryLimit + (bonus?.carryLimitBonus ?? 0)) *
+    const carryLimit = Math.ceil((iv.carryLimit + (bonus?.carryLimitAdd ?? 0)) *
+        (bonus?.carryLimitMul ?? 1) *
         (isGoodCampTicketSet ? 1.2 : 1));
     const minItemCount = Math.min(...itemDist.keys());
 

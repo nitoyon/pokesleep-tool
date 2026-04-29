@@ -499,7 +499,7 @@ class PokemonStrength {
                 Math.max(bonus.ingredientDraw, bonus.skillIngredient));
         }
         if (mainSkill.startsWith("Dream Shard Magnet S")) {
-            mainSkillBase *= bonus.dreamShard * bonus.dreamShard2;
+            mainSkillBase *= bonus.dreamShard;
         }
 
         let mainSkillFactor = 1;
@@ -681,7 +681,7 @@ class PokemonStrength {
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);
                 const shardsPerSkill = (baseShards * superLuckShardRate +
                     baseShards * 5 * superLuckShard5Rate) *
-                    bonus.ingredientDraw * bonus.dreamShard2;
+                    bonus.ingredientDraw * bonus.dreamShard;
                 return {
                     skillValue: skillValue * superLuckIngRate,
                     skillStrength: skillValue * superLuckIngRate * averageStrength * ingFactor,
@@ -804,26 +804,28 @@ class PokemonStrength {
         const eventIngredient = targetEventBonus.ingredient;
 
         return {
-            skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger),
+            skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger) as 1|1.25|1.5,
             skillTriggerReason: expertSkillTrigger > eventSkillTrigger ?
                 'ex' : 'event',
-            skillLevel: expertSkillLevel + eventSkillLevel,
+            skillLevel: (expertSkillLevel + eventSkillLevel) as 0|1|2|3|5,
             skillLevelReason: expertSkillLevel * eventSkillLevel !== 0 ? "event+ex" :
                 expertSkillLevel > 0 ? "ex" : "event",
             berry: targetEventBonus.berry,
-            ingredient: Math.max(expertIngredient, eventIngredient),
-            carryLimit: targetEventBonus.carryLimit,
+            ingredient: Math.max(expertIngredient, eventIngredient) as 0|1,
+            carryLimitAdd: targetEventBonus.carryLimitAdd,
+            carryLimitMul: targetEventBonus.carryLimitMul,
             ingredientReason: expertIngredient > eventIngredient ?
                 'ex' : 'event',
             dreamShard: eventBonus.dreamShard,
-            dreamShard2: eventBonus.dreamShard2,
             ingredientMagnet: eventBonus.ingredientMagnet,
             ingredientDraw: eventBonus.ingredientDraw,
             skillIngredient: eventBonus.skillIngredient,
             berryBurst: eventBonus.berryBurst,
             dish: eventBonus.dish,
             energyFromDish: eventBonus.energyFromDish,
-        } as BonusEffectsWithReason;
+            fixedBerries: targetEventBonus.fixedBerries,
+            fixedAreas: targetEventBonus.fixedAreas,
+        };
     }
 
     /**
@@ -991,14 +993,14 @@ export function createStrengthParameter(
                 skillLevel: 0,
                 ingredient: 0,
                 dreamShard: 1,
-                dreamShard2: 1,
                 ingredientMagnet: 1,
                 ingredientDraw: 1,
                 skillIngredient: 1,
                 berryBurst: 1,
                 dish: 1,
                 energyFromDish: 0,
-                carryLimit: 0,
+                carryLimitAdd: 0,
+                carryLimitMul: 1,
                 fixedAreas: [],
                 fixedBerries: [],
             }
@@ -1105,8 +1107,9 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
                     team.filter(x => x.type === iv.pokemon.type).length :
                     param.berryBurstTeam.species);
             // NOTE: berry burst bonus is not applied to Lunar Blessing
-            myBerryCount = Math.floor(cnt.myBerryCount);
-            othersBerryCount = Math.floor(cnt.othersBerryCount);
+            // in buncha berries week part 1, but it was applied in part 2
+            myBerryCount = Math.ceil(bonus * cnt.myBerryCount);
+            othersBerryCount = Math.ceil(bonus * cnt.othersBerryCount);
             break;
         }
         default:

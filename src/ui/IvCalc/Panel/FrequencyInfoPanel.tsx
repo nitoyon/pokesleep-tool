@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Collapse,
     MenuItem, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import PokemonIv from '../../../util/PokemonIv';
+import PokemonIv, { InventoryBonus } from '../../../util/PokemonIv';
 import { formatHoursLong, formatHoursShort } from '../../../util/TimeUtil';
 import SelectEx from '../../common/SelectEx';
 import BarChartIcon from '../../Resources/BarChartIcon';
@@ -88,11 +88,12 @@ const FullPreview = React.memo(({iv, state, onStateChange}: {
 
     // Calculate distribution data
     const chartData = React.useMemo(() => {
-        const bonus = {
-            berryBonus: state.berryBonus,
-            ingredientBonus: state.ingBonus,
-            carryLimitBonus: state.carryLimitBonus,
-            expertIngBonus: state.expertMode &&
+        const bonus: InventoryBonus = {
+            berry: state.berry,
+            ingredient: state.ingredient,
+            carryLimitAdd: state.carryLimitAdd,
+            carryLimitMul: state.carryLimitMul,
+            expertIng: state.expertMode &&
                 state.expertBerry !== 2 && state.expertIngBonus === 1,
         };
         const cdf = calculateInventoryDistribution(iv,
@@ -278,17 +279,23 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
     }, [state, onStateChange]);
     const onBerryBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value !== null) {
-            onStateChange({...state, berryBonus: parseInt(value, 10) as 0|1});
+            onStateChange({...state, berry: parseInt(value, 10) as 0|1});
         }
     }, [state, onStateChange]);
     const onIngBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value !== null) {
-            onStateChange({...state, ingBonus: parseInt(value, 10) as 0|1});
+            onStateChange({...state, ingredient: parseInt(value, 10) as 0|1});
         }
     }, [state, onStateChange]);
     const onCarryLimitBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
-        if (value !== null) {
-            onStateChange({...state, carryLimitBonus: parseInt(value, 10) as 0|8|15});
+        if (value === null) {
+            return;
+        }
+        const v = parseFloat(value);
+        if (v === 1.5) {
+            onStateChange({...state, carryLimitAdd: 0, carryLimitMul: 1.5});
+        } else {
+            onStateChange({...state, carryLimitAdd: v as 0|8|15, carryLimitMul: 1});
         }
     }, [state, onStateChange]);
     const onExpertModeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -319,6 +326,8 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
     }, [state, onStateChange]);
 
     const hasHelpingBonus = iv.hasHelpingBonusInActiveSubSkills;
+    const carryLimit = state.carryLimitMul > 1 ?
+        state.carryLimitMul : state.carryLimitAdd;
     return <StyledFrequencyControls>
         <div className="line">
             <label>{t('helping bonus')}:</label>
@@ -369,7 +378,7 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
                 <div className="line">
                     <label className="indent">{t('berry')}:</label>
                     <ToggleButtonGroup size="small" exclusive
-                        value={state.berryBonus} onChange={onBerryBonusChange}>
+                        value={state.berry} onChange={onBerryBonusChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={1}>+1</ToggleButton>
                     </ToggleButtonGroup>
@@ -377,7 +386,7 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
                 <div className="line">
                     <label className="indent">{t('ingredient')}:</label>
                     <ToggleButtonGroup size="small" exclusive
-                        value={state.ingBonus} onChange={onIngBonusChange}>
+                        value={state.ingredient} onChange={onIngBonusChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={1}>+1</ToggleButton>
                     </ToggleButtonGroup>
@@ -385,10 +394,11 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
                 <div className="line">
                     <label className="indent">{t('carry limit')}:</label>
                     <ToggleButtonGroup size="small" exclusive
-                        value={state.carryLimitBonus} onChange={onCarryLimitBonusChange}>
+                        value={carryLimit} onChange={onCarryLimitBonusChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={8}>+8</ToggleButton>
                         <ToggleButton value={15}>+15</ToggleButton>
+                        <ToggleButton value={1.5}>x1.5</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </>}

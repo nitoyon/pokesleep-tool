@@ -250,10 +250,10 @@ const RateTextField = React.memo(({min, max, value, onChange}: {
             input: {
                 sx: {
                     '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-                        '-webkit-appearance': 'none',
+                        WebkitAppearance: 'none',
                         margin: 0,
                     },
-                    '-moz-appearance': 'textfield',
+                    MozAppearance: 'textfield',
                 },
             }
         }}

@@ -24,6 +24,19 @@
     ],
     "bonus": [
         {
+            "name": "buncha berries week part 2",
+            "start": "2026-05-11T04:00:00",
+            "end": "2026-05-18T04:00:00",
+            "target": {
+                "specialty": "Berries"
+            },
+            "effects": {
+                "berry": 1,
+                "berryBurst": 1.4,
+                "carryLimitMul": 1.5
+            }
+        },
+        {
             "name": "spring festival 2026",
             "start": "2026-04-27T04:00:00",
             "end": "2026-05-04T04:00:00",
@@ -44,7 +57,7 @@
                 "skillTrigger": 1.25,
                 "skillLevel": 5,
                 "ingredient": 1,
-                "carryLimit": 15
+                "carryLimitAdd": 15
             }
         },
         {
@@ -58,7 +71,7 @@
                 "skillTrigger": 1.25,
                 "skillLevel": 2,
                 "ingredient": 1,
-                "carryLimit": 8
+                "carryLimitAdd": 8
             }
         },
         {
@@ -68,7 +81,7 @@
             "target": {},
             "effects": {
                 "skillTrigger": 1.25,
-                "dreamShard2": 1.5
+                "dreamShard": 1.5
             }
         },
         {
