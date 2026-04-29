@@ -128,7 +128,7 @@ const BarChartAxis = React.memo(({
         {/* X-axis scales */}
         <g stroke="#bbb" transform={`translate(0,${y0})`}>
             {xLabels.map(x => (
-                <line x1={xScale(x)} y1={0} x2={xScale(x)} y2={5}/>
+                <line key={x} x1={xScale(x)} y1={0} x2={xScale(x)} y2={5}/>
             ))}
         </g>
         {/* X-axis labels */}
