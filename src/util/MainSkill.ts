@@ -294,6 +294,33 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
 }
 
 /**
+ * Get the ingredient list for Ingredient Draw S based on the Pokémon.
+ * @param pokemon Pokemon.
+ * @returns Ingredient list.
+ */
+export function getIngredientDrawIngredients(pokemon: PokemonData): IngredientName[] {
+    const id = pokemon.ancestor ?? pokemon.id;
+    switch (id) {
+        // Sandshrew
+        case 27:
+            return ['potato', 'corn', 'pumpkin'];
+        // Murkrow
+        case 198:
+            return ['mushroom', 'sausage', 'soy', 'coffee'];
+        // Mawile
+        case 303:
+            return ['potato', 'oil', 'tomato', 'corn'];
+        // Crustle
+        case 557:
+            return ['potato', 'oil', 'avocado'];
+        // Ribombee
+        case 742:
+            return ['honey', 'oil', 'corn'];
+    }
+    throw new Error(`Unknown Pokémon for Ingredient Draw S: ${pokemon.name} (id: ${id})`);
+}
+
+/**
  * Returns the additional effect of the main skill for the given
  * skill and level.
  * @param skill Name of the main skill.
