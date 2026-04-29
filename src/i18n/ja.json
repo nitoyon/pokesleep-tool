@@ -363,7 +363,7 @@
 
         "none": "なし",
         "enabled": "あり",
-        "cresselia on your team": "クレセリアを編成",
+        "pokemon on your team": "{{pokemon}}を編成",
         "sleep twice": "分割睡眠する",
         "total n pokemon": "合計<n/>体",
         "range separator": "～",
@@ -796,7 +796,7 @@
             "Charge Strength M (Bad Dreams)": {
                 "name": "ナイトメア (エナジーチャージM)",
                 "strength": "$t(types.dark)タイプ以外のポケモンに対する$t(energy)の減少効果 (-12) については、$t(strength)の評価に含めていません。",
-                "desc": "$t(skills.Charge Strength S.desc)同時に、チームのあくタイプ以外のげんきが12減る。",
+                "desc": "$t(skills.Charge Strength S.desc)同時に、チームのあくタイプ以外のげんきが12減ります。",
                 "detail": "$t(skills.Charge Strength S.detail)"
             },
             "Dream Shard Magnet S": {
@@ -1211,6 +1211,7 @@
             "Shelgon": "コモルー",
             "Salamence": "ボーマンダ",
             "Latias": "ラティアス",
+            "Latios": "ラティオス",
             "Shinx": "コリンク",
             "Luxio": "ルクシオ",
             "Luxray": "レントラー",

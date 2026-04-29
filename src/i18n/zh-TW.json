@@ -363,7 +363,7 @@
 
         "none": "無",
         "enabled": "啟用",
-        "cresselia on your team": "隊伍中有克雷色利亞",
+        "pokemon on your team": "隊伍中有{{pokemon}}",
         "sleep twice": "分次睡眠",
         "total n pokemon": "合計<n/>只",
         "range separator": "～",
@@ -936,7 +936,7 @@
                 "strength": ""
             },
             "Cooking Assist S (Bulk Up)": {
-                "name": "健美（料理輔助S）",
+                "name": "健美 (料理輔助S)",
                 "strength": "$t(skills.Ingredient Magnet S.strength)大成功的機率增加 % 不會換算為合計能量值。",
                 "desc": "$t(skills.Ingredient Magnet S.desc)不僅如此，料理漂亮成功的機率還會提升。效果會持續到料理漂亮成功或移動營地為止。",
                 "detail": "$t(skills.Ingredient Magnet S.detail) $t(skills.Tasty Chance S.detail)"
@@ -1211,6 +1211,7 @@
             "Shelgon": "甲殼龍",
             "Salamence": "暴飛龍",
             "Latias": "拉帝亞斯",
+            "Latios": "拉帝歐斯",
             "Shinx": "小貓怪",
             "Luxio": "勒克貓",
             "Luxray": "倫琴貓",

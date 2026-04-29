@@ -1,6 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import IngredientIcon from '../IngredientIcon';
+import { StyledNatureUpEffect, StyledNatureDownEffect } from './NatureTextField';
+import AreaBonusControl from '../Strength/AreaBonusControl';
+import SelectEx from '../../common/SelectEx';
 import {
     getMaxSkillLevel, getSkillValue, getSkillSubValue, getSkillRandomRange,
     getIngredientDrawIngredients, getLunarBlessingBerryCount,
@@ -9,9 +12,17 @@ import {
 import PokemonIv from '../../../util/PokemonIv';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
+    MenuItem, Switch,
 } from '@mui/material';
 import { useTranslation, Trans } from 'react-i18next';
 import i18next from 'i18next'
+
+interface SkillDetailDialogConfig {
+    species: number;
+    energyNature: number;
+    areaBonus: number;
+    latiTwins: boolean;
+}
 
 interface SkillLevelDetailContent {
     desc: React.ReactNode;
@@ -26,6 +37,12 @@ const SkillDetailDialog = React.memo(({value, open, onClose}: {
     onClose: () => void,
 }) => {
     const { t } = useTranslation();
+    const [config, setConfig] = React.useState<SkillDetailDialogConfig>({
+        species: 1,
+        energyNature: 0,
+        areaBonus: 0,
+        latiTwins: false,
+    });
     if (!open) {
         return <></>;
     }
@@ -38,7 +55,8 @@ const SkillDetailDialog = React.memo(({value, open, onClose}: {
             <DialogContent>
                 <header>{content.desc}</header>
                 <footer>{content.detail}</footer>
-                <SkillTable value={value} content={content}/>
+                <SkillTable value={value} content={content} config={config}/>
+                <ConfigForm value={value} config={config} onConfigChange={setConfig}/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} autoFocus>{t('close')}</Button>
@@ -47,24 +65,28 @@ const SkillDetailDialog = React.memo(({value, open, onClose}: {
     );
 });
 
-const SkillTable = React.memo(({value, content}: {
+const SkillTable = React.memo(({value, content, config}: {
     value: PokemonIv,
     content: SkillLevelDetailContent,
+    config: SkillDetailDialogConfig,
 }) => {
     const skill = value.pokemon.skill;
 
     if (skill.startsWith('Berry Burst')) {
         return <BerryBurstTable value={value}/>;
     } else if (skill === 'Energy for Everyone S (Lunar Blessing)') {
-        return <LunarBlessingTable value={value}/>; 
+        return <LunarBlessingTable value={value} config={config}/>; 
+    } else if (skill === 'Metronome' || skill.startsWith('Skill Copy')) {
+        return <></>;
     } else {
-        return <NormalTable value={value} content={content}/>;
+        return <NormalTable value={value} content={content} config={config}/>;
     }
 });
 
-const NormalTable = React.memo(({value, content}: {
+const NormalTable = React.memo(({value, content, config}: {
     value: PokemonIv,
     content: SkillLevelDetailContent,
+    config: SkillDetailDialogConfig,
 }) => {
     const { t } = useTranslation();
     const skill = value.pokemon.skill;
@@ -81,10 +103,10 @@ const NormalTable = React.memo(({value, content}: {
             {[...Array(getMaxSkillLevel(skill))].map((_, i) => {
                 const level = i + 1;
                 const value2 = (content.column2 === undefined ? null :
-                    <td>{getSkillValue2Text(value, level, t)}</td>);
+                    <td>{getSkillValue2Text(value, level, config, t)}</td>);
                 return (<tr key={level}>
                     <td>Lv.{level}</td>
-                    <td>{getSkillValueText(skill, level, t)}</td>
+                    <td>{getSkillValueText(skill, level, config, t)}</td>
                     {value2}
                 </tr>);
             })}
@@ -127,8 +149,9 @@ const BerryBurstTable = React.memo(({value}: {
     </table>;
 });
 
-const LunarBlessingTable = React.memo(({value}: {
+const LunarBlessingTable = React.memo(({value, config}: {
     value: PokemonIv,
+    config: SkillDetailDialogConfig,
 }) => {
     const { t } = useTranslation();
     const skill = value.pokemon.skill;
@@ -149,8 +172,9 @@ const LunarBlessingTable = React.memo(({value}: {
         <tbody>
             {[...Array(getMaxSkillLevel(skill))].map((_, i) => {
                 const level = i + 1;
-                const recovery = getSkillValue(skill, level);
-                const count = getLunarBlessingBerryCount(level, 3);
+                const recovery = multiplyEnergyFactor(
+                    getSkillValue(skill, level), config.energyNature);
+                const count = getLunarBlessingBerryCount(level, config.species);
                 return (<tr key={level}>
                     <td>Lv.{level}</td>
                     <td>{recovery}</td>
@@ -162,6 +186,16 @@ const LunarBlessingTable = React.memo(({value}: {
         </tbody>
     </table>;
 });
+
+function multiplyEnergyFactor(value: number, nature: number): number {
+    if (nature === 1) {
+        return Math.floor(value * 1.2);
+    }
+    if (nature === -1) {
+        return Math.floor(value * 0.88);
+    }
+    return value;
+}
 
 function getSkillContent(
     value: PokemonIv,
@@ -181,7 +215,7 @@ function getSkillContent(
         desc: <Trans i18nKey={`skills.${skill}.desc`}
             components={components}/>,
         detail: t(`skills.${skill}.detail`)
-            .split("\n").map(x => <p>{x}</p>),
+            .split("\n").map((x, index) => <p key={index}>{x}</p>),
         column1: getSkillUnit(skill, t),
         column2: getSkillUnit2(skill, t),
     };
@@ -273,28 +307,50 @@ function getSkillUnit2(skill: MainSkillName,
 }
 
 function getSkillValueText(skill: MainSkillName, level: number,
-    t: typeof i18next.t
+    config: SkillDetailDialogConfig, t: typeof i18next.t
 ): React.ReactNode {
-    const n = getSkillValue(skill, level);
+    const n = getSkillValue(skill, level, config.species);
+    if (skill.startsWith('Energy for Everyone S') ||
+        skill.startsWith('Charge Energy S') ||
+        skill.startsWith('Energizing Cheer S')
+    ) {
+        return t('num', {n: multiplyEnergyFactor(n, config.energyNature)});
+    }
+
+    if (skill.startsWith('Charge Strength')) {
+        return t('num', {n: Math.floor(n * (1 + config.areaBonus / 100))});
+    }
+
     const baseText = t('num', {n});
     return baseText;
 }
 
 function getSkillValue2Text(value: PokemonIv, level: number,
-    t: typeof i18next.t
+    config: SkillDetailDialogConfig, t: typeof i18next.t
 ): React.ReactNode {
     const skill = value.pokemon.skill;
 
-    // Handle range
-    if (skill === 'Charge Strength S (Random)' ||
-        skill === 'Charge Strength S (Stockpile)' ||
-        skill === 'Dream Shard Magnet S (Random)'
+    // Dream Shard Magnet S (Random)
+    if (skill === 'Dream Shard Magnet S (Random)'
     ) {
         const range = getSkillRandomRange(skill, level);
         return <small>
             {t('num', {n: range[0]})}
             {t('range separator')}
             {t('num', {n: range[1]})}
+        </small>;
+    }
+
+    // Range with area bonus
+    if (skill === 'Charge Strength S (Random)' ||
+        skill === 'Charge Strength S (Stockpile)'
+    ) {
+        const range = getSkillRandomRange(skill, level);
+        const b = 1 + config.areaBonus / 100;
+        return <small>
+            {t('num', {n: Math.floor(range[0] * b)})}
+            {t('range separator')}
+            {t('num', {n: Math.floor(range[1] * b)})}
         </small>;
     }
 
@@ -309,7 +365,8 @@ function getSkillValue2Text(value: PokemonIv, level: number,
     }
 
     if (skill === 'Cooking Power-Up S (Minus)') {
-        return getSkillSubValue(skill, level)
+        return multiplyEnergyFactor(
+            getSkillSubValue(skill, level), config.energyNature);
     }
 
     if (skill === 'Cooking Assist S (Bulk Up)') {
@@ -317,7 +374,10 @@ function getSkillValue2Text(value: PokemonIv, level: number,
     }
 
     if (skill === 'Energizing Cheer S (Heal Pulse)') {
-        return getSkillSubValue(skill, level);
+        const base = getSkillSubValue(skill, level);
+        const bonus = level <= 2 ? 1 :
+            level <= 5 ? 2 : 3;
+        return base + (config.latiTwins ? bonus : 0);
     }
 
     return null;
@@ -331,12 +391,12 @@ const StyledSkillDetailDialog = styled(Dialog)({
     },
 
     '& .MuiDialogTitle-root': {
-        fontSize: '1.1rem',
+        fontSize: '1rem',
         fontWeight: 'bold',
         padding: '0.8rem 1rem',
     },
     '& .MuiDialogContent-root': {
-        padding: '1rem',
+        padding: '0 1rem',
         '& > header': {
             marginBottom: '0.2rem',
             fontSize: '0.9rem',
@@ -369,7 +429,7 @@ const StyledSkillDetailDialog = styled(Dialog)({
             '& > tbody': {
                 background: '#f3f3f3',
                 fontSize: '0.9rem',
-                '& > tr:nth-child(even)': {
+                '& > tr:nth-of-type(even)': {
                     background: '#e8e8f0',
                 },
                 '& > tr > td': {
@@ -408,4 +468,120 @@ const StyledSkillDetailDialog = styled(Dialog)({
     }
 });
 
-export default SkillLevelControl;
+const ConfigForm = React.memo(({value, config, onConfigChange}: {
+    value: PokemonIv,
+    config: SkillDetailDialogConfig,
+    onConfigChange: (config: SkillDetailDialogConfig) => void,
+}) => {
+    const { t } = useTranslation();
+
+    const onEnergyChange = React.useCallback((val: string) => {
+        onConfigChange({...config, energyNature: parseInt(val, 10)});
+    }, [onConfigChange, config]);
+    const onSpeciesChange = React.useCallback((val: string) => {
+        onConfigChange({...config, species: parseInt(val, 10)});
+    }, [onConfigChange, config]);
+    const onLatiTwinsChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onConfigChange({...config, latiTwins: e.target.checked});
+    }, [onConfigChange, config]);
+
+    const skill = value.pokemon.skill;
+
+    if (skill.startsWith('Charge Strength')) {
+        return <StyledConfigForm>
+            <section>
+                <label>{t('area bonus')}:</label>
+                <AreaBonusControl value={config.areaBonus} onChange={(val) => {
+                    onConfigChange({...config, areaBonus: val});
+                }}/>
+            </section>
+        </StyledConfigForm>
+    }
+
+    // Energy nature
+    let energyNatureSection: React.ReactNode = null;
+    if (skill.startsWith('Energy for Everyone S') ||
+        skill.startsWith('Charge Energy S') ||
+        skill.startsWith('Energizing Cheer S') ||
+        skill === 'Cooking Power-Up S (Minus)'
+    ) {
+        energyNatureSection = <section>
+            <label>{t('nature')}:</label>
+            <SelectEx onChange={onEnergyChange} value={config.energyNature.toString()}>
+                <MenuItem value="1"><StyledNatureUpEffect>{t('nature effect.Energy recovery')}</StyledNatureUpEffect></MenuItem>
+                <MenuItem value="0">{t('nature effect.Energy recovery')} ーー</MenuItem>
+                <MenuItem value="-1"><StyledNatureDownEffect>{t('nature effect.Energy recovery')}</StyledNatureDownEffect></MenuItem>
+            </SelectEx>
+        </section>
+    }
+
+    let speciesSection: React.ReactNode = null;
+    if (skill === 'Energy for Everyone S (Lunar Blessing)' ||
+        skill === 'Helper Boost'
+    ) {
+        speciesSection = <section>
+            <label>{t('different species')}:</label>
+            <SelectEx value={config.species} onChange={onSpeciesChange}
+                sx={{padding: '0 8px'}}>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+            </SelectEx>
+        </section>;
+    }
+
+    if (skill === 'Helper Boost') {
+        return <StyledConfigForm>
+            {speciesSection}
+        </StyledConfigForm>
+    }
+
+    if (skill === 'Energy for Everyone S (Lunar Blessing)') {
+        return <StyledConfigForm>
+            {energyNatureSection}
+            {speciesSection}
+        </StyledConfigForm>;
+    }
+
+    if (skill === 'Energizing Cheer S (Heal Pulse)') {
+        return <StyledConfigForm>
+            {energyNatureSection}
+            <section>
+                <label>{t('pokemon on your team', {
+                    pokemon: t('pokemons.Latios'),
+                })}:</label>
+                <Switch checked={config.latiTwins} onChange={onLatiTwinsChange}/>
+            </section>
+        </StyledConfigForm>
+    }
+
+    if (energyNatureSection !== null) {
+        return <StyledConfigForm>
+            {energyNatureSection}
+        </StyledConfigForm>
+    }
+
+    return <></>;
+});
+
+const StyledConfigForm = styled('div')({
+    marginTop: '0.5rem',
+    '& > section': {
+        display: 'flex',
+        flex: '0 auto',
+        paddingTop: '0.5rem',
+        '& > label': {
+            fontSize: '0.9rem',
+            marginRight: 'auto',
+            marginTop: 0,
+        },
+        '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+        },
+    },
+});
+
+export default SkillDetailDialog;
