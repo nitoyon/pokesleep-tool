@@ -804,14 +804,14 @@ class PokemonStrength {
         const eventIngredient = targetEventBonus.ingredient;
 
         return {
-            skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger),
+            skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger) as 1|1.25|1.5,
             skillTriggerReason: expertSkillTrigger > eventSkillTrigger ?
                 'ex' : 'event',
-            skillLevel: expertSkillLevel + eventSkillLevel,
+            skillLevel: (expertSkillLevel + eventSkillLevel) as 0|1|2|3|5,
             skillLevelReason: expertSkillLevel * eventSkillLevel !== 0 ? "event+ex" :
                 expertSkillLevel > 0 ? "ex" : "event",
             berry: targetEventBonus.berry,
-            ingredient: Math.max(expertIngredient, eventIngredient),
+            ingredient: Math.max(expertIngredient, eventIngredient) as 0|1,
             carryLimit: targetEventBonus.carryLimit,
             ingredientReason: expertIngredient > eventIngredient ?
                 'ex' : 'event',
@@ -822,7 +822,9 @@ class PokemonStrength {
             berryBurst: eventBonus.berryBurst,
             dish: eventBonus.dish,
             energyFromDish: eventBonus.energyFromDish,
-        } as BonusEffectsWithReason;
+            fixedBerries: targetEventBonus.fixedBerries,
+            fixedAreas: targetEventBonus.fixedAreas,
+        };
     }
 
     /**
