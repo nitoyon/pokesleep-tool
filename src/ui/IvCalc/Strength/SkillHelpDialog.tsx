@@ -434,7 +434,7 @@ function getDreamShardMagnetValueText(strength: PokemonStrength,
     const skill: MainSkillName = strength.pokemonIv.versatileSkill;
 
     const bonus = getEventBonus(param.event, param.customEventBonus);
-    const shardBonus = Math.max(bonus.dreamShard, bonus.dreamShard2);
+    const shardBonus = bonus.dreamShard;
     const text = t('value per skill', { value: t('dream shard')});
     if (skill === 'Dream Shard Magnet S') {
         if (shardBonus === 1) {
@@ -486,7 +486,7 @@ function getSuperLuckShardText(strength: PokemonStrength, skillLevel: number,
     const param = strength.parameter;
     const bonus = getEventBonus(param.event, param.customEventBonus);
     const ingBonus = Math.max(bonus.ingredientMagnet,
-        bonus.dreamShard2);
+        bonus.dreamShard);
 
     return [<>
         {text}<br/>

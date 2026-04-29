@@ -68,7 +68,7 @@
             "target": {},
             "effects": {
                 "skillTrigger": 1.25,
-                "dreamShard2": 1.5
+                "dreamShard": 1.5
             }
         },
         {
