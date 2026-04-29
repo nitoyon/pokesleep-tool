@@ -1184,6 +1184,19 @@ const pokemonRectData: {[id: string]: RectElement[]} = {
         {x: 0.3, y: 0.1, w: 0.4, h: 0.2, r: 0.1, color: '#aa3745'},
         {x: 0.3, y: 0.25, w: 0.4, h: 0.1, color: '#66a0ea'}
     ],
+    // Tyrunt
+    '696': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#776755'},
+        {x: 0, y: 0.8, w: 1, h: 0.2, color: '#c1c1c1'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#e6a059'},
+    ],
+    // Tyrantrum
+    '697': [
+        {x: 0, y: 0, w: 1, h: 1, color: '#ae7376'},
+        {x: 0, y: 0, w: 1, h: 0.1, color: '#ebb76a'},
+        {x: 0, y: 0.4, w: 1, h: 0.2, color: '#ffffff'},
+        {x: 0, y: 0.9, w: 1, h: 0.1, color: '#55524e'}
+    ],
     // Sylveon
     '700': [
         {x: 0, y: 0, w: 1, h: 1, color: '#ffffff'},

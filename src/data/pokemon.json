@@ -6327,6 +6327,74 @@
         }
     },
     {
+        "id": 696,
+        "name": "Tyrunt",
+        "arrival": "2026-05-11",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "rock",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 0,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": 696,
+        "evolutionCount": 0,
+        "evolutionLeft": 1,
+        "isFullyEvolved": false,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
+        "id": 697,
+        "name": "Tyrantrum",
+        "arrival": "2026-05-11",
+        "sleepType": "slumbering",
+        "exp": 600,
+        "type": "rock",
+        "specialty": "unknown",
+        "skill": "unknown",
+        "fp": 0,
+        "frequency": 0,
+        "ingRate": 0,
+        "skillRate": 0,
+        "ancestor": 696,
+        "evolutionCount": 1,
+        "evolutionLeft": 0,
+        "isFullyEvolved": true,
+        "carryLimit": 0,
+        "ing1": {
+            "name": "unknown1",
+            "c1": 1,
+            "c2": 2,
+            "c3": 4
+        },
+        "ing2": {
+            "name": "unknown2",
+            "c2": 0,
+            "c3": 0
+        },
+        "ing3": {
+            "name": "unknown3",
+            "c3": 0
+        }
+    },
+    {
         "id": 700,
         "name": "Sylveon",
         "arrival": "2023-07-17",
