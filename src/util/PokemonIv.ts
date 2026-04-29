@@ -26,11 +26,11 @@ export interface IngredientSlot {
 /** Bonus that affect inventory consumption */
 export interface InventoryBonus {
     /** Berry count bonus from events (0 or 1) */
-    berryBonus: 0|1;
+    berry: 0|1;
     /** Ingredient count bonus from events (0 or 1) */
-    ingredientBonus: 0|1;
+    ingredient: 0|1;
     /** Carry limit bonus */
-    carryLimitBonus: 0|8|15;
+    carryLimit: 0|8|15;
     /**
      * Whether expert mode ingredient bonus applies.
      * True if following condition are all met.
@@ -38,7 +38,7 @@ export interface InventoryBonus {
      * - ExpertEffects is `ing`
      * - Favorite berry
      */
-    expertIngBonus: boolean;
+    expertIng: boolean;
 }
 
 /**
@@ -420,9 +420,9 @@ class PokemonIv {
         };
 
         // Fill bonus
-        const berryBonus = bonus?.berryBonus ?? 0;
-        const ingredientBonus = bonus?.ingredientBonus ?? 0;
-        const expertIngBonus = bonus?.expertIngBonus ?? false;
+        const berryBonus = bonus?.berry ?? 0;
+        const ingredientBonus = bonus?.ingredient ?? 0;
+        const expertIngBonus = bonus?.expertIng ?? false;
 
         // Calculate ing bonus
         const ingRate = this.ingredientRate;

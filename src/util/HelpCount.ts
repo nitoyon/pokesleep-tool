@@ -321,10 +321,10 @@ function calculateBaseFreqAndBonus(
     const baseFreq = iv.getBaseFrequency(helpBonusCount,
         param.isGoodCampTicketSet, isMainBerry, isNonFavoriteBerry);
     const inventoryBonus = {
-        berryBonus: bonus.berry,
-        ingredientBonus: bonus.ingredient,
-        carryLimitBonus: bonus.carryLimit,
-        expertIngBonus: isFavoriteBerry && param.expertEffect === "ing",
+        berry: bonus.berry,
+        ingredient: bonus.ingredient,
+        carryLimit: bonus.carryLimit,
+        expertIng: isFavoriteBerry && param.expertEffect === "ing",
     };
     return { baseFreq, inventoryBonus };
 }
@@ -823,7 +823,7 @@ export class HelpCountSimulation {
     ) {
         // calculate carryLimit and M
         this.carryLimit = Math.ceil(
-            (iv.carryLimit + (bonus?.carryLimitBonus ?? 0)) *
+            (iv.carryLimit + (bonus?.carryLimit ?? 0)) *
             (isGoodCampTicketSet ? 1.2 : 1)
         );
         this.M = this.carryLimit + 1;
