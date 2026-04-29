@@ -44,7 +44,7 @@
                 "skillTrigger": 1.25,
                 "skillLevel": 5,
                 "ingredient": 1,
-                "carryLimit": 15
+                "carryLimitAdd": 15
             }
         },
         {
@@ -58,7 +58,7 @@
                 "skillTrigger": 1.25,
                 "skillLevel": 2,
                 "ingredient": 1,
-                "carryLimit": 8
+                "carryLimitAdd": 8
             }
         },
         {

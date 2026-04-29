@@ -189,7 +189,7 @@ function initializeHelpCountResult(
 ): HelpCountResult {
     const {baseFreq, inventoryBonus} = calculateBaseFreqAndBonus(iv, param,
         bonus, isWhistle);
-    const carryLimit = Math.ceil((iv.carryLimit + bonus.carryLimit) *
+    const carryLimit = Math.ceil((iv.carryLimit + bonus.carryLimitAdd) *
         (param.isGoodCampTicketSet ? 1.2 : 1));
 
     const level = iv.level;
@@ -323,7 +323,7 @@ function calculateBaseFreqAndBonus(
     const inventoryBonus = {
         berry: bonus.berry,
         ingredient: bonus.ingredient,
-        carryLimit: bonus.carryLimit,
+        carryLimitAdd: bonus.carryLimitAdd,
         expertIng: isFavoriteBerry && param.expertEffect === "ing",
     };
     return { baseFreq, inventoryBonus };
@@ -823,7 +823,7 @@ export class HelpCountSimulation {
     ) {
         // calculate carryLimit and M
         this.carryLimit = Math.ceil(
-            (iv.carryLimit + (bonus?.carryLimit ?? 0)) *
+            (iv.carryLimit + (bonus?.carryLimitAdd ?? 0)) *
             (isGoodCampTicketSet ? 1.2 : 1)
         );
         this.M = this.carryLimit + 1;

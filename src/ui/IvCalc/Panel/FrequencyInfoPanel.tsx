@@ -91,7 +91,7 @@ const FullPreview = React.memo(({iv, state, onStateChange}: {
         const bonus = {
             berry: state.berry,
             ingredient: state.ingredient,
-            carryLimit: state.carryLimit,
+            carryLimitAdd: state.carryLimitAdd,
             expertIngBonus: state.expertMode &&
                 state.expertBerry !== 2 && state.expertIngBonus === 1,
         };
@@ -288,7 +288,7 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
     }, [state, onStateChange]);
     const onCarryLimitBonusChange = React.useCallback((_: React.MouseEvent, value: string|null) => {
         if (value !== null) {
-            onStateChange({...state, carryLimit: parseInt(value, 10) as 0|8|15});
+            onStateChange({...state, carryLimitAdd: parseInt(value, 10) as 0|8|15});
         }
     }, [state, onStateChange]);
     const onExpertModeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -385,7 +385,7 @@ export const FrequencyForm = React.memo(({iv, simple, state, onStateChange}: {
                 <div className="line">
                     <label className="indent">{t('carry limit')}:</label>
                     <ToggleButtonGroup size="small" exclusive
-                        value={state.carryLimit} onChange={onCarryLimitBonusChange}>
+                        value={state.carryLimitAdd} onChange={onCarryLimitBonusChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={8}>+8</ToggleButton>
                         <ToggleButton value={15}>+15</ToggleButton>

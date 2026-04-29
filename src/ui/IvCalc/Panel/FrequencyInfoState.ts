@@ -26,8 +26,8 @@ export type FrequencyInfoState = {
     berry: 0|1;
     /** Ingredient bonus from event */
     ingredient: 0|1;
-    /** Carry limit bonus from event */
-    carryLimit: 0|8|15;
+    /** Carry limit bonus from event (add) */
+    carryLimitAdd: 0|8|15;
     /** Expert mode enabled */
     expertMode: boolean;
     /** Expert berry selection (0=main, 1=sub, 2=others) */
@@ -50,7 +50,7 @@ export function createDefaultState(): FrequencyInfoState {
         campTicket: false,
         berry: 0,
         ingredient: 0,
-        carryLimit: 0,
+        carryLimitAdd: 0,
         expertMode: false,
         expertBerry: 2,
         expertIngBonus: 0,
@@ -76,7 +76,7 @@ export function createFrequencyState(iv: PokemonIv,
         campTicket: parameter.isGoodCampTicketSet,
         berry: effect.berry,
         ingredient: effect.ingredient,
-        carryLimit: effect.carryLimit,
+        carryLimitAdd: effect.carryLimitAdd,
         expertMode, expertBerry,
         expertIngBonus: parameter.expertEffect === 'ing' ? 1 : 0,
     })

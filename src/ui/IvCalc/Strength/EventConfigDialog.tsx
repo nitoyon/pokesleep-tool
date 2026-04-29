@@ -96,7 +96,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             },
         }});
     }, [value, onChange]);
-    const onCarryLimitChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
+    const onCarryLimitAddChange = React.useCallback((_: React.MouseEvent, val: number|null) => {
         if (val === null) {
             return;
         }
@@ -104,7 +104,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
             ...value.customEventBonus,
             effects: {
                 ...value.customEventBonus.effects,
-                carryLimit: val as 0|8|15,
+                carryLimitAdd: val as 0|8|15,
             },
         }});
     }, [value, onChange]);
@@ -324,7 +324,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                 <label>{t('carry limit')}:</label>
                 <div>
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
-                        value={value.customEventBonus.effects.carryLimit} onChange={onCarryLimitChange}>
+                        value={value.customEventBonus.effects.carryLimitAdd} onChange={onCarryLimitAddChange}>
                         <ToggleButton value={0}>{t('none')}</ToggleButton>
                         <ToggleButton value={8}>+8</ToggleButton>
                         <ToggleButton value={15}>+15</ToggleButton>

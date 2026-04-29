@@ -29,8 +29,8 @@ export interface InventoryBonus {
     berry: 0|1;
     /** Ingredient count bonus from events (0 or 1) */
     ingredient: 0|1;
-    /** Carry limit bonus */
-    carryLimit: 0|8|15;
+    /** Carry limit bonus (add) */
+    carryLimitAdd: 0|8|15;
     /**
      * Whether expert mode ingredient bonus applies.
      * True if following condition are all met.
