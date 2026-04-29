@@ -28,6 +28,8 @@ export type FrequencyInfoState = {
     ingredient: 0|1;
     /** Carry limit bonus from event (add) */
     carryLimitAdd: 0|8|15;
+    /** Carry limit bonus from event (multiply) */
+    carryLimitMul: 1|1.5;
     /** Expert mode enabled */
     expertMode: boolean;
     /** Expert berry selection (0=main, 1=sub, 2=others) */
@@ -51,6 +53,7 @@ export function createDefaultState(): FrequencyInfoState {
         berry: 0,
         ingredient: 0,
         carryLimitAdd: 0,
+        carryLimitMul: 1,
         expertMode: false,
         expertBerry: 2,
         expertIngBonus: 0,
@@ -77,6 +80,7 @@ export function createFrequencyState(iv: PokemonIv,
         berry: effect.berry,
         ingredient: effect.ingredient,
         carryLimitAdd: effect.carryLimitAdd,
+        carryLimitMul: effect.carryLimitMul,
         expertMode, expertBerry,
         expertIngBonus: parameter.expertEffect === 'ing' ? 1 : 0,
     })

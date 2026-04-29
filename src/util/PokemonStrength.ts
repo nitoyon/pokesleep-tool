@@ -813,6 +813,7 @@ class PokemonStrength {
             berry: targetEventBonus.berry,
             ingredient: Math.max(expertIngredient, eventIngredient) as 0|1,
             carryLimitAdd: targetEventBonus.carryLimitAdd,
+            carryLimitMul: targetEventBonus.carryLimitMul,
             ingredientReason: expertIngredient > eventIngredient ?
                 'ex' : 'event',
             dreamShard: eventBonus.dreamShard,
@@ -999,6 +1000,7 @@ export function createStrengthParameter(
                 dish: 1,
                 energyFromDish: 0,
                 carryLimitAdd: 0,
+                carryLimitMul: 1,
                 fixedAreas: [],
                 fixedBerries: [],
             }

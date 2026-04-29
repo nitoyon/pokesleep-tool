@@ -31,6 +31,8 @@ export interface InventoryBonus {
     ingredient: 0|1;
     /** Carry limit bonus (add) */
     carryLimitAdd: 0|8|15;
+    /** Carry limit bonus (multiply) */
+    carryLimitMul: 1|1.5;
     /**
      * Whether expert mode ingredient bonus applies.
      * True if following condition are all met.

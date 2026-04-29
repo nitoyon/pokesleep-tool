@@ -121,6 +121,7 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
         dish: data.dish ?? 1,
         energyFromDish: data.energyFromDish ?? 0,
         carryLimitAdd: data.carryLimitAdd ?? 0,
+        carryLimitMul: data.carryLimitMul ?? 1,
         fixedBerries: data.fixedBerries ?? [],
         fixedAreas: data.fixedAreas ?? [],
     };
@@ -254,6 +255,8 @@ export interface BonusEffects {
     energyFromDish: 0 | 5;
     /** Carry limit bonus (add) */
     carryLimitAdd: 0 | 8 | 15;
+    /** Carry limit bonus (multiply) */
+    carryLimitMul: 1 | 1.5;
     /**
      * Types of berries that are fixed (i.e., not randomly selected).
      *
@@ -286,6 +289,7 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
     dish: 1,
     energyFromDish: 0,
     carryLimitAdd: 0,
+    carryLimitMul: 1,
     fixedBerries: [],
     fixedAreas: [],
 };
@@ -418,6 +422,10 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
         if (typeof(effects.carryLimitAdd) === "number" &&
             [8, 15].includes(effects.carryLimitAdd)) {
             ret.effects.carryLimitAdd = effects.carryLimitAdd;
+        }
+        if (typeof(effects.carryLimitMul) === "number" &&
+            [1, 1.5].includes(effects.carryLimitMul)) {
+            ret.effects.carryLimitMul = effects.carryLimitMul;
         }
     }
     return ret;
