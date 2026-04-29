@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import PokemonIv from './PokemonIv';
-import { emptyBonusEffects } from '../data/events';
+import { BonusEffects, emptyBonusEffects } from '../data/events';
 import Energy, { AlwaysTap, EnergyParameter, NoTap } from './Energy';
 import Nature from './Nature';
 import {
@@ -162,6 +162,54 @@ describe('calculateHelpCount', () => {
         expect(result.awake.sneakySnacking).not.toBe(0);
     });
 
+    describe('carryLimit calculation', () => {
+        // Toxel Lv60: iv.carryLimit === 6
+        function createToxelIv() {
+            return new PokemonIv({pokemonName: 'Toxel', level: 60, ingredient: 'ABB'});
+        }
+
+        function getCarryLimit(bonus: BonusEffects, isGoodCampTicketSet = false) {
+            const iv = createToxelIv();
+            const param = createParam({isGoodCampTicketSet});
+            const energy = new Energy(iv).calculate(param);
+            return calculateHelpCount(iv, param, energy, bonus, false).carryLimit;
+        }
+
+        test('base carryLimit with no bonus', () => {
+            const iv = createToxelIv();
+            expect(iv.carryLimit).toBe(6);
+            expect(getCarryLimit(emptyBonusEffects)).toBe(6);
+        });
+
+        test('carryLimitAdd=8 adds 8 to base', () => {
+            const bonus = {...emptyBonusEffects, carryLimitAdd: 8 as const};
+            expect(getCarryLimit(bonus)).toBe(14); // 6+8
+        });
+
+        test('carryLimitAdd=15 adds 15 to base', () => {
+            const bonus = {...emptyBonusEffects, carryLimitAdd: 15 as const};
+            expect(getCarryLimit(bonus)).toBe(21); // 6+15
+        });
+
+        test('carryLimitMul=1.5 multiplies base', () => {
+            const bonus = {...emptyBonusEffects, carryLimitMul: 1.5 as const};
+            expect(getCarryLimit(bonus)).toBe(9); // Math.ceil(6*1.5)
+        });
+
+        test('good camp ticket multiplies by 1.2', () => {
+            expect(getCarryLimit(emptyBonusEffects, true)).toBe(8); // Math.ceil(6*1.2)
+        });
+
+        test('carryLimitAdd=8 + good camp ticket', () => {
+            const bonus = {...emptyBonusEffects, carryLimitAdd: 8 as const};
+            expect(getCarryLimit(bonus, true)).toBe(17); // Math.ceil((6+8)*1.2)
+        });
+
+        test('carryLimitMul=1.5 + good camp ticket', () => {
+            const bonus = {...emptyBonusEffects, carryLimitMul: 1.5 as const};
+            expect(getCarryLimit(bonus, true)).toBe(11); // Math.ceil(6*1.5*1.2)
+        });
+    });
 });
 
 describe('calculateNextHelpElapsed', () => {
