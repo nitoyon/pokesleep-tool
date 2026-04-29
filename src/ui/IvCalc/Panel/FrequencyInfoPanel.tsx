@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Collapse,
     MenuItem, Switch, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import PokemonIv from '../../../util/PokemonIv';
+import PokemonIv, { InventoryBonus } from '../../../util/PokemonIv';
 import { formatHoursLong, formatHoursShort } from '../../../util/TimeUtil';
 import SelectEx from '../../common/SelectEx';
 import BarChartIcon from '../../Resources/BarChartIcon';
@@ -88,11 +88,11 @@ const FullPreview = React.memo(({iv, state, onStateChange}: {
 
     // Calculate distribution data
     const chartData = React.useMemo(() => {
-        const bonus = {
+        const bonus: InventoryBonus = {
             berry: state.berry,
             ingredient: state.ingredient,
             carryLimitAdd: state.carryLimitAdd,
-            expertIngBonus: state.expertMode &&
+            expertIng: state.expertMode &&
                 state.expertBerry !== 2 && state.expertIngBonus === 1,
         };
         const cdf = calculateInventoryDistribution(iv,
