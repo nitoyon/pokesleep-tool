@@ -36,23 +36,23 @@ type IngredientDrawIconProps = SvgIconProps & {
     firstIngredient: IngredientName;
 };
 
-const IngredientDrawIcon = React.memo((props: IngredientDrawIconProps) => {
+const IngredientDrawIcon = React.memo(({firstIngredient, ...props}: IngredientDrawIconProps) => {
     return (
         <SvgIcon {...props} viewBox="0 0 200 200">
             <g transform="translate(48,0) scale(0.5)">
-                {props.firstIngredient === "avocado" && <AvocadoIconPaths/>}
-                {props.firstIngredient === "honey" && <HoneyIconPaths/>}
-                {props.firstIngredient === "pumpkin" && <PumpkinIconPaths/>}
+                {firstIngredient === "avocado" && <AvocadoIconPaths/>}
+                {firstIngredient === "honey" && <HoneyIconPaths/>}
+                {firstIngredient === "pumpkin" && <PumpkinIconPaths/>}
             </g>
             <g transform="translate(0, 98) scale(0.5)">
-                {props.firstIngredient === "avocado" && <PotatoIconPaths />}
-                {props.firstIngredient === "honey" && <OilIconPaths/>}
-                {props.firstIngredient === "pumpkin" && <CornIconPaths/>}
+                {firstIngredient === "avocado" && <PotatoIconPaths />}
+                {firstIngredient === "honey" && <OilIconPaths/>}
+                {firstIngredient === "pumpkin" && <CornIconPaths/>}
             </g>
             <g transform="translate(100,98) scale(0.5)">
-                {props.firstIngredient === "avocado" && <OilIconPaths />}
-                {props.firstIngredient === "honey" && <CornIconPaths/>}
-                {props.firstIngredient === "pumpkin" && <PotatoIconPaths/>}
+                {firstIngredient === "avocado" && <OilIconPaths />}
+                {firstIngredient === "honey" && <CornIconPaths/>}
+                {firstIngredient === "pumpkin" && <PotatoIconPaths/>}
             </g>
         </SvgIcon>
     );
