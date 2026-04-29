@@ -1103,8 +1103,9 @@ export function calculateBerryBurstStrength(iv: PokemonIv, param: StrengthParame
                     team.filter(x => x.type === iv.pokemon.type).length :
                     param.berryBurstTeam.species);
             // NOTE: berry burst bonus is not applied to Lunar Blessing
-            myBerryCount = Math.floor(cnt.myBerryCount);
-            othersBerryCount = Math.floor(cnt.othersBerryCount);
+            // in buncha berries week part 1, but it was applied in part 2
+            myBerryCount = Math.ceil(bonus * cnt.myBerryCount);
+            othersBerryCount = Math.ceil(bonus * cnt.othersBerryCount);
             break;
         }
         default:
