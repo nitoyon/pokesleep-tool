@@ -141,6 +141,9 @@ export function calculateHelpCount(
     // Initialize return value
     const ret: HelpCountResult = initializeHelpCountResult(
         iv, param, energy, bonus, isWhistle);
+    if (ret.baseFreq <= 0) {
+        return ret;
+    }
 
     // Awake helps
     const simulation = new HelpCountSimulation(iv, param.isGoodCampTicketSet,

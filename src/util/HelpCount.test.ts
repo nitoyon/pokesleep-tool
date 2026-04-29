@@ -162,6 +162,23 @@ describe('calculateHelpCount', () => {
         expect(result.awake.sneakySnacking).not.toBe(0);
     });
 
+    test('returns zeroed result for placeholder pokemon with frequency 0', () => {
+        const iv = new PokemonIv({ pokemonName: 'Eevee', level: 1 });
+        (iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+            ...iv.pokemon,
+            frequency: 0,
+        };
+
+        const param = createParam({});
+        const energy = new Energy(iv).calculate(param);
+        const result = calculateHelpCount(iv, param, energy, emptyBonusEffects, false);
+
+        expect(result.baseFreq).toBe(0);
+        expect(result.total.all).toBe(0);
+        expect(result.awake.all).toBe(0);
+        expect(result.asleep.all).toBe(0);
+    });
+
     describe('carryLimit calculation', () => {
         // Toxel Lv60: iv.carryLimit === 6
         function createToxelIv() {
