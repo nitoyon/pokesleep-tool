@@ -5,7 +5,7 @@ import { normalizeState, ivStateReducer } from './IvState';
 import type IvState from './IvState';
 import type { IvAction } from './IvState';
 import { loadStrengthParameter } from '../../util/PokemonStrength';
-import i18n from '../../i18n';
+import i18n, { loadLanguage } from '../../i18n';
 
 function createBaseState(): IvState {
     return {
@@ -382,6 +382,7 @@ describe('ivStateReducer', () => {
         });
 
         test('should clear nickname when it matches Pokemon name in Japanese', async () => {
+            await loadLanguage("ja");
             await i18n.changeLanguage("ja");
             const box = new PokemonBox();
             const originalIv = new PokemonIv({ pokemonName: 'Pikachu' });
