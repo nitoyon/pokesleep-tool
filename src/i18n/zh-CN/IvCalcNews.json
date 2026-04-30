@@ -244,6 +244,14 @@
             "energy nature and inventory": {
                 "headline": "现在可以通过持有数和活力回复量的性格进行食材・技能次数的计算。",
                 "detail": "目前为止、过高评价了夜间持有数溢出的宝可梦的能力。现在更接近实际的食材数量和技能次数。此外，在 [能量] 标签里、可以确认睡眠中到达所持上限的时间和第二天早上技能发动几率。\n目前，持有上限数量是基于进化前的状态捕获的前提下进行预估。"
+            },
+            "box": {
+                "headline": "已新增$t(box)功能。",
+                "detail": "请用来帮助比较你的宝可梦。"
+            },
+            "initial release": {
+                "headline": "已发布$t(IvCalc.short title)。",
+                "detail": "$t(IvCalc.description)"
             }
         }
     }

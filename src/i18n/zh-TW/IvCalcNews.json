@@ -244,6 +244,14 @@
             "energy nature and inventory": {
                 "headline": "現在可以通過持有數和活力回復量的性格進行食材，技能次數的計算",
                 "detail": "目前爲止、過高評價了夜間持有溢出的寶可夢的能力。現在更接近實際的食材數量和技能次數。此外，在 [能量] 選項卡中，可以確認睡眠中到達所持上限大的時間和第二天早上技能發動機率。\n目前，持有上限是基於進化前的狀態捕獲的前提下進行的預估。"
+            },
+            "box": {
+                "headline": "已新增$t(box)功能。",
+                "detail": "請用來幫助比較你的寶可夢。"
+            },
+            "initial release": {
+                "headline": "已推出$t(IvCalc.short title)。",
+                "detail": "$t(IvCalc.description)"
             }
         }
     }
