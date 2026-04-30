@@ -738,6 +738,7 @@
         "total strength": "Total strength",
         "skill count": "Skill count",
         "total": "Total",
+        "sometimes": "Sometimes",
 
         "select subskill at level xxx": "Select sub skill at <level/>",
 
@@ -953,7 +954,9 @@
             },
             "Versatile": {
                 "name": "Versatile",
-                "strength": ""
+                "strength": "",
+                "desc": "Additionally, get Candy for 1 Pokémon on your team.",
+                "detail": "From skill level 6 onward, there is a chance to get extra Candy. The chance is said to be 30% (per RaenonX)."
             },
             "unknown": {
                 "name": "(Unknown)",

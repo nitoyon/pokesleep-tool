@@ -728,6 +728,7 @@
         "total strength": "合計エナジー",
         "skill count": "スキル回数",
         "total": "合計",
+        "sometimes": "ときどき",
 
         "select subskill at level xxx": "<level/> のサブスキルを選択してください",
 
@@ -943,7 +944,9 @@
             },
             "Versatile": {
                 "name": "オールマイティー",
-                "strength": ""
+                "strength": "",
+                "desc": "追加で、チームのポケモン1匹のアメをゲットします。",
+                "detail": "スキルレベル6以降は運が良ければアメの個数が増えます。増える確率は 30% とされています (RaenonX 調べ)。"
             },
             "unknown": {
                 "name": "(不明)",

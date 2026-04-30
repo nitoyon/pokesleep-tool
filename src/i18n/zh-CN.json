@@ -726,6 +726,7 @@
         "total strength": "总能量",
         "skill count": "技能次数",
         "total": "合计",
+        "sometimes": "有时候",
 
         "select subskill at level xxx": "请选择 <level/> 的副技能",
         
@@ -941,7 +942,9 @@
             },
             "Versatile": {
                 "name": "十项全能",
-                "strength": ""
+                "strength": "",
+                "desc": "额外获得队伍中1只宝可梦的糖果。",
+                "detail": "技能等级6以上时，如果运气好，可能会增加糖果数量。据称增加的概率为30%（RaenonX 调查）。"
             },
             "unknown": {
                 "name": "(未知)",

@@ -723,6 +723,7 @@
         "total strength": "총 에너지",
         "skill count": "스킬 수",
         "total": "합계",
+        "sometimes": "가끔",
 
         "select subskill at level xxx": "<level/>의 서브 스킬을 선택해주세요",
 
@@ -938,7 +939,9 @@
             },
             "Versatile": {
                 "name": "올마이티",
-                "strength": ""
+                "strength": "",
+                "desc": "추가로 팀 포켓몬 1마리의 사탕을 획득합니다.",
+                "detail": "스킬 레벨 6 이상에서는 운이 좋으면 사탕 개수가 늘어납니다. 늘어날 확률은 30%로 알려져 있습니다 (RaenonX 조사)."
             },
             "unknown": {
                 "name": "(알 수 없음)",

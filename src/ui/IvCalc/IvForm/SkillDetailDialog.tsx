@@ -51,7 +51,11 @@ const SkillDetailDialog = React.memo(({value, open, onClose}: {
     const content = getSkillContent(value, t);
     return (
         <StyledSkillDetailDialog open={open} onClose={onClose}>
-            <DialogTitle>{t(`skills.${skill}.name`)}</DialogTitle>
+            <DialogTitle>
+                {t(`skills.${skill}.name`)}
+                {skill === 'Versatile' &&
+                    ` (${t(`skills.${value.versatileSkill.replace(' (Random)', '')}.name`)})`}
+            </DialogTitle>
             <DialogContent>
                 <header>{content.desc}</header>
                 <footer>{content.detail}</footer>
@@ -70,14 +74,11 @@ const SkillTable = React.memo(({value, content, config}: {
     content: SkillLevelDetailContent,
     config: SkillDetailDialogConfig,
 }) => {
-    const skill = value.pokemon.skill;
-
+    const skill = value.versatileSkill;
     if (skill.startsWith('Berry Burst')) {
         return <BerryBurstTable value={value}/>;
     } else if (skill === 'Energy for Everyone S (Lunar Blessing)') {
         return <LunarBlessingTable value={value} config={config}/>; 
-    } else if (skill === 'Metronome' || skill.startsWith('Skill Copy')) {
-        return <></>;
     } else {
         return <NormalTable value={value} content={content} config={config}/>;
     }
@@ -89,25 +90,39 @@ const NormalTable = React.memo(({value, content, config}: {
     config: SkillDetailDialogConfig,
 }) => {
     const { t } = useTranslation();
-    const skill = value.pokemon.skill;
+    if (value.pokemon.skill === 'Metronome' ||
+        value.pokemon.skill.startsWith('Skill Copy')
+    ) {
+        return <></>;
+    }
+
+    const skill: MainSkillName = value.versatileSkill;
+    const max = getMaxSkillLevel(skill);
+    const colMax = getMaxSkillLevel(value.pokemon.skill);
+    const hasColumn1 = skill !== 'Metronome';
+    const isVersatile = value.pokemon.skill === 'Versatile';
 
     return <table>
         <thead>
             <tr>
                 <th>{t('skill level')}</th>
-                <th>{content.column1}</th>
+                {hasColumn1 && <th>{content.column1}</th>}
                 {content.column2 !== undefined && <th>{content.column2}</th>}
+                {isVersatile && <th>{t('candy')}</th>}
             </tr>
         </thead>
         <tbody>
-            {[...Array(getMaxSkillLevel(skill))].map((_, i) => {
+            {[...Array(colMax)].map((_, i) => {
                 const level = i + 1;
+                const valueLevel = Math.min(level, max);
+                const value1 = getSkillValueText(skill, valueLevel, config, t);
                 const value2 = (content.column2 === undefined ? null :
-                    <td>{getSkillValue2Text(value, level, config, t)}</td>);
+                    <td>{getSkillValue2Text(value, valueLevel, config, t)}</td>);
                 return (<tr key={level}>
                     <td>Lv.{level}</td>
-                    <td>{getSkillValueText(skill, level, config, t)}</td>
+                    {hasColumn1 && <td>{value1}</td>}
                     {value2}
+                    {isVersatile && <td>{getVersatileCandyCount(level, t)}</td>}
                 </tr>);
             })}
         </tbody>
@@ -118,13 +133,17 @@ const BerryBurstTable = React.memo(({value}: {
     value: PokemonIv,
 }) => {
     const { t } = useTranslation();
-    const skill = value.pokemon.skill;
+    const skill: MainSkillName = value.versatileSkill;
+    const max = getMaxSkillLevel(skill);
+    const colMax = getMaxSkillLevel(value.pokemon.skill);
+    const isVersatile = value.pokemon.skill === 'Versatile';
 
     return <table>
         <thead>
             <tr>
                 <th rowSpan={2}>{t('skill level')}</th>
                 <th colSpan={3}>{t('berry')}</th>
+                {isVersatile && <th rowSpan={2}>{t('candy')}</th>}
             </tr>
             <tr>
                 <th>{t('total')}</th>
@@ -133,16 +152,18 @@ const BerryBurstTable = React.memo(({value}: {
             </tr>
         </thead>
         <tbody>
-            {[...Array(getMaxSkillLevel(skill))].map((_, i) => {
+            {[...Array(colMax)].map((_, i) => {
                 const level = i + 1;
-                const own = getSkillValue(skill, level);
-                const team = getSkillSubValue(skill, level);
+                const burstLevel = Math.min(level, max);
+                const own = getSkillValue(skill, burstLevel);
+                const team = getSkillSubValue(skill, burstLevel);
                 const total = own + team * 4;
                 return (<tr key={level}>
                     <td>Lv.{level}</td>
                     <td>{total}</td>
                     <td>{own}</td>
                     <td>{team}</td>
+                    {isVersatile && <td>{getVersatileCandyCount(level, t)}</td>}
                 </tr>);
             })}
         </tbody>
@@ -202,6 +223,20 @@ function getSkillContent(
     t: typeof i18next.t
 ): SkillLevelDetailContent {
     const skill = value.pokemon.skill;
+
+    // Versatile
+    if (skill === 'Versatile') {
+        const s = value.versatileSkill;
+        return {
+            desc: t(`skills.${s}.desc`) + t('skills.Versatile.desc'),
+            detail: [
+                <p>{t(`skills.${s}.detail`)}</p>,
+                <p>{t('skills.Versatile.detail')}</p>
+            ],
+            column1: getSkillUnit(s, t),
+            column2: getSkillUnit2(s, t),
+        };
+    }
 
     const components = {ingredients: <></>};
     if (skill.startsWith('Ingredient Draw S')) {
@@ -328,7 +363,7 @@ function getSkillValueText(skill: MainSkillName, level: number,
 function getSkillValue2Text(value: PokemonIv, level: number,
     config: SkillDetailDialogConfig, t: typeof i18next.t
 ): React.ReactNode {
-    const skill = value.pokemon.skill;
+    const skill = value.versatileSkill;
 
     // Dream Shard Magnet S (Random)
     if (skill === 'Dream Shard Magnet S (Random)'
@@ -381,6 +416,19 @@ function getSkillValue2Text(value: PokemonIv, level: number,
     }
 
     return null;
+}
+
+function getVersatileCandyCount(level: number, t: typeof i18next.t): React.ReactNode {
+    const count = getSkillSubValue('Versatile', level);
+    if (count === 0) {
+        return '1';
+    } else {
+        return <>
+            <>1</>
+            <> </>
+            <small style={{whiteSpace: 'nowrap'}}>({t('sometimes')} {1 + count})</small>
+        </> ;
+    }
 }
 
 const StyledSkillDetailDialog = styled(Dialog)({
@@ -485,7 +533,7 @@ const ConfigForm = React.memo(({value, config, onConfigChange}: {
         onConfigChange({...config, latiTwins: e.target.checked});
     }, [onConfigChange, config]);
 
-    const skill = value.pokemon.skill;
+    const skill = value.versatileSkill;
 
     if (skill.startsWith('Charge Strength')) {
         return <StyledConfigForm>
