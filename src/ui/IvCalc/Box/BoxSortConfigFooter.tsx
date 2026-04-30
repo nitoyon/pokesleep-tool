@@ -62,7 +62,7 @@ const BoxSortConfigFooter = React.memo(({sortConfig, parameter, dispatch, onChan
         const ret = MainSkillNames.map(name =>
             <SkillMenuItem key={name} value={name}>
                 <MainSkillIcon mainSkill={name}/>
-                {t(`skills.${name}`)}
+                {t(`skills.${name}.name`)}
             </SkillMenuItem>);
         ret.push(<Divider key="divider" style={{gridColumn: '1 / -1'}}/>);
         ret.push(<SkillMenuItem key="strength" value="strength" style={{paddingLeft: '.8rem'}}>

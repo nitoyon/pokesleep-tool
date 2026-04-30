@@ -1,22 +1,33 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import SelectEx from '../../common/SelectEx';
+import SkillDetailDialog from './SkillDetailDialog';
 import {
     getMaxSkillLevel, MainSkillName, VersatileCandidates,
 } from '../../../util/MainSkill';
 import PokemonIv from '../../../util/PokemonIv';
+import InfoButton from '../InfoButton';
 import { MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const SkillLevelControl = React.memo(({iv, onChange}: {
-    iv: PokemonIv,
+const SkillLevelControl = React.memo(({value, onChange}: {
+    value: PokemonIv,
     onChange: (value: PokemonIv) => void,
 }) => {
     const { t } = useTranslation();
-    const maxLevel = getMaxSkillLevel(iv.pokemon.skill);
+    const [infoOpen, setInfoOpen] = React.useState(false);
+    const onInfoClick = React.useCallback(() => {
+        setInfoOpen(true);
+    }, []);
+    const onInfoClose = React.useCallback(() => {
+        setInfoOpen(false);
+    }, []);
+
+    const pokemon = value.pokemon;
+    const maxLevel = getMaxSkillLevel(pokemon.skill);
 
     // prepare menus
-    const isVersatile = (iv.pokemon.skill === "Versatile");
+    const isVersatile = (value.pokemon.skill === "Versatile");
     const versatileOptions = React.useMemo(() => {
         if (!isVersatile) {
             return [];
@@ -25,8 +36,8 @@ const SkillLevelControl = React.memo(({iv, onChange}: {
             <VersatileMenuItem
                 key={name} value={name} dense
             >
-                <span className="hide">{t('skills.Versatile')} (</span>
-                {t(`skills.${name.replace(" (Random)", "")}`)}
+                <span className="hide">{t('skills.Versatile.name')} (</span>
+                {t(`skills.${name.replace(" (Random)", "")}.name`)}
                 <span className="hide">)</span>
             </VersatileMenuItem>
         );
@@ -40,18 +51,18 @@ const SkillLevelControl = React.memo(({iv, onChange}: {
         return ret;
     }, [maxLevel]);
 
-    const onSkillLevelChange = React.useCallback((value: string) => {
-        onChange(iv.clone({skillLevel: parseInt(value, 10)}));
-    }, [iv, onChange]);
+    const onSkillLevelChange = React.useCallback((val: string) => {
+        onChange(value.clone({skillLevel: parseInt(val, 10)}));
+    }, [value, onChange]);
 
-    const onVersatileChange = React.useCallback((value: string) => {
-        onChange(iv.clone({versatileSkill: value as MainSkillName}));
-    }, [iv, onChange]);
+    const onVersatileChange = React.useCallback((val: string) => {
+        onChange(value.clone({versatileSkill: val as MainSkillName}));
+    }, [value, onChange]);
 
     return <StyledSkillLevel>
         {!isVersatile &&
             <span style={{marginRight: '10px'}}>
-                {t(`skills.${iv.pokemon.skill}`)}
+                {t(`skills.${value.pokemon.skill}.name`)}
             </span>
         }
         {isVersatile &&
@@ -60,13 +71,16 @@ const SkillLevelControl = React.memo(({iv, onChange}: {
                     display: 'grid',
                     gridTemplateColumns: '1fr 1fr',
                 }}
-                value={iv.versatileSkill} onChange={onVersatileChange}>
+                value={value.versatileSkill} onChange={onVersatileChange}>
                 {versatileOptions}
             </SelectEx>
         }
-        <SelectEx value={iv.skillLevel} onChange={onSkillLevelChange} sx={{padding: '0 8px'}}>
+        <SelectEx value={value.skillLevel} onChange={onSkillLevelChange} sx={{padding: '0 8px'}}>
             {levelOptions}
         </SelectEx>
+        <InfoButton onClick={onInfoClick}/>
+        <SkillDetailDialog value={value}
+            open={infoOpen} onClose={onInfoClose}/>
     </StyledSkillLevel>;
 });
 

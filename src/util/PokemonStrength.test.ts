@@ -2,6 +2,7 @@ import PokemonStrength, {
     createStrengthParameter, StrengthParameter,
     isSkillStrengthZero,
     expertFavoriteBerryBonus,
+    getAverageIngredientDrawStrength,
 } from './PokemonStrength';
 import { AlwaysTap, NoTap, whistlePeriod } from './Energy';
 import PokemonIv from './PokemonIv';
@@ -829,6 +830,33 @@ describe('PokemonStrength', () => {
             expect(result.ingRate).not.toBeCloseTo(0.99);
             expect(result.skillRate).not.toBeCloseTo(0.5);
         });
+    });
+});
+
+describe('getAverageIngredientDrawStrength', () => {
+    test('Sandshrew', () => {
+        const iv = new PokemonIv({ pokemonName: 'Sandshrew' });
+        expect(getAverageIngredientDrawStrength(iv)).toBeCloseTo(514 / 3);
+    });
+
+    test('Murkrow', () => {
+        const iv = new PokemonIv({ pokemonName: 'Murkrow' });
+        expect(getAverageIngredientDrawStrength(iv)).toBeCloseTo(523 / 4);
+    });
+
+    test('Mawile', () => {
+        const iv = new PokemonIv({ pokemonName: 'Mawile' });
+        expect(getAverageIngredientDrawStrength(iv)).toBeCloseTo(495 / 4);
+    });
+
+    test('Crustle', () => {
+        const iv = new PokemonIv({ pokemonName: 'Crustle' });
+        expect(getAverageIngredientDrawStrength(iv)).toBeCloseTo(407 / 3);
+    });
+
+    test('Cutiefly', () => {
+        const iv = new PokemonIv({ pokemonName: 'Cutiefly' });
+        expect(getAverageIngredientDrawStrength(iv)).toBeCloseTo(362 / 3);
     });
 });
 

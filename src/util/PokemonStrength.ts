@@ -14,7 +14,8 @@ import PokemonRp, {
     averageIngredientStrength, ingredientStrength,
  } from './PokemonRp';
 import {
-    getSkillValue, getSkillSubValue, getMaxSkillLevel, getLunarBlessingBerryCount,
+    getSkillValue, getSkillSubValue, getMaxSkillLevel,
+    getIngredientDrawIngredients, getLunarBlessingBerryCount,
     hyperCutterSuccess, presentCandyRate,
     superLuckIngRate, superLuckShardRate, superLuckShard5Rate,
  } from './MainSkill';
@@ -663,12 +664,7 @@ class PokemonStrength {
                     skillValue2: 0, skillStrength2: 0, skillValuePerTrigger2: 0,
                 };
             case "Ingredient Draw S": {
-                const averageStrength = (
-                    this.iv.pokemon.ancestor === 557 ? 407 / 3 : // Crustle
-                    this.iv.pokemon.ancestor === 742 ? 362 / 3 :// Ribombee
-                    this.iv.pokemon.ancestor === 27 ? 514 / 3 : // Sandshrew
-                    0
-                );
+                const averageStrength = getAverageIngredientDrawStrength(this.iv);
                 return {
                     skillValue: skillValue,
                     skillStrength: skillValue * averageStrength * ingFactor,
@@ -677,7 +673,7 @@ class PokemonStrength {
                 };
             }
             case "Ingredient Draw S (Super Luck)": {
-                const averageStrength = 123.75;
+                const averageStrength = getAverageIngredientDrawStrength(this.iv);
                 const baseShards = getSkillSubValue(mainSkill, skillLevel);
                 const shardsPerSkill = (baseShards * superLuckShardRate +
                     baseShards * 5 * superLuckShard5Rate) *
@@ -692,7 +688,7 @@ class PokemonStrength {
                 };
             }
             case "Ingredient Draw S (Hyper Cutter)": {
-                const averageStrength = 130.75;
+                const averageStrength = getAverageIngredientDrawStrength(this.iv);
                 return {
                     skillValue: skillValue * (1 + hyperCutterSuccess),
                     skillStrength: skillValue * averageStrength * ingFactor * (1 + hyperCutterSuccess),
@@ -886,6 +882,17 @@ export function isSkillStrengthZero(skillName: MainSkillName): boolean {
         return true;
     }
     return false;
+}
+
+/**
+ * Get the average ingredient strength of the Pokémon's ingredients draw.
+ * @param iv PokemonIv of the Pokémon.
+ * @returns The average ingredient strength.
+ */
+export function getAverageIngredientDrawStrength(iv: PokemonIv): number {
+    const ingredients = getIngredientDrawIngredients(iv.pokemon);
+    const sum = ingredients.reduce((sum, ing) => sum + ingredientStrength[ing], 0);
+    return sum / ingredients.length;
 }
 
 /** Reason why the berry was set */

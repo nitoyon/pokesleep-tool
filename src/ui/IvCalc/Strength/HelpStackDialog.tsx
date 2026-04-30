@@ -58,7 +58,7 @@ const HelpStackDialog = React.memo(({open, onClose, parameter, strength, result,
             <footer>{t('required helper boost description')}</footer>
         </article>
         <footer>
-            <h3><MainSkillIcon mainSkill='Helper Boost'/>{t('skills.Helper Boost')}</h3>
+            <h3><MainSkillIcon mainSkill='Helper Boost'/>{t('skills.Helper Boost.name')}</h3>
             <section className="first">
                 <label>{t('skill level')}:</label>
                 <SelectEx value={parameter.helperBoostLevel} onChange={onSkillLevelChange}>

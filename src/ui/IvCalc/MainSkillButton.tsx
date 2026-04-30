@@ -23,7 +23,7 @@ const MainSkillButton = React.memo(({mainSkill, checked, onClick}: {
             {!checked && <MainSkillIcon mainSkill={mainSkill}/>}
             {checked && <CheckIcon role="switch"/>}
         </div>
-        {t(`skills.${mainSkill}`)}
+        {t(`skills.${mainSkill}.name`)}
     </StyledMainSkillButton>;
 });
 

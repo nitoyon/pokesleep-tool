@@ -360,7 +360,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                 </div>
             </section>
             <section>
-                <label>{t('skills.Ingredient Draw S')}:</label>
+                <label>{t('skills.Ingredient Draw S.name')}:</label>
                 <div>
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
                         value={value.customEventBonus.effects.ingredientDraw} onChange={onIngredientDrawChange}>
@@ -380,7 +380,7 @@ const EventConfigDialog = React.memo(({open, value, onClose, onChange}: {
                 </div>
             </section>
             <section>
-                <label>{t('skills.Berry Burst')}:</label>
+                <label>{t('skills.Berry Burst.name')}:</label>
                 <div>
                     <ToggleButtonGroup size="small" exclusive style={{ textTransform: 'none' }}
                         value={value.customEventBonus.effects.berryBurst} onChange={onBerryBurstChange}>
