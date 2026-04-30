@@ -1,0 +1,218 @@
+{
+    "skills": {
+        "Ingredient Magnet S": {
+            "name": "Ingredient Magnet S",
+            "strength": "Ingredients from the skill are assumed to be surplus.",
+            "desc": "Gets you ingredients chosen at random.",
+            "detail": "Obtains 3 types equally from ingredients that have been previously found."
+        },
+        "Ingredient Magnet S (Present)": {
+            "name": "Present (Ingredient Magnet S)",
+            "strength": "$t(skills.Ingredient Magnet S.strength) The candy acquisition rate is based on RaenonX's data (34.4%).",
+            "desc": "$t(skills.Ingredient Magnet S.desc) Sometimes gets an additional 4 $t(candy) for one Pokémon on your team.",
+            "detail": "$t(skills.Ingredient Magnet S.detail) The probability of obtaining candy is 34.4% (based on RaenonX data)."
+        },
+        "Ingredient Magnet S (Plus)": {
+            "name": "Plus (Ingredient Magnet S)",
+            "strength": "$t(skills.Ingredient Magnet S.strength) The additional ingredients will be obtained when there's one or more Pokémon on the team with the Plus or Minus main skill.",
+            "desc": "$t(skills.Ingredient Magnet S.desc) If there is a Pokémon on the team with Plus or Minus (other than yourself), also gets the 1st slot ingredient.",
+            "detail": "The randomly obtained ingredients: $t(skills.Ingredient Magnet S.detail)"
+        },
+        "Charge Energy S": {
+            "name": "Charge Energy S",
+            "strength": "This value is not counted towards the total strength amount. To estimate the impact on the strength amount, change the value of [$t(energy)].",
+            "desc": "Restores Energy to the user.",
+            "detail": "The amount of Energy restored is affected by the Pokémon's nature."
+        },
+        "Charge Energy S (Moonlight)": {
+            "name": "Moonlight (Charge Energy S)",
+            "strength": "$t(skills.Charge Energy S.strength)",
+            "desc": "$t(skills.Charge Energy S.desc) With 50% chance, also restores the Energy to random Pokémon on your team.",
+            "detail": "$t(skills.Charge Energy S.detail) The Pokémon itself may be selected as the target on a great success."
+        },
+        "Charge Strength S": {
+            "name": "Charge Strength S",
+            "strength": "",
+            "desc": "Increases Snorlax's Strength.",
+            "detail": "The Strength amount includes $t(area bonus)."
+        },
+        "Charge Strength S (Random)": {
+            "name": "Charge Strength S (Random)",
+            "strength": "",
+            "desc": "$t(skills.Charge Strength S.desc)",
+            "detail": "$t(skills.Charge Strength S.detail) $t(skills.random)"
+        },
+        "Charge Strength S (Stockpile)": {
+            "name": "Stockpile (Charge Strength S)",
+            "strength": "The expected value of $t(base strength) is calculated using aggregated results from RaenonX (Spit up probability: 26.5%).",
+            "desc": "Increases Snorlax's Strength from Stockpile's number.",
+            "detail": "$t(skills.Charge Strength S.detail) $t(skills.Charge Strength S (Stockpile).strength)"
+        },
+        "Charge Strength M": {
+            "name": "Charge Strength M",
+            "strength": "",
+            "desc": "$t(skills.Charge Strength S.desc)",
+            "detail": "$t(skills.Charge Strength S.detail)"
+        },
+        "Charge Strength M (Bad Dreams)": {
+            "name": "Bad Dreams (Charge Strength M)",
+            "strength": "The $t(energy) reduction effect (-12) against non-$t(types.dark) type Pokémon is not included in the evaluation of $t(strength).",
+            "desc": "$t(skills.Charge Strength S.desc). At the same time, reduces the Energy of helper Pokémon on your team that aren't Dark type by 12.",
+            "detail": "$t(skills.Charge Strength S.detail)"
+        },
+        "Dream Shard Magnet S": {
+            "name": "Dream Shard Magnet S",
+            "strength": "",
+            "desc": "Obtains Dream Shards.",
+            "detail": "Up to skill level 7, the random version has 1.25× higher expected value. At skill level 8, the difference narrows to 1.15×."
+        },
+        "Dream Shard Magnet S (Random)": {
+            "name": "Dream Shard Magnet S (Random)",
+            "strength": "",
+            "desc": "$t(skills.Dream Shard Magnet S.desc)",
+            "detail": "$t(skills.random)"
+        },
+        "Energizing Cheer S": {
+            "name": "Energizing Cheer S",
+            "strength": "Energy recovery by this skill is not counted towards the total strength amount.",
+            "desc": "Restores the Energy to random Pokémon on your team.",
+            "detail": "$t(skills.Energy for Everyone S.detail) The Pokémon with the lowest Energy on the team is more likely to be selected."
+        },
+        "Energizing Cheer S (Nuzzle)": {
+            "name": "Nuzzle (Energizing Cheer S)",
+            "strength": "$t(skills.Energizing Cheer S.strength)",
+            "desc": "$t(skills.Energizing Cheer S.desc) If you are lucky, that Pokémon will also gain a main skill activation bonus.",
+            "detail": "$t(skills.Energizing Cheer S.detail)\nThe probability of gaining the main skill activation bonus is the chance of the target Pokémon activating the skill in \"$t(skill level) + 1\" helps."
+        },
+        "Energizing Cheer S (Heal Pulse)": {
+            "name": "Heal Pulse (Energizing Cheer S)",
+            "strength": "$t(skills.Energizing Cheer S.strength) The extra effect: $t(skills.Extra Helpful S.strength)",
+            "desc": "Restores the Energy to two random Pokémon on your team instantly gets you the usual help from those Pokémon. If Latios is on your team, the number of completed helps increases.",
+            "detail": "$t(skills.Energizing Cheer S.detail)"
+        },
+        "Metronome": {
+            "name": "Metronome",
+            "strength": "$t(skills.Skill Copy.strength)",
+            "desc": "Uses one main skill chosen randomly from a large selection of main skills.",
+            "detail": "$t(skills.copy)\nExcluded from draw: $t(skills.Charge Strength M (Bad Dreams).name), $t(skills.Ingredient Draw S.name), $t(skills.Energizing Cheer S (Heal Pulse).name) (?)."
+        },
+        "Energy for Everyone S": {
+            "name": "Energy for Everyone S",
+            "strength": "To estimate the impact on the strength amount, change the value of [$t(energy)].",
+            "desc": "Restores the Energy to each helper Pokémon on your team.",
+            "detail": "The amount of Energy restored is affected by the target's nature."
+        },
+        "Energy for Everyone S (Lunar Blessing)": {
+            "name": "Lunar Blessing (Energy for Everyone S)",
+            "strength": "$t(skills.Energy for Everyone S.strength)",
+            "desc": "Restores the Energy to each helper Pokémon on your team and gets Berries the Pokémon on your team (including itself) collect.",
+            "detail": "$t(skills.Energy for Everyone S.detail) The more different Psychic type Pokémon on the team, the more Berries are obtained."
+        },
+        "Energy for Everyone S (Berry Juice)": {
+            "name": "Berry Juice (Energy for Everyone S)",
+            "strength": "$t(skills.Energy for Everyone S.strength) $t(berry juice assumption)",
+            "desc": "$t(skills.Energy for Everyone S.desc) Sometimes, in addition, gets Berry Juice.",
+            "detail": "$t(skills.Energy for Everyone S.detail) Berry Juice can be held up to 5. The acquisition rate is estimated at approximately 20%."
+        },
+        "Extra Helpful S": {
+            "name": "Extra Helpful S",
+            "strength": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
+            "desc": "Instantly gets you the usual help from a helper Pokémon.",
+            "detail": "The target is chosen randomly, including itself. No main skill is triggered. Not affected by berry/ingredient count changes from $t(expert mode) or $t(event bonus)."
+        },
+        "Cooking Power-Up S": {
+            "name": "Cooking Power-Up S",
+            "strength": "",
+            "desc": "Gives your pot room for more ingredients for the next time you cook.",
+            "detail": "The increased pot capacity persists even after changing sites or into the next week. Maximum increase is +200."
+        },
+        "Cooking Power-Up S (Minus)": {
+            "name": "Minus (Cooking Power-Up S)",
+            "strength": "Restores Energy to one random Pokémon on your team, but only if at least one teammate has the Plus or Minus main skill.",
+            "desc": "$t(skills.Cooking Power-Up S.desc) $t(skills.Energizing Cheer S.desc), if there is a Pokémon on the team with Plus or Minus (other than yourself).",
+            "detail": "$t(skills.Cooking Power-Up S.detail)\nExtra effect: $t(skills.Energizing Cheer S.detail)"
+        },
+        "Tasty Chance S": {
+            "name": "Tasty Chance S",
+            "strength": "Displays the Extra Tasty rate increase. The effect of skills is not counted towards the total strength amount.",
+            "desc": "Raises your Extra Tasty rate. The effect lasts until you cook an Extra Tasty dish or change sites.",
+            "detail": "The Extra Tasty rate effect can stack up to a maximum of +70%. During cooking, the chance of Extra Tasty is determined by adding the base Extra Tasty rate (10% Mon–Sat, 30% Sun) to the skill effect."
+        },
+        "Helper Boost": {
+            "name": "Helper Boost",
+            "strength": "It is assumed that there are 3 Pokémon of the same type. The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
+            "desc": "Instantly gets you the usual help from all Pokémon on your team. The effect increases the more different Pokémon of the same type are on your team.",
+            "detail": "Helper Pokémon can hold up to 999 Berries/ingredients, exceeding the carry limit."
+        },
+        "Berry Burst": {
+            "name": "Berry Burst",
+            "strength": "",
+            "desc": "Gets Berries plus each of the Berries other Pokémon on your team collect.",
+            "detail": "Regardless of the number of Berries per normal help, a fixed number of Berries per skill level is obtained."
+        },
+        "Berry Burst (Disguise)": {
+            "name": "Disguise (Berry Burst)",
+            "strength": "The great success rate is based on RaenonX's data (18.5%).",
+            "desc": "$t(skills.Berry Burst.desc) On a great success, obtains 3× the amount.",
+            "detail": "$t(skills.Berry Burst.detail) After a great success, cannot great success again until the next research. Great success rate is 18.5% (RaenonX data)."
+        },
+        "Skill Copy": {
+            "name": "Skill Copy",
+            "strength": "Displays the number of skill count since it's difficult to estimate the effect. This value is not counted towards the total strength amount.",
+            "desc": "Copies and performs the main skill of one randomly selected Pokémon on your team.",
+            "detail": "$t(skills.copy)\nExcluded from copy: $t(skills.Charge Strength M (Bad Dreams).name), $t(skills.Energizing Cheer S (Heal Pulse).name)"
+        },
+        "Skill Copy (Transform)": {
+            "name": "Transform (Skill Copy)",
+            "strength": "$t(skills.Skill Copy.strength)",
+            "desc": "$t(skills.Skill Copy.desc)",
+            "detail": "$t(skills.Skill Copy.detail)"
+        },
+        "Skill Copy (Mimic)": {
+            "name": "Mimic (Skill Copy)",
+            "strength": "$t(skills.Skill Copy.strength)",
+            "desc": "$t(skills.Skill Copy.desc)",
+            "detail": "$t(skills.Skill Copy.detail)"
+        },
+        "Ingredient Draw S": {
+            "name": "Ingredient Draw S",
+            "strength": "The strength of ingredients is calculated by applying the recipe bonus.",
+            "desc": "Gets one type of ingredients chosen randomly from <ingredients/>.",
+            "detail": "Undiscovered ingredients can also be drawn."
+        },
+        "Ingredient Draw S (Super Luck)": {
+            "name": "Super Luck (Ingredient Draw S)",
+            "strength": "$t(skills.Ingredient Draw S.strength) The probability of collecting $t(dream shard) is based on aggregated results from RaenonX.",
+            "desc": "$t(skills.Ingredient Draw S.desc) On rare occations, you'll receive a great number of Dream Shards instead.",
+            "detail": "$t(skills.Ingredient Draw S.detail) The probability of obtaining $t(dream shard) is 11.2% and 2.8% (RaenonX data)."
+        },
+        "Ingredient Draw S (Hyper Cutter)": {
+            "name": "Hyper Cutter (Ingredient Draw S)",
+            "strength": "$t(skills.Ingredient Draw S.strength) $t(additional ingredient rate) uses aggregated results from RaenonX (16.68%).",
+            "desc": "$t(skills.Ingredient Draw S.desc) Sometimes doubles the number of ingredients.",
+            "detail": "$t(skills.Ingredient Draw S.detail) The great success probability is 16.68% (RaenonX data)."
+        },
+        "Cooking Assist S": {
+            "name": "Cooking Assist S",
+            "strength": ""
+        },
+        "Cooking Assist S (Bulk Up)": {
+            "name": "Bulk Up (Cooking Assist S)",
+            "strength": "$t(skills.Ingredient Magnet S.strength) The % increase in great success rate is not counted towards the total strength amount.",
+            "desc": "$t(skills.Ingredient Magnet S.desc) Also raises your Extra Tasty rate. The effect lasts until you cook an Extra Tasty dish or change sites.",
+            "detail": "$t(skills.Ingredient Magnet S.detail) $t(skills.Tasty Chance S.detail)"
+        },
+        "Versatile": {
+            "name": "Versatile",
+            "strength": "",
+            "desc": "Additionally, get Candy for 1 Pokémon on your team.",
+            "detail": "From skill level 6 onward, there is a chance to get extra Candy. The chance is said to be 30% (per RaenonX)."
+        },
+        "unknown": {
+            "name": "(Unknown)",
+            "strength": "The main skill has not been determined yet."
+        },
+        "random": "Between the minimum and maximum values, there are 151 equal steps. All steps have equal selection probability.",
+        "copy": "The copied skill activates at the current skill level."
+    }
+}

@@ -48,7 +48,7 @@ export default defineConfig({
           if (id.includes('news.json')) {
             return 'news';
           }
-          if (id.includes('/src/i18n.ts') || (id.includes('/src/i18n/') && id.includes('en.json'))) {
+          if (id.includes('/src/i18n.ts') || id.includes('/src/i18n/en.ts') || id.includes('/src/i18n/en/')) {
             return 'i18n';
           }
           if (id.includes('PokemonIconData.ts')) {

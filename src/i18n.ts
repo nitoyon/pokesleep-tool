@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from './i18n/en.json';
+import en from './i18n/en';
 
 export const LANGUAGE_NAMES: Record<string, string> = {
     "en": "English",
@@ -30,16 +30,16 @@ export async function loadLanguage(lang: string): Promise<void> {
     let data: Record<string, unknown>;
     switch (lang) {
         case "ja":
-            data = (await import('./i18n/ja.json')).default as Record<string, unknown>;
+            data = (await import('./i18n/ja')).default as Record<string, unknown>;
             break;
         case "ko":
-            data = (await import('./i18n/ko.json')).default as Record<string, unknown>;
+            data = (await import('./i18n/ko')).default as Record<string, unknown>;
             break;
         case "zh-CN":
-            data = (await import('./i18n/zh-CN.json')).default as Record<string, unknown>;
+            data = (await import('./i18n/zh-CN')).default as Record<string, unknown>;
             break;
         case "zh-TW":
-            data = (await import('./i18n/zh-TW.json')).default as Record<string, unknown>;
+            data = (await import('./i18n/zh-TW')).default as Record<string, unknown>;
             break;
         default:
             return;
