@@ -78,7 +78,7 @@ const SkillLevelControl = React.memo(({value, onChange}: {
         <SelectEx value={value.skillLevel} onChange={onSkillLevelChange} sx={{padding: '0 8px'}}>
             {levelOptions}
         </SelectEx>
-        <InfoButton onClick={onInfoClick}/>
+        {value.pokemon.skill !== "unknown" && <InfoButton onClick={onInfoClick}/>}
         <SkillDetailDialog value={value}
             open={infoOpen} onClose={onInfoClose}/>
     </StyledSkillLevel>;
