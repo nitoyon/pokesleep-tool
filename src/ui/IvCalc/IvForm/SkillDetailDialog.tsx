@@ -465,7 +465,7 @@ const StyledSkillDetailDialog = styled(Dialog)({
             borderCollapse: 'separate',
             borderSpacing: '2px',
             '& > thead': {
-                background: '#006',
+                background: '#557799',
                 fontSize: '0.9rem',
                 '& > tr > th': {
                     color: '#fff',
@@ -473,12 +473,20 @@ const StyledSkillDetailDialog = styled(Dialog)({
                     fontWeight: 'normal',
                     textAlign: 'center',
                 },
+                '& > tr:first-of-type > th': {
+                    '&:first-of-type': {
+                        borderTopLeftRadius: '0.5rem',
+                    },
+                    '&:last-of-type': {
+                        borderTopRightRadius: '0.5rem',
+                    },
+                },
             },
             '& > tbody': {
                 background: '#f3f3f3',
                 fontSize: '0.9rem',
                 '& > tr:nth-of-type(even)': {
-                    background: '#e8e8f0',
+                    background: '#e8e8f3',
                 },
                 '& > tr > td': {
                     padding: '0.1rem 0.4rem',
@@ -487,6 +495,12 @@ const StyledSkillDetailDialog = styled(Dialog)({
                     '&:nth-of-type(1)': {
                         textAlign: 'center',
                     },
+                },
+                '& > tr:last-of-type > td:first-of-type': {
+                    borderBottomLeftRadius: '0.5rem',
+                },
+                '& > tr:last-of-type > td:last-of-type': {
+                    borderBottomRightRadius: '0.5rem',
                 },
             },
         },
