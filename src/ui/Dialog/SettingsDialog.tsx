@@ -4,6 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent,
     TextField, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import AppConfig, { AppConfigContext, AppType } from '../AppConfig';
 import { useTranslation } from 'react-i18next';
+import { LANGUAGE_NAMES, loadLanguage } from '../../i18n';
 
 interface SettingsDialogProps {
     /** Whether dialog is open or not */
@@ -24,15 +25,14 @@ export default function SettingsDialog({open, app, onAppConfigChange, onClose}: 
 
     // language settings
     const lang = i18n.language;
-    const onLanguageChange = (event: React.MouseEvent<HTMLElement>, value: string) => {
+    const onLanguageChange = async (event: React.MouseEvent<HTMLElement>, value: string) => {
+        if (!value) return;
+        await loadLanguage(value);
         i18n.changeLanguage(value);
     }
-    const buttons = [];
-    const resources = i18n.options.resources;
-    for (const lng in resources) {
-        const label = i18n.getResource(lng, "translation", "langname");
-        buttons.push(<ToggleButton key={lng} value={lng} aria-label={lng}>{label}</ToggleButton>)
-    }
+    const buttons = Object.entries(LANGUAGE_NAMES).map(([lng, label]) =>
+        <ToggleButton key={lng} value={lng} aria-label={lng}>{label}</ToggleButton>
+    );
 
     // icon
     let iconUrlInvalid = false;

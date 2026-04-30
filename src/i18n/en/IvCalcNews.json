@@ -1,0 +1,258 @@
+{
+    "IvCalc": {
+        "news": {
+            "add sandshrew": {
+                "headline": "Added data for $t(pokemons.Sandshrew) and $t(pokemons.Sandslash), and updated $t(pokemons.Togedemaru)'s data. $t(pity proc) and $t(tap frequency) simulation are now supported (<a href='https://youtu.be/kEX2myG-wS8'>Tutorial video</a>).",
+                "detail": "$t(rp collection) $t(movie detail)"
+            },
+            "add latias": {
+                "headline": "Added data for $t(pokemons.Latias).",
+                "detail": "$t(rp collection)"
+            },
+            "v3.4.0": {
+                "headline": "Updated the data with balance adjustments in version 3.4.0",
+                "detail": "$t(own research note)"
+            },
+            "add noibat": {
+                "headline": "Added data for $t(pokemons.Noibat) and $t(pokemons.Noivern).",
+                "detail": "$t(rp collection)"
+            },
+            "latias research": {
+                "headline": "$t(time to full inventory) can now be displayed as a graph (<a href='https://youtu.be/C7Ik6U9JsEM'>tutorial video</a>).",
+                "detail": "You can check it from the [i] mark to the right of [$t(frequency)] or the [i] mark to the right of [$t(full inventory while sleeping (short))]. See the tutorial video for details.\nAlso, simulation for the Latias Research event is now supported."
+            },
+            "add mew": {
+                "headline": "Added data for $t(pokemons.Mew).",
+                "detail": "$t(rp collection)"
+            },
+            "v3.3.0": {
+                "headline": "Updated the data with balance adjustments in version 3.3.0",
+                "detail": "If the $t(rp) is different, please let us know."
+            },
+            "add cutiefly": {
+                "headline": "Added data for $t(pokemons.Cutiefly) and $t(pokemons.Ribombee).",
+                "detail": "$t(rp collection)"
+            },
+            "add shuckle": {
+                "headline": "Added data for $t(pokemons.Shuckle).",
+                "detail": "$t(rp collection)"
+            },
+            "clodsire bug": {
+                "headline": "$t(pokemons.Clodsire) may have escaped from [$t(box)]. Please check.",
+                "detail": "If you opened the tool between January 7-9, $t(pokemons.Clodsire) data may have disappeared from the box. We sincerely apologize for the inconvenience."
+            },
+            "candy movie": {
+                "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>Video tutorial for candy calculation feature</a> has been published.",
+                "detail": "$t(movie detail)"
+            },
+            "holiday2025": {
+                "headline": "$t(pokemons.Togedemaru), $t(pokemons.Cetoddle) and their evolutions have been added.",
+                "detail": "$t(rp collection)"
+            },
+            "candy2025": {
+                "headline": "Major improvements to the candy calculator feature.",
+                "detail": "Added [$t(details)] mode to the candy calculator feature.\nAlso added [$t(turn candy)] feature. Access it from the button at the bottom left.\nUse it to plan your $t(candy boost) during $t(events.holiday 2025)."
+            },
+            "add spiritomb": {
+                "headline": "Added data for Spiritomb.",
+                "detail": "$t(rp collection)"
+            },
+            "v3.1.0": {
+                "headline": "Supported the new skill '$t(skills.Ingredient Magnet S (Present).name)' in version 3.1.0.",
+                "detail": "$t(rp collection)"
+            },
+            "add amber pokemons": {
+                "headline": "$t(pokemons.Trapinch), $t(pokemons.Bagon), $t(pokemons.Dwebble) and their evolutions have been added.",
+                "detail": "$t(rp collection)"
+            },
+            "add halloween eevee": {
+                "headline": "Added $t(pokemons.Eevee (Halloween)) data and improved simulations for $t(subskill.Helping Bonus).",
+                "detail": "$t(rp collection)\nTotal strength now includes other members' strength gained through the current Pokémon's [Helping Bonus]."
+            },
+            "add pumpkaboo": {
+                "headline": "Pumpkaboo and Gourgeist are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "v3.0.0": {
+                "headline": "Updated the data with balance adjustments in version 3.0.0",
+                "detail": "$t(rp collection)"
+            },
+            "add natu": {
+                "headline": "Added data for Natu and Xatu.",
+                "detail": "$t(rp collection)"
+            },
+            "v2.12.0": {
+                "headline": "Adjusted for balance changes in v2.12.0 and improved simulation for $t(skills.Berry Burst.name).",
+                "detail": "Updated skill probabilities for $t(pokemons.Braviary) and $t(pokemons.Mimikyu).\nWhen calculating the expected strength of $t(skills.Berry Burst.name), it is now assumed that all Pokémon in the team are at the same level. Additionally, from the [i] button next to [$t(skill)] on the [$t(strength2)] tab, you can now customize each Pokémon in the team in more detail."
+            },
+            "ex and toxel": {
+                "headline": "Added data for Toxel and Toxtricity. Also added support for $t(area.7).",
+                "detail": "$t(rp collection)"
+            },
+            "v2.11.0": {
+                "headline": "Updated the data with balance adjustments in version 2.11.0",
+                "detail": "Data for $t(pokemons.Dugtrio), $t(pokemons.Marowak) and $t(skills.Extra Helpful S.name) have been updated."
+            },
+            "sprigatito bug": {
+                "headline": "Bug Report: $t(pokemons.Sprigatito) may have disappeared from your box. We apologize for the trouble and kindly ask you to verify.",
+                "detail": "Between August 4 and 6, if you reloaded this tool, there was an issue where $t(pokemons.Sprigatito) data may have been lost from your box. We sincerely apologize for the inconvenience."
+            },
+            "add hoenn": {
+                "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle) and $t(pokemons.Minun) have been added.",
+                "detail": "$t(rp collection)"
+            },
+            "v2.10.0": {
+                "headline": "Balance adjustments in v2.10.0 have been reflected in the Candy Calculator feature.",
+                "detail": "In the Candy Calculator feature, the candy usage for Pokémon below level 30 has been reduced."
+            },
+            "add farfetch'd": {
+                "headline": "Farfetch'd has been added.",
+                "detail": "$t(rp collection)"
+            },
+            "add mawile & candy calc": {
+                "headline": "Mawile has been added. A candy calculator feature has also been added.",
+                "detail": "$t(rp collection)\nA candy calculator feature can be used by tapping the candy button to the right of the Pokémon’s name, or by selecting [Candy] from the ︙ menu at the top right of a Pokémon in your box."
+            },
+            "v2.9.0": {
+                "headline": "Updated the data for Pokémon with balance adjustments in v2.9.0.",
+                "detail": "Frequency of Butterfree, Dodrio, and Altaria has been updated."
+            },
+            "add murkrow": {
+                "headline": "Murkrow and Honchkrow has been added.",
+                "detail": "$t(rp collection)"
+            },
+            "darkrai ing": {
+                "headline": "It is now possible to change Darkrai's ingredients.",
+                "detail": "The count of the third ingredient is an estimate and may not be accurate."
+            },
+            "add happiny": {
+                "headline": "Happiny, Chansey and Blissey has been added.",
+                "detail": "$t(rp collection)"
+            },
+            "v2.7.0": {
+                "headline": "Support for version 2.7.0 has been added.",
+                "detail": "Added support for RP calculation up to level 65, as well as skill level cap unlocks."
+            },
+            "add darkrai": {
+                "headline": "Darkrai has been added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "add cresselia": {
+                "headline": "Cresselia has been added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "v2.6.0": {
+                "headline": "Balance adjustments in v2.6.0 have been applied.",
+                "detail": "Speed of Help ▼▼ modifiers has been changed from 1.1 to 1.075."
+            },
+            "add munna": {
+                "headline": "Munna and Musharna are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "add clodsire": {
+                "headline": "Wooper (Paldea) and Clodsire are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "v2.5.0": {
+                "headline": "Updated the data for Absol with balance adjustments in v2.5.0.",
+                "detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
+            },
+            "add rufflet": {
+                "headline": "Rufflet and Braviary are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "v2.4.0": {
+                "headline": "Updated the data for Pokémon with balance adjustments in v2.4.0.",
+                "detail": "$t(rp collection)"
+            },
+            "add holiday 2024 pokemons": {
+                "headline": "New Pokémon data for the holiday event has been added.",
+                "detail": "$t(rp collection)"
+            },
+            "v2.3.0": {
+                "headline": "Updated the data for Pokémon with balance adjustments in v2.3.0.",
+                "detail": "$t(rp collection)"
+            },
+            "holiday 2024": {
+                "headline": "You can now simulate Holiday event.",
+                "detail": "You can now check the performance of Pokémon during the Holiday event in the [$t(strength2)] tab."
+            },
+            "add sneasel": {
+                "headline": "Sneasel and Weavile are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "eevee week 2024": {
+                "headline": "You can now simulate Eevee week.",
+                "detail": "You can now check the skill performance of Pokémon during the Eevee week in the [$t(strength2)] tab."
+            },
+            "add mimikyu": {
+                "headline": "Mimikyu is added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "v2.1.0": {
+                "headline": "Updated the data for Houndour, Houndoom, Umbreon, and Pikachu (Halloween).",
+                "detail": "$t(rp collection)"
+            },
+            "halloween event 2024 simmulation": {
+                "headline": "You can now simulate Halloween event.",
+                "detail": "You can now check the performance of Ghost-type Pokémon during the Halloween event in the [$t(strength2)] tab."
+            },
+            "add drifloon and drifblim": {
+                "headline": "Drifloon and Drifblim are added!!!",
+                "detail": "$t(rp collection)\nThe strength amount is calculated based on the assumption that it spits up every time."
+            },
+            "add OGPP pokemons": {
+                "headline": "Grubbin, Shinx, Aron, and their evolutions are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "add OGPP": {
+                "headline": "Old Gold Power Plant has been added to research area list.",
+                "detail": "You can now easily simulate your pokemon's strength at Old Gold Power Plant."
+            },
+            "add suicune": {
+                "headline": "Suicune are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "add wooper and quagsire": {
+                "headline": "Wooper and Quagsire are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "box filter and sort improvement": {
+                "headline": "Box filtering and sorting have significantly evolved.",
+                "detail": "You can now filter the box by Species Name, Nickname, $t(ingredient), $t(main skill), and $t(sub skills).\nAdditionally, sorting options have been expanded to include $t(berry), $t(ingredient), and $t(skill count)."
+            },
+            "suicune event simmulation": {
+                "headline": "You can now simulate Suicune event.",
+                "detail": "You can now check the performance of Water-type Pokémon during the Suicune event in the [$t(strength2)] tab."
+            },
+            "evolution count and ribbon": {
+                "headline": "The evolution count and the level of Good-Night Ribbon are now configurable.",
+                "detail": "You can now specify the evolution count with [$t(carry limit)] and the sleeping time with [$t(sleeping time shared)].\nThis allows you to check Pokémon performance with appropriate values for '$t(carry limit)' and '$t(frequency)'."
+            },
+            "bank main skill": {
+                "headline": "The probability of the main skill being banked is now available.",
+                "detail": "In the [Energy] tab, you can now see the probability of the main skill being banked in the [Wake up skill] section (only Pokémon with the Skills specialty). This number is also reflected in the calculation of skill occurrences.\nAdditionally, a new setting item, [Tap frequency (Asleep)], has been added. You can now check the abilities when sneaky snacking does not occur during the night."
+            },
+            "add paldea starter": {
+                "headline": "Sprigatito, Fuecoco, Quaxly, and their evolutions are added!!!",
+                "detail": "$t(rp collection)"
+            },
+            "v1.9.0": {
+                "headline": "Energy efficiency values adjusted in response to changes made by Pokémon Sleep version 1.9.0.",
+                "detail": "We have responded to the change implemented in Pokémon Sleep 1.9.0, where 'Help from helper Pokémon with low Energy will be slightly more effective.' (ref: ポケモンスリープ攻略・検証Wiki, Pokémon Sleep Info Wiki)\nWe have also increased box capacity from 100 to 150."
+            },
+            "energy nature and inventory": {
+                "headline": "Carry limit and energy recovery nature are now taken into account when calculating strength.",
+                "detail": "Previously, we have overestimated the abilities of Pokémon whose inventory overflows at night, but we are now approaching the actual number of ingredients and skill occurrences. Additionally, in the [STRENGTH] tab, you can now check the time until full inventory during sleep and the wake up skill%.\nCurrently, the carry limit is estimated under the assumption that the Pokémon is caught in its pre-evolved state."
+            },
+            "box": {
+                "headline": "Added the $t(box) feature.",
+                "detail": "Please use it to help compare your Pokémon."
+            },
+            "initial release": {
+                "headline": "Released $t(IvCalc.short title).",
+                "detail": "$t(IvCalc.description)"
+            }
+        }
+    }
+}

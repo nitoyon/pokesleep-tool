@@ -1,0 +1,258 @@
+{
+    "IvCalc": {
+        "news": {
+            "add sandshrew": {
+                "headline": "添加了$t(pokemons.Sandshrew)和$t(pokemons.Sandslash)的数据，并更新了$t(pokemons.Togedemaru)的数据。支持了$t(pity proc)・$t(tap frequency)的模拟（<a href='https://youtu.be/kEX2myG-wS8'>讲解视频</a>）。",
+                "detail": "$t(rp collection)$t(movie detail)"
+            },
+            "add latias": {
+                "headline": "添加了$t(pokemons.Latias)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v3.4.0": {
+                "headline": "已因应 v3.4.0 的平衡性调整。",
+                "detail": "$t(own research note)"
+            },
+            "add noibat": {
+                "headline": "添加了$t(pokemons.Noibat)和$t(pokemons.Noivern)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "latias research": {
+                "headline": "现在可以以图表形式显示$t(time to full inventory)了（<a href='https://youtu.be/C7Ik6U9JsEM'>讲解视频</a>）。",
+                "detail": "可以通过[$t(frequency)]右侧的 [i] 标记或[$t(full inventory while sleeping (short))]右侧的 [i] 标记来确认。详情请观看讲解视频。\n此外，已支持拉帝亚斯调查的模拟。"
+            },
+            "add mew": {
+                "headline": "添加了$t(pokemons.Mew)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v3.3.0": {
+                "headline": "已因应 v3.3.0 的平衡性调整。",
+                "detail": "如果$t(rp)有所不同，请告知我们。"
+            },
+            "add cutiefly": {
+                "headline": "添加了$t(pokemons.Cutiefly)和$t(pokemons.Ribombee)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add shuckle": {
+                "headline": "添加了$t(pokemons.Shuckle)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "clodsire bug": {
+                "headline": "$t(pokemons.Clodsire)可能从[$t(box)]中逃走了，请您确认。",
+                "detail": "如果您在1月7日至9日期间首次打开工具，盒子中的$t(pokemons.Clodsire)数据可能已消失。对此造成的不便深表歉意。"
+            },
+            "candy movie": {
+                "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>糖果计算功能的使用方法视频</a>已发布。",
+                "detail": "$t(movie detail)"
+            },
+            "holiday2025": {
+                "headline": "添加了$t(pokemons.Togedemaru)、$t(pokemons.Cetoddle)及其进化形态的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "candy2025": {
+                "headline": "大幅改进了糖果计算功能。",
+                "detail": "在糖果计算功能中添加了 [$t(details)] 模式。\n另外，添加了 [$t(turn candy)] 功能。请从左下角的按钮使用。\n请用于规划 $t(events.holiday 2025) 期间的 $t(candy boost)。"
+            },
+            "add spiritomb": {
+                "headline": "添加了$t(pokemons.Spiritomb)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v3.1.0": {
+                "headline": "已对应 v3.1.0 的新技能「$t(skills.Ingredient Magnet S (Present).name)」。",
+                "detail": "$t(rp collection)"
+            },
+            "add amber pokemons": {
+                "headline": "添加了$t(pokemons.Trapinch)、$t(pokemons.Bagon)、$t(pokemons.Dwebble)及其进化形态的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add halloween eevee": {
+                "headline": "添加了$t(pokemons.Eevee (Halloween))的数据，并改进了$t(subskill.Helping Bonus)的$t(strength2)计算。",
+                "detail": "$t(rp collection)\n现在可以$t(helping bonus addition label)。"
+            },
+            "add pumpkaboo": {
+                "headline": "已新增南瓜精与南瓜怪人的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v3.0.0": {
+                "headline": "已因应 v3.0.0 的平衡性调整。",
+                "detail": "$t(rp collection)"
+            },
+            "add natu": {
+                "headline": "已新增$t(pokemons.Natu)与$t(pokemons.Xatu)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.12.0": {
+                "headline": "已适配 v2.12.0 的平衡性调整，并改进了 $t(skills.Berry Burst.name) 的模拟。",
+                "detail": "已更新 $t(pokemons.Braviary) 和 $t(pokemons.Mimikyu) 的技能概率。\n在计算 $t(skills.Berry Burst.name) 的期望值时，现在默认队伍中的宝可梦等级相同。此外，现在可以通过 [$t(strength2)] 标签中 [$t(skill)] 右侧的 [i] 按钮，更详细地自定义队伍中的宝可梦。"
+            },
+            "ex and toxel": {
+                "headline": "已新增$t(pokemons.Toxel)与颤弦蝾螈的数据，同时也支持 $t(area.7)。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.11.0": {
+                "headline": "已对应 v2.11.0 的平衡性调整。",
+                "detail": "已更新 $t(pokemons.Dugtrio)、$t(pokemons.Marowak)、$t(skills.Extra Helpful S.name) 的数据。"
+            },
+            "sprigatito bug": {
+                "headline": "错误报告：$t(pokemons.Sprigatito) 可能已从盒子中消失，麻烦您确认一下。",
+                "detail": "在 8 月 4 日至 6 日期间，如果您重新打开了工具，盒子中的 $t(pokemons.Sprigatito) 数据可能会丢失。对此给您带来的不便，我们深表歉意。"
+            },
+            "add hoenn": {
+                "headline": "已新增$t(pokemons.Treecko)、$t(pokemons.Torchic)、$t(pokemons.Mudkip)、$t(pokemons.Plusle)和$t(pokemons.Minun)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.10.0": {
+                "headline": "v2.10.0 的平衡调整已反映在糖果计算功能中。",
+                "detail": "在糖果计算功能中，30级以下宝可梦的糖果使用量已减少。"
+            },
+            "add farfetch'd": {
+                "headline": "更新了$t(pokemons.Farfetch'd)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add mawile & candy calc": {
+                "headline": "更新了$t(pokemons.Mawile)的数据。另外，新增了糖果计算功能。",
+                "detail": "$t(rp collection)\n糖果计算功能可以通过点击宝可梦名字右侧的糖果图标，或者在盒子里的宝可梦右上角点击︙后选择 [糖果] 来使用。"
+            },
+            "v2.9.0": {
+                "headline": "v2.9.0中的平衡调整已应用。",
+                "detail": "已更新 $t(pokemons.Butterfree), $t(pokemons.Dodrio), $t(pokemons.Altaria) 的资料。"
+            },
+            "add murkrow": {
+                "headline": "更新了$t(pokemons.Murkrow), $t(pokemons.Honchkrow)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "darkrai ing": {
+                "headline": "可以更改$t(pokemons.Darkrai)的材料了。",
+                "detail": "第三个材料的数量是估算值，因此可能不准确。"
+            },
+            "add happiny": {
+                "headline": "更新了$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.7.0": {
+                "headline": "已新增支持版本 2.7.0。",
+                "detail": "已支持至等级 65 的 SP 计算，并开放技能等级上限。"
+            },
+            "add darkrai": {
+                "headline": "更新了达克莱伊的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add cresselia": {
+                "headline": "更新了克雷色利亚的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.6.0": {
+                "headline": "v2.6.0中的平衡调整已应用。",
+                "detail": "帮手速度▼▼的修正值已从1.1更改为1.075。"
+            },
+            "add munna": {
+                "headline": "更新了食梦梦，梦梦蚀的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add clodsire": {
+                "headline": "更新了乌波 (帕底亚)，土王的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.5.0": {
+                "headline": "已更新 v2.5.0 中进行平衡调整的阿勃梭鲁数据。",
+                "detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
+            },
+            "add rufflet": {
+                "headline": "更新了毛头小鹰，勇士雄鹰的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.4.0": {
+                "headline": "已更新 v2.4.0 中进行平衡调整的宝可梦数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add holiday 2024 pokemons": {
+                "headline": "新增了佳节活动的宝可梦数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.3.0": {
+                "headline": "已更新 v2.3.0 中进行平衡调整的宝可梦数据。",
+                "detail": "$t(rp collection)"
+            },
+            "holiday 2024": {
+                "headline": "现在可以计算佳节活动。",
+                "detail": "在 [$t(strength2)] 标签的计算里，可以确认佳节活动中宝可梦的能力。"
+            },
+            "add sneasel": {
+                "headline": "更新了狃拉，玛狃拉的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "eevee week 2024": {
+                "headline": "现在可以计算伊布週。",
+                "detail": "在 [$t(strength2)] 标签的计算里，可以确认伊布週中宝可梦的能力。"
+            },
+            "add mimikyu": {
+                "headline": "更新了谜拟丘的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v2.1.0": {
+                "headline": "更新了戴鲁比、黑鲁加、月亮伊布、皮卡丘 (万圣节)的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "halloween event 2024 simmulation": {
+                "headline": "现在可以计算万圣节活动。",
+                "detail": "在 [$t(strength2)] 标签的计算里，可以确认万圣节活动中幽灵属性宝可梦的能力。"
+            },
+            "add drifloon and drifblim": {
+                "headline": "更新了飘飘球，随风球的数据。",
+                "detail": "$t(rp collection)\n能量是基于一次都没有蓄力的前提下进行计算。"
+            },
+            "add OGPP pokemons": {
+                "headline": "更新了强颚鸡母虫，小猫怪，可可多拉及进化型的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add OGPP": {
+                "headline": "更新了黄金旧发电厂到地图一览。",
+                "detail": "可以更加便捷的确认黄金旧发电厂的宝可梦大的性能。"
+            },
+            "add suicune": {
+                "headline": "更新了水君的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "add wooper and quagsire": {
+                "headline": "更新了乌波，沼王的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "box filter and sort improvement": {
+                "headline": "大幅升级了盒子的筛选和排序功能。",
+                "detail": "可以在盒子中通过「名称・昵称・$t(ingredient)・$t(main skill)・$t(sub skills)」进行筛选。\n而且、更新了盒子的「$t(berry)・$t(ingredient)・$t(skill count)」排序功能。"
+            },
+            "suicune event simmulation": {
+                "headline": "现在可以计算水君活动。",
+                "detail": "在 [$t(strength2)] 标签的计算里、可以确认水君活动中水属性宝可梦的能力。"
+            },
+            "evolution count and ribbon": {
+                "headline": "现在可以确认睡饱饱奖章和进化次数带来的影响。",
+                "detail": "现在可以在 [$t(carry limit)] 指定进化次数、[$t(sleeping time shared)] 指定睡眠时间。\n这样可以通过正确的「$t(carry limit)」和「$t(frequency)」确认宝可梦的性能。"
+            },
+            "bank main skill": {
+                "headline": "现在可以计算主技能的积存几率。",
+                "detail": "在[能量] 标签和 [第二天早上技能] 标签里，可以显示发动2次技能的几率(只适用于技能类型宝可梦)。积存的次数也反映在技能发动次数的计算中。\n同时、在设定项目中追加了 [点击频率 (睡眠中)] 。可以确认夜间不发生「不知不觉中长大」时的能力。"
+            },
+            "add paldea starter": {
+                "headline": "更新了新叶喵、呆火鳄、润水鸭及进化型的数据。",
+                "detail": "$t(rp collection)"
+            },
+            "v1.9.0": {
+                "headline": "在 Ver.1.9.0 更新中，新增了活力减少时对帮手效率的影响的支持。",
+                "detail": "Pokémon Sleep Ver.1.9.0 中增加了对“活力偏低时帮手效率改善”的支持。 (参考来源: ポケモンスリープ攻略・検証Wiki, RaenonXポケスリ攻略ツール)\n同时、盒子的大小从100增加到了150。"
+            },
+            "energy nature and inventory": {
+                "headline": "现在可以通过持有数和活力回复量的性格进行食材・技能次数的计算。",
+                "detail": "目前为止、过高评价了夜间持有数溢出的宝可梦的能力。现在更接近实际的食材数量和技能次数。此外，在 [能量] 标签里、可以确认睡眠中到达所持上限的时间和第二天早上技能发动几率。\n目前，持有上限数量是基于进化前的状态捕获的前提下进行预估。"
+            },
+            "box": {
+                "headline": "已新增$t(box)功能。",
+                "detail": "请用来帮助比较你的宝可梦。"
+            },
+            "initial release": {
+                "headline": "已发布$t(IvCalc.short title)。",
+                "detail": "$t(IvCalc.description)"
+            }
+        }
+    }
+}

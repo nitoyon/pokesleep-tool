@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './ui/App';
 import {loadConfig, saveConfig} from './ui/AppConfig';
-import i18n from './i18n';
+import i18n, { loadLanguage } from './i18n';
 
-(function() {
+(async function() {
     // add error handler
     window.addEventListener('error', (event) => {
         const { message, filename, lineno, colno, error } = event;
@@ -25,6 +25,7 @@ import i18n from './i18n';
     const config = loadConfig(language);
     config.pwacnt++;
     saveConfig(config);
+    await loadLanguage(config.language);
     i18n.changeLanguage(config.language);
 
     const elm = document.getElementById('root');
