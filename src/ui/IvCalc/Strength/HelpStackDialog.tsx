@@ -104,7 +104,7 @@ const HelpStackDialog = React.memo(
 						{t("skills.Helper Boost.name")}
 					</h3>
 					<section className="first">
-						<label>{t("skill level")}:</label>
+						<span className="lbl">{t("skill level")}:</span>
 						<SelectEx
 							value={parameter.helperBoostLevel}
 							onChange={onSkillLevelChange}
@@ -130,7 +130,7 @@ const HelpStackDialog = React.memo(
 						</SelectEx>
 					</section>
 					<section>
-						<label>{t("different species")}:</label>
+						<span className="lbl">{t("different species")}:</span>
 						<SelectEx
 							value={parameter.helperBoostSpecies}
 							onChange={onSpeciesChange}
@@ -153,7 +153,7 @@ const HelpStackDialog = React.memo(
 						</SelectEx>
 					</section>
 					<section>
-						<label>{t("helps per skill")}:</label>
+						<span className="lbl">{t("helps per skill")}:</span>
 						<span>
 							{getSkillValue(
 								"Helper Boost",
@@ -218,7 +218,7 @@ const StyledHelpStackDialog = styled(Dialog)({
 				display: "flex",
 				flex: "0 auto",
 				marginTop: "0.4rem",
-				"& > label": {
+				"& > span.lbl": {
 					padding: "0 0 .2rem 0",
 					margin: 0,
 					marginRight: "auto",

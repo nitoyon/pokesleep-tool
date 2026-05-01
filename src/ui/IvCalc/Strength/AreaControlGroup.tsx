@@ -34,7 +34,7 @@ const AreaSelectControl = React.memo(
 		return (
 			<>
 				<section className="first">
-					<label>{t("research area")}:</label>
+					<span className="lbl">{t("research area")}:</span>
 					<ResearchAreaSelect
 						value={value}
 						fontSize="0.9rem"
@@ -43,7 +43,7 @@ const AreaSelectControl = React.memo(
 				</section>
 				<FavoriteBerrySelect value={value} onChange={onChange} />
 				<section>
-					<label>{t("area bonus")}:</label>
+					<span className="lbl">{t("area bonus")}:</span>
 					<AreaBonusControl
 						value={value.fieldBonus}
 						onChange={onFieldBonusChange}
@@ -51,7 +51,7 @@ const AreaSelectControl = React.memo(
 				</section>
 				<Collapse in={isNotWhistle}>
 					<section>
-						<label>{t("good camp ticket")}:</label>
+						<span className="lbl">{t("good camp ticket")}:</span>
 						<Switch
 							checked={value.isGoodCampTicketSet}
 							size="small"

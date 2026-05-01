@@ -163,7 +163,7 @@ const RateNotFixedDialog = React.memo(
 						{t("rate is not fixed title", { name: t("pokemons.Mew") })}
 					</header>
 					<section>
-						<label>{t("ingredient rate")}:</label>
+						<span className="lbl">{t("ingredient rate")}:</span>
 						<RateTextField
 							min={0}
 							max={100}
@@ -172,11 +172,11 @@ const RateNotFixedDialog = React.memo(
 						/>
 					</section>
 					<section>
-						<label>{t("skill rate")}:</label>
+						<span className="lbl">{t("skill rate")}:</span>
 					</section>
 					<div style={{ marginLeft: "1rem" }}>
 						<section>
-							<label>{t("high chance")}:</label>
+							<span className="lbl">{t("high chance")}:</span>
 							<RateTextField
 								min={0}
 								max={100}
@@ -190,7 +190,7 @@ const RateNotFixedDialog = React.memo(
 							{t("skills.Charge Energy S.name")}
 						</footer>
 						<section>
-							<label>{t("medium chance")}:</label>
+							<span className="lbl">{t("medium chance")}:</span>
 							<RateTextField
 								min={0}
 								max={100}
@@ -214,7 +214,7 @@ const RateNotFixedDialog = React.memo(
 							{t("skills.Tasty Chance S.name")}
 						</footer>
 						<section>
-							<label>{t("low chance")}:</label>
+							<span className="lbl">{t("low chance")}:</span>
 							<RateTextField
 								min={0}
 								max={100}
@@ -229,7 +229,7 @@ const RateNotFixedDialog = React.memo(
 						</footer>
 					</div>
 					<section>
-						<label>{t("additional candy")}:</label>
+						<span className="lbl">{t("additional candy")}:</span>
 						<RateTextField
 							min={0}
 							max={100}
@@ -262,7 +262,7 @@ const StyledDialogContent = styled(DialogContent)({
 		maxWidth: "40rem",
 		minWidth: "13rem",
 		marginTop: "0.4rem",
-		"& > label": {
+		"& > span.lbl": {
 			marginRight: "auto",
 			fontSize: "0.9rem",
 		},

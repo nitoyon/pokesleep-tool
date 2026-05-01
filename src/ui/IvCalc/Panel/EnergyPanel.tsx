@@ -176,7 +176,9 @@ const EnergyPanel = React.memo(
 				<Collapse in={!parameter.isEnergyAlwaysFull}>
 					<section ref={dialogRef}>
 						<div>
-							<label>{t("skills.Energy for Everyone S.name")}:</label>
+							<span className="lbl">
+								{t("skills.Energy for Everyone S.name")}:
+							</span>
 							<div>
 								<Select
 									variant="standard"
@@ -211,7 +213,9 @@ const EnergyPanel = React.memo(
 							</div>
 						</div>
 						<div>
-							<label>{t("subskill.Energy Recovery Bonus")}:</label>
+							<span className="lbl">
+								{t("subskill.Energy Recovery Bonus")}:
+							</span>
 							<Select
 								variant="standard"
 								value={parameter.recoveryBonusCount.toString()}
@@ -227,7 +231,7 @@ const EnergyPanel = React.memo(
 							</Select>
 						</div>
 						<div>
-							<label>{t("sleep score")}:</label>
+							<span className="lbl">{t("sleep score")}:</span>
 							<div>
 								<TextField
 									variant="standard"
@@ -245,7 +249,7 @@ const EnergyPanel = React.memo(
 				</Collapse>
 				<section>
 					<div>
-						<label>{t("always 81%+")}:</label>
+						<span className="lbl">{t("always 81%+")}:</span>
 						<div>
 							<Switch
 								size="small"
@@ -257,7 +261,7 @@ const EnergyPanel = React.memo(
 				</section>
 				<section>
 					<div>
-						<label>{t("good camp ticket")}:</label>
+						<span className="lbl">{t("good camp ticket")}:</span>
 						<div>
 							<Switch
 								size="small"
@@ -269,9 +273,9 @@ const EnergyPanel = React.memo(
 				</section>
 				<section>
 					<div>
-						<label>
+						<span className="lbl">
 							{t("tap frequency")} ({t("awake")}):
-						</label>
+						</span>
 						<TapFrequencyControl
 							max={10}
 							value={parameter.tapFrequencyAwake}
@@ -279,9 +283,9 @@ const EnergyPanel = React.memo(
 						/>
 					</div>
 					<div>
-						<label>
+						<span className="lbl">
 							{t("tap frequency")} ({t("asleep")}):
-						</label>
+						</span>
 						{parameter.tapFrequencyAwake === NoTap ? (
 							<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
 						) : (
@@ -295,7 +299,7 @@ const EnergyPanel = React.memo(
 				</section>
 				<footer>
 					<section className="first">
-						<label>{t("average help efficiency")}:</label>
+						<span className="lbl">{t("average help efficiency")}:</span>
 						<div>{energy.averageEfficiency.total}</div>
 						{parameter.period >= 24 && (
 							<footer>
@@ -310,7 +314,7 @@ const EnergyPanel = React.memo(
 					</section>
 					<Collapse in={energy.showSkillStock && parameter.period >= 24}>
 						<section>
-							<label>{t("full inventory while sleeping")}:</label>
+							<span className="lbl">{t("full inventory while sleeping")}:</span>
 							<div>
 								{result.timeToFullInventory < 0
 									? t("none")
@@ -331,7 +335,7 @@ const EnergyPanel = React.memo(
 							</footer>
 						</section>
 						<section>
-							<label>{t("skill trigger after wake up")}:</label>
+							<span className="lbl">{t("skill trigger after wake up")}:</span>
 							<div>
 								{iv.pokemon.specialty !== "Skills" ? (
 									<>
@@ -375,7 +379,7 @@ const StyledEnergyPanel = styled("div")({
 			flex: "0 auto",
 			flexWrap: "wrap",
 			alignItems: "center",
-			"& > label": {
+			"& > span.lbl": {
 				marginRight: "auto",
 				fontSize: "0.9rem",
 				"&.indent": {

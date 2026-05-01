@@ -40,14 +40,14 @@ const StyledDialogContent = styled(DialogContent)({
 	paddingBottom: 0,
 	fontSize: "0.9rem",
 	"& section": {
-		"& > label": {
+		"& > span.lbl": {
 			paddingTop: "1rem",
 			display: "block",
 		},
-		"&.first > label": {
+		"&.first > span.lbl": {
 			paddingTop: 0,
 		},
-		"& > span, & > div, & > button:first-of-type": {
+		"& > span.MuiSwitch-root, & > div, & > button:first-of-type": {
 			marginLeft: "1rem",
 			fontSize: "0.9rem",
 		},

@@ -116,7 +116,7 @@ const CandyTurnDialog = React.memo(
 			<StyledDialog open={open} onClose={onClose}>
 				<StyledContent>
 					<header>
-						<label>{t("required candy")}:</label>
+						<span>{t("required candy")}:</span>
 						<section>
 							<NumericSliderInput
 								min={0}
@@ -130,7 +130,7 @@ const CandyTurnDialog = React.memo(
 								onChange={(v) => onChange("required", v)}
 							/>
 						</section>
-						<label>{t("pokemon candy", { name })}:</label>
+						<span>{t("pokemon candy", { name })}:</span>
 						<section>
 							<NumericSliderInput
 								min={0}
@@ -146,7 +146,7 @@ const CandyTurnDialog = React.memo(
 						</section>
 					</header>
 					<article className="handy">
-						<label>{t("handy candy")}:</label>
+						<span>{t("handy candy")}:</span>
 						<NumericSliderInput
 							min={0}
 							max={999}
@@ -180,7 +180,7 @@ const CandyTurnDialog = React.memo(
 						<footer>×100</footer>
 					</article>
 					<article className="type">
-						<label>{t("type candy")}:</label>
+						<span>{t("type candy")}:</span>
 						<NumericSliderInput
 							min={0}
 							max={999}
@@ -292,7 +292,7 @@ const StyledContent = styled("div")({
 		gap: "0.2rem 0.8rem",
 		gridTemplateColumns: "8rem 1fr",
 		alignItems: "center",
-		"& > label": {
+		"& > span": {
 			fontSize: "0.9rem",
 		},
 		"& > section": {
@@ -318,7 +318,7 @@ const StyledContent = styled("div")({
 		"&.handy": {
 			marginTop: "2rem",
 		},
-		"& > label": {
+		"& > span": {
 			fontSize: "0.9rem",
 		},
 		"& .numeric": {

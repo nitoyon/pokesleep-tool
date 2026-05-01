@@ -185,7 +185,7 @@ const IngHelpDialog = React.memo(
 						)}
 					</article>
 					<section style={{ marginTop: "1.8rem" }}>
-						<label>{t("recipe bonus")}:</label>
+						<span className="lbl">{t("recipe bonus")}:</span>
 						<FormControl size="small">
 							<Select
 								variant="standard"
@@ -250,7 +250,7 @@ const IngHelpDialog = React.memo(
 						</FormControl>
 					</section>
 					<section>
-						<label>{t("average recipe level")}:</label>
+						<span className="lbl">{t("average recipe level")}:</span>
 						<LevelInput
 							value={strength.parameter.recipeLevel}
 							onChange={onRecipeLevelChange}

@@ -388,7 +388,7 @@ const EventConfigDialog = React.memo(
 			<StyledEventConfigDialog open={open} onClose={onClose}>
 				<header>
 					<section>
-						<label>{t("event")}:</label>
+						<span>{t("event")}:</span>
 						<TextField
 							value={value.event}
 							onChange={onEventChange}
@@ -417,7 +417,7 @@ const EventConfigDialog = React.memo(
 				</header>
 				<article>
 					<section>
-						<label>{t("target")}:</label>
+						<span>{t("target")}:</span>
 						<div
 							style={{
 								display: "flex",
@@ -465,7 +465,7 @@ const EventConfigDialog = React.memo(
 						/>
 					</Collapse>
 					<section>
-						<label>{t("berry")}:</label>
+						<span>{t("berry")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -480,7 +480,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("ingredient")}:</label>
+						<span>{t("ingredient")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -495,7 +495,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("skill rate")}:</label>
+						<span>{t("skill rate")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -511,7 +511,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("skill level")}:</label>
+						<span>{t("skill level")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -529,7 +529,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("carry limit")}:</label>
+						<span>{t("carry limit")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -548,7 +548,7 @@ const EventConfigDialog = React.memo(
 				</article>
 				<article className="transparent">
 					<section>
-						<label>{t("dream shards from main skills")}:</label>
+						<span>{t("dream shards from main skills")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -564,7 +564,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("skills.Ingredient Magnet S")}:</label>
+						<span>{t("skills.Ingredient Magnet S")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -579,7 +579,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("skills.Ingredient Draw S.name")}:</label>
+						<span>{t("skills.Ingredient Draw S.name")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -594,7 +594,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("ingredients from main skills")}:</label>
+						<span>{t("ingredients from main skills")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -609,7 +609,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("skills.Berry Burst.name")}:</label>
+						<span>{t("skills.Berry Burst.name")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -624,7 +624,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("dish")}:</label>
+						<span>{t("dish")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -641,7 +641,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<label>{t("energy from dish")}:</label>
+						<span>{t("energy from dish")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
@@ -683,7 +683,7 @@ const StyledEventConfigDialog = styled(Dialog)({
 				"&:first-of-type": {
 					marginTop: 0,
 				},
-				"& > label": {
+				"& > span": {
 					marginRight: "auto",
 					marginTop: 0,
 				},

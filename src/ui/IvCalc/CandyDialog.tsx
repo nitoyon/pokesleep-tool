@@ -353,7 +353,7 @@ const LevelForm = React.memo(
 				<StyledLevel>
 					<div className="level">
 						<div className="levelInput">
-							<label>Lv.</label>
+							<span className="lbl">Lv.</span>
 							<LevelInput
 								value={levelInfo.currentLevel}
 								onChange={handleCurrentLevelChange}
@@ -389,7 +389,7 @@ const LevelForm = React.memo(
 					<EastIcon />
 					<div className="level">
 						<div className="levelInput">
-							<label>Lv.</label>
+							<span className="lbl">Lv.</span>
 							<LevelInput
 								value={levelInfo.targetLevel}
 								onChange={handleTargetLevelChange}
@@ -422,7 +422,7 @@ const StyledLevel = styled("div")({
 			display: "flex",
 			justifyContent: "center",
 			gap: "0.2rem",
-			"& > label": {
+			"& > span": {
 				transform: "scale(1, 0.9)",
 				paddingTop: "0.2rem",
 			},
@@ -518,18 +518,18 @@ const NormalCandyForm = React.memo(
 			<>
 				<div className="expResult">
 					<section className="first">
-						<label>{t("required exp")}:</label>
+						<span className="lbl">{t("required exp")}:</span>
 						<div>{formatWithComma(result.exp)}</div>
 					</section>
 					<section>
-						<label>{t("candy")}:</label>
+						<span className="lbl">{t("candy")}:</span>
 						<div>
 							<CandyIcon />
 							{formatWithComma(result.candy)}
 						</div>
 					</section>
 					<section>
-						<label>{t("dream shard")}:</label>
+						<span className="lbl">{t("dream shard")}:</span>
 						<div>
 							<DreamShardIcon />
 							{formatWithComma(result.shards)}
@@ -538,7 +538,7 @@ const NormalCandyForm = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<label>{t("nature")}:</label>
+						<span className="lbl">{t("nature")}:</span>
 						<SelectEx
 							onChange={onExpFactorChange}
 							value={config.expFactor.toString()}
@@ -557,7 +557,7 @@ const NormalCandyForm = React.memo(
 						</SelectEx>
 					</section>
 					<section>
-						<label>{t("candy boost")}:</label>
+						<span className="lbl">{t("candy boost")}:</span>
 						<ToggleButtonGroup
 							size="small"
 							exclusive
@@ -829,19 +829,19 @@ const DetailCandyForm = React.memo(
 			<>
 				<div className="expResult">
 					<section className="first">
-						<label>{t("required exp")}:</label>
+						<span className="lbl">{t("required exp")}:</span>
 						<div>{formatWithComma(exp)}</div>
 					</section>
 					<CollapseEx show={candyBoostResult.candyUsed > 0}>
 						<section>
-							<label>{t("candy boost")}:</label>
+							<span className="lbl">{t("candy boost")}:</span>
 							<div>{formatWithComma(exp - candyBoostResult.expLeft)}</div>
 						</section>
 						<CandyResultPreview iv={levelInfo.iv} value={candyBoostResult} />
 					</CollapseEx>
 					<CollapseEx show={normalCandyResult.candyUsed > 0}>
 						<section>
-							<label>{t("candy-based training")}:</label>
+							<span className="lbl">{t("candy-based training")}:</span>
 							<div>
 								{formatWithComma(
 									candyBoostResult.expLeft - normalCandyResult.expLeft,
@@ -852,7 +852,7 @@ const DetailCandyForm = React.memo(
 					</CollapseEx>
 					<CollapseEx show={sleepResult !== undefined}>
 						<section>
-							<label>{t("sleep-based training")}:</label>
+							<span className="lbl">{t("sleep-based training")}:</span>
 							<div>
 								{formatWithComma(
 									normalCandyResult.expLeft + (sleepResult?.expExceeded ?? 0),
@@ -868,7 +868,7 @@ const DetailCandyForm = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<label>{t("pokemon candy", { name })}:</label>
+						<span className="lbl">{t("pokemon candy", { name })}:</span>
 						<NumericSliderInput
 							value={config.pokemonCandy}
 							min={0}
@@ -878,7 +878,7 @@ const DetailCandyForm = React.memo(
 						/>
 					</section>
 					<section>
-						<label>{t("nature")}:</label>
+						<span className="lbl">{t("nature")}:</span>
 						<SelectEx
 							onChange={onExpFactorChange}
 							value={config.expFactor.toString()}
@@ -899,7 +899,7 @@ const DetailCandyForm = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<label>{t("candy boost")}:</label>
+						<span className="lbl">{t("candy boost")}:</span>
 						<Switch
 							checked={config.candyBoost !== "none"}
 							size="small"
@@ -908,14 +908,14 @@ const DetailCandyForm = React.memo(
 					</section>
 					<CollapseEx show={config.candyBoost !== "none"}>
 						<section>
-							<label>{t("kind")}:</label>
+							<span className="lbl">{t("kind")}:</span>
 							<SelectEx onChange={onCandyBoostChange} value={config.candyBoost}>
 								<MenuItem value="mini">{t("mini candy boost")} </MenuItem>
 								<MenuItem value="unlimited">{t("normal candy boost")}</MenuItem>
 							</SelectEx>
 						</section>
 						<section>
-							<label>
+							<span>
 								<SelectEx
 									onChange={onBoostPolicyChange}
 									value={config.boostPolicy}
@@ -927,7 +927,7 @@ const DetailCandyForm = React.memo(
 									</MenuItem>
 								</SelectEx>
 								:
-							</label>
+							</span>
 							{config.boostPolicy === "all" && (
 								<div>
 									<CandyIcon />
@@ -962,7 +962,7 @@ const DetailCandyForm = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<label>{t("subskill.Sleep EXP Bonus")}:</label>
+						<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
 						<SelectEx
 							value={config.expBonus}
 							onChange={onExpBonusChange}
@@ -977,7 +977,7 @@ const DetailCandyForm = React.memo(
 						</SelectEx>
 					</section>
 					<section>
-						<label>{t("sleep score")}:</label>
+						<span className="lbl">{t("sleep score")}:</span>
 						<NumericSliderInput
 							value={config.score}
 							onChange={onScoreChange}
@@ -987,7 +987,7 @@ const DetailCandyForm = React.memo(
 						/>
 					</section>
 					<section>
-						<label>{t("growth incense")}:</label>
+						<span className="lbl">{t("growth incense")}:</span>
 						<SelectEx
 							value={config.growthIncense}
 							onChange={onIncenseChange}
@@ -1044,7 +1044,7 @@ const StyledDialog = styled(Dialog)({
 				"&.first": {
 					paddingTop: 0,
 				},
-				"& > label": {
+				"& > span.lbl": {
 					marginRight: "auto",
 					marginTop: 0,
 				},

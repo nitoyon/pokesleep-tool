@@ -191,7 +191,7 @@ const BoxFilterDialog = React.memo(
 					<div className="tabChild">
 						{ingButtons}
 						<section>
-							<label>{t("unlocked only")}:</label>
+							<span className="lbl">{t("unlocked only")}:</span>
 							<Switch
 								checked={value.ingredientUnlockedOnly}
 								onChange={onIngredientUnlockedOnlyChange}
@@ -237,7 +237,7 @@ const StyledPokemonFilterDialog = styled(Dialog)({
 				"&:first-of-type": {
 					marginTop: "0.3rem",
 				},
-				"& > label": {
+				"& > span.lbl": {
 					marginRight: "auto",
 				},
 			},
@@ -352,7 +352,7 @@ const SubSkillTab = React.memo(
 					onClick={onClick}
 				/>
 				<section style={{ marginTop: "2rem" }}>
-					<label>{t("unlocked only")}:</label>
+					<span className="lbl">{t("unlocked only")}:</span>
 					<Switch
 						checked={value.subSkillUnlockedOnly}
 						size="small"
@@ -360,7 +360,7 @@ const SubSkillTab = React.memo(
 					/>
 				</section>
 				<section>
-					<label>AND:</label>
+					<span className="lbl">AND:</span>
 					<Switch
 						checked={value.subSkillAnd}
 						size="small"

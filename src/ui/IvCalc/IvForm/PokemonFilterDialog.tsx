@@ -108,7 +108,7 @@ const StyledPokemonFilterDialog = styled(Dialog)({
 				"&:first-of-type": {
 					marginTop: "0.3rem",
 				},
-				"& > label": {
+				"& > span.lbl": {
 					marginRight: "auto",
 				},
 			},
@@ -273,7 +273,7 @@ const IngredientTab = React.memo(
 			<>
 				<div style={{ marginBottom: "1rem" }}>{ingButtons}</div>
 				<section>
-					<label>{t("ing-a")}:</label>
+					<span className="lbl">{t("ing-a")}:</span>
 					<Switch
 						checked={value.ingredientA}
 						size="small"
@@ -281,7 +281,7 @@ const IngredientTab = React.memo(
 					/>
 				</section>
 				<section>
-					<label>{t("ing-b")}:</label>
+					<span className="lbl">{t("ing-b")}:</span>
 					<Switch
 						checked={value.ingredientB}
 						size="small"
@@ -289,7 +289,7 @@ const IngredientTab = React.memo(
 					/>
 				</section>
 				<section>
-					<label>{t("ing-c")}:</label>
+					<span className="lbl">{t("ing-c")}:</span>
 					<Switch
 						checked={value.ingredientC}
 						size="small"

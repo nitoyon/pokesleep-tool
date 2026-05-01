@@ -82,7 +82,7 @@ const FavoriteBerrySelect = React.memo(
 		return (
 			<CollapseEx show={value.fieldIndex >= 0}>
 				<section>
-					<label>{t("favorite berry")}:</label>
+					<span className="lbl">{t("favorite berry")}:</span>
 					<TypeSelectContainer>
 						<span>
 							{expert && <header>{t("main")}</header>}
@@ -148,7 +148,7 @@ const FavoriteBerrySelect = React.memo(
 				</section>
 				{expert && (
 					<section>
-						<label>{t("expert effect")}:</label>
+						<span className="lbl">{t("expert effect")}:</span>
 						<ExpertEffectSelect
 							value={value.expertEffect}
 							onChange={onExpertEffectChange}

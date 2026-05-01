@@ -153,9 +153,9 @@ const BerryHelpDialog = React.memo(
 					{parameter.period > 0 && (
 						<>
 							<section style={{ marginTop: "1.8rem" }}>
-								<label>
+								<span className="lbl">
 									{t("tap frequency")} ({t("awake")}):
-								</label>
+								</span>
 								<TapFrequencyControl
 									max={10}
 									value={parameter.tapFrequencyAwake}
@@ -163,9 +163,9 @@ const BerryHelpDialog = React.memo(
 								/>
 							</section>
 							<section>
-								<label>
+								<span className="lbl">
 									{t("tap frequency")} ({t("asleep")}):
-								</label>
+								</span>
 								{parameter.tapFrequencyAwake === NoTap ? (
 									<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
 								) : (

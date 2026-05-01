@@ -45,7 +45,7 @@ const StyledSettingForm = styled("div")({
 		"&.mt": {
 			marginTop: "1rem",
 		},
-		"& > label": {
+		"& > span.lbl": {
 			marginRight: "auto",
 			marginTop: 0,
 			textWrap: "nowrap",
@@ -210,12 +210,12 @@ const StrengthSettingForm = React.memo(
 		return (
 			<StyledSettingForm>
 				<section>
-					<label>{t("period")}:</label>
+					<span className="lbl">{t("period")}:</span>
 					<PeriodSelect dispatch={dispatch} value={value} />
 				</section>
 				<AreaControlGroup value={value} onChange={onChange} />
 				<section className="mt">
-					<label>{t("event")}:</label>
+					<span className="lbl">{t("event")}:</span>
 					<div
 						style={{
 							display: "flex",
@@ -239,29 +239,29 @@ const StrengthSettingForm = React.memo(
 					</div>
 				</section>
 				<section className="mt">
-					<label>{t("level")}:</label>
+					<span className="lbl">{t("level")}:</span>
 					<FixedLevelSelect dispatch={dispatch} value={value} />
 				</section>
 				<section>
-					<label>{t("calc with evolved")}:</label>
+					<span className="lbl">{t("calc with evolved")}:</span>
 					<Switch checked={value.evolved} onChange={onEvolvedChange} />
 				</section>
 				<section>
-					<label>{t("calc with max skill level")}:</label>
+					<span className="lbl">{t("calc with max skill level")}:</span>
 					<Switch
 						checked={value.maxSkillLevel}
 						onChange={onMaxSkillLevelChange}
 					/>
 				</section>
 				<section>
-					<label>
+					<span className="lbl">
 						{t("include pity proc")}:
 						<InfoButton onClick={onPityProcHelpClick} />
-					</label>
+					</span>
 					<Switch checked={value.pityProc} onChange={onPityProcChange} />
 				</section>
 				<section className="mt">
-					<label>{t("helping bonus")}:</label>
+					<span className="lbl">{t("helping bonus")}:</span>
 					<Select
 						variant="standard"
 						value={value.helpBonusCount.toString()}
@@ -276,9 +276,9 @@ const StrengthSettingForm = React.memo(
 				</section>
 				<Collapse in={isNotWhistle}>
 					<section>
-						<label>
+						<span className="lbl">
 							{t("tap frequency")} ({t("awake")}):
-						</label>
+						</span>
 						<TapFrequencyControl
 							max={10}
 							value={value.tapFrequencyAwake}
@@ -286,9 +286,9 @@ const StrengthSettingForm = React.memo(
 						/>
 					</section>
 					<section>
-						<label>
+						<span className="lbl">
 							{t("tap frequency")} ({t("asleep")}):
-						</label>
+						</span>
 						{value.tapFrequencyAwake === NoTap ? (
 							<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
 						) : (
@@ -300,14 +300,14 @@ const StrengthSettingForm = React.memo(
 						)}
 					</section>
 					<section className="mt">
-						<label>{t("energy")}:</label>
+						<span className="lbl">{t("energy")}:</span>
 						<Button onClick={onEditEnergyClick}>{t("edit")}</Button>
 					</section>
 				</Collapse>
 				<section className="mt">
-					<label>
+					<span className="lbl">
 						{t("recipe bonus")}:<InfoButton onClick={onRecipeBonusInfoClick} />
-					</label>
+					</span>
 					<FormControl size="small">
 						<Select
 							variant="standard"
@@ -372,7 +372,7 @@ const StrengthSettingForm = React.memo(
 					</FormControl>
 				</section>
 				<section>
-					<label>{t("average recipe level")}:</label>
+					<span className="lbl">{t("average recipe level")}:</span>
 					<LevelInput
 						value={value.recipeLevel}
 						onChange={onRecipeLevelChange}

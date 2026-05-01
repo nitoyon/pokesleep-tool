@@ -93,22 +93,22 @@ const SkillPityProcDialog = React.memo(
 						</p>
 					</header>
 					<section>
-						<label>{t("pity proc rate")}:</label>
+						<span className="lbl">{t("pity proc rate")}:</span>
 						<span>{round1(pityProcRate * 100)}%</span>
 					</section>
 					<section>
-						<label>{t("skill rate")}:</label>
+						<span className="lbl">{t("skill rate")}:</span>
 					</section>
 					<section className="indent">
-						<label>{t("with pity proc")}:</label>
+						<span className="lbl">{t("with pity proc")}:</span>
 						<span>{round1(overallSkillRate * 100)}%</span>
 					</section>
 					<section className="indent">
-						<label>{t("without pity proc")}:</label>
+						<span className="lbl">{t("without pity proc")}:</span>
 						<span>{round1(result.skillRate * 100)}%</span>
 					</section>
 					<section className="mt">
-						<label>{t("time to pity proc")}:</label>
+						<span className="lbl">{t("time to pity proc")}:</span>
 					</section>
 					<EnergyPreviewPanel
 						baseFreq={result.baseFreq}
@@ -116,7 +116,7 @@ const SkillPityProcDialog = React.memo(
 						display="pity"
 					/>
 					<section>
-						<label>{t("helping bonus")}:</label>
+						<span className="lbl">{t("helping bonus")}:</span>
 						<ToggleButtonGroup
 							size="small"
 							exclusive
@@ -141,7 +141,7 @@ const SkillPityProcDialog = React.memo(
 						</ToggleButtonGroup>
 					</section>
 					<section>
-						<label>{t("good camp ticket")}:</label>
+						<span className="lbl">{t("good camp ticket")}:</span>
 						<Switch
 							checked={param.isGoodCampTicketSet}
 							onChange={onCampTicketChange}
@@ -202,7 +202,7 @@ const StyledDialog = styled(Dialog)({
 		"&.indent": {
 			marginLeft: "1rem",
 		},
-		"& > label": {
+		"& > span.lbl": {
 			marginRight: "auto",
 			marginTop: 0,
 			textWrap: "nowrap",

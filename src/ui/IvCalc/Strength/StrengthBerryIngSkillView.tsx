@@ -768,7 +768,7 @@ export const StyledInfoDialog = styled(Dialog)({
 				"&.mt": {
 					marginTop: "1rem",
 				},
-				"& > label": {
+				"& > span.lbl": {
 					marginRight: "auto",
 					marginTop: 0,
 					textWrap: "nowrap",

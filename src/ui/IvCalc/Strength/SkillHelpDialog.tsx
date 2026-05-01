@@ -317,7 +317,7 @@ const SkillHelpDialog = React.memo(
 
 					{(!isCountOnly || iv.pokemon.skill === "Versatile") && (
 						<section style={{ marginTop: "0.8rem" }}>
-							<label>{t("skill level")}:</label>
+							<span className="lbl">{t("skill level")}:</span>
 							<FormControl size="small">
 								<ToggleButtonGroup
 									exclusive
@@ -361,14 +361,14 @@ const SkillHelpDialog = React.memo(
 						</div>
 					</Collapse>
 					<section style={{ marginTop: "0.8rem" }}>
-						<label>
+						<span className="lbl">
 							{t("skill rate")} (
 							{strength.parameter.pityProc
 								? t("with pity proc")
 								: t("without pity proc")}
 							):
 							<InfoButton onClick={onPityProcClick} />
-						</label>
+						</span>
 						{round1(result.overallSkillRate * 100)}%
 					</section>
 
@@ -880,31 +880,31 @@ function getBerryBurstValueText(
 			{text}
 			<br />
 			<div className="bbgrid">
-				<label>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</label>
+				<span>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</span>
 				<span>{formatWithComma(result.members[0].total)}</span>
 				<small>
 					({result.members[0].perBerry} × {result.members[0].count})
 				</small>
 
-				<label>{t("other team member")} 1:</label>
+				<span>{t("other team member")} 1:</span>
 				<span>{formatWithComma(result.members[1].total)}</span>
 				<small>
 					({result.members[1].perBerry} × {result.members[1].count})
 				</small>
 
-				<label>{t("other team member")} 2:</label>
+				<span>{t("other team member")} 2:</span>
 				<span>{formatWithComma(result.members[2].total)}</span>
 				<small>
 					({result.members[2].perBerry} × {result.members[2].count})
 				</small>
 
-				<label>{t("other team member")} 3:</label>
+				<span>{t("other team member")} 3:</span>
 				<span>{formatWithComma(result.members[3].total)}</span>
 				<small>
 					({result.members[3].perBerry} × {result.members[3].count})
 				</small>
 
-				<label>{t("other team member")} 4:</label>
+				<span>{t("other team member")} 4:</span>
 				<span>{formatWithComma(result.members[4].total)}</span>
 				<small>
 					({result.members[4].perBerry} × {result.members[4].count})
@@ -1011,7 +1011,7 @@ function getBerryBurstConfigHtml(
 	return (
 		<>
 			<section style={{ marginTop: "0.5rem" }}>
-				<label>{t("events.advanced")}:</label>
+				<span>{t("events.advanced")}:</span>
 				<Switch
 					checked={!auto}
 					size="small"
@@ -1019,7 +1019,7 @@ function getBerryBurstConfigHtml(
 				/>
 			</section>
 			<section style={{ paddingLeft: "1rem" }}>
-				<label>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</label>
+				<span>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</span>
 				<span style={{ color: "#999" }}>
 					<TypeSelect
 						size="small"
@@ -1036,9 +1036,9 @@ function getBerryBurstConfigHtml(
 			</section>
 			{[0, 1, 2, 3].map((i) => (
 				<section key={i} style={{ paddingLeft: "1rem" }}>
-					<label>
+					<span>
 						{t("other team member")} {i + 1}:
-					</label>
+					</span>
 					<span style={{ color: auto ? "#999" : "inherit" }}>
 						<TypeSelect
 							size="small"
@@ -1067,7 +1067,7 @@ function getBerryBurstConfigHtml(
 			))}
 			{iv.pokemon.name === "Cresselia" && (
 				<section style={{ paddingLeft: "1rem" }}>
-					<label>{t("different species")}:</label>
+					<span>{t("different species")}:</span>
 					<span style={{ color: "#999" }}>
 						{auto ? (
 							species

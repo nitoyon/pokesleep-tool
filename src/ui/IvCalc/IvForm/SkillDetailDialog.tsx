@@ -592,7 +592,7 @@ const StyledSkillDetailDialog = styled(Dialog)({
 				"&:first-of-type": {
 					marginTop: 0,
 				},
-				"& > label": {
+				"& > span.lbl": {
 					marginRight: "auto",
 					marginTop: 0,
 				},
@@ -642,7 +642,7 @@ const ConfigForm = React.memo(
 			return (
 				<StyledConfigForm>
 					<section>
-						<label>{t("area bonus")}:</label>
+						<span className="lbl">{t("area bonus")}:</span>
 						<AreaBonusControl
 							value={config.areaBonus}
 							onChange={(val) => {
@@ -664,7 +664,7 @@ const ConfigForm = React.memo(
 		) {
 			energyNatureSection = (
 				<section>
-					<label>{t("nature")}:</label>
+					<span className="lbl">{t("nature")}:</span>
 					<SelectEx
 						onChange={onEnergyChange}
 						value={config.energyNature.toString()}
@@ -694,7 +694,7 @@ const ConfigForm = React.memo(
 		) {
 			speciesSection = (
 				<section>
-					<label>{t("different species")}:</label>
+					<span className="lbl">{t("different species")}:</span>
 					<SelectEx
 						value={config.species}
 						onChange={onSpeciesChange}
@@ -728,12 +728,12 @@ const ConfigForm = React.memo(
 				<StyledConfigForm>
 					{energyNatureSection}
 					<section>
-						<label>
+						<span>
 							{t("pokemon on your team", {
 								pokemon: t("pokemons.Latios"),
 							})}
 							:
-						</label>
+						</span>
 						<Switch checked={config.latiTwins} onChange={onLatiTwinsChange} />
 					</section>
 				</StyledConfigForm>
@@ -754,7 +754,7 @@ const StyledConfigForm = styled("div")({
 		display: "flex",
 		flex: "0 auto",
 		paddingTop: "0.5rem",
-		"& > label": {
+		"& > span:first-of-type": {
 			fontSize: "0.9rem",
 			marginRight: "auto",
 			marginTop: 0,

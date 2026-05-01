@@ -186,7 +186,7 @@ const TrackingPanel = React.memo(
 									)}
 								</h3>
 								<article>
-									<label>{t("strength")}:</label>
+									<span>{t("strength")}:</span>
 									<section>
 										<strong>
 											{t("num", { n: data.tracking?.strength ?? 0 })}
@@ -200,11 +200,11 @@ const TrackingPanel = React.memo(
 											)
 										</small>
 									</section>
-									<label>{t("sleep score")}:</label>
+									<span>{t("sleep score")}:</span>
 									<section>
 										<strong>{data.tracking?.score ?? 0}</strong>
 									</section>
-									<label>{t("drowsy power")}:</label>
+									<span>{t("drowsy power")}:</span>
 									<section>
 										<strong>{t("num", { n: dp })}</strong>
 										<small>

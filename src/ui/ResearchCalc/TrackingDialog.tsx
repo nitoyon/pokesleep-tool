@@ -157,19 +157,19 @@ const TrackingDialog = React.memo(
 					<DialogContent>
 						<div className="notice">
 							<p>{t("tracking title")}</p>
-							<label>❶</label>
+							<span>❶</span>
 							<div>
 								{t("tracking desc1")}
 								<Button onClick={onGoPlusWarningClick}>
 									{t("tracking go plus+ title")}
 								</Button>
 							</div>
-							<label>❷</label>
+							<span>❷</span>
 							<div>{t("tracking desc2")}</div>
-							<label>❸</label>
+							<span>❸</span>
 							<div>{t("tracking desc3")}</div>
 						</div>
-						<label>{t("sleep score")}:</label>
+						<span>{t("sleep score")}:</span>
 						<header>
 							<SleepScore score={score} />
 							<div className="slider">
@@ -203,7 +203,7 @@ const TrackingDialog = React.memo(
 							</section>
 						</CollapseEx>
 						<div className="grid">
-							<label>{t("strength2")}:</label>
+							<span className="lbl">{t("strength2")}:</span>
 							<section>
 								<strong>{t("num", { n: data.strength })}</strong>
 								<br />
@@ -212,14 +212,14 @@ const TrackingDialog = React.memo(
 									<RankBallLabel type={rank.type} number={rank.rankNumber} />)
 								</small>
 							</section>
-							<label>{t("drowsy power")}:</label>
+							<span className="lbl">{t("drowsy power")}:</span>
 							<section>
 								<strong>{t("num", { n: dp })}</strong>
 								<small>
 									(<SpawnCountLabel count={spawnCount} />)
 								</small>
 							</section>
-							<label>{t("time range")}:</label>
+							<span className="lbl">{t("time range")}:</span>
 							<section style={{ display: "block" }}>
 								<span>
 									<strong>{start}</strong>
@@ -279,7 +279,7 @@ const StyledDialog = styled(Dialog)({
 				margin: "0 0 0.4rem 0",
 				lineHeight: 1.2,
 			},
-			"& > label": {
+			"& > span": {
 				color: "#24da6d",
 			},
 			"& > div": {
@@ -293,7 +293,7 @@ const StyledDialog = styled(Dialog)({
 				},
 			},
 		},
-		"& > label": {
+		"& > span.lbl": {
 			fontSize: "0.9rem",
 			marginTop: "1rem",
 			display: "block",
