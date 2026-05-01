@@ -1,24 +1,36 @@
-import React from 'react';
-import IvState, { IvAction } from '../IvState';
-import StrengthBerryIngSkillView from './StrengthBerryIngSkillView';
-import StrengthParameterSummary from './StrengthParameterSummary';
-import { Collapse } from '@mui/material';
+import { Collapse } from "@mui/material";
+import React from "react";
+import type IvState from "../IvState";
+import type { IvAction } from "../IvState";
+import StrengthBerryIngSkillView from "./StrengthBerryIngSkillView";
+import StrengthParameterSummary from "./StrengthParameterSummary";
 
-const StrengthView = React.memo(({state, dispatch}: {
-    state: IvState,
-    dispatch: React.Dispatch<IvAction>,
-}) => {
-    const pokemonIv = state.pokemonIv;
-    const parameter = state.parameter;
-    const lowerTabIndex = state.lowerTabIndex;
+const StrengthView = React.memo(
+	({
+		state,
+		dispatch,
+	}: {
+		state: IvState;
+		dispatch: React.Dispatch<IvAction>;
+	}) => {
+		const pokemonIv = state.pokemonIv;
+		const parameter = state.parameter;
+		const lowerTabIndex = state.lowerTabIndex;
 
-    return (<div>
-        <StrengthBerryIngSkillView pokemonIv={pokemonIv} settings={parameter}
-            energyDialogOpen={state.energyDialogOpen} dispatch={dispatch}/>
-        <Collapse in={lowerTabIndex !== 2}>
-            <StrengthParameterSummary state={state} dispatch={dispatch}/>
-        </Collapse>
-    </div>);
-});
+		return (
+			<div>
+				<StrengthBerryIngSkillView
+					pokemonIv={pokemonIv}
+					settings={parameter}
+					energyDialogOpen={state.energyDialogOpen}
+					dispatch={dispatch}
+				/>
+				<Collapse in={lowerTabIndex !== 2}>
+					<StrengthParameterSummary state={state} dispatch={dispatch} />
+				</Collapse>
+			</div>
+		);
+	},
+);
 
 export default StrengthView;

@@ -11,7 +11,9 @@ Feel free to [contribute](CONTRIBUTING.md)!
 
 Install Node.js v22.19+.
 
-Clone this repository, and run `npm install`.
+1. Clone this repository
+2. Run `npm install`.
+3. Run `npx lefthook install`
 
 ### `npm run dev`
 

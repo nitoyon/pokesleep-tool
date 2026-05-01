@@ -1,114 +1,154 @@
-import React from 'react';
-import { styled } from '@mui/system';
-import { IvAction } from '../IvState';
-import PokemonIv from '../../../util/PokemonIv';
-import { StrengthParameter, StrengthResult } from '../../../util/PokemonStrength';
-import DraggableTabContainer from '../../common/DraggableTabContainer';
-import EnergyPanel from '../Panel/EnergyPanel';
-import FrequencyInfoState, {
-    applyStateToParameter, createDefaultState, createFrequencyState,
-} from '../Panel/FrequencyInfoState';
-import FrequencyInfoPanel from '../Panel/FrequencyInfoPanel';
-import { useElementWidth } from '../../common/Hook';
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle,
-    Tabs, Tab,
- } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Tab,
+	Tabs,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import type PokemonIv from "../../../util/PokemonIv";
+import type {
+	StrengthParameter,
+	StrengthResult,
+} from "../../../util/PokemonStrength";
+import DraggableTabContainer from "../../common/DraggableTabContainer";
+import { useElementWidth } from "../../common/Hook";
+import type { IvAction } from "../IvState";
+import EnergyPanel from "../Panel/EnergyPanel";
+import FrequencyInfoPanel from "../Panel/FrequencyInfoPanel";
+import type FrequencyInfoState from "../Panel/FrequencyInfoState";
+import {
+	applyStateToParameter,
+	createDefaultState,
+	createFrequencyState,
+} from "../Panel/FrequencyInfoState";
 
 let defaultTabIndex = 0;
 
-const EnergyDialog = React.memo(({open, iv, result, parameter, onClose, dispatch}: {
-    open: boolean,
-    iv: PokemonIv,
-    result: StrengthResult,
-    parameter: StrengthParameter,
-    onClose: () => void,
-    dispatch: React.Dispatch<IvAction>,
-}) => {
-    const { t } = useTranslation();
-    const [width, elementRef] = useElementWidth();
-    const [tabIndex, setTabIndex] = React.useState(defaultTabIndex);
-    const openRef = React.useRef(open);
-    const [state, setState] = React.useState<FrequencyInfoState>(
-        createDefaultState());
+const EnergyDialog = React.memo(
+	({
+		open,
+		iv,
+		result,
+		parameter,
+		onClose,
+		dispatch,
+	}: {
+		open: boolean;
+		iv: PokemonIv;
+		result: StrengthResult;
+		parameter: StrengthParameter;
+		onClose: () => void;
+		dispatch: React.Dispatch<IvAction>;
+	}) => {
+		const { t } = useTranslation();
+		const [width, elementRef] = useElementWidth();
+		const [tabIndex, setTabIndex] = React.useState(defaultTabIndex);
+		const openRef = React.useRef(open);
+		const [state, setState] = React.useState<FrequencyInfoState>(
+			createDefaultState(),
+		);
 
-    React.useEffect(() => {
-        // execute only after this dialog is opened
-        if (!(open && !openRef.current)) {
-            openRef.current = open;
-            return;
-        }
-        openRef.current = open;
+		React.useEffect(() => {
+			// execute only after this dialog is opened
+			if (!(open && !openRef.current)) {
+				openRef.current = open;
+				return;
+			}
+			openRef.current = open;
 
-        // Initialize state from parameter
-        setState(createFrequencyState(iv, parameter,
-            createDefaultState()));
-    }, [iv, open, state, parameter]);
+			// Initialize state from parameter
+			setState(createFrequencyState(iv, parameter, createDefaultState()));
+		}, [iv, open, parameter]);
 
-    const onTabChange = React.useCallback((_: React.SyntheticEvent, tabIndex: number) => {
-        setTabIndex(tabIndex);
-        defaultTabIndex = tabIndex;
-    }, [])
+		const onTabChange = React.useCallback(
+			(_: React.SyntheticEvent, tabIndex: number) => {
+				setTabIndex(tabIndex);
+				defaultTabIndex = tabIndex;
+			},
+			[],
+		);
 
-    const onDragChange = React.useCallback((tabIndex: number) => {
-        setTabIndex(tabIndex);
-        defaultTabIndex = tabIndex;
-    }, []);
+		const onDragChange = React.useCallback((tabIndex: number) => {
+			setTabIndex(tabIndex);
+			defaultTabIndex = tabIndex;
+		}, []);
 
-    const onStateChange = React.useCallback((value: FrequencyInfoState) => {
-        applyStateToParameter(parameter, state, value, dispatch);
-        setState(value);
-    }, [dispatch, parameter, state]);
+		const onStateChange = React.useCallback(
+			(value: FrequencyInfoState) => {
+				applyStateToParameter(parameter, state, value, dispatch);
+				setState(value);
+			},
+			[dispatch, parameter, state],
+		);
 
-    return <StyledEnergyDialog open={open} onClose={onClose}>
-        <DialogTitle>
-            <Tabs value={tabIndex} onChange={onTabChange} ref={elementRef}>
-                <Tab label={t('energy')} value={0}/>
-                <Tab label={t('frequency')} value={1}/>
-            </Tabs>
-        </DialogTitle>
-        <DialogContent>
-            <DraggableTabContainer index={tabIndex} width={width + 20}
-                fitHeight onChange={onDragChange}>
-                <div className="tabChild">
-                    <EnergyPanel result={result} dispatch={dispatch}
-                        iv={iv} parameter={parameter}/>
-                </div>
-                <div className="tabChild">
-                    <FrequencyInfoPanel iv={iv} state={state} simple
-                        onStateChange={onStateChange}/>
-                </div>
-            </DraggableTabContainer>
-        </DialogContent>
-        <DialogActions disableSpacing>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </StyledEnergyDialog>;
-});
+		return (
+			<StyledEnergyDialog open={open} onClose={onClose}>
+				<DialogTitle>
+					<Tabs value={tabIndex} onChange={onTabChange} ref={elementRef}>
+						<Tab label={t("energy")} value={0} />
+						<Tab label={t("frequency")} value={1} />
+					</Tabs>
+				</DialogTitle>
+				<DialogContent>
+					<DraggableTabContainer
+						index={tabIndex}
+						width={width + 20}
+						fitHeight
+						onChange={onDragChange}
+					>
+						<div className="tabChild">
+							<EnergyPanel
+								result={result}
+								dispatch={dispatch}
+								iv={iv}
+								parameter={parameter}
+							/>
+						</div>
+						<div className="tabChild">
+							<FrequencyInfoPanel
+								iv={iv}
+								state={state}
+								simple
+								onStateChange={onStateChange}
+							/>
+						</div>
+					</DraggableTabContainer>
+				</DialogContent>
+				<DialogActions disableSpacing>
+					<Button onClick={onClose}>{t("close")}</Button>
+				</DialogActions>
+			</StyledEnergyDialog>
+		);
+	},
+);
 
 const StyledEnergyDialog = styled(Dialog)({
-    '& > div.MuiDialog-container > div.MuiPaper-root': {
-        // extend dialog width
-        width: '100%',
-        margin: '20px',
-        maxHeight: 'calc(100% - 20px)',
-        '& > .MuiDialogTitle-root': {
-            padding: '0.5rem 10px',
-            fontSize: '1rem',
-            '& > .MuiTabs-root': {
-                minHeight: '36px',
-                marginBottom: 'clamp(.3rem, 0.6vh, .7rem)',
-                '& button': {
-                    minHeight: '36px',
-                    padding: '6px 16px',
-                },
-            },
-        },
-        '& > .MuiDialogContent-root': {
-            padding: 0,
-        },
-    },
+	"& > div.MuiDialog-container > div.MuiPaper-root": {
+		// extend dialog width
+		width: "100%",
+		margin: "20px",
+		maxHeight: "calc(100% - 20px)",
+		"& > .MuiDialogTitle-root": {
+			padding: "0.5rem 10px",
+			fontSize: "1rem",
+			"& > .MuiTabs-root": {
+				minHeight: "36px",
+				marginBottom: "clamp(.3rem, 0.6vh, .7rem)",
+				"& button": {
+					minHeight: "36px",
+					padding: "6px 16px",
+				},
+			},
+		},
+		"& > .MuiDialogContent-root": {
+			padding: 0,
+		},
+	},
 });
 
 export default EnergyDialog;

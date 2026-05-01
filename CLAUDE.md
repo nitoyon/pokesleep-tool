@@ -19,6 +19,7 @@ This project is licensed under the MIT License.
 - `npm run build` - Full production build with typecheck + lint + build
 - `npm run typecheck` - Run TypeScript type checking only
 - `npm run lint` - Run ESLint checks only
+- `npm run fmt` - Format the source code
 - `npm test` - Run Vitest unit tests in watch mode
 - `npm run verify` - Verify all source code
 

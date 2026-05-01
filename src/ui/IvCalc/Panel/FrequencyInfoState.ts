@@ -1,13 +1,15 @@
-import { isExpertField } from '../../../data/fields';
-import PokemonIv from '../../../util/PokemonIv';
-import PokemonStrength, { StrengthParameter } from '../../../util/PokemonStrength';
-import { IvAction } from '../IvState';
+import { isExpertField } from "../../../data/fields";
+import type PokemonIv from "../../../util/PokemonIv";
+import PokemonStrength, {
+	type StrengthParameter,
+} from "../../../util/PokemonStrength";
+import type { IvAction } from "../IvState";
 
-type DisplayValue = "frequency"|"count"|"full";
+type DisplayValue = "frequency" | "count" | "full";
 
-type EnergyValue = 1|2|3|4|5;
+type EnergyValue = 1 | 2 | 3 | 4 | 5;
 
-type DistributionMode = "pmf"|"cdf";
+type DistributionMode = "pmf" | "cdf";
 
 // These global variables persist across tab switches.
 let defaultDisplayValue: DisplayValue = "frequency";
@@ -18,97 +20,115 @@ let defaultDistributionMode: DistributionMode = "pmf";
 
 /** Configuration for frequency info dialog display and calculation */
 export type FrequencyInfoState = {
-    /** Helping bonus count (0-4) */
-    helpingBonus: number;
-    /** Good camp ticket enabled */
-    campTicket: boolean;
-    /** Berry bonus from event */
-    berry: 0|1;
-    /** Ingredient bonus from event */
-    ingredient: 0|1;
-    /** Carry limit bonus from event (add) */
-    carryLimitAdd: 0|8|15;
-    /** Carry limit bonus from event (multiply) */
-    carryLimitMul: 1|1.5;
-    /** Expert mode enabled */
-    expertMode: boolean;
-    /** Expert berry selection (0=main, 1=sub, 2=others) */
-    expertBerry: number;
-    /** Expert ingredient bonus effect */
-    expertIngBonus: number;
-    /** Display value type */
-    displayValue: DisplayValue;
-    /** Distribution mode for chart */
-    distributionMode: DistributionMode;
-    /** Energy (5: 81-150, 4: 61-80, 3: 41-60, 2: 1-40, 0: 0) */
-    energy: EnergyValue;
-    /** Highlighted interval (80%, 90%, 95%, 99%) */
-    highlighted: number;
+	/** Helping bonus count (0-4) */
+	helpingBonus: number;
+	/** Good camp ticket enabled */
+	campTicket: boolean;
+	/** Berry bonus from event */
+	berry: 0 | 1;
+	/** Ingredient bonus from event */
+	ingredient: 0 | 1;
+	/** Carry limit bonus from event (add) */
+	carryLimitAdd: 0 | 8 | 15;
+	/** Carry limit bonus from event (multiply) */
+	carryLimitMul: 1 | 1.5;
+	/** Expert mode enabled */
+	expertMode: boolean;
+	/** Expert berry selection (0=main, 1=sub, 2=others) */
+	expertBerry: number;
+	/** Expert ingredient bonus effect */
+	expertIngBonus: number;
+	/** Display value type */
+	displayValue: DisplayValue;
+	/** Distribution mode for chart */
+	distributionMode: DistributionMode;
+	/** Energy (5: 81-150, 4: 61-80, 3: 41-60, 2: 1-40, 0: 0) */
+	energy: EnergyValue;
+	/** Highlighted interval (80%, 90%, 95%, 99%) */
+	highlighted: number;
 };
 
 export function createDefaultState(): FrequencyInfoState {
-    return {
-        helpingBonus: 0,
-        campTicket: false,
-        berry: 0,
-        ingredient: 0,
-        carryLimitAdd: 0,
-        carryLimitMul: 1,
-        expertMode: false,
-        expertBerry: 2,
-        expertIngBonus: 0,
-        displayValue: defaultDisplayValue,
-        energy: defaultEnergy,
-        distributionMode: defaultDistributionMode,
-        highlighted: 90,
-    };
+	return {
+		helpingBonus: 0,
+		campTicket: false,
+		berry: 0,
+		ingredient: 0,
+		carryLimitAdd: 0,
+		carryLimitMul: 1,
+		expertMode: false,
+		expertBerry: 2,
+		expertIngBonus: 0,
+		displayValue: defaultDisplayValue,
+		energy: defaultEnergy,
+		distributionMode: defaultDistributionMode,
+		highlighted: 90,
+	};
 }
 
-export function createFrequencyState(iv: PokemonIv,
-    parameter: StrengthParameter,
-    defaultState: FrequencyInfoState
+export function createFrequencyState(
+	iv: PokemonIv,
+	parameter: StrengthParameter,
+	defaultState: FrequencyInfoState,
 ): FrequencyInfoState {
-    const effect = new PokemonStrength(iv, parameter).bonusEffects;
-    const expertMode = isExpertField(parameter.fieldIndex);
-    const expertBerry = !expertMode ? defaultState.expertBerry :
-        parameter.favoriteType[0] === iv.pokemon.type ? 0 :
-        parameter.favoriteType.includes(iv.pokemon.type) ? 1 : 2;
-    return({
-        ...defaultState,
-        helpingBonus: parameter.helpBonusCount,
-        campTicket: parameter.isGoodCampTicketSet,
-        berry: effect.berry,
-        ingredient: effect.ingredient,
-        carryLimitAdd: effect.carryLimitAdd,
-        carryLimitMul: effect.carryLimitMul,
-        expertMode, expertBerry,
-        expertIngBonus: parameter.expertEffect === 'ing' ? 1 : 0,
-    })
+	const effect = new PokemonStrength(iv, parameter).bonusEffects;
+	const expertMode = isExpertField(parameter.fieldIndex);
+	const expertBerry = !expertMode
+		? defaultState.expertBerry
+		: parameter.favoriteType[0] === iv.pokemon.type
+			? 0
+			: parameter.favoriteType.includes(iv.pokemon.type)
+				? 1
+				: 2;
+	return {
+		...defaultState,
+		helpingBonus: parameter.helpBonusCount,
+		campTicket: parameter.isGoodCampTicketSet,
+		berry: effect.berry,
+		ingredient: effect.ingredient,
+		carryLimitAdd: effect.carryLimitAdd,
+		carryLimitMul: effect.carryLimitMul,
+		expertMode,
+		expertBerry,
+		expertIngBonus: parameter.expertEffect === "ing" ? 1 : 0,
+	};
 }
 
-export function applyStateToParameter(parameter: StrengthParameter,
-    prev: FrequencyInfoState, current: FrequencyInfoState,
-    dispatch: (action: IvAction) => void
+export function applyStateToParameter(
+	parameter: StrengthParameter,
+	prev: FrequencyInfoState,
+	current: FrequencyInfoState,
+	dispatch: (action: IvAction) => void,
 ) {
-    // Sync isGoodCampTicketSet to parameter
-    if (prev.campTicket !== current.campTicket) {
-        dispatch({type: 'changeParameter', payload: { parameter: {
-            ...parameter,
-            isGoodCampTicketSet: current.campTicket,
-        }}})
-    }
+	// Sync isGoodCampTicketSet to parameter
+	if (prev.campTicket !== current.campTicket) {
+		dispatch({
+			type: "changeParameter",
+			payload: {
+				parameter: {
+					...parameter,
+					isGoodCampTicketSet: current.campTicket,
+				},
+			},
+		});
+	}
 
-    // Sync helpBonusCount to parameter
-    if (prev.helpingBonus !== current.helpingBonus) {
-        dispatch({type: 'changeParameter', payload: { parameter: {
-            ...parameter,
-            helpBonusCount: current.helpingBonus as 0|1|2|3|4,
-        }}})
-    }
+	// Sync helpBonusCount to parameter
+	if (prev.helpingBonus !== current.helpingBonus) {
+		dispatch({
+			type: "changeParameter",
+			payload: {
+				parameter: {
+					...parameter,
+					helpBonusCount: current.helpingBonus as 0 | 1 | 2 | 3 | 4,
+				},
+			},
+		});
+	}
 
-    defaultDisplayValue = current.displayValue;
-    defaultDistributionMode = current.distributionMode;
-    defaultEnergy = current.energy;
+	defaultDisplayValue = current.displayValue;
+	defaultDistributionMode = current.distributionMode;
+	defaultEnergy = current.energy;
 }
 
 export default FrequencyInfoState;

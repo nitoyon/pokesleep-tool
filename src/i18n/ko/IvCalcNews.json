@@ -1,254 +1,254 @@
 {
-    "IvCalc": {
-        "news": {
-            "add sandshrew": {
-                "headline": "$t(pokemons.Sandshrew)・$t(pokemons.Sandslash)의 데이터를 추가하고, $t(pokemons.Togedemaru)의 데이터를 업데이트했습니다. $t(pity proc)・$t(tap frequency) 시뮬레이션에 대응했습니다 (<a href='https://youtu.be/kEX2myG-wS8'>설명 동영상</a>).",
-                "detail": "$t(rp collection)$t(movie detail)"
-            },
-            "add latias": {
-                "headline": "$t(pokemons.Latias)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v3.4.0": {
-                "headline": "v3.4.0의 밸런스 조정에 대응하였습니다.",
-                "detail": "$t(own research note)"
-            },
-            "add noibat": {
-                "headline": "$t(pokemons.Noibat)・$t(pokemons.Noivern)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "latias research": {
-                "headline": "$t(time to full inventory)를 그래프로 표시할 수 있게 되었습니다 (<a href='https://youtu.be/C7Ik6U9JsEM'>설명 동영상</a>).",
-                "detail": "[$t(frequency)] 오른쪽의 [i] 마크나 [$t(full inventory while sleeping (short))] 오른쪽의 [i] 마크에서 확인할 수 있습니다. 자세한 내용은 설명 동영상을 참조하세요.\n또한, 라티아스 리서치 시뮬레이션에 대응하였습니다."
-            },
-            "add mew": {
-                "headline": "$t(pokemons.Mew)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v3.3.0": {
-                "headline": "v3.3.0의 밸런스 조정에 대응하였습니다.",
-                "detail": "$t(rp)가 다르다면 알려주세요."
-            },
-            "add cutiefly": {
-                "headline": "$t(pokemons.Cutiefly)와 $t(pokemons.Ribombee)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add shuckle": {
-                "headline": "$t(pokemons.Shuckle)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "clodsire bug": {
-                "headline": "[$t(box)]에서 $t(pokemons.Clodsire)가 탈출했을 가능성이 있습니다. 확인해 주세요.",
-                "detail": "1월 7일~9일 사이에 도구를 새로 연 경우, 박스 내 $t(pokemons.Clodsire)의 데이터가 사라진 상태였습니다. 불편을 끼쳐드려 죄송합니다."
-            },
-            "candy movie": {
-                "headline": "<a href='https://youtu.be/-1I4s8jwiUs'>사탕 계산 기능 사용법 동영상</a>을 공개했습니다.",
-                "detail": "$t(movie detail)"
-            },
-            "holiday2025": {
-                "headline": "$t(pokemons.Togedemaru), $t(pokemons.Cetoddle)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "candy2025": {
-                "headline": "사탕 계산 기능을 대폭 개선했습니다.",
-                "detail": "사탕 계산 기능에 [$t(details)] 모드를 추가했습니다.\n또한 [$t(turn candy)] 기능을 추가했습니다. 왼쪽 하단의 버튼을 통해 이용하세요.\n$t(events.holiday 2025)에서의 $t(candy boost) 계획에 활용하세요."
-            },
-            "add spiritomb": {
-                "headline": "$t(pokemons.Spiritomb)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v3.1.0": {
-                "headline": "v3.1.0의 새로운 스킬 「$t(skills.Ingredient Magnet S (Present).name)」에 대응했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add amber pokemons": {
-                "headline": "$t(pokemons.Trapinch), $t(pokemons.Bagon), $t(pokemons.Dwebble)의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add halloween eevee": {
-                "headline": "$t(pokemons.Eevee (Halloween))의 데이터를 추가하고 $t(subskill.Helping Bonus)의 $t(strength2) 계산을 개선했습니다.",
-                "detail": "$t(rp collection)\n또한 $t(helping bonus addition label)할 수 있게 되었습니다."
-            },
-            "add pumpkaboo": {
-                "headline": "호바귀와 펌킨인가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v3.0.0": {
-                "headline": "v3.0.0의 밸런스 조정에 대응하였습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add natu": {
-                "headline": "$t(pokemons.Natu) 그리고 $t(pokemons.Xatu)가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.12.0": {
-                "headline": "v2.12.0 밸런스 조정을 반영하고 $t(skills.Berry Burst.name)의 시뮬레이션을 개선했습니다.",
-                "detail": "$t(pokemons.Braviary), $t(pokemons.Mimikyu)의 스킬 확률을 업데이트했습니다.\n$t(skills.Berry Burst.name)의 기대값 계산 시, 팀 내 포켓몬들은 동일한 레벨이라고 가정하도록 변경되었습니다. 또한 [$t(strength2)] 탭의 [$t(skill)] 오른쪽에 있는 [i] 버튼을 통해 팀 내 포켓몬들을 보다 상세하게 커스터마이즈할 수 있게 되었습니다."
-            },
-            "ex and toxel": {
-                "headline": "$t(pokemons.Toxel) 그리고 스트린더의 데이터가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.11.0": {
-                "headline": "v2.11.0의 밸런스 조정에 대응하였습니다.",
-                "detail": "$t(pokemons.Dugtrio), $t(pokemons.Marowak), $t(skills.Extra Helpful S.name)의 데이터를 업데이트하였습니다."
-            },
-            "sprigatito bug": {
-                "headline": "버그 보고: $t(pokemons.Sprigatito)가 박스에서 사라졌을 가능성이 있습니다. 번거로우시겠지만 확인 부탁드립니다.",
-                "detail": "8월 4일부터 6일 사이에 도구를 새로 열었을 경우, 박스 내의 $t(pokemons.Sprigatito) 데이터가 사라지는 문제가 있었습니다. 불편을 드려 죄송합니다."
-            },
-            "add hoenn": {
-                "headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle), 그리고 $t(pokemons.Minun)의 데이터가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.10.0": {
-                "headline": "v2.10.0의 밸런스 조정이 사탕 계산 기능에 반영되었습니다.",
-                "detail": "사탕 계산 기능에서 레벨 30 이하 포켓몬의 사탕 사용량이 감소했습니다."
-            },
-            "add farfetch'd": {
-                "headline": "$t(pokemons.Farfetch'd)의 식재료를 변경할 수 있게 되었습니다.",
-                "detail": "세 번째 재료의 개수는 추정치이므로 정확하지 않을 수 있습니다."
-            },
-            "add mawile & candy calc": {
-                "headline": "$t(pokemons.Mawile)가 추가되었습니다. 또한, 사탕 계산 기능을 추가했습니다.",
-                "detail": "$t(rp collection) 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
-            },
-            "v2.9.0": {
-                "headline": "v2.9.0에서 밸런스 조정이 적용되었습니다.",
-                "detail": "$t(pokemons.Butterfree), $t(pokemons.Dodrio), $t(pokemons.Altaria)의 데이터를 업데이트했습니다."
-            },
-            "add murkrow": {
-                "headline": "$t(pokemons.Murkrow), $t(pokemons.Honchkrow)가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "darkrai ing": {
-                "headline": "$t(pokemons.Darkrai)의 식재료를 변경할 수 있게 되었습니다.",
-                "detail": "세 번째 재료의 개수는 추정치이므로 정확하지 않을 수 있습니다."
-            },
-            "add happiny": {
-                "headline": "$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.7.0": {
-                "headline": "버전 2.7.0이 지원됩니다.",
-                "detail": "레벨 65까지의 SP 계산 및 스킬 레벨 상한 해방이 지원됩니다."
-            },
-            "add darkrai": {
-                "headline": "다크라이의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add cresselia": {
-                "headline": "크레세리아의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.6.0": {
-                "headline": "v2.6.0에서 밸런스 조정이 적용되었습니다.",
-                "detail": "도우미 ▼▼ 보정 값을 1.1에서 1.075로 변경했습니다."
-            },
-            "add munna": {
-                "headline": "몽나 와 몽얌나의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add clodsire": {
-                "headline": "우파 (팔데아) 와 토오의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.5.0": {
-                "headline": "v2.5.0에서 밸런스 조정이 있던 앱솔의 데이터를 업데이트했습니다.",
-                "detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
-            },
-            "add rufflet": {
-                "headline": "수리둥보와 워글의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.4.0": {
-                "headline": "v2.4.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.3.0": {
-                "headline": "v2.3.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "holiday 2024": {
-                "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add sneasel": {
-                "headline": "포푸니와 포푸니라의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "eevee week 2024": {
-                "headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
-                "detail": "[$t(strength2)] 탭에서 이브이 위크 중 포켓몬의 성능을 확인할 수 있게 되었습니다."
-            },
-            "add mimikyu": {
-                "headline": "따라큐의 정보를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v2.1.0": {
-                "headline": "델빌, 헬가, 블래키, 그리고 피카츄 (핼러윈)의 데이터를 업데이트했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "halloween event 2024 simmulation": {
-                "headline": "핼러윈 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
-                "detail": "[$t(strength2)] 탭에서 핼러윈 이벤트 중 고스트 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
-            },
-            "add drifloon and drifblim": {
-                "headline": "흔들풍손와 둥실라이드의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)\n힘의 양은 매번 발산된다고 가정하여 계산됩니다."
-            },
-            "add OGPP pokemons": {
-                "headline": "턱지충이, 꼬링크, 가보리와 그 진화형가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add OGPP": {
-                "headline": "골드 폐발전소가 연구 지역 목록에 추가되었습니다.",
-                "detail": "이제 골드 폐발전소에서 당신의 포켓몬 힘을 쉽게 시뮬레이션할 수 있습니다."
-            },
-            "add suicune": {
-                "headline": "스이쿤의 정보를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "add wooper and quagsire": {
-                "headline": "우파와 누오의 데이터를 추가했습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "box filter and sort improvement": {
-                "headline": "박스 필터링 및 정렬 기능이 크게 향상되었습니다.",
-                "detail": "이제 박스를 종 이름, 닉네임, $t(ingredient), $t(main skill), $t(sub skills) 로 필터링할 수 있습니다.\n추가로, 박스의 정렬 옵션이 $t(berry), $t(ingredient), $t(skill count) 로 확장되었습니다."
-            },
-            "suicune event simmulation": {
-                "headline": "스이쿤 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
-                "detail": "[$t(strength2)] 탭에서 스이쿤 이벤트 중 물 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
-            },
-            "evolution count and ribbon": {
-                "headline": "진화 횟수와 굿나잇리본의 레벨이 이제 설정 가능합니다.",
-                "detail": "이제 [$t(carry limit)]로 진화 횟수를, [$t(sleeping time shared)]로 수면 시간을 지정할 수 있습니다.\n이를 통해 '$t(carry limit)'와 '$t(frequency)'에 적절한 값을 사용하여 포켓몬 성능을 확인할 수 있습니다."
-            },
-            "bank main skill": {
-                "headline": "주요 스킬이 저장될 확률을 이제 확인할 수 있습니다.",
-                "detail": "[기력] 탭에서 [일어났을 때 스킬] 섹션에서 주요 스킬의 저장 확률을 확인할 수 있습니다 (스킬 특기의 포켓몬만). 이 숫자는 스킬 발생 횟수 계산에도 반영됩니다.\n추가로, 새로운 설정 항목인 [탭 빈도 (잠자는 중)]가 추가되었습니다. 이제 밤에 '어느새 육성'이 발생하지 않을 때의 능력을 확인할 수 있습니다."
-            },
-            "add paldea starter": {
-                "headline": "나오하, 뜨아거, 꾸왁스와 그 진화형가 추가되었습니다.",
-                "detail": "$t(rp collection)"
-            },
-            "v1.9.0": {
-                "headline": "포켓몬 슬립 버전 1.9.0의 변경에 대응하여 에너지 효율 값 조정",
-                "detail": "포켓몬 슬립 1.9.0에서 '기력이 적을 때 도와주는 효율이 지금보다 조금 좋아집니다'이라는 변경 사항에 대응하였습니다. (참고: ポケモンスリープ攻略・検証Wiki, 포슬립 위키)\n또한, 상자 용량을 100에서 150으로 증가시켰습니다."
-            },
-            "energy nature and inventory": {
-                "headline": "최대 소지 수와 기력 회복량은 총 에너지를 계산할 때 고려됩니다.",
-                "detail": "이전에는 밤에 인벤토리가 넘치는 포켓몬의 능력을 과대평가했지만, 이제는 실제 재료 수와 기술 발생 수에 접근하고 있습니다. 또한 [총 에너지] 탭에서는 수면 중 인벤토리가 가득 찰 때까지의 시간과 일어날 때 기술 발생률을 확인할 수 있습니다.\n현재로서는 포켓몬을 진화하기 전 상태에서 잡은 것을 가정하여 최대 소지 수를 추정하고 있습니다."
-            },
-            "box": {
-                "headline": "$t(box) 기능이 추가되었습니다.",
-                "detail": "포켓몬 비교에 활용해 주세요."
-            },
-            "initial release": {
-                "headline": "$t(IvCalc.short title)이 출시되었습니다.",
-                "detail": "$t(IvCalc.description)"
-            }
-        }
-    }
+	"IvCalc": {
+		"news": {
+			"add sandshrew": {
+				"headline": "$t(pokemons.Sandshrew)・$t(pokemons.Sandslash)의 데이터를 추가하고, $t(pokemons.Togedemaru)의 데이터를 업데이트했습니다. $t(pity proc)・$t(tap frequency) 시뮬레이션에 대응했습니다 (<a href='https://youtu.be/kEX2myG-wS8'>설명 동영상</a>).",
+				"detail": "$t(rp collection)$t(movie detail)"
+			},
+			"add latias": {
+				"headline": "$t(pokemons.Latias)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v3.4.0": {
+				"headline": "v3.4.0의 밸런스 조정에 대응하였습니다.",
+				"detail": "$t(own research note)"
+			},
+			"add noibat": {
+				"headline": "$t(pokemons.Noibat)・$t(pokemons.Noivern)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"latias research": {
+				"headline": "$t(time to full inventory)를 그래프로 표시할 수 있게 되었습니다 (<a href='https://youtu.be/C7Ik6U9JsEM'>설명 동영상</a>).",
+				"detail": "[$t(frequency)] 오른쪽의 [i] 마크나 [$t(full inventory while sleeping (short))] 오른쪽의 [i] 마크에서 확인할 수 있습니다. 자세한 내용은 설명 동영상을 참조하세요.\n또한, 라티아스 리서치 시뮬레이션에 대응하였습니다."
+			},
+			"add mew": {
+				"headline": "$t(pokemons.Mew)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v3.3.0": {
+				"headline": "v3.3.0의 밸런스 조정에 대응하였습니다.",
+				"detail": "$t(rp)가 다르다면 알려주세요."
+			},
+			"add cutiefly": {
+				"headline": "$t(pokemons.Cutiefly)와 $t(pokemons.Ribombee)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add shuckle": {
+				"headline": "$t(pokemons.Shuckle)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"clodsire bug": {
+				"headline": "[$t(box)]에서 $t(pokemons.Clodsire)가 탈출했을 가능성이 있습니다. 확인해 주세요.",
+				"detail": "1월 7일~9일 사이에 도구를 새로 연 경우, 박스 내 $t(pokemons.Clodsire)의 데이터가 사라진 상태였습니다. 불편을 끼쳐드려 죄송합니다."
+			},
+			"candy movie": {
+				"headline": "<a href='https://youtu.be/-1I4s8jwiUs'>사탕 계산 기능 사용법 동영상</a>을 공개했습니다.",
+				"detail": "$t(movie detail)"
+			},
+			"holiday2025": {
+				"headline": "$t(pokemons.Togedemaru), $t(pokemons.Cetoddle)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"candy2025": {
+				"headline": "사탕 계산 기능을 대폭 개선했습니다.",
+				"detail": "사탕 계산 기능에 [$t(details)] 모드를 추가했습니다.\n또한 [$t(turn candy)] 기능을 추가했습니다. 왼쪽 하단의 버튼을 통해 이용하세요.\n$t(events.holiday 2025)에서의 $t(candy boost) 계획에 활용하세요."
+			},
+			"add spiritomb": {
+				"headline": "$t(pokemons.Spiritomb)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v3.1.0": {
+				"headline": "v3.1.0의 새로운 스킬 「$t(skills.Ingredient Magnet S (Present).name)」에 대응했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add amber pokemons": {
+				"headline": "$t(pokemons.Trapinch), $t(pokemons.Bagon), $t(pokemons.Dwebble)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add halloween eevee": {
+				"headline": "$t(pokemons.Eevee (Halloween))의 데이터를 추가하고 $t(subskill.Helping Bonus)의 $t(strength2) 계산을 개선했습니다.",
+				"detail": "$t(rp collection)\n또한 $t(helping bonus addition label)할 수 있게 되었습니다."
+			},
+			"add pumpkaboo": {
+				"headline": "호바귀와 펌킨인가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v3.0.0": {
+				"headline": "v3.0.0의 밸런스 조정에 대응하였습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add natu": {
+				"headline": "$t(pokemons.Natu) 그리고 $t(pokemons.Xatu)가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.12.0": {
+				"headline": "v2.12.0 밸런스 조정을 반영하고 $t(skills.Berry Burst.name)의 시뮬레이션을 개선했습니다.",
+				"detail": "$t(pokemons.Braviary), $t(pokemons.Mimikyu)의 스킬 확률을 업데이트했습니다.\n$t(skills.Berry Burst.name)의 기대값 계산 시, 팀 내 포켓몬들은 동일한 레벨이라고 가정하도록 변경되었습니다. 또한 [$t(strength2)] 탭의 [$t(skill)] 오른쪽에 있는 [i] 버튼을 통해 팀 내 포켓몬들을 보다 상세하게 커스터마이즈할 수 있게 되었습니다."
+			},
+			"ex and toxel": {
+				"headline": "$t(pokemons.Toxel) 그리고 스트린더의 데이터가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.11.0": {
+				"headline": "v2.11.0의 밸런스 조정에 대응하였습니다.",
+				"detail": "$t(pokemons.Dugtrio), $t(pokemons.Marowak), $t(skills.Extra Helpful S.name)의 데이터를 업데이트하였습니다."
+			},
+			"sprigatito bug": {
+				"headline": "버그 보고: $t(pokemons.Sprigatito)가 박스에서 사라졌을 가능성이 있습니다. 번거로우시겠지만 확인 부탁드립니다.",
+				"detail": "8월 4일부터 6일 사이에 도구를 새로 열었을 경우, 박스 내의 $t(pokemons.Sprigatito) 데이터가 사라지는 문제가 있었습니다. 불편을 드려 죄송합니다."
+			},
+			"add hoenn": {
+				"headline": "$t(pokemons.Treecko), $t(pokemons.Torchic), $t(pokemons.Mudkip), $t(pokemons.Plusle), 그리고 $t(pokemons.Minun)의 데이터가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.10.0": {
+				"headline": "v2.10.0의 밸런스 조정이 사탕 계산 기능에 반영되었습니다.",
+				"detail": "사탕 계산 기능에서 레벨 30 이하 포켓몬의 사탕 사용량이 감소했습니다."
+			},
+			"add farfetch'd": {
+				"headline": "$t(pokemons.Farfetch'd)의 식재료를 변경할 수 있게 되었습니다.",
+				"detail": "세 번째 재료의 개수는 추정치이므로 정확하지 않을 수 있습니다."
+			},
+			"add mawile & candy calc": {
+				"headline": "$t(pokemons.Mawile)가 추가되었습니다. 또한, 사탕 계산 기능을 추가했습니다.",
+				"detail": "$t(rp collection) 사탕 계산 기능은 포켓몬 이름 오른쪽에 있는 사탕 아이콘을 누르거나, 박스에 있는 포켓몬의 오른쪽 상단에 있는 ⁝ 아이콘을 눌러 [사탕]을 선택하면 사용할 수 있습니다."
+			},
+			"v2.9.0": {
+				"headline": "v2.9.0에서 밸런스 조정이 적용되었습니다.",
+				"detail": "$t(pokemons.Butterfree), $t(pokemons.Dodrio), $t(pokemons.Altaria)의 데이터를 업데이트했습니다."
+			},
+			"add murkrow": {
+				"headline": "$t(pokemons.Murkrow), $t(pokemons.Honchkrow)가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"darkrai ing": {
+				"headline": "$t(pokemons.Darkrai)의 식재료를 변경할 수 있게 되었습니다.",
+				"detail": "세 번째 재료의 개수는 추정치이므로 정확하지 않을 수 있습니다."
+			},
+			"add happiny": {
+				"headline": "$t(pokemons.Happiny), $t(pokemons.Chansey), $t(pokemons.Blissey)가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.7.0": {
+				"headline": "버전 2.7.0이 지원됩니다.",
+				"detail": "레벨 65까지의 SP 계산 및 스킬 레벨 상한 해방이 지원됩니다."
+			},
+			"add darkrai": {
+				"headline": "다크라이의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add cresselia": {
+				"headline": "크레세리아의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.6.0": {
+				"headline": "v2.6.0에서 밸런스 조정이 적용되었습니다.",
+				"detail": "도우미 ▼▼ 보정 값을 1.1에서 1.075로 변경했습니다."
+			},
+			"add munna": {
+				"headline": "몽나 와 몽얌나의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add clodsire": {
+				"headline": "우파 (팔데아) 와 토오의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.5.0": {
+				"headline": "v2.5.0에서 밸런스 조정이 있던 앱솔의 데이터를 업데이트했습니다.",
+				"detail": "$t(frequency): 3,100 → 2,950\n$t(carry limit): 18 → 21"
+			},
+			"add rufflet": {
+				"headline": "수리둥보와 워글의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.4.0": {
+				"headline": "v2.4.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.3.0": {
+				"headline": "v2.3.0에서 밸런스 조정이 있던 포켓몬의 데이터를 업데이트했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"holiday 2024": {
+				"headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add sneasel": {
+				"headline": "포푸니와 포푸니라의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"eevee week 2024": {
+				"headline": "이브이 위크 시뮬레이션을 할 수 있게 되었습니다.",
+				"detail": "[$t(strength2)] 탭에서 이브이 위크 중 포켓몬의 성능을 확인할 수 있게 되었습니다."
+			},
+			"add mimikyu": {
+				"headline": "따라큐의 정보를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v2.1.0": {
+				"headline": "델빌, 헬가, 블래키, 그리고 피카츄 (핼러윈)의 데이터를 업데이트했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"halloween event 2024 simmulation": {
+				"headline": "핼러윈 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
+				"detail": "[$t(strength2)] 탭에서 핼러윈 이벤트 중 고스트 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
+			},
+			"add drifloon and drifblim": {
+				"headline": "흔들풍손와 둥실라이드의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)\n힘의 양은 매번 발산된다고 가정하여 계산됩니다."
+			},
+			"add OGPP pokemons": {
+				"headline": "턱지충이, 꼬링크, 가보리와 그 진화형가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add OGPP": {
+				"headline": "골드 폐발전소가 연구 지역 목록에 추가되었습니다.",
+				"detail": "이제 골드 폐발전소에서 당신의 포켓몬 힘을 쉽게 시뮬레이션할 수 있습니다."
+			},
+			"add suicune": {
+				"headline": "스이쿤의 정보를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"add wooper and quagsire": {
+				"headline": "우파와 누오의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"box filter and sort improvement": {
+				"headline": "박스 필터링 및 정렬 기능이 크게 향상되었습니다.",
+				"detail": "이제 박스를 종 이름, 닉네임, $t(ingredient), $t(main skill), $t(sub skills) 로 필터링할 수 있습니다.\n추가로, 박스의 정렬 옵션이 $t(berry), $t(ingredient), $t(skill count) 로 확장되었습니다."
+			},
+			"suicune event simmulation": {
+				"headline": "스이쿤 이벤트 시뮬레이션을 할 수 있게 되었습니다.",
+				"detail": "[$t(strength2)] 탭에서 스이쿤 이벤트 중 물 타입 포켓몬의 성능을 확인할 수 있게 되었습니다."
+			},
+			"evolution count and ribbon": {
+				"headline": "진화 횟수와 굿나잇리본의 레벨이 이제 설정 가능합니다.",
+				"detail": "이제 [$t(carry limit)]로 진화 횟수를, [$t(sleeping time shared)]로 수면 시간을 지정할 수 있습니다.\n이를 통해 '$t(carry limit)'와 '$t(frequency)'에 적절한 값을 사용하여 포켓몬 성능을 확인할 수 있습니다."
+			},
+			"bank main skill": {
+				"headline": "주요 스킬이 저장될 확률을 이제 확인할 수 있습니다.",
+				"detail": "[기력] 탭에서 [일어났을 때 스킬] 섹션에서 주요 스킬의 저장 확률을 확인할 수 있습니다 (스킬 특기의 포켓몬만). 이 숫자는 스킬 발생 횟수 계산에도 반영됩니다.\n추가로, 새로운 설정 항목인 [탭 빈도 (잠자는 중)]가 추가되었습니다. 이제 밤에 '어느새 육성'이 발생하지 않을 때의 능력을 확인할 수 있습니다."
+			},
+			"add paldea starter": {
+				"headline": "나오하, 뜨아거, 꾸왁스와 그 진화형가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
+			"v1.9.0": {
+				"headline": "포켓몬 슬립 버전 1.9.0의 변경에 대응하여 에너지 효율 값 조정",
+				"detail": "포켓몬 슬립 1.9.0에서 '기력이 적을 때 도와주는 효율이 지금보다 조금 좋아집니다'이라는 변경 사항에 대응하였습니다. (참고: ポケモンスリープ攻略・検証Wiki, 포슬립 위키)\n또한, 상자 용량을 100에서 150으로 증가시켰습니다."
+			},
+			"energy nature and inventory": {
+				"headline": "최대 소지 수와 기력 회복량은 총 에너지를 계산할 때 고려됩니다.",
+				"detail": "이전에는 밤에 인벤토리가 넘치는 포켓몬의 능력을 과대평가했지만, 이제는 실제 재료 수와 기술 발생 수에 접근하고 있습니다. 또한 [총 에너지] 탭에서는 수면 중 인벤토리가 가득 찰 때까지의 시간과 일어날 때 기술 발생률을 확인할 수 있습니다.\n현재로서는 포켓몬을 진화하기 전 상태에서 잡은 것을 가정하여 최대 소지 수를 추정하고 있습니다."
+			},
+			"box": {
+				"headline": "$t(box) 기능이 추가되었습니다.",
+				"detail": "포켓몬 비교에 활용해 주세요."
+			},
+			"initial release": {
+				"headline": "$t(IvCalc.short title)이 출시되었습니다.",
+				"detail": "$t(IvCalc.description)"
+			}
+		}
+	}
 }

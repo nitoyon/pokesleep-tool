@@ -1,46 +1,58 @@
-import Nature from './Nature';
-import pokemons, { getDecendants, IngredientName,
-    PokemonData, ValidFormType, toxelId, toxtricityId } from '../data/pokemons';
-import { IngredientType, IngredientTypes } from './PokemonRp';
-import { getMaxSkillLevel, MainSkillName, VersatileCandidates } from './MainSkill';
-import SubSkill from './SubSkill';
-import SubSkillList from './SubSkillList';
-import { clamp, trunc } from './NumberUtil';
+import pokemons, {
+	getDecendants,
+	type IngredientName,
+	type PokemonData,
+	toxelId,
+	toxtricityId,
+	type ValidFormType,
+} from "../data/pokemons";
 import {
-    expertFavoriteIngredientBonus, expertFavoriteIngredientAdditionalBonus,
-    expertMainBerrySpeedBonus, expertNonFavoriteBerrySpeedPenalty,
-} from './PokemonStrength';
+	getMaxSkillLevel,
+	type MainSkillName,
+	VersatileCandidates,
+} from "./MainSkill";
+import Nature from "./Nature";
+import { clamp, trunc } from "./NumberUtil";
+import { type IngredientType, IngredientTypes } from "./PokemonRp";
+import {
+	expertFavoriteIngredientAdditionalBonus,
+	expertFavoriteIngredientBonus,
+	expertMainBerrySpeedBonus,
+	expertNonFavoriteBerrySpeedPenalty,
+} from "./PokemonStrength";
+import SubSkill from "./SubSkill";
+import SubSkillList from "./SubSkillList";
 
 /**
  * Represents the slot of ingredient.
  */
 export interface IngredientSlot {
-    /** Ingredient name. */
-    name: IngredientName;
-    /** Ingredient count by single help (0 if locked) */
-    count: number;
-    /** Slot index (ing1 -> 0, ing2 -> 1, ing3 -> 2) */
-    index: number;
+	/** Ingredient name. */
+	name: IngredientName;
+	/** Ingredient count by single help (0 if locked) */
+	count: number;
+	/** Slot index (ing1 -> 0, ing2 -> 1, ing3 -> 2) */
+	index: number;
 }
 
 /** Bonus that affect inventory consumption */
 export interface InventoryBonus {
-    /** Berry count bonus from events (0 or 1) */
-    berry: 0|1;
-    /** Ingredient count bonus from events (0 or 1) */
-    ingredient: 0|1;
-    /** Carry limit bonus (add) */
-    carryLimitAdd: 0|8|15;
-    /** Carry limit bonus (multiply) */
-    carryLimitMul: 1|1.5;
-    /**
-     * Whether expert mode ingredient bonus applies.
-     * True if following condition are all met.
-     * - Expert mode
-     * - ExpertEffects is `ing`
-     * - Favorite berry
-     */
-    expertIng: boolean;
+	/** Berry count bonus from events (0 or 1) */
+	berry: 0 | 1;
+	/** Ingredient count bonus from events (0 or 1) */
+	ingredient: 0 | 1;
+	/** Carry limit bonus (add) */
+	carryLimitAdd: 0 | 8 | 15;
+	/** Carry limit bonus (multiply) */
+	carryLimitMul: 1 | 1.5;
+	/**
+	 * Whether expert mode ingredient bonus applies.
+	 * True if following condition are all met.
+	 * - Expert mode
+	 * - ExpertEffects is `ing`
+	 * - Favorite berry
+	 */
+	expertIng: boolean;
 }
 
 /**
@@ -48,16 +60,16 @@ export interface InventoryBonus {
  * the bag-space consumed by a single help outcome (berry or ingredient).
  */
 export type BagUsagePerHelpDetailItem = {
-    /** The item produced: "berry" or a specific ingredient name */
-    name: "berry" | IngredientName;
-    /** Bag usage increase by the help */
-    count: number;
-    /** Probability of the usage */
-    p: number;
-    /** Ingredient slot index: 0=ing1, 1=ing2, 2=ing3. -1 for berry. */
-    ingSlotIndex: number;
-    /** Unique ingredient kind index (by name). -1 for berry. */
-    ingKindIndex: number;
+	/** The item produced: "berry" or a specific ingredient name */
+	name: "berry" | IngredientName;
+	/** Bag usage increase by the help */
+	count: number;
+	/** Probability of the usage */
+	p: number;
+	/** Ingredient slot index: 0=ing1, 1=ing2, 2=ing3. -1 for berry. */
+	ingSlotIndex: number;
+	/** Unique ingredient kind index (by name). -1 for berry. */
+	ingKindIndex: number;
 };
 
 /**
@@ -65,21 +77,21 @@ export type BagUsagePerHelpDetailItem = {
  * a PokemonIv instance.
  */
 export interface PokemonIvProps {
-    pokemonName: string;
-    level: number;
-    skillLevel: number;
-    ingredient: IngredientType;
-    subSkills: SubSkillList;
-    nature: Nature;
-    ribbon: 0|1|2|3|4;
-    mythIng1: IngredientName;
-    mythIng2: IngredientName;
-    mythIng3: IngredientName;
-    versatileSkill: MainSkillName;
-    /** Override base ingredient rate (replaces pokemon.ingRate) */
-    baseIngRate?: number;
-    /** Override base skill rate (replaces pokemon.skillRate) */
-    baseSkillRate?: number;
+	pokemonName: string;
+	level: number;
+	skillLevel: number;
+	ingredient: IngredientType;
+	subSkills: SubSkillList;
+	nature: Nature;
+	ribbon: 0 | 1 | 2 | 3 | 4;
+	mythIng1: IngredientName;
+	mythIng2: IngredientName;
+	mythIng3: IngredientName;
+	versatileSkill: MainSkillName;
+	/** Override base ingredient rate (replaces pokemon.ingRate) */
+	baseIngRate?: number;
+	/** Override base skill rate (replaces pokemon.skillRate) */
+	baseSkillRate?: number;
 }
 
 /**
@@ -89,991 +101,1070 @@ export interface PokemonIvProps {
  * This immutability depends on Nature and SubSkillList also being immutable.
  */
 class PokemonIv {
-    readonly pokemonName: string;
-    readonly pokemon: PokemonData;
-    readonly level: number;
-    readonly skillLevel: number;
-    readonly ingredient: IngredientType;
-    readonly subSkills: SubSkillList;
-    readonly nature: Nature;
-    readonly ribbon: 0|1|2|3|4;
-    readonly mythIng1: IngredientName;
-    readonly mythIng2: IngredientName;
-    readonly mythIng3: IngredientName;
-
-    /**
-     * Actual skill name for Versatile if pokemonName is Mew,
-     * otherwise same as pokemon.skill.
-     *
-     * (ex) Versatile (Charge Strength S)
-     * => Charge Strength S (Random)
-     */
-    readonly versatileSkill: MainSkillName;
-    readonly baseIngRate?: number;
-    readonly baseSkillRate?: number;
-
-    private readonly cache: Map<string, number> = new Map();
-    private activeSubSkillsCache: undefined | SubSkill[] = undefined;
-
-    /**
-     * ID migration map for backward compatibility.
-     * Maps incorrect IDs to correct Pokedex IDs.
-     */
-    private static readonly idMigrations: Record<number, number> = {
-        231: 213,  // Shuckle: placeholder ID -> actual Pokedex ID
-    };
-
-    /** Initialize new instance. */
-    constructor(input: Partial<PokemonIvProps>) {
-        const params = PokemonIv.normalize(input);
-
-        // Apply normalized parameters to instance
-        this.pokemonName = params.pokemonName;
-        this.level = params.level;
-        this.skillLevel = params.skillLevel;
-        this.ingredient = params.ingredient;
-        this.subSkills = params.subSkills;
-        this.nature = params.nature;
-        this.ribbon = params.ribbon;
-        this.mythIng1 = params.mythIng1;
-        this.mythIng2 = params.mythIng2;
-        this.mythIng3 = params.mythIng3;
-        this.versatileSkill = params.versatileSkill;
-        this.baseIngRate = params.baseIngRate;
-        this.baseSkillRate = params.baseSkillRate;
-
-        // Look up pokemon data (not in params)
-        const pokemon = pokemons.find(x => x.name === params.pokemonName);
-        if (pokemon === undefined) {
-            throw new Error(`Unknown name: ${params.pokemonName}`);
-        }
-        this.pokemon = pokemon;
-
-        // Apply base rate overrides
-        if (params.baseIngRate !== undefined || params.baseSkillRate !== undefined) {
-            this.pokemon = {
-                ...this.pokemon,
-                ...(params.baseIngRate !== undefined && { ingRate: params.baseIngRate }),
-                ...(params.baseSkillRate !== undefined && { skillRate: params.baseSkillRate }),
-            };
-        }
-    }
-
-    /** Returns true if the Pokémon is mythical. */
-    get isMythical(): boolean {
-        return this.pokemon.mythIng !== undefined;
-    }
-
-    /** Get active sub-skills list. */
-    get activeSubSkills(): SubSkill[] {
-        if (this.activeSubSkillsCache !== undefined) {
-            return this.activeSubSkillsCache;
-        }
-
-        this.activeSubSkillsCache = this.subSkills
-            .getActiveSubSkills(this.level);
-        return this.activeSubSkillsCache;
-    }
-
-    private getOrCache(key: string, compute: () => number): number {
-        const cached = this.cache.get(key);
-        if (cached !== undefined) {
-            return cached;
-        }
-        const value = compute();
-        this.cache.set(key, value);
-        return value;
-    }
-
-    get skillRate(): number {
-        return this.getOrCache('skillRate', () => {
-            return trunc(
-                this.pokemon.skillRate / 100 *
-                (this.nature?.mainSkillChanceFactor ?? 1) *
-                (1 + this.activeSubSkills.reduce((p, c) => p + c.skillTrigger, 0) * 0.18),
-                4);
-        });
-    }
-
-    /** Calculate help count for pity proc */
-    get pityProcHelpCount(): number {
-        return this.getOrCache('pityProc', () => {
-            if (this.pokemon.specialty !== "Skills" &&
-                this.pokemon.specialty !== "All"
-            ) {
-                return 78;
-            }
-
-            return Math.ceil(142000 / this.pokemon.frequency);
-        });
-    }
-
-    /**
-     * Calculate overall skill rate including pity proc
-     *
-     * (ref) https://pks.raenonx.cc/en/docs/view/mechanics/skill-pity
-     *
-     * @param rate Skill rate (including event bonus or area bonus).
-     * @return Overall skill proc rate.
-     */
-    calculateSkillRateWithPityProc(rate: number): number {
-        return rate /
-            (1 - Math.pow(1 - rate, this.pityProcHelpCount + 1));
-    }
-
-    get ingredientRate(): number {
-        return this.getOrCache('ingredientRate', () => {
-            return trunc(
-                this.pokemon.ingRate / 100 *
-                (this.nature?.ingredientFindingFactor ?? 1) *
-                (1 + this.activeSubSkills.reduce((p, c) => p + c.ingredientFinder, 0) * 0.18),
-                4);
-        });
-    }
-
-    get berryRate(): number {
-        return this.ingredientRate > 0 ? 1 - this.ingredientRate : 0;
-    }
-
-    /**
-     * Creates a deep copy of this instance.
-     * @param input New properties.
-     * @returns A cloned instance.
-     */
-    clone(input?: Partial<PokemonIvProps>): PokemonIv {
-        const params = this.toProps();
-        if (input) {
-            Object.assign(params, input);
-
-            // Handle when pokemon name has been changed
-            if (params.pokemonName !== this.pokemonName) {
-                const pokemon = pokemons.find(x => x.name === params.pokemonName);
-                if (pokemon === undefined) {
-                    throw new Error(`Unknown name: ${params.pokemonName}`);
-                }
-
-                // Increase or decrease skill level
-                const diff = pokemon.evolutionCount - this.pokemon.evolutionCount;
-                params.skillLevel += diff;
-
-                // Reset mythIng
-                params.mythIng1 = params.mythIng2 = params.mythIng3 = "unknown";
-            }
-        }
-
-        return new PokemonIv(params);
-    }
-
-    /**
-     * Creates a new PokemonIv instance with a changed level.
-     * @param level The new level for the PokemonIv.
-     * @return A new PokemonIv instance with the specified level.
-     */
-    changeLevel(level: number): PokemonIv {
-        const tmp = this.clone({level});
-
-        const beforeSkillLevelUp = this.activeSubSkills
-            .reduce((p, c) => p + c.skillLevelUp, 0);
-        const afterSkillLevelUp = tmp.activeSubSkills
-            .reduce((p, c) => p + c.skillLevelUp, 0);
-        const skillLevel = this.skillLevel +
-            afterSkillLevelUp - beforeSkillLevelUp;
-        return tmp.clone({skillLevel});
-    }
-
-    /**
-     * Creates a new PokemonIv instance with a changed sub-skills.
-     * @param subSkills The new sub-skills for the PokemonIv.
-     * @return A new PokemonIv instance with the specified sub-skills.
-     */
-    changeSubSkills(subSkills: SubSkillList): PokemonIv {
-        const tmp = this.clone({subSkills});
-
-        const beforeSkillLevelUp = this.activeSubSkills
-            .reduce((p, c) => p + c.skillLevelUp, 0);
-        const afterSkillLevelUp = tmp.activeSubSkills
-            .reduce((p, c) => p + c.skillLevelUp, 0);
-        const skillLevel = this.skillLevel +
-            afterSkillLevelUp - beforeSkillLevelUp;
-        return tmp.clone({skillLevel});
-    }
-
-    /**
-     * Get IngredientName[] which the Pokemon can gather
-     * @param unlockedOnly Unlocked ingredients only or not.
-     * @returns Ingredients.
-     */
-    getIngredients(unlockedOnly: boolean): IngredientName[] {
-        if (this.isMythical) {
-            const mythRet = [this.mythIng1];
-            if (!unlockedOnly || this.level >= 30) {
-                if (this.mythIng2 !== "unknown" && mythRet[0] !== this.mythIng2) {
-                    mythRet.push(this.mythIng2);
-                }
-            }
-            if (!unlockedOnly || this.level >= 60) {
-                if (this.mythIng3 !== "unknown" && mythRet.includes(this.mythIng3)) {
-                    mythRet.push(this.mythIng3);
-                }
-            }
-            return mythRet;
-        }
-
-        const ret: IngredientName[] = [this.pokemon.ing1.name];
-
-        if (!unlockedOnly || this.level >= 30) {
-            if (this.ingredient.charAt(1) === 'B') {
-                ret.push(this.pokemon.ing2.name);
-            }
-        }
-
-        if (!unlockedOnly || this.level >= 60) {
-            const ing3 = this.ingredient.charAt(2) === 'A' ? this.pokemon.ing1 :
-                this.ingredient.charAt(2) === 'B' ?
-                this.pokemon.ing2 : this.pokemon.ing3;
-            if (ing3 !== undefined && !ret.includes(ing3.name)) {
-                ret.push(ing3.name);
-            }
-        }
-        return ret;
-    }
-
-    get ingredient1(): IngredientSlot {
-        if (this.pokemon.mythIng !== undefined) {
-            return {
-                name: this.mythIng1 ?? "unknown",
-                count: this.pokemon.mythIng.find(x => x.name === this.mythIng1)?.c1 ?? 0,
-                index: 0,
-            };
-        }
-
-        return {
-            name: this.pokemon.ing1.name ?? "unknown",
-            count: this.pokemon.ing1.c1,
-            index: 0,
-        };
-    }
-
-    get ingredient2(): IngredientSlot {
-        if (this.pokemon.mythIng !== undefined) {
-            return {
-                name: this.mythIng2 ?? "unknown",
-                count: this.pokemon.mythIng.find(x => x.name === this.mythIng2)?.c2 ?? 0,
-                index: 1,
-            };
-        }
-
-        const ing2 = this.ingredient.charAt(1) === 'A' ?
-            this.pokemon.ing1 : this.pokemon.ing2;
-        return { name: ing2.name, count: ing2.c2, index: 1 };
-    }
-
-    get ingredient3(): IngredientSlot {
-        if (this.pokemon.mythIng !== undefined) {
-            return {
-                name: this.mythIng3 ?? "unknown",
-                count: this.pokemon.mythIng.find(x => x.name === this.mythIng3)?.c3 ?? 0,
-                index: 2,
-            };
-        }
-
-        const ing3 = this.ingredient.charAt(2) === 'A' ? this.pokemon.ing1 :
-            this.ingredient.charAt(2) === 'B' ?
-            this.pokemon.ing2 : this.pokemon.ing3;
-        if (ing3 === undefined) { throw new Error("this pokemon doesn't have 3rd ing"); }
-        return { name: ing3.name, count: ing3.c3, index: 2 };
-    }
-
-    /**
-     * Calculate the average bag usage (inventory slots used) per help action.
-     *
-     * This method calculates how many inventory slots are consumed on average
-     * when the Pokemon helps, taking into account both berries and ingredients
-     * based on the ingredient rate.
-     *
-     * @param bonus Bonus that affect inventory consumption.
-     * @returns Average number of inventory slots used per help
-     */
-    getBagUsagePerHelp(bonus?: Partial<InventoryBonus>): number {
-        const detail = this.getBagUsagePerHelpDetail(bonus);
-        let ret = 0;
-        for (const item of detail) {
-            ret += item.count * item.p;
-        }
-        return ret;
-    }
-
-    /**
-     * Calculate the detail bag usage (inventory slots used) per help action.
-     *
-     * @param bonus Bonus that affect inventory consumption.
-     * @returns Usage name, count and its probability.
-     */
-    getBagUsagePerHelpDetail(bonus?: Partial<InventoryBonus>): BagUsagePerHelpDetailItem[] {
-        const ret: BagUsagePerHelpDetailItem[] = [];
-        const ingKindIndexMap = new Map<string, number>();
-        const getIngKindIndex = (name: string): number => {
-            let idx = ingKindIndexMap.get(name);
-            if (idx === undefined) {
-                idx = ingKindIndexMap.size;
-                ingKindIndexMap.set(name, idx);
-            }
-            return idx;
-        };
-
-        // Fill bonus
-        const berryBonus = bonus?.berry ?? 0;
-        const ingredientBonus = bonus?.ingredient ?? 0;
-        const expertIngBonus = bonus?.expertIng ?? false;
-
-        // Calculate ing bonus
-        const ingRate = this.ingredientRate;
-        let ingBonus = ingredientBonus;
-        let hasExpertAdditionalBonus = false;
-        if (expertIngBonus) {
-            ingBonus += expertFavoriteIngredientBonus;
-            if (this.pokemon.specialty === "Ingredients") {
-                hasExpertAdditionalBonus = true;
-            }
-        }
-
-        // Add ing1
-        ret.push({
-            name: this.ingredient1.name,
-            count: this.ingredient1.count + ingBonus,
-            ingKindIndex: getIngKindIndex(this.ingredient1.name),
-            ingSlotIndex: 0,
-            p: 0,
-        });
-
-        // Add ing2
-        if (this.level >= 30) {
-            const ing2 = this.ingredient2;
-            if (ing2.count > 0) {
-                ret.push({
-                    name: this.ingredient2.name,
-                    count: ing2.count + ingBonus,
-                    ingKindIndex: getIngKindIndex(this.ingredient2.name),
-                    ingSlotIndex: 1,
-                    p: 0,
-                });
-            }
-        }
-
-        // Add ing3
-        if (this.level >= 60) {
-            const ing3 = this.ingredient3;
-            if (ing3.count > 0) {
-                ret.push({
-                    name: this.ingredient3.name,
-                    count: ing3.count + ingBonus,
-                    ingKindIndex: getIngKindIndex(this.ingredient3.name),
-                    ingSlotIndex: 2,
-                    p: 0,
-                });
-            }
-        }
-
-        // Duplicate ret if hasExpertAdditionalBonus is true
-        const ings = ret.length;
-        if (hasExpertAdditionalBonus) {
-            if (expertFavoriteIngredientAdditionalBonus !== 0.5) {
-                throw new Error('expert bonus changed');
-            }
-            for (let i = 0; i < ings; i++) {
-                ret.push({name: ret[i].name, count: ret[i].count + 1, p: 0,
-                    ingSlotIndex: ret[i].ingSlotIndex, ingKindIndex: ret[i].ingKindIndex});
-            }
-        }
-
-        // Divide ingRate equally across all ingredients
-        const eachIngRate = ingRate / ret.length;
-        for (const item of ret) {
-            item.p = eachIngRate;
-        }
-
-        // Add berry
-        const berryCount = this.berryCount;
-        ret.unshift({
-            name: "berry",
-            count: berryCount + berryBonus,
-            p: this.berryRate,
-            ingSlotIndex: -1,
-            ingKindIndex: -1,
-        });
-
-        return ret;
-    }
-
-    /**
-     * Get speed factor by the Good-Night Ribbon.
-     */
-    get speedOfRibbonFactor(): number {
-        return this.getOrCache('speedOfRibbonFactor', () => {
-            if (this.pokemon.evolutionLeft === 0) {
-                return 1;
-            }
-            if (this.ribbon >= 4) {
-                switch (this.pokemon.evolutionLeft) {
-                    case 2: return 0.75;
-                    case 1: return 0.88;
-                }
-            }
-            if (this.ribbon >= 2) {
-                switch (this.pokemon.evolutionLeft) {
-                    case 2: return 0.89;
-                    case 1: return 0.95;
-                }
-            }
-            return 1;
-        });
-    }
-
-    /**
-     * Calculate frequency with helping bonus from other Pokemon.
-     * @param count Number of other pokemon in the team with Helping Bonus sub-skill
-     * @returns Frequency with helping bonus applied
-     */
-    frequencyWithHelpingBonus(count: number): number {
-        const helpingSpeed = this.activeSubSkills
-            .reduce((p, c) => p + c.helpingSpeed, 0) * 0.07;
-        const subSkillFactor = Math.min(helpingSpeed + 0.05 * count, 0.35);
-
-        return this.pokemon.frequency * // Base frequency
-            trunc(
-                // Level Factor
-                (501 - this.level) / 500 *
-                // Nature Factor
-                (this.nature?.speedOfHelpFactor ?? 1) *
-                // Good-Night Ribbon Factor
-                this.speedOfRibbonFactor *
-                // Sub-Skill Factor
-                (1 - subSkillFactor)
-            , 4);
-    }
-
-    /**
-     * Calculate base frequency with helping bonus and optional modifiers.
-     * @param helpBonusCount Number of other pokemon in the team with Helping Bonus sub-skill
-     * @param isGoodCampTicketSet Whether good camp ticket is set
-     * @param isMainBerry Whether this is the main berry in expert mode
-     * @param isNonFavoriteBerry Whether this is a non-favorite berry in expert mode
-     * @returns Base frequency
-     */
-    getBaseFrequency(
-        helpBonusCount: number,
-        isGoodCampTicketSet: boolean,
-        isMainBerry: boolean,
-        isNonFavoriteBerry: boolean
-    ): number {
-        return this.frequencyWithHelpingBonus(helpBonusCount) /
-            (isGoodCampTicketSet ? 1.2 : 1) *
-            (isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
-            (isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1);
-    }
-
-    /**
-     * Validates and normalizes Pokemon IV parameters.
-     * @param params Partial parameters to normalize.
-     * @returns Complete, validated PokemonIvProps.
-     */
-    static normalize(params: Partial<PokemonIvProps>): PokemonIvProps {
-        // 1. pokemonName is required
-        if (!params.pokemonName) {
-            throw new Error("pokemonName is required");
-        }
-
-        // 2. Look up pokemon data
-        const pokemon = pokemons.find(x => x.name === params.pokemonName);
-        if (!pokemon) {
-            throw new Error(`Unknown name: ${params.pokemonName}`);
-        }
-
-        // 3. Apply defaults
-        const ret: PokemonIvProps = {
-            pokemonName: params.pokemonName,
-            level: params.level ?? 30,
-            skillLevel: params.skillLevel ?? Math.max(pokemon.evolutionCount + 1, 1),
-            ingredient: params.ingredient ?? (pokemon.ing3 !== undefined ? "ABC" : "ABB"),
-            subSkills: params.subSkills ?? new SubSkillList(),
-            nature: params.nature ?? new Nature(
-                params.pokemonName === "Toxtricity (Amped)" ? "Hardy" : "Serious"
-            ),
-            ribbon: params.ribbon ?? 0,
-            mythIng1: params.mythIng1 ?? "unknown",
-            mythIng2: params.mythIng2 ?? "unknown",
-            mythIng3: params.mythIng3 ?? "unknown",
-            versatileSkill: pokemon.skill,
-            baseIngRate: params.baseIngRate,
-            baseSkillRate: params.baseSkillRate,
-        };
-
-        // 4. Validate and normalize values
-        // Clamp skillLevel to valid range
-        const maxSkillLevel = getMaxSkillLevel(pokemon.skill);
-        ret.skillLevel = clamp(1, ret.skillLevel, maxSkillLevel);
-
-        // Fix ingredient if ing3 doesn't exist
-        if (ret.ingredient.endsWith('C') && pokemon.ing3 === undefined) {
-            ret.ingredient = ret.ingredient.replace('C', 'A') as IngredientType;
-        }
-
-        // Handle mythical pokemon ingredient defaults
-        const isMythical = pokemon.mythIng !== undefined;
-        if (isMythical) {
-            if (ret.mythIng1 === "unknown") {
-                ret.mythIng1 = pokemon.ing1.name;
-            }
-            if (ret.mythIng2 === "unknown") {
-                ret.mythIng2 = pokemon.ing2.name;
-            }
-        }
-
-        // Validate versatileSkill
-        if (pokemon.skill === "Versatile") {
-            if (params.versatileSkill !== undefined &&
-                VersatileCandidates.indexOf(params.versatileSkill) !== -1
-            ) {
-                ret.versatileSkill = params.versatileSkill;
-            } else {
-                ret.versatileSkill = "Metronome";
-            }
-        }
-
-        // Apply Toxtricity nature rules based on form
-        if (pokemon.id === toxtricityId) {
-            if (pokemon.form === "Amped" && ret.nature.isLowKey) {
-                ret.nature = Nature.allNatures
-                    .filter(x => x.isAmped)
-                    .filter(x => x.upEffect === ret.nature.upEffect)[0] ??
-                    new Nature("Hardy");
-            }
-            else if (pokemon.form === "Low Key" && ret.nature.isAmped) {
-                ret.nature = Nature.allNatures
-                    .filter(x => x.isLowKey)
-                    .filter(x => x.upEffect === ret.nature.upEffect)[0] ??
-                    new Nature("Serious");
-            }
-        }
-
-        return ret;
-    }
-
-    /**
-     * Check whether given IV is equal to this IV.
-     * @param iv IV to be compared.
-     * @returns Whether two IV is equal or not.
-     */
-    isEqual(iv: PokemonIv): boolean {
-        const isEqual = this.pokemonName === iv.pokemonName &&
-            this.level === iv.level &&
-            this.skillLevel === iv.skillLevel &&
-            this.subSkills.isEqual(iv.subSkills) &&
-            this.nature.name === iv.nature.name &&
-            this.ribbon === iv.ribbon &&
-            this.versatileSkill === iv.versatileSkill;
-
-        if (this.isMythical) {
-            return (isEqual &&
-                this.mythIng1 === iv.mythIng1 &&
-                this.mythIng2 === iv.mythIng2 &&
-                this.mythIng3 === iv.mythIng3);
-        } else {
-            return (isEqual && this.ingredient === iv.ingredient);
-        }
-    }
-
-    /**
-     * Get descendants of this Pokémon.
-     * @returns Descendants of this Pokémon.
-     */
-    get decendants(): PokemonData[] {
-        return this.getDecendants(false);
-    }
-
-    /**
-     * Get all descendants of this Pokémon, including non-final evolutions.
-     * @returns All descendants of this Pokémon.
-     */
-    get allDecendants(): PokemonData[] {
-        return this.getDecendants(true);
-    }
-
-    /**
-     * Internal method to descendants and allDecendants property.
-     * @param {boolean} [includeNonFinal] - Whether to include non-final evolutions.
-     * @return Descendants of this Pokémon.
-     */
-    private getDecendants(includeNonFinal: boolean): PokemonData[] {
-        const ret = getDecendants(this.pokemon, includeNonFinal);
-
-        // if the Pokémon is Toxel, filter by form
-        if (this.pokemon.ancestor === toxelId) {
-            return ret
-                .filter(x => x.id === toxelId ||
-                    (x.form === "Amped" && this.nature.isAmped) ||
-                    (x.form === "Low Key" && this.nature.isLowKey));
-        }
-
-        return ret;
-    }
-
-    /**
-     * Check whether the pokemon has an active sub-skill 'Helping Bonus'.
-     */
-    get hasHelpingBonusInActiveSubSkills(): boolean {
-        return this.activeSubSkills
-            .some(x => x.name === "Helping Bonus");
-    }
-
-    /**
-     * Check whether the pokemon has an active sub-skill 'Energy Recovery Bonus'.
-     */
-    get hasEnergyRecoveryBonusInActiveSubSkills(): boolean {
-        return this.activeSubSkills
-            .some(x => x.name === "Energy Recovery Bonus");
-    }
-
-    /**
-     * Check whether the pokemon has an active sub-skill 'Sleep EXP Bonus'.
-     */
-    get hasSleepExpBonusInActiveSubSkills(): boolean {
-        return this.activeSubSkills
-            .some(x => x.name === "Sleep EXP Bonus");
-    }
-
-    /**
-     * Get carry limit for this level (assuming evolution count is max).
-     */
-    get carryLimit(): number {
-        return this.pokemon.carryLimit +
-            5 * Math.max(0, this.pokemon.evolutionCount) +
-            this.ribbonCarryLimit +
-            this.activeSubSkills.reduce((p, c) => p + c.inventory, 0) * 6;
-    }
-
-    /**
-     * Get carry limit added by the Good-Night Ribbon.
-     */
-    get ribbonCarryLimit(): number {
-        switch (this.ribbon) {
-            case 1: return 1;
-            case 2: return 3;
-            case 3: return 6;
-            case 4: return 8;
-            default: return 0;
-        }
-    }
-
-    /**
-     * Get berry count per help.
-     */
-    get berryCount(): number {
-        return this.getOrCache('berryCount', () => {
-            const defaultTwoBerry = (this.pokemon.specialty === "Berries" || this.pokemon.specialty === "All");
-            return (defaultTwoBerry ? 2 : 1) +
-                (this.activeSubSkills.some(s => s.isBFS) ? 1 : 0);
-        });
-    }
-
-    /**
-     * Get form number.
-     */
-    get form(): number {
-        if (this.pokemon.form === undefined) {
-            return 0;
-        }
-        const formMap: Record<ValidFormType, number> = {
-            'Halloween': 1,
-            'Holiday': 2,
-            'Alola': 3,
-            'Paldea': 4,
-            'Amped': 5,
-            'Low Key': 6,
-            'Small': 7,
-            'Medium': 8,
-            'Large': 9,
-            'Jumbo': 10,
-        };
-
-        return formMap[this.pokemon.form] ?? 0;
-    }
-
-    /**
-     * Convert form number to string.
-     * @param form    form number
-     * @return        form name
-     */
-    public static formToString(form: number): '' | ValidFormType {
-        const formNames: ('' | ValidFormType)[] = ['', 'Halloween', 'Holiday',
-            'Alola', 'Paldea', 'Amped', 'Low Key',
-            'Small', 'Medium', 'Large', 'Jumbo'];
-        return formNames[form] ?? '';
-    }
-
-    /**
-     * ID & form
-     */
-    get idForm(): number {
-        return this.pokemon.id + (this.form << 12);
-    }
-
-    /**
-     * Get pokemon ID from idForm.
-     * @param idForm idForm number.
-     * @returns Pokemon ID.
-     */
-    static getIdByIdForm(idForm: number): number {
-        return idForm & 0xfff;
-    }
-
-    /**
-     * Get form ID from idForm.
-     * @param idForm idForm number.
-     * @returns form ID.
-     */
-    static getFormByIdForm(idForm: number): number {
-        return idForm >> 12;
-    }
-
-    /**
-     * Extract current props as PokemonIvProps object.
-     * @returns Current state as props.
-     */
-    toProps(): PokemonIvProps {
-        return {
-            pokemonName: this.pokemonName,
-            level: this.level,
-            skillLevel: this.skillLevel,
-            ingredient: this.ingredient,
-            subSkills: this.subSkills,
-            nature: this.nature,
-            ribbon: this.ribbon,
-            mythIng1: this.mythIng1,
-            mythIng2: this.mythIng2,
-            mythIng3: this.mythIng3,
-            versatileSkill: this.versatileSkill,
-            baseIngRate: this.baseIngRate,
-            baseSkillRate: this.baseSkillRate,
-        };
-    }
-
-    /**
-     * Serialize IV data to printable string.
-     *
-     * Format
-     * ------
-     *
-     * First, serialize IV data to following bit array (72bit or 90bit).
-     *
-     * * 4bit  : Version (1)
-     * * 12bit : Pokedex ID
-     *
-     * * 6bit  : Form (0: normal, 1: Halloween, 2: Holiday, 3: Alola,
-     *           4: Paldea, 5: Amped, 6: Low-Key, 7: Small, 8: Medium,
-     *           9: Large, 10: Jumbo)
-     * * 7bit  : level
-     * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
-     *
-     * * 2bit  : reserved
-     * * 4bit  : Skill level (0: Lv1, 1: Lv2, ..., 7: Lv8)
-     * * 5bit  : Nature index, index of Nature.allNatureNames (0-24)
-     * * 5bit  : Sub-skill Lv10 (index of SubSkill.subSkillNames (0-16), unknown: 31)
-     *
-     * * 5bit  : Sub-skill Lv25
-     * * 5bit  : Sub-skill Lv50
-     * * 5bit  : Sub-skill Lv75
-     * * 1bit  : reserved
-     *
-     * * 5bit  : Sub-skill Lv100
-     * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
-     * * 4bit  : Versatile skill index (0: not set, 1-12: VersatileCandidates index)
-     * * 4bit  : reserved
-     *
-     * * 10bit : Ingredient for mythical pokemon
-     *           - 0: unknown
-     *                Darkrai    Mew
-     *           - 1: apple     leek
-     *           - 2: herb      egg
-     *           - 3: sausage   herb
-     *           - 4: milk      sausage
-     *           - 5: honey     oil
-     *           - 6: soy       tail (C)
-     *           - 7: corn      soy
-     *           - 8: coffee    avocado
-     *
-     *           1st ingredient: value % 9
-     *           2nd ingredient: Math.floor(value / 9)
-     *           3rd ingredient: Math.floor(value / 81)
-     *
-     * Second, convert bit array using BASE64, and replace '/' to '-',
-     * and remove trailing 'AA=='
-     */
-    serialize(): string {
-        const array16 = new Uint16Array(6);
-        array16[0] = 1 + (this.pokemon.id << 4);
-        array16[1] = this.form +
-            (this.level << 6) +
-            (IngredientTypes.indexOf(this.ingredient) << 13);
-
-        array16[2] =
-            ((this.skillLevel - 1) << 2) +
-            (Nature.allNatures.findIndex(x => x.name === this.nature.name) << 6) +
-            ((this.subSkills.lv10 === null ? 31 : this.subSkills.lv10.index) << 11);
-        array16[3] = (this.subSkills.lv25 === null ? 31 : this.subSkills.lv25.index) +
-            ((this.subSkills.lv50 === null ? 31 : this.subSkills.lv50.index) << 5) +
-            ((this.subSkills.lv75 === null ? 31 : this.subSkills.lv75.index) << 10);
-        const versatileIndex = this.pokemon.skill === "Versatile" ?
-            VersatileCandidates.indexOf(this.versatileSkill) + 1 :
-            0;
-        array16[4] = (this.subSkills.lv100 === null ? 31 : this.subSkills.lv100.index) +
-            (this.ribbon << 5) +
-            (versatileIndex << 8);
-
-        if (this.pokemon.mythIng !== undefined) {
-            const ing1 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng1) + 1;
-            const ing2 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng2) + 1;
-            const ing3 = this.pokemon.mythIng.findIndex(x => x.name === this.mythIng3) + 1;
-            const n = this.pokemon.mythIng.length + 1; // 1 is unknown
-            array16[5] = ing1 + ing2 * n + ing3 * n * n;
-        }
-
-        const array8 = new Uint8Array(array16.buffer);
-        let bin = "";
-        for (let i = 0; i < array8.length; i++) {
-            bin += String.fromCharCode(array8[i]);
-        }
-        return btoa(bin)
-            .replace(/\//g, '-')
-            // strip tailing "AAAA" if not mythical pokemon
-            .substring(0, this.isMythical ? 16 : 12);
-    }
-
-    /**
-     * Deserialize serialized string.
-     * @param value Serialized string.
-     * @returns PokemonIv object.
-     */
-    static deserialize(value: string): PokemonIv {
-        // validate, and convert to BASE64 string
-        if (value.length === 12) {
-            value = value.replace(/-/g, '/') + "AAAA";
-        } else if (value.length === 16) {
-            value = value.replace(/-/g, '/');
-        } else {
-            throw new Error(`Invalid length ${value.length}`);
-        }
-
-        // decode BASE64 to Uint16Array
-        const bin = atob(value);
-        const array8 = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) {
-            array8[i] = bin.charCodeAt(i);
-        }
-        const array16 = new Uint16Array(array8.buffer);
-
-        // validate version
-        if ((array16[0] & 0xf) !== 1) {
-            throw new Error('Invalid version');
-        }
-
-        // get Pokedex ID
-        // Shuckle's ID was incorrectly written as 231, so it must
-        // be fixed when deserializing
-        const id = array16[0] >> 4;
-        const migratedId = id === 231 ? 213 : id;
-        let pokemon = pokemons.find(x => x.id === migratedId);
-        if (pokemon === undefined) {
-            throw new Error(`Pokemon id ${id} not found`);
-        }
-
-        // get form
-        const form = array16[1] & 0x3f;
-        if (form !== 0 &&
-            id !== 980 // treat `Clodsire` as special case
-        ) {
-            const formStr = PokemonIv.formToString(form);
-            const newName = `${pokemon.name.replace(/ \(.+/, '')} (${formStr})`;
-            pokemon = pokemons.find(x => x.name === newName);
-            if (pokemon === undefined) {
-                throw new Error(`Invalid form specified (${form})`);
-            }
-        }
-        const ret: Partial<PokemonIvProps> = {
-            pokemonName: pokemon.name
-        };
-
-        // level
-        ret.level = (array16[1] >> 6) & 0x7f;
-        if (ret.level === 0 || ret.level > 100) {
-            throw new Error(`Invalid level (${ret.level})`);
-        }
-
-        // ingredient type
-        const ing = (array16[1] >> 13) & 0x7;
-        if (ing > 5) {
-            throw new Error(`Invalid ing value (${ing})`);
-        }
-        ret.ingredient = IngredientTypes[ing];
-
-        // skill level
-        ret.skillLevel = ((array16[2] >> 2) & 0x7) + 1;
-        if (ret.skillLevel > getMaxSkillLevel(pokemon.skill)) {
-            throw new Error(`Too large skill level ${ret.skillLevel} for ${pokemon.name}`);
-        }
-
-        // nature
-        const natureIndex = (array16[2] >> 6) & 31;
-        if (natureIndex >= Nature.allNatures.length) {
-            throw new Error(`Too large nature ${natureIndex}`);
-        }
-        ret.nature = Nature.allNatures[natureIndex];
-
-        // sub skill
-        const allSubSkills = SubSkill.allSubSkills;
-        const getSubSkill = (index: number, lv: number) => {
-            if (index === 31) { return null; }
-            if (index >= allSubSkills.length) {
-                throw new Error(`Too large subskill for level ${lv}: ${index}`);
-            }
-            return allSubSkills[index];
-        };
-        ret.subSkills = new SubSkillList({
-            lv10: getSubSkill((array16[2] >> 11) & 31, 10),
-            lv25: getSubSkill((array16[3] >> 0) & 31, 25),
-            lv50: getSubSkill((array16[3] >> 5) & 31, 50),
-            lv75: getSubSkill((array16[3] >> 10) & 31, 75),
-            lv100: getSubSkill((array16[4] >> 0) & 31, 100),
-        });
-
-        // ribbon
-        ret.ribbon = ((array16[4] >> 5) & 7) as 0|1|2|3|4;
-        if (ret.ribbon >= 5) {
-            throw new Error(`Invalid ribbon (${ret.ribbon})`);
-        }
-
-        // versatile skill
-        const versatileIndex = (array16[4] >> 8) & 0xf;
-        if (versatileIndex > 0 && pokemon.skill === "Versatile") {
-            if (versatileIndex > VersatileCandidates.length) {
-                throw new Error(`Invalid versatile skill index (${versatileIndex})`);
-            }
-            ret.versatileSkill = VersatileCandidates[versatileIndex - 1];
-        }
-
-        // mythical ingredients
-        if (pokemon.mythIng !== undefined) {
-            const n = pokemon.mythIng.length + 1; // 1 is unknown
-            const ing1 = (array16[5] % n) - 1;
-            const ing2 = (Math.floor(array16[5] / n) % n) - 1;
-            const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
-            ret.mythIng1 = ing1 < 0 ? pokemon.ing1.name : pokemon.mythIng[ing1].name;
-            ret.mythIng2 = ing2 < 0 ? pokemon.ing2.name : pokemon.mythIng[ing2].name;
-            ret.mythIng3 = ing3 < 0 ? pokemon.ing3?.name : pokemon.mythIng[ing3].name;
-        }
-
-        return new PokemonIv(ret);
-    }
+	readonly pokemonName: string;
+	readonly pokemon: PokemonData;
+	readonly level: number;
+	readonly skillLevel: number;
+	readonly ingredient: IngredientType;
+	readonly subSkills: SubSkillList;
+	readonly nature: Nature;
+	readonly ribbon: 0 | 1 | 2 | 3 | 4;
+	readonly mythIng1: IngredientName;
+	readonly mythIng2: IngredientName;
+	readonly mythIng3: IngredientName;
+
+	/**
+	 * Actual skill name for Versatile if pokemonName is Mew,
+	 * otherwise same as pokemon.skill.
+	 *
+	 * (ex) Versatile (Charge Strength S)
+	 * => Charge Strength S (Random)
+	 */
+	readonly versatileSkill: MainSkillName;
+	readonly baseIngRate?: number;
+	readonly baseSkillRate?: number;
+
+	private readonly cache: Map<string, number> = new Map();
+	private activeSubSkillsCache: undefined | SubSkill[] = undefined;
+
+	/** Initialize new instance. */
+	constructor(input: Partial<PokemonIvProps>) {
+		const params = PokemonIv.normalize(input);
+
+		// Apply normalized parameters to instance
+		this.pokemonName = params.pokemonName;
+		this.level = params.level;
+		this.skillLevel = params.skillLevel;
+		this.ingredient = params.ingredient;
+		this.subSkills = params.subSkills;
+		this.nature = params.nature;
+		this.ribbon = params.ribbon;
+		this.mythIng1 = params.mythIng1;
+		this.mythIng2 = params.mythIng2;
+		this.mythIng3 = params.mythIng3;
+		this.versatileSkill = params.versatileSkill;
+		this.baseIngRate = params.baseIngRate;
+		this.baseSkillRate = params.baseSkillRate;
+
+		// Look up pokemon data (not in params)
+		const pokemon = pokemons.find((x) => x.name === params.pokemonName);
+		if (pokemon === undefined) {
+			throw new Error(`Unknown name: ${params.pokemonName}`);
+		}
+		this.pokemon = pokemon;
+
+		// Apply base rate overrides
+		if (
+			params.baseIngRate !== undefined ||
+			params.baseSkillRate !== undefined
+		) {
+			this.pokemon = {
+				...this.pokemon,
+				...(params.baseIngRate !== undefined && {
+					ingRate: params.baseIngRate,
+				}),
+				...(params.baseSkillRate !== undefined && {
+					skillRate: params.baseSkillRate,
+				}),
+			};
+		}
+	}
+
+	/** Returns true if the Pokémon is mythical. */
+	get isMythical(): boolean {
+		return this.pokemon.mythIng !== undefined;
+	}
+
+	/** Get active sub-skills list. */
+	get activeSubSkills(): SubSkill[] {
+		if (this.activeSubSkillsCache !== undefined) {
+			return this.activeSubSkillsCache;
+		}
+
+		this.activeSubSkillsCache = this.subSkills.getActiveSubSkills(this.level);
+		return this.activeSubSkillsCache;
+	}
+
+	private getOrCache(key: string, compute: () => number): number {
+		const cached = this.cache.get(key);
+		if (cached !== undefined) {
+			return cached;
+		}
+		const value = compute();
+		this.cache.set(key, value);
+		return value;
+	}
+
+	get skillRate(): number {
+		return this.getOrCache("skillRate", () => {
+			return trunc(
+				(this.pokemon.skillRate / 100) *
+					(this.nature?.mainSkillChanceFactor ?? 1) *
+					(1 +
+						this.activeSubSkills.reduce((p, c) => p + c.skillTrigger, 0) *
+							0.18),
+				4,
+			);
+		});
+	}
+
+	/** Calculate help count for pity proc */
+	get pityProcHelpCount(): number {
+		return this.getOrCache("pityProc", () => {
+			if (
+				this.pokemon.specialty !== "Skills" &&
+				this.pokemon.specialty !== "All"
+			) {
+				return 78;
+			}
+
+			return Math.ceil(142000 / this.pokemon.frequency);
+		});
+	}
+
+	/**
+	 * Calculate overall skill rate including pity proc
+	 *
+	 * (ref) https://pks.raenonx.cc/en/docs/view/mechanics/skill-pity
+	 *
+	 * @param rate Skill rate (including event bonus or area bonus).
+	 * @return Overall skill proc rate.
+	 */
+	calculateSkillRateWithPityProc(rate: number): number {
+		return rate / (1 - (1 - rate) ** (this.pityProcHelpCount + 1));
+	}
+
+	get ingredientRate(): number {
+		return this.getOrCache("ingredientRate", () => {
+			return trunc(
+				(this.pokemon.ingRate / 100) *
+					(this.nature?.ingredientFindingFactor ?? 1) *
+					(1 +
+						this.activeSubSkills.reduce((p, c) => p + c.ingredientFinder, 0) *
+							0.18),
+				4,
+			);
+		});
+	}
+
+	get berryRate(): number {
+		return this.ingredientRate > 0 ? 1 - this.ingredientRate : 0;
+	}
+
+	/**
+	 * Creates a deep copy of this instance.
+	 * @param input New properties.
+	 * @returns A cloned instance.
+	 */
+	clone(input?: Partial<PokemonIvProps>): PokemonIv {
+		const params = this.toProps();
+		if (input) {
+			Object.assign(params, input);
+
+			// Handle when pokemon name has been changed
+			if (params.pokemonName !== this.pokemonName) {
+				const pokemon = pokemons.find((x) => x.name === params.pokemonName);
+				if (pokemon === undefined) {
+					throw new Error(`Unknown name: ${params.pokemonName}`);
+				}
+
+				// Increase or decrease skill level
+				const diff = pokemon.evolutionCount - this.pokemon.evolutionCount;
+				params.skillLevel += diff;
+
+				// Reset mythIng
+				params.mythIng1 = params.mythIng2 = params.mythIng3 = "unknown";
+			}
+		}
+
+		return new PokemonIv(params);
+	}
+
+	/**
+	 * Creates a new PokemonIv instance with a changed level.
+	 * @param level The new level for the PokemonIv.
+	 * @return A new PokemonIv instance with the specified level.
+	 */
+	changeLevel(level: number): PokemonIv {
+		const tmp = this.clone({ level });
+
+		const beforeSkillLevelUp = this.activeSubSkills.reduce(
+			(p, c) => p + c.skillLevelUp,
+			0,
+		);
+		const afterSkillLevelUp = tmp.activeSubSkills.reduce(
+			(p, c) => p + c.skillLevelUp,
+			0,
+		);
+		const skillLevel = this.skillLevel + afterSkillLevelUp - beforeSkillLevelUp;
+		return tmp.clone({ skillLevel });
+	}
+
+	/**
+	 * Creates a new PokemonIv instance with a changed sub-skills.
+	 * @param subSkills The new sub-skills for the PokemonIv.
+	 * @return A new PokemonIv instance with the specified sub-skills.
+	 */
+	changeSubSkills(subSkills: SubSkillList): PokemonIv {
+		const tmp = this.clone({ subSkills });
+
+		const beforeSkillLevelUp = this.activeSubSkills.reduce(
+			(p, c) => p + c.skillLevelUp,
+			0,
+		);
+		const afterSkillLevelUp = tmp.activeSubSkills.reduce(
+			(p, c) => p + c.skillLevelUp,
+			0,
+		);
+		const skillLevel = this.skillLevel + afterSkillLevelUp - beforeSkillLevelUp;
+		return tmp.clone({ skillLevel });
+	}
+
+	/**
+	 * Get IngredientName[] which the Pokemon can gather
+	 * @param unlockedOnly Unlocked ingredients only or not.
+	 * @returns Ingredients.
+	 */
+	getIngredients(unlockedOnly: boolean): IngredientName[] {
+		if (this.isMythical) {
+			const mythRet = [this.mythIng1];
+			if (!unlockedOnly || this.level >= 30) {
+				if (this.mythIng2 !== "unknown" && mythRet[0] !== this.mythIng2) {
+					mythRet.push(this.mythIng2);
+				}
+			}
+			if (!unlockedOnly || this.level >= 60) {
+				if (this.mythIng3 !== "unknown" && mythRet.includes(this.mythIng3)) {
+					mythRet.push(this.mythIng3);
+				}
+			}
+			return mythRet;
+		}
+
+		const ret: IngredientName[] = [this.pokemon.ing1.name];
+
+		if (!unlockedOnly || this.level >= 30) {
+			if (this.ingredient.charAt(1) === "B") {
+				ret.push(this.pokemon.ing2.name);
+			}
+		}
+
+		if (!unlockedOnly || this.level >= 60) {
+			const ing3 =
+				this.ingredient.charAt(2) === "A"
+					? this.pokemon.ing1
+					: this.ingredient.charAt(2) === "B"
+						? this.pokemon.ing2
+						: this.pokemon.ing3;
+			if (ing3 !== undefined && !ret.includes(ing3.name)) {
+				ret.push(ing3.name);
+			}
+		}
+		return ret;
+	}
+
+	get ingredient1(): IngredientSlot {
+		if (this.pokemon.mythIng !== undefined) {
+			return {
+				name: this.mythIng1 ?? "unknown",
+				count:
+					this.pokemon.mythIng.find((x) => x.name === this.mythIng1)?.c1 ?? 0,
+				index: 0,
+			};
+		}
+
+		return {
+			name: this.pokemon.ing1.name ?? "unknown",
+			count: this.pokemon.ing1.c1,
+			index: 0,
+		};
+	}
+
+	get ingredient2(): IngredientSlot {
+		if (this.pokemon.mythIng !== undefined) {
+			return {
+				name: this.mythIng2 ?? "unknown",
+				count:
+					this.pokemon.mythIng.find((x) => x.name === this.mythIng2)?.c2 ?? 0,
+				index: 1,
+			};
+		}
+
+		const ing2 =
+			this.ingredient.charAt(1) === "A" ? this.pokemon.ing1 : this.pokemon.ing2;
+		return { name: ing2.name, count: ing2.c2, index: 1 };
+	}
+
+	get ingredient3(): IngredientSlot {
+		if (this.pokemon.mythIng !== undefined) {
+			return {
+				name: this.mythIng3 ?? "unknown",
+				count:
+					this.pokemon.mythIng.find((x) => x.name === this.mythIng3)?.c3 ?? 0,
+				index: 2,
+			};
+		}
+
+		const ing3 =
+			this.ingredient.charAt(2) === "A"
+				? this.pokemon.ing1
+				: this.ingredient.charAt(2) === "B"
+					? this.pokemon.ing2
+					: this.pokemon.ing3;
+		if (ing3 === undefined) {
+			throw new Error("this pokemon doesn't have 3rd ing");
+		}
+		return { name: ing3.name, count: ing3.c3, index: 2 };
+	}
+
+	/**
+	 * Calculate the average bag usage (inventory slots used) per help action.
+	 *
+	 * This method calculates how many inventory slots are consumed on average
+	 * when the Pokemon helps, taking into account both berries and ingredients
+	 * based on the ingredient rate.
+	 *
+	 * @param bonus Bonus that affect inventory consumption.
+	 * @returns Average number of inventory slots used per help
+	 */
+	getBagUsagePerHelp(bonus?: Partial<InventoryBonus>): number {
+		const detail = this.getBagUsagePerHelpDetail(bonus);
+		let ret = 0;
+		for (const item of detail) {
+			ret += item.count * item.p;
+		}
+		return ret;
+	}
+
+	/**
+	 * Calculate the detail bag usage (inventory slots used) per help action.
+	 *
+	 * @param bonus Bonus that affect inventory consumption.
+	 * @returns Usage name, count and its probability.
+	 */
+	getBagUsagePerHelpDetail(
+		bonus?: Partial<InventoryBonus>,
+	): BagUsagePerHelpDetailItem[] {
+		const ret: BagUsagePerHelpDetailItem[] = [];
+		const ingKindIndexMap = new Map<string, number>();
+		const getIngKindIndex = (name: string): number => {
+			let idx = ingKindIndexMap.get(name);
+			if (idx === undefined) {
+				idx = ingKindIndexMap.size;
+				ingKindIndexMap.set(name, idx);
+			}
+			return idx;
+		};
+
+		// Fill bonus
+		const berryBonus = bonus?.berry ?? 0;
+		const ingredientBonus = bonus?.ingredient ?? 0;
+		const expertIngBonus = bonus?.expertIng ?? false;
+
+		// Calculate ing bonus
+		const ingRate = this.ingredientRate;
+		let ingBonus = ingredientBonus;
+		let hasExpertAdditionalBonus = false;
+		if (expertIngBonus) {
+			ingBonus += expertFavoriteIngredientBonus;
+			if (this.pokemon.specialty === "Ingredients") {
+				hasExpertAdditionalBonus = true;
+			}
+		}
+
+		// Add ing1
+		ret.push({
+			name: this.ingredient1.name,
+			count: this.ingredient1.count + ingBonus,
+			ingKindIndex: getIngKindIndex(this.ingredient1.name),
+			ingSlotIndex: 0,
+			p: 0,
+		});
+
+		// Add ing2
+		if (this.level >= 30) {
+			const ing2 = this.ingredient2;
+			if (ing2.count > 0) {
+				ret.push({
+					name: this.ingredient2.name,
+					count: ing2.count + ingBonus,
+					ingKindIndex: getIngKindIndex(this.ingredient2.name),
+					ingSlotIndex: 1,
+					p: 0,
+				});
+			}
+		}
+
+		// Add ing3
+		if (this.level >= 60) {
+			const ing3 = this.ingredient3;
+			if (ing3.count > 0) {
+				ret.push({
+					name: this.ingredient3.name,
+					count: ing3.count + ingBonus,
+					ingKindIndex: getIngKindIndex(this.ingredient3.name),
+					ingSlotIndex: 2,
+					p: 0,
+				});
+			}
+		}
+
+		// Duplicate ret if hasExpertAdditionalBonus is true
+		const ings = ret.length;
+		if (hasExpertAdditionalBonus) {
+			if (expertFavoriteIngredientAdditionalBonus !== 0.5) {
+				throw new Error("expert bonus changed");
+			}
+			for (let i = 0; i < ings; i++) {
+				ret.push({
+					name: ret[i].name,
+					count: ret[i].count + 1,
+					p: 0,
+					ingSlotIndex: ret[i].ingSlotIndex,
+					ingKindIndex: ret[i].ingKindIndex,
+				});
+			}
+		}
+
+		// Divide ingRate equally across all ingredients
+		const eachIngRate = ingRate / ret.length;
+		for (const item of ret) {
+			item.p = eachIngRate;
+		}
+
+		// Add berry
+		const berryCount = this.berryCount;
+		ret.unshift({
+			name: "berry",
+			count: berryCount + berryBonus,
+			p: this.berryRate,
+			ingSlotIndex: -1,
+			ingKindIndex: -1,
+		});
+
+		return ret;
+	}
+
+	/**
+	 * Get speed factor by the Good-Night Ribbon.
+	 */
+	get speedOfRibbonFactor(): number {
+		return this.getOrCache("speedOfRibbonFactor", () => {
+			if (this.pokemon.evolutionLeft === 0) {
+				return 1;
+			}
+			if (this.ribbon >= 4) {
+				switch (this.pokemon.evolutionLeft) {
+					case 2:
+						return 0.75;
+					case 1:
+						return 0.88;
+				}
+			}
+			if (this.ribbon >= 2) {
+				switch (this.pokemon.evolutionLeft) {
+					case 2:
+						return 0.89;
+					case 1:
+						return 0.95;
+				}
+			}
+			return 1;
+		});
+	}
+
+	/**
+	 * Calculate frequency with helping bonus from other Pokemon.
+	 * @param count Number of other pokemon in the team with Helping Bonus sub-skill
+	 * @returns Frequency with helping bonus applied
+	 */
+	frequencyWithHelpingBonus(count: number): number {
+		const helpingSpeed =
+			this.activeSubSkills.reduce((p, c) => p + c.helpingSpeed, 0) * 0.07;
+		const subSkillFactor = Math.min(helpingSpeed + 0.05 * count, 0.35);
+
+		return (
+			this.pokemon.frequency * // Base frequency
+			trunc(
+				// Level Factor
+				((501 - this.level) / 500) *
+					// Nature Factor
+					(this.nature?.speedOfHelpFactor ?? 1) *
+					// Good-Night Ribbon Factor
+					this.speedOfRibbonFactor *
+					// Sub-Skill Factor
+					(1 - subSkillFactor),
+				4,
+			)
+		);
+	}
+
+	/**
+	 * Calculate base frequency with helping bonus and optional modifiers.
+	 * @param helpBonusCount Number of other pokemon in the team with Helping Bonus sub-skill
+	 * @param isGoodCampTicketSet Whether good camp ticket is set
+	 * @param isMainBerry Whether this is the main berry in expert mode
+	 * @param isNonFavoriteBerry Whether this is a non-favorite berry in expert mode
+	 * @returns Base frequency
+	 */
+	getBaseFrequency(
+		helpBonusCount: number,
+		isGoodCampTicketSet: boolean,
+		isMainBerry: boolean,
+		isNonFavoriteBerry: boolean,
+	): number {
+		return (
+			(this.frequencyWithHelpingBonus(helpBonusCount) /
+				(isGoodCampTicketSet ? 1.2 : 1)) *
+			(isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
+			(isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1)
+		);
+	}
+
+	/**
+	 * Validates and normalizes Pokemon IV parameters.
+	 * @param params Partial parameters to normalize.
+	 * @returns Complete, validated PokemonIvProps.
+	 */
+	static normalize(params: Partial<PokemonIvProps>): PokemonIvProps {
+		// 1. pokemonName is required
+		if (!params.pokemonName) {
+			throw new Error("pokemonName is required");
+		}
+
+		// 2. Look up pokemon data
+		const pokemon = pokemons.find((x) => x.name === params.pokemonName);
+		if (!pokemon) {
+			throw new Error(`Unknown name: ${params.pokemonName}`);
+		}
+
+		// 3. Apply defaults
+		const ret: PokemonIvProps = {
+			pokemonName: params.pokemonName,
+			level: params.level ?? 30,
+			skillLevel: params.skillLevel ?? Math.max(pokemon.evolutionCount + 1, 1),
+			ingredient:
+				params.ingredient ?? (pokemon.ing3 !== undefined ? "ABC" : "ABB"),
+			subSkills: params.subSkills ?? new SubSkillList(),
+			nature:
+				params.nature ??
+				new Nature(
+					params.pokemonName === "Toxtricity (Amped)" ? "Hardy" : "Serious",
+				),
+			ribbon: params.ribbon ?? 0,
+			mythIng1: params.mythIng1 ?? "unknown",
+			mythIng2: params.mythIng2 ?? "unknown",
+			mythIng3: params.mythIng3 ?? "unknown",
+			versatileSkill: pokemon.skill,
+			baseIngRate: params.baseIngRate,
+			baseSkillRate: params.baseSkillRate,
+		};
+
+		// 4. Validate and normalize values
+		// Clamp skillLevel to valid range
+		const maxSkillLevel = getMaxSkillLevel(pokemon.skill);
+		ret.skillLevel = clamp(1, ret.skillLevel, maxSkillLevel);
+
+		// Fix ingredient if ing3 doesn't exist
+		if (ret.ingredient.endsWith("C") && pokemon.ing3 === undefined) {
+			ret.ingredient = ret.ingredient.replace("C", "A") as IngredientType;
+		}
+
+		// Handle mythical pokemon ingredient defaults
+		const isMythical = pokemon.mythIng !== undefined;
+		if (isMythical) {
+			if (ret.mythIng1 === "unknown") {
+				ret.mythIng1 = pokemon.ing1.name;
+			}
+			if (ret.mythIng2 === "unknown") {
+				ret.mythIng2 = pokemon.ing2.name;
+			}
+		}
+
+		// Validate versatileSkill
+		if (pokemon.skill === "Versatile") {
+			if (
+				params.versatileSkill !== undefined &&
+				VersatileCandidates.indexOf(params.versatileSkill) !== -1
+			) {
+				ret.versatileSkill = params.versatileSkill;
+			} else {
+				ret.versatileSkill = "Metronome";
+			}
+		}
+
+		// Apply Toxtricity nature rules based on form
+		if (pokemon.id === toxtricityId) {
+			if (pokemon.form === "Amped" && ret.nature.isLowKey) {
+				ret.nature =
+					Nature.allNatures
+						.filter((x) => x.isAmped)
+						.filter((x) => x.upEffect === ret.nature.upEffect)[0] ??
+					new Nature("Hardy");
+			} else if (pokemon.form === "Low Key" && ret.nature.isAmped) {
+				ret.nature =
+					Nature.allNatures
+						.filter((x) => x.isLowKey)
+						.filter((x) => x.upEffect === ret.nature.upEffect)[0] ??
+					new Nature("Serious");
+			}
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Check whether given IV is equal to this IV.
+	 * @param iv IV to be compared.
+	 * @returns Whether two IV is equal or not.
+	 */
+	isEqual(iv: PokemonIv): boolean {
+		const isEqual =
+			this.pokemonName === iv.pokemonName &&
+			this.level === iv.level &&
+			this.skillLevel === iv.skillLevel &&
+			this.subSkills.isEqual(iv.subSkills) &&
+			this.nature.name === iv.nature.name &&
+			this.ribbon === iv.ribbon &&
+			this.versatileSkill === iv.versatileSkill;
+
+		if (this.isMythical) {
+			return (
+				isEqual &&
+				this.mythIng1 === iv.mythIng1 &&
+				this.mythIng2 === iv.mythIng2 &&
+				this.mythIng3 === iv.mythIng3
+			);
+		} else {
+			return isEqual && this.ingredient === iv.ingredient;
+		}
+	}
+
+	/**
+	 * Get descendants of this Pokémon.
+	 * @returns Descendants of this Pokémon.
+	 */
+	get decendants(): PokemonData[] {
+		return this.getDecendants(false);
+	}
+
+	/**
+	 * Get all descendants of this Pokémon, including non-final evolutions.
+	 * @returns All descendants of this Pokémon.
+	 */
+	get allDecendants(): PokemonData[] {
+		return this.getDecendants(true);
+	}
+
+	/**
+	 * Internal method to descendants and allDecendants property.
+	 * @param {boolean} [includeNonFinal] - Whether to include non-final evolutions.
+	 * @return Descendants of this Pokémon.
+	 */
+	private getDecendants(includeNonFinal: boolean): PokemonData[] {
+		const ret = getDecendants(this.pokemon, includeNonFinal);
+
+		// if the Pokémon is Toxel, filter by form
+		if (this.pokemon.ancestor === toxelId) {
+			return ret.filter(
+				(x) =>
+					x.id === toxelId ||
+					(x.form === "Amped" && this.nature.isAmped) ||
+					(x.form === "Low Key" && this.nature.isLowKey),
+			);
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Check whether the pokemon has an active sub-skill 'Helping Bonus'.
+	 */
+	get hasHelpingBonusInActiveSubSkills(): boolean {
+		return this.activeSubSkills.some((x) => x.name === "Helping Bonus");
+	}
+
+	/**
+	 * Check whether the pokemon has an active sub-skill 'Energy Recovery Bonus'.
+	 */
+	get hasEnergyRecoveryBonusInActiveSubSkills(): boolean {
+		return this.activeSubSkills.some((x) => x.name === "Energy Recovery Bonus");
+	}
+
+	/**
+	 * Check whether the pokemon has an active sub-skill 'Sleep EXP Bonus'.
+	 */
+	get hasSleepExpBonusInActiveSubSkills(): boolean {
+		return this.activeSubSkills.some((x) => x.name === "Sleep EXP Bonus");
+	}
+
+	/**
+	 * Get carry limit for this level (assuming evolution count is max).
+	 */
+	get carryLimit(): number {
+		return (
+			this.pokemon.carryLimit +
+			5 * Math.max(0, this.pokemon.evolutionCount) +
+			this.ribbonCarryLimit +
+			this.activeSubSkills.reduce((p, c) => p + c.inventory, 0) * 6
+		);
+	}
+
+	/**
+	 * Get carry limit added by the Good-Night Ribbon.
+	 */
+	get ribbonCarryLimit(): number {
+		switch (this.ribbon) {
+			case 1:
+				return 1;
+			case 2:
+				return 3;
+			case 3:
+				return 6;
+			case 4:
+				return 8;
+			default:
+				return 0;
+		}
+	}
+
+	/**
+	 * Get berry count per help.
+	 */
+	get berryCount(): number {
+		return this.getOrCache("berryCount", () => {
+			const defaultTwoBerry =
+				this.pokemon.specialty === "Berries" ||
+				this.pokemon.specialty === "All";
+			return (
+				(defaultTwoBerry ? 2 : 1) +
+				(this.activeSubSkills.some((s) => s.isBFS) ? 1 : 0)
+			);
+		});
+	}
+
+	/**
+	 * Get form number.
+	 */
+	get form(): number {
+		if (this.pokemon.form === undefined) {
+			return 0;
+		}
+		const formMap: Record<ValidFormType, number> = {
+			Halloween: 1,
+			Holiday: 2,
+			Alola: 3,
+			Paldea: 4,
+			Amped: 5,
+			"Low Key": 6,
+			Small: 7,
+			Medium: 8,
+			Large: 9,
+			Jumbo: 10,
+		};
+
+		return formMap[this.pokemon.form] ?? 0;
+	}
+
+	/**
+	 * Convert form number to string.
+	 * @param form    form number
+	 * @return        form name
+	 */
+	public static formToString(form: number): "" | ValidFormType {
+		const formNames: ("" | ValidFormType)[] = [
+			"",
+			"Halloween",
+			"Holiday",
+			"Alola",
+			"Paldea",
+			"Amped",
+			"Low Key",
+			"Small",
+			"Medium",
+			"Large",
+			"Jumbo",
+		];
+		return formNames[form] ?? "";
+	}
+
+	/**
+	 * ID & form
+	 */
+	get idForm(): number {
+		return this.pokemon.id + (this.form << 12);
+	}
+
+	/**
+	 * Get pokemon ID from idForm.
+	 * @param idForm idForm number.
+	 * @returns Pokemon ID.
+	 */
+	static getIdByIdForm(idForm: number): number {
+		return idForm & 0xfff;
+	}
+
+	/**
+	 * Get form ID from idForm.
+	 * @param idForm idForm number.
+	 * @returns form ID.
+	 */
+	static getFormByIdForm(idForm: number): number {
+		return idForm >> 12;
+	}
+
+	/**
+	 * Extract current props as PokemonIvProps object.
+	 * @returns Current state as props.
+	 */
+	toProps(): PokemonIvProps {
+		return {
+			pokemonName: this.pokemonName,
+			level: this.level,
+			skillLevel: this.skillLevel,
+			ingredient: this.ingredient,
+			subSkills: this.subSkills,
+			nature: this.nature,
+			ribbon: this.ribbon,
+			mythIng1: this.mythIng1,
+			mythIng2: this.mythIng2,
+			mythIng3: this.mythIng3,
+			versatileSkill: this.versatileSkill,
+			baseIngRate: this.baseIngRate,
+			baseSkillRate: this.baseSkillRate,
+		};
+	}
+
+	/**
+	 * Serialize IV data to printable string.
+	 *
+	 * Format
+	 * ------
+	 *
+	 * First, serialize IV data to following bit array (72bit or 90bit).
+	 *
+	 * * 4bit  : Version (1)
+	 * * 12bit : Pokedex ID
+	 *
+	 * * 6bit  : Form (0: normal, 1: Halloween, 2: Holiday, 3: Alola,
+	 *           4: Paldea, 5: Amped, 6: Low-Key, 7: Small, 8: Medium,
+	 *           9: Large, 10: Jumbo)
+	 * * 7bit  : level
+	 * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
+	 *
+	 * * 2bit  : reserved
+	 * * 4bit  : Skill level (0: Lv1, 1: Lv2, ..., 7: Lv8)
+	 * * 5bit  : Nature index, index of Nature.allNatureNames (0-24)
+	 * * 5bit  : Sub-skill Lv10 (index of SubSkill.subSkillNames (0-16), unknown: 31)
+	 *
+	 * * 5bit  : Sub-skill Lv25
+	 * * 5bit  : Sub-skill Lv50
+	 * * 5bit  : Sub-skill Lv75
+	 * * 1bit  : reserved
+	 *
+	 * * 5bit  : Sub-skill Lv100
+	 * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
+	 * * 4bit  : Versatile skill index (0: not set, 1-12: VersatileCandidates index)
+	 * * 4bit  : reserved
+	 *
+	 * * 10bit : Ingredient for mythical pokemon
+	 *           - 0: unknown
+	 *                Darkrai    Mew
+	 *           - 1: apple     leek
+	 *           - 2: herb      egg
+	 *           - 3: sausage   herb
+	 *           - 4: milk      sausage
+	 *           - 5: honey     oil
+	 *           - 6: soy       tail (C)
+	 *           - 7: corn      soy
+	 *           - 8: coffee    avocado
+	 *
+	 *           1st ingredient: value % 9
+	 *           2nd ingredient: Math.floor(value / 9)
+	 *           3rd ingredient: Math.floor(value / 81)
+	 *
+	 * Second, convert bit array using BASE64, and replace '/' to '-',
+	 * and remove trailing 'AA=='
+	 */
+	serialize(): string {
+		const array16 = new Uint16Array(6);
+		array16[0] = 1 + (this.pokemon.id << 4);
+		array16[1] =
+			this.form +
+			(this.level << 6) +
+			(IngredientTypes.indexOf(this.ingredient) << 13);
+
+		array16[2] =
+			((this.skillLevel - 1) << 2) +
+			(Nature.allNatures.findIndex((x) => x.name === this.nature.name) << 6) +
+			((this.subSkills.lv10 === null ? 31 : this.subSkills.lv10.index) << 11);
+		array16[3] =
+			(this.subSkills.lv25 === null ? 31 : this.subSkills.lv25.index) +
+			((this.subSkills.lv50 === null ? 31 : this.subSkills.lv50.index) << 5) +
+			((this.subSkills.lv75 === null ? 31 : this.subSkills.lv75.index) << 10);
+		const versatileIndex =
+			this.pokemon.skill === "Versatile"
+				? VersatileCandidates.indexOf(this.versatileSkill) + 1
+				: 0;
+		array16[4] =
+			(this.subSkills.lv100 === null ? 31 : this.subSkills.lv100.index) +
+			(this.ribbon << 5) +
+			(versatileIndex << 8);
+
+		if (this.pokemon.mythIng !== undefined) {
+			const ing1 =
+				this.pokemon.mythIng.findIndex((x) => x.name === this.mythIng1) + 1;
+			const ing2 =
+				this.pokemon.mythIng.findIndex((x) => x.name === this.mythIng2) + 1;
+			const ing3 =
+				this.pokemon.mythIng.findIndex((x) => x.name === this.mythIng3) + 1;
+			const n = this.pokemon.mythIng.length + 1; // 1 is unknown
+			array16[5] = ing1 + ing2 * n + ing3 * n * n;
+		}
+
+		const array8 = new Uint8Array(array16.buffer);
+		let bin = "";
+		for (let i = 0; i < array8.length; i++) {
+			bin += String.fromCharCode(array8[i]);
+		}
+		return (
+			btoa(bin)
+				.replace(/\//g, "-")
+				// strip tailing "AAAA" if not mythical pokemon
+				.substring(0, this.isMythical ? 16 : 12)
+		);
+	}
+
+	/**
+	 * Deserialize serialized string.
+	 * @param value Serialized string.
+	 * @returns PokemonIv object.
+	 */
+	static deserialize(value: string): PokemonIv {
+		// validate, and convert to BASE64 string
+		if (value.length === 12) {
+			value = `${value.replace(/-/g, "/")}AAAA`;
+		} else if (value.length === 16) {
+			value = value.replace(/-/g, "/");
+		} else {
+			throw new Error(`Invalid length ${value.length}`);
+		}
+
+		// decode BASE64 to Uint16Array
+		const bin = atob(value);
+		const array8 = new Uint8Array(bin.length);
+		for (let i = 0; i < bin.length; i++) {
+			array8[i] = bin.charCodeAt(i);
+		}
+		const array16 = new Uint16Array(array8.buffer);
+
+		// validate version
+		if ((array16[0] & 0xf) !== 1) {
+			throw new Error("Invalid version");
+		}
+
+		// get Pokedex ID
+		// Shuckle's ID was incorrectly written as 231, so it must
+		// be fixed when deserializing
+		const id = array16[0] >> 4;
+		const migratedId = id === 231 ? 213 : id;
+		let pokemon = pokemons.find((x) => x.id === migratedId);
+		if (pokemon === undefined) {
+			throw new Error(`Pokemon id ${id} not found`);
+		}
+
+		// get form
+		const form = array16[1] & 0x3f;
+		if (
+			form !== 0 &&
+			id !== 980 // treat `Clodsire` as special case
+		) {
+			const formStr = PokemonIv.formToString(form);
+			const newName = `${pokemon.name.replace(/ \(.+/, "")} (${formStr})`;
+			pokemon = pokemons.find((x) => x.name === newName);
+			if (pokemon === undefined) {
+				throw new Error(`Invalid form specified (${form})`);
+			}
+		}
+		const ret: Partial<PokemonIvProps> = {
+			pokemonName: pokemon.name,
+		};
+
+		// level
+		ret.level = (array16[1] >> 6) & 0x7f;
+		if (ret.level === 0 || ret.level > 100) {
+			throw new Error(`Invalid level (${ret.level})`);
+		}
+
+		// ingredient type
+		const ing = (array16[1] >> 13) & 0x7;
+		if (ing > 5) {
+			throw new Error(`Invalid ing value (${ing})`);
+		}
+		ret.ingredient = IngredientTypes[ing];
+
+		// skill level
+		ret.skillLevel = ((array16[2] >> 2) & 0x7) + 1;
+		if (ret.skillLevel > getMaxSkillLevel(pokemon.skill)) {
+			throw new Error(
+				`Too large skill level ${ret.skillLevel} for ${pokemon.name}`,
+			);
+		}
+
+		// nature
+		const natureIndex = (array16[2] >> 6) & 31;
+		if (natureIndex >= Nature.allNatures.length) {
+			throw new Error(`Too large nature ${natureIndex}`);
+		}
+		ret.nature = Nature.allNatures[natureIndex];
+
+		// sub skill
+		const allSubSkills = SubSkill.allSubSkills;
+		const getSubSkill = (index: number, lv: number) => {
+			if (index === 31) {
+				return null;
+			}
+			if (index >= allSubSkills.length) {
+				throw new Error(`Too large subskill for level ${lv}: ${index}`);
+			}
+			return allSubSkills[index];
+		};
+		ret.subSkills = new SubSkillList({
+			lv10: getSubSkill((array16[2] >> 11) & 31, 10),
+			lv25: getSubSkill((array16[3] >> 0) & 31, 25),
+			lv50: getSubSkill((array16[3] >> 5) & 31, 50),
+			lv75: getSubSkill((array16[3] >> 10) & 31, 75),
+			lv100: getSubSkill((array16[4] >> 0) & 31, 100),
+		});
+
+		// ribbon
+		ret.ribbon = ((array16[4] >> 5) & 7) as 0 | 1 | 2 | 3 | 4;
+		if (ret.ribbon >= 5) {
+			throw new Error(`Invalid ribbon (${ret.ribbon})`);
+		}
+
+		// versatile skill
+		const versatileIndex = (array16[4] >> 8) & 0xf;
+		if (versatileIndex > 0 && pokemon.skill === "Versatile") {
+			if (versatileIndex > VersatileCandidates.length) {
+				throw new Error(`Invalid versatile skill index (${versatileIndex})`);
+			}
+			ret.versatileSkill = VersatileCandidates[versatileIndex - 1];
+		}
+
+		// mythical ingredients
+		if (pokemon.mythIng !== undefined) {
+			const n = pokemon.mythIng.length + 1; // 1 is unknown
+			const ing1 = (array16[5] % n) - 1;
+			const ing2 = (Math.floor(array16[5] / n) % n) - 1;
+			const ing3 = (Math.floor(array16[5] / n / n) % n) - 1;
+			ret.mythIng1 = ing1 < 0 ? pokemon.ing1.name : pokemon.mythIng[ing1].name;
+			ret.mythIng2 = ing2 < 0 ? pokemon.ing2.name : pokemon.mythIng[ing2].name;
+			ret.mythIng3 = ing3 < 0 ? pokemon.ing3?.name : pokemon.mythIng[ing3].name;
+		}
+
+		return new PokemonIv(ret);
+	}
 }
 
 export default PokemonIv;

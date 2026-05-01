@@ -22,40 +22,42 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { AvocadoIconPaths } from './AvocadoIcon';
-import { CornIconPaths } from './CornIcon';
-import { HoneyIconPaths } from './HoneyIcon';
-import { PotatoIconPaths } from './PotatoIcon';
-import { PumpkinIconPaths } from './PumpkinIcon';
-import { OilIconPaths } from './OilIcon';
-import { IngredientName } from '../../data/pokemons';
+import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
+import type { IngredientName } from "../../data/pokemons";
+import { AvocadoIconPaths } from "./AvocadoIcon";
+import { CornIconPaths } from "./CornIcon";
+import { HoneyIconPaths } from "./HoneyIcon";
+import { OilIconPaths } from "./OilIcon";
+import { PotatoIconPaths } from "./PotatoIcon";
+import { PumpkinIconPaths } from "./PumpkinIcon";
 
 type IngredientDrawIconProps = SvgIconProps & {
-    firstIngredient: IngredientName;
+	firstIngredient: IngredientName;
 };
 
-const IngredientDrawIcon = React.memo(({firstIngredient, ...props}: IngredientDrawIconProps) => {
-    return (
-        <SvgIcon {...props} viewBox="0 0 200 200">
-            <g transform="translate(48,0) scale(0.5)">
-                {firstIngredient === "avocado" && <AvocadoIconPaths/>}
-                {firstIngredient === "honey" && <HoneyIconPaths/>}
-                {firstIngredient === "pumpkin" && <PumpkinIconPaths/>}
-            </g>
-            <g transform="translate(0, 98) scale(0.5)">
-                {firstIngredient === "avocado" && <PotatoIconPaths />}
-                {firstIngredient === "honey" && <OilIconPaths/>}
-                {firstIngredient === "pumpkin" && <CornIconPaths/>}
-            </g>
-            <g transform="translate(100,98) scale(0.5)">
-                {firstIngredient === "avocado" && <OilIconPaths />}
-                {firstIngredient === "honey" && <CornIconPaths/>}
-                {firstIngredient === "pumpkin" && <PotatoIconPaths/>}
-            </g>
-        </SvgIcon>
-    );
-});
+const IngredientDrawIcon = React.memo(
+	({ firstIngredient, ...props }: IngredientDrawIconProps) => {
+		return (
+			<SvgIcon {...props} viewBox="0 0 200 200">
+				<g transform="translate(48,0) scale(0.5)">
+					{firstIngredient === "avocado" && <AvocadoIconPaths />}
+					{firstIngredient === "honey" && <HoneyIconPaths />}
+					{firstIngredient === "pumpkin" && <PumpkinIconPaths />}
+				</g>
+				<g transform="translate(0, 98) scale(0.5)">
+					{firstIngredient === "avocado" && <PotatoIconPaths />}
+					{firstIngredient === "honey" && <OilIconPaths />}
+					{firstIngredient === "pumpkin" && <CornIconPaths />}
+				</g>
+				<g transform="translate(100,98) scale(0.5)">
+					{firstIngredient === "avocado" && <OilIconPaths />}
+					{firstIngredient === "honey" && <CornIconPaths />}
+					{firstIngredient === "pumpkin" && <PotatoIconPaths />}
+				</g>
+			</SvgIcon>
+		);
+	},
+);
 
 export default IngredientDrawIcon;
