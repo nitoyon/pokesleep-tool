@@ -859,8 +859,8 @@ export class HelpCountSimulation {
         // Initialize cummulative arrays
         this.cumulativeFullProb = [0];
         this.cumulativeFullBerryExpected = [0];
-        this.cumulativeFullIngExpected = [new Array(this.numIngredientKinds).fill(0)];
-        this.cumulativeOverflowIngSlots = [new Array(numSlots).fill(0)];
+        this.cumulativeFullIngExpected = [Array.from<number>({length: this.numIngredientKinds}).fill(0)];
+        this.cumulativeOverflowIngSlots = [Array.from<number>({length: numSlots}).fill(0)];
     }
 
     /**
@@ -964,9 +964,9 @@ export class HelpCountSimulation {
 
         const nextState = new Map<number, number>();
         let newFullProb = 0;
-        const newFullIng = new Array(this.numIngredientKinds).fill(0);
+        const newFullIng = Array.from<number>({length: this.numIngredientKinds}).fill(0);
         let newFullBerry = 0;
-        const newOverflowIngSlots = new Array(prevCumulativeOverflow.length).fill(0);
+        const newOverflowIngSlots = Array.from<number>({length: prevCumulativeOverflow.length}).fill(0);
 
         for (const [key, prob] of prevState) {
             const [berry, a, b, c] = this.decodeKey(key);

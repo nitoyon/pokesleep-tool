@@ -7,13 +7,6 @@ const {JSDOM} = require('jsdom');
 const { INIT_CWD } = process.env;
 
 // constants
-const areas = {
-    "ワカクサ": 0,
-    "シアン": 1,
-    "トープ": 2,
-    "ウノハナ": 3,
-    "ラピス": 4
-};
 const sleepTypes = {
     "うとうと": "dozing",
     "すやすや": "snoozing",
@@ -153,7 +146,7 @@ function getPowers(html) {
 *     }
 * }
 */
-async function syncSPO(json) {
+/*async function syncSPO(json) {
     const name = '検証：ねむけパワーと出現寝顔の関係/SPO調整/SPO一覧';
     const html = await getWikiHtml(name);
     console.log('  downloaded');
@@ -187,7 +180,7 @@ function updateSPO(json, html) {
         }
         json[name][rarity] = {spo, id};
     }
-}
+}*/
 
 async function syncPokemon() {
     // read i18n/ja.json
