@@ -236,10 +236,12 @@ const CandyTurnDialog = React.memo(
 								</tr>
 							</thead>
 							<tbody>
-								{usage.map((x, i) => {
+								{usage.map((x) => {
 									const total = calcMaxCandy(x);
 									return (
-										<tr key={i}>
+										<tr
+											key={`${x.handyS}-${x.handyM}-${x.handyL}-${x.typeS}-${x.typeM}`}
+										>
 											<td className={`handy${x.handyS === 0 ? " empty" : ""}`}>
 												{x.handyS}
 											</td>

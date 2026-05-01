@@ -210,6 +210,7 @@ const BarChartBars = React.memo(
 					const c = typeof color === "string" ? color : color(i);
 					return (
 						<rect
+							// biome-ignore lint/suspicious/noArrayIndexKey: bars never reordered
 							key={i}
 							x={x}
 							y={y}
@@ -280,13 +281,13 @@ const BarChartHover = React.memo(
 	}) => {
 		const margin = 20;
 		if (mouse.svgX - 40 < -margin || mouse.svgX - 40 > width + margin) {
-			return <></>;
+			return null;
 		}
 
 		// Calculate hovered bar index
 		const index = Math.floor(((mouse.svgX - 40) / width) * data.length);
 		if (index < 0 || index >= data.length) {
-			return <></>;
+			return null;
 		}
 
 		const x = (index / data.length) * width;

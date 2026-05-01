@@ -28,13 +28,13 @@ const NewsInfo = React.memo(
 
 		const articles = News.getArticles(appType);
 		if (articles.length === 0) {
-			return <></>;
+			return null;
 		}
 
 		const article = articles[0];
 		const closedAtricleId = appConfig.news[appType];
 		if (article.id === closedAtricleId) {
-			return <></>;
+			return null;
 		}
 		const onClose = () => {
 			const newConfig = {
@@ -117,7 +117,7 @@ export const NewsArticleDialog = React.memo(
 	}) => {
 		const { t, i18n } = useTranslation();
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const lines = t(`${appType}.news.${article.id}.detail`).split(/\n/g);

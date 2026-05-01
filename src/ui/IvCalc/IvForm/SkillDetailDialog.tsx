@@ -61,7 +61,7 @@ const SkillDetailDialog = React.memo(
 			latiTwins: false,
 		});
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const skill = value.pokemon.skill;
@@ -129,7 +129,7 @@ const NormalTable = React.memo(
 			value.pokemon.skill === "Metronome" ||
 			value.pokemon.skill.startsWith("Skill Copy")
 		) {
-			return <></>;
+			return null;
 		}
 
 		const skill: MainSkillName = value.versatileSkill;
@@ -744,7 +744,7 @@ const ConfigForm = React.memo(
 			return <StyledConfigForm>{energyNatureSection}</StyledConfigForm>;
 		}
 
-		return <></>;
+		return null;
 	},
 );
 

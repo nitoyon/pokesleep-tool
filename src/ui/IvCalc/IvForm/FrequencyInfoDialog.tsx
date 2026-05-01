@@ -54,7 +54,7 @@ const FrequencyInfoDialog = React.memo(
 		);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		return (

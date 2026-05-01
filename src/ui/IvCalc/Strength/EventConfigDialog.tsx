@@ -359,7 +359,7 @@ const EventConfigDialog = React.memo(
 		);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const eventMenus = events.bonus.map((event) => (

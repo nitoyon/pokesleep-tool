@@ -23,7 +23,7 @@ const ConfirmDialog = React.memo(
 		}, [onOk, onClose]);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 		return (
 			<Dialog open={open} onClose={onClose}>

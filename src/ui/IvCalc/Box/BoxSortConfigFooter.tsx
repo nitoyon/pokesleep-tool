@@ -127,7 +127,7 @@ const BoxSortConfigFooter = React.memo(
 			sortConfig.sort !== "ingredient" &&
 			sortConfig.sort !== "skill"
 		) {
-			return <></>;
+			return null;
 		}
 		return (
 			<StyledBoxHeader>

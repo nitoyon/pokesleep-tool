@@ -38,7 +38,7 @@ export default function BetterSecondSleepDialog({
 	const { t } = useTranslation();
 
 	if (!open) {
-		return <></>;
+		return null;
 	}
 
 	const details = [];

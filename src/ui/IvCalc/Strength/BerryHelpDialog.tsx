@@ -61,7 +61,7 @@ const BerryHelpDialog = React.memo(
 		);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const param = strength.parameter;

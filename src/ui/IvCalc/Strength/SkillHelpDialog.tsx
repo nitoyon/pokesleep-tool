@@ -136,7 +136,7 @@ const SkillHelpDialog = React.memo(
 		}
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const iv = strength.pokemonIv;
@@ -934,7 +934,7 @@ function getBerryBurstConfigHtml(
 		strength.pokemonIv.pokemon.skill ===
 			"Energy for Everyone S (Lunar Blessing)";
 	if (!showBurstConfig) {
-		return <></>;
+		return null;
 	}
 
 	const iv = strength.pokemonIv;

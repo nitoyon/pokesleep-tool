@@ -149,7 +149,7 @@ function MythicalIngredientTextField(
 	onChange3: (e: string) => void,
 ) {
 	if (iv.pokemon.mythIng === undefined) {
-		return <></>;
+		return null;
 	}
 
 	const ing1Menus = [];

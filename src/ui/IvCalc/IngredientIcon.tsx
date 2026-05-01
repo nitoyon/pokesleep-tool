@@ -116,7 +116,7 @@ const IngredientIcon = React.memo(({ name }: { name: IngredientName }) => {
 				</svg>
 			);
 	}
-	return <></>;
+	return null;
 });
 
 export default IngredientIcon;

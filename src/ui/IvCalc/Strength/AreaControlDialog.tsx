@@ -19,7 +19,7 @@ const AreaControlDialog = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		return (

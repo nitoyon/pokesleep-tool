@@ -536,7 +536,7 @@ const BoxExportAlert = React.memo(
 
 		// return empty element when no need to show message
 		if (!boxIncreased && !elapsed) {
-			return <></>;
+			return null;
 		}
 
 		return (

@@ -64,7 +64,7 @@ const SkillPityProcDialog = React.memo(
 		);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const iv = strength.pokemonIv;

@@ -304,7 +304,7 @@ const EnergyHover = React.memo(
 
 		const margin = 20;
 		if (x < -margin || x > width + margin) {
-			return <></>;
+			return null;
 		}
 		x = clamp(0, x, width);
 		const minute = Math.round(((x / width) * 1440) / 10) * 10;

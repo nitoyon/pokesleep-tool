@@ -28,7 +28,7 @@ const BerryStrengthDialog = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const berryRawStrength = new PokemonRp(iv).berryStrength;

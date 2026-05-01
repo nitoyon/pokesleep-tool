@@ -63,7 +63,7 @@ const ScoreTableDialog = React.memo(
 		);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const scores = [];

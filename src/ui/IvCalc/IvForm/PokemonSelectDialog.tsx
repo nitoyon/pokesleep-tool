@@ -495,7 +495,7 @@ const PokemonSelectDialog = React.memo(
 			(params: AutocompleteRenderGroupParams) => {
 				let headerLabel = params.group;
 				if (headerLabel === "") {
-					return <></>;
+					return null;
 				}
 				if (sortType === "sleeptype") {
 					headerLabel = t(params.group);

@@ -150,7 +150,7 @@ const RpInfoDialog = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
-			return <></>;
+			return null;
 		}
 		if (isError) {
 			return (
@@ -326,7 +326,7 @@ const RpValueDialog = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		let color = "",

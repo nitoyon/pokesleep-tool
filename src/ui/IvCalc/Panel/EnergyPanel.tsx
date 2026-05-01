@@ -163,7 +163,7 @@ const EnergyPanel = React.memo(
 		);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const hasRecoveryBonus = iv.hasEnergyRecoveryBonusInActiveSubSkills;

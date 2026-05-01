@@ -50,7 +50,7 @@ const BoxItemDialog = React.memo(
 			);
 		}
 		if (boxItem === null) {
-			return <></>;
+			return null;
 		}
 		return (
 			<StyledDialog

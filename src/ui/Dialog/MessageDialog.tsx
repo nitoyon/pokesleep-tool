@@ -14,7 +14,7 @@ const MessageDialog = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
-			return <></>;
+			return null;
 		}
 		return (
 			<Dialog open={open} onClose={onClose}>

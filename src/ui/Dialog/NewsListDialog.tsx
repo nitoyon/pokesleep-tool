@@ -56,7 +56,7 @@ const NewsListDialog = React.memo(({ open, onClose }: NewsListDialogProps) => {
 	const [selectedYear, setSelectedYear] = React.useState<number>(years[0]);
 
 	if (!open) {
-		return <></>;
+		return null;
 	}
 
 	const filteredArticles = articles.filter(
