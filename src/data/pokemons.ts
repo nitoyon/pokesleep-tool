@@ -1,6 +1,6 @@
-import pokemon_ from './pokemon.json';
-import {SleepType} from './fields';
-import { MainSkillName } from '../util/MainSkill';
+import pokemon_ from "./pokemon.json";
+import { SleepType } from "./fields";
+import { MainSkillName } from "../util/MainSkill";
 
 /** Required exp from level 1 to level 25
  *
@@ -9,109 +9,194 @@ import { MainSkillName } from '../util/MainSkill';
  * * 900: Larvitar, Dratini
  * * 600: Other Pokémon
  */
-export type ExpType = 600|900|1080|1320;
+export type ExpType = 600 | 900 | 1080 | 1320;
 
-export type ValidFormType = 'Halloween' | 'Holiday' | 'Alola' | 'Paldea' |
-    'Amped' | 'Low Key' | 'Small' | 'Medium' | 'Large' | 'Jumbo';
+export type ValidFormType =
+	| "Halloween"
+	| "Holiday"
+	| "Alola"
+	| "Paldea"
+	| "Amped"
+	| "Low Key"
+	| "Small"
+	| "Medium"
+	| "Large"
+	| "Jumbo";
 
 export type FormType = undefined | ValidFormType;
 
 export interface PokemonData {
-    /** Pokemon ID */
-    readonly id: number;
-    /** Pokemon name in English */
-    readonly name: string;
-    /** Arrival date of the Pokémon */
-    readonly arrival: string;
-    /** Pokemon form */
-    readonly form: FormType;
-    /** Sleep type of the pokemon */
-    readonly sleepType: SleepType;
-    /** EXP type (600, 900, 1080, 1320) */
-    readonly exp: ExpType;
-    /** Type of the pokemon. */
-    readonly type: PokemonType;
-    /** Specialty of the pokemon. */
-    readonly specialty: PokemonSpecialty;
-    /** Skill of the pokemon */
-    readonly skill: MainSkillName;
-    /** Friend point */
-    readonly fp: number;
-    /** Frequency of the help */
-    readonly frequency: number;
-    /** Rate for get ingredients */
-    readonly ingRate: number;
-    /** Rate for skill occurance. */
-    readonly skillRate: number;
-    /** Whether rate is not fixed or not */
-    readonly rateNotFixed?: boolean;
-    /** Ancestor pokemon id */
-    readonly ancestor: number | null;
-    /** Evolution count (-1, 0, 1, 2) */
-    readonly evolutionCount: -1|0|1|2;
-    /** Number of remaining evolutions (0, 1, 2) */
-    readonly evolutionLeft: 0|1|2;
-    /** true if Non-evolving pokemon or filal evolution pokemon */
-    readonly isFullyEvolved: boolean;
-    /** Carry limit (excluding 5 * evolutionCount). */
-    readonly carryLimit: number;
-    readonly ing1: {
-        readonly name: IngredientName,
-        readonly c1: number,
-        readonly c2: number,
-        readonly c3: number,   
-    }
-    readonly ing2: {
-        readonly name: IngredientName,
-        readonly c2: number;
-        readonly c3: number;
-    },
-    readonly ing3: {
-        readonly name: IngredientName,
-        readonly c3: number;
-    } | undefined;
-    readonly mythIng: readonly MythIngredient[] | undefined;
+	/** Pokemon ID */
+	readonly id: number;
+	/** Pokemon name in English */
+	readonly name: string;
+	/** Arrival date of the Pokémon */
+	readonly arrival: string;
+	/** Pokemon form */
+	readonly form: FormType;
+	/** Sleep type of the pokemon */
+	readonly sleepType: SleepType;
+	/** EXP type (600, 900, 1080, 1320) */
+	readonly exp: ExpType;
+	/** Type of the pokemon. */
+	readonly type: PokemonType;
+	/** Specialty of the pokemon. */
+	readonly specialty: PokemonSpecialty;
+	/** Skill of the pokemon */
+	readonly skill: MainSkillName;
+	/** Friend point */
+	readonly fp: number;
+	/** Frequency of the help */
+	readonly frequency: number;
+	/** Rate for get ingredients */
+	readonly ingRate: number;
+	/** Rate for skill occurance. */
+	readonly skillRate: number;
+	/** Whether rate is not fixed or not */
+	readonly rateNotFixed?: boolean;
+	/** Ancestor pokemon id */
+	readonly ancestor: number | null;
+	/** Evolution count (-1, 0, 1, 2) */
+	readonly evolutionCount: -1 | 0 | 1 | 2;
+	/** Number of remaining evolutions (0, 1, 2) */
+	readonly evolutionLeft: 0 | 1 | 2;
+	/** true if Non-evolving pokemon or filal evolution pokemon */
+	readonly isFullyEvolved: boolean;
+	/** Carry limit (excluding 5 * evolutionCount). */
+	readonly carryLimit: number;
+	readonly ing1: {
+		readonly name: IngredientName;
+		readonly c1: number;
+		readonly c2: number;
+		readonly c3: number;
+	};
+	readonly ing2: {
+		readonly name: IngredientName;
+		readonly c2: number;
+		readonly c3: number;
+	};
+	readonly ing3:
+		| {
+				readonly name: IngredientName;
+				readonly c3: number;
+		  }
+		| undefined;
+	readonly mythIng: readonly MythIngredient[] | undefined;
 }
 
-export type PokemonType = "normal" | "fire" | "water" | "electric" | "grass" |
-    "ice" | "fighting" | "poison" | "ground" | "flying" | "psychic" | "bug" |
-    "rock" | "ghost" | "dragon" | "dark" | "steel" | "fairy";
+export type PokemonType =
+	| "normal"
+	| "fire"
+	| "water"
+	| "electric"
+	| "grass"
+	| "ice"
+	| "fighting"
+	| "poison"
+	| "ground"
+	| "flying"
+	| "psychic"
+	| "bug"
+	| "rock"
+	| "ghost"
+	| "dragon"
+	| "dark"
+	| "steel"
+	| "fairy";
 
-export const PokemonTypes: PokemonType[] = ["normal", "fire", "water",
-    "electric","grass", "ice", "fighting", "poison", "ground",
-    "flying", "psychic", "bug", "rock", "ghost",
-    "dragon", "dark", "steel", "fairy"];
+export const PokemonTypes: PokemonType[] = [
+	"normal",
+	"fire",
+	"water",
+	"electric",
+	"grass",
+	"ice",
+	"fighting",
+	"poison",
+	"ground",
+	"flying",
+	"psychic",
+	"bug",
+	"rock",
+	"ghost",
+	"dragon",
+	"dark",
+	"steel",
+	"fairy",
+];
 
 export const SpecialtyNames: PokemonSpecialty[] = [
-    "Berries", "Ingredients", "Skills", "All",
+	"Berries",
+	"Ingredients",
+	"Skills",
+	"All",
 ];
 
-export type PokemonSpecialty = "Ingredients" | "Berries" | "Skills" | "All" | "unknown";
+export type PokemonSpecialty =
+	| "Ingredients"
+	| "Berries"
+	| "Skills"
+	| "All"
+	| "unknown";
 
 export const IngredientNames: IngredientName[] = [
-    "leek", "mushroom", "egg", "potato",
-    "apple", "herb", "sausage", "milk", "honey", "oil", "ginger",
-    "tomato", "cacao", "tail", "soy", "corn", "coffee", "pumpkin",
-    "avocado",
+	"leek",
+	"mushroom",
+	"egg",
+	"potato",
+	"apple",
+	"herb",
+	"sausage",
+	"milk",
+	"honey",
+	"oil",
+	"ginger",
+	"tomato",
+	"cacao",
+	"tail",
+	"soy",
+	"corn",
+	"coffee",
+	"pumpkin",
+	"avocado",
 ];
 
-export type IngredientName = "leek" | "mushroom" | "egg" | "potato" |
-    "apple" | "herb" | "sausage" | "milk" | "honey" | "oil" | "ginger" |
-    "tomato" | "cacao" | "tail" | "soy" | "corn" | "coffee" | "pumpkin" |
-    "avocado" |
-    "unknown" | "unknown1" | "unknown2" | "unknown3";
+export type IngredientName =
+	| "leek"
+	| "mushroom"
+	| "egg"
+	| "potato"
+	| "apple"
+	| "herb"
+	| "sausage"
+	| "milk"
+	| "honey"
+	| "oil"
+	| "ginger"
+	| "tomato"
+	| "cacao"
+	| "tail"
+	| "soy"
+	| "corn"
+	| "coffee"
+	| "pumpkin"
+	| "avocado"
+	| "unknown"
+	| "unknown1"
+	| "unknown2"
+	| "unknown3";
 
 /** Ingredient for mythical pokemon */
 export type MythIngredient = {
-    /** Ingredient name */
-    readonly name: IngredientName;
-    /** First ingredient count */
-    readonly c1: number;
-    /** Second ingredient count */
-    readonly c2: number;
-    /** Third ingredient count */
-    readonly c3: number;
-}
+	/** Ingredient name */
+	readonly name: IngredientName;
+	/** First ingredient count */
+	readonly c1: number;
+	/** Second ingredient count */
+	readonly c2: number;
+	/** Third ingredient count */
+	readonly c3: number;
+};
 
 const pokemons = pokemon_ as PokemonData[];
 
@@ -132,51 +217,54 @@ export const toxtricityId = 849;
  * @param {boolean} [includeNonFinal=false] - Whether to include non-final evolutions.
  * @returns {Array} An array of descendants of the specified Pokémon.
  */
-export function getDecendants(pokemon: PokemonData,
-    includeNonFinal: boolean = false
+export function getDecendants(
+	pokemon: PokemonData,
+	includeNonFinal: boolean = false,
 ): PokemonData[] {
-    if (ancestorId2Decendants.size === 0) {
-        // initialize ancestorId2Decendants
-        const ancestorId2evoCount = new Map<number, number>();
-        for (const pokemon of pokemons) {
-            const ancestor = pokemon.ancestor ?? 0;
-            if (ancestor === 0) {
-                continue;
-            }
-            const count = ancestorId2evoCount.get(ancestor);
-            if (count !== undefined) {
-                ancestorId2evoCount.set(ancestor,
-                    Math.max(pokemon.evolutionCount, count));
-            }
-            else {
-                ancestorId2evoCount.set(ancestor, pokemon.evolutionCount);
-            }
-        }
+	if (ancestorId2Decendants.size === 0) {
+		// initialize ancestorId2Decendants
+		const ancestorId2evoCount = new Map<number, number>();
+		for (const pokemon of pokemons) {
+			const ancestor = pokemon.ancestor ?? 0;
+			if (ancestor === 0) {
+				continue;
+			}
+			const count = ancestorId2evoCount.get(ancestor);
+			if (count !== undefined) {
+				ancestorId2evoCount.set(
+					ancestor,
+					Math.max(pokemon.evolutionCount, count),
+				);
+			} else {
+				ancestorId2evoCount.set(ancestor, pokemon.evolutionCount);
+			}
+		}
 
-        for (const [ancestorId] of ancestorId2evoCount) {
-            ancestorId2Decendants.set(ancestorId, pokemons
-                .filter(x => x.ancestor === ancestorId));
-        }
-    }
+		for (const [ancestorId] of ancestorId2evoCount) {
+			ancestorId2Decendants.set(
+				ancestorId,
+				pokemons.filter((x) => x.ancestor === ancestorId),
+			);
+		}
+	}
 
-    if (pokemon.ancestor === null) {
-        return [];
-    }
-    const ret = ancestorId2Decendants.get(pokemon.ancestor);
-    if (ret === undefined) {
-        return [];
-    }
+	if (pokemon.ancestor === null) {
+		return [];
+	}
+	const ret = ancestorId2Decendants.get(pokemon.ancestor);
+	if (ret === undefined) {
+		return [];
+	}
 
-    // Toxel is a special case (form changes when it evolves)
-    if (pokemon.ancestor === toxelId) {
-        return ret
-            .filter(x => includeNonFinal || x.evolutionLeft === 0);
-    }
+	// Toxel is a special case (form changes when it evolves)
+	if (pokemon.ancestor === toxelId) {
+		return ret.filter((x) => includeNonFinal || x.evolutionLeft === 0);
+	}
 
-    return ret
-        .filter(x => x.form === pokemon.form)
-        .filter(x => includeNonFinal || x.evolutionLeft === 0)
-        .sort((a, b) => a.id === pokemon.ancestor ? -1 : a.id - b.id);
+	return ret
+		.filter((x) => x.form === pokemon.form)
+		.filter((x) => includeNonFinal || x.evolutionLeft === 0)
+		.sort((a, b) => (a.id === pokemon.ancestor ? -1 : a.id - b.id));
 }
 
 /**
@@ -198,37 +286,37 @@ export function getDecendants(pokemon: PokemonData,
  * getCandyName(176); // Togetic returns "Togepi"
  */
 export function getCandyName(id: number): string {
-    const pokemon = pokemons.find(p => p.id === id);
-    if (!pokemon) {
-        return "";
-    }
+	const pokemon = pokemons.find((p) => p.id === id);
+	if (!pokemon) {
+		return "";
+	}
 
-    // Some baby Pokémon use their evolved form's candy instead of their own
-    const ancestorId = pokemon.ancestor ?? pokemon.id;
-    switch (ancestorId) {
-        case 172: // Pichu
-            return "Pikachu";
-        case 173: // Cleffa
-            return "Clefairy";
-        case 174: // Igglybuff
-            return "Jigglypuff";
-        case 360: // Wynaut
-            return "Wobbuffet";
-        case 438: // Bonsly
-            return "Sudowoodo";
-        case 439: // Mime Jr.
-            return "Mr. Mime";
-        case 440: // Happiny
-            return "Chansey";
-        case 447: // Riolu
-            return "Lucario";
-    }
+	// Some baby Pokémon use their evolved form's candy instead of their own
+	const ancestorId = pokemon.ancestor ?? pokemon.id;
+	switch (ancestorId) {
+		case 172: // Pichu
+			return "Pikachu";
+		case 173: // Cleffa
+			return "Clefairy";
+		case 174: // Igglybuff
+			return "Jigglypuff";
+		case 360: // Wynaut
+			return "Wobbuffet";
+		case 438: // Bonsly
+			return "Sudowoodo";
+		case 439: // Mime Jr.
+			return "Mr. Mime";
+		case 440: // Happiny
+			return "Chansey";
+		case 447: // Riolu
+			return "Lucario";
+	}
 
-    // Default to the base form of the evolutionary line
-    // Note: Togepi and Toxel are exceptions that use their own candy despite being baby forms
-    const ancestorPokemon = id === ancestorId ? pokemon :
-        pokemons.find(p => p.id === ancestorId);
-    return ancestorPokemon?.name ?? "";
+	// Default to the base form of the evolutionary line
+	// Note: Togepi and Toxel are exceptions that use their own candy despite being baby forms
+	const ancestorPokemon =
+		id === ancestorId ? pokemon : pokemons.find((p) => p.id === ancestorId);
+	return ancestorPokemon?.name ?? "";
 }
 
 export default pokemons;

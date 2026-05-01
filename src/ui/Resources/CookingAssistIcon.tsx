@@ -22,24 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { IngredientsIconPaths } from './IngredientsIcon';
+import React from "react";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { IngredientsIconPaths } from "./IngredientsIcon";
 
 const IngredientDrawIcon = React.memo((props: SvgIconProps) => {
-    return (
-        <SvgIcon {...props} viewBox="0 0 300 300">
-            <IngredientsIconPaths/>
-            <g transform="scale(8) translate(15,10)" stroke="#ffffff" strokeWidth="3">
-                <path d="M10 3h4v12h-4z"/>
-                <circle cx="12" cy="19" r="2"/>
-            </g>
-            <g transform="scale(8) translate(15,10)" fill="#da3122">
-                <path d="M10 3h4v12h-4z"/>
-                <circle cx="12" cy="19" r="2"/>
-            </g>
-        </SvgIcon>
-    );
+	return (
+		<SvgIcon {...props} viewBox="0 0 300 300">
+			<IngredientsIconPaths />
+			<g transform="scale(8) translate(15,10)" stroke="#ffffff" strokeWidth="3">
+				<path d="M10 3h4v12h-4z" />
+				<circle cx="12" cy="19" r="2" />
+			</g>
+			<g transform="scale(8) translate(15,10)" fill="#da3122">
+				<path d="M10 3h4v12h-4z" />
+				<circle cx="12" cy="19" r="2" />
+			</g>
+		</SvgIcon>
+	);
 });
 
 export default IngredientDrawIcon;

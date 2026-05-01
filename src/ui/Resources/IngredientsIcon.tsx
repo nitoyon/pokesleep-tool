@@ -22,32 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { MilkIconPaths } from './MilkIcon';
-import { PotatoIconPaths } from './PotatoIcon';
-import { AppleIconPaths } from './AppleIcon';
+import React from "react";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { MilkIconPaths } from "./MilkIcon";
+import { PotatoIconPaths } from "./PotatoIcon";
+import { AppleIconPaths } from "./AppleIcon";
 
 const IngredientsIcon = React.memo((props: SvgIconProps) => {
-    return (
-        <SvgIcon {...props} viewBox="0 0 200 200">
-            <IngredientsIconPaths/>
-        </SvgIcon>
-    );
+	return (
+		<SvgIcon {...props} viewBox="0 0 200 200">
+			<IngredientsIconPaths />
+		</SvgIcon>
+	);
 });
 
 export const IngredientsIconPaths = () => (
-    <g transform="scale(0.6)">
-        <g transform="translate(30, 0)">
-            <MilkIconPaths />
-        </g>
-        <g transform="translate(133, 130)">
-            <PotatoIconPaths />
-        </g>
-        <g transform="translate(0,140)">
-            <AppleIconPaths />
-        </g>
-    </g>
+	<g transform="scale(0.6)">
+		<g transform="translate(30, 0)">
+			<MilkIconPaths />
+		</g>
+		<g transform="translate(133, 130)">
+			<PotatoIconPaths />
+		</g>
+		<g transform="translate(0,140)">
+			<AppleIconPaths />
+		</g>
+	</g>
 );
 
 export default IngredientsIcon;

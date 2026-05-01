@@ -22,32 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { PotatoIconPaths } from './PotatoIcon';
-import { OilIconPaths } from './OilIcon';
-import { TomatoIconPaths } from './TomatoIcon';
-import { CornIconPaths } from './CornIcon';
+import React from "react";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import { PotatoIconPaths } from "./PotatoIcon";
+import { OilIconPaths } from "./OilIcon";
+import { TomatoIconPaths } from "./TomatoIcon";
+import { CornIconPaths } from "./CornIcon";
 
 const HyperCutterIcon = React.memo((props: SvgIconProps) => {
-    return (
-        <SvgIcon {...props} viewBox="0 0 200 200">
-            <g transform="scale(0.5)">
-                <g transform="translate(0, 0)">
-                    <PotatoIconPaths />
-                </g>
-                <g transform="translate(200, 0)">
-                    <OilIconPaths />
-                </g>
-                <g transform="translate(0, 200)">
-                    <TomatoIconPaths />
-                </g>
-                <g transform="translate(200,200)">
-                    <CornIconPaths />
-                </g>
-            </g>
-        </SvgIcon>
-    );
+	return (
+		<SvgIcon {...props} viewBox="0 0 200 200">
+			<g transform="scale(0.5)">
+				<g transform="translate(0, 0)">
+					<PotatoIconPaths />
+				</g>
+				<g transform="translate(200, 0)">
+					<OilIconPaths />
+				</g>
+				<g transform="translate(0, 200)">
+					<TomatoIconPaths />
+				</g>
+				<g transform="translate(200,200)">
+					<CornIconPaths />
+				</g>
+			</g>
+		</SvgIcon>
+	);
 });
 
 export default HyperCutterIcon;

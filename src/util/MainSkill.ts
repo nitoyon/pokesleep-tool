@@ -1,68 +1,77 @@
-import PokemonIv from './PokemonIv';
-import { IngredientName, PokemonData, toxelId } from '../data/pokemons';
+import PokemonIv from "./PokemonIv";
+import { IngredientName, PokemonData, toxelId } from "../data/pokemons";
 
-export type MainSkillName = "Ingredient Magnet S" |
-    "Ingredient Magnet S (Plus)" |
-    "Ingredient Magnet S (Present)" |
-    "Charge Energy S" |
-    "Charge Energy S (Moonlight)" |
-    "Charge Strength S" |
-    "Charge Strength S (Random)" |
-    "Charge Strength S (Stockpile)" |
-    "Charge Strength M" |
-    "Charge Strength M (Bad Dreams)" |
-    "Dream Shard Magnet S" |
-    "Dream Shard Magnet S (Random)" |
-    "Energizing Cheer S" |
-    "Energizing Cheer S (Nuzzle)" |
-    "Energizing Cheer S (Heal Pulse)" |
-    "Metronome" |
-    "Energy for Everyone S" |
-    "Energy for Everyone S (Lunar Blessing)" |
-    "Energy for Everyone S (Berry Juice)" |
-    "Extra Helpful S" |
-    "Cooking Power-Up S" |
-    "Cooking Power-Up S (Minus)" |
-    "Tasty Chance S" |
-    "Helper Boost" |
-    "Berry Burst" |
-    "Berry Burst (Disguise)" |
-    "Skill Copy" |
-    "Skill Copy (Transform)" |
-    "Skill Copy (Mimic)" |
-    "Ingredient Draw S" |
-    "Ingredient Draw S (Super Luck)" |
-    "Ingredient Draw S (Hyper Cutter)" |
-    "Cooking Assist S" |
-    "Cooking Assist S (Bulk Up)" |
-    "Versatile" |
-    "unknown";
+export type MainSkillName =
+	| "Ingredient Magnet S"
+	| "Ingredient Magnet S (Plus)"
+	| "Ingredient Magnet S (Present)"
+	| "Charge Energy S"
+	| "Charge Energy S (Moonlight)"
+	| "Charge Strength S"
+	| "Charge Strength S (Random)"
+	| "Charge Strength S (Stockpile)"
+	| "Charge Strength M"
+	| "Charge Strength M (Bad Dreams)"
+	| "Dream Shard Magnet S"
+	| "Dream Shard Magnet S (Random)"
+	| "Energizing Cheer S"
+	| "Energizing Cheer S (Nuzzle)"
+	| "Energizing Cheer S (Heal Pulse)"
+	| "Metronome"
+	| "Energy for Everyone S"
+	| "Energy for Everyone S (Lunar Blessing)"
+	| "Energy for Everyone S (Berry Juice)"
+	| "Extra Helpful S"
+	| "Cooking Power-Up S"
+	| "Cooking Power-Up S (Minus)"
+	| "Tasty Chance S"
+	| "Helper Boost"
+	| "Berry Burst"
+	| "Berry Burst (Disguise)"
+	| "Skill Copy"
+	| "Skill Copy (Transform)"
+	| "Skill Copy (Mimic)"
+	| "Ingredient Draw S"
+	| "Ingredient Draw S (Super Luck)"
+	| "Ingredient Draw S (Hyper Cutter)"
+	| "Cooking Assist S"
+	| "Cooking Assist S (Bulk Up)"
+	| "Versatile"
+	| "unknown";
 
 export const MainSkillNames: Readonly<MainSkillName[]> = [
-    "Charge Strength S", "Charge Strength M",
-    "Ingredient Magnet S", "Energy for Everyone S",
-    "Charge Energy S", "Energizing Cheer S",
-    "Cooking Power-Up S", "Tasty Chance S",
-    "Extra Helpful S", "Helper Boost",
-    "Dream Shard Magnet S", "Metronome",
-    "Berry Burst", "Skill Copy", "Ingredient Draw S",
-    "Cooking Assist S",
+	"Charge Strength S",
+	"Charge Strength M",
+	"Ingredient Magnet S",
+	"Energy for Everyone S",
+	"Charge Energy S",
+	"Energizing Cheer S",
+	"Cooking Power-Up S",
+	"Tasty Chance S",
+	"Extra Helpful S",
+	"Helper Boost",
+	"Dream Shard Magnet S",
+	"Metronome",
+	"Berry Burst",
+	"Skill Copy",
+	"Ingredient Draw S",
+	"Cooking Assist S",
 ];
 
 /** Versatile candidates */
 export const VersatileCandidates: Readonly<MainSkillName[]> = [
-    "Charge Strength S (Random)",
-    "Charge Strength M",
-    "Dream Shard Magnet S (Random)",
-    "Ingredient Magnet S",
-    "Charge Energy S",
-    "Energizing Cheer S",
-    "Energy for Everyone S",
-    "Tasty Chance S",
-    "Cooking Power-Up S",
-    "Extra Helpful S",
-    "Metronome",
-    "Berry Burst",
+	"Charge Strength S (Random)",
+	"Charge Strength M",
+	"Dream Shard Magnet S (Random)",
+	"Ingredient Magnet S",
+	"Charge Energy S",
+	"Energizing Cheer S",
+	"Energy for Everyone S",
+	"Tasty Chance S",
+	"Cooking Power-Up S",
+	"Extra Helpful S",
+	"Metronome",
+	"Berry Burst",
 ];
 
 /** Candy probability for Present */
@@ -88,36 +97,38 @@ export const superLuckShard5Rate = 0.028;
  */
 export const hyperCutterSuccess = 0.1668;
 
-export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
-    if (skill === "Dream Shard Magnet S" ||
-        skill === "Dream Shard Magnet S (Random)" ||
-        skill === "Versatile"
-    ) {
-        return 8;
-    }
-    if (skill === "Ingredient Magnet S" ||
-        skill === "Ingredient Magnet S (Plus)" ||
-        skill === "Ingredient Magnet S (Present)" ||
-        skill === "Charge Strength M" ||
-        skill === "Charge Strength M (Bad Dreams)" ||
-        skill === "Charge Strength S" ||
-        skill === "Charge Strength S (Random)" ||
-        skill === "Charge Strength S (Stockpile)" ||
-        skill === "Extra Helpful S" ||
-        skill === "Cooking Power-Up S" ||
-        skill === "Cooking Power-Up S (Minus)" ||
-        skill === "Metronome" ||
-        skill === "Skill Copy (Transform)" ||
-        skill === "Skill Copy (Mimic)" ||
-        skill === "Ingredient Draw S" ||
-        skill === "Ingredient Draw S (Super Luck)" ||
-        skill === "Ingredient Draw S (Hyper Cutter)" ||
-        skill === "Cooking Assist S" ||
-        skill === "Cooking Assist S (Bulk Up)"
-    ) {
-        return 7;
-    }
-    return 6;
+export function getMaxSkillLevel(skill: MainSkillName): 6 | 7 | 8 {
+	if (
+		skill === "Dream Shard Magnet S" ||
+		skill === "Dream Shard Magnet S (Random)" ||
+		skill === "Versatile"
+	) {
+		return 8;
+	}
+	if (
+		skill === "Ingredient Magnet S" ||
+		skill === "Ingredient Magnet S (Plus)" ||
+		skill === "Ingredient Magnet S (Present)" ||
+		skill === "Charge Strength M" ||
+		skill === "Charge Strength M (Bad Dreams)" ||
+		skill === "Charge Strength S" ||
+		skill === "Charge Strength S (Random)" ||
+		skill === "Charge Strength S (Stockpile)" ||
+		skill === "Extra Helpful S" ||
+		skill === "Cooking Power-Up S" ||
+		skill === "Cooking Power-Up S (Minus)" ||
+		skill === "Metronome" ||
+		skill === "Skill Copy (Transform)" ||
+		skill === "Skill Copy (Mimic)" ||
+		skill === "Ingredient Draw S" ||
+		skill === "Ingredient Draw S (Super Luck)" ||
+		skill === "Ingredient Draw S (Hyper Cutter)" ||
+		skill === "Cooking Assist S" ||
+		skill === "Cooking Assist S (Bulk Up)"
+	) {
+		return 7;
+	}
+	return 6;
 }
 
 /**
@@ -127,110 +138,120 @@ export function getMaxSkillLevel(skill: MainSkillName): 6|7|8 {
  * @param species Number of different species of same type Pokémon on the team.
  * @returns Skill value.
  */
-export function getSkillValue(skill: MainSkillName, skillLevel: number,
-    species: number = 3,
+export function getSkillValue(
+	skill: MainSkillName,
+	skillLevel: number,
+	species: number = 3,
 ): number {
-    // verification
-    if (skillLevel !== Math.floor(skillLevel)) {
-        throw new Error(`invalid skill level: ${skillLevel}`);
-    }
-    if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
-        throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
-    }
+	// verification
+	if (skillLevel !== Math.floor(skillLevel)) {
+		throw new Error(`invalid skill level: ${skillLevel}`);
+	}
+	if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
+		throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
+	}
 
-    if (skill === "Ingredient Magnet S" ||
-        skill === "Cooking Assist S (Bulk Up)"
-    ) {
-        return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
-    }
-    if (skill === "Ingredient Magnet S (Plus)") {
-        return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
-    }
-    if (skill === "Ingredient Magnet S (Present)") {
-        return [4, 6, 8, 10, 12, 15, 17][skillLevel - 1];
-    }
-    if (skill === "Charge Energy S" ||
-        skill === "Charge Energy S (Moonlight)"
-    ) {
-        return [12, 16, 21, 27, 34, 43][skillLevel - 1];
-    }
-    if (skill === "Charge Strength S") {
-        return [400, 569, 785, 1083, 1496, 2066, 3212][skillLevel - 1];
-    }
-    if (skill === "Charge Strength S (Stockpile)") {
-        return [644.3, 915.95, 1263.97, 1745.19, 2408.59, 3327.75, 4834.38][skillLevel - 1];
-    }
-    if (skill === "Charge Strength S (Random)") {
-        return [500, 711.5, 981.5, 1354, 1870, 2582.5, 4015][skillLevel - 1];
-    }
-    if (skill === "Charge Strength M") {
-        return [880, 1251, 1726, 2383, 3290, 4546, 6858][skillLevel - 1];
-    }
-    if (skill === "Charge Strength M (Bad Dreams)") {
-        return [2640, 3753, 5178, 7149, 9870, 13638, 18515][skillLevel - 1];
-    }
-    if (skill === "Cooking Power-Up S") {
-        return [7, 10, 12, 17, 22, 27, 31][skillLevel - 1];
-    }
-    if (skill === "Cooking Power-Up S (Minus)") {
-        return [5, 7, 9, 12, 16, 20, 24][skillLevel - 1];
-    }
-    if (skill === "Energizing Cheer S") {
-        return [12, 15, 20, 25, 33, 44][skillLevel - 1];
-    }
-    if (skill === "Energizing Cheer S (Nuzzle)") {
-        return [9, 12, 16, 20, 27, 35][skillLevel - 1];
-    }
-    if (skill === "Energizing Cheer S (Heal Pulse)") {
-        return [6, 8, 10, 13, 17, 22][skillLevel - 1];
-    }
-    if (skill === "Energy for Everyone S") {
-        return [5, 7, 9, 11, 15, 18][skillLevel - 1];
-    }
-    if (skill === "Energy for Everyone S (Lunar Blessing)") {
-        return [3, 4, 5, 7, 9, 11][skillLevel - 1];
-    }
-    if (skill === "Energy for Everyone S (Berry Juice)") {
-        return [5, 7, 9, 11, 15, 18][skillLevel - 1];
-    }
-    if (skill === "Extra Helpful S") {
-        return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
-    }
-    if (skill === "Helper Boost") {
-        switch (species) {
-            case 1: return [2, 3, 3, 4, 4, 5][skillLevel - 1];
-            case 2: return [2, 3, 3, 4, 5, 6][skillLevel - 1];
-            case 3: return [3, 4, 5, 6, 7, 8][skillLevel - 1];
-            case 4: return [4, 5, 6, 7, 8, 9][skillLevel - 1];
-            case 5: return [6, 7, 8, 9, 10, 11][skillLevel - 1];
-            default: throw new Error(`invalid species count: ${species}`);
-        }
-    }
-    if (skill === "Dream Shard Magnet S") {
-        return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
-    }
-    if (skill === "Dream Shard Magnet S (Random)") {
-        return [300, 425, 600, 837.5, 1150, 1575, 2250, 2875][skillLevel - 1];
-    }
-    if (skill === "Tasty Chance S") {
-        return [4, 5, 6, 7, 8, 10][skillLevel - 1];
-    }
-    if (skill === "Berry Burst (Disguise)") {
-        return [8, 10, 15, 17, 19, 21][skillLevel - 1];
-    }
-    if (skill === "Berry Burst") {
-        return [11, 14, 21, 24, 27, 30][skillLevel - 1];
-    }
-    if (skill === "Ingredient Draw S" ||
-        skill === "Ingredient Draw S (Super Luck)" ||
-        skill === "Ingredient Draw S (Hyper Cutter)"
-    ) {
-        return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
-    }
+	if (
+		skill === "Ingredient Magnet S" ||
+		skill === "Cooking Assist S (Bulk Up)"
+	) {
+		return [6, 8, 11, 14, 17, 21, 24][skillLevel - 1];
+	}
+	if (skill === "Ingredient Magnet S (Plus)") {
+		return [5, 7, 9, 11, 13, 16, 18][skillLevel - 1];
+	}
+	if (skill === "Ingredient Magnet S (Present)") {
+		return [4, 6, 8, 10, 12, 15, 17][skillLevel - 1];
+	}
+	if (skill === "Charge Energy S" || skill === "Charge Energy S (Moonlight)") {
+		return [12, 16, 21, 27, 34, 43][skillLevel - 1];
+	}
+	if (skill === "Charge Strength S") {
+		return [400, 569, 785, 1083, 1496, 2066, 3212][skillLevel - 1];
+	}
+	if (skill === "Charge Strength S (Stockpile)") {
+		return [644.3, 915.95, 1263.97, 1745.19, 2408.59, 3327.75, 4834.38][
+			skillLevel - 1
+		];
+	}
+	if (skill === "Charge Strength S (Random)") {
+		return [500, 711.5, 981.5, 1354, 1870, 2582.5, 4015][skillLevel - 1];
+	}
+	if (skill === "Charge Strength M") {
+		return [880, 1251, 1726, 2383, 3290, 4546, 6858][skillLevel - 1];
+	}
+	if (skill === "Charge Strength M (Bad Dreams)") {
+		return [2640, 3753, 5178, 7149, 9870, 13638, 18515][skillLevel - 1];
+	}
+	if (skill === "Cooking Power-Up S") {
+		return [7, 10, 12, 17, 22, 27, 31][skillLevel - 1];
+	}
+	if (skill === "Cooking Power-Up S (Minus)") {
+		return [5, 7, 9, 12, 16, 20, 24][skillLevel - 1];
+	}
+	if (skill === "Energizing Cheer S") {
+		return [12, 15, 20, 25, 33, 44][skillLevel - 1];
+	}
+	if (skill === "Energizing Cheer S (Nuzzle)") {
+		return [9, 12, 16, 20, 27, 35][skillLevel - 1];
+	}
+	if (skill === "Energizing Cheer S (Heal Pulse)") {
+		return [6, 8, 10, 13, 17, 22][skillLevel - 1];
+	}
+	if (skill === "Energy for Everyone S") {
+		return [5, 7, 9, 11, 15, 18][skillLevel - 1];
+	}
+	if (skill === "Energy for Everyone S (Lunar Blessing)") {
+		return [3, 4, 5, 7, 9, 11][skillLevel - 1];
+	}
+	if (skill === "Energy for Everyone S (Berry Juice)") {
+		return [5, 7, 9, 11, 15, 18][skillLevel - 1];
+	}
+	if (skill === "Extra Helpful S") {
+		return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
+	}
+	if (skill === "Helper Boost") {
+		switch (species) {
+			case 1:
+				return [2, 3, 3, 4, 4, 5][skillLevel - 1];
+			case 2:
+				return [2, 3, 3, 4, 5, 6][skillLevel - 1];
+			case 3:
+				return [3, 4, 5, 6, 7, 8][skillLevel - 1];
+			case 4:
+				return [4, 5, 6, 7, 8, 9][skillLevel - 1];
+			case 5:
+				return [6, 7, 8, 9, 10, 11][skillLevel - 1];
+			default:
+				throw new Error(`invalid species count: ${species}`);
+		}
+	}
+	if (skill === "Dream Shard Magnet S") {
+		return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
+	}
+	if (skill === "Dream Shard Magnet S (Random)") {
+		return [300, 425, 600, 837.5, 1150, 1575, 2250, 2875][skillLevel - 1];
+	}
+	if (skill === "Tasty Chance S") {
+		return [4, 5, 6, 7, 8, 10][skillLevel - 1];
+	}
+	if (skill === "Berry Burst (Disguise)") {
+		return [8, 10, 15, 17, 19, 21][skillLevel - 1];
+	}
+	if (skill === "Berry Burst") {
+		return [11, 14, 21, 24, 27, 30][skillLevel - 1];
+	}
+	if (
+		skill === "Ingredient Draw S" ||
+		skill === "Ingredient Draw S (Super Luck)" ||
+		skill === "Ingredient Draw S (Hyper Cutter)"
+	) {
+		return [5, 6, 8, 11, 13, 16, 18][skillLevel - 1];
+	}
 
-    // Return 0 for 'Metronome' or 'Skill Copy' since
-    // their value depends on the copied skill.
-    return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
+	// Return 0 for 'Metronome' or 'Skill Copy' since
+	// their value depends on the copied skill.
+	return [0, 0, 0, 0, 0, 0, 0][skillLevel - 1];
 }
 
 /**
@@ -242,55 +263,56 @@ export function getSkillValue(skill: MainSkillName, skillLevel: number,
  *                        `Ingredient Magnet S (Plus)`.
  * @returns Additional effect for the skill, or throws if not applicable.
  */
-export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
-    firstIngredient?: IngredientName
+export function getSkillSubValue(
+	skill: MainSkillName,
+	skillLevel: number,
+	firstIngredient?: IngredientName,
 ): number {
-    // verification
-    if (skillLevel !== Math.floor(skillLevel)) {
-        throw new Error(`invalid skill level: ${skillLevel}`);
-    }
-    if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
-        throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
-    }
+	// verification
+	if (skillLevel !== Math.floor(skillLevel)) {
+		throw new Error(`invalid skill level: ${skillLevel}`);
+	}
+	if (skillLevel < 0 || skillLevel > getMaxSkillLevel(skill)) {
+		throw new Error(`invalid main skill: ${skill}, ${skillLevel}`);
+	}
 
-    if (skill === "Energizing Cheer S (Heal Pulse)") {
-        return [1, 2, 2, 3, 4, 4][skillLevel - 1];
-    }
+	if (skill === "Energizing Cheer S (Heal Pulse)") {
+		return [1, 2, 2, 3, 4, 4][skillLevel - 1];
+	}
 
-    if (skill.startsWith("Berry Burst")) {
-        // Get the number of berries gathered from other members
-        return [1, 2, 2, 3, 4, 5][skillLevel - 1];
-    }
+	if (skill.startsWith("Berry Burst")) {
+		// Get the number of berries gathered from other members
+		return [1, 2, 2, 3, 4, 5][skillLevel - 1];
+	}
 
-    if (skill === "Ingredient Magnet S (Plus)") {
-        // Get additional ingredient count
-        if (firstIngredient === 'coffee') {
-            return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
-        }
-        else if (firstIngredient === 'milk') {
-            return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
-        }
-        throw new Error(`invalid ingredient: ${firstIngredient}`);
-    }
-    if (skill === "Ingredient Magnet S (Present)") {
-        return 4;
-    }
-    if (skill === "Cooking Power-Up S (Minus)") {
-        // Get additional energy restore
-        return [8, 10, 13, 17, 23, 30, 35][skillLevel - 1];
-    }
-    if (skill === "Ingredient Draw S (Super Luck)") {
-        // Amount of Dream Shards (x1)
-        return [500, 720, 1030, 1440, 2000, 2800, 4000][skillLevel - 1];
-    }
-    if (skill === "Cooking Assist S (Bulk Up)") {
-        return [1, 2, 2, 3, 3, 4, 5][skillLevel - 1];
-    }
-    if (skill === "Versatile") {
-        // additional candy count
-        return [0, 0, 0, 0, 0, 1, 2, 3][skillLevel - 1];
-    }
-    throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
+	if (skill === "Ingredient Magnet S (Plus)") {
+		// Get additional ingredient count
+		if (firstIngredient === "coffee") {
+			return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
+		} else if (firstIngredient === "milk") {
+			return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
+		}
+		throw new Error(`invalid ingredient: ${firstIngredient}`);
+	}
+	if (skill === "Ingredient Magnet S (Present)") {
+		return 4;
+	}
+	if (skill === "Cooking Power-Up S (Minus)") {
+		// Get additional energy restore
+		return [8, 10, 13, 17, 23, 30, 35][skillLevel - 1];
+	}
+	if (skill === "Ingredient Draw S (Super Luck)") {
+		// Amount of Dream Shards (x1)
+		return [500, 720, 1030, 1440, 2000, 2800, 4000][skillLevel - 1];
+	}
+	if (skill === "Cooking Assist S (Bulk Up)") {
+		return [1, 2, 2, 3, 3, 4, 5][skillLevel - 1];
+	}
+	if (skill === "Versatile") {
+		// additional candy count
+		return [0, 0, 0, 0, 0, 1, 2, 3][skillLevel - 1];
+	}
+	throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
 
 /**
@@ -298,26 +320,30 @@ export function getSkillSubValue(skill: MainSkillName, skillLevel: number,
  * @param pokemon Pokemon.
  * @returns Ingredient list.
  */
-export function getIngredientDrawIngredients(pokemon: PokemonData): IngredientName[] {
-    const id = pokemon.ancestor ?? pokemon.id;
-    switch (id) {
-        // Sandshrew
-        case 27:
-            return ['potato', 'corn', 'pumpkin'];
-        // Murkrow
-        case 198:
-            return ['mushroom', 'sausage', 'soy', 'coffee'];
-        // Mawile
-        case 303:
-            return ['potato', 'oil', 'tomato', 'corn'];
-        // Crustle
-        case 557:
-            return ['potato', 'oil', 'avocado'];
-        // Ribombee
-        case 742:
-            return ['honey', 'oil', 'corn'];
-    }
-    throw new Error(`Unknown Pokémon for Ingredient Draw S: ${pokemon.name} (id: ${id})`);
+export function getIngredientDrawIngredients(
+	pokemon: PokemonData,
+): IngredientName[] {
+	const id = pokemon.ancestor ?? pokemon.id;
+	switch (id) {
+		// Sandshrew
+		case 27:
+			return ["potato", "corn", "pumpkin"];
+		// Murkrow
+		case 198:
+			return ["mushroom", "sausage", "soy", "coffee"];
+		// Mawile
+		case 303:
+			return ["potato", "oil", "tomato", "corn"];
+		// Crustle
+		case 557:
+			return ["potato", "oil", "avocado"];
+		// Ribombee
+		case 742:
+			return ["honey", "oil", "corn"];
+	}
+	throw new Error(
+		`Unknown Pokémon for Ingredient Draw S: ${pokemon.name} (id: ${id})`,
+	);
 }
 
 /**
@@ -329,68 +355,102 @@ export function getIngredientDrawIngredients(pokemon: PokemonData): IngredientNa
  *                        `Ingredient Magnet S (Plus)`.
  * @returns Additional effect for the skill, or throws if not applicable.
  */
-export function getLunarBlessingBerryCount(skillLevel: number, species: number):
-{
-    myBerryCount: number,
-    othersBerryCount: number,
+export function getLunarBlessingBerryCount(
+	skillLevel: number,
+	species: number,
+): {
+	myBerryCount: number;
+	othersBerryCount: number;
 } {
-    switch (skillLevel) {
-        case 1:
-            switch (species) {
-                case 1: return { myBerryCount: 5, othersBerryCount: 1 };
-                case 2: return { myBerryCount: 7, othersBerryCount: 1 };
-                case 3: return { myBerryCount: 9, othersBerryCount: 1 };
-                case 4: return { myBerryCount: 12, othersBerryCount: 1 };
-                case 5: return { myBerryCount: 14, othersBerryCount: 2 };
-            }
-            break;
-        case 2:
-            switch (species) {
-                case 1: return { myBerryCount: 9, othersBerryCount: 1 };
-                case 2: return { myBerryCount: 12, othersBerryCount: 1 };
-                case 3: return { myBerryCount: 15, othersBerryCount: 1 };
-                case 4: return { myBerryCount: 16, othersBerryCount: 2 };
-                case 5: return { myBerryCount: 19, othersBerryCount: 3 };
-            }
-            break;
-        case 3:
-            switch (species) {
-                case 1: return { myBerryCount: 13, othersBerryCount: 1 };
-                case 2: return { myBerryCount: 17, othersBerryCount: 1 };
-                case 3: return { myBerryCount: 18, othersBerryCount: 2 };
-                case 4: return { myBerryCount: 20, othersBerryCount: 3 };
-                case 5: return { myBerryCount: 24, othersBerryCount: 4 };
-            }
-            break;
-        case 4:
-            switch (species) {
-                case 1: return { myBerryCount: 17, othersBerryCount: 1 };
-                case 2: return { myBerryCount: 19, othersBerryCount: 2 };
-                case 3: return { myBerryCount: 25, othersBerryCount: 2 };
-                case 4: return { myBerryCount: 28, othersBerryCount: 3 };
-                case 5: return { myBerryCount: 29, othersBerryCount: 5 };
-            }
-            break;
-        case 5:
-            switch (species) {
-                case 1: return { myBerryCount: 21, othersBerryCount: 1 };
-                case 2: return { myBerryCount: 24, othersBerryCount: 2 };
-                case 3: return { myBerryCount: 27, othersBerryCount: 3 };
-                case 4: return { myBerryCount: 28, othersBerryCount: 5 };
-                case 5: return { myBerryCount: 30, othersBerryCount: 7 };
-            }
-            break;
-        case 6:
-            switch (species) {
-                case 1: return { myBerryCount: 25, othersBerryCount: 1 };
-                case 2: return { myBerryCount: 29, othersBerryCount: 2 };
-                case 3: return { myBerryCount: 30, othersBerryCount: 4 };
-                case 4: return { myBerryCount: 31, othersBerryCount: 6 };
-                case 5: return { myBerryCount: 32, othersBerryCount: 9 };
-            }
-            break;
-    }
-    throw new Error(`Lunar Blessing doesn’t have a sub-value: ${skillLevel}, ${species}`);
+	switch (skillLevel) {
+		case 1:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 5, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 7, othersBerryCount: 1 };
+				case 3:
+					return { myBerryCount: 9, othersBerryCount: 1 };
+				case 4:
+					return { myBerryCount: 12, othersBerryCount: 1 };
+				case 5:
+					return { myBerryCount: 14, othersBerryCount: 2 };
+			}
+			break;
+		case 2:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 9, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 12, othersBerryCount: 1 };
+				case 3:
+					return { myBerryCount: 15, othersBerryCount: 1 };
+				case 4:
+					return { myBerryCount: 16, othersBerryCount: 2 };
+				case 5:
+					return { myBerryCount: 19, othersBerryCount: 3 };
+			}
+			break;
+		case 3:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 13, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 17, othersBerryCount: 1 };
+				case 3:
+					return { myBerryCount: 18, othersBerryCount: 2 };
+				case 4:
+					return { myBerryCount: 20, othersBerryCount: 3 };
+				case 5:
+					return { myBerryCount: 24, othersBerryCount: 4 };
+			}
+			break;
+		case 4:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 17, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 19, othersBerryCount: 2 };
+				case 3:
+					return { myBerryCount: 25, othersBerryCount: 2 };
+				case 4:
+					return { myBerryCount: 28, othersBerryCount: 3 };
+				case 5:
+					return { myBerryCount: 29, othersBerryCount: 5 };
+			}
+			break;
+		case 5:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 21, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 24, othersBerryCount: 2 };
+				case 3:
+					return { myBerryCount: 27, othersBerryCount: 3 };
+				case 4:
+					return { myBerryCount: 28, othersBerryCount: 5 };
+				case 5:
+					return { myBerryCount: 30, othersBerryCount: 7 };
+			}
+			break;
+		case 6:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 25, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 29, othersBerryCount: 2 };
+				case 3:
+					return { myBerryCount: 30, othersBerryCount: 4 };
+				case 4:
+					return { myBerryCount: 31, othersBerryCount: 6 };
+				case 5:
+					return { myBerryCount: 32, othersBerryCount: 9 };
+			}
+			break;
+	}
+	throw new Error(
+		`Lunar Blessing doesn’t have a sub-value: ${skillLevel}, ${species}`,
+	);
 }
 
 /**
@@ -399,44 +459,69 @@ export function getLunarBlessingBerryCount(skillLevel: number, species: number):
  * @param skillLevel Main skill level.
  * @returns A tuple of the minimum and maximum value of the skill.
  */
-export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [number, number] {
-    switch (skill) {
-        case "Charge Strength S (Random)":
-            switch (skillLevel) {
-                case 1: return [200, 800];
-                case 2: return [285, 1138];
-                case 3: return [393, 1570];
-                case 4: return [542, 2166];
-                case 5: return [748, 2992];
-                case 6: return [1033, 4132];
-                case 7: return [1501, 6004];
-            }
-            break;
-        case "Charge Strength S (Stockpile)":
-            switch (skillLevel) {
-                case 1: return [600, 12120];
-                case 2: return [853, 17231];
-                case 3: return [1177, 23776];
-                case 4: return [1625, 32827];
-                case 5: return [2243, 45309];
-                case 6: return [3099, 62600];
-                case 7: return [4502, 90940];
-            }
-            break;
-        case "Dream Shard Magnet S (Random)":
-            switch (skillLevel) {
-                case 1: return [120, 480];
-                case 2: return [170, 680];
-                case 3: return [240, 960];
-                case 4: return [335, 1340];
-                case 5: return [460, 1840];
-                case 6: return [630, 2520];
-                case 7: return [900, 3600];
-                case 8: return [1150, 4600];
-            }
-            break;
-    }
-    return [0, 0];
+export function getSkillRandomRange(
+	skill: MainSkillName,
+	skillLevel: number,
+): [number, number] {
+	switch (skill) {
+		case "Charge Strength S (Random)":
+			switch (skillLevel) {
+				case 1:
+					return [200, 800];
+				case 2:
+					return [285, 1138];
+				case 3:
+					return [393, 1570];
+				case 4:
+					return [542, 2166];
+				case 5:
+					return [748, 2992];
+				case 6:
+					return [1033, 4132];
+				case 7:
+					return [1501, 6004];
+			}
+			break;
+		case "Charge Strength S (Stockpile)":
+			switch (skillLevel) {
+				case 1:
+					return [600, 12120];
+				case 2:
+					return [853, 17231];
+				case 3:
+					return [1177, 23776];
+				case 4:
+					return [1625, 32827];
+				case 5:
+					return [2243, 45309];
+				case 6:
+					return [3099, 62600];
+				case 7:
+					return [4502, 90940];
+			}
+			break;
+		case "Dream Shard Magnet S (Random)":
+			switch (skillLevel) {
+				case 1:
+					return [120, 480];
+				case 2:
+					return [170, 680];
+				case 3:
+					return [240, 960];
+				case 4:
+					return [335, 1340];
+				case 5:
+					return [460, 1840];
+				case 6:
+					return [630, 2520];
+				case 7:
+					return [900, 3600];
+				case 8:
+					return [1150, 4600];
+			}
+			break;
+	}
+	return [0, 0];
 }
 
 /**
@@ -447,57 +532,63 @@ export function getSkillRandomRange(skill: MainSkillName, skillLevel: number): [
  * @param match The string to match against the skill name.
  * @returns `true` if the skill name starts with the match string.
  */
-export function matchMainSkillName(pokemon: PokemonData, match: string,
-    evolved?: boolean, iv?: PokemonIv
+export function matchMainSkillName(
+	pokemon: PokemonData,
+	match: string,
+	evolved?: boolean,
+	iv?: PokemonIv,
 ): boolean {
-    let name: MainSkillName = pokemon.skill;
+	let name: MainSkillName = pokemon.skill;
 
-    // Special case: Mew matches the versatileSkill
-    if (pokemon.skill === "Versatile") {
-        // Matches all VersatileCandidates
-        if (iv === undefined) {
-            return VersatileCandidates.some(x => x.startsWith(match));
-        }
-        name = iv.versatileSkill;
-    }
+	// Special case: Mew matches the versatileSkill
+	if (pokemon.skill === "Versatile") {
+		// Matches all VersatileCandidates
+		if (iv === undefined) {
+			return VersatileCandidates.some((x) => x.startsWith(match));
+		}
+		name = iv.versatileSkill;
+	}
 
-    // Special case: Toxel's main skill changes upon evolution
-    if (evolved && pokemon.id === toxelId && iv !== undefined) {
-        name = (iv.nature.isAmped ?
-            'Ingredient Magnet S (Plus)' :
-            'Cooking Power-Up S (Minus)');
-    }
+	// Special case: Toxel's main skill changes upon evolution
+	if (evolved && pokemon.id === toxelId && iv !== undefined) {
+		name = iv.nature.isAmped
+			? "Ingredient Magnet S (Plus)"
+			: "Cooking Power-Up S (Minus)";
+	}
 
-    // `name` should start with `match`
-    // (ex) `Charge Strength S (Stockpile)` matches `Charge Strength S`
-    if (name.startsWith(match)) {
-        return true;
-    }
+	// `name` should start with `match`
+	// (ex) `Charge Strength S (Stockpile)` matches `Charge Strength S`
+	if (name.startsWith(match)) {
+		return true;
+	}
 
-    // Treat "Cooking Power-Up S (Minus)" as matching "Energizing Cheer S"
-    if (name === 'Cooking Power-Up S (Minus)' &&
-        match === 'Energizing Cheer S'
-    ) {
-        return true;
-    }
+	// Treat "Cooking Power-Up S (Minus)" as matching "Energizing Cheer S"
+	if (name === "Cooking Power-Up S (Minus)" && match === "Energizing Cheer S") {
+		return true;
+	}
 
-    // Treat "Berry Burst" as matching "Energy for Everyone S (Lunar Blessing)"
-    if (name === "Energy for Everyone S (Lunar Blessing)" && match === "Berry Burst") {
-        return true;
-    }
+	// Treat "Berry Burst" as matching "Energy for Everyone S (Lunar Blessing)"
+	if (
+		name === "Energy for Everyone S (Lunar Blessing)" &&
+		match === "Berry Burst"
+	) {
+		return true;
+	}
 
-    // Treat "Dream Shard Magnet S" as matching "Ingredient Draw S (Super Luck)"
-    if (name === "Ingredient Draw S (Super Luck)" && match === "Dream Shard Magnet S") {
-        return true;
-    }
+	// Treat "Dream Shard Magnet S" as matching "Ingredient Draw S (Super Luck)"
+	if (
+		name === "Ingredient Draw S (Super Luck)" &&
+		match === "Dream Shard Magnet S"
+	) {
+		return true;
+	}
 
-    // Treat "Bulk Up" as matching "Tasty Chance S" and "Ingredient Magnet S"
-    if (name === "Cooking Assist S (Bulk Up)") {
-        if (match === "Tasty Chance S" ||
-            match === "Ingredient Magnet S") {
-            return true;
-        }
-    }
+	// Treat "Bulk Up" as matching "Tasty Chance S" and "Ingredient Magnet S"
+	if (name === "Cooking Assist S (Bulk Up)") {
+		if (match === "Tasty Chance S" || match === "Ingredient Magnet S") {
+			return true;
+		}
+	}
 
-    return false;
+	return false;
 }

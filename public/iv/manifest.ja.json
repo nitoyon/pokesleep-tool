@@ -1,20 +1,20 @@
 {
-  "short_name": "個体値計算機",
-  "name": "個体値計算機 for ポケモンスリープ",
-  "description": "使い方はかんたん！ ポケモンのレベルやスキルを入力すると、SP や稼ぐエナジー・強さが分かります。",
-  "icons": [
-    {
-      "src": "favicon.svg",
-      "sizes": "24x24"
-    },
-    {
-      "src": "logo192.png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    }
-  ],
-  "start_url": "./index.ja.html?utm_source=homescreen",
-  "display": "standalone",
-  "theme_color": "#f9f9f9",
-  "background_color": "#ffffff"
+	"short_name": "個体値計算機",
+	"name": "個体値計算機 for ポケモンスリープ",
+	"description": "使い方はかんたん！ ポケモンのレベルやスキルを入力すると、SP や稼ぐエナジー・強さが分かります。",
+	"icons": [
+		{
+			"src": "favicon.svg",
+			"sizes": "24x24"
+		},
+		{
+			"src": "logo192.png",
+			"sizes": "192x192",
+			"purpose": "any maskable"
+		}
+	],
+	"start_url": "./index.ja.html?utm_source=homescreen",
+	"display": "standalone",
+	"theme_color": "#f9f9f9",
+	"background_color": "#ffffff"
 }
