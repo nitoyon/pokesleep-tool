@@ -1,15 +1,3 @@
-import React from "react";
-import { styled } from "@mui/system";
-import CollapseEx from "../common/CollapseEx";
-import NumericSliderInput from "../common/NumericSliderInput";
-import type PokemonIv from "../../util/PokemonIv";
-import { formatWithComma } from "../../util/NumberUtil";
-import calcCandyUsage, {
-	calcMaxCandy,
-	type CandyCount,
-} from "../../util/Candy";
-import { getCandyName } from "../../data/pokemons";
-import CandyIcon from "../Resources/CandyIcon";
 import {
 	Alert,
 	Button,
@@ -17,7 +5,19 @@ import {
 	DialogActions,
 	InputAdornment,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { getCandyName } from "../../data/pokemons";
+import calcCandyUsage, {
+	type CandyCount,
+	calcMaxCandy,
+} from "../../util/Candy";
+import { formatWithComma } from "../../util/NumberUtil";
+import type PokemonIv from "../../util/PokemonIv";
+import CollapseEx from "../common/CollapseEx";
+import NumericSliderInput from "../common/NumericSliderInput";
+import CandyIcon from "../Resources/CandyIcon";
 
 /** Configuration for candy dialog */
 type TurnConfig = CandyCount & {

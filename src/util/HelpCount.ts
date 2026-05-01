@@ -1,19 +1,19 @@
+import type { BonusEffects } from "../data/events";
+import { isExpertField } from "../data/fields";
 import type { IngredientName } from "../data/pokemons";
+import {
+	AlwaysTap,
+	type EfficiencyEvent,
+	type EnergyParameter,
+	type EnergyResult,
+	NoTap,
+} from "./Energy";
 import type PokemonIv from "./PokemonIv";
 import type {
 	BagUsagePerHelpDetailItem,
 	IngredientSlot,
 	InventoryBonus,
 } from "./PokemonIv";
-import {
-	type EfficiencyEvent,
-	type EnergyParameter,
-	type EnergyResult,
-	AlwaysTap,
-	NoTap,
-} from "./Energy";
-import type { BonusEffects } from "../data/events";
-import { isExpertField } from "../data/fields";
 
 /**
  * Represents help count split by normal and sneaky snacking.

@@ -1,8 +1,8 @@
-import React from "react";
 import { styled } from "@mui/system";
-import { frequencyToString, formatHoursLong } from "../../../util/TimeUtil";
-import EnergyIcon from "../../Resources/EnergyIcon";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { formatHoursLong, frequencyToString } from "../../../util/TimeUtil";
+import EnergyIcon from "../../Resources/EnergyIcon";
 
 const EnergyPreviewPanel = React.memo(
 	({

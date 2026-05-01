@@ -1,8 +1,8 @@
+import pokemons from "../data/pokemons";
 import Nature from "./Nature";
 import PokemonIv from "./PokemonIv";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
-import pokemons from "../data/pokemons";
 
 describe("PokemonIV", () => {
 	describe("constructor", () => {

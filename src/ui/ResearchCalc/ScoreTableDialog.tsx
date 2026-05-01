@@ -1,16 +1,16 @@
-import React from "react";
-import { styled } from "@mui/system";
 import {
 	Button,
 	Dialog,
 	DialogActions,
 	DialogTitle,
-	ToggleButtonGroup,
 	ToggleButton,
+	ToggleButtonGroup,
 } from "@mui/material";
-import SleepScore from "./SleepScore";
-import { getMinTimeForScore, getMaxTimeForScore } from "./Score";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { getMaxTimeForScore, getMinTimeForScore } from "./Score";
+import SleepScore from "./SleepScore";
 
 interface ScoreTableDialogProps {
 	/** Whether dialog is open or not */

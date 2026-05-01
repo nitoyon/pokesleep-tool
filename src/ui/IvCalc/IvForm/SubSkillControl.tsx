@@ -1,9 +1,3 @@
-import React from "react";
-import { styled } from "@mui/system";
-import SubSkill, { type SubSkillType } from "../../../util/SubSkill";
-import SubSkillList, {
-	type SubSkillListProps,
-} from "../../../util/SubSkillList";
 import {
 	Badge,
 	Button,
@@ -11,7 +5,13 @@ import {
 	Dialog,
 	DialogActions,
 } from "@mui/material";
-import { useTranslation, Trans } from "react-i18next";
+import { styled } from "@mui/system";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import SubSkill, { type SubSkillType } from "../../../util/SubSkill";
+import SubSkillList, {
+	type SubSkillListProps,
+} from "../../../util/SubSkillList";
 
 /** Event object for onChange event handler */
 export interface SubSkillChangeEvent {

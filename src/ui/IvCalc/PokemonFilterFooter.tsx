@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import { ButtonBase, MenuItem, MenuList } from "@mui/material";
-import PopperMenu from "../common/PopperMenu";
+import NorthIcon from "@mui/icons-material/North";
 import SearchIcon from "@mui/icons-material/Search";
 import SortIcon from "@mui/icons-material/Sort";
-import NorthIcon from "@mui/icons-material/North";
+import { ButtonBase, MenuItem, MenuList } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import PopperMenu from "../common/PopperMenu";
 
 /**
  * Pokemon select dialog configuration.

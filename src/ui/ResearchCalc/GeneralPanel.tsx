@@ -1,9 +1,9 @@
 import { useState } from "react";
-import type { InputAreaData } from "./ResearchCalcAppConfig";
 import BetterSecondSleepDialog, {
 	type BetterSecondSleepData,
 } from "./BetterSecondSleepDialog";
 import PreviewScore from "./PreviewScore";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
 import { getScoreRange } from "./Score";
 
 export default function GeneralPanel({ data }: { data: InputAreaData }) {

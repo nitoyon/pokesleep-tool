@@ -1,5 +1,5 @@
-import { getMaxTimeForScore, getMinTimeForScore } from "./Score";
 import type { TrackingData } from "./ResearchCalcAppConfig";
+import { getMaxTimeForScore, getMinTimeForScore } from "./Score";
 
 /** Required minutes taken to fall asleep */
 export const minutesTakenToFallAsleep = 5;

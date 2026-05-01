@@ -1,13 +1,13 @@
-import type { AppType } from "../AppConfig";
 import {
 	Button,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	DialogContent,
+	DialogTitle,
 	Typography,
 } from "@mui/material";
-import { useTranslation, Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+import type { AppType } from "../AppConfig";
 
 interface HowToDialogProps {
 	app: AppType;

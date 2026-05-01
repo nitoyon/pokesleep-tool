@@ -1,16 +1,16 @@
-import React from "react";
+import { MenuItem } from "@mui/material";
 import { styled } from "@mui/system";
-import SelectEx from "../../common/SelectEx";
-import SkillDetailDialog from "./SkillDetailDialog";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import {
 	getMaxSkillLevel,
 	type MainSkillName,
 	VersatileCandidates,
 } from "../../../util/MainSkill";
 import type PokemonIv from "../../../util/PokemonIv";
+import SelectEx from "../../common/SelectEx";
 import InfoButton from "../InfoButton";
-import { MenuItem } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import SkillDetailDialog from "./SkillDetailDialog";
 
 const SkillLevelControl = React.memo(
 	({

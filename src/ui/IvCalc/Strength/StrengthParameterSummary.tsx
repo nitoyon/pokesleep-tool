@@ -1,5 +1,18 @@
-import React from "react";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Button, IconButton, MenuItem } from "@mui/material";
 import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { getActiveHelpBonus } from "../../../data/events";
+import { isExpertField } from "../../../data/fields";
+import { NoTap, whistlePeriod } from "../../../util/Energy";
+import {
+	allFavoriteFieldIndex,
+	noFavoriteFieldIndex,
+	type StrengthParameter,
+} from "../../../util/PokemonStrength";
+import SelectEx from "../../common/SelectEx";
+import TextLikeButton from "../../common/TextLikeButton";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
 import AreaControlDialog from "./AreaControlDialog";
@@ -7,19 +20,6 @@ import EventConfigDialog from "./EventConfigDialog";
 import FixedLevelSelect from "./FixedLevelSelect";
 import PeriodSelect from "./PeriodSelect";
 import TapFrequencyControl from "./TapFrequencyControl";
-import SelectEx from "../../common/SelectEx";
-import TextLikeButton from "../../common/TextLikeButton";
-import { getActiveHelpBonus } from "../../../data/events";
-import { isExpertField } from "../../../data/fields";
-import {
-	allFavoriteFieldIndex,
-	noFavoriteFieldIndex,
-	type StrengthParameter,
-} from "../../../util/PokemonStrength";
-import { NoTap, whistlePeriod } from "../../../util/Energy";
-import { Button, IconButton, MenuItem } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { useTranslation } from "react-i18next";
 
 const StrengthParameterSummary = React.memo(
 	({

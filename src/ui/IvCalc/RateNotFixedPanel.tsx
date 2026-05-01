@@ -1,20 +1,20 @@
-import React from "react";
-import { styled } from "@mui/system";
 import {
 	Button,
 	Dialog,
-	DialogContent,
 	DialogActions,
+	DialogContent,
 	Input,
 	InputAdornment,
 } from "@mui/material";
-import type IvState from "./IvState";
-import type { IvAction } from "./IvState";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import {
 	createStrengthParameter,
 	type MewParameter,
 } from "../../util/PokemonStrength";
-import { useTranslation } from "react-i18next";
+import type IvState from "./IvState";
+import type { IvAction } from "./IvState";
 
 const RateNotFixedPanel = React.memo(
 	({

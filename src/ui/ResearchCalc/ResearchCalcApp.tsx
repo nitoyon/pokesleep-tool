@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
+import GeneralPanel from "./GeneralPanel";
 import { InputArea } from "./InputArea";
 import NotFixedWarning from "./NotFixedWarning";
-import GeneralPanel from "./GeneralPanel";
 import {
 	type InputAreaData,
 	loadConfig,

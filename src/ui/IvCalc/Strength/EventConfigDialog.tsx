@@ -1,5 +1,4 @@
-import React from "react";
-import { styled } from "@mui/system";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {
 	Button,
 	Collapse,
@@ -11,20 +10,21 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
-import SpecialtyButton from "../SpecialtyButton";
-import TypeSelect from "../TypeSelect";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import events, {
+	fillBonusEffects,
+	type TargetPokemon,
+} from "../../../data/events";
 import {
 	type PokemonSpecialty,
 	type PokemonType,
 	PokemonTypes,
 } from "../../../data/pokemons";
-import events, {
-	fillBonusEffects,
-	type TargetPokemon,
-} from "../../../data/events";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { useTranslation } from "react-i18next";
+import SpecialtyButton from "../SpecialtyButton";
+import TypeSelect from "../TypeSelect";
 
 const EventConfigDialog = React.memo(
 	({

@@ -1,9 +1,9 @@
-import React from "react";
 import MoodIcon from "@mui/icons-material/Mood";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import React from "react";
 
 const EnergyIcon = React.memo(({ energy }: { energy: number }) => {
 	if (energy > 80) {

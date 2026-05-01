@@ -1,7 +1,7 @@
-import React from "react";
-import { styled } from "@mui/system";
-import type { IngredientName } from "../../data/pokemons";
 import { Badge } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import type { IngredientName } from "../../data/pokemons";
 import IngredientIcon from "./IngredientIcon";
 
 const IngredientBadge = styled(Badge)(() => ({

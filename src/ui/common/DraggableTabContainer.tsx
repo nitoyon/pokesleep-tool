@@ -1,7 +1,7 @@
-import React from "react";
 import { styled } from "@mui/system";
-import { useSpring, animated } from "@react-spring/web";
+import { animated, useSpring } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
+import React from "react";
 import { clamp } from "../../util/NumberUtil";
 
 /** Gap between each tab (in pixels) */

@@ -8,10 +8,10 @@
 // Read tsv from stdin (RP collection sheet format)
 // See src/util/RpParse.tsv for details
 
-import parseTsv, { type RpData } from "../src/util/RpParse";
+import * as fs from "node:fs";
 import type PokemonIv from "../src/util/PokemonIv";
 import PokemonRp from "../src/util/PokemonRp";
-import * as fs from "node:fs";
+import parseTsv, { type RpData } from "../src/util/RpParse";
 
 type RateInfo = {
 	skill: number;

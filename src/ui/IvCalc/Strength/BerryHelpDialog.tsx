@@ -1,5 +1,14 @@
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import {
+	Button,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+} from "@mui/material";
 import React from "react";
-import { round1, formatWithComma } from "../../../util/NumberUtil";
+import { useTranslation } from "react-i18next";
+import { NoTap } from "../../../util/Energy";
+import { formatWithComma, round1 } from "../../../util/NumberUtil";
 import type PokemonStrength from "../../../util/PokemonStrength";
 import type { StrengthResult } from "../../../util/PokemonStrength";
 import InfoButton from "../InfoButton";
@@ -7,15 +16,6 @@ import type { IvAction } from "../IvState";
 import BerryStrengthDialog from "./BerryStrengthDialog";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 import TapFrequencyControl from "./TapFrequencyControl";
-import { NoTap } from "../../../util/Energy";
-import {
-	Button,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-} from "@mui/material";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import { useTranslation } from "react-i18next";
 
 const BerryHelpDialog = React.memo(
 	({

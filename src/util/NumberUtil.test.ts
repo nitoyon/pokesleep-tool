@@ -1,9 +1,9 @@
 import {
-	round1,
-	round2,
+	clamp,
 	formatWithComma,
 	getFormatWithCommaPos,
-	clamp,
+	round1,
+	round2,
 } from "./NumberUtil";
 
 describe("round1", () => {

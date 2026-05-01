@@ -1,16 +1,16 @@
-import React from "react";
-import { formatWithComma } from "../../../util/NumberUtil";
-import type PokemonIv from "../../../util/PokemonIv";
-import PokemonRp from "../../../util/PokemonRp";
-import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import {
 	Button,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
 } from "@mui/material";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { formatWithComma } from "../../../util/NumberUtil";
+import type PokemonIv from "../../../util/PokemonIv";
+import PokemonRp from "../../../util/PokemonRp";
+import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 
 const BerryStrengthDialog = React.memo(
 	({

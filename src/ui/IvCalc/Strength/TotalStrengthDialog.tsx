@@ -1,5 +1,5 @@
-import React from "react";
-import { styled } from "@mui/system";
+import BlockIcon from "@mui/icons-material/Block";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import {
 	Button,
 	Checkbox,
@@ -8,7 +8,9 @@ import {
 	FormControlLabel,
 	IconButton,
 } from "@mui/material";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { formatWithComma } from "../../../util/NumberUtil";
 import type {
 	StrengthParameter,
@@ -17,8 +19,6 @@ import type {
 import CollapseEx from "../../common/CollapseEx";
 import type { IvAction } from "../IvState";
 import SpecialtyButton from "../SpecialtyButton";
-import BlockIcon from "@mui/icons-material/Block";
-import { useTranslation } from "react-i18next";
 
 const TotalStrengthDialog = React.memo(
 	({

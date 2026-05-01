@@ -1,6 +1,6 @@
+import Nature from "./Nature";
 import PokemonIv from "./PokemonIv";
 import PokemonRp from "./PokemonRp";
-import Nature from "./Nature";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
 

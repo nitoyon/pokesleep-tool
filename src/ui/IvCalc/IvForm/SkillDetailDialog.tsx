@@ -1,22 +1,3 @@
-import React from "react";
-import { styled } from "@mui/system";
-import IngredientIcon from "../IngredientIcon";
-import {
-	StyledNatureUpEffect,
-	StyledNatureDownEffect,
-} from "./NatureTextField";
-import AreaBonusControl from "../Strength/AreaBonusControl";
-import SelectEx from "../../common/SelectEx";
-import {
-	getMaxSkillLevel,
-	getSkillValue,
-	getSkillSubValue,
-	getSkillRandomRange,
-	getIngredientDrawIngredients,
-	getLunarBlessingBerryCount,
-	type MainSkillName,
-} from "../../../util/MainSkill";
-import type PokemonIv from "../../../util/PokemonIv";
 import {
 	Button,
 	Dialog,
@@ -26,8 +7,27 @@ import {
 	MenuItem,
 	Switch,
 } from "@mui/material";
-import { useTranslation, Trans } from "react-i18next";
+import { styled } from "@mui/system";
 import type i18next from "i18next";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import {
+	getIngredientDrawIngredients,
+	getLunarBlessingBerryCount,
+	getMaxSkillLevel,
+	getSkillRandomRange,
+	getSkillSubValue,
+	getSkillValue,
+	type MainSkillName,
+} from "../../../util/MainSkill";
+import type PokemonIv from "../../../util/PokemonIv";
+import SelectEx from "../../common/SelectEx";
+import IngredientIcon from "../IngredientIcon";
+import AreaBonusControl from "../Strength/AreaBonusControl";
+import {
+	StyledNatureDownEffect,
+	StyledNatureUpEffect,
+} from "./NatureTextField";
 
 interface SkillDetailDialogConfig {
 	species: number;

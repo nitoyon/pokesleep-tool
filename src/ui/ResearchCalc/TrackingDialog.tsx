@@ -1,25 +1,25 @@
-import React from "react";
-import { styled } from "@mui/system";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import fields from "../../data/fields";
+import { getPokemonCount, type PokemonCount } from "../../util/PokemonCount";
+import Rank from "../../util/Rank";
+import { AmountOfSleep } from "../../util/TimeUtil";
+import ArrowButton from "../common/ArrowButton";
+import CollapseEx from "../common/CollapseEx";
+import SliderEx from "../common/SliderEx";
+import MessageDialog from "../Dialog/MessageDialog";
+import RankBallLabel from "./RankBallLabel";
 import type { InputAreaData, TrackingData } from "./ResearchCalcAppConfig";
 import { getScoreRangeForCount } from "./Score";
+import SleepScore from "./SleepScore";
+import SpawnCountLabel from "./SpawnCountLabel";
 import {
 	getAverageMinuteForScore,
 	getTrackingPeriod,
 	minutesTakenToFallAsleep,
 } from "./TrackingDetail";
-import MessageDialog from "../Dialog/MessageDialog";
-import RankBallLabel from "./RankBallLabel";
-import SleepScore from "./SleepScore";
-import SpawnCountLabel from "./SpawnCountLabel";
-import ArrowButton from "../common/ArrowButton";
-import CollapseEx from "../common/CollapseEx";
-import SliderEx from "../common/SliderEx";
-import fields from "../../data/fields";
-import { getPokemonCount, type PokemonCount } from "../../util/PokemonCount";
-import Rank from "../../util/Rank";
-import { AmountOfSleep } from "../../util/TimeUtil";
-import { useTranslation, Trans } from "react-i18next";
 
 const TrackingDialog = React.memo(
 	({

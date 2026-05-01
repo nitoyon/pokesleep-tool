@@ -1,5 +1,5 @@
-import { AmountOfSleep } from "./TimeUtil";
 import type { TFunction } from "i18next";
+import { AmountOfSleep } from "./TimeUtil";
 
 // Mock translation function
 const mockT = vi.fn((_key: string, obj: { h: number; m: number }) => {

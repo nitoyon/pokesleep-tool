@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import i18n, { loadLanguage } from "./i18n";
 import App from "./ui/App";
 import { loadConfig, saveConfig } from "./ui/AppConfig";
-import i18n, { loadLanguage } from "./i18n";
 
 (async () => {
 	// add error handler

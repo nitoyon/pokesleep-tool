@@ -1,9 +1,9 @@
-import React from "react";
-import { styled } from "@mui/system";
 import { Popper } from "@mui/material";
-import { clamp } from "../../../util/NumberUtil";
-import { useSvgTouch, type MousePosition } from "./ChartHook";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { clamp } from "../../../util/NumberUtil";
+import { type MousePosition, useSvgTouch } from "./ChartHook";
 
 export const BarChart = React.memo(
 	({

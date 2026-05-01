@@ -1,17 +1,17 @@
-import React from "react";
+import { Divider, FormControlLabel, MenuItem, Switch } from "@mui/material";
 import { styled } from "@mui/system";
-import type { IvAction } from "../IvState";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { type IngredientName, IngredientNames } from "../../../data/pokemons";
+import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
 import type { BoxSortConfig } from "../../../util/PokemonBoxSort";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import SelectEx from "../../common/SelectEx";
 import IngredientIcon from "../IngredientIcon";
+import type { IvAction } from "../IvState";
 import MainSkillIcon from "../MainSkillIcon";
 import FixedLevelSelect from "../Strength/FixedLevelSelect";
 import ResearchAreaSelect from "../Strength/ResearchAreaSelect";
-import SelectEx from "../../common/SelectEx";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
-import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
-import { type IngredientName, IngredientNames } from "../../../data/pokemons";
-import { Divider, FormControlLabel, Switch, MenuItem } from "@mui/material";
-import { useTranslation } from "react-i18next";
 
 const BoxSortConfigFooter = React.memo(
 	({

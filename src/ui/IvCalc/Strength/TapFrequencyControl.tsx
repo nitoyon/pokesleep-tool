@@ -1,11 +1,11 @@
-import React from "react";
-import { styled } from "@mui/system";
 import { Button } from "@mui/material";
-import TextLikeButton from "../../common/TextLikeButton";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { AlwaysTap, NoTap } from "../../../util/Energy";
 import PopperMenu from "../../common/PopperMenu";
 import SliderAndArrow from "../../common/SliderAndArrow";
-import { AlwaysTap, NoTap } from "../../../util/Energy";
-import { useTranslation } from "react-i18next";
+import TextLikeButton from "../../common/TextLikeButton";
 
 const TapFrequencyControl = React.memo(
 	({

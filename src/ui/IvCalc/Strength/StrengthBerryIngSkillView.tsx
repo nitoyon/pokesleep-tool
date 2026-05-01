@@ -1,40 +1,40 @@
-import React from "react";
-import { styled } from "@mui/system";
-import type { PokemonData } from "../../../data/pokemons";
-import type PokemonIv from "../../../util/PokemonIv";
-import { NoTap, whistlePeriod } from "../../../util/Energy";
-import {
-	round1,
-	round2,
-	formatNice,
-	formatWithComma,
-} from "../../../util/NumberUtil";
-import PokemonStrength, {
-	getRequiredHelperBoost,
-	getHelpYield,
-	type StrengthResult,
-} from "../../../util/PokemonStrength";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
-import { AmountOfSleep } from "../../../util/TimeUtil";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import {
 	Dialog,
+	MenuItem,
 	Select,
 	type SelectChangeEvent,
-	MenuItem,
 } from "@mui/material";
-import MainSkillIcon from "../MainSkillIcon";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { styled } from "@mui/system";
+import type i18next from "i18next";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import type { PokemonData } from "../../../data/pokemons";
+import { NoTap, whistlePeriod } from "../../../util/Energy";
+import {
+	formatNice,
+	formatWithComma,
+	round1,
+	round2,
+} from "../../../util/NumberUtil";
+import type PokemonIv from "../../../util/PokemonIv";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import PokemonStrength, {
+	getHelpYield,
+	getRequiredHelperBoost,
+	type StrengthResult,
+} from "../../../util/PokemonStrength";
+import { AmountOfSleep } from "../../../util/TimeUtil";
 import InfoButton from "../InfoButton";
+import IngredientIcon from "../IngredientIcon";
 import type { IvAction } from "../IvState";
+import MainSkillIcon from "../MainSkillIcon";
 import BerryHelpDialog from "./BerryHelpDialog";
 import EnergyDialog from "./EnergyDialog";
-import IngHelpDialog from "./IngHelpDialog";
-import IngredientIcon from "../IngredientIcon";
-import SkillHelpDialog from "./SkillHelpDialog";
 import HelpStackDialog from "./HelpStackDialog";
+import IngHelpDialog from "./IngHelpDialog";
+import SkillHelpDialog from "./SkillHelpDialog";
 import TotalStrengthDialog from "./TotalStrengthDialog";
-import { useTranslation } from "react-i18next";
-import type i18next from "i18next";
 
 const StyledBerryIngSkillStrengthView = styled("div")({
 	display: "grid",

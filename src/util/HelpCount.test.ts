@@ -1,16 +1,16 @@
-import { describe, test, expect } from "vitest";
-import PokemonIv from "./PokemonIv";
+import { describe, expect, test } from "vitest";
 import { type BonusEffects, emptyBonusEffects } from "../data/events";
 import Energy, { AlwaysTap, type EnergyParameter, NoTap } from "./Energy";
-import Nature from "./Nature";
 import {
 	calculateHelpCount,
-	calculateNextHelpElapsed,
 	calculateHelpCountInInterval,
 	calculateHelpCountPerTap,
+	calculateNextHelpElapsed,
 	HelpCountSimulation,
 } from "./HelpCount";
+import Nature from "./Nature";
 import { calculateInventoryDistribution } from "./PokemonInventory";
+import PokemonIv from "./PokemonIv";
 
 const paramBase = {
 	period: 24,

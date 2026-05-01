@@ -1,18 +1,18 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import pokemons, {
-	type IngredientName,
-	type PokemonType,
-	type PokemonData,
-} from "../../../data/pokemons";
-import { Icon, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
-import TextLikeButton from "../../common/TextLikeButton";
-import PokemonSelectDialog from "./PokemonSelectDialog";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import CheckIcon from "@mui/icons-material/Check";
-import CandyIcon from "../../Resources/CandyIcon";
+import { Icon, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import pokemons, {
+	type IngredientName,
+	type PokemonData,
+	type PokemonType,
+} from "../../../data/pokemons";
 import PokemonIv from "../../../util/PokemonIv";
+import TextLikeButton from "../../common/TextLikeButton";
+import CandyIcon from "../../Resources/CandyIcon";
+import PokemonSelectDialog from "./PokemonSelectDialog";
 
 /** Autocomplete option list */
 export interface PokemonOption extends PokemonData {

@@ -1,27 +1,27 @@
-import Nature from "./Nature";
 import pokemons, {
 	getDecendants,
 	type IngredientName,
 	type PokemonData,
-	type ValidFormType,
 	toxelId,
 	toxtricityId,
+	type ValidFormType,
 } from "../data/pokemons";
-import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
 	getMaxSkillLevel,
 	type MainSkillName,
 	VersatileCandidates,
 } from "./MainSkill";
-import SubSkill from "./SubSkill";
-import SubSkillList from "./SubSkillList";
+import Nature from "./Nature";
 import { clamp, trunc } from "./NumberUtil";
+import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
-	expertFavoriteIngredientBonus,
 	expertFavoriteIngredientAdditionalBonus,
+	expertFavoriteIngredientBonus,
 	expertMainBerrySpeedBonus,
 	expertNonFavoriteBerrySpeedPenalty,
 } from "./PokemonStrength";
+import SubSkill from "./SubSkill";
+import SubSkillList from "./SubSkillList";
 
 /**
  * Represents the slot of ingredient.

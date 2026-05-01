@@ -1,22 +1,22 @@
-import React from "react";
 import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import type Nature from "../../../util/Nature";
 import type PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { frequencyToString } from "../../../util/TimeUtil";
 import CandyDialog from "../CandyDialog";
-import PokemonTextField from "./PokemonTextField";
-import LevelControl from "./LevelControl";
-import IngredientTextField from "./IngredientTextField";
-import SkillLevelControl from "./SkillLevelControl";
 import InfoButton from "../InfoButton";
 import type { IvAction } from "../IvState";
-import SubSkillControl, { type SubSkillChangeEvent } from "./SubSkillControl";
-import NatureTextField from "./NatureTextField";
-import SleepingTimeControl from "./SleepingTimeControl";
 import FrequencyInfoDialog from "./FrequencyInfoDialog";
-import { useTranslation } from "react-i18next";
+import IngredientTextField from "./IngredientTextField";
+import LevelControl from "./LevelControl";
+import NatureTextField from "./NatureTextField";
+import PokemonTextField from "./PokemonTextField";
+import SkillLevelControl from "./SkillLevelControl";
+import SleepingTimeControl from "./SleepingTimeControl";
+import SubSkillControl, { type SubSkillChangeEvent } from "./SubSkillControl";
 
 // Style for IvForm
 const StyledInputForm = styled("div")({

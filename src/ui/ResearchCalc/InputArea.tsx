@@ -1,8 +1,4 @@
-import { styled } from "@mui/system";
-import Rank from "../../util/Rank";
-import fields, { type FieldData, MAX_STRENGTH } from "../../data/fields";
-import { getDrowsyBonus } from "../../data/events";
-import React, { useCallback, useState } from "react";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import {
 	Button,
 	Checkbox,
@@ -12,15 +8,19 @@ import {
 	MenuItem,
 	TextField,
 } from "@mui/material";
-import TrackingPanel from "./TrackingPanel";
-import type { InputAreaData } from "./ResearchCalcAppConfig";
-import ArrowButton from "../common/ArrowButton";
-import SliderEx from "../common/SliderEx";
-import NumericInput from "../common/NumericInput";
-import ResearchAreaTextField from "./ResearchAreaTextField";
-import RankBall from "./RankBallLabel";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { styled } from "@mui/system";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getDrowsyBonus } from "../../data/events";
+import fields, { type FieldData, MAX_STRENGTH } from "../../data/fields";
+import Rank from "../../util/Rank";
+import ArrowButton from "../common/ArrowButton";
+import NumericInput from "../common/NumericInput";
+import SliderEx from "../common/SliderEx";
+import RankBall from "./RankBallLabel";
+import ResearchAreaTextField from "./ResearchAreaTextField";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
+import TrackingPanel from "./TrackingPanel";
 
 interface InputAreaProps {
 	/** state */

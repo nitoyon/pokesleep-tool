@@ -1,5 +1,5 @@
-import TrackingDetail, { getTrackingPeriod } from "./TrackingDetail";
 import type { TrackingData } from "./ResearchCalcAppConfig";
+import TrackingDetail, { getTrackingPeriod } from "./TrackingDetail";
 
 // Test timestamp: 2024-01-15 22:00:00 UTC
 const TEST_START_TIMESTAMP = 1705356000;

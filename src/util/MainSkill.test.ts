@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
+import pokemons from "../data/pokemons";
 import { getMaxSkillLevel, matchMainSkillName } from "./MainSkill";
 import Nature from "./Nature";
 import PokemonIv from "./PokemonIv";
-import pokemons from "../data/pokemons";
 
 describe("MainSkill", () => {
 	describe("getMaxSkillLevel", () => {

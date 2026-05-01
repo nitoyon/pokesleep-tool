@@ -1,36 +1,36 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import pokemons, {
-	type PokemonSpecialty,
-	SpecialtyNames,
-	type IngredientName,
-	IngredientNames,
-	type PokemonType,
-	PokemonTypes,
-} from "../../../data/pokemons";
-import {
-	type MainSkillName,
-	MainSkillNames,
-	matchMainSkillName,
-} from "../../../util/MainSkill";
+import SearchIcon from "@mui/icons-material/Search";
 import {
 	Autocomplete,
-	autocompleteClasses,
 	type AutocompleteRenderGroupParams,
+	autocompleteClasses,
 	Dialog,
 	type FilterOptionsState,
 	InputAdornment,
 	InputBase,
 	MenuItem,
 } from "@mui/material";
-import PokemonIcon from "../PokemonIcon";
-import PokemonFilterDialog from "./PokemonFilterDialog";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import pokemons, {
+	type IngredientName,
+	IngredientNames,
+	type PokemonSpecialty,
+	type PokemonType,
+	PokemonTypes,
+	SpecialtyNames,
+} from "../../../data/pokemons";
+import {
+	type MainSkillName,
+	MainSkillNames,
+	matchMainSkillName,
+} from "../../../util/MainSkill";
 import PokemonFilterFooter, {
 	type PokemonFilterFooterConfig,
 } from "../PokemonFilterFooter";
+import PokemonIcon from "../PokemonIcon";
+import PokemonFilterDialog from "./PokemonFilterDialog";
 import type { PokemonOption } from "./PokemonTextField";
-import SearchIcon from "@mui/icons-material/Search";
-import { useTranslation } from "react-i18next";
 
 const releaseDate = "2023-07-17";
 

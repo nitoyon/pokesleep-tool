@@ -1,5 +1,5 @@
+import { type SxProps, styled, type Theme } from "@mui/system";
 import React from "react";
-import { styled, type SxProps, type Theme } from "@mui/system";
 import ArrowButton from "./ArrowButton";
 import SliderEx from "./SliderEx";
 

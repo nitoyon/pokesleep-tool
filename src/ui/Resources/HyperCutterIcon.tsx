@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
-import { PotatoIconPaths } from "./PotatoIcon";
-import { OilIconPaths } from "./OilIcon";
-import { TomatoIconPaths } from "./TomatoIcon";
+import React from "react";
 import { CornIconPaths } from "./CornIcon";
+import { OilIconPaths } from "./OilIcon";
+import { PotatoIconPaths } from "./PotatoIcon";
+import { TomatoIconPaths } from "./TomatoIcon";
 
 const HyperCutterIcon = React.memo((props: SvgIconProps) => {
 	return (

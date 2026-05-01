@@ -1,8 +1,8 @@
-import React from "react";
 import { Input } from "@mui/material";
-import PopperMenu from "./PopperMenu";
-import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
+import React from "react";
 import { clamp, formatWithComma } from "../../util/NumberUtil";
+import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
+import PopperMenu from "./PopperMenu";
 
 /**
  * An numeric input component for keyboard.

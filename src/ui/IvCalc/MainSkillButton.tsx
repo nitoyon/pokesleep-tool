@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import MainSkillIcon from "./MainSkillIcon";
-import type { MainSkillName } from "../../util/MainSkill";
-import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { Button } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import type { MainSkillName } from "../../util/MainSkill";
+import MainSkillIcon from "./MainSkillIcon";
 
 const MainSkillButton = React.memo(
 	({

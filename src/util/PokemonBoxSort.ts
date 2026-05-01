@@ -1,3 +1,11 @@
+import type i18next from "i18next";
+import { type IngredientName, IngredientNames } from "../data/pokemons";
+import { NoTap, whistlePeriod } from "./Energy";
+import {
+	type MainSkillName,
+	MainSkillNames,
+	matchMainSkillName,
+} from "./MainSkill";
 import type { PokemonBoxItem } from "./PokemonBox";
 import type PokemonIv from "./PokemonIv";
 import PokemonRp from "./PokemonRp";
@@ -6,14 +14,6 @@ import PokemonStrength, {
 	isSkillStrengthZero,
 	type StrengthParameter,
 } from "./PokemonStrength";
-import { type IngredientName, IngredientNames } from "../data/pokemons";
-import {
-	type MainSkillName,
-	MainSkillNames,
-	matchMainSkillName,
-} from "./MainSkill";
-import { NoTap, whistlePeriod } from "./Energy";
-import type i18next from "i18next";
 
 /** Subset of StrengthResult. */
 export type SimpleStrengthResult = {

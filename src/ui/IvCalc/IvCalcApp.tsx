@@ -1,22 +1,22 @@
-import React from "react";
-import { styled } from "@mui/system";
 import { Button, Snackbar, Tab, Tabs } from "@mui/material";
-import type PokemonIv from "../../util/PokemonIv";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import type { PokemonBoxItem } from "../../util/PokemonBox";
+import type PokemonIv from "../../util/PokemonIv";
+import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
+import BoxExportDialog from "./Box/BoxExportDialog";
+import BoxImportDialog from "./Box/BoxImportDialog";
+import BoxItemDialog from "./Box/BoxItemDialog";
+import BoxView from "./Box/BoxView";
+import IvForm from "./IvForm/IvForm";
 import { getInitialIvState, ivStateReducer } from "./IvState";
 import LowerTabHeader from "./LowerTabHeader";
 import RateNotFixedPanel from "./RateNotFixedPanel";
-import BoxView from "./Box/BoxView";
-import IvForm from "./IvForm/IvForm";
-import StrengthSettingForm from "./Strength/StrengthParameterForm";
-import RpView from "./Rp/RpView";
-import StrengthView from "./Strength/StrengthView";
 import RatingView from "./RatingView";
-import BoxItemDialog from "./Box/BoxItemDialog";
-import BoxExportDialog from "./Box/BoxExportDialog";
-import BoxImportDialog from "./Box/BoxImportDialog";
-import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
-import { useTranslation } from "react-i18next";
+import RpView from "./Rp/RpView";
+import StrengthSettingForm from "./Strength/StrengthParameterForm";
+import StrengthView from "./Strength/StrengthView";
 
 const StyledTabs = styled(Tabs)({
 	minHeight: "36px",

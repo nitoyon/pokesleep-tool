@@ -1,6 +1,6 @@
-import React from "react";
-import { styled, type SxProps, type Theme } from "@mui/system";
 import { Button } from "@mui/material";
+import { type SxProps, styled, type Theme } from "@mui/system";
+import React from "react";
 import { maxLevel } from "../../../util/PokemonRp";
 import NumericInput, {
 	type NumericInputHandle,

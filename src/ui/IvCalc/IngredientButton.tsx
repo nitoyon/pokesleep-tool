@@ -1,9 +1,9 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import IngredientIcon from "./IngredientIcon";
-import type { IngredientName } from "../../data/pokemons";
-import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { Button } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
+import type { IngredientName } from "../../data/pokemons";
+import IngredientIcon from "./IngredientIcon";
 
 const IngredientButton = React.memo(
 	({

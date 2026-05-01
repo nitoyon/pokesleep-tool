@@ -1,17 +1,17 @@
-import React from "react";
-import { styled } from "@mui/system";
-import IvForm from "../IvForm/IvForm";
-import RpLabel from "../Rp/RpLabel";
-import type { IvAction } from "../IvState";
-import PokemonIcon from "../PokemonIcon";
-import { PokemonBoxItem } from "../../../util/PokemonBox";
-import PokemonIv from "../../../util/PokemonIv";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
-import PokemonRp from "../../../util/PokemonRp";
 import { Button, Dialog, DialogActions, TextField } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import type { TransitionProps } from "@mui/material/transitions";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { PokemonBoxItem } from "../../../util/PokemonBox";
+import PokemonIv from "../../../util/PokemonIv";
+import PokemonRp from "../../../util/PokemonRp";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import IvForm from "../IvForm/IvForm";
+import type { IvAction } from "../IvState";
+import PokemonIcon from "../PokemonIcon";
+import RpLabel from "../Rp/RpLabel";
 
 // Full-screen transition
 // https://mui.com/material-ui/react-dialog/#full-screen-dialogs

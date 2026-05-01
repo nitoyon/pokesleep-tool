@@ -1,18 +1,18 @@
-import React from "react";
-import MessageDialog from "./MessageDialog";
 import {
 	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	TextField,
-	ToggleButtonGroup,
 	ToggleButton,
+	ToggleButtonGroup,
 } from "@mui/material";
-import type AppConfig from "../AppConfig";
-import { AppConfigContext, type AppType } from "../AppConfig";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { LANGUAGE_NAMES, loadLanguage } from "../../i18n";
+import type AppConfig from "../AppConfig";
+import { AppConfigContext, type AppType } from "../AppConfig";
+import MessageDialog from "./MessageDialog";
 
 interface SettingsDialogProps {
 	/** Whether dialog is open or not */

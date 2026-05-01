@@ -1,5 +1,5 @@
-import Rank from "./Rank";
 import fields, { MAX_STRENGTH } from "../data/fields";
+import Rank from "./Rank";
 
 test("Rank.indexToType", () => {
 	expect(Rank.rankIndexToType(0)).toBe("basic");

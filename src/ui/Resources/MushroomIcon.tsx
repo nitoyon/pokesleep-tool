@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
 
 const MushroomIcon = React.memo((props: SvgIconProps) => {
 	return (

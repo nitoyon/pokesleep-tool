@@ -1,24 +1,11 @@
-import React from "react";
-import { styled } from "@mui/system";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
-import BoxFilterConfig from "../../../util/PokemonBoxFilter";
-import {
-	sortPokemonItems,
-	type BoxSortType,
-	type BoxSortConfig,
-	loadBoxSortConfig,
-} from "../../../util/PokemonBoxSort";
-import PokemonIcon from "../PokemonIcon";
-import type { IvAction } from "../IvState";
-import PokemonFilterFooter, {
-	type PokemonFilterFooterConfig,
-} from "../PokemonFilterFooter";
-import BoxFilterDialog from "./BoxFilterDialog";
-import BoxSortConfigFooter from "./BoxSortConfigFooter";
-import CandyDialog from "../CandyDialog";
-import { shareIv } from "../ShareUtil";
-import type PokemonIv from "../../../util/PokemonIv";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import IosShareIcon from "@mui/icons-material/IosShare";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import {
 	Button,
 	ButtonBase,
@@ -29,16 +16,29 @@ import {
 	MenuItem,
 	MenuList,
 } from "@mui/material";
-import CandyIcon from "../../Resources/CandyIcon";
-import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
-import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import IosShareIcon from "@mui/icons-material/IosShare";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import type { PokemonBoxItem } from "../../../util/PokemonBox";
+import BoxFilterConfig from "../../../util/PokemonBoxFilter";
+import {
+	type BoxSortConfig,
+	type BoxSortType,
+	loadBoxSortConfig,
+	sortPokemonItems,
+} from "../../../util/PokemonBoxSort";
+import type PokemonIv from "../../../util/PokemonIv";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import CandyIcon from "../../Resources/CandyIcon";
+import CandyDialog from "../CandyDialog";
+import type { IvAction } from "../IvState";
+import PokemonFilterFooter, {
+	type PokemonFilterFooterConfig,
+} from "../PokemonFilterFooter";
+import PokemonIcon from "../PokemonIcon";
+import { shareIv } from "../ShareUtil";
+import BoxFilterDialog from "./BoxFilterDialog";
+import BoxSortConfigFooter from "./BoxSortConfigFooter";
 
 const BoxView = React.memo(
 	({

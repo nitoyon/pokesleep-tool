@@ -1,8 +1,3 @@
-import React from "react";
-import { styled } from "@mui/system";
-import type PokemonStrength from "../../../util/PokemonStrength";
-import type { StrengthResult } from "../../../util/PokemonStrength";
-import { round1 } from "../../../util/NumberUtil";
 import {
 	Button,
 	Dialog,
@@ -10,12 +5,17 @@ import {
 	DialogContent,
 	DialogTitle,
 	Switch,
-	ToggleButtonGroup,
 	ToggleButton,
+	ToggleButtonGroup,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { round1 } from "../../../util/NumberUtil";
+import type PokemonStrength from "../../../util/PokemonStrength";
+import type { StrengthResult } from "../../../util/PokemonStrength";
 import type { IvAction } from "../IvState";
 import EnergyPreviewPanel from "../Panel/EnergyPreviewPanel";
-import { useTranslation, Trans } from "react-i18next";
 
 const SkillPityProcDialog = React.memo(
 	({

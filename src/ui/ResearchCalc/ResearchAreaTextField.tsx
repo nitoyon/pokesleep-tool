@@ -1,7 +1,7 @@
-import React from "react";
-import fields from "../../data/fields";
 import { MenuItem, TextField } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import fields from "../../data/fields";
 
 const ResearchAreaTextField = React.memo(
 	({

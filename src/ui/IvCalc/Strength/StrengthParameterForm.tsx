@@ -1,38 +1,38 @@
-import React from "react";
-import { styled } from "@mui/system";
 import {
 	Button,
 	Collapse,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	DialogContent,
+	DialogTitle,
 	FormControl,
 	MenuItem,
 	Select,
 	type SelectChangeEvent,
 	Snackbar,
 	Switch,
-	Typography,
 	ToggleButton,
 	ToggleButtonGroup,
+	Typography,
 } from "@mui/material";
-import type { IvAction } from "../IvState";
-import AreaControlGroup from "./AreaControlGroup";
-import InfoButton from "../InfoButton";
-import PeriodSelect from "./PeriodSelect";
-import EventConfigDialog from "./EventConfigDialog";
-import FixedLevelSelect from "./FixedLevelSelect";
-import TapFrequencyControl from "./TapFrequencyControl";
-import { LevelInput } from "../IvForm/LevelControl";
-import MessageDialog from "../../Dialog/MessageDialog";
+import { styled } from "@mui/system";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { getActiveHelpBonus } from "../../../data/events";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import {
 	createStrengthParameter,
 	type StrengthParameter,
 } from "../../../util/PokemonStrength";
-import { useTranslation, Trans } from "react-i18next";
+import MessageDialog from "../../Dialog/MessageDialog";
+import InfoButton from "../InfoButton";
+import { LevelInput } from "../IvForm/LevelControl";
+import type { IvAction } from "../IvState";
+import AreaControlGroup from "./AreaControlGroup";
+import EventConfigDialog from "./EventConfigDialog";
+import FixedLevelSelect from "./FixedLevelSelect";
+import PeriodSelect from "./PeriodSelect";
+import TapFrequencyControl from "./TapFrequencyControl";
 
 const StyledSettingForm = styled("div")({
 	padding: "0 1rem",

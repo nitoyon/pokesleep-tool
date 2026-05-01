@@ -1,5 +1,5 @@
-import React from "react";
 import { styled } from "@mui/system";
+import React from "react";
 
 const SpawnCountLabel = React.memo(({ count }: { count: number }) => {
 	return (

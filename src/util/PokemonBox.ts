@@ -1,5 +1,5 @@
-import PokemonIv from "./PokemonIv";
 import type i18next from "i18next";
+import PokemonIv from "./PokemonIv";
 
 /**
  * Represents Indivisual Values (IV) of the Pokemon.

@@ -1,7 +1,7 @@
-import React from "react";
-import { styled } from "@mui/system";
-import { Collapse } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { Collapse } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 const NotFixedWarning = React.memo(({ fieldIndex }: { fieldIndex: number }) => {

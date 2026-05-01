@@ -22,15 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
+import type { IngredientName } from "../../data/pokemons";
 import { AvocadoIconPaths } from "./AvocadoIcon";
 import { CornIconPaths } from "./CornIcon";
 import { HoneyIconPaths } from "./HoneyIcon";
+import { OilIconPaths } from "./OilIcon";
 import { PotatoIconPaths } from "./PotatoIcon";
 import { PumpkinIconPaths } from "./PumpkinIcon";
-import { OilIconPaths } from "./OilIcon";
-import type { IngredientName } from "../../data/pokemons";
 
 type IngredientDrawIconProps = SvgIconProps & {
 	firstIngredient: IngredientName;

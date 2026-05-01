@@ -1,8 +1,8 @@
-import { describe, test, expect } from "vitest";
-import PokemonIv from "./PokemonIv";
+import { describe, expect, test } from "vitest";
 import { calculateInventoryDistribution } from "./PokemonInventory";
-import SubSkillList from "./SubSkillList";
+import PokemonIv from "./PokemonIv";
 import SubSkill from "./SubSkill";
+import SubSkillList from "./SubSkillList";
 
 describe("PokemonInventory", () => {
 	describe("CDF Properties", () => {

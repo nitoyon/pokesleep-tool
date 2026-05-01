@@ -1,17 +1,3 @@
-import React from "react";
-import { styled } from "@mui/system";
-import type { IvAction } from "../IvState";
-import { useElementWidth } from "../../common/Hook";
-import TapFrequencyControl from "../Strength/TapFrequencyControl";
-import type PokemonIv from "../../../util/PokemonIv";
-import type {
-	StrengthParameter,
-	StrengthResult,
-} from "../../../util/PokemonStrength";
-import { AmountOfSleep } from "../../../util/TimeUtil";
-import { EnergyChart } from "../Chart/EnergyChart";
-import { NoTap } from "../../../util/Energy";
-import { clamp } from "../../../util/NumberUtil";
 import {
 	Collapse,
 	MenuItem,
@@ -20,7 +6,21 @@ import {
 	Switch,
 	TextField,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { NoTap } from "../../../util/Energy";
+import { clamp } from "../../../util/NumberUtil";
+import type PokemonIv from "../../../util/PokemonIv";
+import type {
+	StrengthParameter,
+	StrengthResult,
+} from "../../../util/PokemonStrength";
+import { AmountOfSleep } from "../../../util/TimeUtil";
+import { useElementWidth } from "../../common/Hook";
+import { EnergyChart } from "../Chart/EnergyChart";
+import type { IvAction } from "../IvState";
+import TapFrequencyControl from "../Strength/TapFrequencyControl";
 
 const EnergyPanel = React.memo(
 	({

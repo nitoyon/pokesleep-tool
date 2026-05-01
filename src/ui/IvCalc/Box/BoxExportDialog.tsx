@@ -1,6 +1,3 @@
-import React from "react";
-import type PokemonBox from "../../../util/PokemonBox";
-import { copyToClipboard } from "../../../util/Clipboard";
 import {
 	Button,
 	Dialog,
@@ -10,7 +7,10 @@ import {
 	Snackbar,
 	TextField,
 } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { copyToClipboard } from "../../../util/Clipboard";
+import type PokemonBox from "../../../util/PokemonBox";
 
 const BoxExportDialog = React.memo(
 	({

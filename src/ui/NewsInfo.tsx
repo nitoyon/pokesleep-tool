@@ -1,12 +1,12 @@
-import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { Button, Dialog, DialogActions, IconButton } from "@mui/material";
 import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import News, { type NewsArticle } from "../data/news";
 import type AppConfig from "./AppConfig";
 import { AppConfigContext, type AppType } from "./AppConfig";
-import News, { type NewsArticle } from "../data/news";
-import { Button, Dialog, DialogActions, IconButton } from "@mui/material";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import CloseIcon from "@mui/icons-material/Close";
-import { useTranslation } from "react-i18next";
 
 const NewsInfo = React.memo(
 	({

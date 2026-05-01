@@ -1,32 +1,4 @@
-import React from "react";
-import { styled } from "@mui/system";
-import CollapseEx from "../common/CollapseEx";
-import NumericSliderInput from "../common/NumericSliderInput";
-import SelectEx from "../common/SelectEx";
-import SliderEx from "../common/SliderEx";
-import { getCandyName } from "../../data/pokemons";
-import type PokemonIv from "../../util/PokemonIv";
-import calcExpAndCandy, {
-	type BoostEvent,
-	calcExp,
-	type CalcDayToGetSleepExpResult,
-	calcDayToGetSleepExp,
-	type CalcExpAndCandyResult,
-	type CalcLevelResult,
-	calcLevelByCandy,
-	type GrowthIncensePolicy,
-} from "../../util/Exp";
-import Nature, { type PlusMinusOneOrZero } from "../../util/Nature";
-import { clamp, formatWithComma } from "../../util/NumberUtil";
-import { maxLevel } from "../../util/PokemonRp";
-import { LevelInput } from "./IvForm/LevelControl";
-import {
-	StyledNatureUpEffect,
-	StyledNatureDownEffect,
-} from "./IvForm/NatureTextField";
-import PokemonIcon from "./PokemonIcon";
-import DreamShardIcon from "../Resources/DreamShardIcon";
-import CandyIcon from "../Resources/CandyIcon";
+import EastIcon from "@mui/icons-material/East";
 import {
 	Button,
 	Dialog,
@@ -40,9 +12,37 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
-import EastIcon from "@mui/icons-material/East";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { getCandyName } from "../../data/pokemons";
+import calcExpAndCandy, {
+	type BoostEvent,
+	type CalcDayToGetSleepExpResult,
+	type CalcExpAndCandyResult,
+	type CalcLevelResult,
+	calcDayToGetSleepExp,
+	calcExp,
+	calcLevelByCandy,
+	type GrowthIncensePolicy,
+} from "../../util/Exp";
+import Nature, { type PlusMinusOneOrZero } from "../../util/Nature";
+import { clamp, formatWithComma } from "../../util/NumberUtil";
+import type PokemonIv from "../../util/PokemonIv";
+import { maxLevel } from "../../util/PokemonRp";
+import CollapseEx from "../common/CollapseEx";
+import NumericSliderInput from "../common/NumericSliderInput";
+import SelectEx from "../common/SelectEx";
+import SliderEx from "../common/SliderEx";
+import CandyIcon from "../Resources/CandyIcon";
+import DreamShardIcon from "../Resources/DreamShardIcon";
 import CandyTurnDialog from "./CandyTurnDialog";
+import { LevelInput } from "./IvForm/LevelControl";
+import {
+	StyledNatureDownEffect,
+	StyledNatureUpEffect,
+} from "./IvForm/NatureTextField";
+import PokemonIcon from "./PokemonIcon";
 
 /** IV and level information */
 type LevelInfo = {

@@ -1,27 +1,27 @@
-import React from "react";
-import { styled } from "@mui/system";
-import { Button, CircularProgress } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
 import TimerOffOutlinedIcon from "@mui/icons-material/TimerOffOutlined";
+import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
+import { Button, CircularProgress } from "@mui/material";
+import { styled } from "@mui/system";
+import type i18next from "i18next";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import fields from "../../data/fields";
+import { getPokemonCount } from "../../util/PokemonCount";
+import Rank from "../../util/Rank";
+import CollapseEx from "../common/CollapseEx";
+import ConfirmDialog from "../Dialog/ConfirmDialog";
+import MessageDialog from "../Dialog/MessageDialog";
+import RankBallLabel from "./RankBallLabel";
 import type { InputAreaData, TrackingData } from "./ResearchCalcAppConfig";
+import ScoreTableDialog from "./ScoreTableDialog";
+import SpawnCountLabel from "./SpawnCountLabel";
 import TrackingDetail, {
 	formatTime,
 	type TrackingStage,
 } from "./TrackingDetail";
-import RankBallLabel from "./RankBallLabel";
-import ScoreTableDialog from "./ScoreTableDialog";
-import SpawnCountLabel from "./SpawnCountLabel";
 import TrackingDialog from "./TrackingDialog";
-import CollapseEx from "../common/CollapseEx";
-import ConfirmDialog from "../Dialog/ConfirmDialog";
-import MessageDialog from "../Dialog/MessageDialog";
-import fields from "../../data/fields";
-import Rank from "../../util/Rank";
-import { getPokemonCount } from "../../util/PokemonCount";
-import type i18next from "i18next";
-import { useTranslation, Trans } from "react-i18next";
 
 const TrackingPanel = React.memo(
 	({

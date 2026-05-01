@@ -1,5 +1,5 @@
-import pokemons, { getDecendants, getCandyName } from "./pokemons";
 import { assert } from "vitest";
+import pokemons, { getCandyName, getDecendants } from "./pokemons";
 
 describe("getDecendants", () => {
 	test("returns itself when non evolved pokemon is specified", () => {

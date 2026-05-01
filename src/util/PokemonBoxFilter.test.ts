@@ -1,11 +1,11 @@
-import { describe, test, expect, vi } from "vitest";
+import type { TFunction } from "i18next";
+import { describe, expect, test, vi } from "vitest";
+import Nature from "./Nature";
+import { PokemonBoxItem } from "./PokemonBox";
 import BoxFilterConfig from "./PokemonBoxFilter";
 import PokemonIv from "./PokemonIv";
-import { PokemonBoxItem } from "./PokemonBox";
-import Nature from "./Nature";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
-import type { TFunction } from "i18next";
 
 // Mock translation function
 const mockT = vi.fn((key: string) => {

@@ -1,9 +1,9 @@
+import { Collapse } from "@mui/material";
 import React from "react";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
 import StrengthBerryIngSkillView from "./StrengthBerryIngSkillView";
 import StrengthParameterSummary from "./StrengthParameterSummary";
-import { Collapse } from "@mui/material";
 
 const StrengthView = React.memo(
 	({

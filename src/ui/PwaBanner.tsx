@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { styled } from "@mui/system";
-import ResearchCalcIcon from "./Resources/ResearchCalcIcon";
-import IvCalcIcon from "./Resources/IvCalcIcon";
-import SafariIcon from "./Resources/SafariIcon";
-import type { AppType } from "./AppConfig";
-import { copyToClipboard } from "../util/Clipboard";
-import {
-	Button,
-	IconButton,
-	Dialog,
-	DialogContent,
-	DialogTitle,
-	Snackbar,
-	DialogActions,
-} from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import IosShareIcon from "@mui/icons-material/IosShare";
-import { useTranslation, Trans } from "react-i18next";
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	IconButton,
+	Snackbar,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useCallback, useEffect, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { copyToClipboard } from "../util/Clipboard";
+import type { AppType } from "./AppConfig";
+import IvCalcIcon from "./Resources/IvCalcIcon";
+import ResearchCalcIcon from "./Resources/ResearchCalcIcon";
+import SafariIcon from "./Resources/SafariIcon";
 
 interface BeforeInstallPromptEvent extends Event {
 	readonly platforms: string[];

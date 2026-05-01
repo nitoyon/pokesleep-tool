@@ -1,5 +1,3 @@
-import React from "react";
-import type PokemonBox from "../../../util/PokemonBox";
 import {
 	Button,
 	Dialog,
@@ -8,7 +6,9 @@ import {
 	DialogTitle,
 	Snackbar,
 } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonBox from "../../../util/PokemonBox";
 
 const BoxDeleteAllDialog = React.memo(
 	({

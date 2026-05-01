@@ -1,7 +1,7 @@
-import type { InputAreaData } from "./ResearchCalcAppConfig";
-import { AmountOfSleep } from "../../util/TimeUtil";
-import { type PokemonCount, getPokemonCount } from "../../util/PokemonCount";
 import fields from "../../data/fields";
+import { getPokemonCount, type PokemonCount } from "../../util/PokemonCount";
+import { AmountOfSleep } from "../../util/TimeUtil";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
 
 export interface MultipleScoreRange {
 	/** first sleep range */

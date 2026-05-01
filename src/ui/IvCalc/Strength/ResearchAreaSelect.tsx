@@ -1,15 +1,15 @@
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Divider, IconButton, MenuItem } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import fields from "../../../data/fields";
-import SelectEx from "../../common/SelectEx";
-import AreaControlDialog from "./AreaControlDialog";
 import {
 	allFavoriteFieldIndex,
 	noFavoriteFieldIndex,
 	type StrengthParameter,
 } from "../../../util/PokemonStrength";
-import { Divider, IconButton, MenuItem } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { useTranslation } from "react-i18next";
+import SelectEx from "../../common/SelectEx";
+import AreaControlDialog from "./AreaControlDialog";
 
 const ResearchAreaSelect = React.memo(
 	({

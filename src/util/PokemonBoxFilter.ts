@@ -1,13 +1,13 @@
-import type { PokemonBoxItem } from "./PokemonBox";
+import type i18next from "i18next";
 import type {
-	PokemonSpecialty,
 	IngredientName,
+	PokemonSpecialty,
 	PokemonType,
 } from "../data/pokemons";
 import { type MainSkillName, matchMainSkillName } from "./MainSkill";
-import type { SubSkillType } from "./SubSkill";
 import type { NatureEffect } from "./Nature";
-import type i18next from "i18next";
+import type { PokemonBoxItem } from "./PokemonBox";
+import type { SubSkillType } from "./SubSkill";
 
 /**
  * Pokmeon box filter configuration.

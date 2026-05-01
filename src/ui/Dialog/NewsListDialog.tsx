@@ -1,19 +1,19 @@
-import React from "react";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import {
 	Button,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	DialogContent,
+	DialogTitle,
 	List,
 	ListItemButton,
 	ListItemText,
 	Paper,
-	ToggleButtonGroup,
 	ToggleButton,
+	ToggleButtonGroup,
 } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import News, { type NewsArticle } from "../../data/news";
 import { NewsArticleDialog } from "../NewsInfo";
 

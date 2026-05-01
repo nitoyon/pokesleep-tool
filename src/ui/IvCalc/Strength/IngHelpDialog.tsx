@@ -1,20 +1,4 @@
-import React from "react";
-import { getEventBonus } from "../../../data/events";
-import { NoTap } from "../../../util/Energy";
-import {
-	round1,
-	round2,
-	formatNice,
-	formatWithComma,
-} from "../../../util/NumberUtil";
-import type PokemonStrength from "../../../util/PokemonStrength";
-import {
-	type IngredientStrength,
-	type StrengthResult,
-	recipeLevelBonus,
-} from "../../../util/PokemonStrength";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
-import { ingredientStrength } from "../../../util/PokemonRp";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import {
 	Button,
 	Dialog,
@@ -22,20 +6,36 @@ import {
 	DialogContent,
 	DialogTitle,
 	FormControl,
+	MenuItem,
 	Select,
 	type SelectChangeEvent,
 	Typography,
-	MenuItem,
 } from "@mui/material";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import InfoButton from "../InfoButton";
-import type { IvAction } from "../IvState";
-import IngredientIcon from "../IngredientIcon";
-import IngredientCountIcon from "../IngredientCountIcon";
-import { LevelInput } from "../IvForm/LevelControl";
-import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
-import { useTranslation, Trans } from "react-i18next";
 import type i18next from "i18next";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { getEventBonus } from "../../../data/events";
+import { NoTap } from "../../../util/Energy";
+import {
+	formatNice,
+	formatWithComma,
+	round1,
+	round2,
+} from "../../../util/NumberUtil";
+import { ingredientStrength } from "../../../util/PokemonRp";
+import type PokemonStrength from "../../../util/PokemonStrength";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import {
+	type IngredientStrength,
+	recipeLevelBonus,
+	type StrengthResult,
+} from "../../../util/PokemonStrength";
+import InfoButton from "../InfoButton";
+import IngredientCountIcon from "../IngredientCountIcon";
+import IngredientIcon from "../IngredientIcon";
+import { LevelInput } from "../IvForm/LevelControl";
+import type { IvAction } from "../IvState";
+import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 
 const IngHelpDialog = React.memo(
 	({

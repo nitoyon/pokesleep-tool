@@ -1,14 +1,14 @@
 import "./App.css";
-import ResearchCalcApp from "./ResearchCalc/ResearchCalcApp";
-import IvCalcApp from "./IvCalc/IvCalcApp";
+import { createTheme, ThemeProvider } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type AppConfig from "./AppConfig";
 import { AppConfigContext, type AppType, saveConfig } from "./AppConfig";
-import ToolBar from "./ToolBar";
+import IvCalcApp from "./IvCalc/IvCalcApp";
 import NewsInfo from "./NewsInfo";
 import PwaNotify from "./PwaBanner";
-import { useTranslation } from "react-i18next";
+import ResearchCalcApp from "./ResearchCalc/ResearchCalcApp";
+import ToolBar from "./ToolBar";
 
 const defaultTheme = createTheme({
 	typography: {

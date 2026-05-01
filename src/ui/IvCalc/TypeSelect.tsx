@@ -1,8 +1,8 @@
-import React from "react";
 import { MenuList } from "@mui/material";
-import TypeButton from "./TypeButton";
-import PopperMenu from "../common/PopperMenu";
+import React from "react";
 import { type PokemonType, PokemonTypes } from "../../data/pokemons";
+import PopperMenu from "../common/PopperMenu";
+import TypeButton from "./TypeButton";
 
 const TypeSelect = React.memo(
 	({

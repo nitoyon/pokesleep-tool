@@ -2,11 +2,11 @@ import {
 	Button,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	DialogContent,
+	DialogTitle,
 	Typography,
 } from "@mui/material";
-import { useTranslation, Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 interface AboutDialogProps {
 	/** Whether dialog is open or not */

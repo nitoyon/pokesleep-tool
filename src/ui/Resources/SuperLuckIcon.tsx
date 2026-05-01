@@ -22,12 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
+import { CoffeeIconPaths } from "./CoffeeIcon";
 import { MushroomIconPaths } from "./MushroomIcon";
 import { SausageIconPaths } from "./SausageIcon";
 import { SoyIconPaths } from "./SoyIcon";
-import { CoffeeIconPaths } from "./CoffeeIcon";
 
 const SuperLuckIcon = React.memo((props: SvgIconProps) => {
 	return (

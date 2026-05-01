@@ -1,13 +1,13 @@
-import PokemonIv from "../../util/PokemonIv";
 import { getEventBonus } from "../../data/events";
-import { PokemonTypes } from "../../data/pokemons";
-import PokemonBox, { type PokemonBoxItem } from "../../util/PokemonBox";
-import {
-	type StrengthParameter,
-	loadStrengthParameter,
-} from "../../util/PokemonStrength";
 import { isExpertField } from "../../data/fields";
+import { PokemonTypes } from "../../data/pokemons";
 import i18n from "../../i18n";
+import PokemonBox, { type PokemonBoxItem } from "../../util/PokemonBox";
+import PokemonIv from "../../util/PokemonIv";
+import {
+	loadStrengthParameter,
+	type StrengthParameter,
+} from "../../util/PokemonStrength";
 
 export type IvAction =
 	| {

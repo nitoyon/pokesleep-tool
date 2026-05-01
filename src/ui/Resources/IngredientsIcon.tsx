@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
+import { AppleIconPaths } from "./AppleIcon";
 import { MilkIconPaths } from "./MilkIcon";
 import { PotatoIconPaths } from "./PotatoIcon";
-import { AppleIconPaths } from "./AppleIcon";
 
 const IngredientsIcon = React.memo((props: SvgIconProps) => {
 	return (

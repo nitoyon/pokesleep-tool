@@ -1,11 +1,11 @@
-import { describe, test, expect, beforeEach } from "vitest";
-import PokemonIv from "../../util/PokemonIv";
+import { beforeEach, describe, expect, test } from "vitest";
+import i18n, { loadLanguage } from "../../i18n";
 import PokemonBox, { PokemonBoxItem } from "../../util/PokemonBox";
-import { normalizeState, ivStateReducer } from "./IvState";
+import PokemonIv from "../../util/PokemonIv";
+import { loadStrengthParameter } from "../../util/PokemonStrength";
 import type IvState from "./IvState";
 import type { IvAction } from "./IvState";
-import { loadStrengthParameter } from "../../util/PokemonStrength";
-import i18n, { loadLanguage } from "../../i18n";
+import { ivStateReducer, normalizeState } from "./IvState";
 
 function createBaseState(): IvState {
 	return {

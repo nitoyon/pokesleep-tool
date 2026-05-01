@@ -1,17 +1,17 @@
-import { styled } from "@mui/system";
-import { Button } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import type { InputAreaData } from "./ResearchCalcAppConfig";
-import Rank from "../../util/Rank";
-import type { PokemonCount } from "../../util/PokemonCount";
-import SleepScore from "./SleepScore";
-import type { MultipleScoreRange, ScoreRange } from "./Score";
+import { Button } from "@mui/material";
+import { styled } from "@mui/system";
+import type i18next from "i18next";
+import { Trans, useTranslation } from "react-i18next";
 import fields from "../../data/fields";
-import SpawnCountLabel from "./SpawnCountLabel";
+import type { PokemonCount } from "../../util/PokemonCount";
+import Rank from "../../util/Rank";
 import type { BetterSecondSleepData } from "./BetterSecondSleepDialog";
 import RankBall from "./RankBallLabel";
-import { useTranslation, Trans } from "react-i18next";
-import type i18next from "i18next";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
+import type { MultipleScoreRange, ScoreRange } from "./Score";
+import SleepScore from "./SleepScore";
+import SpawnCountLabel from "./SpawnCountLabel";
 
 interface PreviewScoreProps {
 	/** pokemon count */

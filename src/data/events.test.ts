@@ -1,11 +1,11 @@
+import { assert } from "vitest";
 import {
 	BonusEventData,
 	DrowsyEventData,
-	getDrowsyBonus,
 	getActiveHelpBonus,
+	getDrowsyBonus,
 } from "./events";
 import pokemons from "./pokemons";
-import { assert } from "vitest";
 
 test("IsInProgress", () => {
 	const evt = new DrowsyEventData({ name: "", day: "2024-09-02", bonus: 1.5 });

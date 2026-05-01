@@ -1,17 +1,17 @@
+import pokemons from "../data/pokemons";
+import { AlwaysTap, NoTap, whistlePeriod } from "./Energy";
+import { MainSkillNames } from "./MainSkill";
+import Nature from "./Nature";
+import PokemonIv from "./PokemonIv";
 import PokemonStrength, {
 	createStrengthParameter,
-	type StrengthParameter,
-	isSkillStrengthZero,
 	expertFavoriteBerryBonus,
 	getAverageIngredientDrawStrength,
+	isSkillStrengthZero,
+	type StrengthParameter,
 } from "./PokemonStrength";
-import { AlwaysTap, NoTap, whistlePeriod } from "./Energy";
-import PokemonIv from "./PokemonIv";
-import Nature from "./Nature";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
-import pokemons from "../data/pokemons";
-import { MainSkillNames } from "./MainSkill";
 
 function createParam(obj: Partial<StrengthParameter>): StrengthParameter {
 	return createStrengthParameter(obj);

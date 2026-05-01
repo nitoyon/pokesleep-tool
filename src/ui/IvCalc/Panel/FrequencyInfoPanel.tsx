@@ -1,5 +1,3 @@
-import React from "react";
-import { styled } from "@mui/system";
 import {
 	Collapse,
 	MenuItem,
@@ -7,18 +5,20 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { calculateInventoryDistribution } from "../../../util/PokemonInventory";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { InventoryBonus } from "../../../util/PokemonIv";
 import { formatHoursLong, formatHoursShort } from "../../../util/TimeUtil";
+import { useElementWidth } from "../../common/Hook";
 import SelectEx from "../../common/SelectEx";
 import BarChartIcon from "../../Resources/BarChartIcon";
 import EnergyIcon from "../../Resources/EnergyIcon";
-import { calculateInventoryDistribution } from "../../../util/PokemonInventory";
-import { useElementWidth } from "../../common/Hook";
 import { BarChart } from "../Chart/BarChart";
 import EnergyPreviewPanel from "./EnergyPreviewPanel";
 import type FrequencyInfoState from "./FrequencyInfoState";
-import { useTranslation } from "react-i18next";
 
 export const FrequencyInfoPanel = React.memo(
 	({

@@ -1,5 +1,5 @@
-import { getPokemonCount } from "./PokemonCount";
 import fields from "../data/fields";
+import { getPokemonCount } from "./PokemonCount";
 
 describe("getPokemonCount", () => {
 	const powers = fields[0].powers;

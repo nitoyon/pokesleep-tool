@@ -1,12 +1,9 @@
-import type React from "react";
-import { useState } from "react";
-import { styled } from "@mui/system";
-import AboutDialog from "./Dialog/AboutDialog";
-import HowToDialog from "./Dialog/HowToDialog";
-import NewsListDialog from "./Dialog/NewsListDialog";
-import SettingsDialog from "./Dialog/SettingsDialog";
-import type AppConfig from "./AppConfig";
-import type { AppType } from "./AppConfig";
+import CheckIcon from "@mui/icons-material/Check";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import {
 	Divider,
 	Icon,
@@ -15,13 +12,16 @@ import {
 	Menu,
 	MenuItem,
 } from "@mui/material";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import CheckIcon from "@mui/icons-material/Check";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { styled } from "@mui/system";
+import type React from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import type AppConfig from "./AppConfig";
+import type { AppType } from "./AppConfig";
+import AboutDialog from "./Dialog/AboutDialog";
+import HowToDialog from "./Dialog/HowToDialog";
+import NewsListDialog from "./Dialog/NewsListDialog";
+import SettingsDialog from "./Dialog/SettingsDialog";
 
 interface ToolBarProps {
 	app: AppType;

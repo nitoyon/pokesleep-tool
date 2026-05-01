@@ -1,11 +1,11 @@
-import React from "react";
 import { Collapse, Switch } from "@mui/material";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { whistlePeriod } from "../../../util/Energy";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import AreaBonusControl from "./AreaBonusControl";
 import FavoriteBerrySelect from "./FavoriteBerrySelect";
 import ResearchAreaSelect from "./ResearchAreaSelect";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
-import { whistlePeriod } from "../../../util/Energy";
-import { useTranslation } from "react-i18next";
 
 const AreaSelectControl = React.memo(
 	({

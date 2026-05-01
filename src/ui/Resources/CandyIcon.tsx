@@ -1,5 +1,5 @@
-import React from "react";
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
 
 const CandyIcon = React.memo(({ sx, ...props }: SvgIconProps) => {
 	return (

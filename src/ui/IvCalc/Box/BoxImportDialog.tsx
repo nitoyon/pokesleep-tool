@@ -1,5 +1,3 @@
-import React from "react";
-import type PokemonBox from "../../../util/PokemonBox";
 import {
 	Button,
 	Dialog,
@@ -9,7 +7,9 @@ import {
 	Snackbar,
 	TextField,
 } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonBox from "../../../util/PokemonBox";
 
 const BoxImportDialog = React.memo(
 	({

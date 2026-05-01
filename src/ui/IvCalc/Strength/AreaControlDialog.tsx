@@ -1,9 +1,9 @@
-import React from "react";
-import { styled } from "@mui/system";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import AreaControlGroup from "./AreaControlGroup";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import AreaControlGroup from "./AreaControlGroup";
 
 const AreaControlDialog = React.memo(
 	({

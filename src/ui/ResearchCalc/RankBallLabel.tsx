@@ -1,5 +1,5 @@
-import React from "react";
 import { styled } from "@mui/system";
+import React from "react";
 import type { RankType } from "../../util/Rank";
 
 interface RankBallProps {

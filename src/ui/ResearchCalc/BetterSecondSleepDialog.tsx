@@ -1,9 +1,9 @@
-import { styled } from "@mui/system";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { styled } from "@mui/system";
+import { Trans, useTranslation } from "react-i18next";
+import { getMaxTimeForScore, getMinTimeForScore } from "./Score";
 import SleepScore from "./SleepScore";
-import { getMinTimeForScore, getMaxTimeForScore } from "./Score";
-import { useTranslation, Trans } from "react-i18next";
 
 interface BetterSecondSleepDialogProps {
 	/** Whether dialog is open or not */

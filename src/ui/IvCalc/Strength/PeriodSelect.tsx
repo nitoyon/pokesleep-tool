@@ -1,10 +1,10 @@
-import React from "react";
 import { Divider, MenuItem } from "@mui/material";
-import type { IvAction } from "../IvState";
-import SelectEx from "../../common/SelectEx";
-import type { StrengthParameter } from "../../../util/PokemonStrength";
-import { whistlePeriod } from "../../../util/Energy";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { whistlePeriod } from "../../../util/Energy";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import SelectEx from "../../common/SelectEx";
+import type { IvAction } from "../IvState";
 
 const PeriodSelect = React.memo(
 	({

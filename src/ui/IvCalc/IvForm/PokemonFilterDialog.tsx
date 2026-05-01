@@ -1,21 +1,3 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import IngredientButton from "../IngredientButton";
-import TypeButton from "../TypeButton";
-import { PokemonFilterConfig } from "./PokemonSelectDialog";
-import MainSkillButton from "../MainSkillButton";
-import SpecialtyButton from "../SpecialtyButton";
-import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
-import {
-	SpecialtyNames,
-	type PokemonSpecialty,
-	type IngredientName,
-	IngredientNames,
-	type PokemonType,
-	PokemonTypes,
-} from "../../../data/pokemons";
-import { useElementWidth } from "../../common/Hook";
-import DraggableTabContainer from "../../common/DraggableTabContainer";
 import {
 	Button,
 	Dialog,
@@ -26,7 +8,25 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import {
+	type IngredientName,
+	IngredientNames,
+	type PokemonSpecialty,
+	type PokemonType,
+	PokemonTypes,
+	SpecialtyNames,
+} from "../../../data/pokemons";
+import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
+import DraggableTabContainer from "../../common/DraggableTabContainer";
+import { useElementWidth } from "../../common/Hook";
+import IngredientButton from "../IngredientButton";
+import MainSkillButton from "../MainSkillButton";
+import SpecialtyButton from "../SpecialtyButton";
+import TypeButton from "../TypeButton";
+import { PokemonFilterConfig } from "./PokemonSelectDialog";
 
 const PokemonFilterDialog = React.memo(
 	({

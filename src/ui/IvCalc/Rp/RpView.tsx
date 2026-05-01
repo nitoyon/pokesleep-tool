@@ -1,27 +1,27 @@
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Button, Dialog, DialogActions } from "@mui/material";
+import { styled } from "@mui/system";
 import React from "react";
-import PokemonRp, {
-	type RpStrengthResult,
-	maxLevel,
-} from "../../../util/PokemonRp";
+import { Trans, useTranslation } from "react-i18next";
 import {
+	formatWithComma,
 	round1,
 	round2,
 	round3,
-	formatWithComma,
 } from "../../../util/NumberUtil";
+import PokemonRp, {
+	maxLevel,
+	type RpStrengthResult,
+} from "../../../util/PokemonRp";
 import PokemonStrength, {
-	type StrengthParameter,
 	createStrengthParameter,
+	type StrengthParameter,
 } from "../../../util/PokemonStrength";
-import BerryIngSkillView from "./BerryIngSkillView";
 import RaderChart from "../Chart/RaderChart";
-import RpLabel from "./RpLabel";
-import type IvState from "../IvState";
-import { Button, Dialog, DialogActions } from "@mui/material";
 import IngredientIcon from "../IngredientIcon";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import { styled } from "@mui/system";
-import { Trans, useTranslation } from "react-i18next";
+import type IvState from "../IvState";
+import BerryIngSkillView from "./BerryIngSkillView";
+import RpLabel from "./RpLabel";
 
 const RpView = React.memo(
 	({ state, width }: { state: IvState; width: number }) => {

@@ -1,17 +1,17 @@
-import React from "react";
-import type PokemonIv from "../../util/PokemonIv";
-import PokemonRating from "../../util/PokemonRating";
-import BerryIngSkillView from "./Rp/BerryIngSkillView";
-import InfoButton from "./InfoButton";
-import RaderChart from "./Chart/RaderChart";
 import {
 	Button,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	DialogContent,
+	DialogTitle,
 } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonIv from "../../util/PokemonIv";
+import PokemonRating from "../../util/PokemonRating";
+import RaderChart from "./Chart/RaderChart";
+import InfoButton from "./InfoButton";
+import BerryIngSkillView from "./Rp/BerryIngSkillView";
 
 const RatingView = React.memo(
 	({ pokemonIv, width }: { pokemonIv: PokemonIv; width: number }) => {

@@ -1,5 +1,5 @@
-import React from "react";
 import type { InputProps } from "@mui/material";
+import React from "react";
 import NumericInputKeyboard from "./NumericInputKeyboard";
 import NumericInputTouch from "./NumericInputTouch";
 

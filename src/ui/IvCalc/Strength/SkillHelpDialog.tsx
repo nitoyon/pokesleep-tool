@@ -1,33 +1,3 @@
-import React from "react";
-import pokemons from "../../../data/pokemons";
-import { getEventBonus } from "../../../data/events";
-import Nature from "../../../util/Nature";
-import type { PokemonType } from "../../../data/pokemons";
-import { NoTap, whistlePeriod } from "../../../util/Energy";
-import {
-	round1,
-	round2,
-	formatNice,
-	formatWithComma,
-} from "../../../util/NumberUtil";
-import PokemonIv from "../../../util/PokemonIv";
-import PokemonStrength, {
-	type StrengthResult,
-	calculateBerryBurstStrength,
-	getBerryBurstTeam,
-} from "../../../util/PokemonStrength";
-import {
-	getSkillRandomRange as getSkillRange,
-	getMaxSkillLevel,
-	getSkillValue,
-	getSkillSubValue,
-	hyperCutterSuccess,
-	presentCandyRate,
-	superLuckIngRate,
-	superLuckShardRate,
-	superLuckShard5Rate,
-	type MainSkillName,
-} from "../../../util/MainSkill";
 import {
 	Button,
 	Collapse,
@@ -38,25 +8,55 @@ import {
 	FormControl,
 	MenuItem,
 	Switch,
-	ToggleButtonGroup,
 	ToggleButton,
+	ToggleButtonGroup,
 } from "@mui/material";
-import { LevelInput } from "../IvForm/LevelControl";
+import type i18next from "i18next";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { getEventBonus } from "../../../data/events";
+import type { PokemonType } from "../../../data/pokemons";
+import pokemons from "../../../data/pokemons";
+import { NoTap, whistlePeriod } from "../../../util/Energy";
+import {
+	getMaxSkillLevel,
+	getSkillRandomRange as getSkillRange,
+	getSkillSubValue,
+	getSkillValue,
+	hyperCutterSuccess,
+	type MainSkillName,
+	presentCandyRate,
+	superLuckIngRate,
+	superLuckShard5Rate,
+	superLuckShardRate,
+} from "../../../util/MainSkill";
+import Nature from "../../../util/Nature";
+import {
+	formatNice,
+	formatWithComma,
+	round1,
+	round2,
+} from "../../../util/NumberUtil";
+import PokemonIv from "../../../util/PokemonIv";
+import PokemonStrength, {
+	calculateBerryBurstStrength,
+	getBerryBurstTeam,
+	type StrengthResult,
+} from "../../../util/PokemonStrength";
+import SelectEx from "../../common/SelectEx";
 import InfoButton from "../InfoButton";
 import IngredientIcon from "../IngredientIcon";
-import TypeSelect from "../TypeSelect";
-import MainSkillIcon from "../MainSkillIcon";
-import SelectEx from "../../common/SelectEx";
+import { LevelInput } from "../IvForm/LevelControl";
 import {
-	StyledNatureUpEffect,
 	StyledNatureDownEffect,
+	StyledNatureUpEffect,
 } from "../IvForm/NatureTextField";
 import type { IvAction } from "../IvState";
+import MainSkillIcon from "../MainSkillIcon";
+import TypeSelect from "../TypeSelect";
+import BerryStrengthDialog from "./BerryStrengthDialog";
 import SkillPityProcDialog from "./SkillPityProcDialog";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
-import { useTranslation, Trans } from "react-i18next";
-import type i18next from "i18next";
-import BerryStrengthDialog from "./BerryStrengthDialog";
 
 const SkillHelpDialog = React.memo(
 	({

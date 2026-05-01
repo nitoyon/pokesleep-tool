@@ -1,29 +1,5 @@
-import React, { useCallback } from "react";
-import { styled } from "@mui/system";
-import TypeButton from "../TypeButton";
-import SpecialtyButton from "../SpecialtyButton";
-import BoxFilterConfig from "../../../util/PokemonBoxFilter";
-import { EditSubSkillControl } from "../IvForm/SubSkillControl";
-import IngredientButton from "../IngredientButton";
-import MainSkillButton from "../MainSkillButton";
-import {
-	StyledNatureUpEffect,
-	StyledNatureDownEffect,
-} from "../IvForm/NatureTextField";
-import {
-	type PokemonSpecialty,
-	SpecialtyNames,
-	type IngredientName,
-	IngredientNames,
-	type PokemonType,
-	PokemonTypes,
-} from "../../../data/pokemons";
-import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
-import type SubSkill from "../../../util/SubSkill";
-import type { SubSkillType } from "../../../util/SubSkill";
-import type { NatureEffect } from "../../../util/Nature";
-import { useElementWidth } from "../../common/Hook";
-import DraggableTabContainer from "../../common/DraggableTabContainer";
+import CheckIcon from "@mui/icons-material/Check";
+import SearchIcon from "@mui/icons-material/Search";
 import {
 	Button,
 	Dialog,
@@ -34,9 +10,33 @@ import {
 	Tabs,
 	TextField,
 } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import SearchIcon from "@mui/icons-material/Search";
+import { styled } from "@mui/system";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import {
+	type IngredientName,
+	IngredientNames,
+	type PokemonSpecialty,
+	type PokemonType,
+	PokemonTypes,
+	SpecialtyNames,
+} from "../../../data/pokemons";
+import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
+import type { NatureEffect } from "../../../util/Nature";
+import BoxFilterConfig from "../../../util/PokemonBoxFilter";
+import type SubSkill from "../../../util/SubSkill";
+import type { SubSkillType } from "../../../util/SubSkill";
+import DraggableTabContainer from "../../common/DraggableTabContainer";
+import { useElementWidth } from "../../common/Hook";
+import IngredientButton from "../IngredientButton";
+import {
+	StyledNatureDownEffect,
+	StyledNatureUpEffect,
+} from "../IvForm/NatureTextField";
+import { EditSubSkillControl } from "../IvForm/SubSkillControl";
+import MainSkillButton from "../MainSkillButton";
+import SpecialtyButton from "../SpecialtyButton";
+import TypeButton from "../TypeButton";
 
 const BoxFilterDialog = React.memo(
 	({

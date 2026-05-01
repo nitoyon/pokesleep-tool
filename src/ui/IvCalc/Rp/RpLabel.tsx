@@ -1,8 +1,8 @@
 import React from "react";
-import type PokemonIv from "../../../util/PokemonIv";
-import InfoButton from "../InfoButton";
-import { maxLevel } from "../../../util/PokemonRp";
 import { useTranslation } from "react-i18next";
+import type PokemonIv from "../../../util/PokemonIv";
+import { maxLevel } from "../../../util/PokemonRp";
+import InfoButton from "../InfoButton";
 
 const RpLabel = React.memo(
 	({

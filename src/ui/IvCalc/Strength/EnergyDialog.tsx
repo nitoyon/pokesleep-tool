@@ -1,31 +1,31 @@
-import React from "react";
-import { styled } from "@mui/system";
-import type { IvAction } from "../IvState";
-import type PokemonIv from "../../../util/PokemonIv";
-import type {
-	StrengthParameter,
-	StrengthResult,
-} from "../../../util/PokemonStrength";
-import DraggableTabContainer from "../../common/DraggableTabContainer";
-import EnergyPanel from "../Panel/EnergyPanel";
-import type FrequencyInfoState from "../Panel/FrequencyInfoState";
-import {
-	applyStateToParameter,
-	createDefaultState,
-	createFrequencyState,
-} from "../Panel/FrequencyInfoState";
-import FrequencyInfoPanel from "../Panel/FrequencyInfoPanel";
-import { useElementWidth } from "../../common/Hook";
 import {
 	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	Tabs,
 	Tab,
+	Tabs,
 } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonIv from "../../../util/PokemonIv";
+import type {
+	StrengthParameter,
+	StrengthResult,
+} from "../../../util/PokemonStrength";
+import DraggableTabContainer from "../../common/DraggableTabContainer";
+import { useElementWidth } from "../../common/Hook";
+import type { IvAction } from "../IvState";
+import EnergyPanel from "../Panel/EnergyPanel";
+import FrequencyInfoPanel from "../Panel/FrequencyInfoPanel";
+import type FrequencyInfoState from "../Panel/FrequencyInfoState";
+import {
+	applyStateToParameter,
+	createDefaultState,
+	createFrequencyState,
+} from "../Panel/FrequencyInfoState";
 
 let defaultTabIndex = 0;
 

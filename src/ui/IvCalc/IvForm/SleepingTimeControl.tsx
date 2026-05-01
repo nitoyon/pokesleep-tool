@@ -1,7 +1,7 @@
-import React from "react";
-import SelectEx from "../../common/SelectEx";
 import { MenuItem } from "@mui/material";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import SelectEx from "../../common/SelectEx";
 
 const SleepingTimeControl = React.memo(
 	({

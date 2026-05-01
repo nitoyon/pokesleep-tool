@@ -1,6 +1,6 @@
 import React from "react";
-import type { PokemonSpecialty } from "../../../data/pokemons";
 import { useTranslation } from "react-i18next";
+import type { PokemonSpecialty } from "../../../data/pokemons";
 
 interface RaderChartProps {
 	berry: number;

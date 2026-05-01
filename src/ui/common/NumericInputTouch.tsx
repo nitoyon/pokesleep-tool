@@ -1,19 +1,19 @@
-import React from "react";
-import { styled } from "@mui/system";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import BackspaceOutlinedIcon from "@mui/icons-material/BackspaceOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import SubdirectoryArrowLeftIcon from "@mui/icons-material/SubdirectoryArrowLeft";
 import { Button, Divider, IconButton, Input } from "@mui/material";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import PopperMenu from "./PopperMenu";
-import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
+import { styled } from "@mui/system";
+import React from "react";
 import {
 	clamp,
 	formatWithComma,
 	getFormatWithCommaPos,
 } from "../../util/NumberUtil";
+import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
+import PopperMenu from "./PopperMenu";
 
 /**
  * Wheather numpad is show or hidden

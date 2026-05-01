@@ -1,7 +1,7 @@
-import React from "react";
-import InfoButton from "../InfoButton";
 import { styled } from "@mui/system";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import InfoButton from "../InfoButton";
 
 interface ViewInput {
 	/** Value of berry. */

@@ -1,12 +1,12 @@
-import React from "react";
+import { MenuItem, MenuList } from "@mui/material";
 import { styled } from "@mui/system";
-import Nature, { type NatureEffect } from "../../../util/Nature";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { toxtricityId } from "../../../data/pokemons";
+import Nature, { type NatureEffect } from "../../../util/Nature";
 import type PokemonIv from "../../../util/PokemonIv";
-import { MenuList, MenuItem } from "@mui/material";
 import PopperMenu from "../../common/PopperMenu";
 import TextLikeButton from "../../common/TextLikeButton";
-import { useTranslation } from "react-i18next";
 
 const NatureTextField = React.memo(
 	({ iv, onChange }: { iv: PokemonIv; onChange: (value: Nature) => void }) => {

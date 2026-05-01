@@ -1,9 +1,9 @@
 import React from "react";
-import SliderAndArrow from "./SliderAndArrow";
 import NumericInput, {
 	type NumericInputHandle,
 	type NumericInputProps,
 } from "./NumericInput";
+import SliderAndArrow from "./SliderAndArrow";
 
 /**
  * An Input component that accepts numeric values and provides type-safe
