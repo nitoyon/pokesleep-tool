@@ -299,7 +299,7 @@ function getIngDetail(
 				<span className="box box3">{round2(result.ingHelpCount)}</span> ×{" "}
 				{ing.slots.length > 1 ? "(" : ""}
 				{ing.slots.map((ing, i) => (
-					<span key={i}>
+					<span key={`${ingName}x${ing.count}`}>
 						{i === 0 ? "" : " + "}
 						<IngredientCountIcon count={ing.count} name={ingName} />
 					</span>

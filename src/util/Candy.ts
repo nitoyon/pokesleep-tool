@@ -120,7 +120,10 @@ export default function calcCandyUsage(
 
 		// Get current candy type and info
 		const step = steps[stepIndex];
-		const candyType = candyTypes.find((c) => c.key === step)!;
+		const candyType = candyTypes.find((c) => c.key === step);
+		if (candyType === undefined) {
+			return;
+		}
 		const maxCount = Math.min(bag[step], candyType.limit);
 
 		// Determine the range to try

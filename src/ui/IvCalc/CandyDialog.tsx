@@ -703,7 +703,7 @@ const calculateDetailCandy = (
 		"none",
 	);
 
-	let sleepResult;
+	let sleepResult: CalcDayToGetSleepExpResult | undefined;
 	if (normalCandyResult.expLeft > 0) {
 		sleepResult = calcDayToGetSleepExp(
 			normalCandyResult.expLeft,
@@ -862,7 +862,7 @@ const DetailCandyForm = React.memo(
 						<SleepResultPreview
 							iv={levelInfo.iv}
 							level={levelInfo.targetLevel}
-							value={sleepResult!}
+							value={sleepResult}
 						/>
 					</CollapseEx>
 				</div>
@@ -1148,7 +1148,7 @@ const SleepResultPreview = React.memo(
 	}: {
 		iv: PokemonIv;
 		level: number;
-		value: CalcDayToGetSleepExpResult;
+		value?: CalcDayToGetSleepExpResult;
 	}) => {
 		const { t, i18n } = useTranslation();
 		if (value === undefined) {

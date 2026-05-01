@@ -119,7 +119,7 @@ const TrackingDialog = React.memo(
 		}, [open, updateTime, score]);
 
 		if (!open) {
-			return <></>;
+			return null;
 		}
 
 		const buttons: React.ReactNode[] = [];

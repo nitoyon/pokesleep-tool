@@ -43,7 +43,7 @@ const StyledDialog = styled(Dialog)({
 });
 
 function PopperComponent(props: {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// biome-ignore lint/suspicious/noExplicitAny: Allow any please
 	anchorEl?: any;
 	disablePortal?: boolean;
 	open: boolean;

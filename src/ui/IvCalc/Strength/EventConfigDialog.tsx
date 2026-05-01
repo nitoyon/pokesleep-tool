@@ -752,7 +752,7 @@ const MultipleTypeSelect = React.memo(
 		const buttons = value.map((type, index) => {
 			return (
 				<TypeSelect
-					key={index}
+					key={type}
 					type={type}
 					size="small"
 					deletable={value.length > 1}

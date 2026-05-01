@@ -148,6 +148,7 @@ const SkillHelpDialog = React.memo(
 
 		const maxSkillLevel = getMaxSkillLevel(iv.pokemon.skill);
 		const toggleButtons = Array.from({ length: maxSkillLevel }, (_, i) => (
+			// biome-ignore lint/suspicious/noArrayIndexKey: i + 1 is the only key
 			<ToggleButton key={i + 1} value={i + 1}>
 				{i + 1}
 			</ToggleButton>

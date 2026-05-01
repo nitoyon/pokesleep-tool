@@ -81,26 +81,26 @@ const NewsListDialog = React.memo(({ open, onClose }: NewsListDialogProps) => {
 				</DialogTitle>
 				<DialogContent ref={contentRef}>
 					<List>
-						{filteredArticles.map((article) => (
-							<ListItemButton
-								key={article.id}
-								component={Paper}
-								elevation={3}
-								sx={{ mb: 2 }}
-								onClick={() => onItemClick(article)}
-							>
-								<ListItemText
-									primary={
-										<span
-											dangerouslySetInnerHTML={{
-												__html: t(`IvCalc.news.${article.id}.headline`),
-											}}
-										/>
-									}
-									secondary={formatRelativeDate(article, i18n.language)}
-								/>
-							</ListItemButton>
-						))}
+						{filteredArticles.map((article) => {
+							const html = t(`IvCalc.news.${article.id}.headline`);
+							return (
+								<ListItemButton
+									key={article.id}
+									component={Paper}
+									elevation={3}
+									sx={{ mb: 2 }}
+									onClick={() => onItemClick(article)}
+								>
+									<ListItemText
+										primary={
+											// biome-ignore lint/security/noDangerouslySetInnerHtml: title is embeded in i18 files
+											<span dangerouslySetInnerHTML={{ __html: html }} />
+										}
+										secondary={formatRelativeDate(article, i18n.language)}
+									/>
+								</ListItemButton>
+							);
+						})}
 					</List>
 				</DialogContent>
 				<div style={{ margin: "8px 20px 0" }}>

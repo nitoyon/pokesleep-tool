@@ -286,8 +286,8 @@ function getSkillContent(
 		return {
 			desc: t(`skills.${s}.desc`) + t("skills.Versatile.desc"),
 			detail: [
-				<p>{t(`skills.${s}.detail`)}</p>,
-				<p>{t("skills.Versatile.detail")}</p>,
+				<p key="t">{t(`skills.${s}.detail`)}</p>,
+				<p key="v">{t("skills.Versatile.detail")}</p>,
 			],
 			column1: getSkillUnit(s, t),
 			column2: getSkillUnit2(s, t),
@@ -309,7 +309,7 @@ function getSkillContent(
 		desc: <Trans i18nKey={`skills.${skill}.desc`} components={components} />,
 		detail: t(`skills.${skill}.detail`)
 			.split("\n")
-			.map((x, index) => <p key={index}>{x}</p>),
+			.map((x) => <p key={x}>{x}</p>),
 		column1: getSkillUnit(skill, t),
 		column2: getSkillUnit2(skill, t),
 	};
