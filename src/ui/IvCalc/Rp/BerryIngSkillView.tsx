@@ -18,7 +18,7 @@ interface ViewInput {
 	/** Probability of ingredient */
 	ingredientProb: string;
 	/** Sub-value of ingredient. */
-	ingredientSubValue: React.ReactElement | string;
+	ingredientSubValue: React.ReactElement[] | string;
 	/** Ingredient info callback */
 	onIngredientInfoClick?: () => void;
 

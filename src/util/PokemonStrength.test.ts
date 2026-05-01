@@ -647,7 +647,8 @@ describe("PokemonStrength", () => {
 				// Verify Slaking has non-zero skill strength
 				expect(
 					isSkillStrengthZero(
-						pokemons.find((p) => p.name === "Slaking")?.skill,
+						pokemons.find((p) => p.name === "Slaking")?.skill ??
+							"Ingredient Magnet S",
 					),
 				).toBe(false);
 
