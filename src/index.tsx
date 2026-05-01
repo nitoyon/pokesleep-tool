@@ -4,7 +4,7 @@ import App from "./ui/App";
 import { loadConfig, saveConfig } from "./ui/AppConfig";
 import i18n, { loadLanguage } from "./i18n";
 
-(async function () {
+(async () => {
 	// add error handler
 	window.addEventListener("error", (event) => {
 		const { message, filename, lineno, colno, error } = event;

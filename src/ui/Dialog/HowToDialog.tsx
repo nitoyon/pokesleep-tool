@@ -1,5 +1,4 @@
-import React from "react";
-import { AppType } from "../AppConfig";
+import type { AppType } from "../AppConfig";
 import {
 	Button,
 	Dialog,

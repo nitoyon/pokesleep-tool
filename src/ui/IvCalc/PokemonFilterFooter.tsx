@@ -38,10 +38,10 @@ const PokemonFilterFooter = React.memo(
 		// Sort menu handler
 		const onSortButtonClick = useCallback(() => {
 			setSortMenuOpen(true);
-		}, [setSortMenuOpen]);
+		}, []);
 		const onSortMenuClose = useCallback(() => {
 			setSortMenuOpen(false);
-		}, [setSortMenuOpen]);
+		}, []);
 		const onToggleSortOrder = useCallback(() => {
 			onChange({ ...value, descending: !value.descending });
 		}, [value, onChange]);
@@ -53,7 +53,7 @@ const PokemonFilterFooter = React.memo(
 					setSortMenuOpen(false);
 				}
 			},
-			[value, onChange, setSortMenuOpen],
+			[value, onChange],
 		);
 
 		// Sort menu

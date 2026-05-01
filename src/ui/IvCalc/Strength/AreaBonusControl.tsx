@@ -1,7 +1,9 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { IconButton, InputAdornment } from "@mui/material";
-import NumericInput, { NumericInputHandle } from "../../common/NumericInput";
+import NumericInput, {
+	type NumericInputHandle,
+} from "../../common/NumericInput";
 import SliderAndArrow from "../../common/SliderAndArrow";
 
 const maxBonus = 85;

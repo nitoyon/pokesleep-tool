@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Slider, SliderProps } from "@mui/material";
+import { Slider, type SliderProps } from "@mui/material";
 
 const isIOS =
 	/iP(hone|od|ad)/.test(navigator.userAgent) ||

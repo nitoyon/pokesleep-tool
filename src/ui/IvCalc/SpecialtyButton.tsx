@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
-import { PokemonSpecialty } from "../../data/pokemons";
+import type { PokemonSpecialty } from "../../data/pokemons";
 import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { useTranslation } from "react-i18next";

@@ -1,8 +1,8 @@
-import { BonusEffects, emptyBonusEffects } from "../data/events";
-import { PokemonType } from "../data/pokemons";
-import PokemonIv from "./PokemonIv";
-import { ExpertEffects } from "./PokemonStrength";
-import { HelpEventBonus } from "../data/events";
+import { type BonusEffects, emptyBonusEffects } from "../data/events";
+import type { PokemonType } from "../data/pokemons";
+import type PokemonIv from "./PokemonIv";
+import type { ExpertEffects } from "./PokemonStrength";
+import type { HelpEventBonus } from "../data/events";
 
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;
@@ -477,7 +477,6 @@ class Energy {
 					isSnacking: false,
 					isInPeriod: true,
 				});
-				continue;
 			}
 		}
 	}

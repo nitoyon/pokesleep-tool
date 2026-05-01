@@ -5,8 +5,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
 import TimerOffOutlinedIcon from "@mui/icons-material/TimerOffOutlined";
-import { InputAreaData, TrackingData } from "./ResearchCalcAppConfig";
-import TrackingDetail, { formatTime, TrackingStage } from "./TrackingDetail";
+import type { InputAreaData, TrackingData } from "./ResearchCalcAppConfig";
+import TrackingDetail, {
+	formatTime,
+	type TrackingStage,
+} from "./TrackingDetail";
 import RankBallLabel from "./RankBallLabel";
 import ScoreTableDialog from "./ScoreTableDialog";
 import SpawnCountLabel from "./SpawnCountLabel";
@@ -17,7 +20,7 @@ import MessageDialog from "../Dialog/MessageDialog";
 import fields from "../../data/fields";
 import Rank from "../../util/Rank";
 import { getPokemonCount } from "../../util/PokemonCount";
-import i18next from "i18next";
+import type i18next from "i18next";
 import { useTranslation, Trans } from "react-i18next";
 
 const TrackingPanel = React.memo(
@@ -57,7 +60,7 @@ const TrackingPanel = React.memo(
 			}
 
 			// find current stage
-			const now = new Date().getTime();
+			const now = Date.now();
 			let _curStage = stages.current.find(
 				(s) => s.start.getTime() <= now && now < s.end.getTime(),
 			);
@@ -95,11 +98,11 @@ const TrackingPanel = React.memo(
 
 		const onScoreTableButtonClick = React.useCallback(() => {
 			setIsScoreTableDialogOpen(true);
-		}, [setIsScoreTableDialogOpen]);
+		}, []);
 
 		const onScoreTableDialogClose = React.useCallback(() => {
 			setIsScoreTableDialogOpen(false);
-		}, [setIsScoreTableDialogOpen]);
+		}, []);
 
 		const onTrackingButtonClick = React.useCallback(() => {
 			setTrackingDialogOpen(true);
@@ -189,7 +192,7 @@ const TrackingPanel = React.memo(
 											{t("num", { n: data.tracking?.strength ?? 0 })}
 										</strong>
 										<small>
-											({t(`area.${fieldIndex}`)}&ensp;
+											({t(`area.${fieldIndex}`)}{" "}
 											<RankBallLabel
 												type={rank.type}
 												number={rank.rankNumber}

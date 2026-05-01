@@ -8,10 +8,11 @@ import {
 	Input,
 	InputAdornment,
 } from "@mui/material";
-import IvState, { IvAction } from "./IvState";
+import type IvState from "./IvState";
+import type { IvAction } from "./IvState";
 import {
 	createStrengthParameter,
-	MewParameter,
+	type MewParameter,
 } from "../../util/PokemonStrength";
 import { useTranslation } from "react-i18next";
 

@@ -8,24 +8,24 @@
 // Read tsv from stdin (RP collection sheet format).
 // See src/util/RpParse.tsv for details
 
-import parseTsv, { RpData } from "../src/util/RpParse";
-import PokemonIv from "../src/util/PokemonIv";
+import parseTsv, { type RpData } from "../src/util/RpParse";
+import type PokemonIv from "../src/util/PokemonIv";
 import PokemonRp from "../src/util/PokemonRp";
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 const baseSkillValue = parseInt(process.argv[2], 10);
 const fitValueOnly = false; //process.argv.some(x => x === '--fitValueOnly');
 
 function checkSkillValue(data: Record<string, RpData[]>, skillValue: number) {
 	for (const name of Object.keys(data)) {
-		if (!fit(data[name], skillValue)) {
+		if (!rpFit(data[name], skillValue)) {
 			return;
 		}
 	}
 	console.log(skillValue);
 }
 
-function fit(data: RpData[], skillValue: number) {
+function rpFit(data: RpData[], skillValue: number) {
 	let skills: number[] = [];
 	if (fitValueOnly) {
 		skills = [data[0].iv.pokemon.skillRate];

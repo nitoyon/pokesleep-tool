@@ -7,12 +7,13 @@ import {
 	formatNice,
 	formatWithComma,
 } from "../../../util/NumberUtil";
-import PokemonStrength, {
-	IngredientStrength,
-	StrengthResult,
+import type PokemonStrength from "../../../util/PokemonStrength";
+import {
+	type IngredientStrength,
+	type StrengthResult,
 	recipeLevelBonus,
 } from "../../../util/PokemonStrength";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { ingredientStrength } from "../../../util/PokemonRp";
 import {
 	Button,
@@ -22,19 +23,19 @@ import {
 	DialogTitle,
 	FormControl,
 	Select,
-	SelectChangeEvent,
+	type SelectChangeEvent,
 	Typography,
 	MenuItem,
 } from "@mui/material";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import InfoButton from "../InfoButton";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import IngredientIcon from "../IngredientIcon";
 import IngredientCountIcon from "../IngredientCountIcon";
 import { LevelInput } from "../IvForm/LevelControl";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 import { useTranslation, Trans } from "react-i18next";
-import i18next from "i18next";
+import type i18next from "i18next";
 
 const IngHelpDialog = React.memo(
 	({
@@ -62,7 +63,7 @@ const IngHelpDialog = React.memo(
 			(e: SelectChangeEvent) => {
 				onChange({
 					...strength.parameter,
-					recipeBonus: parseInt(e.target.value),
+					recipeBonus: parseInt(e.target.value, 10),
 				});
 			},
 			[onChange, strength.parameter],
@@ -295,8 +296,7 @@ function getIngDetail(
 				{round1(count)}
 			</span>
 			<div>
-				<span className="box box3">{round2(result.ingHelpCount)}</span>
-				<> × </>
+				<span className="box box3">{round2(result.ingHelpCount)}</span> ×{" "}
 				{ing.slots.length > 1 ? "(" : ""}
 				{ing.slots.map((ing, i) => (
 					<span key={i}>
@@ -305,8 +305,7 @@ function getIngDetail(
 					</span>
 				))}
 				{ing.slots.length > 1 ? ")" : ""}
-				<>{ingSlot > 1 ? ` / ${ingSlot}` : ""}</>
-				<> - </>
+				{ingSlot > 1 ? ` / ${ingSlot}` : ""} -{" "}
 				<span className="box box7">{round2(ing.overflowCount)}</span>
 			</div>
 			<span style={{ marginTop: "-0.5rem" }}>
@@ -317,12 +316,9 @@ function getIngDetail(
 				{formatNice(ing.strength, t)}
 			</span>
 			<div style={{ marginTop: "-0.5rem" }}>
-				<span className="box box1">{round1(count)}</span>
-				<> × </>
-				<span className="box box2">{ingredientStrength[ingName]}</span>
-				<> × </>
-				<span className="box box5">{round2(recipeRatio)}</span>
-				<> × </>
+				<span className="box box1">{round1(count)}</span> ×{" "}
+				<span className="box box2">{ingredientStrength[ingName]}</span> ×{" "}
+				<span className="box box5">{round2(recipeRatio)}</span> ×{" "}
 				<span>
 					<>(1+</>
 					<span className="box box4">{param.fieldBonus}%</span>
@@ -330,8 +326,8 @@ function getIngDetail(
 				</span>
 				{dishBonus !== 1 && (
 					<>
-						<> × </>
-						<span className="box box6">{dishBonus}</span>
+						{" "}
+						× <span className="box box6">{dishBonus}</span>
 					</>
 				)}
 			</div>

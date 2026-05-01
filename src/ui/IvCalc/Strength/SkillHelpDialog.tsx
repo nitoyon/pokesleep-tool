@@ -2,7 +2,7 @@ import React from "react";
 import pokemons from "../../../data/pokemons";
 import { getEventBonus } from "../../../data/events";
 import Nature from "../../../util/Nature";
-import { PokemonType } from "../../../data/pokemons";
+import type { PokemonType } from "../../../data/pokemons";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import {
 	round1,
@@ -12,7 +12,7 @@ import {
 } from "../../../util/NumberUtil";
 import PokemonIv from "../../../util/PokemonIv";
 import PokemonStrength, {
-	StrengthResult,
+	type StrengthResult,
 	calculateBerryBurstStrength,
 	getBerryBurstTeam,
 } from "../../../util/PokemonStrength";
@@ -26,7 +26,7 @@ import {
 	superLuckIngRate,
 	superLuckShardRate,
 	superLuckShard5Rate,
-	MainSkillName,
+	type MainSkillName,
 } from "../../../util/MainSkill";
 import {
 	Button,
@@ -51,11 +51,11 @@ import {
 	StyledNatureUpEffect,
 	StyledNatureDownEffect,
 } from "../IvForm/NatureTextField";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import SkillPityProcDialog from "./SkillPityProcDialog";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 import { useTranslation, Trans } from "react-i18next";
-import i18next from "i18next";
+import type i18next from "i18next";
 import BerryStrengthDialog from "./BerryStrengthDialog";
 
 const SkillHelpDialog = React.memo(
@@ -103,7 +103,7 @@ const SkillHelpDialog = React.memo(
 		}, []);
 
 		const onSkillLevelChange = React.useCallback(
-			(e: React.MouseEvent, value: string | null) => {
+			(_e: React.MouseEvent, value: string | null) => {
 				if (value === null) {
 					return;
 				}
@@ -175,7 +175,7 @@ const SkillHelpDialog = React.memo(
 		if (skillName === "Berry Burst (Disguise)") {
 			// Calculate great success
 			// https://pks.raenonx.cc/en/docs/view/calc/main-skill#disguise
-			greatSuccessRate = 1 - Math.pow(1 - 0.18, result.skillCount / days);
+			greatSuccessRate = 1 - (1 - 0.18) ** (result.skillCount / days);
 		}
 
 		return (
@@ -192,12 +192,12 @@ const SkillHelpDialog = React.memo(
 						<footer>
 							<span className="box box1">
 								{formatWithComma(result.skillValuePerTrigger)}
-							</span>
-							<> × </>
-							<span className="box box2">{round2(result.skillCount)}</span>
+							</span>{" "}
+							× <span className="box box2">{round2(result.skillCount)}</span>
 							{skillName === "Ingredient Draw S (Hyper Cutter)" && (
 								<>
-									<> × </>
+									{" "}
+									×{" "}
 									<span className="box box4">
 										{round2(1 + hyperCutterSuccess)}
 									</span>
@@ -205,20 +205,17 @@ const SkillHelpDialog = React.memo(
 							)}
 							{skillName === "Ingredient Draw S (Super Luck)" && (
 								<>
-									<> × </>
-									<span className="box box5">{superLuckIngRate * 100}%</span>
+									{" "}
+									× <span className="box box5">{superLuckIngRate * 100}%</span>
 								</>
 							)}
 							{skillName === "Berry Burst (Disguise)" && (
 								<>
-									<br />
-									<> + </>
+									<br /> ×{" "}
 									<span className="box box1">
 										{formatWithComma(result.skillValuePerTrigger)}
-									</span>
-									<> × </>
-									<span className="box box4">{2 * days}</span>
-									<> × </>
+									</span>{" "}
+									× <span className="box box4">{2 * days}</span>×
 									<span className="box box5">
 										{round1(greatSuccessRate * 100)}%
 									</span>
@@ -531,19 +528,16 @@ function getChargeEnergyValueText(
 		<>
 			{text}
 			<br />
-			<span className="box box4">{val}</span>
-			<> × </>
+			<span className="box box4">{val}</span> ×{" "}
 			<span className="box box5">{iv.nature.energyRecoveryFactor}</span>
 			<ul className="detail">
 				<li>
-					<span className="box box4">{val}</span>
-					<>
-						: {t("base value", { value: t("nature effect.Energy recovery") })}
-					</>
+					<span className="box box4">{val}</span>:{" "}
+					{t("base value", { value: t("nature effect.Energy recovery") })}
 				</li>
 				<li>
-					<span className="box box5">{iv.nature.energyRecoveryFactor}</span>
-					<>: {t("nature factor")}</>
+					<span className="box box5">{iv.nature.energyRecoveryFactor}</span>:{" "}
+					{t("nature factor")}
 					{iv.nature.energyRecoveryFactor > 1 && (
 						<small>
 							{" "}
@@ -613,19 +607,17 @@ function getChargeStrengthValueText(
 		<>
 			{text}
 			<br />
-			<span className="box box4">{val}</span>
-			<> × (1 + </>
-			<span className="box box5">{param.fieldBonus}%</span>
-			<>)</>
+			<span className="box box4">{val}</span> × (1 +{" "}
+			<span className="box box5">{param.fieldBonus}%</span>)
 			<ul className="detail">
 				<li>
-					<span className="box box4">{val}</span>
-					<>: {t("base value", { value: t("strength2") })}</>
+					<span className="box box4">{val}</span>:{" "}
+					{t("base value", { value: t("strength2") })}
 					{detail}
 				</li>
 				<li>
-					<span className="box box5">{param.fieldBonus}%</span>
-					<>: {t("area bonus")}</>
+					<span className="box box5">{param.fieldBonus}%</span>:{" "}
+					{t("area bonus")}
 				</li>
 			</ul>
 		</>,
@@ -662,8 +654,7 @@ function getIngredientGetValueText(
 		text,
 		<>
 			{val}
-			<small> ({t("base value", { value: t("ing count") })})</small>
-			<> × </>
+			<small> ({t("base value", { value: t("ing count") })})</small> ×{" "}
 			{ingBonus}
 			<small> ({t("event bonus")})</small>
 		</>,
@@ -689,13 +680,10 @@ function getDreamShardMagnetValueText(
 			return [
 				text,
 				<>
-					<>
-						{formatWithComma(val)}
-						<small> ({t("base value", { value: t("dream shard") })})</small>
-						<> × </>
-						{shardBonus}
-						<small> ({t("event bonus")})</small>
-					</>
+					{formatWithComma(val)}
+					<small> ({t("base value", { value: t("dream shard") })})</small>×
+					{shardBonus}
+					<small> ({t("event bonus")})</small>
 				</>,
 			];
 		}
@@ -704,16 +692,14 @@ function getDreamShardMagnetValueText(
 		const min = formatWithComma(minVal);
 		const max = formatWithComma(maxVal);
 		if (shardBonus === 1) {
-			return [text, <>{t("range average", { min, max })}</>];
+			return [text, t("range average", { min, max })];
 		} else {
 			const val = getSkillValue(skill, skillLevel);
 			return [
 				text,
 				<>
 					{formatWithComma(val)}
-					<small> ({t("range average", { min, max })})</small>
-					<> × </>
-					{shardBonus}
+					<small> ({t("range average", { min, max })})</small> × {shardBonus}
 					<small> ({t("event bonus")})</small>
 				</>,
 			];
@@ -787,9 +773,8 @@ function getPlusValueText(
 			<small>
 				{" "}
 				({t("base value", { value: t("additional ingredients") })})
-			</small>
-			<> × </>
-			{ingBonus}
+			</small>{" "}
+			× {ingBonus}
 			<small> ({t("event bonus")})</small>
 		</>,
 	];
@@ -816,13 +801,12 @@ function getPresentValueText(
 		text,
 		<>
 			{val}
-			<small> ({t("base value", { value: t("candy") })})</small>
-			<> × </>
+			<small> ({t("base value", { value: t("candy") })})</small> ×{" "}
 			{presentCandyRate * 100}%
 			{ingBonus !== 1 && (
 				<>
-					<> × </>
-					{ingBonus}
+					{" "}
+					× {ingBonus}
 					<small> ({t("event bonus")})</small>
 				</>
 			)}
@@ -839,7 +823,7 @@ function getVersatileCandyValueText(
 
 function getEnergyRecoveryValueText(
 	value: number,
-	skillLevel: number,
+	_skillLevel: number,
 	t: typeof i18next.t,
 	valueText: string,
 ): [React.ReactNode, React.ReactNode] {

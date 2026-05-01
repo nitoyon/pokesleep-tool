@@ -1,6 +1,6 @@
 import PokemonStrength, {
 	createStrengthParameter,
-	StrengthParameter,
+	type StrengthParameter,
 	isSkillStrengthZero,
 	expertFavoriteBerryBonus,
 	getAverageIngredientDrawStrength,
@@ -647,7 +647,7 @@ describe("PokemonStrength", () => {
 				// Verify Slaking has non-zero skill strength
 				expect(
 					isSkillStrengthZero(
-						pokemons.find((p) => p.name === "Slaking")!.skill,
+						pokemons.find((p) => p.name === "Slaking")?.skill,
 					),
 				).toBe(false);
 

@@ -1,8 +1,8 @@
 import events_ from "./event.json";
 import {
-	PokemonData,
-	PokemonSpecialty,
-	PokemonType,
+	type PokemonData,
+	type PokemonSpecialty,
+	type PokemonType,
 	PokemonTypes,
 	SpecialtyNames,
 } from "./pokemons";
@@ -208,7 +208,7 @@ function getEventBonusData(
 	name: string,
 	custom: HelpEventBonus,
 ): BonusEventData | undefined {
-	let event: BonusEventData | undefined = undefined;
+	let event: BonusEventData | undefined;
 	if (name !== "custom") {
 		event = events.bonus.find((x) => x.name === name);
 	} else {

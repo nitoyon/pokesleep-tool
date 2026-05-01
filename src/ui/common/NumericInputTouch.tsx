@@ -8,7 +8,7 @@ import SubdirectoryArrowLeftIcon from "@mui/icons-material/SubdirectoryArrowLeft
 import { Button, Divider, IconButton, Input } from "@mui/material";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import PopperMenu from "./PopperMenu";
-import { NumericInputHandle, NumericInputProps } from "./NumericInput";
+import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
 import {
 	clamp,
 	formatWithComma,
@@ -259,7 +259,7 @@ const NumericInputTouch = React.memo(
 					}
 
 					let val = parseInt(newText, 10);
-					if (isNaN(val)) {
+					if (Number.isNaN(val)) {
 						return;
 					}
 					val = clamp(minValue, val, maxValue);
@@ -290,7 +290,7 @@ const NumericInputTouch = React.memo(
 						currentText.slice(0, currentCursorPos - 1) +
 						currentText.slice(currentCursorPos);
 					const val = parseInt(newText, 10);
-					if (!isNaN(val)) {
+					if (!Number.isNaN(val)) {
 						onChange(Math.max(val, minValue));
 						setCursorPos(currentCursorPos - 1);
 					}
@@ -349,7 +349,7 @@ const NumericInputTouch = React.memo(
 								currentText.slice(0, currentCursorPos) +
 								currentText.slice(currentCursorPos + 1);
 							const val = parseInt(newText, 10);
-							if (!isNaN(val)) {
+							if (!Number.isNaN(val)) {
 								onChange(Math.max(val, minValue));
 							}
 						}
@@ -403,8 +403,6 @@ const NumericInputTouch = React.memo(
 					onClose,
 					minValue,
 					onChange,
-					setIsEmpty,
-					setCursorPos,
 				],
 			);
 
@@ -428,17 +426,15 @@ const NumericInputTouch = React.memo(
 							{text}
 						</MirrorSpan>
 						{open && (
-							<>
-								<Cursor
-									style={{
-										...inputStyle,
-										left: ((inputStyle.left ?? 0) as number) + cursorOffset.x,
-										top: ((inputStyle.top ?? 0) as number) + cursorOffset.y,
-										width: "2px",
-										padding: 0,
-									}}
-								/>
-							</>
+							<Cursor
+								style={{
+									...inputStyle,
+									left: ((inputStyle.left ?? 0) as number) + cursorOffset.x,
+									top: ((inputStyle.top ?? 0) as number) + cursorOffset.y,
+									width: "2px",
+									padding: 0,
+								}}
+							/>
 						)}
 					</StyledInputContainer>
 					<PopperMenu

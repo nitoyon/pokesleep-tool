@@ -1,8 +1,8 @@
 "use strict";
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const { setTimeout } = require("timers/promises");
+const https = require("node:https");
+const fs = require("node:fs");
+const path = require("node:path");
+const { setTimeout } = require("node:timers/promises");
 const { JSDOM } = require("jsdom");
 const { INIT_CWD } = process.env;
 
@@ -114,7 +114,7 @@ async function syncRanksAndPowers(fieldJson) {
 		"ゴールド旧発電所",
 	];
 	for (let i = 0; i < areaNames.length; i++) {
-		const area = "リサーチフィールド/" + areaNames[i];
+		const area = `リサーチフィールド/${areaNames[i]}`;
 		const html = await getWikiHtml(area);
 		fieldJson[i].powers = getPowers(html);
 	}
@@ -126,16 +126,14 @@ function getPowers(html) {
 	// find table
 	const tables = dom.window.document.querySelectorAll("table");
 	const table = [...tables].find((t) => {
-		return t.querySelector("th")?.textContent == "ポケモン数";
+		return t.querySelector("th")?.textContent === "ポケモン数";
 	});
 	if (table == null) {
 		throw new Error("not found");
 	}
 
 	const tds = table.querySelectorAll("tr>td:nth-child(2)");
-	return [...tds].map(function (td) {
-		return parseInt(td.textContent.replace(/,/g, ""), 10);
-	});
+	return [...tds].map((td) => parseInt(td.textContent.replace(/,/g, ""), 10));
 }
 
 /* SPO JSON Format
@@ -237,7 +235,7 @@ async function syncPokemon() {
 	fs.writeFileSync(pokemonJsonPath, JSON.stringify(pokemonJson, null, 4));
 }
 
-function updatePokemonProbability(pokemonJson, ja2en, rpCsv) {
+function updatePokemonProbability(pokemonJson, _ja2en, rpCsv) {
 	const lines = rpCsv.toString().split(/\n/g);
 	const prob = {};
 	for (const line of lines.filter((x) => x.match(/^[^,]+,\d+\.\d+%/))) {
@@ -345,7 +343,7 @@ function getPokemon(html, name, nameJa2en) {
 	}
 	let tds = carryLimitTable.querySelectorAll("td");
 	const carryLimit = parseInt(tds[0].textContent, 10);
-	let skillJa = tds[1].textContent
+	const skillJa = tds[1].textContent
 		.replace(/ /g, "")
 		.replace("（", "(")
 		.replace("）", ")");
@@ -418,7 +416,7 @@ function getPokemon(html, name, nameJa2en) {
 	// get ing1
 	tds = trs[1].querySelectorAll("td");
 	let ingJa = tds[4].querySelector("a").textContent;
-	let c1 = parseInt(tds[1].textContent.replace("個", ""), 10);
+	const c1 = parseInt(tds[1].textContent.replace("個", ""), 10);
 	let c2 = parseInt(tds[2].textContent.replace("個", ""), 10);
 	let c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
 	if (!(ingJa in ingredients)) {
@@ -441,7 +439,7 @@ function getPokemon(html, name, nameJa2en) {
 	// get ing3
 	tds = trs[3].querySelectorAll("td");
 	ingJa = tds[4].querySelector("a")?.textContent;
-	let ing3 = undefined;
+	let ing3;
 	if (ingJa !== undefined) {
 		c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
 		if (!(ingJa in ingredients)) {
@@ -483,7 +481,7 @@ function getPokemon(html, name, nameJa2en) {
 async function getWikiHtml(name) {
 	// return cache if it exists
 	// TODO: cache 1 week
-	const cacheFileName = name.replace(/\//g, "_") + ".html";
+	const cacheFileName = `${name.replace(/\//g, "_")}.html`;
 
 	// download and cache
 	const url = getWikiUrl(name);
@@ -491,7 +489,7 @@ async function getWikiHtml(name) {
 }
 
 function getWikiUrl(name) {
-	return "https://wikiwiki.jp/poke_sleep/" + encodeURI(name);
+	return `https://wikiwiki.jp/poke_sleep/${encodeURI(name)}`;
 }
 
 async function getUrlWithCache(url, name, cacheFileName) {
@@ -523,22 +521,22 @@ async function getHtml(url) {
 		let html = "";
 		res.setEncoding("utf-8");
 		res
-			.on("data", function (chunk) {
+			.on("data", (chunk) => {
 				html += chunk;
 			})
-			.on("end", function () {
+			.on("end", () => {
 				resolve(html);
 			})
 			.on("error", reject);
 	};
 	return new Promise((resolve, reject) => {
-		https.get(url, function (res) {
+		https.get(url, (res) => {
 			if (res.headers.location !== undefined) {
 				res
-					.on("data", function () {})
-					.on("end", function () {})
-					.on("error", function () {});
-				https.get(res.headers.location, function (res) {
+					.on("data", () => {})
+					.on("end", () => {})
+					.on("error", () => {});
+				https.get(res.headers.location, (res) => {
 					handleResponse(res, resolve, reject);
 				});
 				return;

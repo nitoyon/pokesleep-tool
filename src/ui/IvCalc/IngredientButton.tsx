@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
 import IngredientIcon from "./IngredientIcon";
-import { IngredientName } from "../../data/pokemons";
+import type { IngredientName } from "../../data/pokemons";
 import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 

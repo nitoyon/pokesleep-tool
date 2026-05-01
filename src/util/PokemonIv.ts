@@ -1,16 +1,16 @@
 import Nature from "./Nature";
 import pokemons, {
 	getDecendants,
-	IngredientName,
-	PokemonData,
-	ValidFormType,
+	type IngredientName,
+	type PokemonData,
+	type ValidFormType,
 	toxelId,
 	toxtricityId,
 } from "../data/pokemons";
-import { IngredientType, IngredientTypes } from "./PokemonRp";
+import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
 	getMaxSkillLevel,
-	MainSkillName,
+	type MainSkillName,
 	VersatileCandidates,
 } from "./MainSkill";
 import SubSkill from "./SubSkill";
@@ -127,14 +127,6 @@ class PokemonIv {
 	private readonly cache: Map<string, number> = new Map();
 	private activeSubSkillsCache: undefined | SubSkill[] = undefined;
 
-	/**
-	 * ID migration map for backward compatibility.
-	 * Maps incorrect IDs to correct Pokedex IDs.
-	 */
-	private static readonly idMigrations: Record<number, number> = {
-		231: 213, // Shuckle: placeholder ID -> actual Pokedex ID
-	};
-
 	/** Initialize new instance. */
 	constructor(input: Partial<PokemonIvProps>) {
 		const params = PokemonIv.normalize(input);
@@ -239,7 +231,7 @@ class PokemonIv {
 	 * @return Overall skill proc rate.
 	 */
 	calculateSkillRateWithPityProc(rate: number): number {
-		return rate / (1 - Math.pow(1 - rate, this.pityProcHelpCount + 1));
+		return rate / (1 - (1 - rate) ** (this.pityProcHelpCount + 1));
 	}
 
 	get ingredientRate(): number {
@@ -1051,7 +1043,7 @@ class PokemonIv {
 	static deserialize(value: string): PokemonIv {
 		// validate, and convert to BASE64 string
 		if (value.length === 12) {
-			value = value.replace(/-/g, "/") + "AAAA";
+			value = `${value.replace(/-/g, "/")}AAAA`;
 		} else if (value.length === 16) {
 			value = value.replace(/-/g, "/");
 		} else {

@@ -3,7 +3,7 @@ import {
 	ClickAwayListener,
 	Popper,
 	Paper,
-	PopperPlacementType,
+	type PopperPlacementType,
 } from "@mui/material";
 
 const PopperMenu = React.memo(

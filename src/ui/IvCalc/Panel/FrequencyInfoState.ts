@@ -1,9 +1,9 @@
 import { isExpertField } from "../../../data/fields";
-import PokemonIv from "../../../util/PokemonIv";
+import type PokemonIv from "../../../util/PokemonIv";
 import PokemonStrength, {
-	StrengthParameter,
+	type StrengthParameter,
 } from "../../../util/PokemonStrength";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 
 type DisplayValue = "frequency" | "count" | "full";
 

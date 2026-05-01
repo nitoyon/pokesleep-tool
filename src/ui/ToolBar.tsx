@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { styled } from "@mui/system";
 import AboutDialog from "./Dialog/AboutDialog";
 import HowToDialog from "./Dialog/HowToDialog";
 import NewsListDialog from "./Dialog/NewsListDialog";
 import SettingsDialog from "./Dialog/SettingsDialog";
-import AppConfig, { AppType } from "./AppConfig";
+import type AppConfig from "./AppConfig";
+import type { AppType } from "./AppConfig";
 import {
 	Divider,
 	Icon,

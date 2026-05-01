@@ -1,14 +1,15 @@
 import React from "react";
 import { styled } from "@mui/system";
-import PokemonStrength, {
+import type PokemonStrength from "../../../util/PokemonStrength";
+import {
 	getHelpsForCap,
 	getRequiredHelperBoost,
 	getHelpYield,
-	StrengthParameter,
-	StrengthResult,
+	type StrengthParameter,
+	type StrengthResult,
 } from "../../../util/PokemonStrength";
 import MainSkillIcon from "../MainSkillIcon";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import SelectEx from "../../common/SelectEx";
 import { getSkillValue } from "../../../util/MainSkill";
 import { round1 } from "../../../util/NumberUtil";

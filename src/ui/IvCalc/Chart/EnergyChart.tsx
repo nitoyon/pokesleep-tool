@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@mui/system";
 import { Popper } from "@mui/material";
 import EnergyIcon from "../../Resources/EnergyIcon";
-import { EnergyResult } from "../../../util/Energy";
+import type { EnergyResult } from "../../../util/Energy";
 import { clamp } from "../../../util/NumberUtil";
 import { useTranslation } from "react-i18next";
 import { useSvgTouch } from "./ChartHook";

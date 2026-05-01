@@ -1,24 +1,24 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
 import pokemons, {
-	PokemonSpecialty,
+	type PokemonSpecialty,
 	SpecialtyNames,
-	IngredientName,
+	type IngredientName,
 	IngredientNames,
-	PokemonType,
+	type PokemonType,
 	PokemonTypes,
 } from "../../../data/pokemons";
 import {
-	MainSkillName,
+	type MainSkillName,
 	MainSkillNames,
 	matchMainSkillName,
 } from "../../../util/MainSkill";
 import {
 	Autocomplete,
 	autocompleteClasses,
-	AutocompleteRenderGroupParams,
+	type AutocompleteRenderGroupParams,
 	Dialog,
-	FilterOptionsState,
+	type FilterOptionsState,
 	InputAdornment,
 	InputBase,
 	MenuItem,
@@ -26,9 +26,9 @@ import {
 import PokemonIcon from "../PokemonIcon";
 import PokemonFilterDialog from "./PokemonFilterDialog";
 import PokemonFilterFooter, {
-	PokemonFilterFooterConfig,
+	type PokemonFilterFooterConfig,
 } from "../PokemonFilterFooter";
-import { PokemonOption } from "./PokemonTextField";
+import type { PokemonOption } from "./PokemonTextField";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
 
@@ -415,7 +415,7 @@ const PokemonSelectDialog = React.memo(
 				if (newValue === null) {
 					return;
 				}
-				let selected: PokemonOption | undefined = undefined;
+				let selected: PokemonOption | undefined;
 				if (typeof newValue === "string") {
 					selected = pokemonOptions.find((x) => x.localName === newValue);
 					if (selected === undefined) {

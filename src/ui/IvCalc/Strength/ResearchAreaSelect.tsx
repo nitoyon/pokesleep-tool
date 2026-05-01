@@ -5,7 +5,7 @@ import AreaControlDialog from "./AreaControlDialog";
 import {
 	allFavoriteFieldIndex,
 	noFavoriteFieldIndex,
-	StrengthParameter,
+	type StrengthParameter,
 } from "../../../util/PokemonStrength";
 import { Divider, IconButton, MenuItem } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";

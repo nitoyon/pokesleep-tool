@@ -5,13 +5,13 @@ import TypeButton from "../TypeButton";
 import { PokemonFilterConfig } from "./PokemonSelectDialog";
 import MainSkillButton from "../MainSkillButton";
 import SpecialtyButton from "../SpecialtyButton";
-import { MainSkillName, MainSkillNames } from "../../../util/MainSkill";
+import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
 import {
 	SpecialtyNames,
-	PokemonSpecialty,
-	IngredientName,
+	type PokemonSpecialty,
+	type IngredientName,
 	IngredientNames,
-	PokemonType,
+	type PokemonType,
 	PokemonTypes,
 } from "../../../data/pokemons";
 import { useElementWidth } from "../../common/Hook";
@@ -44,7 +44,7 @@ const PokemonFilterDialog = React.memo(
 		const [width, elementRef] = useElementWidth();
 		const [tabIndex, setTabIndex] = React.useState(value.tabIndex);
 		const onTabChange = React.useCallback(
-			(event: React.SyntheticEvent, newValue: number) => {
+			(_event: React.SyntheticEvent, newValue: number) => {
 				setTabIndex(newValue);
 			},
 			[],

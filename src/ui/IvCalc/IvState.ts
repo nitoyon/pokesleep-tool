@@ -1,9 +1,9 @@
 import PokemonIv from "../../util/PokemonIv";
 import { getEventBonus } from "../../data/events";
 import { PokemonTypes } from "../../data/pokemons";
-import PokemonBox, { PokemonBoxItem } from "../../util/PokemonBox";
+import PokemonBox, { type PokemonBoxItem } from "../../util/PokemonBox";
 import {
-	StrengthParameter,
+	type StrengthParameter,
 	loadStrengthParameter,
 } from "../../util/PokemonStrength";
 import { isExpertField } from "../../data/fields";
@@ -239,7 +239,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return {
 			...state,
 			boxItemDialogOpen: true,
-			boxItemDialogKey: "dlg" + new Date().getTime().toString(),
+			boxItemDialogKey: `dlg${Date.now().toString()}`,
 			boxItemDialogIsEdit: false,
 		};
 	}
@@ -362,7 +362,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return {
 			...state,
 			boxItemDialogOpen: true,
-			boxItemDialogKey: "dlg" + new Date().getTime().toString(),
+			boxItemDialogKey: `dlg${Date.now().toString()}`,
 			boxItemDialogIsEdit: true,
 		};
 	} else if (type === "dup") {

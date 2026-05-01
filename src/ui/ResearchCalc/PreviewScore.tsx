@@ -1,17 +1,17 @@
 import { styled } from "@mui/system";
 import { Button } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { InputAreaData } from "./ResearchCalcAppConfig";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
 import Rank from "../../util/Rank";
-import { PokemonCount } from "../../util/PokemonCount";
+import type { PokemonCount } from "../../util/PokemonCount";
 import SleepScore from "./SleepScore";
-import { MultipleScoreRange, ScoreRange } from "./Score";
+import type { MultipleScoreRange, ScoreRange } from "./Score";
 import fields from "../../data/fields";
 import SpawnCountLabel from "./SpawnCountLabel";
-import { BetterSecondSleepData } from "./BetterSecondSleepDialog";
+import type { BetterSecondSleepData } from "./BetterSecondSleepDialog";
 import RankBall from "./RankBallLabel";
 import { useTranslation, Trans } from "react-i18next";
-import i18next from "i18next";
+import type i18next from "i18next";
 
 interface PreviewScoreProps {
 	/** pokemon count */
@@ -54,7 +54,7 @@ export default function PreviewScore(props: PreviewScoreProps) {
 		const count = ranges.secondSleep.count + 1;
 		const secondRequiredStrength = ranges.nextStrength - props.data.strength;
 
-		const onDetailClick = function () {
+		const onDetailClick = () => {
 			const data: BetterSecondSleepData = {
 				first: {
 					count: ranges.firstSleep.count,

@@ -1,8 +1,10 @@
 import React from "react";
-import { styled, SxProps, Theme } from "@mui/system";
+import { styled, type SxProps, type Theme } from "@mui/system";
 import { Button } from "@mui/material";
 import { maxLevel } from "../../../util/PokemonRp";
-import NumericInput, { NumericInputHandle } from "../../common/NumericInput";
+import NumericInput, {
+	type NumericInputHandle,
+} from "../../common/NumericInput";
 import SliderAndArrow from "../../common/SliderAndArrow";
 
 const LevelControlContainer = styled("div")({

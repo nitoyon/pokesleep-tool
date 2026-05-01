@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import type i18next from "i18next";
 
 export function round1(n: number) {
 	n = Math.round(n * 10);
@@ -82,7 +82,7 @@ export function formatNice(n: number, t: typeof i18next.t): string {
 	if (digits === "3") {
 		return (n / 1000).toFixed(0).toString() + t("short num unit");
 	}
-	throw new Error("unknown short num digits: " + digits);
+	throw new Error(`unknown short num digits: ${digits}`);
 }
 
 export function clamp(min: number, value: number, max: number): number {
@@ -90,7 +90,7 @@ export function clamp(min: number, value: number, max: number): number {
 }
 
 export function trunc(v: number, n: number): number {
-	const N = Math.pow(10, n);
+	const N = 10 ** n;
 	const d = parseFloat((v * N).toFixed(6));
 	return Math.floor(d) / N;
 }

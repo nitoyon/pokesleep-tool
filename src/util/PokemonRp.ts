@@ -1,6 +1,10 @@
-import { IngredientName, PokemonData, PokemonType } from "../data/pokemons";
-import PokemonIv from "./PokemonIv";
-import SubSkill from "./SubSkill";
+import type {
+	IngredientName,
+	PokemonData,
+	PokemonType,
+} from "../data/pokemons";
+import type PokemonIv from "./PokemonIv";
+import type SubSkill from "./SubSkill";
 
 export const maxLevel = 65;
 
@@ -297,8 +301,8 @@ class PokemonRp {
 			}
 			// assumption: RP collection's 'Ingr Growth' sheet
 			return (
-				0.000000398 * Math.pow(this.iv.level, 3) +
-				0.000159 * Math.pow(this.iv.level, 2) +
+				0.000000398 * this.iv.level ** 3 +
+				0.000159 * this.iv.level ** 2 +
 				0.00367 * this.iv.level -
 				0.00609 +
 				1
@@ -323,7 +327,7 @@ class PokemonRp {
 			const b0 = berryStrength[this.iv.pokemon.type];
 			return Math.max(
 				b0 + this.iv.level - 1,
-				Math.round(Math.pow(1.025, this.iv.level - 1) * b0),
+				Math.round(1.025 ** (this.iv.level - 1) * b0),
 			);
 		});
 	}
@@ -414,7 +418,7 @@ class PokemonRp {
 }
 
 export function trunc(v: number, n: number) {
-	const N = Math.pow(10, n);
+	const N = 10 ** n;
 	// fix round error
 	// (ex) v=0.051, n=4, v*N -> 509.999999
 	//      (v*N).toFixed(3) -> 510.000

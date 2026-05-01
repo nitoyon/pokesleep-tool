@@ -1,8 +1,8 @@
 import React from "react";
 import { styled } from "@mui/system";
-import Nature, { NatureEffect } from "../../../util/Nature";
+import Nature, { type NatureEffect } from "../../../util/Nature";
 import { toxtricityId } from "../../../data/pokemons";
-import PokemonIv from "../../../util/PokemonIv";
+import type PokemonIv from "../../../util/PokemonIv";
 import { MenuList, MenuItem } from "@mui/material";
 import PopperMenu from "../../common/PopperMenu";
 import TextLikeButton from "../../common/TextLikeButton";
@@ -16,17 +16,17 @@ const NatureTextField = React.memo(
 
 		const onClick = React.useCallback(() => {
 			setOpen((prevOpen) => !prevOpen);
-		}, [setOpen]);
+		}, []);
 
 		const onClose = React.useCallback(() => {
 			setOpen(false);
-		}, [setOpen]);
+		}, []);
 
 		// return focus to the button when we transitioned from !open -> open
 		const prevOpen = React.useRef(open);
 		React.useEffect(() => {
 			if (prevOpen.current === true && open === false) {
-				anchorRef.current!.focus();
+				anchorRef.current?.focus();
 			}
 			prevOpen.current = open;
 		}, [open]);
@@ -136,7 +136,7 @@ const NatureEditPopper = React.memo(
 				).map((x) => <span key={x.name}>{t(`natures.${x.name}`)}</span>);
 				const upElm =
 					upEffect === "No effect" ? (
-						<>{t("nature effect.No effect")}</>
+						t("nature effect.No effect")
 					) : (
 						<StyledNatureUpEffect>
 							{t(`nature effect.${upEffect}`)}

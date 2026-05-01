@@ -1,5 +1,8 @@
 import React from "react";
-import PokemonRp, { RpStrengthResult, maxLevel } from "../../../util/PokemonRp";
+import PokemonRp, {
+	type RpStrengthResult,
+	maxLevel,
+} from "../../../util/PokemonRp";
 import {
 	round1,
 	round2,
@@ -7,13 +10,13 @@ import {
 	formatWithComma,
 } from "../../../util/NumberUtil";
 import PokemonStrength, {
-	StrengthParameter,
+	type StrengthParameter,
 	createStrengthParameter,
 } from "../../../util/PokemonStrength";
 import BerryIngSkillView from "./BerryIngSkillView";
 import RaderChart from "../Chart/RaderChart";
 import RpLabel from "./RpLabel";
-import IvState from "../IvState";
+import type IvState from "../IvState";
 import { Button, Dialog, DialogActions } from "@mui/material";
 import IngredientIcon from "../IngredientIcon";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
@@ -38,18 +41,18 @@ const RpView = React.memo(
 		const onBerryInfoClick = React.useCallback(() => {
 			setRpValueOpen(true);
 			setRpType("berry");
-		}, [setRpValueOpen]);
+		}, []);
 		const onIngInfoClick = React.useCallback(() => {
 			setRpValueOpen(true);
 			setRpType("ingredient");
-		}, [setRpValueOpen]);
+		}, []);
 		const onSkillInfoClick = React.useCallback(() => {
 			setRpValueOpen(true);
 			setRpType("skill");
-		}, [setRpValueOpen]);
+		}, []);
 		const onRpValueClose = React.useCallback(() => {
 			setRpValueOpen(false);
-		}, [setRpValueOpen]);
+		}, []);
 
 		const pokemonIv = state.pokemonIv;
 		const rp = new PokemonRp(pokemonIv);
@@ -97,16 +100,12 @@ const RpView = React.memo(
 						onBerryInfoClick={onBerryInfoClick}
 						ingredientValue={round1(rpResult.ingredientRp)}
 						ingredientProb={round1(strength.ingRate * 100)}
-						ingredientSubValue={
-							<>
-								{strength.ingredients.map((x) => (
-									<React.Fragment key={x.name}>
-										<IngredientIcon name={x.name} />
-										{round1(x.count)}
-									</React.Fragment>
-								))}
-							</>
-						}
+						ingredientSubValue={strength.ingredients.map((x) => (
+							<React.Fragment key={x.name}>
+								<IngredientIcon name={x.name} />
+								{round1(x.count)}
+							</React.Fragment>
+						))}
 						onIngredientInfoClick={onIngInfoClick}
 						skillValue={round1(rpResult.skillRp)}
 						skillProb={round1(strength.skillRate * 100)}
@@ -346,7 +345,7 @@ const RpValueDialog = React.memo(
 		if (rpType === "berry") {
 			color = "#24d76a";
 			rpVal = round1(rpResult.berryRp);
-			param2 = round1(rp.iv.berryRate * 100) + "%";
+			param2 = `${round1(rp.iv.berryRate * 100)}%`;
 			desc2 = t("berry rate");
 			param3 = rp.berryStrength.toString();
 			desc3 = t("berry strength");
@@ -355,7 +354,7 @@ const RpValueDialog = React.memo(
 		} else if (rpType === "ingredient") {
 			color = "#fab855";
 			rpVal = round1(rpResult.ingredientRp);
-			param2 = round1(rp.iv.ingredientRate * 100) + "%";
+			param2 = `${round1(rp.iv.ingredientRate * 100)}%`;
 			desc2 = t("ingredient rate");
 			param3 = round1(rp.ingredientEnergy);
 			desc3 = t("ingredient strength");
@@ -364,7 +363,7 @@ const RpValueDialog = React.memo(
 		} else {
 			color = "#44a2fd";
 			rpVal = round1(rpResult.skillRp);
-			param2 = round1(rp.iv.skillRate * 100) + "%";
+			param2 = `${round1(rp.iv.skillRate * 100)}%`;
 			desc2 = t("skill rate");
 			param3 = formatWithComma(rp.skillValue);
 			desc3 = t("skill strength");
@@ -386,8 +385,7 @@ const RpValueDialog = React.memo(
 						<> × </>
 						{param4 !== "" && (
 							<>
-								<span className="box box4">{param4}</span>
-								<> × </>
+								<span className="box box4">{param4}</span>×
 							</>
 						)}
 						<span className="box box5">{param5}</span>

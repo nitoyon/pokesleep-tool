@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "@mui/material";
 import PopperMenu from "./PopperMenu";
-import { NumericInputHandle, NumericInputProps } from "./NumericInput";
+import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
 import { clamp, formatWithComma } from "../../util/NumberUtil";
 
 /**
@@ -31,7 +31,7 @@ const NumericInputKeyboard = React.memo(
 					}
 
 					const val = parseInt(text, 10);
-					if (isNaN(val)) {
+					if (Number.isNaN(val)) {
 						return;
 					}
 					const clampedVal = clamp(minValue, val, maxValue);
@@ -55,7 +55,7 @@ const NumericInputKeyboard = React.memo(
 					normalizedVal = minValue;
 				} else {
 					const val = parseInt(text, 10);
-					if (isNaN(val)) {
+					if (Number.isNaN(val)) {
 						// If invalid, keep the current value
 						normalizedVal = value;
 					} else {

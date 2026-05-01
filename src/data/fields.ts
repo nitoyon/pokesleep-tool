@@ -1,5 +1,5 @@
 import fields_ from "./field.json";
-import { PokemonType } from "./pokemons";
+import type { PokemonType } from "./pokemons";
 
 export interface FieldData {
 	/** field index */

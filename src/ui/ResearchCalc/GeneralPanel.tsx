@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { InputAreaData } from "./ResearchCalcAppConfig";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
 import BetterSecondSleepDialog, {
-	BetterSecondSleepData,
+	type BetterSecondSleepData,
 } from "./BetterSecondSleepDialog";
 import PreviewScore from "./PreviewScore";
 import { getScoreRange } from "./Score";

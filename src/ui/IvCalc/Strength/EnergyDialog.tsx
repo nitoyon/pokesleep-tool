@@ -1,14 +1,15 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { IvAction } from "../IvState";
-import PokemonIv from "../../../util/PokemonIv";
-import {
+import type { IvAction } from "../IvState";
+import type PokemonIv from "../../../util/PokemonIv";
+import type {
 	StrengthParameter,
 	StrengthResult,
 } from "../../../util/PokemonStrength";
 import DraggableTabContainer from "../../common/DraggableTabContainer";
 import EnergyPanel from "../Panel/EnergyPanel";
-import FrequencyInfoState, {
+import type FrequencyInfoState from "../Panel/FrequencyInfoState";
+import {
 	applyStateToParameter,
 	createDefaultState,
 	createFrequencyState,
@@ -62,7 +63,7 @@ const EnergyDialog = React.memo(
 
 			// Initialize state from parameter
 			setState(createFrequencyState(iv, parameter, createDefaultState()));
-		}, [iv, open, state, parameter]);
+		}, [iv, open, parameter]);
 
 		const onTabChange = React.useCallback(
 			(_: React.SyntheticEvent, tabIndex: number) => {

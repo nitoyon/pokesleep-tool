@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonBox from "../../../util/PokemonBox";
+import type PokemonBox from "../../../util/PokemonBox";
 import {
 	Button,
 	Dialog,

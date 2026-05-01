@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
 import MainSkillIcon from "./MainSkillIcon";
-import { MainSkillName } from "../../util/MainSkill";
+import type { MainSkillName } from "../../util/MainSkill";
 import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { useTranslation } from "react-i18next";

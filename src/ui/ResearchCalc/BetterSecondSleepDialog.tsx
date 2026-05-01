@@ -1,4 +1,3 @@
-import React from "react";
 import { styled } from "@mui/system";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
@@ -56,7 +55,7 @@ export default function BetterSecondSleepDialog({
 				</span>
 				<span className="strength_value">
 					{t("num", { n: entry.strength })}
-					{i === 1 && " " + t("range separator")}
+					{i === 1 && ` ${t("range separator")}`}
 				</span>
 				<SleepScore score={entry.score} />
 				<span className="time_value">

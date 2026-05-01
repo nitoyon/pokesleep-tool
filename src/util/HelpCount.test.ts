@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
 import PokemonIv from "./PokemonIv";
-import { BonusEffects, emptyBonusEffects } from "../data/events";
-import Energy, { AlwaysTap, EnergyParameter, NoTap } from "./Energy";
+import { type BonusEffects, emptyBonusEffects } from "../data/events";
+import Energy, { AlwaysTap, type EnergyParameter, NoTap } from "./Energy";
 import Nature from "./Nature";
 import {
 	calculateHelpCount,
@@ -71,10 +71,10 @@ describe("calculateHelpCount", () => {
 		expect(result.timeToFullInventory).toBe(300);
 		expect(result.asleep.normal).toBe(10);
 		expect(result.skillProbabilityAfterWakeup.once).toBeCloseTo(
-			10 * 0.1 * Math.pow(0.9, 9),
+			10 * 0.1 * 0.9 ** 9,
 		);
 		expect(result.skillProbabilityAfterWakeup.twice).toBeCloseTo(
-			1 - Math.pow(0.9, 10) - result.skillProbabilityAfterWakeup.once,
+			1 - 0.9 ** 10 - result.skillProbabilityAfterWakeup.once,
 		);
 
 		// change pokemon's specialty to Berries
@@ -689,12 +689,12 @@ describe("HelpCountSimulation", () => {
 
 			const p = 0.05;
 			expect(result.skillOnce).toBeCloseTo(
-				snack3 * 2 * p * (1 - p) + (1 - snack3) * 3 * p * Math.pow(1 - p, 2),
+				snack3 * 2 * p * (1 - p) + (1 - snack3) * 3 * p * (1 - p) ** 2,
 				5,
 			);
 			expect(result.skillTwice).toBeCloseTo(
 				snack3 * p * p +
-					(1 - snack3) * (1 - Math.pow(1 - p, 3) - 3 * p * Math.pow(1 - p, 2)),
+					(1 - snack3) * (1 - (1 - p) ** 3 - 3 * p * (1 - p) ** 2),
 				5,
 			);
 		});

@@ -1,4 +1,4 @@
-import SubSkill from "./SubSkill";
+import type SubSkill from "./SubSkill";
 
 /**
  * Properties for configuring a SubSkillList.

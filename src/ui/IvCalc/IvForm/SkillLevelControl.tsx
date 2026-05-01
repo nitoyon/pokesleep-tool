@@ -4,10 +4,10 @@ import SelectEx from "../../common/SelectEx";
 import SkillDetailDialog from "./SkillDetailDialog";
 import {
 	getMaxSkillLevel,
-	MainSkillName,
+	type MainSkillName,
 	VersatileCandidates,
 } from "../../../util/MainSkill";
-import PokemonIv from "../../../util/PokemonIv";
+import type PokemonIv from "../../../util/PokemonIv";
 import InfoButton from "../InfoButton";
 import { MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";

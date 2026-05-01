@@ -1,8 +1,8 @@
 import React from "react";
 import SliderAndArrow from "./SliderAndArrow";
 import NumericInput, {
-	NumericInputHandle,
-	NumericInputProps,
+	type NumericInputHandle,
+	type NumericInputProps,
 } from "./NumericInput";
 
 /**

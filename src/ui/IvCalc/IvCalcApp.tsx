@@ -1,8 +1,8 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Button, Snackbar, Tab, Tabs } from "@mui/material";
-import PokemonIv from "../../util/PokemonIv";
-import { PokemonBoxItem } from "../../util/PokemonBox";
+import type PokemonIv from "../../util/PokemonIv";
+import type { PokemonBoxItem } from "../../util/PokemonBox";
 import { getInitialIvState, ivStateReducer } from "./IvState";
 import LowerTabHeader from "./LowerTabHeader";
 import RateNotFixedPanel from "./RateNotFixedPanel";
@@ -41,7 +41,7 @@ const ResearchCalcApp = React.memo(() => {
 	}, []);
 
 	const onTabChange = React.useCallback(
-		(event: React.SyntheticEvent, newValue: number) => {
+		(_event: React.SyntheticEvent, newValue: number) => {
 			dispatch({ type: "changeUpperTab", payload: { index: newValue } });
 		},
 		[],

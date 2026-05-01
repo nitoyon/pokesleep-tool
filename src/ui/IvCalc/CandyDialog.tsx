@@ -5,18 +5,18 @@ import NumericSliderInput from "../common/NumericSliderInput";
 import SelectEx from "../common/SelectEx";
 import SliderEx from "../common/SliderEx";
 import { getCandyName } from "../../data/pokemons";
-import PokemonIv from "../../util/PokemonIv";
+import type PokemonIv from "../../util/PokemonIv";
 import calcExpAndCandy, {
-	BoostEvent,
+	type BoostEvent,
 	calcExp,
-	CalcDayToGetSleepExpResult,
+	type CalcDayToGetSleepExpResult,
 	calcDayToGetSleepExp,
-	CalcExpAndCandyResult,
-	CalcLevelResult,
+	type CalcExpAndCandyResult,
+	type CalcLevelResult,
 	calcLevelByCandy,
-	GrowthIncensePolicy,
+	type GrowthIncensePolicy,
 } from "../../util/Exp";
-import Nature, { PlusMinusOneOrZero } from "../../util/Nature";
+import Nature, { type PlusMinusOneOrZero } from "../../util/Nature";
 import { clamp, formatWithComma } from "../../util/NumberUtil";
 import { maxLevel } from "../../util/PokemonRp";
 import { LevelInput } from "./IvForm/LevelControl";
@@ -703,7 +703,7 @@ const calculateDetailCandy = (
 		"none",
 	);
 
-	let sleepResult = undefined;
+	let sleepResult;
 	if (normalCandyResult.expLeft > 0) {
 		sleepResult = calcDayToGetSleepExp(
 			normalCandyResult.expLeft,

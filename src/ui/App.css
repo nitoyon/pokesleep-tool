@@ -29,5 +29,5 @@ div#root {
 body > div.MuiDialog-root,
 body > div.MuiPopover-root,
 body > div.base-Popper-root {
-	z-index: 2147483647 !important;
+	z-index: 2147483647;
 }

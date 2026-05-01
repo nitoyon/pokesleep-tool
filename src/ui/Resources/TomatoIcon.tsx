@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 import React from "react";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
 
 const TomatoIcon = React.memo((props: SvgIconProps) => {
 	return (

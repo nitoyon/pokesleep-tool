@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonBox from "../../../util/PokemonBox";
+import type PokemonBox from "../../../util/PokemonBox";
 import { copyToClipboard } from "../../../util/Clipboard";
 import {
 	Button,
@@ -33,10 +33,10 @@ const BoxExportDialog = React.memo(
 					setCopiedMessageVisible(true);
 				})
 				.catch(() => {});
-		}, [setCopiedMessageVisible, value]);
+		}, [value]);
 		const onCopiedMessageClose = React.useCallback(() => {
 			setCopiedMessageVisible(false);
-		}, [setCopiedMessageVisible]);
+		}, []);
 
 		return (
 			<Dialog open={open} onClose={onClose}>

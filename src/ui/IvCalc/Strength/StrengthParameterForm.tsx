@@ -10,14 +10,14 @@ import {
 	FormControl,
 	MenuItem,
 	Select,
-	SelectChangeEvent,
+	type SelectChangeEvent,
 	Snackbar,
 	Switch,
 	Typography,
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import AreaControlGroup from "./AreaControlGroup";
 import InfoButton from "../InfoButton";
 import PeriodSelect from "./PeriodSelect";
@@ -30,7 +30,7 @@ import { getActiveHelpBonus } from "../../../data/events";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import {
 	createStrengthParameter,
-	StrengthParameter,
+	type StrengthParameter,
 } from "../../../util/PokemonStrength";
 import { useTranslation, Trans } from "react-i18next";
 
@@ -167,7 +167,7 @@ const StrengthSettingForm = React.memo(
 		}, [dispatch]);
 		const onRecipeBonusChange = React.useCallback(
 			(e: SelectChangeEvent) => {
-				onChange({ ...value, recipeBonus: parseInt(e.target.value) });
+				onChange({ ...value, recipeBonus: parseInt(e.target.value, 10) });
 			},
 			[onChange, value],
 		);

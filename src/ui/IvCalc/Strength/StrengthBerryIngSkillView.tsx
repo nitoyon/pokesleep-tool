@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { PokemonData } from "../../../data/pokemons";
-import PokemonIv from "../../../util/PokemonIv";
+import type { PokemonData } from "../../../data/pokemons";
+import type PokemonIv from "../../../util/PokemonIv";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import {
 	round1,
@@ -12,15 +12,20 @@ import {
 import PokemonStrength, {
 	getRequiredHelperBoost,
 	getHelpYield,
-	StrengthResult,
+	type StrengthResult,
 } from "../../../util/PokemonStrength";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { AmountOfSleep } from "../../../util/TimeUtil";
-import { Dialog, Select, SelectChangeEvent, MenuItem } from "@mui/material";
+import {
+	Dialog,
+	Select,
+	type SelectChangeEvent,
+	MenuItem,
+} from "@mui/material";
 import MainSkillIcon from "../MainSkillIcon";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import InfoButton from "../InfoButton";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import BerryHelpDialog from "./BerryHelpDialog";
 import EnergyDialog from "./EnergyDialog";
 import IngHelpDialog from "./IngHelpDialog";
@@ -29,7 +34,7 @@ import SkillHelpDialog from "./SkillHelpDialog";
 import HelpStackDialog from "./HelpStackDialog";
 import TotalStrengthDialog from "./TotalStrengthDialog";
 import { useTranslation } from "react-i18next";
-import i18next from "i18next";
+import type i18next from "i18next";
 
 const StyledBerryIngSkillStrengthView = styled("div")({
 	display: "grid",
@@ -258,10 +263,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
-		}, [setHelpOpen]);
+		}, []);
 		const onHelpClose = React.useCallback(() => {
 			setHelpOpen(false);
-		}, [setHelpOpen]);
+		}, []);
 
 		const onDecendantsChange = React.useCallback((e: SelectChangeEvent) => {
 			setDecendantId(parseInt(e.target.value, 10));
@@ -367,30 +372,26 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 									<>: </>
 									{pokemonIv.pokemon.specialty !== "Skills" &&
 									pokemonIv.pokemon.specialty !== "All" ? (
-										round1(result.skillProbabilityAfterWakeup.once * 100) + "%"
+										`${round1(result.skillProbabilityAfterWakeup.once * 100)}%`
 									) : (
 										<>
-											❶{round1(result.skillProbabilityAfterWakeup.once * 100)}%
-											<> </>❷
-											{round1(result.skillProbabilityAfterWakeup.twice * 100)}%
+											❶{round1(result.skillProbabilityAfterWakeup.once * 100)}%{" "}
+											❷{round1(result.skillProbabilityAfterWakeup.twice * 100)}%
 										</>
 									)}
 								</span>
 							</>
 						) : (
-							<>
-								<span>
-									{t("help efficiency")}:{" "}
-									{result.energy.averageEfficiency.total}
-									{settings.period >= 24 && (
-										<>
-											{" ("}
-											{t("awake")}: {result.energy.averageEfficiency.awake},{" "}
-											{t("asleep")}: {result.energy.averageEfficiency.asleep})
-										</>
-									)}
-								</span>
-							</>
+							<span>
+								{t("help efficiency")}: {result.energy.averageEfficiency.total}
+								{settings.period >= 24 && (
+									<>
+										{" ("}
+										{t("awake")}: {result.energy.averageEfficiency.awake},{" "}
+										{t("asleep")}: {result.energy.averageEfficiency.asleep})
+									</>
+								)}
+							</span>
 						)}
 						<InfoButton onClick={onEfficiencyInfoClick} />
 					</footer>

@@ -1,24 +1,24 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { PokemonBoxItem } from "../../../util/PokemonBox";
+import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import BoxFilterConfig from "../../../util/PokemonBoxFilter";
 import {
 	sortPokemonItems,
-	BoxSortType,
-	BoxSortConfig,
+	type BoxSortType,
+	type BoxSortConfig,
 	loadBoxSortConfig,
 } from "../../../util/PokemonBoxSort";
 import PokemonIcon from "../PokemonIcon";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import PokemonFilterFooter, {
-	PokemonFilterFooterConfig,
+	type PokemonFilterFooterConfig,
 } from "../PokemonFilterFooter";
 import BoxFilterDialog from "./BoxFilterDialog";
 import BoxSortConfigFooter from "./BoxSortConfigFooter";
 import CandyDialog from "../CandyDialog";
 import { shareIv } from "../ShareUtil";
-import PokemonIv from "../../../util/PokemonIv";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import type PokemonIv from "../../../util/PokemonIv";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import {
 	Button,
 	ButtonBase,
@@ -151,7 +151,7 @@ const BoxView = React.memo(
 						selectedRef={item.id === selectedId ? selectedRef : undefined}
 					/>
 				)),
-			[sortedItems, dispatch, onCandyClick, selectedId, selectedRef],
+			[sortedItems, dispatch, onCandyClick, selectedId],
 		);
 		if (!sortConfig.descending) {
 			elms = [...elms].reverse();
@@ -309,17 +309,17 @@ const BoxLargeItem = React.memo(
 			(event: React.MouseEvent<HTMLElement>) => {
 				setMoreMenuAnchor(event.currentTarget);
 			},
-			[setMoreMenuAnchor],
+			[],
 		);
 		const onMoreMenuClose = React.useCallback(() => {
 			setMoreMenuAnchor(null);
-		}, [setMoreMenuAnchor]);
+		}, []);
 		const onMenuClick = React.useCallback(
 			(type: string) => {
 				dispatch({ type, payload: { id: item.id } } as IvAction);
 				setMoreMenuAnchor(null);
 			},
-			[item, dispatch, setMoreMenuAnchor],
+			[item, dispatch],
 		);
 		const onShareClick = React.useCallback(() => {
 			setMoreMenuAnchor(null);
@@ -524,10 +524,8 @@ const BoxExportAlert = React.memo(
 
 		// get time since we displayed the warning message
 		const lastWarningTime =
-			config.warnDate !== ""
-				? new Date(config.warnDate).getTime()
-				: new Date().getTime();
-		const elapsedTime = new Date().getTime() - lastWarningTime;
+			config.warnDate !== "" ? new Date(config.warnDate).getTime() : Date.now();
+		const elapsedTime = Date.now() - lastWarningTime;
 
 		// Whether alertDaysThreshold days elapsed
 		const elapsed = elapsedTime > alertDaysThreshold * 24 * 60 * 60 * 1000;

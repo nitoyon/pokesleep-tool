@@ -1,15 +1,19 @@
-import { PokemonBoxItem } from "./PokemonBox";
-import PokemonIv from "./PokemonIv";
+import type { PokemonBoxItem } from "./PokemonBox";
+import type PokemonIv from "./PokemonIv";
 import PokemonRp from "./PokemonRp";
 import PokemonStrength, {
-	IngredientStrength,
+	type IngredientStrength,
 	isSkillStrengthZero,
-	StrengthParameter,
+	type StrengthParameter,
 } from "./PokemonStrength";
-import { IngredientName, IngredientNames } from "../data/pokemons";
-import { MainSkillName, MainSkillNames, matchMainSkillName } from "./MainSkill";
+import { type IngredientName, IngredientNames } from "../data/pokemons";
+import {
+	type MainSkillName,
+	MainSkillNames,
+	matchMainSkillName,
+} from "./MainSkill";
 import { NoTap, whistlePeriod } from "./Energy";
-import i18next from "i18next";
+import type i18next from "i18next";
 
 /** Subset of StrengthResult. */
 export type SimpleStrengthResult = {

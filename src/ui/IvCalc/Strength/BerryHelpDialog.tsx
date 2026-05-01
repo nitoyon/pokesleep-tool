@@ -1,8 +1,9 @@
 import React from "react";
 import { round1, formatWithComma } from "../../../util/NumberUtil";
-import PokemonStrength, { StrengthResult } from "../../../util/PokemonStrength";
+import type PokemonStrength from "../../../util/PokemonStrength";
+import type { StrengthResult } from "../../../util/PokemonStrength";
 import InfoButton from "../InfoButton";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import BerryStrengthDialog from "./BerryStrengthDialog";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 import TapFrequencyControl from "./TapFrequencyControl";
@@ -76,10 +77,8 @@ const BerryHelpDialog = React.memo(
 						{formatWithComma(Math.round(result.berryTotalStrength))}
 					</article>
 					<footer>
-						<span className="box box1">{berryStrength}</span>
-						<> × </>
-						<span className="box box2">{result.berryCountPerNormalHelp}</span>
-						<> × </>
+						<span className="box box1">{berryStrength}</span> ×{" "}
+						<span className="box box2">{result.berryCountPerNormalHelp}</span> ×{" "}
 						{!hasBerryCountBonus && (
 							<span className="box box3">{round1(result.berryHelpCount)}</span>
 						)}
@@ -88,14 +87,11 @@ const BerryHelpDialog = React.memo(
 								<span className="box box3">
 									{round1(result.berryNormalHelpCount)}
 								</span>
-								<br />
-								<> + </>
-								<span className="box box1">{berryStrength}</span>
-								<> × </>
+								<br /> + <span className="box box1">{berryStrength}</span> ×{" "}
 								<span className="box box2">
 									{result.berryCountPerSneakySnacking}
-								</span>
-								<> × </>
+								</span>{" "}
+								×{" "}
 								<span className="box box3">
 									{round1(result.total.sneakySnacking)}
 								</span>

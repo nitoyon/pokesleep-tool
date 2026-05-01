@@ -2,9 +2,12 @@ import React from "react";
 import { styled } from "@mui/system";
 import CollapseEx from "../common/CollapseEx";
 import NumericSliderInput from "../common/NumericSliderInput";
-import PokemonIv from "../../util/PokemonIv";
+import type PokemonIv from "../../util/PokemonIv";
 import { formatWithComma } from "../../util/NumberUtil";
-import calcCandyUsage, { calcMaxCandy, CandyCount } from "../../util/Candy";
+import calcCandyUsage, {
+	calcMaxCandy,
+	type CandyCount,
+} from "../../util/Candy";
 import { getCandyName } from "../../data/pokemons";
 import CandyIcon from "../Resources/CandyIcon";
 import {

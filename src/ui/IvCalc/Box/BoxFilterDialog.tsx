@@ -11,16 +11,17 @@ import {
 	StyledNatureDownEffect,
 } from "../IvForm/NatureTextField";
 import {
-	PokemonSpecialty,
+	type PokemonSpecialty,
 	SpecialtyNames,
-	IngredientName,
+	type IngredientName,
 	IngredientNames,
-	PokemonType,
+	type PokemonType,
 	PokemonTypes,
 } from "../../../data/pokemons";
-import { MainSkillName, MainSkillNames } from "../../../util/MainSkill";
-import SubSkill, { SubSkillType } from "../../../util/SubSkill";
-import { NatureEffect } from "../../../util/Nature";
+import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
+import type SubSkill from "../../../util/SubSkill";
+import type { SubSkillType } from "../../../util/SubSkill";
+import type { NatureEffect } from "../../../util/Nature";
 import { useElementWidth } from "../../common/Hook";
 import DraggableTabContainer from "../../common/DraggableTabContainer";
 import {

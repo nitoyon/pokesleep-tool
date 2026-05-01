@@ -46,7 +46,7 @@ export function loadConfig(language: string): AppConfig {
 	if (typeof json.language === "string") {
 		config.language = json.language;
 	}
-	if (typeof json.pwacnt == "number") {
+	if (typeof json.pwacnt === "number") {
 		config.pwacnt = json.pwacnt;
 	}
 	if (typeof json.news === "object") {

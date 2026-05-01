@@ -8,17 +8,17 @@
 // Read tsv from stdin (RP collection sheet format)
 // See src/util/RpParse.tsv for details
 
-import parseTsv, { RpData } from "../src/util/RpParse";
-import PokemonIv from "../src/util/PokemonIv";
+import parseTsv, { type RpData } from "../src/util/RpParse";
+import type PokemonIv from "../src/util/PokemonIv";
 import PokemonRp from "../src/util/PokemonRp";
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 type RateInfo = {
 	skill: number;
 	ing: number;
 };
 
-function fit(data: RpData[]) {
+function rpFit(data: RpData[]) {
 	let candidates: RateInfo[] = [];
 	for (let skill = 10; skill < 100; skill++) {
 		if (process.argv.some((x) => x === "--fitSkillOnly")) {
@@ -53,5 +53,5 @@ console.log("read done");
 const data = parseTsv(tsv);
 for (const name of Object.keys(data)) {
 	console.log(`Calculating ${name}...`);
-	fit(data[name]);
+	rpFit(data[name]);
 }

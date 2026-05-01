@@ -23,14 +23,14 @@ SOFTWARE.
 */
 
 import React from "react";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
 import { AvocadoIconPaths } from "./AvocadoIcon";
 import { CornIconPaths } from "./CornIcon";
 import { HoneyIconPaths } from "./HoneyIcon";
 import { PotatoIconPaths } from "./PotatoIcon";
 import { PumpkinIconPaths } from "./PumpkinIcon";
 import { OilIconPaths } from "./OilIcon";
-import { IngredientName } from "../../data/pokemons";
+import type { IngredientName } from "../../data/pokemons";
 
 type IngredientDrawIconProps = SvgIconProps & {
 	firstIngredient: IngredientName;

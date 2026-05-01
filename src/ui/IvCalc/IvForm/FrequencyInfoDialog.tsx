@@ -1,15 +1,16 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import PokemonIv from "../../../util/PokemonIv";
-import { StrengthParameter } from "../../../util/PokemonStrength";
-import FrequencyInfoState, {
+import type PokemonIv from "../../../util/PokemonIv";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import type FrequencyInfoState from "../Panel/FrequencyInfoState";
+import {
 	applyStateToParameter,
 	createDefaultState,
 	createFrequencyState,
 } from "../Panel/FrequencyInfoState";
 import FrequencyInfoPanel from "../Panel/FrequencyInfoPanel";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import { useTranslation } from "react-i18next";
 
 const FrequencyInfoDialog = React.memo(
@@ -42,7 +43,7 @@ const FrequencyInfoDialog = React.memo(
 
 			// Initialize state from parameter
 			setState(createFrequencyState(iv, parameter, createDefaultState()));
-		}, [iv, open, state, parameter]);
+		}, [iv, open, parameter]);
 
 		const onStateChange = React.useCallback(
 			(value: FrequencyInfoState) => {

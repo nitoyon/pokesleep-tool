@@ -1,5 +1,5 @@
 import PokemonIv from "./PokemonIv";
-import i18next from "i18next";
+import type i18next from "i18next";
 
 /**
  * Represents Indivisual Values (IV) of the Pokemon.
@@ -182,7 +182,7 @@ export class PokemonBoxItem {
 		if (this._nickname === "") {
 			return serializedIv;
 		}
-		return serializedIv + "@" + this._nickname;
+		return `${serializedIv}@${this._nickname}`;
 	}
 
 	/** Get the Pokemon IV. */

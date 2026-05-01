@@ -1,8 +1,8 @@
 import React from "react";
 import { MenuItem, Divider } from "@mui/material";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import SelectEx from "../../common/SelectEx";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { useTranslation } from "react-i18next";
 
 const FixedLevelSelect = React.memo(

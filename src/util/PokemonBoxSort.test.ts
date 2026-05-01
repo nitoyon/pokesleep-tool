@@ -1,7 +1,7 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import {
-	SimpleStrengthResult,
-	StrengthCalculator,
+	type SimpleStrengthResult,
+	type StrengthCalculator,
 	sortPokemonItems,
 	loadBoxSortConfig,
 } from "./PokemonBoxSort";

@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
 import pokemons, {
-	IngredientName,
-	PokemonType,
-	PokemonData,
+	type IngredientName,
+	type PokemonType,
+	type PokemonData,
 } from "../../../data/pokemons";
 import { Icon, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import TextLikeButton from "../../common/TextLikeButton";
@@ -66,7 +66,7 @@ const PokemonTextField = React.memo(
 		// Open popup when input area is clicked
 		const onInputClick = useCallback(() => {
 			setOpen(true);
-		}, [setOpen]);
+		}, []);
 
 		const changeHandler = useCallback(
 			(value: PokemonOption) => {
@@ -77,12 +77,12 @@ const PokemonTextField = React.memo(
 
 		const onCloseDialog = useCallback(() => {
 			setOpen(false);
-		}, [setOpen]);
+		}, []);
 
 		return (
 			<div>
 				{fixMode ? (
-					<>{selectedOption.localName}</>
+					selectedOption.localName
 				) : (
 					<TextLikeButton
 						onClick={onInputClick}
@@ -129,7 +129,7 @@ const EvolveButton = React.memo(
 				onChange(name);
 				setEvolveButtonEl(null);
 			},
-			[onChange, setEvolveButtonEl],
+			[onChange],
 		);
 
 		// setup menu item
@@ -151,13 +151,13 @@ const EvolveButton = React.memo(
 			(event: React.MouseEvent<HTMLElement>) => {
 				setEvolveButtonEl(event.currentTarget);
 			},
-			[setEvolveButtonEl],
+			[],
 		);
 
 		// menu close handler
 		const onEvolveMenuClose = useCallback(() => {
 			setEvolveButtonEl(null);
-		}, [setEvolveButtonEl]);
+		}, []);
 
 		const open = Boolean(evolveButtonEl);
 		return (

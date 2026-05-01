@@ -2,7 +2,11 @@ import { useCallback, useState } from "react";
 import { InputArea } from "./InputArea";
 import NotFixedWarning from "./NotFixedWarning";
 import GeneralPanel from "./GeneralPanel";
-import { InputAreaData, loadConfig, saveConfig } from "./ResearchCalcAppConfig";
+import {
+	type InputAreaData,
+	loadConfig,
+	saveConfig,
+} from "./ResearchCalcAppConfig";
 
 const defaultData = loadConfig();
 

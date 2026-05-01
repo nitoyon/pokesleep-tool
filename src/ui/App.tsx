@@ -3,7 +3,8 @@ import ResearchCalcApp from "./ResearchCalc/ResearchCalcApp";
 import IvCalcApp from "./IvCalc/IvCalcApp";
 import { useCallback, useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material";
-import AppConfig, { AppConfigContext, AppType, saveConfig } from "./AppConfig";
+import type AppConfig from "./AppConfig";
+import { AppConfigContext, type AppType, saveConfig } from "./AppConfig";
 import ToolBar from "./ToolBar";
 import NewsInfo from "./NewsInfo";
 import PwaNotify from "./PwaBanner";
@@ -44,19 +45,16 @@ export default function App({ config }: { config: AppConfig }) {
 		},
 		[setCurApp],
 	);
-	const onAppConfigChange = useCallback(
-		(value: AppConfig) => {
-			saveConfig(value);
-			setAppConfig(value);
-		},
-		[setAppConfig],
-	);
+	const onAppConfigChange = useCallback((value: AppConfig) => {
+		saveConfig(value);
+		setAppConfig(value);
+	}, []);
 
 	const onPwaBannerClose = useCallback(() => {
 		appConfig.pwacnt = 0;
 		saveConfig(appConfig);
 		setAppConfig(appConfig);
-	}, [appConfig, setAppConfig]);
+	}, [appConfig]);
 
 	// Set theme based on language
 	let theme = defaultTheme;
@@ -102,7 +100,7 @@ function useMultilingual(config: AppConfig) {
 			setLanguage(value);
 			saveConfig({ ...config, language: value });
 		},
-		[config, setLanguage],
+		[config],
 	);
 
 	useEffect(() => {
@@ -139,7 +137,7 @@ function useRouter(language: string): [AppType, (v: AppType) => void] {
 			const current = manifest.href;
 			manifest.href = current.replace(
 				/manifest.*/,
-				"manifest." + language + ".json",
+				`manifest.${language}.json`,
 			);
 		}
 		const description = document.querySelector<HTMLMetaElement>(
@@ -169,7 +167,7 @@ function useRouter(language: string): [AppType, (v: AppType) => void] {
 		}
 
 		// update URL
-		let url = document.location.origin + "/pokesleep-tool/";
+		let url = `${document.location.origin}/pokesleep-tool/`;
 		if (currentApp === "IvCalc") {
 			url += "iv/";
 		}
@@ -178,6 +176,6 @@ function useRouter(language: string): [AppType, (v: AppType) => void] {
 		}
 		const query = document.location.search + document.location.hash;
 		window.history.replaceState(null, "", url + query);
-	}, [language, i18n, t, currentApp]);
+	}, [language, t, currentApp]);
 	return [currentApp, setCurrentApp];
 }

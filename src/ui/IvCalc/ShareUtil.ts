@@ -1,7 +1,7 @@
-import PokemonIv from "../../util/PokemonIv";
+import type PokemonIv from "../../util/PokemonIv";
 import { copyToClipboard } from "../../util/Clipboard";
-import { IvAction } from "./IvState";
-import i18next from "i18next";
+import type { IvAction } from "./IvState";
+import type i18next from "i18next";
 
 export function shareIv(
 	iv: PokemonIv,

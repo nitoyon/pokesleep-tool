@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonBox from "../../../util/PokemonBox";
+import type PokemonBox from "../../../util/PokemonBox";
 import {
 	Button,
 	Dialog,
@@ -29,13 +29,13 @@ const BoxImportDialog = React.memo(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				setValue(e.target.value);
 			},
-			[setValue],
+			[],
 		);
 
 		const onClose_ = React.useCallback(() => {
 			setValue("");
 			onClose();
-		}, [setValue, onClose]);
+		}, [onClose]);
 
 		const onImportClick = React.useCallback(() => {
 			const lines = value.split(/\n/g);
@@ -59,11 +59,11 @@ const BoxImportDialog = React.memo(
 				setImportedMessage(t("imported N pokemon", { n: added }));
 				onClose_();
 			}
-		}, [box, setImportedMessage, t, onClose_, value]);
+		}, [box, t, onClose_, value]);
 
 		const onImportedMessageClose = React.useCallback(() => {
 			setImportedMessage("");
-		}, [setImportedMessage]);
+		}, []);
 
 		const importedMessageVisible = importedMessage !== "";
 

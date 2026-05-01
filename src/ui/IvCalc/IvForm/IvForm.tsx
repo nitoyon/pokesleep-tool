@@ -1,9 +1,9 @@
 import React from "react";
 import { styled } from "@mui/system";
-import Nature from "../../../util/Nature";
-import PokemonIv from "../../../util/PokemonIv";
+import type Nature from "../../../util/Nature";
+import type PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { frequencyToString } from "../../../util/TimeUtil";
 import CandyDialog from "../CandyDialog";
 import PokemonTextField from "./PokemonTextField";
@@ -11,8 +11,8 @@ import LevelControl from "./LevelControl";
 import IngredientTextField from "./IngredientTextField";
 import SkillLevelControl from "./SkillLevelControl";
 import InfoButton from "../InfoButton";
-import { IvAction } from "../IvState";
-import SubSkillControl, { SubSkillChangeEvent } from "./SubSkillControl";
+import type { IvAction } from "../IvState";
+import SubSkillControl, { type SubSkillChangeEvent } from "./SubSkillControl";
 import NatureTextField from "./NatureTextField";
 import SleepingTimeControl from "./SleepingTimeControl";
 import FrequencyInfoDialog from "./FrequencyInfoDialog";
@@ -91,10 +91,10 @@ const IvForm = React.memo(
 		const [frequencyDialogOpen, setFrequencyDialogOpen] = React.useState(false);
 		const onFrequencyInfoClick = React.useCallback(() => {
 			setFrequencyDialogOpen(true);
-		}, [setFrequencyDialogOpen]);
+		}, []);
 		const onFrequencyDialogClose = React.useCallback(() => {
 			setFrequencyDialogOpen(false);
-		}, [setFrequencyDialogOpen]);
+		}, []);
 		const [candyDialogOpen, setCandyDialogOpen] = React.useState(false);
 
 		// Candy dialog handler

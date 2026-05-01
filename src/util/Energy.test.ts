@@ -1,4 +1,4 @@
-import Energy, { EnergyParameter, AlwaysTap, NoTap } from "./Energy";
+import Energy, { type EnergyParameter, AlwaysTap, NoTap } from "./Energy";
 import Nature from "./Nature";
 import PokemonIv from "./PokemonIv";
 import SubSkill from "./SubSkill";

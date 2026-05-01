@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
-import { PokemonType } from "../../data/pokemons";
+import type { PokemonType } from "../../data/pokemons";
 import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";

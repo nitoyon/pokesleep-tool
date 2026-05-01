@@ -1,6 +1,6 @@
 import pokemon_ from "./pokemon.json";
-import { SleepType } from "./fields";
-import { MainSkillName } from "../util/MainSkill";
+import type { SleepType } from "./fields";
+import type { MainSkillName } from "../util/MainSkill";
 
 /** Required exp from level 1 to level 25
  *

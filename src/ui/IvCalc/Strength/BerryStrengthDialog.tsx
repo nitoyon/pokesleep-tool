@@ -1,6 +1,6 @@
 import React from "react";
 import { formatWithComma } from "../../../util/NumberUtil";
-import PokemonIv from "../../../util/PokemonIv";
+import type PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 import {

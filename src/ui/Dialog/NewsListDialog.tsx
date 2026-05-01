@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import News, { NewsArticle } from "../../data/news";
+import News, { type NewsArticle } from "../../data/news";
 import { NewsArticleDialog } from "../NewsInfo";
 
 interface NewsListDialogProps {
@@ -23,8 +23,8 @@ interface NewsListDialogProps {
 }
 
 function formatRelativeDate(article: NewsArticle, language: string): string {
-	if (Intl && Intl.RelativeTimeFormat) {
-		const diff = Math.max(0, new Date().getTime() - article.date.getTime());
+	if (Intl?.RelativeTimeFormat) {
+		const diff = Math.max(0, Date.now() - article.date.getTime());
 		const formatter = new Intl.RelativeTimeFormat(language, { style: "long" });
 		if (diff > 31536000000) {
 			return article.date.toLocaleDateString();

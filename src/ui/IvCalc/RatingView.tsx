@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonIv from "../../util/PokemonIv";
+import type PokemonIv from "../../util/PokemonIv";
 import PokemonRating from "../../util/PokemonRating";
 import BerryIngSkillView from "./Rp/BerryIngSkillView";
 import InfoButton from "./InfoButton";
@@ -19,10 +19,10 @@ const RatingView = React.memo(
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
-		}, [setHelpOpen]);
+		}, []);
 		const onHelpDialogClose = React.useCallback(() => {
 			setHelpOpen(false);
-		}, [setHelpOpen]);
+		}, []);
 
 		const rating = new PokemonRating(pokemonIv);
 		const result = rating.calculate();
@@ -31,7 +31,7 @@ const RatingView = React.memo(
 
 		const trunc1 = (n: number) => {
 			n = Math.round(n * 10) / 10;
-			return t("num", { n: Math.floor(n) }) + "." + ((n * 10) % 10);
+			return `${t("num", { n: Math.floor(n) })}.${(n * 10) % 10}`;
 		};
 
 		return (

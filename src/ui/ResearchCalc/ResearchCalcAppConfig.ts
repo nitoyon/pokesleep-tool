@@ -78,7 +78,7 @@ export function loadConfig(): InputAreaData {
 		json.tracking.score > 0 &&
 		json.tracking.score <= 100 &&
 		typeof json.tracking.start === "number" &&
-		json.tracking.score < new Date().getTime() / 1000 &&
+		json.tracking.score < Date.now() / 1000 &&
 		typeof json.tracking.area === "number" &&
 		json.tracking.area >= 0 &&
 		json.tracking.area < fields.length &&

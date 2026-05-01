@@ -1,5 +1,5 @@
 import React from "react";
-import { IngredientName } from "../../data/pokemons";
+import type { IngredientName } from "../../data/pokemons";
 import AppleIcon from "../Resources/AppleIcon";
 import AvocadoIcon from "../Resources/AvocadoIcon";
 import CacaoIcon from "../Resources/CacaoIcon";

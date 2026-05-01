@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { styled } from "@mui/system";
 import SelectEx from "../../common/SelectEx";
-import { IngredientType } from "../../../util/PokemonRp";
-import PokemonIv from "../../../util/PokemonIv";
-import { IngredientName, PokemonData } from "../../../data/pokemons";
+import type { IngredientType } from "../../../util/PokemonRp";
+import type PokemonIv from "../../../util/PokemonIv";
+import type { IngredientName, PokemonData } from "../../../data/pokemons";
 import { TextField, MenuItem } from "@mui/material";
 import IngredientCountIcon from "../IngredientCountIcon";
 

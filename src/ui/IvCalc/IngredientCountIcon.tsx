@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { IngredientName } from "../../data/pokemons";
+import type { IngredientName } from "../../data/pokemons";
 import { Badge } from "@mui/material";
 import IngredientIcon from "./IngredientIcon";
 
@@ -36,7 +36,7 @@ const IngredientCountIcon = React.memo(
 			);
 		}
 		return (
-			<IngredientBadge badgeContent={"×" + count}>
+			<IngredientBadge badgeContent={`×${count}`}>
 				<IngredientIcon name={name} />
 			</IngredientBadge>
 		);

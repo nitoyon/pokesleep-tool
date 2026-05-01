@@ -165,7 +165,7 @@ class SubSkill {
 	}
 
 	static get allSubSkillNames(): SubSkillType[] {
-		return [...this.subSkillNames];
+		return [...SubSkill.subSkillNames];
 	}
 
 	static get allSubSkills(): SubSkill[] {

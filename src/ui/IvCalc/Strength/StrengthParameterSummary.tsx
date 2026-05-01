@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
-import IvState, { IvAction } from "../IvState";
+import type IvState from "../IvState";
+import type { IvAction } from "../IvState";
 import AreaControlDialog from "./AreaControlDialog";
 import EventConfigDialog from "./EventConfigDialog";
 import FixedLevelSelect from "./FixedLevelSelect";
@@ -13,7 +14,7 @@ import { isExpertField } from "../../../data/fields";
 import {
 	allFavoriteFieldIndex,
 	noFavoriteFieldIndex,
-	StrengthParameter,
+	type StrengthParameter,
 } from "../../../util/PokemonStrength";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import { Button, IconButton, MenuItem } from "@mui/material";
@@ -121,9 +122,9 @@ const StrengthParameterSummary = React.memo(
 
 		let area: React.ReactNode;
 		if (parameter.fieldIndex === allFavoriteFieldIndex) {
-			area = t("favorite berry") + ": " + t("all");
+			area = `${t("favorite berry")}: ${t("all")}`;
 		} else if (parameter.fieldIndex === noFavoriteFieldIndex) {
-			area = t("favorite berry") + ": " + t("none");
+			area = `${t("favorite berry")}: ${t("none")}`;
 		} else if (parameter.fieldIndex === 0) {
 			area = parameter.favoriteType
 				.map((x) => t(`types.${x}`))
@@ -160,7 +161,7 @@ const StrengthParameterSummary = React.memo(
 				x === "none"
 					? t("no event")
 					: x === "custom"
-						? t("event") + ": " + t("events.advanced")
+						? `${t("event")}: ${t("events.advanced")}`
 						: t(`events.${x}`);
 			return (
 				<MenuItem key={x} value={x} dense style={{ textTransform: "none" }}>
@@ -186,7 +187,8 @@ const StrengthParameterSummary = React.memo(
 					<PeriodSelect dispatch={dispatch} value={parameter} />
 					{parameter.period > 0 && (
 						<>
-							<> (</>
+							{" "}
+							(
 							<TapFrequencyControl
 								max={10}
 								value={parameter.tapFrequencyAwake}
@@ -196,7 +198,7 @@ const StrengthParameterSummary = React.memo(
 							/>
 							{parameter.tapFrequencyAwake !== NoTap && (
 								<>
-									<> </>
+									{" "}
 									<TapFrequencyControl
 										max={8}
 										value={parameter.tapFrequencyAsleep}
@@ -206,7 +208,7 @@ const StrengthParameterSummary = React.memo(
 									/>
 								</>
 							)}
-							<>)</>
+							)
 						</>
 					)}
 				</span>
@@ -224,7 +226,7 @@ const StrengthParameterSummary = React.memo(
 				)}
 				{parameter.period !== whistlePeriod && (
 					<span>
-						<>{t("good camp ticket (short)")}: </>
+						{t("good camp ticket (short)")}:{" "}
 						<TextLikeButton
 							onClick={onCampTicketClick}
 							style={{ width: "2rem" }}

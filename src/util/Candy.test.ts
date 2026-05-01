@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import calcCandyUsage, { CandyCount } from "./Candy";
+import calcCandyUsage, { type CandyCount } from "./Candy";
 
 describe("calcCandyUsage", () => {
 	it("should return empty array when no candies are available", () => {

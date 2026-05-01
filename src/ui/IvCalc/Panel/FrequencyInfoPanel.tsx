@@ -7,7 +7,8 @@ import {
 	ToggleButton,
 	ToggleButtonGroup,
 } from "@mui/material";
-import PokemonIv, { InventoryBonus } from "../../../util/PokemonIv";
+import type PokemonIv from "../../../util/PokemonIv";
+import type { InventoryBonus } from "../../../util/PokemonIv";
 import { formatHoursLong, formatHoursShort } from "../../../util/TimeUtil";
 import SelectEx from "../../common/SelectEx";
 import BarChartIcon from "../../Resources/BarChartIcon";
@@ -16,7 +17,7 @@ import { calculateInventoryDistribution } from "../../../util/PokemonInventory";
 import { useElementWidth } from "../../common/Hook";
 import { BarChart } from "../Chart/BarChart";
 import EnergyPreviewPanel from "./EnergyPreviewPanel";
-import FrequencyInfoState from "./FrequencyInfoState";
+import type FrequencyInfoState from "./FrequencyInfoState";
 import { useTranslation } from "react-i18next";
 
 export const FrequencyInfoPanel = React.memo(
@@ -172,7 +173,7 @@ const FullPreview = React.memo(
 
 		const onHighlightedChange = React.useCallback(
 			(value: string) => {
-				const highlighted = parseInt(value);
+				const highlighted = parseInt(value, 10);
 				onStateChange({ ...state, highlighted });
 			},
 			[onStateChange, state],
@@ -199,7 +200,8 @@ const FullPreview = React.memo(
 						{t("range separator")}
 						{highTime}
 						<small>
-							<> ({t("probability")}: </>
+							{" "}
+							({t("probability")}:{" "}
 							<SelectEx
 								value={state.highlighted.toString()}
 								onChange={onHighlightedChange}
@@ -428,7 +430,7 @@ export const FrequencyForm = React.memo(
 				if (value === null) {
 					return;
 				}
-				const energy = parseInt(value) as 1 | 2 | 3 | 4 | 5;
+				const energy = parseInt(value, 10) as 1 | 2 | 3 | 4 | 5;
 				onStateChange({ ...state, energy });
 			},
 			[state, onStateChange],

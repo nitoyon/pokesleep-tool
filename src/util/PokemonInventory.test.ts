@@ -89,8 +89,7 @@ describe("PokemonInventory", () => {
 			expect(dist[5]).toBe(0);
 			// Fills when the ingredient is brought 5 times.
 			expect(dist[6]).toBeCloseTo(
-				Math.pow(iv.ingredientRate, 6) +
-					6 * iv.berryRate * Math.pow(iv.ingredientRate, 5),
+				iv.ingredientRate ** 6 + 6 * iv.berryRate * iv.ingredientRate ** 5,
 				5,
 			);
 		});
@@ -140,8 +139,7 @@ describe("PokemonInventory", () => {
 			expect(dist[0]).toBe(0);
 			expect(dist[3]).toBe(0);
 			expect(dist[4]).toBeCloseTo(
-				Math.pow(iv.berryRate, 4) +
-					4 * Math.pow(iv.berryRate, 3) * iv.ingredientRate,
+				iv.berryRate ** 4 + 4 * iv.berryRate ** 3 * iv.ingredientRate,
 				5,
 			);
 
@@ -149,7 +147,7 @@ describe("PokemonInventory", () => {
 			const dist2 = calculateInventoryDistribution(iv, false, { berry: 1 });
 			expect(dist2[0]).toBe(0);
 			expect(dist2[2]).toBe(0);
-			expect(dist2[3]).toBeCloseTo(Math.pow(iv.berryRate, 3), 5);
+			expect(dist2[3]).toBeCloseTo(iv.berryRate ** 3, 5);
 		});
 
 		test("with event ingredient bonus", () => {
@@ -182,8 +180,7 @@ describe("PokemonInventory", () => {
 			// - p4: Get 4 honey (iv.ingredientRate * 0.5)
 			// - p3: Get 3 honey (iv.ingredientRate * 0.5)
 			expect(dist[3]).toBe(
-				Math.pow(iv.ingredientRate * 0.5, 3) +
-					3 * Math.pow(iv.ingredientRate * 0.5, 3),
+				(iv.ingredientRate * 0.5) ** 3 + 3 * (iv.ingredientRate * 0.5) ** 3,
 			);
 		});
 	});

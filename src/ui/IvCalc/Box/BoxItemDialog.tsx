@@ -2,15 +2,15 @@ import React from "react";
 import { styled } from "@mui/system";
 import IvForm from "../IvForm/IvForm";
 import RpLabel from "../Rp/RpLabel";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import PokemonIcon from "../PokemonIcon";
 import { PokemonBoxItem } from "../../../util/PokemonBox";
 import PokemonIv from "../../../util/PokemonIv";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import PokemonRp from "../../../util/PokemonRp";
 import { Button, Dialog, DialogActions, TextField } from "@mui/material";
 import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
+import type { TransitionProps } from "@mui/material/transitions";
 import { useTranslation } from "react-i18next";
 
 // Full-screen transition
@@ -108,26 +108,26 @@ const BoxItemDialogContent = React.memo(
 					setNickname("");
 				}
 			},
-			[setBoxItem, boxItem, setRp, localName, nickname],
+			[boxItem, localName, nickname],
 		);
 		const onNickNameChange = React.useCallback(
 			(event: React.ChangeEvent<HTMLInputElement>) => {
 				setNickname(event.target.value);
 			},
-			[setNickname],
+			[],
 		);
 		const onNickNameFocus = React.useCallback(() => {
 			setIsEditingNickName(true);
 			if (nickname === "") {
 				setNickname(localName);
 			}
-		}, [setIsEditingNickName, setNickname, nickname, localName]);
+		}, [nickname, localName]);
 		const onNickNameBlur = React.useCallback(() => {
 			setIsEditingNickName(false);
 			if (nickname === localName) {
 				setNickname("");
 			}
-		}, [setNickname, setIsEditingNickName, nickname, localName]);
+		}, [nickname, localName]);
 
 		const onCloseClick = React.useCallback(() => {
 			if (isEdit) {

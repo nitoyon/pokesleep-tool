@@ -1,28 +1,28 @@
 import pokemons from "../data/pokemons";
 import {
-	BonusEffects,
+	type BonusEffects,
 	emptyBonusEffects,
 	getEventBonus,
 	getEventBonusIfTarget,
 } from "../data/events";
-import { PokemonType, PokemonTypes } from "../data/pokemons";
+import { type PokemonType, PokemonTypes } from "../data/pokemons";
 import fields, { isExpertField, getFavoriteBerries } from "../data/fields";
 import events, { loadHelpEventBonus } from "../data/events";
 import Energy, {
-	EnergyParameter,
-	EnergyResult,
+	type EnergyParameter,
+	type EnergyResult,
 	AlwaysTap,
 	NoTap,
 	isValidTapFrequency,
 	whistlePeriod,
 } from "./Energy";
-import { MainSkillName } from "./MainSkill";
+import type { MainSkillName } from "./MainSkill";
 import {
 	calculateHelpCount,
-	HelpCountResult,
-	IngredientHelp,
+	type HelpCountResult,
+	type IngredientHelp,
 } from "./HelpCount";
-import PokemonIv, { IngredientSlot } from "./PokemonIv";
+import PokemonIv, { type IngredientSlot } from "./PokemonIv";
 import PokemonRp, {
 	averageIngredientStrength,
 	ingredientStrength,
@@ -762,7 +762,7 @@ class PokemonStrength {
 
 				// Calculate great success
 				// https://pks.raenonx.cc/en/docs/view/calc/main-skill#disguise
-				const successRate = 1 - Math.pow(1 - 0.18, skillCount / days);
+				const successRate = 1 - (1 - 0.18) ** (skillCount / days);
 
 				const strength = ret.total * skillCount + ret.total * successRate * 2;
 				return {

@@ -14,7 +14,7 @@ process.on("unhandledRejection", (err) => {
 // Ensure environment variables are read.
 require("../config/env");
 
-const path = require("path");
+const path = require("node:path");
 const chalk = require("react-dev-utils/chalk");
 const fs = require("fs-extra");
 const webpack = require("webpack");
@@ -121,7 +121,7 @@ checkBrowsers(paths.appPath, isInteractive)
 		},
 	)
 	.catch((err) => {
-		if (err && err.message) {
+		if (err?.message) {
 			console.log(err.message);
 		}
 		process.exit(1);
@@ -143,10 +143,10 @@ function build(previousFileSizes) {
 				let errMessage = err.message;
 
 				// Add additional information for postcss errors
-				if (Object.prototype.hasOwnProperty.call(err, "postcssNode")) {
+				if (Object.hasOwn(err, "postcssNode")) {
 					errMessage +=
 						"\nCompileError: Begins at CSS selector " +
-						err["postcssNode"].selector;
+						err.postcssNode.selector;
 				}
 
 				messages = formatWebpackMessages({

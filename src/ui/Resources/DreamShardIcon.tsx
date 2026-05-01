@@ -1,7 +1,7 @@
 // This SVG is originally published at https://uxwing.com/sparkle-icon/
 
 import React from "react";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
+import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
 
 const DreamShardIcon = React.memo((props: SvgIconProps) => {
 	return (

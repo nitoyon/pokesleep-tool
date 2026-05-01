@@ -1,15 +1,15 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { IvAction } from "../IvState";
-import { BoxSortConfig } from "../../../util/PokemonBoxSort";
+import type { IvAction } from "../IvState";
+import type { BoxSortConfig } from "../../../util/PokemonBoxSort";
 import IngredientIcon from "../IngredientIcon";
 import MainSkillIcon from "../MainSkillIcon";
 import FixedLevelSelect from "../Strength/FixedLevelSelect";
 import ResearchAreaSelect from "../Strength/ResearchAreaSelect";
 import SelectEx from "../../common/SelectEx";
-import { StrengthParameter } from "../../../util/PokemonStrength";
-import { MainSkillName, MainSkillNames } from "../../../util/MainSkill";
-import { IngredientName, IngredientNames } from "../../../data/pokemons";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
+import { type IngredientName, IngredientNames } from "../../../data/pokemons";
 import { Divider, FormControlLabel, Switch, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
 

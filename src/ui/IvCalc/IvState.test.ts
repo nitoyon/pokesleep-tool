@@ -343,8 +343,8 @@ describe("ivStateReducer", () => {
 			// The item in the box should be updated
 			const savedItem = newState.box.getById(itemId);
 			expect(savedItem).not.toBeNull();
-			expect(savedItem!.iv.level).toBe(50);
-			expect(savedItem!.nickname).toBe("MyPikachu");
+			expect(savedItem?.iv.level).toBe(50);
+			expect(savedItem?.nickname).toBe("MyPikachu");
 
 			// Should create new instance
 			expect(newState.box).not.toBe(state.box);
@@ -371,8 +371,8 @@ describe("ivStateReducer", () => {
 
 			const savedItem = newState.box.getById(itemId);
 			expect(savedItem).not.toBeNull();
-			expect(savedItem!.iv.level).toBe(100);
-			expect(savedItem!.nickname).toBe("");
+			expect(savedItem?.iv.level).toBe(100);
+			expect(savedItem?.nickname).toBe("");
 		});
 
 		test("should clear nickname when it matches Pokemon name in English", async () => {
@@ -396,8 +396,8 @@ describe("ivStateReducer", () => {
 			const newState = ivStateReducer(state, action);
 
 			const savedItem = newState.box.getById(itemId);
-			expect(savedItem!.iv.level).toBe(50);
-			expect(savedItem!.nickname).toBe("");
+			expect(savedItem?.iv.level).toBe(50);
+			expect(savedItem?.nickname).toBe("");
 		});
 
 		test("should clear nickname when it matches Pokemon name in Japanese", async () => {
@@ -422,8 +422,8 @@ describe("ivStateReducer", () => {
 			const newState = ivStateReducer(state, action);
 
 			const savedItem = newState.box.getById(itemId);
-			expect(savedItem!.iv.level).toBe(50);
-			expect(savedItem!.nickname).toBe("");
+			expect(savedItem?.iv.level).toBe(50);
+			expect(savedItem?.nickname).toBe("");
 		});
 	});
 });

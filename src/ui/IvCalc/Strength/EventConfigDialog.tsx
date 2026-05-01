@@ -14,12 +14,15 @@ import {
 import SpecialtyButton from "../SpecialtyButton";
 import TypeSelect from "../TypeSelect";
 import {
-	PokemonSpecialty,
-	PokemonType,
+	type PokemonSpecialty,
+	type PokemonType,
 	PokemonTypes,
 } from "../../../data/pokemons";
-import events, { fillBonusEffects, TargetPokemon } from "../../../data/events";
-import { StrengthParameter } from "../../../util/PokemonStrength";
+import events, {
+	fillBonusEffects,
+	type TargetPokemon,
+} from "../../../data/events";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useTranslation } from "react-i18next";
 
@@ -361,7 +364,7 @@ const EventConfigDialog = React.memo(
 
 		const eventMenus = events.bonus.map((event) => (
 			<MenuItem key={event.name} value={event.name}>
-				{t("events." + event.name)}
+				{t(`events.${event.name}`)}
 			</MenuItem>
 		));
 		eventMenus.unshift(

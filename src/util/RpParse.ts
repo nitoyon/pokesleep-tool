@@ -1,9 +1,9 @@
 import Nature from "./Nature";
 import PokemonIv from "./PokemonIv";
-import SubSkill, { SubSkillType } from "./SubSkill";
-import { IngredientType } from "./PokemonRp";
+import SubSkill, { type SubSkillType } from "./SubSkill";
+import type { IngredientType } from "./PokemonRp";
 import SubSkillList from "./SubSkillList";
-import { IngredientName } from "../data/pokemons";
+import type { IngredientName } from "../data/pokemons";
 
 type CsvData = {
 	name: string;

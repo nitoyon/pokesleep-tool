@@ -1,5 +1,9 @@
-import PokemonIv from "./PokemonIv";
-import { IngredientName, PokemonData, toxelId } from "../data/pokemons";
+import type PokemonIv from "./PokemonIv";
+import {
+	type IngredientName,
+	type PokemonData,
+	toxelId,
+} from "../data/pokemons";
 
 export type MainSkillName =
 	| "Ingredient Magnet S"

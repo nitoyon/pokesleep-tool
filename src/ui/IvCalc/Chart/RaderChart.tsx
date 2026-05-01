@@ -1,5 +1,5 @@
 import React from "react";
-import { PokemonSpecialty } from "../../../data/pokemons";
+import type { PokemonSpecialty } from "../../../data/pokemons";
 import { useTranslation } from "react-i18next";
 
 interface RaderChartProps {
@@ -129,11 +129,9 @@ const RaderLine = React.memo(
 		const x3 = (1.732 / 2) * ingredient;
 		const y3 = ingredient / 2;
 		return (
-			<>
-				<g stroke={color} strokeWidth={2} fill={color} fillOpacity="0.3">
-					<polygon points={`${x1},${y1},${x2},${y2},${x3},${y3}`} />
-				</g>
-			</>
+			<g stroke={color} strokeWidth={2} fill={color} fillOpacity="0.3">
+				<polygon points={`${x1},${y1},${x2},${y2},${x3},${y3}`} />
+			</g>
 		);
 	},
 );

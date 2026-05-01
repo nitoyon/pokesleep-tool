@@ -14,9 +14,9 @@ import {
 	getSkillRandomRange,
 	getIngredientDrawIngredients,
 	getLunarBlessingBerryCount,
-	MainSkillName,
+	type MainSkillName,
 } from "../../../util/MainSkill";
-import PokemonIv from "../../../util/PokemonIv";
+import type PokemonIv from "../../../util/PokemonIv";
 import {
 	Button,
 	Dialog,
@@ -27,7 +27,7 @@ import {
 	Switch,
 } from "@mui/material";
 import { useTranslation, Trans } from "react-i18next";
-import i18next from "i18next";
+import type i18next from "i18next";
 
 interface SkillDetailDialogConfig {
 	species: number;
@@ -464,7 +464,7 @@ function getSkillValue2Text(
 
 	if (skill === "Ingredient Draw S (Super Luck)") {
 		const shards = getSkillSubValue(skill, level);
-		return t("num", { n: shards }) + " / " + t("num", { n: shards * 5 });
+		return `${t("num", { n: shards })} / ${t("num", { n: shards * 5 })}`;
 	}
 
 	if (skill === "Cooking Power-Up S (Minus)") {
@@ -497,8 +497,7 @@ function getVersatileCandyCount(
 	} else {
 		return (
 			<>
-				<>1</>
-				<> </>
+				1{" "}
 				<small style={{ whiteSpace: "nowrap" }}>
 					({t("sometimes")} {1 + count})
 				</small>

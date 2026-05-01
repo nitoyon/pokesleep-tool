@@ -3,14 +3,14 @@ import { styled } from "@mui/system";
 import TypeButton from "../TypeButton";
 import TypeSelect from "../TypeSelect";
 import { isExpertField } from "../../../data/fields";
-import { PokemonType } from "../../../data/pokemons";
+import type { PokemonType } from "../../../data/pokemons";
 import CollapseEx from "../../common/CollapseEx";
 import {
-	ExpertEffects,
+	type ExpertEffects,
 	getCurrentFavoriteBerries,
-	StrengthParameter,
+	type StrengthParameter,
 } from "../../../util/PokemonStrength";
-import { Select, SelectChangeEvent, MenuItem } from "@mui/material";
+import { Select, type SelectChangeEvent, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 const FavoriteBerrySelect = React.memo(

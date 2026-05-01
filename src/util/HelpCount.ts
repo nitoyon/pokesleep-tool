@@ -1,17 +1,18 @@
-import { IngredientName } from "../data/pokemons";
-import PokemonIv, {
+import type { IngredientName } from "../data/pokemons";
+import type PokemonIv from "./PokemonIv";
+import type {
 	BagUsagePerHelpDetailItem,
 	IngredientSlot,
 	InventoryBonus,
 } from "./PokemonIv";
 import {
-	EfficiencyEvent,
-	EnergyParameter,
-	EnergyResult,
+	type EfficiencyEvent,
+	type EnergyParameter,
+	type EnergyResult,
 	AlwaysTap,
 	NoTap,
 } from "./Energy";
-import { BonusEffects } from "../data/events";
+import type { BonusEffects } from "../data/events";
 import { isExpertField } from "../data/fields";
 
 /**
@@ -1170,9 +1171,9 @@ export class HelpCountSimulation {
 			if (prob === 0) {
 				continue;
 			}
-			const skillNoneK = Math.pow(1 - p, k);
+			const skillNoneK = (1 - p) ** k;
 			if (this.isSkillSpecialty) {
-				const onceK = k * p * Math.pow(1 - p, k - 1);
+				const onceK = k * p * (1 - p) ** (k - 1);
 				skillOnce += prob * onceK;
 				skillTwice += prob * (1 - skillNoneK - onceK);
 			} else {
@@ -1183,9 +1184,9 @@ export class HelpCountSimulation {
 		// For n: P(normalHelpCount = n) = 1 - cumulativeFullProb[n-1]
 		const probNormalN = n > 0 ? 1 - this.cumulativeFullProb[n - 1] : 1;
 		if (probNormalN > 0) {
-			const skillNoneN = Math.pow(1 - p, n);
+			const skillNoneN = (1 - p) ** n;
 			if (this.isSkillSpecialty) {
-				const onceN = n * p * Math.pow(1 - p, n - 1);
+				const onceN = n * p * (1 - p) ** (n - 1);
 				skillOnce += probNormalN * onceN;
 				skillTwice += probNormalN * (1 - skillNoneN - onceN);
 			} else {

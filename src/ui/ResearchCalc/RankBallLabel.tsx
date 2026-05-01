@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { RankType } from "../../util/Rank";
+import type { RankType } from "../../util/Rank";
 
 interface RankBallProps {
 	/** Rank type (basic, great, ultra, master) */
@@ -12,7 +12,7 @@ interface RankBallProps {
 const RankBall = React.memo(({ type, number }: RankBallProps) => {
 	return (
 		<StyledRankBall>
-			<span className={"rank_ball rank_ball_" + type}>◓</span>
+			<span className={`rank_ball rank_ball_${type}`}>◓</span>
 			<span className="rank_number">{number}</span>
 		</StyledRankBall>
 	);

@@ -1,7 +1,8 @@
 import React from "react";
 import { styled } from "@mui/system";
-import AppConfig, { AppConfigContext, AppType } from "./AppConfig";
-import News, { NewsArticle } from "../data/news";
+import type AppConfig from "./AppConfig";
+import { AppConfigContext, type AppType } from "./AppConfig";
+import News, { type NewsArticle } from "../data/news";
 import { Button, Dialog, DialogActions, IconButton } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CloseIcon from "@mui/icons-material/Close";
@@ -123,8 +124,8 @@ export const NewsArticleDialog = React.memo(
 		const title = t(`${appType}.news.${article.id}.headline`);
 
 		let date = "";
-		if (Intl && Intl.RelativeTimeFormat) {
-			const diff = Math.max(0, new Date().getTime() - article.date.getTime());
+		if (Intl?.RelativeTimeFormat) {
+			const diff = Math.max(0, Date.now() - article.date.getTime());
 			const formatter = new Intl.RelativeTimeFormat(i18n.language, {
 				style: "long",
 			});

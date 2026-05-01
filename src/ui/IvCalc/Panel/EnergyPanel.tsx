@@ -1,10 +1,10 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import { useElementWidth } from "../../common/Hook";
 import TapFrequencyControl from "../Strength/TapFrequencyControl";
-import PokemonIv from "../../../util/PokemonIv";
-import {
+import type PokemonIv from "../../../util/PokemonIv";
+import type {
 	StrengthParameter,
 	StrengthResult,
 } from "../../../util/PokemonStrength";
@@ -16,7 +16,7 @@ import {
 	Collapse,
 	MenuItem,
 	Select,
-	SelectChangeEvent,
+	type SelectChangeEvent,
 	Switch,
 	TextField,
 } from "@mui/material";
@@ -89,7 +89,7 @@ const EnergyPanel = React.memo(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				setIsScoreEmpty(e.target.value === "");
 				let newVal = parseInt(e.target.value, 10);
-				if (isNaN(newVal)) {
+				if (Number.isNaN(newVal)) {
 					newVal = 0;
 				}
 				newVal = clamp(0, newVal, 100);
@@ -342,7 +342,7 @@ const EnergyPanel = React.memo(
 									<>
 										❶
 										{(result.skillProbabilityAfterWakeup.once * 100).toFixed(1)}
-										%<> </>❷
+										% ❷
 										{(result.skillProbabilityAfterWakeup.twice * 100).toFixed(
 											1,
 										)}

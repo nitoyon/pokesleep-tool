@@ -51,7 +51,7 @@ export async function loadLanguage(lang: string): Promise<void> {
 	i18n.addResourceBundle(
 		lang,
 		"translation",
-		data["translation"] as Record<string, unknown>,
+		data.translation as Record<string, unknown>,
 		true,
 		true,
 	);

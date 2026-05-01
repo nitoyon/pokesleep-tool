@@ -2,7 +2,7 @@ import { AmountOfSleep } from "./TimeUtil";
 import type { TFunction } from "i18next";
 
 // Mock translation function
-const mockT = vi.fn((key: string, obj: { h: number; m: number }) => {
+const mockT = vi.fn((_key: string, obj: { h: number; m: number }) => {
 	return `${obj.h}hr ${obj.m}m`;
 }) as unknown as TFunction;
 

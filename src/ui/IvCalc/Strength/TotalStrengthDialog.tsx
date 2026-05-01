@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { formatWithComma } from "../../../util/NumberUtil";
-import {
+import type {
 	StrengthParameter,
 	StrengthResult,
 } from "../../../util/PokemonStrength";
 import CollapseEx from "../../common/CollapseEx";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import SpecialtyButton from "../SpecialtyButton";
 import BlockIcon from "@mui/icons-material/Block";
 import { useTranslation } from "react-i18next";

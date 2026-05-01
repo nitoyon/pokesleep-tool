@@ -1,7 +1,9 @@
 import React from "react";
 import { styled } from "@mui/system";
-import SubSkill, { SubSkillType } from "../../../util/SubSkill";
-import SubSkillList, { SubSkillListProps } from "../../../util/SubSkillList";
+import SubSkill, { type SubSkillType } from "../../../util/SubSkill";
+import SubSkillList, {
+	type SubSkillListProps,
+} from "../../../util/SubSkillList";
 import {
 	Badge,
 	Button,
@@ -43,19 +45,19 @@ const SubSkillControl = React.memo(
 				);
 				setOpen(true);
 			},
-			[setEditingLevel, setOpen],
+			[],
 		);
 
 		const onLevelChange = React.useCallback(
 			(level: 10 | 25 | 50 | 75 | 100) => {
 				setEditingLevel(level);
 			},
-			[setEditingLevel],
+			[],
 		);
 
 		const onPopupClosed = React.useCallback(() => {
 			setOpen(false);
-		}, [setOpen]);
+		}, []);
 
 		return (
 			<StyledSubSkillContainer>
@@ -317,21 +319,19 @@ export const EditSubSkillControl = React.memo(
 					label = t(`subskill.${name}`);
 				}
 				return (
-					<>
-						<StyledSubSkillButton
-							onClick={onClickHandler}
-							className={cls}
-							value={name}
-						>
-							{label}
-							<StyledBadge
-								color="secondary"
-								badgeContent={badge}
-								max={100}
-								className={typeof badge === "number" ? "isnum" : ""}
-							/>
-						</StyledSubSkillButton>
-					</>
+					<StyledSubSkillButton
+						onClick={onClickHandler}
+						className={cls}
+						value={name}
+					>
+						{label}
+						<StyledBadge
+							color="secondary"
+							badgeContent={badge}
+							max={100}
+							className={typeof badge === "number" ? "isnum" : ""}
+						/>
+					</StyledSubSkillButton>
 				);
 			},
 			[onClickHandler, subSkill2Badge, t],

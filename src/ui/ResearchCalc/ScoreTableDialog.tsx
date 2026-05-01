@@ -88,8 +88,7 @@ const ScoreTableDialog = React.memo(
 				>
 					<SleepScore score={i} />
 					<div className="time">
-						{getMinTimeForScore(i).toString(t)}
-						<> {t("range separator")} </>
+						{getMinTimeForScore(i).toString(t)} {t("range separator")}{" "}
 						{getMaxTimeForScore(i).toString(t)}
 						<div className="time_power">
 							{t("num", { n: i * strength * bonus })}

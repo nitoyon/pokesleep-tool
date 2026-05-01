@@ -14,7 +14,7 @@ process.on("unhandledRejection", (err) => {
 // Ensure environment variables are read.
 require("../config/env");
 
-const fs = require("fs");
+const fs = require("node:fs");
 const chalk = require("react-dev-utils/chalk");
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
@@ -132,8 +132,8 @@ checkBrowsers(paths.appPath, isInteractive)
 		console.log(chalk.cyan("Starting the development server...\n"));
 		openBrowser(urls.localUrlForBrowser);
 
-		["SIGINT", "SIGTERM"].forEach(function (sig) {
-			process.on(sig, async function () {
+		["SIGINT", "SIGTERM"].forEach((sig) => {
+			process.on(sig, async () => {
 				await devServer.close();
 				process.exit();
 			});
@@ -141,14 +141,14 @@ checkBrowsers(paths.appPath, isInteractive)
 
 		if (process.env.CI !== "true") {
 			// Gracefully exit when stdin ends
-			process.stdin.on("end", async function () {
+			process.stdin.on("end", async () => {
 				await devServer.close();
 				process.exit();
 			});
 		}
 	})
 	.catch((err) => {
-		if (err && err.message) {
+		if (err?.message) {
 			console.log(err.message);
 		}
 		process.exit(1);

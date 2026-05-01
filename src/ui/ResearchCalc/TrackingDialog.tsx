@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
-import { InputAreaData, TrackingData } from "./ResearchCalcAppConfig";
+import type { InputAreaData, TrackingData } from "./ResearchCalcAppConfig";
 import { getScoreRangeForCount } from "./Score";
 import {
 	getAverageMinuteForScore,
@@ -16,7 +16,7 @@ import ArrowButton from "../common/ArrowButton";
 import CollapseEx from "../common/CollapseEx";
 import SliderEx from "../common/SliderEx";
 import fields from "../../data/fields";
-import { getPokemonCount, PokemonCount } from "../../util/PokemonCount";
+import { getPokemonCount, type PokemonCount } from "../../util/PokemonCount";
 import Rank from "../../util/Rank";
 import { AmountOfSleep } from "../../util/TimeUtil";
 import { useTranslation, Trans } from "react-i18next";
@@ -97,7 +97,7 @@ const TrackingDialog = React.memo(
 		const onStartClick = React.useCallback(() => {
 			onStart({
 				score,
-				start: Math.floor(new Date().getTime() / 1000),
+				start: Math.floor(Date.now() / 1000),
 				area: data.fieldIndex,
 				strength: data.strength,
 				dp: Math.round(data.strength * data.bonus * score),
@@ -208,7 +208,7 @@ const TrackingDialog = React.memo(
 								<strong>{t("num", { n: data.strength })}</strong>
 								<br />
 								<small>
-									({t(`area.${data.fieldIndex}`)}&ensp;
+									({t(`area.${data.fieldIndex}`)}{" "}
 									<RankBallLabel type={rank.type} number={rank.rankNumber} />)
 								</small>
 							</section>

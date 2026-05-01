@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
-import PokemonStrength, { StrengthResult } from "../../../util/PokemonStrength";
+import type PokemonStrength from "../../../util/PokemonStrength";
+import type { StrengthResult } from "../../../util/PokemonStrength";
 import { round1 } from "../../../util/NumberUtil";
 import {
 	Button,
@@ -12,7 +13,7 @@ import {
 	ToggleButtonGroup,
 	ToggleButton,
 } from "@mui/material";
-import { IvAction } from "../IvState";
+import type { IvAction } from "../IvState";
 import EnergyPreviewPanel from "../Panel/EnergyPreviewPanel";
 import { useTranslation, Trans } from "react-i18next";
 
@@ -72,7 +73,7 @@ const SkillPityProcDialog = React.memo(
 		);
 		const param = strength.parameter;
 		const hasHelpingBonus = iv.hasHelpingBonusInActiveSubSkills;
-		const pityProcRate = Math.pow(1 - result.skillRate, iv.pityProcHelpCount);
+		const pityProcRate = (1 - result.skillRate) ** iv.pityProcHelpCount;
 
 		return (
 			<StyledDialog open={open} onClose={onClose}>
@@ -84,7 +85,7 @@ const SkillPityProcDialog = React.memo(
 							<Trans
 								i18nKey="pity proc help3"
 								components={{
-									name: <b>{t("pokemons." + iv.pokemon.name)}</b>,
+									name: <b>{t(`pokemons.${iv.pokemon.name}`)}</b>,
 									count: <b>{iv.pityProcHelpCount}</b>,
 									count1: <b>{iv.pityProcHelpCount + 1}</b>,
 								}}

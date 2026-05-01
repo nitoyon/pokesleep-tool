@@ -9,7 +9,8 @@ import {
 	ToggleButtonGroup,
 	ToggleButton,
 } from "@mui/material";
-import AppConfig, { AppConfigContext, AppType } from "../AppConfig";
+import type AppConfig from "../AppConfig";
+import { AppConfigContext, type AppType } from "../AppConfig";
 import { useTranslation } from "react-i18next";
 import { LANGUAGE_NAMES, loadLanguage } from "../../i18n";
 
@@ -38,7 +39,7 @@ export default function SettingsDialog({
 	// language settings
 	const lang = i18n.language;
 	const onLanguageChange = async (
-		event: React.MouseEvent<HTMLElement>,
+		_event: React.MouseEvent<HTMLElement>,
 		value: string,
 	) => {
 		if (!value) return;
@@ -68,7 +69,7 @@ export default function SettingsDialog({
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			setIconUrl(event.target.value);
 		},
-		[setIconUrl],
+		[],
 	);
 	const closeHandler = React.useCallback(() => {
 		if (iconUrlInvalid) {
@@ -84,7 +85,7 @@ export default function SettingsDialog({
 	}, [onAppConfigChange, onClose, appConfig, iconUrlInvalid, iconUrl, lang]);
 	const onAlertClose = React.useCallback(() => {
 		setAlertOpen(false);
-	}, [setAlertOpen]);
+	}, []);
 
 	return (
 		<>

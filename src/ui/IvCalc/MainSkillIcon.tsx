@@ -1,6 +1,6 @@
 import React from "react";
-import { IngredientName } from "../../data/pokemons";
-import { MainSkillName } from "../../util/MainSkill";
+import type { IngredientName } from "../../data/pokemons";
+import type { MainSkillName } from "../../util/MainSkill";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import LocalDrinkIcon from "@mui/icons-material/LocalDrink";

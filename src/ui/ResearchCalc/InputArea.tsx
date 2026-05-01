@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import Rank from "../../util/Rank";
-import fields, { FieldData, MAX_STRENGTH } from "../../data/fields";
+import fields, { type FieldData, MAX_STRENGTH } from "../../data/fields";
 import { getDrowsyBonus } from "../../data/events";
 import React, { useCallback, useState } from "react";
 import {
@@ -13,7 +13,7 @@ import {
 	TextField,
 } from "@mui/material";
 import TrackingPanel from "./TrackingPanel";
-import { InputAreaData } from "./ResearchCalcAppConfig";
+import type { InputAreaData } from "./ResearchCalcAppConfig";
 import ArrowButton from "../common/ArrowButton";
 import SliderEx from "../common/SliderEx";
 import NumericInput from "../common/NumericInput";
@@ -336,7 +336,7 @@ const EventBonusTextField = React.memo(
 		const { t } = useTranslation();
 		const [todaysBonus, setTodaysBonus] = useState(getDrowsyBonus(new Date()));
 		React.useEffect(() => {
-			const id = setInterval(function () {
+			const id = setInterval(() => {
 				setTodaysBonus(getDrowsyBonus(new Date()));
 			}, 5000);
 			return () => clearInterval(id);

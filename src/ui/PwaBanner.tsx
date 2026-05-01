@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 import ResearchCalcIcon from "./Resources/ResearchCalcIcon";
 import IvCalcIcon from "./Resources/IvCalcIcon";
 import SafariIcon from "./Resources/SafariIcon";
-import { AppType } from "./AppConfig";
+import type { AppType } from "./AppConfig";
 import { copyToClipboard } from "../util/Clipboard";
 import {
 	Button,
@@ -28,7 +28,7 @@ interface BeforeInstallPromptEvent extends Event {
 	prompt(): Promise<void>;
 }
 
-let defferedPrompt: BeforeInstallPromptEvent | undefined = undefined;
+let defferedPrompt: BeforeInstallPromptEvent | undefined;
 
 /// Show banner when pwaCount is greater than or equal to this value
 const iOsShowPwaBannerThreshold = 3;
@@ -94,18 +94,18 @@ const PwaBanner = React.memo(({ app, pwaCount, onClose }: PwaBannerProps) => {
 			// iPhone
 			setIPhoneMessageOpen(true);
 		}
-	}, [setOpen]);
+	}, []);
 
 	// Close button click handler
 	const onCloseClick = useCallback(() => {
 		setOpen(false);
 		onClose();
-	}, [setOpen, onClose]);
+	}, [onClose]);
 
 	// Message for iPhone closed handler
 	const onCloseMessage = useCallback(() => {
 		setIPhoneMessageOpen(false);
-	}, [setIPhoneMessageOpen]);
+	}, []);
 
 	return (
 		<StyledPwaBanner open={open}>
@@ -209,17 +209,17 @@ const IPhoneMessageDialog = React.memo(
 				"https://nitoyon.github.io/pokesleep-tool/" +
 				(app === "IvCalc" ? "iv/" : "");
 			if (i18n.language !== "en") {
-				url += "index." + i18n.language + ".html";
+				url += `index.${i18n.language}.html`;
 			}
 			copyToClipboard(url)
 				.then(() => {
 					setCopyCompleted(true);
 				})
 				.catch(() => {});
-		}, [app, setCopyCompleted, i18n.language]);
+		}, [app, i18n.language]);
 		const onCopyCompletedClose = useCallback(() => {
 			setCopyCompleted(false);
-		}, [setCopyCompleted]);
+		}, []);
 
 		return (
 			<StyledIosPwaDialog open={open} onClose={onClose}>

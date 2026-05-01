@@ -1,4 +1,4 @@
-import SubSkill, { SubSkillType } from "./SubSkill";
+import SubSkill, { type SubSkillType } from "./SubSkill";
 
 describe("SubSkill", () => {
 	test("works fine when Helping Speed M is given", () => {

@@ -1,6 +1,6 @@
-import { ExpType } from "../data/pokemons";
-import Nature from "./Nature";
-import PokemonIv from "./PokemonIv";
+import type { ExpType } from "../data/pokemons";
+import type Nature from "./Nature";
+import type PokemonIv from "./PokemonIv";
 import { maxLevel } from "./PokemonRp";
 
 // special thanks to
@@ -284,7 +284,8 @@ export function calcDayToGetSleepExp(
 			exp -= expPerDay * (dates - 1);
 			d = new Date(d.getTime() + (dates - 1) * 24 * 60 * 60 * 1000);
 			continue;
-		} else if (dates === 0) {
+		}
+		if (dates === 0) {
 			// When it's a full moon day
 			const expPerDay = Math.floor(
 				baseExp * getExpRateForDay("fullmoon", policy) * expGainRate,
@@ -298,21 +299,20 @@ export function calcDayToGetSleepExp(
 			exp -= expPerDay;
 			d = new Date(d.getTime() + 24 * 60 * 60 * 1000);
 			continue;
-		} else {
-			// When it's the day before or after the full moon
-			const expPerDay = Math.floor(
-				baseExp * getExpRateForDay("gsd", policy) * expGainRate,
-			);
-			ret.days += 1;
-			if (expPerDay >= exp) {
-				ret.expExceeded += expPerDay - exp;
-				break;
-			}
-
-			exp -= expPerDay;
-			d = new Date(d.getTime() + 24 * 60 * 60 * 1000);
-			continue;
 		}
+
+		// When it's the day before or after the full moon
+		const expPerDay = Math.floor(
+			baseExp * getExpRateForDay("gsd", policy) * expGainRate,
+		);
+		ret.days += 1;
+		if (expPerDay >= exp) {
+			ret.expExceeded += expPerDay - exp;
+			break;
+		}
+
+		exp -= expPerDay;
+		d = new Date(d.getTime() + 24 * 60 * 60 * 1000);
 	}
 
 	ret.date = new Date();

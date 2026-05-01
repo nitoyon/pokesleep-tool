@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
-import IvState, { IvAction } from "./IvState";
+import type IvState from "./IvState";
+import type { IvAction } from "./IvState";
 import { shareIv } from "./ShareUtil";
 import {
 	Button,
@@ -69,7 +70,7 @@ const LowerTabHeader = React.memo(
 		}, [dispatch, state.pokemonIv, t]);
 
 		const onTabChange = React.useCallback(
-			(event: React.SyntheticEvent, newValue: number) => {
+			(_event: React.SyntheticEvent, newValue: number) => {
 				dispatch({ type: "changeLowerTab", payload: { index: newValue } });
 				setMoreMenuAnchor(null);
 			},

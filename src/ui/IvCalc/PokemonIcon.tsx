@@ -7,10 +7,10 @@ import { AppConfigContext } from "../AppConfig";
 const PokemonIcon = React.memo(
 	({ idForm, size }: { idForm: number; size: number }) => {
 		const appConfig = React.useContext(AppConfigContext);
-		if (appConfig.iconUrl !== null && appConfig.iconUrl.match(/^https?:\/\//)) {
+		if (appConfig.iconUrl?.match(/^https?:\/\//)) {
 			let url = appConfig.iconUrl;
 			const id = PokemonIv.getIdByIdForm(idForm);
-			url = url.replace(/@ID(\d)@/g, (m, num) =>
+			url = url.replace(/@ID(\d)@/g, (_m, num) =>
 				id.toString().padStart(parseInt(num, 10), "0"),
 			);
 			return <img src={url} width={size} height={size} alt={id.toString()} />;
