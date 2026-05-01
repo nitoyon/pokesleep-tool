@@ -20,7 +20,13 @@ export const EnergyChart = React.memo(
 		const svgRef = React.useRef<SVGSVGElement | null>(null);
 		const mouse = useSvgTouch(svgRef);
 		return (
-			<svg width={width} height="200" viewBox={`0 0 ${width} 200`} ref={svgRef}>
+			<svg
+				width={width}
+				height="200"
+				viewBox={`0 0 ${width} 200`}
+				ref={svgRef}
+				aria-hidden={true}
+			>
 				<g transform="translate(25,3)">
 					<EnergyChartAxis
 						width={width - 50}

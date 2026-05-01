@@ -27,6 +27,7 @@ export const BarChart = React.memo(
 		formatY: (value: number) => string;
 		formatHover: (index: number) => React.ReactNode;
 	}) => {
+		const { t } = useTranslation();
 		const svgRef = React.useRef<SVGSVGElement | null>(null);
 		const mouse = useSvgTouch(svgRef);
 
@@ -36,6 +37,9 @@ export const BarChart = React.memo(
 
 		return (
 			<svg ref={svgRef} width={width} height="200" viewBox={`0 0 ${width} 200`}>
+				<title>
+					{t("average")}: {convertX(average)}
+				</title>
 				<g transform="translate(40, 20)">
 					<BarChartAxis
 						width={chartWidth}

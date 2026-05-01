@@ -125,7 +125,7 @@ function useRouter(language: string): [AppType, (v: AppType) => void] {
 		? "IvCalc"
 		: "ResearchCalc";
 
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const [currentApp, setCurrentApp] = useState<AppType>(initialApp);
 	useEffect(() => {
 		// Replace on memory HTML

@@ -62,34 +62,56 @@ const IngredientIcon = React.memo(({ name }: { name: IngredientName }) => {
 			return <TomatoIcon />;
 		case "unknown":
 			return (
-				<svg width="24" height="20" viewBox="0 0 24 24">
-					<svg viewBox="0 0 200 200">
-						<line
-							x1="10"
-							y1="100"
-							x2="180"
-							y2="100"
-							stroke="#bbbbbb"
-							strokeWidth="12"
-						/>
-					</svg>
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					role="img"
+					aria-label="unknown"
+				>
+					<line
+						x1="1.2"
+						y1="12"
+						x2="12"
+						y2="12"
+						stroke="#bbbbbb"
+						strokeWidth="1.44"
+					/>
 				</svg>
 			);
 		case "unknown1":
 			return (
-				<svg width="24" height="24" viewBox="0 0 24 24">
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					role="img"
+					aria-label="unknown1"
+				>
 					<circle cx="12" cy="12" r="8" fill="#eaae35" />
 				</svg>
 			);
 		case "unknown2":
 			return (
-				<svg width="24" height="24" viewBox="0 0 24 24">
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					role="img"
+					aria-label="unknown2"
+				>
 					<circle cx="12" cy="12" r="8" fill="#56c0fe" />
 				</svg>
 			);
 		case "unknown3":
 			return (
-				<svg width="24" height="24" viewBox="0 0 24 24">
+				<svg
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					role="img"
+					aria-label="unknown3"
+				>
 					<circle cx="12" cy="12" r="8" fill="#f55865" />
 				</svg>
 			);

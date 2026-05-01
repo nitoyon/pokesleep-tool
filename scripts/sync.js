@@ -420,7 +420,7 @@ function getPokemon(html, name, nameJa2en) {
 	let c2 = parseInt(tds[2].textContent.replace("個", ""), 10);
 	let c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
 	if (!(ingJa in ingredients)) {
-		throw new Error("Unknown ing: ${ingJa}");
+		throw new Error(`Unknown ing: ${ingJa}`);
 	}
 	let ing = ingredients[ingJa];
 	const ing1 = { name: ing, c1, c2, c3 };
@@ -431,7 +431,7 @@ function getPokemon(html, name, nameJa2en) {
 	c2 = parseInt(tds[2].textContent.replace("個", ""), 10);
 	c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
 	if (!(ingJa in ingredients)) {
-		throw new Error("Unknown ing: ${ingJa}");
+		throw new Error(`Unknown ing: ${ingJa}`);
 	}
 	ing = ingredients[ingJa];
 	const ing2 = { name: ing, c2, c3 };
@@ -443,7 +443,7 @@ function getPokemon(html, name, nameJa2en) {
 	if (ingJa !== undefined) {
 		c3 = parseInt(tds[3].textContent.replace("個", ""), 10);
 		if (!(ingJa in ingredients)) {
-			throw new Error("Unknown ing: ${ingJa}");
+			throw new Error(`Unknown ing: ${ingJa}`);
 		}
 		ing = ingredients[ingJa];
 		ing3 = { name: ing, c3 };
