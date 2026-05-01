@@ -30,16 +30,16 @@ export async function loadLanguage(lang: string): Promise<void> {
     let data: Record<string, unknown>;
     switch (lang) {
         case "ja":
-            data = (await import('./i18n/ja')).default as Record<string, unknown>;
+            data = (await import('./i18n/ja.js')).default as Record<string, unknown>;
             break;
         case "ko":
-            data = (await import('./i18n/ko')).default as Record<string, unknown>;
+            data = (await import('./i18n/ko.js')).default as Record<string, unknown>;
             break;
         case "zh-CN":
-            data = (await import('./i18n/zh-CN')).default as Record<string, unknown>;
+            data = (await import('./i18n/zh-CN.js')).default as Record<string, unknown>;
             break;
         case "zh-TW":
-            data = (await import('./i18n/zh-TW')).default as Record<string, unknown>;
+            data = (await import('./i18n/zh-TW.js')).default as Record<string, unknown>;
             break;
         default:
             return;
