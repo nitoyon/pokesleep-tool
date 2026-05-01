@@ -174,10 +174,10 @@ const CandyTurnDialog = React.memo(
 							}
 							onChange={(v) => onChange("handyL", v)}
 						/>
-						<span></span>
-						<span>×3</span>
-						<span>×20</span>
-						<span>×100</span>
+						<footer></footer>
+						<footer>×3</footer>
+						<footer>×20</footer>
+						<footer>×100</footer>
 					</article>
 					<article className="type">
 						<label>{t("type candy")}:</label>
@@ -199,11 +199,11 @@ const CandyTurnDialog = React.memo(
 							}
 							onChange={(v) => onChange("typeM", v)}
 						/>
-						<span />
-						<span />
-						<span>×4</span>
-						<span>×25</span>
-						<span />
+						<footer />
+						<footer />
+						<footer>×4</footer>
+						<footer>×25</footer>
+						<footer />
 					</article>
 					<CollapseEx show={add === 0}>
 						<Alert severity="info">{t("sufficient candy")}</Alert>
@@ -341,7 +341,7 @@ const StyledContent = styled("div")({
 				color: "#3ba6f9",
 			},
 		},
-		"& > span": {
+		"& > footer": {
 			fontSize: "0.7rem",
 			transform: "scale(1, 0.9)",
 			textAlign: "right",
@@ -350,7 +350,7 @@ const StyledContent = styled("div")({
 			color: "#ff6633",
 			fontWeight: "bold",
 		},
-		"&.type > span": {
+		"&.type > footer": {
 			color: "#3ba6f9",
 		},
 	},
