@@ -340,7 +340,7 @@ export function loadBoxSortConfig(): BoxSortConfig {
 		return ret;
 	}
 
-	let json;
+	let json: object;
 	try {
 		json = JSON.parse(settings);
 	} catch {
@@ -351,6 +351,7 @@ export function loadBoxSortConfig(): BoxSortConfig {
 		return ret;
 	}
 	if (
+		"sort" in json &&
 		typeof json.sort === "string" &&
 		[
 			"level",
@@ -367,34 +368,35 @@ export function loadBoxSortConfig(): BoxSortConfig {
 		if (json.sort === "skill count") {
 			ret.sort = "skill";
 		} else {
-			ret.sort = json.sort;
+			ret.sort = json.sort as BoxSortType;
 		}
 	}
-	if (typeof json.ingredient === "string") {
+	if ("ingredient" in json && typeof json.ingredient === "string") {
 		if (
 			json.ingredient === "strength" ||
 			json.ingredient === "count" ||
-			IngredientNames.includes(json.ingredient)
+			IngredientNames.includes(json.ingredient as IngredientName)
 		) {
-			ret.ingredient = json.ingredient;
+			ret.ingredient = json.ingredient as IngredientSortType;
 		}
 	}
-	if (typeof json.mainSkill === "string") {
+	if ("mainSkill" in json && typeof json.mainSkill === "string") {
 		if (
 			json.mainSkill === "strength" ||
 			json.mainSkill === "count" ||
-			MainSkillNames.includes(json.mainSkill)
+			MainSkillNames.includes(json.mainSkill as MainSkillName)
 		) {
-			ret.mainSkill = json.mainSkill;
+			ret.mainSkill = json.mainSkill as MainSkillSortType;
 		}
 	}
-	if (typeof json.descending === "boolean") {
+	if ("descending" in json && typeof json.descending === "boolean") {
 		ret.descending = json.descending;
 	}
-	if (typeof json.warnItems === "number") {
+	if ("warnItems" in json && typeof json.warnItems === "number") {
 		ret.warnItems = json.warnItems;
 	}
 	if (
+		"warnDate" in json &&
 		typeof json.warnDate === "string" &&
 		json.warnDate.match(/^\d{4}-\d{2}-\d{2}$/)
 	) {

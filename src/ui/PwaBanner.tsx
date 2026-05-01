@@ -85,6 +85,7 @@ const PwaBanner = React.memo(({ app, pwaCount, onClose }: PwaBannerProps) => {
 	const onAddToHomeScreen = useCallback(() => {
 		if (defferedPrompt !== undefined) {
 			// Android or Google Chrome (PC)
+			setIPhoneMessageOpen(true);
 			setOpen(false);
 			defferedPrompt.prompt();
 			defferedPrompt.userChoice.then(() => {

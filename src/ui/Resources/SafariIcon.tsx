@@ -2,8 +2,8 @@ import React from "react";
 
 const SafariIcon = React.memo(() => {
 	return (
-		<svg width="24" height="24">
-			<svg viewBox="0 0 512 512">
+		<svg width="24" height="24" role="img" aria-hidden={true}>
+			<g transform="scale(0.0469)">
 				<rect
 					x="5"
 					y="5"
@@ -24,7 +24,7 @@ const SafariIcon = React.memo(() => {
 					<path d="M6 6l-12-12l-29 39" fill="#eee" />
 					<path d="M6 6l-12-12l41-28" fill="#f55" />
 				</g>
-			</svg>
+			</g>
 		</svg>
 	);
 });

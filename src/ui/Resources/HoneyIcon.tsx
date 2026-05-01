@@ -28,7 +28,7 @@ import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
 const HoneyIcon = React.memo((props: SvgIconProps) => {
 	return (
 		<SvgIcon {...props}>
-			<svg viewBox="0 0 200 200">
+			<svg viewBox="0 0 200 200" role="img" aria-label="honey">
 				<HoneyIconPaths />
 			</svg>
 		</SvgIcon>

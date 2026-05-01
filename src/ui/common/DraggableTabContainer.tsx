@@ -161,7 +161,7 @@ const DraggableTabContainer = React.memo(
 			return () => {
 				observer.disconnect();
 			};
-		}, [fitHeight, length]);
+		}, [fitHeight]);
 
 		// Callback ref factory for child wrappers
 		const setChildRef = React.useCallback(
@@ -185,6 +185,7 @@ const DraggableTabContainer = React.memo(
 			<StyledDraggableTabContainer style={containerStyle} {...bind()}>
 				<animated.div className="tabTrack" style={trackStyle}>
 					{children.map((child, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: tabs never reordered
 						<div style={{ width }} key={i} ref={setChildRef(i)}>
 							{child}
 						</div>

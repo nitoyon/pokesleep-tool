@@ -51,9 +51,10 @@ const NumericInput = React.memo(
 						max={max}
 						value={value}
 						onChange={onChange}
-						children={children}
 						{...props}
-					/>
+					>
+						{children}
+					</NumericInputKeyboard>
 				);
 			} else {
 				return (
@@ -63,9 +64,10 @@ const NumericInput = React.memo(
 						max={max}
 						value={value}
 						onChange={onChange}
-						children={children}
 						{...props}
-					/>
+					>
+						{children}
+					</NumericInputTouch>
 				);
 			}
 		},

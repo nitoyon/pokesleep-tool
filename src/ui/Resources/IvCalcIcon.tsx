@@ -2,7 +2,7 @@ import React from "react";
 
 const ResearchCalcIcon = React.memo(() => {
 	return (
-		<svg width="48" height="48">
+		<svg width="48" height="48" role="img" aria-hidden={true}>
 			<rect cx="0" cy="0" width="24" height="24" fill="#f3ac55" />
 			<g transform="translate(0, 1.8)">
 				<polygon

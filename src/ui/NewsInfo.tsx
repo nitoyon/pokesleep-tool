@@ -45,15 +45,13 @@ const NewsInfo = React.memo(
 			onAppConfigChange(newConfig);
 		};
 
+		const html = t(`${appType}.news.${article.id}.headline`);
 		return (
 			<StyledNewsInfo>
 				<InfoOutlinedIcon />
 				<div>
-					<span
-						dangerouslySetInnerHTML={{
-							__html: t(`${appType}.news.${article.id}.headline`),
-						}}
-					/>
+					{/** biome-ignore lint/security/noDangerouslySetInnerHtml: headline is embeded in i18 files */}
+					<span dangerouslySetInnerHTML={{ __html: html }} />
 					<Button onClick={onDetailClick}>[{t("details")}]</Button>
 				</div>
 				<IconButton onClick={onClose}>
@@ -147,9 +145,10 @@ export const NewsArticleDialog = React.memo(
 		return (
 			<StyledNewsArticleDialog open={open} onClose={onClose}>
 				<time>{date}</time>
+				{/** biome-ignore lint/security/noDangerouslySetInnerHtml: title is embeded in i18 files */}
 				<header dangerouslySetInnerHTML={{ __html: title }} />
-				{lines.map((x, i) => (
-					<p key={i}>{x}</p>
+				{lines.map((x) => (
+					<p key={x}>{x}</p>
 				))}
 				<DialogActions disableSpacing>
 					<Button onClick={onClose}>{t("close")}</Button>

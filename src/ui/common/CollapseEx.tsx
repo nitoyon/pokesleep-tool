@@ -18,6 +18,7 @@ const CollapseEx = React.memo(
 			}
 		}, [children, show]);
 
+		// biome-ignore lint/correctness/useExhaustiveDependencies: This dependancy is necessary
 		React.useLayoutEffect(() => {
 			setHeight(ref.current ? ref.current.scrollHeight : 0);
 		}, [renderedChildren, show]);

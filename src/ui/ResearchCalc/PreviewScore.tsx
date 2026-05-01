@@ -240,7 +240,7 @@ function renderRange(
 		</div>
 	);
 	if (!range.canGet || range.tooMuch) {
-		let warningElement;
+		let warningElement: React.ReactNode;
 		if (range.canGet) {
 			warningElement = <span>{t("strength too much")}</span>;
 		} else {

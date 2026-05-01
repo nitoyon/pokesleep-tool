@@ -37,7 +37,9 @@ const subscribeToNumpadVisibility = (listener: (visible: boolean) => void) => {
 };
 
 const notifyNumpadVisibilityChange = (visible: boolean) => {
-	numpadVisibilityListeners.forEach((listener) => listener(visible));
+	numpadVisibilityListeners.forEach((listener) => {
+		listener(visible);
+	});
 };
 
 /**

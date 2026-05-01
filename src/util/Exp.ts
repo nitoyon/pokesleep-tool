@@ -154,7 +154,7 @@ export function calcLevelByCandy(
 	let carry = expGot;
 	const shardRate = boost === "none" ? 1 : boost === "mini" ? 4 : 5;
 	let candyLeft = candy;
-	let level;
+	let level: number;
 	for (level = srcLevel; level < dstLevel; level++) {
 		const requiredExp = calcExp(level, level + 1, iv) - carry;
 		const expPerCandy = calcExpPerCandy(level, iv.nature, boost);

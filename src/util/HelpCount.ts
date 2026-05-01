@@ -201,7 +201,9 @@ export function calculateHelpCount(
 		ret.berryNormalHelpCount *= countRate;
 		ret.berrySneakySnackingCount *= countRate;
 		ret.ingHelpCount *= countRate;
-		ret.ingredients.forEach((x) => (x.count *= countRate));
+		ret.ingredients.forEach((x) => {
+			x.count *= countRate;
+		});
 		ret.skillCount *= countRate;
 
 		function multiply(help: NormalAndSnackingHelpCount) {

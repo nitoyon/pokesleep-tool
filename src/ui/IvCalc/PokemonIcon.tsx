@@ -19,7 +19,13 @@ const PokemonIcon = React.memo(
 		const elements = createIconElements(idForm, size);
 		return (
 			<StyledIconContainer style={{ width: `${size}px`, height: `${size}px` }}>
-				<svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+				<svg
+					width={size}
+					height={size}
+					viewBox={`0 0 ${size} ${size}`}
+					role="img"
+					aria-hidden={true}
+				>
 					{elements}
 				</svg>
 			</StyledIconContainer>
@@ -37,7 +43,7 @@ function createIconElements(
 	} else {
 		id = PokemonIv.getIdByIdForm(idForm);
 		if (!(id in PokemonIconData)) {
-			return createEmptyIconElements(size);
+			return [createEmptyIconElement(size)];
 		}
 	}
 
@@ -65,8 +71,8 @@ function createIconElements(
 	return shape;
 }
 
-function createEmptyIconElements(size: number): React.ReactElement[] {
-	return [<rect x="0" y="0" width={size} height={size} fill="#bbbbbb" />];
+function createEmptyIconElement(size: number): React.ReactElement {
+	return <rect x="0" y="0" width={size} height={size} fill="#bbbbbb" />;
 }
 
 const StyledIconContainer = styled("div")({
