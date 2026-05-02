@@ -18,11 +18,13 @@ const BoxSortConfigFooter = React.memo(
 		sortConfig,
 		parameter,
 		dispatch,
+		sx,
 		onChange,
 	}: {
 		sortConfig: BoxSortConfig;
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
+		sx: object;
 		onChange: (value: BoxSortConfig) => void;
 	}) => {
 		const { t } = useTranslation();
@@ -130,7 +132,7 @@ const BoxSortConfigFooter = React.memo(
 			return null;
 		}
 		return (
-			<StyledBoxHeader>
+			<StyledBoxHeader style={sx}>
 				<div>
 					<span>
 						<FixedLevelSelect
@@ -217,11 +219,12 @@ const BoxSortConfigFooter = React.memo(
 );
 
 const StyledBoxHeader = styled("div")({
+	padding: ".2rem 0 .2rem 0",
+	background: "#f3f5f0",
+	borderTop: "1px solid #ccc",
+	position: "relative",
+	overflow: "hidden",
 	"& > div": {
-		padding: ".2rem 0 .2rem 1.2rem",
-		background: "#f3f5f0",
-		borderTop: "1px solid #ccc",
-		position: "relative",
 		display: "flex",
 		flexWrap: "wrap",
 		alignItems: "stretch",
