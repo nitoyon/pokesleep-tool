@@ -111,7 +111,7 @@ const TotalStrengthDialog = React.memo(
 					</div>
 					<CollapseEx show={result.helpingBonusStrength > 0}>
 						<footer className="helpingBonus">
-							<span>{t("helping bonus addition")}: </span>
+							<span className="lbl">{t("helping bonus addition")}: </span>
 							<strong>{formatWithComma(result.helpingBonusStrength)}</strong>
 						</footer>
 					</CollapseEx>

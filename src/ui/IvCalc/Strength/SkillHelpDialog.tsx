@@ -880,31 +880,33 @@ function getBerryBurstValueText(
 			{text}
 			<br />
 			<div className="bbgrid">
-				<span>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</span>
+				<span className="lbl">
+					{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:
+				</span>
 				<span>{formatWithComma(result.members[0].total)}</span>
 				<small>
 					({result.members[0].perBerry} × {result.members[0].count})
 				</small>
 
-				<span>{t("other team member")} 1:</span>
+				<span className="lbl">{t("other team member")} 1:</span>
 				<span>{formatWithComma(result.members[1].total)}</span>
 				<small>
 					({result.members[1].perBerry} × {result.members[1].count})
 				</small>
 
-				<span>{t("other team member")} 2:</span>
+				<span className="lbl">{t("other team member")} 2:</span>
 				<span>{formatWithComma(result.members[2].total)}</span>
 				<small>
 					({result.members[2].perBerry} × {result.members[2].count})
 				</small>
 
-				<span>{t("other team member")} 3:</span>
+				<span className="lbl">{t("other team member")} 3:</span>
 				<span>{formatWithComma(result.members[3].total)}</span>
 				<small>
 					({result.members[3].perBerry} × {result.members[3].count})
 				</small>
 
-				<span>{t("other team member")} 4:</span>
+				<span className="lbl">{t("other team member")} 4:</span>
 				<span>{formatWithComma(result.members[4].total)}</span>
 				<small>
 					({result.members[4].perBerry} × {result.members[4].count})
@@ -1011,7 +1013,7 @@ function getBerryBurstConfigHtml(
 	return (
 		<>
 			<section style={{ marginTop: "0.5rem" }}>
-				<span>{t("events.advanced")}:</span>
+				<span className="lbl">{t("events.advanced")}:</span>
 				<Switch
 					checked={!auto}
 					size="small"
@@ -1019,7 +1021,9 @@ function getBerryBurstConfigHtml(
 				/>
 			</section>
 			<section style={{ paddingLeft: "1rem" }}>
-				<span>{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:</span>
+				<span className="lbl">
+					{t(`pokemons.${strength.pokemonIv.pokemon.name}`)}:
+				</span>
 				<span style={{ color: "#999" }}>
 					<TypeSelect
 						size="small"
@@ -1036,7 +1040,7 @@ function getBerryBurstConfigHtml(
 			</section>
 			{[0, 1, 2, 3].map((i) => (
 				<section key={i} style={{ paddingLeft: "1rem" }}>
-					<span>
+					<span className="lbl">
 						{t("other team member")} {i + 1}:
 					</span>
 					<span style={{ color: auto ? "#999" : "inherit" }}>
@@ -1067,7 +1071,7 @@ function getBerryBurstConfigHtml(
 			))}
 			{iv.pokemon.name === "Cresselia" && (
 				<section style={{ paddingLeft: "1rem" }}>
-					<span>{t("different species")}:</span>
+					<span className="lbl">{t("different species")}:</span>
 					<span style={{ color: "#999" }}>
 						{auto ? (
 							species

@@ -259,7 +259,7 @@ const FullPreview = React.memo(
 						return (
 							<StyledHover>
 								<h2>{t("after hhmm", { hhmm: timeStr })}</h2>
-								<span>{t("help count")}:</span>
+								<span className="lbl">{t("help count")}:</span>
 								<div>{index}</div>
 								<span className="span">{t("full inventory probability")}:</span>
 								<span className="pad">{t("before this time")}:</span>
@@ -452,7 +452,7 @@ export const FrequencyForm = React.memo(
 		return (
 			<StyledFrequencyControls>
 				<div className="line">
-					<span>{t("helping bonus")}:</span>
+					<span className="lbl">{t("helping bonus")}:</span>
 					<ToggleButtonGroup
 						size="small"
 						exclusive
@@ -467,7 +467,7 @@ export const FrequencyForm = React.memo(
 					</ToggleButtonGroup>
 				</div>
 				<div className="line">
-					<span>{t("good camp ticket")}:</span>
+					<span className="lbl">{t("good camp ticket")}:</span>
 					<Switch
 						checked={state.campTicket}
 						onChange={onCampTicketChange}
@@ -476,7 +476,7 @@ export const FrequencyForm = React.memo(
 				</div>
 				<Collapse in={state.displayValue === "full"}>
 					<div className="line">
-						<span>{t("energy")}:</span>
+						<span className="lbl">{t("energy")}:</span>
 						<ToggleButtonGroup
 							exclusive
 							size="small"
@@ -508,10 +508,10 @@ export const FrequencyForm = React.memo(
 					{!simple && (
 						<>
 							<div className="line">
-								<span>{t("event bonus")}:</span>
+								<span className="lbl">{t("event bonus")}:</span>
 							</div>
 							<div className="line">
-								<span className="indent">{t("berry")}:</span>
+								<span className="indent lbl">{t("berry")}:</span>
 								<ToggleButtonGroup
 									size="small"
 									exclusive
@@ -523,7 +523,7 @@ export const FrequencyForm = React.memo(
 								</ToggleButtonGroup>
 							</div>
 							<div className="line">
-								<span className="indent">{t("ingredient")}:</span>
+								<span className="indent lbl">{t("ingredient")}:</span>
 								<ToggleButtonGroup
 									size="small"
 									exclusive
@@ -535,7 +535,7 @@ export const FrequencyForm = React.memo(
 								</ToggleButtonGroup>
 							</div>
 							<div className="line">
-								<span className="indent">{t("carry limit")}:</span>
+								<span className="indent lbl">{t("carry limit")}:</span>
 								<ToggleButtonGroup
 									size="small"
 									exclusive
@@ -554,7 +554,7 @@ export const FrequencyForm = React.memo(
 				{!simple && (
 					<>
 						<div className="line">
-							<span>{t("expert mode")}:</span>
+							<span className="lbl">{t("expert mode")}:</span>
 							<Switch
 								checked={state.expertMode}
 								onChange={onExpertModeChange}
@@ -563,7 +563,7 @@ export const FrequencyForm = React.memo(
 						</div>
 						<Collapse in={state.expertMode}>
 							<div className="line">
-								<span className="indent">{t("berry")}:</span>
+								<span className="indent lbl">{t("berry")}:</span>
 								<ToggleButtonGroup
 									size="small"
 									exclusive
@@ -584,7 +584,7 @@ export const FrequencyForm = React.memo(
 							}
 						>
 							<div className="line">
-								<span className="indent">{t("expert effect")}:</span>
+								<span className="indent lbl">{t("expert effect")}:</span>
 								<ToggleButtonGroup
 									size="small"
 									exclusive
@@ -601,7 +601,7 @@ export const FrequencyForm = React.memo(
 					</>
 				)}
 				<div className="line">
-					<span>{t("value")}:</span>
+					<span className="lbl">{t("value")}:</span>
 				</div>
 				<div className="value">
 					<ToggleButtonGroup
