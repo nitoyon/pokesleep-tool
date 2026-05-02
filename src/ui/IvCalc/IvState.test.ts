@@ -23,6 +23,7 @@ function createBaseState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
+		teamMembers: [undefined, undefined, undefined, undefined, undefined],
 	};
 }
 

@@ -24,6 +24,7 @@
 	"rp": "SP",
 	"strength2": "能量",
 	"rating": "个体评价",
+	"team": "队伍",
 	"go to strength tab to show the current condition values": "如果想在不同条件下查看宝可梦的性能，请前往[$t(strength2)] 标签并编辑参数。",
 	"rp tab warning level": "[$t(strength2)] 标签中指定了等级 {{level}}，但[$t(rp)] 标签显示的是宝可梦当前等级下的性能。",
 	"rp tab warning field": "[$t(strength2)] 标签中指定了 {{field}}，但[$t(rp)] 标签显示的是没有 $t(area bonus)、没有喜好果的性能。",

@@ -17,6 +17,7 @@ import RatingView from "./RatingView";
 import RpView from "./Rp/RpView";
 import StrengthSettingForm from "./Strength/StrengthParameterForm";
 import StrengthView from "./Strength/StrengthView";
+import TeamView from "./Team/TeamView";
 
 const StyledTabs = styled(Tabs)({
 	minHeight: "36px",
@@ -94,6 +95,7 @@ const ResearchCalcApp = React.memo(() => {
 					<StyledTab label={t("rp")} />
 					<StyledTab label={t("strength2")} />
 					<StyledTab label={t("rating")} />
+					<StyledTab label={t("team")} />
 				</StyledTabs>
 				{state.tabIndex === 0 && <RpView state={state} width={width} />}
 				{state.tabIndex === 1 && (
@@ -102,15 +104,19 @@ const ResearchCalcApp = React.memo(() => {
 				{state.tabIndex === 2 && (
 					<RatingView pokemonIv={state.pokemonIv} width={width} />
 				)}
-				<RateNotFixedPanel state={state} dispatch={dispatch} />
-
-				<LowerTabHeader
-					state={state}
-					dispatch={dispatch}
-					isBoxEmpty={state.box.items.length === 0}
-				/>
+				{state.tabIndex !== 3 && (
+					<>
+						<RateNotFixedPanel state={state} dispatch={dispatch} />
+						<LowerTabHeader
+							state={state}
+							dispatch={dispatch}
+							isBoxEmpty={state.box.items.length === 0}
+						/>
+					</>
+				)}
 			</div>
-			{state.lowerTabIndex === 0 && (
+			{state.tabIndex === 3 && <TeamView state={state} dispatch={dispatch} />}
+			{state.tabIndex !== 3 && state.lowerTabIndex === 0 && (
 				<div style={{ margin: "0 0.5rem 10rem 0.5rem" }}>
 					<IvForm
 						parameter={state.parameter}
@@ -129,7 +135,7 @@ const ResearchCalcApp = React.memo(() => {
 					parameter={state.parameter}
 				/>
 			)}
-			{state.lowerTabIndex === 2 && (
+			{state.tabIndex !== 3 && state.lowerTabIndex === 2 && (
 				<StrengthSettingForm
 					value={state.parameter}
 					items={state.box.items}
