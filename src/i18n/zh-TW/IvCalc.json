@@ -27,6 +27,7 @@
 	"rp": "SP",
 	"strength2": "能量",
 	"rating": "個体評價",
+	"team": "隊伍",
 	"go to strength tab to show the current condition values": "如果想在不同條件下查看寶可夢的性能，請前往[$t(strength2)] 標籤並編輯參數。",
 	"rp tab warning level": "[$t(strength2)] 標籤中指定了等級 {{level}}，但[$t(rp)] 標籤顯示的是寶可夢當前等級下的性能。",
 	"rp tab warning field": "[$t(strength2)] 標籤中指定了 {{field}}，但[$t(rp)] 標籤顯示的是沒有 $t(area bonus)、沒有喜好樹果的性能。",
