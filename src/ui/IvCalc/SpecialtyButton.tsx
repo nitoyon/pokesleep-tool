@@ -11,11 +11,13 @@ const SpecialtyButton = React.memo(
 		checked,
 		disabled,
 		onClick,
+		sx,
 	}: {
 		specialty: PokemonSpecialty;
 		checked?: boolean;
 		disabled?: boolean;
 		onClick?: (value: PokemonSpecialty) => void;
+		sx?: React.CSSProperties;
 	}) => {
 		const { t } = useTranslation();
 		const onTypeClick = useCallback(
@@ -44,7 +46,7 @@ const SpecialtyButton = React.memo(
 
 		if (disabled === true) {
 			return (
-				<StyledDisabledButton key={specialty} className={spec}>
+				<StyledDisabledButton key={specialty} className={spec} style={sx}>
 					{t(spec)}
 				</StyledDisabledButton>
 			);
@@ -56,6 +58,7 @@ const SpecialtyButton = React.memo(
 				className={`${spec} ${checked ? "checked" : ""}`}
 				value={specialty}
 				onClick={onTypeClick}
+				sx={sx}
 			>
 				{t(spec)}
 				{checked && <CheckIcon />}
