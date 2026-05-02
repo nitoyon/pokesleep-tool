@@ -1,5 +1,6 @@
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { styled } from "@mui/system";
+import type i18next from "i18next";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { formatNice } from "../../../util/NumberUtil";
@@ -23,82 +24,104 @@ const SkillArticle = React.memo(
 	}) => {
 		const { t } = useTranslation();
 
-		const mainSkill = pokemonIv.versatileSkill;
-		const mainSkillValue: string = formatNice(skillValue, t);
-		const mainSkillValue2: string =
-			skillValue2 === 0 ? "" : formatNice(skillValue2, t);
-
-		const skill1 = (
-			<div>
-				<MainSkillIcon
-					mainSkill={mainSkill}
-					firstIngredient={pokemonIv.pokemon.ing1.name}
-				/>
-				<span style={{ paddingLeft: "0.2rem" }}>{mainSkillValue}</span>
-			</div>
-		);
-
-		let strength1: React.ReactNode = null;
-		if (skillValue !== skillStrength && skillStrength > 0) {
-			strength1 = (
-				<span className="strength">
-					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-					<span>{formatNice(skillStrength, t)}</span>
-				</span>
-			);
-		}
-
-		let strength2: React.ReactNode = null;
-		if (skillValue2 !== skillStrength2 && skillStrength2 > 0) {
-			strength2 = (
-				<span className="strength">
-					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-					<span>{formatNice(skillStrength2, t)}</span>
-				</span>
-			);
-		}
-
-		let skill2 = null;
-		if (mainSkillValue2 !== "") {
-			// Set to `Versatile` for Mew
-			const mainSkill2 = pokemonIv.pokemon.skill;
-
-			skill2 = (
-				<div>
-					{mainSkill === "Ingredient Magnet S (Plus)" ? (
-						<IngredientIcon name={pokemonIv.pokemon.ing1.name} />
-					) : (
-						<MainSkillIcon mainSkill={mainSkill2} second />
-					)}
-					<span style={{ paddingLeft: "0.2rem" }}>{mainSkillValue2}</span>
-				</div>
-			);
-		}
+		const skill1 = getSkill1Row(pokemonIv, skillValue, skillStrength, t);
+		const skill2 = getSkill2Row(pokemonIv, skillValue2, skillStrength2, t);
 
 		return (
 			<StyledSkillArticle
-				className={mainSkillValue2 !== "" ? `skill2 skillc` : `skill1 skillc`}
+				className={skill2 !== null ? `skill2 skillc` : `skill1 skillc`}
 			>
-				{strength1 === null ? (
-					<div style={{ gridColumn: "1 / -1" }}>{skill1}</div>
-				) : (
-					<>
-						{skill1}
-						{strength1}
-					</>
-				)}
-				{strength2 === null ? (
-					<div style={{ gridColumn: "1 / -1" }}>{skill2}</div>
-				) : (
-					<>
-						{skill2}
-						{strength2}
-					</>
-				)}
+				{skill1}
+				{skill2}
 			</StyledSkillArticle>
 		);
 	},
 );
+
+function getSkill1Row(
+	pokemonIv: PokemonIv,
+	skillValue: number,
+	skillStrength: number,
+	t: typeof i18next.t,
+): React.ReactElement {
+	const mainSkill = pokemonIv.versatileSkill;
+	const mainSkillValue: string = formatNice(skillValue, t);
+
+	const skill1 = (
+		<div>
+			<MainSkillIcon
+				mainSkill={mainSkill}
+				firstIngredient={pokemonIv.pokemon.ing1.name}
+			/>
+			<span style={{ paddingLeft: "0.2rem" }}>{mainSkillValue}</span>
+		</div>
+	);
+
+	// Show skill value only
+	if (skillValue === skillStrength || skillStrength === 0) {
+		return <div style={{ gridColumn: "1 / -1" }}>{skill1}</div>;
+	}
+
+	// Show skill strength too
+	const strength1 = (
+		<span className="strength">
+			<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
+			<span>{formatNice(skillStrength, t)}</span>
+		</span>
+	);
+
+	return (
+		<>
+			{skill1}
+			{strength1}
+		</>
+	);
+}
+
+function getSkill2Row(
+	pokemonIv: PokemonIv,
+	skillValue2: number,
+	skillStrength2: number,
+	t: typeof i18next.t,
+): React.ReactNode {
+	if (skillValue2 === 0 && skillStrength2 === 0) {
+		return null;
+	}
+
+	// Set to `Versatile` for Mew
+	const mainSkill2 = pokemonIv.pokemon.skill;
+	const mainSkillValue2: string = formatNice(skillValue2, t);
+
+	const skill2 = (
+		<div>
+			{mainSkill2 === "Ingredient Magnet S (Plus)" ? (
+				<IngredientIcon name={pokemonIv.pokemon.ing1.name} />
+			) : (
+				<MainSkillIcon mainSkill={mainSkill2} second />
+			)}
+			<span style={{ paddingLeft: "0.2rem" }}>{mainSkillValue2}</span>
+		</div>
+	);
+
+	// Show skill value only
+	if (skillValue2 === skillStrength2 || skillStrength2 === 0) {
+		return <div style={{ gridColumn: "1 / -1" }}>{skill2}</div>;
+	}
+
+	// Show skill strength too
+	const strength2 = (
+		<span className="strength">
+			<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
+			<span>{formatNice(skillStrength2, t)}</span>
+		</span>
+	);
+	return (
+		<>
+			{skill2}
+			{strength2}
+		</>
+	);
+}
 
 const StyledSkillArticle = styled("article")({
 	display: "flex",
