@@ -6,17 +6,11 @@ import {
 	type SelectChangeEvent,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import type i18next from "i18next";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PokemonData } from "../../../data/pokemons";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
-import {
-	formatNice,
-	formatWithComma,
-	round1,
-	round2,
-} from "../../../util/NumberUtil";
+import { formatWithComma, round1, round2 } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import PokemonStrength, {
@@ -26,13 +20,15 @@ import PokemonStrength, {
 } from "../../../util/PokemonStrength";
 import { AmountOfSleep } from "../../../util/TimeUtil";
 import InfoButton from "../InfoButton";
-import IngredientIcon from "../IngredientIcon";
 import type { IvAction } from "../IvState";
-import MainSkillIcon from "../MainSkillIcon";
+import BerryArticle from "./BerryArticle";
 import BerryHelpDialog from "./BerryHelpDialog";
 import EnergyDialog from "./EnergyDialog";
 import HelpStackDialog from "./HelpStackDialog";
+import IngArticle from "./IngArticle";
 import IngHelpDialog from "./IngHelpDialog";
+import NoneArticle from "./NoneArticle";
+import SkillArticle from "./SkillArticle";
 import SkillHelpDialog from "./SkillHelpDialog";
 import TotalStrengthDialog from "./TotalStrengthDialog";
 
@@ -78,79 +74,6 @@ const StyledBerryIngSkillStrengthView = styled("div")({
 					color: "#f0f0f0",
 					width: "16px",
 					height: "16px",
-				},
-			},
-		},
-		"& > article": {
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
-			flexDirection: "column",
-			fontWeight: 600,
-			textAlign: "center",
-			verticalAlign: "middle",
-			fontSize: "1.1rem",
-			margin: "auto 0",
-			height: "3rem",
-			"& span": {
-				verticalAlign: "middle",
-			},
-			"& svg": {
-				verticalAlign: "middle",
-			},
-			"& span.unit": {
-				display: "inline-block",
-				paddingLeft: ".1rem",
-				fontSize: "0.6rem",
-				verticalAlign: "bottom",
-			},
-			"&.ingc": {
-				display: "grid",
-				gridTemplateColumns: "auto auto",
-				"& > span.ing": {
-					textAlign: "right",
-					"& > svg": {
-						width: "0.6em",
-						height: "0.6em",
-						paddingRight: "0.1rem",
-					},
-					"& > span": { fontSize: "0.8em" },
-				},
-				"& > span.strength": {
-					paddingLeft: "0.3rem",
-					textAlign: "right",
-					"& > svg": { width: "0.6em", height: "0.6em" },
-					"& > span": { fontSize: "0.6em" },
-				},
-			},
-			"&.ing2": {
-				lineHeight: "50%",
-			},
-			"&.ing3": {
-				"& > span.ing > svg": { width: "0.4em", height: "0.4em" },
-				fontSize: "0.8em",
-				lineHeight: "50%",
-			},
-			"&.skill2": {
-				lineHeight: "1.6",
-				fontSize: "0.8rem",
-				"& > div > svg": {
-					width: "16px",
-					height: "16px",
-				},
-			},
-			"&.skillc": {
-				display: "grid",
-				gridTemplateColumns: "auto auto",
-				"&.skill1": {
-					fontSize: "0.9rem",
-					"& > div > svg": { width: "0.8em", height: "0.8em" },
-				},
-				"& > span.strength": {
-					paddingLeft: "0.3rem",
-					textAlign: "right",
-					fontSize: "0.7em",
-					"& > svg": { width: "0.6em", height: "0.6em" },
 				},
 			},
 		},
@@ -251,15 +174,10 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 		);
 
 		// summarize ing value
-		const ingArticle = getIngArticle(result, settings, t);
+		const ingArticle = getIngArticle(result, settings);
 
 		// skill value
-		const mainSkillArticle = getMainSkillArticle(
-			pokemonIv,
-			result,
-			settings,
-			t,
-		);
+		const mainSkillArticle = getMainSkillArticle(pokemonIv, result, settings);
 
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
@@ -315,12 +233,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 						{t("berry")}
 						<InfoButton onClick={onBerryHelpClick} />
 					</h3>
-					<article>
-						<div>
-							<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-							<span>{berryStrength}</span>
-						</div>
-					</article>
+					<BerryArticle strength={berryStrength} />
 					<footer>
 						<div>{round1(result.berryRate * 100)}%</div>
 						<div>
@@ -472,128 +385,37 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 function getIngArticle(
 	result: StrengthResult,
 	settings: StrengthParameter,
-	t: typeof i18next.t,
 ): React.ReactNode {
 	if (
 		settings.period !== whistlePeriod &&
 		settings.tapFrequencyAwake === NoTap
 	) {
-		return <article>ー</article>;
+		return <NoneArticle />;
 	}
 
-	const ingValue = (
-		<>
-			{result.ingredients.map((x) => (
-				<React.Fragment key={x.name}>
-					<span className="ing">
-						<IngredientIcon name={x.name} />
-						<span>{round1(x.count)}</span>
-					</span>
-					<span className="strength">
-						<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-						<span>{formatNice(Math.floor(x.strength), t)}</span>
-					</span>
-				</React.Fragment>
-			))}
-		</>
-	);
-	return (
-		<article className={`ingc ing${result.ingredients.length}`}>
-			{ingValue}
-		</article>
-	);
+	return <IngArticle ingredients={result.ingredients} />;
 }
 
 function getMainSkillArticle(
 	pokemonIv: PokemonIv,
 	result: StrengthResult,
 	settings: StrengthParameter,
-	t: typeof i18next.t,
 ): React.ReactNode {
 	if (
 		settings.period <= whistlePeriod ||
 		settings.tapFrequencyAwake === NoTap
 	) {
-		return <article>ー</article>;
-	}
-
-	const mainSkill = pokemonIv.versatileSkill;
-	const mainSkillValue: string = formatNice(result.skillValue, t);
-	const mainSkillValue2: string =
-		//mainSkill === "Energy for Everyone S (Berry Juice)" ? "0.00" :
-		result.skillValue2 === 0 ? "" : formatNice(result.skillValue2, t);
-
-	const skill1 = (
-		<div>
-			<MainSkillIcon
-				mainSkill={mainSkill}
-				firstIngredient={pokemonIv.pokemon.ing1.name}
-			/>
-			<span style={{ paddingLeft: "0.2rem" }}>{mainSkillValue}</span>
-		</div>
-	);
-
-	let skillStrength: React.ReactNode = null;
-	if (result.skillValue !== result.skillStrength && result.skillStrength > 0) {
-		skillStrength = (
-			<span className="strength">
-				<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-				<span>{formatNice(result.skillStrength, t)}</span>
-			</span>
-		);
-	}
-
-	let skillStrength2: React.ReactNode = null;
-	if (
-		result.skillValue2 !== result.skillStrength2 &&
-		result.skillStrength2 > 0
-	) {
-		skillStrength2 = (
-			<span className="strength">
-				<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-				<span>{formatNice(result.skillStrength2, t)}</span>
-			</span>
-		);
-	}
-
-	let skill2 = null;
-	if (mainSkillValue2 !== "") {
-		// Set to `Versatile` for Mew
-		const mainSkill2 = pokemonIv.pokemon.skill;
-
-		skill2 = (
-			<div>
-				{mainSkill === "Ingredient Magnet S (Plus)" ? (
-					<IngredientIcon name={pokemonIv.pokemon.ing1.name} />
-				) : (
-					<MainSkillIcon mainSkill={mainSkill2} second />
-				)}
-				<span style={{ paddingLeft: "0.2rem" }}>{mainSkillValue2}</span>
-			</div>
-		);
+		return <NoneArticle />;
 	}
 
 	return (
-		<article
-			className={mainSkillValue2 !== "" ? `skill2 skillc` : `skill1 skillc`}
-		>
-			{skillStrength === null ? (
-				<div style={{ gridColumn: "1 / -1" }}>{skill1}</div>
-			) : (
-				<>
-					{skill1}
-					{skillStrength}
-				</>
-			)}
-			{skillStrength2 === null ? (
-				<div style={{ gridColumn: "1 / -1" }}>{skill2}</div>
-			) : (
-				<>
-					{skill2}
-					{skillStrength2}
-				</>
-			)}
-		</article>
+		<SkillArticle
+			pokemonIv={pokemonIv}
+			skillValue={result.skillValue}
+			skillStrength={result.skillStrength}
+			skillValue2={result.skillValue2}
+			skillStrength2={result.skillStrength2}
+		/>
 	);
 }
 
