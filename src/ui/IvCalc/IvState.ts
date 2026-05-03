@@ -53,6 +53,10 @@ export type IvAction =
 	| {
 			type: "showAlert";
 			payload: { message: string };
+	  }
+	| {
+			type: "setTeamMember";
+			payload: { index: number; iv: PokemonIv | undefined };
 	  };
 
 const initialBox = new PokemonBox();
@@ -73,6 +77,7 @@ type IvState = {
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
 	alertMessage: string;
+	teamMembers: (PokemonIv | undefined)[];
 };
 
 /**
@@ -129,6 +134,7 @@ export function getInitialIvState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
+		teamMembers: [undefined, undefined, undefined, undefined, undefined],
 	};
 
 	// Update initial pokemonIv
@@ -337,6 +343,12 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	}
 	if (type === "closeAlert") {
 		return { ...state, alertMessage: "" };
+	}
+
+	if (type === "setTeamMember") {
+		const { index, iv } = action.payload;
+		const teamMembers = state.teamMembers.map((x, i) => (i === index ? iv : x));
+		return { ...state, teamMembers };
 	}
 
 	// following action requires item

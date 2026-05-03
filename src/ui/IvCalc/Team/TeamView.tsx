@@ -20,13 +20,6 @@ const TeamView = React.memo(
 		state: IvState;
 		dispatch: (action: IvAction) => void;
 	}) => {
-		const [members, setMembers] = React.useState<(PokemonIv | undefined)[]>([
-			undefined,
-			undefined,
-			undefined,
-			undefined,
-			undefined,
-		]);
 		const [boxDialogOpen, setBoxDialogOpen] = React.useState(false);
 		const [editingIndex, setEditingIndex] = React.useState(-1);
 
@@ -41,13 +34,12 @@ const TeamView = React.memo(
 
 		const onBoxSelect = React.useCallback(
 			(item: PokemonBoxItem) => {
-				setMembers(
-					members.map((x, index) => {
-						return editingIndex !== index ? x : item.iv;
-					}),
-				);
+				dispatch({
+					type: "setTeamMember",
+					payload: { index: editingIndex, iv: item.iv },
+				});
 			},
-			[editingIndex, members],
+			[editingIndex, dispatch],
 		);
 
 		return (
@@ -60,11 +52,31 @@ const TeamView = React.memo(
 					sx={{ width: "100%" }}
 				/>
 				<SpecialtyButton specialty="Skills" disabled sx={{ width: "100%" }} />
-				<MemberView index={0} iv={members[0]} onBoxClick={onBoxClick} />
-				<MemberView index={1} iv={members[1]} onBoxClick={onBoxClick} />
-				<MemberView index={2} iv={members[2]} onBoxClick={onBoxClick} />
-				<MemberView index={3} iv={members[3]} onBoxClick={onBoxClick} />
-				<MemberView index={4} iv={members[4]} onBoxClick={onBoxClick} />
+				<MemberView
+					index={0}
+					iv={state.teamMembers[0]}
+					onBoxClick={onBoxClick}
+				/>
+				<MemberView
+					index={1}
+					iv={state.teamMembers[1]}
+					onBoxClick={onBoxClick}
+				/>
+				<MemberView
+					index={2}
+					iv={state.teamMembers[2]}
+					onBoxClick={onBoxClick}
+				/>
+				<MemberView
+					index={3}
+					iv={state.teamMembers[3]}
+					onBoxClick={onBoxClick}
+				/>
+				<MemberView
+					index={4}
+					iv={state.teamMembers[4]}
+					onBoxClick={onBoxClick}
+				/>
 				<BoxSelectDialog
 					open={boxDialogOpen}
 					items={state.box.items}
