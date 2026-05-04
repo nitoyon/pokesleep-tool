@@ -382,7 +382,8 @@ function calculateBaseFreqAndBonus(
 	);
 	const inventoryBonus = {
 		berry: bonus.berry,
-		ingredient: bonus.ingredient,
+		// fix later
+		ingredient: bonus.ingredient as 0 | 1,
 		carryLimitAdd: bonus.carryLimitAdd,
 		carryLimitMul: bonus.carryLimitMul,
 		expertIng: isFavoriteBerry && param.expertEffect === "ing",
