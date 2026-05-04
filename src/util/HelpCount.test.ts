@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { type BonusEffects, emptyBonusEffects } from "../data/events";
+import { emptyBonusEffects } from "../data/events";
 import Energy, { AlwaysTap, type EnergyParameter, NoTap } from "./Energy";
 import {
 	calculateHelpCount,
@@ -11,6 +11,7 @@ import {
 import Nature from "./Nature";
 import { calculateInventoryDistribution } from "./PokemonInventory";
 import PokemonIv from "./PokemonIv";
+import type { BonusEffectsWithReason } from "./PokemonStrength";
 
 const paramBase = {
 	period: 24,
@@ -28,6 +29,13 @@ const paramBase = {
 function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
 	return Object.assign({ fieldIndex: 0 }, paramBase, obj) as EnergyParameter;
 }
+
+const emptyBonusBase: BonusEffectsWithReason = {
+	...emptyBonusEffects,
+	skillTriggerReason: "none",
+	skillLevelReason: "none",
+	ingredientReason: "none",
+};
 
 describe("calculateHelpCount", () => {
 	test("calculate timeToFullInventory and skillProbabilityAfterWakeup", () => {
@@ -48,13 +56,7 @@ describe("calculateHelpCount", () => {
 
 		const param = createParam({ e4eCount: 0, sleepScore: 90 });
 		const energy = new Energy(iv).calculate(param);
-		const result = calculateHelpCount(
-			iv,
-			param,
-			energy,
-			emptyBonusEffects,
-			false,
-		);
+		const result = calculateHelpCount(iv, param, energy, emptyBonusBase, false);
 
 		// sleep from 981 min
 		const sleepEvent = energy.events.find((x) => x.type === "sleep");
@@ -96,7 +98,7 @@ describe("calculateHelpCount", () => {
 			iv2,
 			param,
 			energy2,
-			emptyBonusEffects,
+			emptyBonusBase,
 			false,
 		);
 
@@ -127,13 +129,7 @@ describe("calculateHelpCount", () => {
 			tapFrequencyAsleep: AlwaysTap,
 		});
 		const energy = new Energy(iv).calculate(param);
-		const result = calculateHelpCount(
-			iv,
-			param,
-			energy,
-			emptyBonusEffects,
-			false,
-		);
+		const result = calculateHelpCount(iv, param, energy, emptyBonusBase, false);
 		expect(result.timeToFullInventory).toBe(-1);
 	});
 
@@ -158,13 +154,7 @@ describe("calculateHelpCount", () => {
 			period: 3,
 		});
 		const energy = new Energy(iv).calculate(param);
-		const result = calculateHelpCount(
-			iv,
-			param,
-			energy,
-			emptyBonusEffects,
-			false,
-		);
+		const result = calculateHelpCount(iv, param, energy, emptyBonusBase, false);
 		expect(result.awake.all).toBeCloseTo(((180 * 60) / 1800) * 2.222);
 		expect(result.asleep.sneakySnacking).toBe(0);
 		expect(result.asleep.normal).toBe(0);
@@ -180,13 +170,7 @@ describe("calculateHelpCount", () => {
 			tapFrequencyAwake: NoTap,
 		});
 		const energy = new Energy(iv).calculate(param);
-		const result = calculateHelpCount(
-			iv,
-			param,
-			energy,
-			emptyBonusEffects,
-			false,
-		);
+		const result = calculateHelpCount(iv, param, energy, emptyBonusBase, false);
 		expect(result.asleep.normal).toBe(0);
 		expect(result.total.normal).toBe(0);
 		expect(result.awake.normal).toBe(0);
@@ -202,13 +186,7 @@ describe("calculateHelpCount", () => {
 
 		const param = createParam({});
 		const energy = new Energy(iv).calculate(param);
-		const result = calculateHelpCount(
-			iv,
-			param,
-			energy,
-			emptyBonusEffects,
-			false,
-		);
+		const result = calculateHelpCount(iv, param, energy, emptyBonusBase, false);
 
 		expect(result.baseFreq).toBe(0);
 		expect(result.total.all).toBe(0);
@@ -226,7 +204,10 @@ describe("calculateHelpCount", () => {
 			});
 		}
 
-		function getCarryLimit(bonus: BonusEffects, isGoodCampTicketSet = false) {
+		function getCarryLimit(
+			bonus: BonusEffectsWithReason,
+			isGoodCampTicketSet = false,
+		) {
 			const iv = createToxelIv();
 			const param = createParam({ isGoodCampTicketSet });
 			const energy = new Energy(iv).calculate(param);
@@ -236,35 +217,35 @@ describe("calculateHelpCount", () => {
 		test("base carryLimit with no bonus", () => {
 			const iv = createToxelIv();
 			expect(iv.carryLimit).toBe(6);
-			expect(getCarryLimit(emptyBonusEffects)).toBe(6);
+			expect(getCarryLimit(emptyBonusBase)).toBe(6);
 		});
 
 		test("carryLimitAdd=8 adds 8 to base", () => {
-			const bonus = { ...emptyBonusEffects, carryLimitAdd: 8 as const };
+			const bonus = { ...emptyBonusBase, carryLimitAdd: 8 as const };
 			expect(getCarryLimit(bonus)).toBe(14); // 6+8
 		});
 
 		test("carryLimitAdd=15 adds 15 to base", () => {
-			const bonus = { ...emptyBonusEffects, carryLimitAdd: 15 as const };
+			const bonus = { ...emptyBonusBase, carryLimitAdd: 15 as const };
 			expect(getCarryLimit(bonus)).toBe(21); // 6+15
 		});
 
 		test("carryLimitMul=1.5 multiplies base", () => {
-			const bonus = { ...emptyBonusEffects, carryLimitMul: 1.5 as const };
+			const bonus = { ...emptyBonusBase, carryLimitMul: 1.5 as const };
 			expect(getCarryLimit(bonus)).toBe(9); // Math.ceil(6*1.5)
 		});
 
 		test("good camp ticket multiplies by 1.2", () => {
-			expect(getCarryLimit(emptyBonusEffects, true)).toBe(8); // Math.ceil(6*1.2)
+			expect(getCarryLimit(emptyBonusBase, true)).toBe(8); // Math.ceil(6*1.2)
 		});
 
 		test("carryLimitAdd=8 + good camp ticket", () => {
-			const bonus = { ...emptyBonusEffects, carryLimitAdd: 8 as const };
+			const bonus = { ...emptyBonusBase, carryLimitAdd: 8 as const };
 			expect(getCarryLimit(bonus, true)).toBe(17); // Math.ceil((6+8)*1.2)
 		});
 
 		test("carryLimitMul=1.5 + good camp ticket", () => {
-			const bonus = { ...emptyBonusEffects, carryLimitMul: 1.5 as const };
+			const bonus = { ...emptyBonusBase, carryLimitMul: 1.5 as const };
 			expect(getCarryLimit(bonus, true)).toBe(11); // Math.ceil(6*1.5*1.2)
 		});
 	});

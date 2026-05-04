@@ -547,6 +547,26 @@ describe("PokemonStrength", () => {
 				expect(resultIng.ing1.count).toBe(ingIv.pokemon.ing1.c1 + 1.5);
 			});
 
+			test("ing: awake tap freq for ing bonus", () => {
+				const param = createParam({
+					fieldIndex,
+					favoriteType: ["fighting", "fire", "water"],
+					expertEffect: "ing",
+					tapFrequencyAsleep: 90,
+				});
+
+				const iv = new PokemonIv({
+					pokemonName: "Quaquaval",
+					level: 30,
+					ingredient: "ABC",
+				});
+				const result = new PokemonStrength(iv, param).calculate();
+				expect(result.ing1.count).toBe(3.5);
+				expect(result.ing2.count).toBe(3.5);
+				expect(result.ingredients).toHaveLength(2);
+				expect(result.ingredients[0].count).toBe(result.ingredients[1].count);
+			});
+
 			test("skill: expertEffect skill gives higher skillCount than expertEffect berry", () => {
 				const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
 				const resultSkill = new PokemonStrength(
