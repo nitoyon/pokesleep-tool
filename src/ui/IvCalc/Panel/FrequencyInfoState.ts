@@ -80,12 +80,14 @@ export function createFrequencyState(
 			: parameter.favoriteType.includes(iv.pokemon.type)
 				? 1
 				: 2;
+	const ingredient =
+		effect.ingredientReason === "ex" ? 0 : (effect.ingredient as 0 | 1);
 	return {
 		...defaultState,
 		helpingBonus: parameter.helpBonusCount,
 		campTicket: parameter.isGoodCampTicketSet,
 		berry: effect.berry,
-		ingredient: effect.ingredient,
+		ingredient,
 		carryLimitAdd: effect.carryLimitAdd,
 		carryLimitMul: effect.carryLimitMul,
 		expertMode,

@@ -1,4 +1,3 @@
-import type { BonusEffects } from "../data/events";
 import { isExpertField } from "../data/fields";
 import type { IngredientName } from "../data/pokemons";
 import {
@@ -14,6 +13,7 @@ import type {
 	IngredientSlot,
 	InventoryBonus,
 } from "./PokemonIv";
+import type { BonusEffectsWithReason } from "./PokemonStrength";
 
 /**
  * Represents help count split by normal and sneaky snacking.
@@ -133,7 +133,7 @@ export function calculateHelpCount(
 	iv: PokemonIv,
 	param: EnergyParameter,
 	energy: EnergyResult,
-	bonus: BonusEffects,
+	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
 ): HelpCountResult {
 	const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
@@ -223,7 +223,7 @@ function initializeHelpCountResult(
 	iv: PokemonIv,
 	param: EnergyParameter,
 	energy: EnergyResult,
-	bonus: BonusEffects,
+	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
 ): HelpCountResult {
 	const { baseFreq, inventoryBonus } = calculateBaseFreqAndBonus(
@@ -360,7 +360,7 @@ function initializeHelpCountResult(
 function calculateBaseFreqAndBonus(
 	iv: PokemonIv,
 	param: EnergyParameter,
-	bonus: BonusEffects,
+	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
 ): {
 	baseFreq: number;
@@ -382,7 +382,8 @@ function calculateBaseFreqAndBonus(
 	);
 	const inventoryBonus = {
 		berry: bonus.berry,
-		ingredient: bonus.ingredient,
+		ingredient:
+			bonus.ingredientReason === "ex" ? 0 : (bonus.ingredient as 0 | 1),
 		carryLimitAdd: bonus.carryLimitAdd,
 		carryLimitMul: bonus.carryLimitMul,
 		expertIng: isFavoriteBerry && param.expertEffect === "ing",

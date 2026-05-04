@@ -992,7 +992,7 @@ class PokemonStrength {
 			isExpertMode && param.favoriteType.includes(this.iv.pokemon.type);
 		const expertSkillLevel =
 			isExpertMode && isMainBerry ? expertMainSkillLevelBonus : 0;
-		const expertIngredientAdditionalEffect =
+		const expertIngredientAdditionalEffect: 0 | 0.5 =
 			isExpertMode &&
 			isFavoriteBerry &&
 			this.param.expertEffect === "ing" &&
@@ -1000,9 +1000,11 @@ class PokemonStrength {
 				this.iv.pokemon.specialty === "All")
 				? expertFavoriteIngredientAdditionalBonus
 				: 0;
-		const expertIngredient =
+		const expertIngredient: 0 | 1 | 1.5 =
 			isExpertMode && isFavoriteBerry && this.param.expertEffect === "ing"
-				? expertFavoriteIngredientBonus + expertIngredientAdditionalEffect
+				? ((expertFavoriteIngredientBonus + expertIngredientAdditionalEffect) as
+						| 1
+						| 1.5)
 				: 0;
 		const expertSkillTrigger =
 			isExpertMode && isFavoriteBerry && this.param.expertEffect === "skill"
@@ -1029,7 +1031,8 @@ class PokemonStrength {
 						? "ex"
 						: "event",
 			berry: targetEventBonus.berry,
-			ingredient: Math.max(expertIngredient, eventIngredient) as 0 | 1,
+			ingredient:
+				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
 			carryLimitAdd: targetEventBonus.carryLimitAdd,
 			carryLimitMul: targetEventBonus.carryLimitMul,
 			ingredientReason: expertIngredient > eventIngredient ? "ex" : "event",
