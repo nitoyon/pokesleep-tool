@@ -466,7 +466,7 @@ class PokemonIv {
 		let ingBonus = ingredientBonus;
 		let hasExpertAdditionalBonus = false;
 		if (expertIngBonus) {
-			ingBonus += expertFavoriteIngredientBonus;
+			ingBonus = expertFavoriteIngredientBonus;
 			if (this.pokemon.specialty === "Ingredients") {
 				hasExpertAdditionalBonus = true;
 			}
