@@ -4,10 +4,10 @@ import React from "react";
 import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
+import BoxView from "../Box/BoxView";
 import type { IvAction } from "../IvState";
-import BoxView from "./BoxView";
 
-const BoxSelectDialog = React.memo(
+const EditMemberDialog = React.memo(
 	({
 		items,
 		parameter,
@@ -65,4 +65,4 @@ const StyledDialog = styled(Dialog)({
 	},
 });
 
-export default BoxSelectDialog;
+export default EditMemberDialog;

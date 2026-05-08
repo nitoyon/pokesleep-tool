@@ -1,9 +1,9 @@
 import { styled } from "@mui/system";
 import React from "react";
 import type { PokemonBoxItem } from "../../../util/PokemonBox";
-import BoxSelectDialog from "../Box/BoxSelectDialog";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
+import EditMemberDialog from "./EditMemberDialog";
 import type { MemberEvent } from "./MemberEvent";
 import MemberItem from "./MemberItem";
 
@@ -25,6 +25,7 @@ const MemberList = React.memo(
 					setBoxDialogOpen(true);
 					return;
 				}
+
 				if (event.action === "clear") {
 					dispatch({
 						type: "setTeamMember",
@@ -57,7 +58,7 @@ const MemberList = React.memo(
 				<MemberItem index={2} iv={state.teamMembers[2]} onChange={onChange} />
 				<MemberItem index={3} iv={state.teamMembers[3]} onChange={onChange} />
 				<MemberItem index={4} iv={state.teamMembers[4]} onChange={onChange} />
-				<BoxSelectDialog
+				<EditMemberDialog
 					open={boxDialogOpen}
 					items={state.box.items}
 					parameter={state.parameter}
