@@ -20,7 +20,7 @@ const MemberList = React.memo(
 
 		const onChange = React.useCallback(
 			(event: MemberEvent) => {
-				if (event.action === "add") {
+				if (event.action === "add" || event.action === "edit") {
 					setEditingIndex(event.index);
 					setBoxDialogOpen(true);
 					return;
@@ -61,6 +61,7 @@ const MemberList = React.memo(
 				<EditMemberDialog
 					open={boxDialogOpen}
 					items={state.box.items}
+					iv={state.teamMembers[editingIndex]}
 					parameter={state.parameter}
 					dispatch={dispatch}
 					onClose={onBoxDialogClose}

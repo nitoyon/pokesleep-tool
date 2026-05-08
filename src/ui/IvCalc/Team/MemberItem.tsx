@@ -71,6 +71,7 @@ const ValidMemberBox = React.memo(
 			React.useState<HTMLElement | null>(null);
 		const onAction = React.useCallback(
 			(action: MemberAction) => {
+				setMoreMenuAnchor(null);
 				onChange({
 					index,
 					action,

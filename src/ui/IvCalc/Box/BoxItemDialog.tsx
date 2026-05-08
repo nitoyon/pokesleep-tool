@@ -84,7 +84,7 @@ const BoxItemDialog = React.memo(
 	},
 );
 
-const BoxItemDialogContent = React.memo(
+export const BoxItemDialogContent = React.memo(
 	({
 		originalBoxItem,
 		isEdit,
