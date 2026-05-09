@@ -14,6 +14,7 @@ import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type PokemonIv from "../../../util/PokemonIv";
+import { useLongPress } from "../../common/Hook";
 import PokemonIcon from "../PokemonIcon";
 import type { MemberAction, MemberEvent } from "./MemberEvent";
 
@@ -75,6 +76,7 @@ const ValidMemberBox = React.memo(
 		const { t } = useTranslation();
 		const [moreMenuAnchor, setMoreMenuAnchor] =
 			React.useState<HTMLElement | null>(null);
+
 		const onAction = React.useCallback(
 			(action: MemberAction) => {
 				setMoreMenuAnchor(null);
@@ -85,9 +87,15 @@ const ValidMemberBox = React.memo(
 			},
 			[index, onChange],
 		);
+
 		const onPokemonClick = React.useCallback(() => {
-			onChange({ index, action: "edit" });
+			onChange({ index, action: "openbox" });
 		}, [index, onChange]);
+		const onLongPress = React.useCallback(() => {
+			onChange({ index, action: "editiv" });
+		}, [index, onChange]);
+		const longPressRef = useLongPress(onLongPress, 500);
+
 		const onMenuClick = React.useCallback(
 			(event: React.MouseEvent<HTMLElement>) => {
 				setMoreMenuAnchor(event.currentTarget);
@@ -101,7 +109,7 @@ const ValidMemberBox = React.memo(
 
 		return (
 			<StyledMember>
-				<ButtonBase onClick={onPokemonClick}>
+				<ButtonBase onClick={onPokemonClick} ref={longPressRef}>
 					<header>
 						<span className="lv">Lv.</span>
 						{iv.level}
@@ -119,7 +127,13 @@ const ValidMemberBox = React.memo(
 					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 				>
 					<MenuList>
-						<MenuItem onClick={() => onAction("edit")}>
+						<MenuItem onClick={() => onAction("openbox")}>
+							<ListItemIcon>
+								<OutboxIcon />
+							</ListItemIcon>
+							{t("box")}
+						</MenuItem>
+						<MenuItem onClick={() => onAction("editiv")}>
 							<ListItemIcon>
 								<EditNoteOutlinedIcon />
 							</ListItemIcon>

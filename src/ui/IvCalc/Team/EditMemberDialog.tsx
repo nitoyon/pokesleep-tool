@@ -18,9 +18,11 @@ import type { StrengthParameter } from "../../../util/PokemonStrength";
 import BoxView from "../Box/BoxView";
 import IvForm from "../IvForm/IvForm";
 import type { IvAction } from "../IvState";
+import type { MemberAction } from "./MemberEvent";
 
 const EditMemberDialog = React.memo(
 	({
+		action,
 		items,
 		iv,
 		parameter,
@@ -29,6 +31,7 @@ const EditMemberDialog = React.memo(
 		onClose,
 		onSelect,
 	}: {
+		action: MemberAction;
 		items: PokemonBoxItem[];
 		iv?: PokemonIv;
 		parameter: StrengthParameter;
@@ -38,10 +41,36 @@ const EditMemberDialog = React.memo(
 		onSelect: (item: PokemonBoxItem) => void;
 	}) => {
 		const { t } = useTranslation();
+		const openRef = React.useRef(open);
 		const [tabIndex, setTabIndex] = React.useState(0);
 		const [pokemonIv, setPokemonIv] = React.useState<PokemonIv>(
 			iv ?? new PokemonIv({ pokemonName: "Bulbasaur" }),
 		);
+
+		// Initialize dialog
+		React.useEffect(() => {
+			// execute only after this dialog is opened
+			if (!(open && !openRef.current)) {
+				openRef.current = open;
+				return;
+			}
+			openRef.current = open;
+
+			// set iv
+			if (iv !== undefined) {
+				setPokemonIv(iv);
+			}
+
+			// set tabIndex
+			if (action === "openbox") {
+				setTabIndex(0);
+			} else if (action === "editiv") {
+				setTabIndex(1);
+			} else if (action === "add") {
+				// if box is not empty, open box
+				setTabIndex(items.length > 0 ? 0 : 1);
+			}
+		});
 
 		const onAdd = React.useCallback(() => {
 			onSelect(new PokemonBoxItem(pokemonIv));
