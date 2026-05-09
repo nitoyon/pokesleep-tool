@@ -1,3 +1,4 @@
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import OutboxIcon from "@mui/icons-material/Outbox";
@@ -50,9 +51,9 @@ const EmptyMemberItem = React.memo(
 
 		return (
 			<StyledEmptyMember>
-				<IconButton onClick={onBoxClickHandler}>
-					<OutboxIcon />
-				</IconButton>
+				<ButtonBase onClick={onBoxClickHandler}>
+					<AddCircleOutlineIcon />
+				</ButtonBase>
 			</StyledEmptyMember>
 		);
 	},
@@ -61,6 +62,14 @@ const EmptyMemberItem = React.memo(
 const StyledEmptyMember = styled("div")({
 	border: "1px solid #aaa",
 	borderRadius: "10px",
+	"& > button": {
+		borderRadius: "10px",
+		width: "100%",
+		height: "100%",
+		"& > svg": {
+			color: "#999",
+		},
+	},
 });
 
 const ValidMemberBox = React.memo(
