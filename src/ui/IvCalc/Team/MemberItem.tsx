@@ -3,6 +3,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import OutboxIcon from "@mui/icons-material/Outbox";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import {
+	ButtonBase,
 	IconButton,
 	ListItemIcon,
 	Menu,
@@ -47,14 +48,19 @@ const EmptyMemberItem = React.memo(
 		}, [index, onChange]);
 
 		return (
-			<StyledMember>
+			<StyledEmptyMember>
 				<IconButton onClick={onBoxClickHandler}>
 					<OutboxIcon />
 				</IconButton>
-			</StyledMember>
+			</StyledEmptyMember>
 		);
 	},
 );
+
+const StyledEmptyMember = styled("div")({
+	border: "1px solid #aaa",
+	borderRadius: "10px",
+});
 
 const ValidMemberBox = React.memo(
 	({
@@ -79,6 +85,9 @@ const ValidMemberBox = React.memo(
 			},
 			[index, onChange],
 		);
+		const onPokemonClick = React.useCallback(() => {
+			onChange({ index, action: "edit" });
+		}, [index, onChange]);
 		const onMenuClick = React.useCallback(
 			(event: React.MouseEvent<HTMLElement>) => {
 				setMoreMenuAnchor(event.currentTarget);
@@ -92,17 +101,17 @@ const ValidMemberBox = React.memo(
 
 		return (
 			<StyledMember>
-				<div className="icon">
+				<ButtonBase onClick={onPokemonClick}>
 					<header>
 						<span className="lv">Lv.</span>
 						{iv.level}
 					</header>
 					<PokemonIcon idForm={iv.idForm} shiny={iv.shiny} size={32} />
 					<footer>{t(`pokemons.${iv.pokemonName}`)}</footer>
-					<IconButton onClick={onMenuClick}>
-						<MoreIcon />
-					</IconButton>
-				</div>
+				</ButtonBase>
+				<IconButton onClick={onMenuClick}>
+					<MoreIcon />
+				</IconButton>
 				<Menu
 					anchorEl={moreMenuAnchor}
 					open={isMenuOpen}
@@ -132,8 +141,12 @@ const ValidMemberBox = React.memo(
 const StyledMember = styled("div")({
 	border: "1px solid #aaa",
 	borderRadius: "10px",
-	"& > div.icon": {
-		position: "relative",
+	position: "relative",
+	"& > button:first-of-type": {
+		borderRadius: "10px",
+		fontFamily: `"M PLUS 1p"`,
+		display: "block",
+		width: "100%",
 		textAlign: "center",
 		"& > header": {
 			fontSize: "0.7rem",
@@ -152,14 +165,14 @@ const StyledMember = styled("div")({
 			color: "#666666",
 			overflowWrap: "anywhere",
 		},
-		"& > button.MuiIconButton-root": {
-			position: "absolute",
-			right: "-8px",
-			top: "-4px",
-			"& > svg": {
-				width: "0.8rem",
-				height: "0.8rem",
-			},
+	},
+	"& > button.MuiIconButton-root": {
+		position: "absolute",
+		right: "-8px",
+		top: "-4px",
+		"& > svg": {
+			width: "0.8rem",
+			height: "0.8rem",
 		},
 	},
 });
