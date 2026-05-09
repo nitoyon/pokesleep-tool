@@ -48,12 +48,10 @@ const DailyView = React.memo(
 				</div>
 				<StyledTotalArticle className="ing">
 					{ingNamesByCount.map((ing) => (
-						<>
-							<span key={ing} className="ing">
-								<IngredientIcon name={ing} />
-								<span>{round1(ingMap.get(ing) ?? 0)}</span>
-							</span>{" "}
-						</>
+						<span key={ing} className="ing">
+							<IngredientIcon name={ing} />
+							<span>{round1(ingMap.get(ing) ?? 0)}</span>
+						</span>
 					))}
 				</StyledTotalArticle>
 				<div className="category">
