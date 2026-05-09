@@ -28,11 +28,13 @@ export interface PokemonOption extends PokemonData {
 
 const PokemonTextField = React.memo(
 	({
+		hideCandyButton,
 		iv,
 		fixMode,
 		onChange,
 		onCandyClick,
 	}: {
+		hideCandyButton?: boolean;
 		iv: PokemonIv;
 		/** Fix evolutionary line or not */
 		fixMode?: boolean;
@@ -96,7 +98,7 @@ const PokemonTextField = React.memo(
 					</TextLikeButton>
 				)}
 				<EvolveButton iv={iv} onChange={onChange} />
-				<CandyButton onClick={onCandyClick} />
+				{!hideCandyButton && <CandyButton onClick={onCandyClick} />}
 				<PokemonSelectDialog
 					open={open}
 					shiny={iv.shiny}

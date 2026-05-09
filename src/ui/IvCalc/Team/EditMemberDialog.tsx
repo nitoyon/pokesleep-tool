@@ -1,9 +1,11 @@
+import CloseIcon from "@mui/icons-material/Close";
 import {
 	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	IconButton,
 	Tab,
 	Tabs,
 } from "@mui/material";
@@ -97,6 +99,9 @@ const EditMemberDialog = React.memo(
 						<StyledTab label={t("box")} value={0} />
 						<StyledTab label={t("pokemon")} value={1} />
 					</StyledTabs>
+					<IconButton onClick={onCloseHook}>
+						<CloseIcon />
+					</IconButton>
 				</DialogTitle>
 				<DialogContent>
 					{tabIndex === 0 && (
@@ -113,6 +118,7 @@ const EditMemberDialog = React.memo(
 						<div style={{ margin: "0.5rem 0.5rem 0" }}>
 							<IvForm
 								dispatch={dispatch}
+								hideCandyButton
 								parameter={parameter}
 								pokemonIv={pokemonIv}
 								onChange={onIvChange}
@@ -146,6 +152,11 @@ const StyledDialog = styled(Dialog)({
 		position: "relative",
 		"& > h2": {
 			padding: "0 10px",
+			"& > button": {
+				position: "absolute",
+				right: 2,
+				top: 2,
+			},
 		},
 		"& > div.MuiDialogContent-root": {
 			padding: 0,
