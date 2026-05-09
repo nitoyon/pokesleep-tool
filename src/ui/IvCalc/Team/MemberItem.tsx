@@ -13,7 +13,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type PokemonIv from "../../../util/PokemonIv";
+import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import { useLongPress } from "../../common/Hook";
 import PokemonIcon from "../PokemonIcon";
 import type { MemberAction, MemberEvent } from "./MemberEvent";
@@ -21,18 +21,18 @@ import type { MemberAction, MemberEvent } from "./MemberEvent";
 const MemberItem = React.memo(
 	({
 		index,
-		iv,
+		item,
 		onChange,
 	}: {
 		index: number;
-		iv?: PokemonIv;
+		item?: PokemonBoxItem;
 		onChange: (event: MemberEvent) => void;
 	}) => {
-		if (iv === undefined) {
+		if (item === undefined) {
 			return <EmptyMemberItem index={index} onChange={onChange} />;
 		}
 
-		return <ValidMemberBox index={index} iv={iv} onChange={onChange} />;
+		return <ValidMemberBox index={index} item={item} onChange={onChange} />;
 	},
 );
 
@@ -66,14 +66,15 @@ const StyledEmptyMember = styled("div")({
 const ValidMemberBox = React.memo(
 	({
 		index,
-		iv,
+		item,
 		onChange,
 	}: {
 		index: number;
-		iv: PokemonIv;
+		item: PokemonBoxItem;
 		onChange: (event: MemberEvent) => void;
 	}) => {
 		const { t } = useTranslation();
+		const iv = item.iv;
 		const [moreMenuAnchor, setMoreMenuAnchor] =
 			React.useState<HTMLElement | null>(null);
 

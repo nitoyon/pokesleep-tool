@@ -56,7 +56,7 @@ export type IvAction =
 	  }
 	| {
 			type: "setTeamMember";
-			payload: { index: number; iv: PokemonIv | undefined };
+			payload: { index: number; item: PokemonBoxItem | undefined };
 	  };
 
 const initialBox = new PokemonBox();
@@ -77,7 +77,7 @@ type IvState = {
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
 	alertMessage: string;
-	teamMembers: (PokemonIv | undefined)[];
+	teamMembers: (PokemonBoxItem | undefined)[];
 };
 
 /**
@@ -346,8 +346,10 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	}
 
 	if (type === "setTeamMember") {
-		const { index, iv } = action.payload;
-		const teamMembers = state.teamMembers.map((x, i) => (i === index ? iv : x));
+		const { index, item } = action.payload;
+		const teamMembers = state.teamMembers.map((x, i) =>
+			i === index ? item : x,
+		);
 		return { ...state, teamMembers };
 	}
 

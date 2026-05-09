@@ -24,7 +24,7 @@ const EditMemberDialog = React.memo(
 	({
 		action,
 		items,
-		iv,
+		item,
 		parameter,
 		open,
 		dispatch,
@@ -33,7 +33,7 @@ const EditMemberDialog = React.memo(
 	}: {
 		action: MemberAction;
 		items: PokemonBoxItem[];
-		iv?: PokemonIv;
+		item?: PokemonBoxItem;
 		parameter: StrengthParameter;
 		open: boolean;
 		dispatch: (action: IvAction) => void;
@@ -44,7 +44,7 @@ const EditMemberDialog = React.memo(
 		const openRef = React.useRef(open);
 		const [tabIndex, setTabIndex] = React.useState(0);
 		const [pokemonIv, setPokemonIv] = React.useState<PokemonIv>(
-			iv ?? new PokemonIv({ pokemonName: "Bulbasaur" }),
+			item?.iv ?? new PokemonIv({ pokemonName: "Bulbasaur" }),
 		);
 
 		// Initialize dialog
@@ -57,8 +57,8 @@ const EditMemberDialog = React.memo(
 			openRef.current = open;
 
 			// set iv
-			if (iv !== undefined) {
-				setPokemonIv(iv);
+			if (item !== undefined) {
+				setPokemonIv(item.iv);
 			}
 
 			// set tabIndex
@@ -89,10 +89,10 @@ const EditMemberDialog = React.memo(
 		}, [onClose, onSelect, pokemonIv, tabIndex]);
 
 		const onReset = React.useCallback(() => {
-			if (iv !== undefined) {
-				setPokemonIv(iv);
+			if (item !== undefined) {
+				setPokemonIv(item.iv);
 			}
-		}, [iv]);
+		}, [item]);
 
 		const onTabChange = React.useCallback(
 			(_event: React.SyntheticEvent, newValue: number) => {
@@ -157,7 +157,7 @@ const EditMemberDialog = React.memo(
 				</DialogContent>
 				{tabIndex === 1 && (
 					<DialogActions>
-						{iv !== undefined && (
+						{item !== undefined && (
 							<>
 								<Button onClick={onReset} color="error">
 									{t("reset")}
@@ -165,7 +165,7 @@ const EditMemberDialog = React.memo(
 								<Button onClick={onCloseHook}>{t("close")}</Button>
 							</>
 						)}
-						{iv === undefined && <Button onClick={onAdd}>{t("add")}</Button>}
+						{item === undefined && <Button onClick={onAdd}>{t("add")}</Button>}
 					</DialogActions>
 				)}
 			</StyledDialog>

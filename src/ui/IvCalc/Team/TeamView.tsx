@@ -13,8 +13,10 @@ const TeamView = React.memo(
 		state: IvState;
 		dispatch: (action: IvAction) => void;
 	}) => {
-		const results = state.teamMembers.map((iv) =>
-			iv ? new PokemonStrength(iv, state.parameter).calculate() : undefined,
+		const results = state.teamMembers.map((member) =>
+			member
+				? new PokemonStrength(member.iv, state.parameter).calculate()
+				: undefined,
 		);
 
 		return (

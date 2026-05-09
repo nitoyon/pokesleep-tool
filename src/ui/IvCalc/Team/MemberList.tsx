@@ -35,7 +35,7 @@ const MemberList = React.memo(
 				if (event.action === "clear") {
 					dispatch({
 						type: "setTeamMember",
-						payload: { index: event.index, iv: undefined },
+						payload: { index: event.index, item: undefined },
 					});
 					return;
 				}
@@ -51,7 +51,7 @@ const MemberList = React.memo(
 			(item: PokemonBoxItem) => {
 				dispatch({
 					type: "setTeamMember",
-					payload: { index: editingIndex, iv: item.iv },
+					payload: { index: editingIndex, item },
 				});
 			},
 			[editingIndex, dispatch],
@@ -59,16 +59,16 @@ const MemberList = React.memo(
 
 		return (
 			<StyledTeamView>
-				<MemberItem index={0} iv={state.teamMembers[0]} onChange={onChange} />
-				<MemberItem index={1} iv={state.teamMembers[1]} onChange={onChange} />
-				<MemberItem index={2} iv={state.teamMembers[2]} onChange={onChange} />
-				<MemberItem index={3} iv={state.teamMembers[3]} onChange={onChange} />
-				<MemberItem index={4} iv={state.teamMembers[4]} onChange={onChange} />
+				<MemberItem index={0} item={state.teamMembers[0]} onChange={onChange} />
+				<MemberItem index={1} item={state.teamMembers[1]} onChange={onChange} />
+				<MemberItem index={2} item={state.teamMembers[2]} onChange={onChange} />
+				<MemberItem index={3} item={state.teamMembers[3]} onChange={onChange} />
+				<MemberItem index={4} item={state.teamMembers[4]} onChange={onChange} />
 				<EditMemberDialog
 					action={editAction}
 					open={boxDialogOpen}
 					items={state.box.items}
-					iv={state.teamMembers[editingIndex]}
+					item={state.teamMembers[editingIndex]}
 					parameter={state.parameter}
 					dispatch={dispatch}
 					onClose={onBoxDialogClose}
