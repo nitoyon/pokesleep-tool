@@ -84,9 +84,9 @@ const EditMemberDialog = React.memo(
 			}
 
 			// Call onSelect when tabIndex === 1 on close
-			onSelect(new PokemonBoxItem(pokemonIv));
+			onSelect(new PokemonBoxItem(pokemonIv, item?.nickname));
 			onClose();
-		}, [onClose, onSelect, pokemonIv, tabIndex]);
+		}, [item, onClose, onSelect, pokemonIv, tabIndex]);
 
 		const onReset = React.useCallback(() => {
 			if (item !== undefined) {
