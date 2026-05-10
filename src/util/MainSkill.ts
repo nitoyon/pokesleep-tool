@@ -388,6 +388,42 @@ export function getIngredientDrawIngredients(
 }
 
 /**
+ * Returns the additional effect of the main skill for the given
+ * skill and level.
+ * @param skill Name of the main skill.
+ * @param skillLevel Level of the main skill.
+ * @param stockpileCount Stockpile's number.
+ * @returns Additional effect for the skill, or throws if not applicable.
+ */
+export function getStockpileStrength(
+	skillLevel: number,
+	stockpileCount: number,
+): number {
+	if (stockpileCount !== 0) {
+		throw new Error(`Unsupported count: ${stockpileCount}`);
+	}
+
+	switch (skillLevel) {
+		case 1:
+			return 600;
+		case 2:
+			return 853;
+		case 3:
+			return 1177;
+		case 4:
+			return 1625;
+		case 5:
+			return 2243;
+		case 6:
+			return 3099;
+		case 7:
+			return 4502;
+		default:
+			throw new Error("invalid skill level");
+	}
+}
+
+/**
  * Returns the berry count of the main skill for the given
  * skill and level.
  * @param skillLevel Level of the main skill.

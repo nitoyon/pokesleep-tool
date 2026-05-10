@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonStrength from "../../../util/PokemonStrength";
+import { simulateTeam } from "../../../util/Team";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
 import DailyView from "./DailyView";
@@ -13,16 +13,12 @@ const TeamView = React.memo(
 		state: IvState;
 		dispatch: (action: IvAction) => void;
 	}) => {
-		const results = state.teamMembers.map((member) =>
-			member
-				? new PokemonStrength(member.iv, state.parameter).calculate()
-				: undefined,
-		);
+		const results = simulateTeam(state.teamMembers, state.parameter);
 
 		return (
 			<>
 				<MemberList state={state} dispatch={dispatch} />
-				<DailyView results={results} />
+				<DailyView results={results.members} />
 			</>
 		);
 	},
