@@ -3,12 +3,20 @@ import { styled } from "@mui/system";
 import React from "react";
 import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
-import type { StrengthResult } from "../../../util/PokemonStrength";
 import IngredientIcon from "../IngredientIcon";
 import SpecialtyButton from "../SpecialtyButton";
 
+/** Minimal result interface required by DailyView. */
+interface DailyViewResult {
+	totalStrength: number;
+	berryTotalStrength: number;
+	skillStrength: number;
+	skillStrength2: number;
+	ingredients: { name: IngredientName; count: number }[];
+}
+
 const DailyView = React.memo(
-	({ results }: { results: (StrengthResult | undefined)[] }) => {
+	({ results }: { results: (DailyViewResult | undefined)[] }) => {
 		const total = results.reduce((sum, r) => sum + (r?.totalStrength ?? 0), 0);
 		const totalBerry = results.reduce(
 			(sum, r) => sum + (r?.berryTotalStrength ?? 0),
