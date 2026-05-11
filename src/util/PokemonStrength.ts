@@ -137,18 +137,9 @@ export interface StrengthParameter extends EnergyParameter {
 	helperBoostSpecies: number;
 
 	/** Berry burst team configuration */
-	berryBurstTeam: {
+	berryBurstTeam: BerryBurstTeam & {
 		/** Whether to calculate automatically using the default team */
 		auto: boolean;
-		/**
-		 * Number of different Pokémon species of the same type on the team.
-		 *
-		 * - Used only when the main skill is "Energy for Everyone S (Lunar Blessing)".
-		 * - Ignored if `auto` is set to true.
-		 */
-		species: number;
-		/** Custom team members (0 - 4) */
-		members: BerryBurstTeamMember[];
 	};
 
 	/** Mew config overwrite */
@@ -156,6 +147,21 @@ export interface StrengthParameter extends EnergyParameter {
 
 	/** Latias/Latios twins are on the team */
 	latiTwins: boolean;
+}
+
+/**
+ * Berry burst team configuration.
+ */
+export interface BerryBurstTeam {
+	/**
+	 * Number of different Pokémon species of the same type on the team.
+	 *
+	 * - Used only when the main skill is "Energy for Everyone S (Lunar Blessing)".
+	 * - Ignored if `auto` is set to true.
+	 */
+	species: number;
+	/** Custom team members (0 - 4) */
+	members: BerryBurstTeamMember[];
 }
 
 /** Custom team member to calculate berry burst */
@@ -1289,10 +1295,13 @@ export function createStrengthParameter(
 export function getBerryBurstTeam(
 	iv: PokemonIv,
 	param: StrengthParameter,
-): BerryBurstTeamMember[] {
+): BerryBurstTeam {
 	// Return custom team if auto is disabled
 	if (!param.berryBurstTeam.auto) {
-		return param.berryBurstTeam.members;
+		return {
+			species: param.berryBurstTeam.species,
+			members: param.berryBurstTeam.members,
+		};
 	}
 
 	// Auto-generate team based on current Pokémon and preferences
@@ -1314,7 +1323,7 @@ export function getBerryBurstTeam(
 		) ?? "psychic";
 
 	// Return the generated team
-	return [
+	const members: BerryBurstTeamMember[] = [
 		// Member 1: Same type as the current Pokémon
 		{ type: iv.pokemon.type, level },
 
@@ -1333,6 +1342,8 @@ export function getBerryBurstTeam(
 		// Member 4: Healer type
 		{ type: healerType, level },
 	];
+	const species = members.filter((x) => x.type === iv.pokemon.type).length;
+	return { species, members };
 }
 
 /**
@@ -1377,12 +1388,7 @@ export function calculateBerryBurstStrength(
 			);
 			break;
 		case "Energy for Everyone S (Lunar Blessing)": {
-			const cnt = getLunarBlessingBerryCount(
-				_skillLevel,
-				param.berryBurstTeam.auto
-					? team.filter((x) => x.type === iv.pokemon.type).length
-					: param.berryBurstTeam.species,
-			);
+			const cnt = getLunarBlessingBerryCount(_skillLevel, team.species);
 			// NOTE: berry burst bonus is not applied to Lunar Blessing
 			// in buncha berries week part 1, but it was applied in part 2
 			myBerryCount = Math.ceil(bonus * cnt.myBerryCount);
@@ -1401,17 +1407,17 @@ export function calculateBerryBurstStrength(
 	// Get the Berry Burst team members (types and levels)
 	const levels: number[] = [
 		iv.level,
-		team[0].level,
-		team[1].level,
-		team[2].level,
-		team[3].level,
+		team.members[0].level,
+		team.members[1].level,
+		team.members[2].level,
+		team.members[3].level,
 	];
 	const types: PokemonType[] = [
 		iv.pokemon.type,
-		team[0].type,
-		team[1].type,
-		team[2].type,
-		team[3].type,
+		team.members[0].type,
+		team.members[1].type,
+		team.members[2].type,
+		team.members[3].type,
 	];
 	const ret = {
 		total: 0,
