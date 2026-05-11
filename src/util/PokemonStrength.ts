@@ -710,6 +710,7 @@ class PokemonStrength {
 			case "Energy for Everyone S (Lunar Blessing)": {
 				const ret = calculateBerryBurstStrength(
 					this.iv,
+					getBerryBurstTeam(this.iv, param),
 					param,
 					bonus.berryBurst,
 					skillLevel,
@@ -773,6 +774,7 @@ class PokemonStrength {
 			case "Berry Burst (Disguise)": {
 				const ret = calculateBerryBurstStrength(
 					this.iv,
+					getBerryBurstTeam(this.iv, param),
 					param,
 					bonus.berryBurst,
 					skillLevel,
@@ -795,6 +797,7 @@ class PokemonStrength {
 			case "Berry Burst": {
 				const ret = calculateBerryBurstStrength(
 					this.iv,
+					getBerryBurstTeam(this.iv, param),
 					param,
 					bonus.berryBurst,
 					skillLevel,
@@ -1350,6 +1353,7 @@ export function getBerryBurstTeam(
  * Calculates the total Berry Burst strength for a Pokémon and its team.
  *
  * @param iv The Pokémon's IV and level information.
+ * @param team The team member information.
  * @param param Additional parameters including team composition and config flags.
  * @param bonus Berry burst effect bonus.
  * @param skillLevel The skill level to use, overriding the default if necessary.
@@ -1364,6 +1368,7 @@ export function getBerryBurstTeam(
  */
 export function calculateBerryBurstStrength(
 	iv: PokemonIv,
+	team: BerryBurstTeam,
 	param: StrengthParameter,
 	bonus: number,
 	skillLevel?: number,
@@ -1377,7 +1382,6 @@ export function calculateBerryBurstStrength(
 
 	// Get berry count
 	// Bonus is ceiled.
-	const team = getBerryBurstTeam(iv, param);
 	let myBerryCount: number, othersBerryCount: number;
 	switch (skill) {
 		case "Berry Burst":

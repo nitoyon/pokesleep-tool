@@ -873,6 +873,7 @@ function getBerryBurstValueText(
 	const bonus = getEventBonus(param.event, param.customEventBonus).berryBurst;
 	const result = calculateBerryBurstStrength(
 		strength.pokemonIv,
+		getBerryBurstTeam(strength.pokemonIv, param),
 		strength.parameter,
 		bonus,
 		skillLevel,
