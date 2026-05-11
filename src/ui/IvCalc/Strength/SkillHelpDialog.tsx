@@ -32,6 +32,7 @@ import {
 } from "../../../util/MainSkill";
 import Nature from "../../../util/Nature";
 import {
+	clamp,
 	formatNice,
 	formatWithComma,
 	round1,
@@ -945,7 +946,10 @@ function getBerryBurstConfigHtml(
 	const burstTeam = getBerryBurstTeam(iv, settings);
 	const maxSpecies =
 		burstTeam.filter((x) => x.type === iv.pokemon.type).length + 1;
-	const species = auto ? maxSpecies : settings.berryBurstTeam.species;
+	const minSpecies = maxSpecies >= 2 ? 2 : 1;
+	const species = auto
+		? maxSpecies
+		: clamp(minSpecies, settings.berryBurstTeam.species, maxSpecies);
 
 	const onBerryBurstAutoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch({
@@ -1081,9 +1085,11 @@ function getBerryBurstConfigHtml(
 								sx={{ padding: "0 0.5rem" }}
 								onChange={onBerryBurstSpeciesChange}
 							>
-								<MenuItem dense value="1">
-									1
-								</MenuItem>
+								{minSpecies === 1 && (
+									<MenuItem dense value="1">
+										1
+									</MenuItem>
+								)}
 								{maxSpecies > 1 && (
 									<MenuItem dense value="2">
 										2
