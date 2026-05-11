@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add tyrunt": {
+				"headline": "$t(pokemons.Tyrunt)・$t(pokemons.Tyrantrum)のデータを追加しました。",
+				"detail": "$t(rp collection)"
+			},
 			"add sandshrew": {
 				"headline": "サンドのデータを追加し、$t(pokemons.Togedemaru)のデータを更新しました。$t(pity proc)・$t(tap frequency)のシミュレーションに対応しました (<a href='https://youtu.be/kEX2myG-wS8'>解説動画</a>)。",
 				"detail": "$t(rp collection)$t(movie detail)"

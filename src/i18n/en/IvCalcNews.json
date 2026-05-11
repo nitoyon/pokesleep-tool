@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add tyrunt": {
+				"headline": "Added data for $t(pokemons.Tyrunt) and $t(pokemons.Tyrantrum).",
+				"detail": "$t(rp collection)"
+			},
 			"add sandshrew": {
 				"headline": "Added data for $t(pokemons.Sandshrew) and $t(pokemons.Sandslash), and updated $t(pokemons.Togedemaru)'s data. $t(pity proc) and $t(tap frequency) simulation are now supported (<a href='https://youtu.be/kEX2myG-wS8'>Tutorial video</a>).",
 				"detail": "$t(rp collection) $t(movie detail)"

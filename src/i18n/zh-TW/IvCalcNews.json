@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add tyrunt": {
+				"headline": "新增了$t(pokemons.Tyrunt)和$t(pokemons.Tyrantrum)的資料。",
+				"detail": "$t(rp collection)"
+			},
 			"add sandshrew": {
 				"headline": "新增了$t(pokemons.Sandshrew)和$t(pokemons.Sandslash)的資料，並更新了$t(pokemons.Togedemaru)的資料。支援了$t(pity proc)・$t(tap frequency)的模擬（<a href='https://youtu.be/kEX2myG-wS8'>講解影片</a>）。",
 				"detail": "$t(rp collection)$t(movie detail)"

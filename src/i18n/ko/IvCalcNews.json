@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add tyrunt": {
+				"headline": "$t(pokemons.Tyrunt)・$t(pokemons.Tyrantrum)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
 			"add sandshrew": {
 				"headline": "$t(pokemons.Sandshrew)・$t(pokemons.Sandslash)의 데이터를 추가하고, $t(pokemons.Togedemaru)의 데이터를 업데이트했습니다. $t(pity proc)・$t(tap frequency) 시뮬레이션에 대응했습니다 (<a href='https://youtu.be/kEX2myG-wS8'>설명 동영상</a>).",
 				"detail": "$t(rp collection)$t(movie detail)"
