@@ -1368,6 +1368,20 @@ const pokemonRectData: { [id: string]: RectElement[] } = {
 		{ x: 0.55, y: 0.6, w: 0.05, h: 0.15, r: 0.2, color: "#66662f" },
 		{ x: 0, y: 0.94, w: 1, h: 0.2, color: "#66662f" },
 	],
+	// Drampa
+	"780": [
+		{ x: 0, y: 0, w: 1, h: 1, color: "#76aea2" },
+		{ x: 0, y: 0, w: 0.5, h: 1, r: 0.1, color: "#fdfbf2" },
+		{ x: 0, y: 0.6, w: 1, h: 1, color: "#fdfbf2" },
+		{ x: 0.5, y: 0.4, w: 0.4, h: 0.4, r: 0.4, color: "#76aea2" },
+		{ x: 0.7, y: 0.4, w: 0.4, h: 0.4, color: "#76aea2" },
+		{ x: 0.7, y: 0, w: 0.45, h: 0.5, r: 0.4, color: "#fdfbf2" },
+		{ x: 0, y: 0.1, w: 0.4, h: 0.1, color: "#f5e760" },
+		{ x: 0, y: 0.2, w: 0.4, h: 0.1, color: "#e5c0d6" },
+		{ x: 0, y: 0.3, w: 0.4, h: 0.1, color: "#76aea2" },
+		{ x: 0, y: 0.4, w: 0.4, h: 0.4, r: 0.1, color: "#dde4b8" },
+		{ x: 0, y: 0.4, w: 0.4, h: 0.2, color: "#dde4b8" },
+	],
 	// Cramorant
 	"845": [
 		{ x: 0, y: 0, w: 1, h: 1, color: "#339eff" },
