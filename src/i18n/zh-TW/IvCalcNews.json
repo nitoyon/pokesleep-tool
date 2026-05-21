@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.5.0": {
+				"headline": "已因應 v3.5.0 的平衡性調整。",
+				"detail": "$t(own research note)"
+			},
 			"add tyrunt": {
 				"headline": "新增了$t(pokemons.Tyrunt)和$t(pokemons.Tyrantrum)的資料。",
 				"detail": "$t(rp collection)"
