@@ -12,7 +12,7 @@ describe("PokemonRP", () => {
 				level: 31,
 			});
 			const rp = new PokemonRp(iv);
-			expect(Math.floor(rp.frequency)).toBe(45 * 60 + 26);
+			expect(Math.floor(rp.frequency)).toBe(43 * 60 + 5);
 		});
 
 		test("test with Helping Speed M", () => {
@@ -22,7 +22,7 @@ describe("PokemonRP", () => {
 				subSkills: new SubSkillList({ lv50: new SubSkill("Helping Speed M") }),
 			});
 			const rp = new PokemonRp(iv);
-			expect(Math.floor(rp.frequency)).toBe(37 * 60 + 29);
+			expect(Math.floor(rp.frequency)).toBe(35 * 60 + 33);
 		});
 
 		test("test with Helping Speed M and nature", () => {
@@ -120,7 +120,7 @@ describe("PokemonRP", () => {
 			const freq1 = rp.frequency;
 			const freq2 = rp.frequency;
 			expect(freq1).toBe(freq2);
-			expect(freq1).toBe(45 * 60 + 26);
+			expect(freq1).toBe(43 * 60 + 5);
 		});
 
 		test("calculate is not cached and returns same value", () => {

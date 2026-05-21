@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.5.0": {
+				"headline": "Updated the data with balance adjustments in version 3.5.0",
+				"detail": "$t(own research note)"
+			},
 			"add tyrunt": {
 				"headline": "Added data for $t(pokemons.Tyrunt) and $t(pokemons.Tyrantrum).",
 				"detail": "$t(rp collection)"

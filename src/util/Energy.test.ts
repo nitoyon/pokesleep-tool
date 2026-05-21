@@ -51,28 +51,28 @@ describe("Energy", () => {
 				minutes: 360,
 				type: "cook",
 				energyBefore: 65,
-				energyAfter: 67,
+				energyAfter: 68,
 				isSnacking: false,
 				isInPeriod: true,
 			},
 			{
 				minutes: 720,
 				type: "cook",
-				energyBefore: 31,
-				energyAfter: 35,
+				energyBefore: 32,
+				energyAfter: 38,
 				isSnacking: false,
 				isInPeriod: true,
 			},
 			{
 				minutes: 930,
 				type: "sleep",
-				energyBefore: 14,
-				energyAfter: 14,
+				energyBefore: 17,
+				energyAfter: 17,
 				isSnacking: false,
 				isInPeriod: true,
 			},
 			{
-				minutes: 1070,
+				minutes: 1100,
 				type: "empty",
 				energyBefore: 0,
 				energyAfter: 0,
@@ -101,7 +101,7 @@ describe("Energy", () => {
 			},
 			{
 				start: 210,
-				end: 430,
+				end: 440,
 				efficiency: 1.923,
 				frequencyRate: 0.52,
 				isAwake: true,
@@ -109,8 +109,8 @@ describe("Energy", () => {
 				isInPeriod: true,
 			},
 			{
-				start: 430,
-				end: 630,
+				start: 440,
+				end: 640,
 				efficiency: 1.724,
 				frequencyRate: 0.58,
 				isAwake: true,
@@ -118,7 +118,7 @@ describe("Energy", () => {
 				isInPeriod: true,
 			},
 			{
-				start: 630,
+				start: 640,
 				end: 930,
 				efficiency: 1.515,
 				frequencyRate: 0.66,
@@ -128,7 +128,7 @@ describe("Energy", () => {
 			},
 			{
 				start: 930,
-				end: 1060,
+				end: 1090,
 				efficiency: 1.515,
 				frequencyRate: 0.66,
 				isAwake: false,
@@ -136,7 +136,7 @@ describe("Energy", () => {
 				isInPeriod: true,
 			},
 			{
-				start: 1060,
+				start: 1090,
 				end: 1440,
 				efficiency: 1,
 				frequencyRate: 1,
@@ -184,28 +184,28 @@ describe("Energy", () => {
 				minutes: 360,
 				type: "cook",
 				energyBefore: 65,
-				energyAfter: 67,
+				energyAfter: 68,
 				isSnacking: false,
 				isInPeriod: false,
 			},
 			{
 				minutes: 720,
 				type: "cook",
-				energyBefore: 31,
-				energyAfter: 35,
+				energyBefore: 32,
+				energyAfter: 38,
 				isSnacking: false,
 				isInPeriod: false,
 			},
 			{
 				minutes: 930,
 				type: "sleep",
-				energyBefore: 14,
-				energyAfter: 14,
+				energyBefore: 17,
+				energyAfter: 17,
 				isSnacking: false,
 				isInPeriod: false,
 			},
 			{
-				minutes: 1070,
+				minutes: 1100,
 				type: "empty",
 				energyBefore: 0,
 				energyAfter: 0,
@@ -243,7 +243,7 @@ describe("Energy", () => {
 			},
 			{
 				start: 210,
-				end: 430,
+				end: 440,
 				efficiency: 1.923,
 				frequencyRate: 0.52,
 				isAwake: true,
@@ -251,8 +251,8 @@ describe("Energy", () => {
 				isInPeriod: false,
 			},
 			{
-				start: 430,
-				end: 630,
+				start: 440,
+				end: 640,
 				efficiency: 1.724,
 				frequencyRate: 0.58,
 				isAwake: true,
@@ -260,7 +260,7 @@ describe("Energy", () => {
 				isInPeriod: false,
 			},
 			{
-				start: 630,
+				start: 640,
 				end: 930,
 				efficiency: 1.515,
 				frequencyRate: 0.66,
@@ -270,7 +270,7 @@ describe("Energy", () => {
 			},
 			{
 				start: 930,
-				end: 1060,
+				end: 1090,
 				efficiency: 1.515,
 				frequencyRate: 0.66,
 				isAwake: false,
@@ -278,7 +278,7 @@ describe("Energy", () => {
 				isInPeriod: false,
 			},
 			{
-				start: 1060,
+				start: 1090,
 				end: 1440,
 				efficiency: 1,
 				frequencyRate: 1,
@@ -312,12 +312,12 @@ describe("Energy", () => {
 				minutes: 120,
 				type: "cook",
 				energyBefore: 0,
-				energyAfter: 5,
+				energyAfter: 9,
 				isSnacking: false,
 				isInPeriod: true,
 			},
 			{
-				minutes: 170,
+				minutes: 210,
 				type: "empty",
 				energyBefore: 0,
 				energyAfter: 0,
@@ -328,12 +328,12 @@ describe("Energy", () => {
 				minutes: 360,
 				type: "cook",
 				energyBefore: 0,
-				energyAfter: 5,
+				energyAfter: 9,
 				isSnacking: false,
 				isInPeriod: true,
 			},
 			{
-				minutes: 410,
+				minutes: 450,
 				type: "empty",
 				energyBefore: 0,
 				energyAfter: 0,
@@ -352,12 +352,12 @@ describe("Energy", () => {
 				minutes: 720,
 				type: "cook",
 				energyBefore: 0,
-				energyAfter: 5,
+				energyAfter: 9,
 				isSnacking: false,
 				isInPeriod: false,
 			},
 			{
-				minutes: 770,
+				minutes: 810,
 				type: "empty",
 				energyBefore: 0,
 				energyAfter: 0,
@@ -472,9 +472,9 @@ describe("Energy", () => {
 		const result = energy.calculate(createParam({ e4eCount: 2 }));
 
 		expect(result.averageEfficiency).toEqual({
-			total: 1.812,
-			awake: 1.987,
-			asleep: 1.493,
+			total: 1.819,
+			awake: 1.989,
+			asleep: 1.507,
 		});
 	});
 
@@ -498,23 +498,23 @@ describe("Energy", () => {
 		);
 
 		expect(result.averageEfficiency).toEqual({
-			total: 1.043,
-			awake: 1.043,
+			total: 1.086,
+			awake: 1.086,
 			asleep: 1,
 		});
 
 		expect(result.events[1].type).toBe("cook");
-		expect(result.events[1].energyAfter).toBe(5);
+		expect(result.events[1].energyAfter).toBe(9);
 		expect(result.events[1].minutes).toBe(120);
 		expect(result.events[2].type).toBe("empty");
 		expect(result.events[2].energyBefore).toBe(0);
-		expect(result.events[2].minutes).toBe(170);
+		expect(result.events[2].minutes).toBe(210);
 
 		expect(result.events[3].type).toBe("cook");
-		expect(result.events[3].energyAfter).toBe(5);
+		expect(result.events[3].energyAfter).toBe(9);
 		expect(result.events[3].minutes).toBe(360);
 		expect(result.events[4].type).toBe("empty");
 		expect(result.events[4].energyBefore).toBe(0);
-		expect(result.events[4].minutes).toBe(410);
+		expect(result.events[4].minutes).toBe(450);
 	});
 });

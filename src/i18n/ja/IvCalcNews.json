@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.5.0": {
+				"headline": "v3.5.0 でのバランス調整に対応しました。",
+				"detail": "$t(own research note)"
+			},
 			"add tyrunt": {
 				"headline": "$t(pokemons.Tyrunt)・$t(pokemons.Tyrantrum)のデータを追加しました。",
 				"detail": "$t(rp collection)"
