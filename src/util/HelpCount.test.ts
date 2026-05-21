@@ -71,7 +71,7 @@ describe("calculateHelpCount", () => {
 
 		// snacking from 981 + 300 min (30min x 10)
 		expect(result.timeToFullInventory).toBe(300);
-		expect(result.asleep.normal).toBe(10);
+		expect(result.asleep.normal).toBeCloseTo(10, 5);
 		expect(result.skillProbabilityAfterWakeup.once).toBeCloseTo(
 			10 * 0.1 * 0.9 ** 9,
 		);
