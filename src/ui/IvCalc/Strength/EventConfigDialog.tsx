@@ -564,7 +564,7 @@ const EventConfigDialog = React.memo(
 						</div>
 					</section>
 					<section>
-						<span>{t("skills.Ingredient Magnet S")}:</span>
+						<span>{t("skills.Ingredient Magnet S.name")}:</span>
 						<div>
 							<ToggleButtonGroup
 								size="small"
