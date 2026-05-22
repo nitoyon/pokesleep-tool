@@ -49,8 +49,6 @@
 	"bonus not match": "오늘의 졸음 파워 보너스는 {{bonus}}입니다.",
 	"sleep twice": "분할 수면하기",
 	"total n pokemon": "총 <n/>체",
-	"range separator": "~",
-	"text separator": ", ",
 	"hhmm_short": "{{h}}시간 {{m}}분",
 	"mmss_short": "{{m}}분 {{s}}초",
 	"ss_short": "{{s}}초",

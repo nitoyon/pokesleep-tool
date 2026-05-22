@@ -49,8 +49,6 @@
 	"bonus not match": "今日のねむけボーナスは {{bonus}} です。",
 	"sleep twice": "分割睡眠する",
 	"total n pokemon": "合計<n/>体",
-	"range separator": "～",
-	"text separator": "、",
 	"hhmm_short": "{{h}}時間{{m}}分",
 	"mmss_short": "{{m}}分{{s}}秒",
 	"ss_short": "{{s}}秒",
