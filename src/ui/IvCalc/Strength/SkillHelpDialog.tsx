@@ -373,7 +373,7 @@ const SkillHelpDialog = React.memo(
 						{round1(result.overallSkillRate * 100)}%
 					</section>
 
-					{getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
+					{getConfigHtml(strength, dispatch, onBerryInfoClick, t)}
 					{footnote !== "" && <div className="footnote">{footnote}</div>}
 				</DialogContent>
 				<DialogActions>
@@ -925,22 +925,30 @@ function getNormalSkillValueText(
 	return [t("value per skill", { value: valueText }), null];
 }
 
+function getConfigHtml(
+	strength: PokemonStrength,
+	dispatch: React.Dispatch<IvAction>,
+	onBerryInfoClick: (type: PokemonType, level: number) => void,
+	t: typeof i18next.t,
+): React.ReactNode {
+	const iv = strength.pokemonIv;
+	if (
+		iv.versatileSkill.startsWith("Berry Burst") ||
+		iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
+	) {
+		return getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t);
+	}
+
+	return null;
+}
+
 function getBerryBurstConfigHtml(
 	strength: PokemonStrength,
 	dispatch: React.Dispatch<IvAction>,
 	onBerryInfoClick: (type: PokemonType, level: number) => void,
 	t: typeof i18next.t,
-) {
+): React.ReactNode {
 	const settings = strength.parameter;
-
-	const showBurstConfig =
-		strength.pokemonIv.versatileSkill.startsWith("Berry Burst") ||
-		strength.pokemonIv.pokemon.skill ===
-			"Energy for Everyone S (Lunar Blessing)";
-	if (!showBurstConfig) {
-		return null;
-	}
-
 	const iv = strength.pokemonIv;
 	const auto = settings.berryBurstTeam.auto;
 	const burstTeam = getBerryBurstTeam(iv, settings);
