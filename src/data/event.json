@@ -1,6 +1,11 @@
 {
 	"drowsy": [
 		{
+			"name": "Latios",
+			"day": "2026-06-22",
+			"bonus": 1.5
+		},
+		{
 			"name": "GSD",
 			"day": "2026-05-30",
 			"bonus": 1.5
