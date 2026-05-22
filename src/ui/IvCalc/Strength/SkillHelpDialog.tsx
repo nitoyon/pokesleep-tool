@@ -1128,7 +1128,7 @@ function getBerryBurstConfigHtml(
 					</span>
 				</section>
 			))}
-			{iv.pokemon.name === "Cresselia" && (
+			{iv.pokemon.exp === 1080 && (
 				<section style={{ paddingLeft: "1rem" }}>
 					<span className="lbl">{t("different species")}:</span>
 					<span style={{ color: "#999" }}>
