@@ -932,6 +932,11 @@ function getConfigHtml(
 	t: typeof i18next.t,
 ): React.ReactNode {
 	const iv = strength.pokemonIv;
+
+	if (iv.pokemon.skill === "Energizing Cheer S (Heal Pulse)") {
+		return getLatiTwinsConfigHtml(strength, dispatch, t);
+	}
+
 	if (
 		iv.versatileSkill.startsWith("Berry Burst") ||
 		iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
@@ -940,6 +945,43 @@ function getConfigHtml(
 	}
 
 	return null;
+}
+
+function getLatiTwinsConfigHtml(
+	strength: PokemonStrength,
+	dispatch: React.Dispatch<IvAction>,
+	t: typeof i18next.t,
+): React.ReactElement {
+	const settings = strength.parameter;
+	const onLatiTwinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		dispatch({
+			type: "changeParameter",
+			payload: {
+				parameter: {
+					...settings,
+					latiTwins: e.target.checked,
+				},
+			},
+		});
+	};
+
+	const label = t("pokemon on your team", {
+		pokemon:
+			strength.pokemonIv.pokemon.id === 380
+				? t("pokemons.Latios")
+				: t("pokemons.Latias"),
+	});
+
+	return (
+		<section style={{ marginTop: "0.5rem" }}>
+			<span className="lbl">{label}:</span>
+			<Switch
+				checked={settings.latiTwins}
+				size="small"
+				onChange={onLatiTwinsChange}
+			/>
+		</section>
+	);
 }
 
 function getBerryBurstConfigHtml(
@@ -1021,6 +1063,11 @@ function getBerryBurstConfigHtml(
 			},
 		});
 	};
+
+	const twins =
+		iv.pokemon.skill === "Berry Burst (Draco Meteor)"
+			? getLatiTwinsConfigHtml(strength, dispatch, t)
+			: null;
 
 	return (
 		<>
@@ -1123,6 +1170,7 @@ function getBerryBurstConfigHtml(
 					</span>
 				</section>
 			)}
+			{twins}
 		</>
 	);
 }
