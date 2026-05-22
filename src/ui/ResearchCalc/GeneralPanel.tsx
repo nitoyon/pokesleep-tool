@@ -4,7 +4,6 @@ import BetterSecondSleepDialog, {
 } from "./BetterSecondSleepDialog";
 import PreviewScore from "./PreviewScore";
 import type { InputAreaData } from "./ResearchCalcAppConfig";
-import { getScoreRange } from "./Score";
 
 export default function GeneralPanel({ data }: { data: InputAreaData }) {
 	const [isBetterSecondSleepDialogOpen, setBetterSecondSleepOpen] =
@@ -28,31 +27,26 @@ export default function GeneralPanel({ data }: { data: InputAreaData }) {
 			<PreviewScore
 				count={4}
 				data={data}
-				ranges={getScoreRange(4, data)}
 				onSecondSleepDetailClick={onSecondSleepDetailClick}
 			/>
 			<PreviewScore
 				count={5}
 				data={data}
-				ranges={getScoreRange(5, data)}
 				onSecondSleepDetailClick={onSecondSleepDetailClick}
 			/>
 			<PreviewScore
 				count={6}
 				data={data}
-				ranges={getScoreRange(6, data)}
 				onSecondSleepDetailClick={onSecondSleepDetailClick}
 			/>
 			<PreviewScore
 				count={7}
 				data={data}
-				ranges={getScoreRange(7, data)}
 				onSecondSleepDetailClick={onSecondSleepDetailClick}
 			/>
 			<PreviewScore
 				count={8}
 				data={data}
-				ranges={getScoreRange(8, data)}
 				onSecondSleepDetailClick={onSecondSleepDetailClick}
 			/>
 			<BetterSecondSleepDialog
