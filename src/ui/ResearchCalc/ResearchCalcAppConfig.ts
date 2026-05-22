@@ -1,3 +1,4 @@
+import { isInLatiosEvent } from "../../data/events";
 import fields from "../../data/fields";
 
 /** Sleep tracking configuration. */
@@ -31,8 +32,27 @@ export interface InputAreaData {
 	/** whether to do two sleep sessions in one day */
 	secondSleep: boolean;
 
+	/** Latios on your team */
+	isLatiosOnTeam: boolean;
+
+	/** Latias on your team */
+	isLatiasOnTeam: boolean;
+
 	/** Tracking configuration (undefined when not tracking) */
 	tracking?: TrackingData;
+}
+
+export function updateActualBonus(data: InputAreaData): InputAreaData {
+	let bonus = data.bonus;
+	if (isInLatiosEvent()) {
+		if (data.isLatiosOnTeam && data.isLatiasOnTeam) {
+			bonus = Math.max(data.bonus, 1.3);
+		} else if (data.isLatiosOnTeam || data.isLatiasOnTeam) {
+			bonus = Math.max(data.bonus, 1.1);
+		}
+	}
+
+	return { ...data, bonus };
 }
 
 export function loadConfig(): InputAreaData {
@@ -41,6 +61,8 @@ export function loadConfig(): InputAreaData {
 		strength: 73120,
 		bonus: 1,
 		secondSleep: false,
+		isLatiosOnTeam: false,
+		isLatiasOnTeam: false,
 		tracking: undefined,
 	};
 
@@ -70,6 +92,13 @@ export function loadConfig(): InputAreaData {
 	}
 	if (typeof json.secondSleep === "boolean") {
 		config.secondSleep = json.secondSleep;
+	}
+
+	if (typeof json.isLatiosOnTeam === "boolean") {
+		config.isLatiosOnTeam = json.isLatiosOnTeam;
+	}
+	if (typeof json.isLatiasOnTeam === "boolean") {
+		config.isLatiasOnTeam = json.isLatiasOnTeam;
 	}
 
 	if (

@@ -11,7 +11,7 @@ import {
 import { styled } from "@mui/system";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getDrowsyBonus } from "../../data/events";
+import { getDrowsyBonus, isInLatiosEvent } from "../../data/events";
 import fields, { type FieldData, MAX_STRENGTH } from "../../data/fields";
 import Rank from "../../util/Rank";
 import ArrowButton from "../common/ArrowButton";
@@ -20,6 +20,7 @@ import SliderEx from "../common/SliderEx";
 import RankBall from "./RankBallLabel";
 import ResearchAreaTextField from "./ResearchAreaTextField";
 import type { InputAreaData } from "./ResearchCalcAppConfig";
+import { updateActualBonus } from "./ResearchCalcAppConfig";
 import TrackingPanel from "./TrackingPanel";
 
 interface InputAreaProps {
@@ -96,6 +97,19 @@ function InputArea({ data, onChange: onchange }: InputAreaProps) {
 		[onchange],
 	);
 
+	const onLatiosChange = useCallback(
+		(isLatiosOnTeam: boolean) => {
+			onchange?.({ isLatiosOnTeam });
+		},
+		[onchange],
+	);
+	const onLatiasChange = useCallback(
+		(isLatiasOnTeam: boolean) => {
+			onchange?.({ isLatiasOnTeam });
+		},
+		[onchange],
+	);
+
 	const onSecondSleepChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const secondSleep = e.target.checked;
@@ -154,13 +168,25 @@ function InputArea({ data, onChange: onchange }: InputAreaProps) {
 					<div>
 						<EventBonusTextField value={data.bonus} onChange={onBonusChange} />
 					</div>
+					<TeamCheckbox
+						type="Latios"
+						bonus={data.bonus}
+						value={data.isLatiosOnTeam}
+						onChange={onLatiosChange}
+					/>
+					<TeamCheckbox
+						type="Latias"
+						bonus={data.bonus}
+						value={data.isLatiasOnTeam}
+						onChange={onLatiasChange}
+					/>
 					<SecondSleepCheckbox
 						value={data.secondSleep}
 						onChange={onSecondSleepChange}
 					/>
 				</div>
 			</StyledForm>
-			<TrackingPanel data={data} onChange={onchange} />
+			<TrackingPanel data={updateActualBonus(data)} onChange={onchange} />
 		</>
 	);
 }
@@ -400,6 +426,54 @@ const EventBonusTextField = React.memo(
 					</Button>
 				</Collapse>
 			</>
+		);
+	},
+);
+
+const TeamCheckbox = React.memo(
+	({
+		bonus,
+		type,
+		value,
+		onChange,
+	}: {
+		bonus: number;
+		type: "Latios" | "Latias";
+		value: boolean;
+		onChange: (value: boolean) => void;
+	}) => {
+		const { t } = useTranslation();
+		const [open, setOpen] = React.useState(isInLatiosEvent());
+		const handler = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange(e.target.checked);
+			},
+			[onChange],
+		);
+
+		React.useEffect(() => {
+			const interval = setInterval(() => {
+				const val = isInLatiosEvent();
+				if (val !== open) {
+					setOpen(val);
+					if (!val) {
+						onChange(false);
+					}
+				}
+			}, 1000);
+			return () => clearInterval(interval);
+		});
+
+		return (
+			<Collapse in={open && bonus === 1}>
+				<FormControlLabel
+					sx={{ marginRight: 0 }}
+					control={<Checkbox checked={value} onChange={handler} />}
+					label={t("pokemon on your team", {
+						pokemon: t(`pokemons.${type}`),
+					})}
+				/>
+			</Collapse>
 		);
 	},
 );
