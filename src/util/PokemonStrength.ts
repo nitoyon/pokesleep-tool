@@ -151,6 +151,9 @@ export interface StrengthParameter extends EnergyParameter {
 
 	/** Mew config overwrite */
 	mew: MewParameter;
+
+	/** Latias/Latios twins are on the team */
+	latiTwins: boolean;
 }
 
 /** Custom team member to calculate berry burst */
@@ -664,7 +667,10 @@ class PokemonStrength {
 					skillValuePerTrigger2: 0,
 				};
 			case "Energizing Cheer S (Heal Pulse)": {
-				const helpCount = getSkillSubValue(mainSkill, skillLevel);
+				const bonus = skillLevel <= 2 ? 1 : skillLevel <= 5 ? 2 : 3;
+				const helpCount =
+					getSkillSubValue(mainSkill, skillLevel) +
+					(param.latiTwins ? bonus : 0);
 				const skillValuePerTrigger2 = helpCount;
 				const skillValue2 = helpCount * skillCount;
 				const skillStrength2 = skillValue2 * strengthPerHelp * 2;
@@ -1245,6 +1251,7 @@ export function createStrengthParameter(
 			skill3: 3.2,
 			success: 30,
 		},
+		latiTwins: false,
 	};
 	return { ...defaultParameters, ...param };
 }
@@ -1356,6 +1363,11 @@ export function calculateBerryBurstStrength(
 			// in buncha berries week part 1, but it was applied in part 2
 			myBerryCount = Math.ceil(bonus * cnt.myBerryCount);
 			othersBerryCount = Math.ceil(bonus * cnt.othersBerryCount);
+			break;
+		}
+		case "Berry Burst (Draco Meteor)": {
+			myBerryCount = 0;
+			othersBerryCount = 0;
 			break;
 		}
 		default:
@@ -1716,6 +1728,10 @@ export function loadStrengthParameter(): StrengthParameter {
 		) {
 			ret.mew.success = json.mew.success;
 		}
+	}
+
+	if (typeof json.latiTwins === "boolean") {
+		ret.latiTwins = json.latiTwins;
 	}
 
 	return ret;

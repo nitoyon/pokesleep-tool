@@ -373,7 +373,7 @@ const SkillHelpDialog = React.memo(
 						{round1(result.overallSkillRate * 100)}%
 					</section>
 
-					{getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t)}
+					{getConfigHtml(strength, dispatch, onBerryInfoClick, t)}
 					{footnote !== "" && <div className="footnote">{footnote}</div>}
 				</DialogContent>
 				<DialogActions>
@@ -925,22 +925,72 @@ function getNormalSkillValueText(
 	return [t("value per skill", { value: valueText }), null];
 }
 
+function getConfigHtml(
+	strength: PokemonStrength,
+	dispatch: React.Dispatch<IvAction>,
+	onBerryInfoClick: (type: PokemonType, level: number) => void,
+	t: typeof i18next.t,
+): React.ReactNode {
+	const iv = strength.pokemonIv;
+
+	if (iv.pokemon.skill === "Energizing Cheer S (Heal Pulse)") {
+		return getLatiTwinsConfigHtml(strength, dispatch, t);
+	}
+
+	if (
+		iv.versatileSkill.startsWith("Berry Burst") ||
+		iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
+	) {
+		return getBerryBurstConfigHtml(strength, dispatch, onBerryInfoClick, t);
+	}
+
+	return null;
+}
+
+function getLatiTwinsConfigHtml(
+	strength: PokemonStrength,
+	dispatch: React.Dispatch<IvAction>,
+	t: typeof i18next.t,
+): React.ReactElement {
+	const settings = strength.parameter;
+	const onLatiTwinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		dispatch({
+			type: "changeParameter",
+			payload: {
+				parameter: {
+					...settings,
+					latiTwins: e.target.checked,
+				},
+			},
+		});
+	};
+
+	const label = t("pokemon on your team", {
+		pokemon:
+			strength.pokemonIv.pokemon.id === 380
+				? t("pokemons.Latios")
+				: t("pokemons.Latias"),
+	});
+
+	return (
+		<section style={{ marginTop: "0.5rem" }}>
+			<span className="lbl">{label}:</span>
+			<Switch
+				checked={settings.latiTwins}
+				size="small"
+				onChange={onLatiTwinsChange}
+			/>
+		</section>
+	);
+}
+
 function getBerryBurstConfigHtml(
 	strength: PokemonStrength,
 	dispatch: React.Dispatch<IvAction>,
 	onBerryInfoClick: (type: PokemonType, level: number) => void,
 	t: typeof i18next.t,
-) {
+): React.ReactNode {
 	const settings = strength.parameter;
-
-	const showBurstConfig =
-		strength.pokemonIv.versatileSkill.startsWith("Berry Burst") ||
-		strength.pokemonIv.pokemon.skill ===
-			"Energy for Everyone S (Lunar Blessing)";
-	if (!showBurstConfig) {
-		return null;
-	}
-
 	const iv = strength.pokemonIv;
 	const auto = settings.berryBurstTeam.auto;
 	const burstTeam = getBerryBurstTeam(iv, settings);
@@ -1014,6 +1064,11 @@ function getBerryBurstConfigHtml(
 		});
 	};
 
+	const twins =
+		iv.pokemon.skill === "Berry Burst (Draco Meteor)"
+			? getLatiTwinsConfigHtml(strength, dispatch, t)
+			: null;
+
 	return (
 		<>
 			<section style={{ marginTop: "0.5rem" }}>
@@ -1073,7 +1128,7 @@ function getBerryBurstConfigHtml(
 					</span>
 				</section>
 			))}
-			{iv.pokemon.name === "Cresselia" && (
+			{iv.pokemon.exp === 1080 && (
 				<section style={{ paddingLeft: "1rem" }}>
 					<span className="lbl">{t("different species")}:</span>
 					<span style={{ color: "#999" }}>
@@ -1115,6 +1170,7 @@ function getBerryBurstConfigHtml(
 					</span>
 				</section>
 			)}
+			{twins}
 		</>
 	);
 }

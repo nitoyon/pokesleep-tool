@@ -403,6 +403,10 @@ function calculateTimeToFullInventory(
 	const alwaysTapAsleep = param.tapFrequencyAsleep === AlwaysTap;
 	const bagUsagePerHelp = iv.getBagUsagePerHelp(inventoryBonus);
 
+	if (baseFreq === 0) {
+		return 0;
+	}
+
 	// calculate timeToFullInventory & timeFullInventory
 	let carryLeft = carryLimit;
 	let timeToFullInventory = 9999; // elapsed time since sleep start when bag becomes full

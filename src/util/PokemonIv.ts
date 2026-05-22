@@ -218,6 +218,10 @@ class PokemonIv {
 				return 78;
 			}
 
+			if (this.pokemon.frequency === 0) {
+				return 78;
+			}
+
 			return Math.ceil(142000 / this.pokemon.frequency);
 		});
 	}
@@ -231,6 +235,9 @@ class PokemonIv {
 	 * @return Overall skill proc rate.
 	 */
 	calculateSkillRateWithPityProc(rate: number): number {
+		if (rate === 0) {
+			return 0;
+		}
 		return rate / (1 - (1 - rate) ** (this.pityProcHelpCount + 1));
 	}
 

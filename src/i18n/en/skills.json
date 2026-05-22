@@ -208,6 +208,12 @@
 			"desc": "Additionally, get Candy for 1 Pokémon on your team.",
 			"detail": "From skill level 6 onward, there is a chance to get extra Candy. The chance is said to be 30% (per RaenonX)."
 		},
+		"Berry Burst (Draco Meteor)": {
+			"name": "Draco Meteor (Berry Burst)",
+			"strength": "",
+			"desc": "Gets Berries Pokémon on your team (including itself) collect. The more different species of Dragon-type Pokémon on your team, the more Berries it gets. If Latias is on your team, the number of Berries this Pokémon gets increases.",
+			"detail": ""
+		},
 		"unknown": {
 			"name": "(Unknown)",
 			"strength": "The main skill has not been determined yet."

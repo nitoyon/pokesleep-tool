@@ -952,6 +952,11 @@ const pokemonRectData: { [id: string]: RectElement[] } = {
 		{ x: 0, y: 0, w: 1, h: 1, color: "#da5b66" },
 		{ x: 0, y: 0, w: 1, h: 0.48, color: "#ffffff" },
 	],
+	// Latios
+	"381": [
+		{ x: 0, y: 0, w: 1, h: 1, color: "#76bde7" },
+		{ x: 0, y: 0, w: 1, h: 0.48, color: "#fdfdfd" },
+	],
 	// Shinx
 	"403": [
 		{ x: 0, y: 0, w: 1, h: 1, color: "#9fe3fe" },

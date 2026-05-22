@@ -92,6 +92,7 @@ const MainSkillIcon = React.memo(
 			case "Charge Strength S (Stockpile)":
 			case "Berry Burst":
 			case "Berry Burst (Disguise)":
+			case "Berry Burst (Draco Meteor)":
 				return <LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />;
 			case "Dream Shard Magnet S":
 			case "Dream Shard Magnet S (Random)":
