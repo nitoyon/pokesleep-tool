@@ -1358,6 +1358,11 @@ export function calculateBerryBurstStrength(
 			othersBerryCount = Math.ceil(bonus * cnt.othersBerryCount);
 			break;
 		}
+		case "Berry Burst (Draco Meteor)": {
+			myBerryCount = 0;
+			othersBerryCount = 0;
+			break;
+		}
 		default:
 			throw new Error(`Invalid skill: ${iv.pokemon.skill}`);
 	}

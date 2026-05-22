@@ -41,6 +41,7 @@ export type MainSkillName =
 	| "Cooking Assist S"
 	| "Cooking Assist S (Bulk Up)"
 	| "Versatile"
+	| "Berry Burst (Draco Meteor)"
 	| "unknown";
 
 export const MainSkillNames: Readonly<MainSkillName[]> = [
@@ -284,6 +285,9 @@ export function getSkillSubValue(
 		return [1, 2, 2, 3, 4, 4][skillLevel - 1];
 	}
 
+	if (skill === "Berry Burst (Draco Meteor)") {
+		return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+	}
 	if (skill.startsWith("Berry Burst")) {
 		// Get the number of berries gathered from other members
 		return [1, 2, 2, 3, 4, 5][skillLevel - 1];

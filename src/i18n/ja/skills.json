@@ -197,7 +197,7 @@
 			"strength": ""
 		},
 		"Cooking Assist S (Bulk Up)": {
-			"name": "ビルドアップ(料理アシストS)",
+			"name": "ビルドアップ (料理アシストS)",
 			"strength": "$t(skills.Ingredient Magnet S.strength)大成功の確率増加 % は合計エナジー量には換算していません。",
 			"desc": "$t(skills.Ingredient Magnet S.desc)さらに、$t(skills.Tasty Chance S.desc)",
 			"detail": "$t(skills.Ingredient Magnet S.detail)$t(skills.Tasty Chance S.detail)"
@@ -207,6 +207,12 @@
 			"strength": "",
 			"desc": "追加で、チームのポケモン1匹のアメをゲットします。",
 			"detail": "スキルレベル6以降は運が良ければアメの個数が増えます。増える確率は 30% とされています (RaenonX 調べ)。"
+		},
+		"Berry Burst (Draco Meteor)": {
+			"name": "りゅうせいぐん (きのみバースト)",
+			"strength": "",
+			"desc": "自分とチーム内のポケモンのきのみを獲得します。チームに異なる種類のドラゴンタイプのポケモンが多いほど、さらにきのみの数がUPします。チームにラティアスがいる場合、獲得する自分のきのみの数がさらにUPします。",
+			"detail": ""
 		},
 		"unknown": {
 			"name": "(不明)",
