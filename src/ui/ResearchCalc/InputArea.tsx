@@ -20,6 +20,7 @@ import SliderEx from "../common/SliderEx";
 import RankBall from "./RankBallLabel";
 import ResearchAreaTextField from "./ResearchAreaTextField";
 import type { InputAreaData } from "./ResearchCalcAppConfig";
+import { updateActualBonus } from "./ResearchCalcAppConfig";
 import TrackingPanel from "./TrackingPanel";
 
 interface InputAreaProps {
@@ -185,7 +186,7 @@ function InputArea({ data, onChange: onchange }: InputAreaProps) {
 					/>
 				</div>
 			</StyledForm>
-			<TrackingPanel data={data} onChange={onchange} />
+			<TrackingPanel data={updateActualBonus(data)} onChange={onchange} />
 		</>
 	);
 }

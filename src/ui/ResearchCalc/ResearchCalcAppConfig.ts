@@ -1,3 +1,4 @@
+import { isInLatiosEvent } from "../../data/events";
 import fields from "../../data/fields";
 
 /** Sleep tracking configuration. */
@@ -39,6 +40,19 @@ export interface InputAreaData {
 
 	/** Tracking configuration (undefined when not tracking) */
 	tracking?: TrackingData;
+}
+
+export function updateActualBonus(data: InputAreaData): InputAreaData {
+	let bonus = data.bonus;
+	if (isInLatiosEvent()) {
+		if (data.isLatiosOnTeam && data.isLatiasOnTeam) {
+			bonus = Math.max(data.bonus, 1.3);
+		} else if (data.isLatiosOnTeam || data.isLatiasOnTeam) {
+			bonus = Math.max(data.bonus, 1.1);
+		}
+	}
+
+	return { ...data, bonus };
 }
 
 export function loadConfig(): InputAreaData {
