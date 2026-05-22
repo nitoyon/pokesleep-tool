@@ -483,4 +483,12 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
 	return ret;
 }
 
+export function isInLatiosEvent() {
+	const now = new Date();
+	return (
+		new Date("2026-06-08T04:00:00") <= now &&
+		now <= new Date("2026-06-22T04:00:00")
+	);
+}
+
 export default events;

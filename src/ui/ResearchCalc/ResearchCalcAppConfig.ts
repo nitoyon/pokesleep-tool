@@ -31,6 +31,12 @@ export interface InputAreaData {
 	/** whether to do two sleep sessions in one day */
 	secondSleep: boolean;
 
+	/** Latios on your team */
+	isLatiosOnTeam: boolean;
+
+	/** Latias on your team */
+	isLatiasOnTeam: boolean;
+
 	/** Tracking configuration (undefined when not tracking) */
 	tracking?: TrackingData;
 }
@@ -41,6 +47,8 @@ export function loadConfig(): InputAreaData {
 		strength: 73120,
 		bonus: 1,
 		secondSleep: false,
+		isLatiosOnTeam: false,
+		isLatiasOnTeam: false,
 		tracking: undefined,
 	};
 
@@ -70,6 +78,13 @@ export function loadConfig(): InputAreaData {
 	}
 	if (typeof json.secondSleep === "boolean") {
 		config.secondSleep = json.secondSleep;
+	}
+
+	if (typeof json.isLatiosOnTeam === "boolean") {
+		config.isLatiosOnTeam = json.isLatiosOnTeam;
+	}
+	if (typeof json.isLatiasOnTeam === "boolean") {
+		config.isLatiasOnTeam = json.isLatiasOnTeam;
 	}
 
 	if (
