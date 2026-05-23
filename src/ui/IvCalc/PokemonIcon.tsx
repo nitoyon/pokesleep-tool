@@ -47,10 +47,10 @@ function createIconElements(
 		}
 	}
 
-	const elements = PokemonIconData[id];
+	const { rects, normalPallet } = PokemonIconData[id];
 	const shape: React.ReactElement[] = [];
 	let i = 0;
-	for (const datum of elements) {
+	for (const datum of rects) {
 		const props: { rx?: string; ry?: string } = {};
 		if (datum.r !== undefined) {
 			props.rx = props.ry = (size * datum.r).toFixed(1);
@@ -62,7 +62,7 @@ function createIconElements(
 				y={(size * datum.y).toFixed(1)}
 				width={(size * datum.w).toFixed(1)}
 				height={(size * datum.h).toFixed(1)}
-				fill={datum.color}
+				fill={normalPallet[datum.color]}
 				{...props}
 			/>,
 		);
