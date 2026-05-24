@@ -46,6 +46,21 @@ describe("PokemonIV", () => {
 			expect(iv.ribbon).toBe(2);
 		});
 
+		test("shiny defaults to false", () => {
+			const iv = new PokemonIv({ pokemonName: "Pikachu" });
+			expect(iv.shiny).toBe(false);
+		});
+
+		test("shiny can be set to true", () => {
+			const iv = new PokemonIv({ pokemonName: "Pikachu", shiny: true });
+			expect(iv.shiny).toBe(true);
+		});
+
+		test("shiny is always false for mythical pokemon", () => {
+			const iv = new PokemonIv({ pokemonName: "Mew", shiny: true });
+			expect(iv.shiny).toBe(false);
+		});
+
 		test("normalization happens automatically", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Feraligatr",
@@ -147,6 +162,26 @@ describe("PokemonIV", () => {
 
 			const iv2 = iv.clone({ pokemonName: "Toxtricity (Low Key)" });
 			expect(iv2.nature.name).toBe("Bold");
+		});
+
+		test("clone preserves shiny=true", () => {
+			const iv = new PokemonIv({ pokemonName: "Bulbasaur", shiny: true });
+			const cloned = iv.clone({ level: 50 });
+			expect(cloned.shiny).toBe(true);
+		});
+
+		test("clone can change shiny from false to true", () => {
+			const iv = new PokemonIv({ pokemonName: "Bulbasaur", shiny: false });
+			const cloned = iv.clone({ shiny: true });
+			expect(cloned.shiny).toBe(true);
+			// Original is unchanged
+			expect(iv.shiny).toBe(false);
+		});
+
+		test("clone keeps shiny=false for mythical pokemon even when shiny=true is passed", () => {
+			const iv = new PokemonIv({ pokemonName: "Mew" });
+			const cloned = iv.clone({ shiny: true });
+			expect(cloned.shiny).toBe(false);
 		});
 
 		test("mythIng is preserved when pokemon name is unchanged", () => {
@@ -350,6 +385,16 @@ describe("PokemonIV", () => {
 			expect(params.nature).toBe(iv.nature);
 		});
 
+		test("includes shiny=false by default", () => {
+			const iv = new PokemonIv({ pokemonName: "Bulbasaur" });
+			expect(iv.toProps().shiny).toBe(false);
+		});
+
+		test("includes shiny=true when set", () => {
+			const iv = new PokemonIv({ pokemonName: "Bulbasaur", shiny: true });
+			expect(iv.toProps().shiny).toBe(true);
+		});
+
 		test("clears versatileSkill for non-Versatile pokemon", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Darkrai",
@@ -466,6 +511,26 @@ describe("PokemonIV", () => {
 			expect(iv.idForm).toBe(37 + 0x3000);
 			expect(PokemonIv.getFormByIdForm(37 + 0x3000)).toBe(3);
 			expect(PokemonIv.getIdByIdForm(37 + 0x3000)).toBe(37);
+		});
+
+		test("shiny Bulbasaur", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Bulbasaur",
+				skillLevel: 3,
+				shiny: true,
+			});
+			// The shiny bit (bit 0 of array16[2]) flips one char vs the non-shiny form
+			expect(iv.serialize()).toBe("EQCApwn5-38f");
+
+			const ret = PokemonIv.deserialize("EQCApwn5-38f");
+			expect(ret.shiny).toBe(true);
+			compareIv(iv, ret);
+		});
+
+		test("non-shiny serialize produces shiny=false after deserialize", () => {
+			const iv = new PokemonIv({ pokemonName: "Bulbasaur", skillLevel: 3 });
+			const ret = PokemonIv.deserialize(iv.serialize());
+			expect(ret.shiny).toBe(false);
 		});
 
 		test("import old darkrai", () => {
@@ -670,6 +735,27 @@ describe("PokemonIV", () => {
 			});
 
 			expect(result2.skillLevel).toBe(1);
+		});
+
+		test("shiny defaults to false", () => {
+			const result = PokemonIv.normalize({ pokemonName: "Bulbasaur" });
+			expect(result.shiny).toBe(false);
+		});
+
+		test("preserves shiny=true when provided", () => {
+			const result = PokemonIv.normalize({
+				pokemonName: "Bulbasaur",
+				shiny: true,
+			});
+			expect(result.shiny).toBe(true);
+		});
+
+		test("forces shiny=false for mythical pokemon even when shiny=true is provided", () => {
+			const result = PokemonIv.normalize({
+				pokemonName: "Mew",
+				shiny: true,
+			});
+			expect(result.shiny).toBe(false);
 		});
 
 		test("handles mythical pokemon ingredient defaults (Darkrai)", () => {
@@ -1302,6 +1388,7 @@ describe("PokemonIV", () => {
 		expect(iv2.subSkills.lv75?.name).toBe(iv1.subSkills.lv75?.name);
 		expect(iv2.subSkills.lv100?.name).toBe(iv1.subSkills.lv100?.name);
 		expect(iv2.ribbon).toBe(iv1.ribbon);
+		expect(iv2.shiny).toBe(iv1.shiny);
 		expect(iv2.versatileSkill).toBe(iv1.versatileSkill);
 	}
 });
