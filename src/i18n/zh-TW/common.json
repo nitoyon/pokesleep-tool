@@ -38,6 +38,7 @@
 	],
 	"none": "無",
 	"enabled": "啟用",
+	"multiplier": "倍率",
 	"range separator": "～",
 	"text separator": "，",
 	"pokemon on your team": "隊伍中有{{pokemon}}",

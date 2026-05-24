@@ -23,6 +23,7 @@ import PokemonIcon from "../PokemonIcon";
 import RpLabel from "../Rp/RpLabel";
 import SpecialtyButton from "../SpecialtyButton";
 import TypeButton from "../TypeButton";
+import TypeInfoDialog from "./TypeInfoDialog";
 
 // Full-screen transition
 // https://mui.com/material-ui/react-dialog/#full-screen-dialogs
@@ -105,6 +106,7 @@ const BoxItemDialogContent = React.memo(
 		const [nickname, setNickname] = React.useState<string>(
 			originalBoxItem.nickname,
 		);
+		const [typeOpen, setTypeOpen] = React.useState(false);
 		const [specialtyOpen, setSpecialtyOpen] = React.useState(false);
 		const [rp, setRp] = React.useState<number>(
 			new PokemonRp(boxItem.iv).calculate().rp,
@@ -122,6 +124,12 @@ const BoxItemDialogContent = React.memo(
 			},
 			[boxItem, localName, nickname],
 		);
+		const onTypeClick = React.useCallback(() => {
+			setTypeOpen(true);
+		}, []);
+		const onTypeClose = React.useCallback(() => {
+			setTypeOpen(false);
+		}, []);
 		const onShinyClick = React.useCallback(() => {
 			onFormChange(
 				boxItem.iv.clone({
@@ -182,7 +190,7 @@ const BoxItemDialogContent = React.memo(
 							<TypeButton
 								type={boxItem.iv.pokemon.type}
 								disabled
-								onClick={() => {}}
+								onClick={onTypeClick}
 							/>
 							<SpecialtyButton
 								specialty={boxItem.iv.pokemon.specialty}
@@ -232,6 +240,14 @@ const BoxItemDialogContent = React.memo(
 					<Button onClick={onCloseClick}>{t("close")}</Button>
 					{!isEdit && <Button onClick={onSaveClick}>{t("add")}</Button>}
 				</DialogActions>
+				<TypeInfoDialog
+					open={typeOpen}
+					onClose={onTypeClose}
+					type={boxItem.iv.pokemon.type}
+					level={boxItem.iv.level}
+					dispatch={dispatch}
+					parameter={parameter}
+				/>
 				<MessageDialog
 					open={specialtyOpen}
 					onClose={onSpecialtyClose}

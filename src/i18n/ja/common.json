@@ -38,6 +38,7 @@
 	],
 	"none": "なし",
 	"enabled": "あり",
+	"multiplier": "倍率",
 	"range separator": "～",
 	"text separator": "、",
 	"pokemon on your team": "{{pokemon}}を編成",

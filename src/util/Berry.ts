@@ -47,3 +47,12 @@ export function getBerryStrength(
 	const withFieldBonus = Math.ceil(rawStrength * (1 + fieldBonus / 100));
 	return Math.ceil(withFieldBonus * berryStrengthMultiplier);
 }
+
+export function getBerryRank(type: PokemonType): number {
+	return (
+		Object.values(berryBaseStrength)
+			.sort()
+			.reverse()
+			.indexOf(berryBaseStrength[type]) + 1
+	);
+}
