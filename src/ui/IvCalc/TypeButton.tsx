@@ -12,7 +12,7 @@ const TypeButton = React.memo(
 		{
 			size?: "small" | "medium" | "large";
 			type: PokemonType;
-			checked: boolean;
+			checked?: boolean;
 			disabled?: boolean;
 			deletable?: boolean;
 			onClick: (value: PokemonType) => void;

@@ -1,4 +1,12 @@
-import { Button, Dialog, DialogActions, TextField } from "@mui/material";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import {
+	Button,
+	ButtonBase,
+	Dialog,
+	DialogActions,
+	TextField,
+	ToggleButton,
+} from "@mui/material";
 import Slide from "@mui/material/Slide";
 import type { TransitionProps } from "@mui/material/transitions";
 import { styled } from "@mui/system";
@@ -12,6 +20,8 @@ import IvForm from "../IvForm/IvForm";
 import type { IvAction } from "../IvState";
 import PokemonIcon from "../PokemonIcon";
 import RpLabel from "../Rp/RpLabel";
+import SpecialtyButton from "../SpecialtyButton";
+import TypeButton from "../TypeButton";
 
 // Full-screen transition
 // https://mui.com/material-ui/react-dialog/#full-screen-dialogs
@@ -110,6 +120,13 @@ const BoxItemDialogContent = React.memo(
 			},
 			[boxItem, localName, nickname],
 		);
+		const onShinyClick = React.useCallback(() => {
+			onFormChange(
+				boxItem.iv.clone({
+					shiny: !boxItem.iv.shiny,
+				}),
+			);
+		}, [boxItem, onFormChange]);
 		const onNickNameChange = React.useCallback(
 			(event: React.ChangeEvent<HTMLInputElement>) => {
 				setNickname(event.target.value);
@@ -151,12 +168,35 @@ const BoxItemDialogContent = React.memo(
 			<>
 				<article>
 					<RpLabel rp={rp} iv={boxItem.iv} />
+					<header className="control">
+						<span className="status">
+							<TypeButton
+								type={boxItem.iv.pokemon.type}
+								disabled
+								onClick={() => {}}
+							/>
+							<SpecialtyButton specialty={boxItem.iv.pokemon.specialty} />
+						</span>
+						{!boxItem.iv.isMythical && (
+							<span className="shiny">
+								<ToggleButton
+									value="shiny"
+									selected={boxItem.iv.shiny}
+									onClick={onShinyClick}
+								>
+									<AutoAwesomeIcon />
+								</ToggleButton>
+							</span>
+						)}
+					</header>
 					<div className="icon">
-						<PokemonIcon
-							idForm={boxItem.iv.idForm}
-							shiny={boxItem.iv.shiny}
-							size={80}
-						/>
+						<ButtonBase onClick={onShinyClick}>
+							<PokemonIcon
+								idForm={boxItem.iv.idForm}
+								shiny={boxItem.iv.shiny}
+								size={80}
+							/>
+						</ButtonBase>
 					</div>
 					<div className="nickname">
 						<TextField
@@ -190,9 +230,42 @@ const StyledDialog = styled(Dialog)({
 		"& > article": {
 			padding: ".5rem .5rem 4rem .5rem",
 
+			"& > header.control": {
+				position: "absolute",
+				top: ".8rem",
+				right: ".7rem",
+				"& > span.status > button": {
+					padding: 0,
+					lineHeight: 1.5,
+					fontSize: "0.7rem",
+					margin: "0 0.2rem",
+					borderRadius: "0.5rem",
+				},
+				"& > span.shiny": {
+					"& > button": {
+						border: 0,
+						borderRadius: "1rem",
+						margin: 0,
+						padding: "4px",
+						background: "#cccccc",
+						color: "#ffffff",
+						"& > svg": {
+							width: 14,
+							height: 14,
+						},
+						"&.Mui-selected": {
+							background: "#ffcc00",
+							color: "#ffffff",
+						},
+					},
+				},
+			},
 			"& > div.icon": {
-				margin: ".2rem auto",
+				margin: ".5rem auto .2rem",
 				width: "82px",
+				"& > button": {
+					borderRadius: ".5rem",
+				},
 			},
 			"& > div.nickname": {
 				margin: "0 auto 1.2rem auto",
