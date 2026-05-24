@@ -99,6 +99,7 @@ const PokemonTextField = React.memo(
 				<CandyButton onClick={onCandyClick} />
 				<PokemonSelectDialog
 					open={open}
+					shiny={iv.shiny}
 					onClose={onCloseDialog}
 					onChange={changeHandler}
 					pokemonOptions={pokemonOptions}
