@@ -919,7 +919,7 @@ const DetailCandyForm = React.memo(
 							</SelectEx>
 						</section>
 						<section>
-							<span>
+							<span className="lbl">
 								<SelectEx
 									onChange={onBoostPolicyChange}
 									value={config.boostPolicy}
