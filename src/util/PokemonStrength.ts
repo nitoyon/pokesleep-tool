@@ -6,7 +6,8 @@ import events, {
 	loadHelpEventBonus,
 } from "../data/events";
 import fields, { getFavoriteBerries, isExpertField } from "../data/fields";
-import pokemons, { type PokemonType, PokemonTypes } from "../data/pokemons";
+import { type PokemonType, PokemonTypes } from "../data/pokemons";
+import { getBerryStrength } from "./Berry";
 import Energy, {
 	AlwaysTap,
 	type EnergyParameter,
@@ -33,7 +34,8 @@ import {
 	superLuckShard5Rate,
 	superLuckShardRate,
 } from "./MainSkill";
-import PokemonIv, { type IngredientSlot } from "./PokemonIv";
+import type PokemonIv from "./PokemonIv";
+import type { IngredientSlot } from "./PokemonIv";
 import PokemonRp, {
 	averageIngredientStrength,
 	ingredientStrength,
@@ -470,11 +472,16 @@ class PokemonStrength {
 		// calc berry
 		const berryCountWithBonus = this.iv.berryCount + bonus.berry;
 		const berryRawStrength = rp.berryStrength;
-		const berryStrength = Math.ceil(
-			berryRawStrength * (1 + param.fieldBonus / 100),
+		const berryStrength = getBerryStrength(
+			this.iv.pokemon.type,
+			this.iv.level,
+			param.fieldBonus,
 		);
-		const berryStrengthWithBonus = Math.ceil(
-			berryStrength * this.berryStrengthBonus,
+		const berryStrengthWithBonus = getBerryStrength(
+			this.iv.pokemon.type,
+			this.iv.level,
+			param.fieldBonus,
+			this.berryStrengthBonus,
 		);
 		const berryTotalStrength =
 			berryStrengthWithBonus *
@@ -1058,16 +1065,7 @@ class PokemonStrength {
 	 * Gets the multiplier for berry strength.
 	 */
 	get berryStrengthBonus(): number {
-		const isExpertMode = isExpertField(this.param.fieldIndex);
-		if (
-			isExpertMode &&
-			this.param.expertEffect === "berry" &&
-			this.param.favoriteType.includes(this.iv.pokemon.type)
-		) {
-			return expertFavoriteBerryBonus;
-		}
-
-		return this.isFavoriteBerry ? 2 : 1;
+		return calcBerryStrengthBonus(this.iv.pokemon.type, this.param);
 	}
 
 	/**
@@ -1085,6 +1083,32 @@ class PokemonStrength {
 		const { types } = getCurrentFavoriteBerries(this.param);
 		return types.includes(this.iv.pokemon.type);
 	}
+}
+
+/**
+ * Calculates the berry strength bonus multiplier for a given Pokémon type.
+ */
+export function calcBerryStrengthBonus(
+	type: PokemonType,
+	param: StrengthParameter,
+): number {
+	const isExpertMode = isExpertField(param.fieldIndex);
+	if (
+		isExpertMode &&
+		param.expertEffect === "berry" &&
+		param.favoriteType.includes(type)
+	) {
+		return expertFavoriteBerryBonus;
+	}
+
+	if (param.fieldIndex === noFavoriteFieldIndex) {
+		return 1;
+	}
+	if (param.fieldIndex === allFavoriteFieldIndex) {
+		return 2;
+	}
+	const { types } = getCurrentFavoriteBerries(param);
+	return types.includes(type) ? 2 : 1;
 }
 
 /**
@@ -1394,15 +1418,11 @@ export function calculateBerryBurstStrength(
 		members: [] as { total: number; perBerry: number; count: number }[],
 	};
 	for (let i = 0; i < 5; i++) {
-		const ivMember = new PokemonIv({
-			pokemonName:
-				pokemons.find((x) => x.type === types[i])?.name ?? "Bulbasaur",
-			level: levels[i],
-		});
-		const berryRawStrength = new PokemonRp(ivMember).berryStrength;
-		const perBerry = Math.ceil(
-			Math.ceil(berryRawStrength * (1 + param.fieldBonus / 100)) *
-				new PokemonStrength(ivMember, param).berryStrengthBonus,
+		const perBerry = getBerryStrength(
+			types[i],
+			levels[i],
+			param.fieldBonus,
+			calcBerryStrengthBonus(types[i], param),
 		);
 		const count = i === 0 ? myBerryCount : othersBerryCount;
 		const total = perBerry * count;
