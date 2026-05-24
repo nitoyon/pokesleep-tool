@@ -182,6 +182,7 @@
 	"name": "名字",
 	"type": "类型",
 	"specialty": "专长",
+	"allspecialty": "全部",
 	"berry": "树果",
 	"ingredient": "食材",
 	"skill": "技能",

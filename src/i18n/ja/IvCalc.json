@@ -185,6 +185,7 @@
 	"name": "名前",
 	"type": "タイプ",
 	"specialty": "とくいなもの",
+	"allspecialty": "オール",
 	"berry": "きのみ",
 	"ingredient": "食材",
 	"skill": "スキル",

@@ -184,6 +184,7 @@
 	"name": "이름",
 	"type": "타입",
 	"specialty": "특기",
+	"allspecialty": "올",
 	"berry": "열매",
 	"ingredient": "식재료",
 	"skill": "스킬",
