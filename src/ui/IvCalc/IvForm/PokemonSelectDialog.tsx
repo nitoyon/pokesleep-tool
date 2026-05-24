@@ -612,7 +612,7 @@ const PokemonSelectDialog = React.memo(
 						const { key, ...others } = props;
 						return (
 							<MenuItem key={key} {...others}>
-								<PokemonIcon idForm={option.idForm} size={48} />
+								<PokemonIcon idForm={option.idForm} shiny={false} size={48} />
 								<footer>
 									{option.localName.replace(/\(.+/, "")}
 									{option.localName.endsWith(")") && (

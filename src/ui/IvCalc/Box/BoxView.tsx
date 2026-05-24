@@ -341,7 +341,11 @@ const BoxLargeItem = React.memo(
 						<span className="lv">Lv.</span>
 						{item.iv.level}
 					</header>
-					<PokemonIcon idForm={item.iv.idForm} size={32} />
+					<PokemonIcon
+						idForm={item.iv.idForm}
+						shiny={item.iv.shiny}
+						size={32}
+					/>
 					<footer>{item.filledNickname(t)}</footer>
 				</ButtonBase>
 				{selected && (

@@ -152,7 +152,11 @@ const BoxItemDialogContent = React.memo(
 				<article>
 					<RpLabel rp={rp} iv={boxItem.iv} />
 					<div className="icon">
-						<PokemonIcon idForm={boxItem.iv.idForm} size={80} />
+						<PokemonIcon
+							idForm={boxItem.iv.idForm}
+							shiny={boxItem.iv.shiny}
+							size={80}
+						/>
 					</div>
 					<div className="nickname">
 						<TextField

@@ -5,7 +5,15 @@ import { AppConfigContext } from "../AppConfig";
 import PokemonIconData from "./PokemonIconData";
 
 const PokemonIcon = React.memo(
-	({ idForm, size }: { idForm: number; size: number }) => {
+	({
+		idForm,
+		shiny,
+		size,
+	}: {
+		idForm: number;
+		shiny: boolean;
+		size: number;
+	}) => {
 		const appConfig = React.useContext(AppConfigContext);
 		if (appConfig.iconUrl?.match(/^https?:\/\//)) {
 			let url = appConfig.iconUrl;
@@ -16,7 +24,7 @@ const PokemonIcon = React.memo(
 			return <img src={url} width={size} height={size} alt={id.toString()} />;
 		}
 
-		const elements = createIconElements(idForm, size);
+		const elements = createIconElements(idForm, shiny, size);
 		return (
 			<StyledIconContainer style={{ width: `${size}px`, height: `${size}px` }}>
 				<svg
@@ -35,6 +43,7 @@ const PokemonIcon = React.memo(
 
 function createIconElements(
 	idForm: number,
+	shiny: boolean,
 	size: number,
 ): React.ReactElement[] {
 	let id: number;
@@ -47,7 +56,7 @@ function createIconElements(
 		}
 	}
 
-	const { rects, normalPallet } = PokemonIconData[id];
+	const { rects, shinyPallet, normalPallet } = PokemonIconData[id];
 	const shape: React.ReactElement[] = [];
 	let i = 0;
 	for (const datum of rects) {
@@ -55,6 +64,7 @@ function createIconElements(
 		if (datum.r !== undefined) {
 			props.rx = props.ry = (size * datum.r).toFixed(1);
 		}
+		const pallet = shiny ? shinyPallet : normalPallet;
 		shape.push(
 			<rect
 				key={i}
@@ -62,7 +72,7 @@ function createIconElements(
 				y={(size * datum.y).toFixed(1)}
 				width={(size * datum.w).toFixed(1)}
 				height={(size * datum.h).toFixed(1)}
-				fill={normalPallet[datum.color]}
+				fill={pallet[datum.color]}
 				{...props}
 			/>,
 		);
