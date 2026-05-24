@@ -16,6 +16,7 @@ import { PokemonBoxItem } from "../../../util/PokemonBox";
 import PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
+import MessageDialog from "../../Dialog/MessageDialog";
 import IvForm from "../IvForm/IvForm";
 import type { IvAction } from "../IvState";
 import PokemonIcon from "../PokemonIcon";
@@ -104,6 +105,7 @@ const BoxItemDialogContent = React.memo(
 		const [nickname, setNickname] = React.useState<string>(
 			originalBoxItem.nickname,
 		);
+		const [specialtyOpen, setSpecialtyOpen] = React.useState(false);
 		const [rp, setRp] = React.useState<number>(
 			new PokemonRp(boxItem.iv).calculate().rp,
 		);
@@ -159,6 +161,13 @@ const BoxItemDialogContent = React.memo(
 			onClose();
 		}, [isEdit, onChange, onClose, boxItem, nickname]);
 
+		const onSpecialtyClick = React.useCallback(() => {
+			setSpecialtyOpen(true);
+		}, []);
+		const onSpecialtyClose = React.useCallback(() => {
+			setSpecialtyOpen(false);
+		}, []);
+
 		let displayNickName = nickname;
 		if (!isEditingNickName && nickname === "") {
 			displayNickName = t(`pokemons.${boxItem.iv.pokemonName}`);
@@ -175,7 +184,10 @@ const BoxItemDialogContent = React.memo(
 								disabled
 								onClick={() => {}}
 							/>
-							<SpecialtyButton specialty={boxItem.iv.pokemon.specialty} />
+							<SpecialtyButton
+								specialty={boxItem.iv.pokemon.specialty}
+								onClick={onSpecialtyClick}
+							/>
 						</span>
 						{!boxItem.iv.isMythical && (
 							<span className="shiny">
@@ -220,6 +232,32 @@ const BoxItemDialogContent = React.memo(
 					<Button onClick={onCloseClick}>{t("close")}</Button>
 					{!isEdit && <Button onClick={onSaveClick}>{t("add")}</Button>}
 				</DialogActions>
+				<MessageDialog
+					open={specialtyOpen}
+					onClose={onSpecialtyClose}
+					message={
+						<>
+							<header>
+								{t("specialty")}
+								<>: </>
+								<SpecialtyButton
+									specialty={boxItem.iv.pokemon.specialty}
+									disabled
+								/>
+							</header>
+							<p>
+								{t(`${boxItem.iv.pokemon.specialty.toLowerCase()} desc`)}
+								{boxItem.iv.pokemon.specialty === "All" && (
+									<ul>
+										<li>{t("berries desc")}</li>
+										<li>{t("ingredients desc")}</li>
+										<li>{t("skills desc")}</li>
+									</ul>
+								)}
+							</p>
+						</>
+					}
+				/>
 			</>
 		);
 	},
@@ -238,7 +276,6 @@ const StyledDialog = styled(Dialog)({
 					padding: 0,
 					lineHeight: 1.5,
 					fontSize: "0.7rem",
-					margin: "0 0.2rem",
 					borderRadius: "0.5rem",
 				},
 				"& > span.shiny": {
