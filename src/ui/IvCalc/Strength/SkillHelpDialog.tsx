@@ -76,7 +76,8 @@ const SkillHelpDialog = React.memo(
 		const { t } = useTranslation();
 		const [berryStrengthOpen, setBerryStrengthOpen] = React.useState(false);
 		const [berryIv, setBerryIv] = React.useState(strength.pokemonIv);
-		const [berryBonus, setBerryBonus] = React.useState(1);
+		const [berryStrengthMultiplier, setBerryStrengthMultiplier] =
+			React.useState(1);
 		const [pityProcOpen, setPityProcOpen] = React.useState(false);
 		const onBerryInfoClick = React.useCallback(
 			(type: PokemonType, level: number) => {
@@ -87,7 +88,7 @@ const SkillHelpDialog = React.memo(
 					level,
 				});
 				setBerryIv(iv);
-				setBerryBonus(
+				setBerryStrengthMultiplier(
 					new PokemonStrength(iv, strength.parameter).berryStrengthBonus,
 				);
 			},
@@ -384,7 +385,7 @@ const SkillHelpDialog = React.memo(
 					onClose={onBerryStrenthClose}
 					iv={berryIv}
 					fieldBonus={settings.fieldBonus}
-					berryBonus={berryBonus}
+					berryStrengthMultiplier={berryStrengthMultiplier}
 				/>
 				<SkillPityProcDialog
 					open={pityProcOpen}

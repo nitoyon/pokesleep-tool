@@ -1,8 +1,5 @@
-import type {
-	IngredientName,
-	PokemonData,
-	PokemonType,
-} from "../data/pokemons";
+import type { IngredientName, PokemonData } from "../data/pokemons";
+import { getBerryStrength } from "./Berry";
 import type PokemonIv from "./PokemonIv";
 import type SubSkill from "./SubSkill";
 
@@ -45,27 +42,6 @@ export const averageIngredientStrength: number = (() => {
 	const total = ingredients.reduce((sum, [, strength]) => sum + strength, 0);
 	return total / ingredients.length;
 })();
-
-const berryStrength: { [type in PokemonType]: number } = {
-	normal: 28,
-	fire: 27,
-	water: 31,
-	electric: 25,
-	grass: 30,
-	ice: 32,
-	fighting: 27,
-	poison: 32,
-	ground: 29,
-	flying: 24,
-	psychic: 26,
-	bug: 24,
-	rock: 30,
-	ghost: 26,
-	dragon: 35,
-	dark: 31,
-	steel: 33,
-	fairy: 26,
-};
 
 export type IngredientType = "AAA" | "AAB" | "AAC" | "ABA" | "ABB" | "ABC";
 
@@ -324,11 +300,7 @@ class PokemonRp {
 
 	get berryStrength(): number {
 		return this.getOrCache("berryStrength", () => {
-			const b0 = berryStrength[this.iv.pokemon.type];
-			return Math.max(
-				b0 + this.iv.level - 1,
-				Math.round(1.025 ** (this.iv.level - 1) * b0),
-			);
+			return getBerryStrength(this.iv.pokemon.type, this.iv.level);
 		});
 	}
 

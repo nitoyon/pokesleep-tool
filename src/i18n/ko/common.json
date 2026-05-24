@@ -38,6 +38,7 @@
 	],
 	"none": "없음",
 	"enabled": "활성화",
+	"multiplier": "배율",
 	"range separator": "~",
 	"text separator": ", ",
 	"pokemon on your team": "{{pokemon}}를 편성하다",

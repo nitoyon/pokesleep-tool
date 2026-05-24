@@ -7,9 +7,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { getBerryStrength } from "../../../util/Berry";
 import { formatWithComma } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
-import PokemonRp from "../../../util/PokemonRp";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 
 const BerryStrengthDialog = React.memo(
@@ -18,22 +18,25 @@ const BerryStrengthDialog = React.memo(
 		onClose,
 		iv,
 		fieldBonus,
-		berryBonus,
+		berryStrengthMultiplier,
 	}: {
 		open: boolean;
 		onClose: () => void;
 		iv: PokemonIv;
 		fieldBonus: number;
-		berryBonus: number;
+		berryStrengthMultiplier: number;
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
 			return null;
 		}
 
-		const berryRawStrength = new PokemonRp(iv).berryStrength;
-		const berryStrength = Math.ceil(
-			Math.ceil(berryRawStrength * (1 + fieldBonus / 100)) * berryBonus,
+		const berryRawStrength = getBerryStrength(iv.pokemon.type, iv.level);
+		const berryStrength = getBerryStrength(
+			iv.pokemon.type,
+			iv.level,
+			fieldBonus,
+			berryStrengthMultiplier,
 		);
 
 		return (
@@ -51,7 +54,7 @@ const BerryStrengthDialog = React.memo(
 						<span className="box box3">{berryRawStrength}</span>
 						<> × </>
 						(1 + <span className="box box4">{fieldBonus}%</span>)<> × </>
-						<span className="box box5">{berryBonus}</span>
+						<span className="box box5">{berryStrengthMultiplier}</span>
 					</footer>
 				</DialogTitle>
 				<DialogContent>
@@ -65,7 +68,7 @@ const BerryStrengthDialog = React.memo(
 						</div>
 						<span>{t("area bonus")}</span>
 						<div>
-							<span className="box box5">{berryBonus}</span>
+							<span className="box box5">{berryStrengthMultiplier}</span>
 						</div>
 						<span>{t("favorite berry")}</span>
 					</article>

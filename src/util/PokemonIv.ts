@@ -84,6 +84,7 @@ export interface PokemonIvProps {
 	subSkills: SubSkillList;
 	nature: Nature;
 	ribbon: 0 | 1 | 2 | 3 | 4;
+	shiny: boolean;
 	mythIng1: IngredientName;
 	mythIng2: IngredientName;
 	mythIng3: IngredientName;
@@ -109,6 +110,7 @@ class PokemonIv {
 	readonly subSkills: SubSkillList;
 	readonly nature: Nature;
 	readonly ribbon: 0 | 1 | 2 | 3 | 4;
+	readonly shiny: boolean;
 	readonly mythIng1: IngredientName;
 	readonly mythIng2: IngredientName;
 	readonly mythIng3: IngredientName;
@@ -139,6 +141,7 @@ class PokemonIv {
 		this.subSkills = params.subSkills;
 		this.nature = params.nature;
 		this.ribbon = params.ribbon;
+		this.shiny = params.shiny;
 		this.mythIng1 = params.mythIng1;
 		this.mythIng2 = params.mythIng2;
 		this.mythIng3 = params.mythIng3;
@@ -659,6 +662,7 @@ class PokemonIv {
 					params.pokemonName === "Toxtricity (Amped)" ? "Hardy" : "Serious",
 				),
 			ribbon: params.ribbon ?? 0,
+			shiny: params.shiny ?? false,
 			mythIng1: params.mythIng1 ?? "unknown",
 			mythIng2: params.mythIng2 ?? "unknown",
 			mythIng3: params.mythIng3 ?? "unknown",
@@ -686,6 +690,9 @@ class PokemonIv {
 			if (ret.mythIng2 === "unknown") {
 				ret.mythIng2 = pokemon.ing2.name;
 			}
+
+			// Mythical Pokémon cannot be shiny
+			ret.shiny = false;
 		}
 
 		// Validate versatileSkill
@@ -933,6 +940,7 @@ class PokemonIv {
 			subSkills: this.subSkills,
 			nature: this.nature,
 			ribbon: this.ribbon,
+			shiny: this.shiny,
 			mythIng1: this.mythIng1,
 			mythIng2: this.mythIng2,
 			mythIng3: this.mythIng3,
@@ -959,7 +967,8 @@ class PokemonIv {
 	 * * 7bit  : level
 	 * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
 	 *
-	 * * 2bit  : reserved
+	 * * 1bit  : Shiny or not (0: Normal, 1: Shiny)
+	 * * 1bit  : reserved
 	 * * 4bit  : Skill level (0: Lv1, 1: Lv2, ..., 7: Lv8)
 	 * * 5bit  : Nature index, index of Nature.allNatureNames (0-24)
 	 * * 5bit  : Sub-skill Lv10 (index of SubSkill.subSkillNames (0-16), unknown: 31)
@@ -1002,6 +1011,7 @@ class PokemonIv {
 			(IngredientTypes.indexOf(this.ingredient) << 13);
 
 		array16[2] =
+			(this.shiny ? 1 : 0) +
 			((this.skillLevel - 1) << 2) +
 			(Nature.allNatures.findIndex((x) => x.name === this.nature.name) << 6) +
 			((this.subSkills.lv10 === null ? 31 : this.subSkills.lv10.index) << 11);
@@ -1109,6 +1119,9 @@ class PokemonIv {
 			throw new Error(`Invalid ing value (${ing})`);
 		}
 		ret.ingredient = IngredientTypes[ing];
+
+		// Shiny
+		ret.shiny = (array16[2] & 1) !== 0;
 
 		// skill level
 		ret.skillLevel = ((array16[2] >> 2) & 0x7) + 1;

@@ -187,7 +187,7 @@ const BerryHelpDialog = React.memo(
 					onClose={onBerryStrengthInfoClose}
 					iv={strength.pokemonIv}
 					fieldBonus={param.fieldBonus}
-					berryBonus={strength.berryStrengthBonus}
+					berryStrengthMultiplier={strength.berryStrengthBonus}
 				/>
 			</StyledInfoDialog>
 		);

@@ -28,6 +28,9 @@ const SpecialtyButton = React.memo(
 
 		let spec: string = "";
 		switch (specialty) {
+			case "All":
+				spec = "allspecialty";
+				break;
 			case "Berries":
 				spec = "berry";
 				break;
@@ -70,6 +73,7 @@ const StyledDisabledButton = styled("span")({
 	color: "white",
 	borderRadius: ".6rem",
 	verticalAlign: "20%",
+	"&.allspecialty": { backgroundColor: "#fe7b96" },
 	"&.berry": { backgroundColor: "#24d76a" },
 	"&.ingredient": { backgroundColor: "#fab855" },
 	"&.skill": { backgroundColor: "#44a2fd" },
@@ -92,6 +96,7 @@ const StyledSpecialtyButton = styled(Button)({
 		right: "calc(50%-15px)",
 		top: "calc(50%-15px)",
 	},
+	"&.allspecialty": { backgroundColor: "#fe7b96" },
 	"&.berry": { backgroundColor: "#24d76a" },
 	"&.berry.checked": { backgroundColor: "#bde9bb" },
 	"&.ingredient": { backgroundColor: "#fab855" },
