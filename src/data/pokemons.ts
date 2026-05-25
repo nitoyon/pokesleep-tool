@@ -129,7 +129,7 @@ export const SpecialtyNames: PokemonSpecialty[] = [
 	"Berries",
 	"Ingredients",
 	"Skills",
-	"All",
+	// (NOTE) "All" is not includes in order to hide in specialty filter UI
 ];
 
 export type PokemonSpecialty =
