@@ -6,9 +6,6 @@
 		"notice detail1": "グッドスリープデーの間は、[$t(bonus)] の倍率を変更するのを忘れずに。",
 		"notice detail2": "[$t(sleep twice)] をチェックすると、分割睡眠したときに出会えるトータルのポケモン数を確認できます。"
 	},
-	"own research note": "バランス調整後の確率は独自の調査で算出しています。",
-	"rp collection": "食材確率・スキル確率については、RP Collection の情報を参照しています。",
-	"movie detail": "チャンネル登録・高評価・コメント・ハイプなどいただけると励みになります！",
 	"sleep score table": "睡眠スコア表",
 	"score is too low": "スコア <score/> での睡眠計測は難しいため、スコア 17 以上での計測を推奨します。",
 	"tracking title": "以下の手順により、狙った睡眠スコアで計測できます。",

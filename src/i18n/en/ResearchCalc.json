@@ -6,9 +6,6 @@
 		"notice detail1": "While Good Sleep Day, don't forget to change the multiplier for the [$t(bonus)]!",
 		"notice detail2": "If you check [$t(sleep twice)], you can know the total number of Pokémon."
 	},
-	"own research note": "Probabilities after balance adjustments are calculated based on our own research.",
-	"rp collection": "The ingredient% and skill% are based on RP Collection values.",
-	"movie detail": "Your subscriptions, likes, comments, and hypes are greatly appreciated!",
 	"sleep score table": "Sleep Score Table",
 	"score is too low": "Sleep tracking may fail at <score/>. Recommended at 17 or higher.",
 	"tracking title": "You can track at your target sleep score by following these steps:",

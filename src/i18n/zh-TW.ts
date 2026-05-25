@@ -12,6 +12,7 @@ export default {
 		...common,
 		...ResearchCalc,
 		...IvCalc,
+		...IvCalcNews,
 		IvCalc: {
 			...IvCalc.IvCalc,
 			...IvCalcNews.IvCalc,

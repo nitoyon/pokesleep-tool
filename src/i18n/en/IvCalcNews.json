@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add drampa": {
+				"headline": "Added data for $t(pokemons.Drampa). Also, shiny Pokémon can now be added to $t(box).",
+				"detail": "$t(own research note)"
+			},
 			"v3.5.0": {
 				"headline": "Updated the data with balance adjustments in version 3.5.0",
 				"detail": "$t(own research note)"
@@ -262,5 +266,8 @@
 				"detail": "$t(IvCalc.description)"
 			}
 		}
-	}
+	},
+	"own research note": "The ingredient% and skill% are calculated based on our own research.",
+	"rp collection": "The ingredient% and skill% are based on RP Collection values.",
+	"movie detail": "Your subscriptions, likes, comments, and hypes are greatly appreciated!"
 }

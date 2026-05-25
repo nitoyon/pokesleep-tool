@@ -6,9 +6,6 @@
 		"notice detail1": "不要忘记修改好睡眠日期间的 [$t(bonus)] 的倍数。",
 		"notice detail2": "勾选 [$t(sleep twice)] 就可以知道分次睡眠时可以遇到的宝可梦数量的总和。"
 	},
-	"own research note": "平衡性调整后的概率是通过独自的调查计算的。",
-	"rp collection": "食材几率、技能几率参照了 RP Collection 的数据。",
-	"movie detail": "订阅频道・点赞・评论・Hype等都会给我带来很大的鼓励！",
 	"sleep score table": "睡眠分数表",
 	"score is too low": "在分数 <score/> 时睡眠监测可能失败，建议在 17 分或更高分数时进行测量。",
 	"tracking title": "按照以下步骤，可以在目标睡眠分数进行测量。",

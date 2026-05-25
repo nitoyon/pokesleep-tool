@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add drampa": {
+				"headline": "新增了$t(pokemons.Drampa)的資料。另外，現在可以將$t(shiny)寶可夢登錄到$t(box)了。",
+				"detail": "$t(own research note)"
+			},
 			"v3.5.0": {
 				"headline": "已因應 v3.5.0 的平衡性調整。",
 				"detail": "$t(own research note)"
@@ -262,5 +266,8 @@
 				"detail": "$t(IvCalc.description)"
 			}
 		}
-	}
+	},
+	"own research note": "食材機率、技能機率是通過獨自的調查計算的。",
+	"rp collection": "食材機率、技能機率參考了 RP Collection 的資料。",
+	"movie detail": "訂閱頻道・按讚・留言・Hype等都會給我帶來很大的鼓勵！"
 }
