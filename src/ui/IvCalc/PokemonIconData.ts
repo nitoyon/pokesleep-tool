@@ -629,7 +629,7 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0.18, y: 0.45, w: 0.6, h: 0.03, r: 0.03, color: 2 },
 		],
 		normalPallet: ["#c8bbf5", "#b6a6ea", "#494447"],
-		shinyPallet: ["#82f2fe", "#6ed2f2", "#6ed2f2"],
+		shinyPallet: ["#82f2fe", "#6ed2f2", "#494447"],
 	},
 	// Eevee
 	"133": {
