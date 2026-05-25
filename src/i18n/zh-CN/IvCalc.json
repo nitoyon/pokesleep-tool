@@ -190,6 +190,7 @@
 	"berries desc": "一次帮忙能获得较多树果等，擅长收集树果的宝可梦。",
 	"ingredients desc": "一次帮忙能获得较多食材等，擅长收集食材的宝可梦。",
 	"skills desc": "主技能特别或发动概率高等，擅长发动技能的宝可梦。可以多储存一次主技能，且有时会在一次帮忙中连续发动两次主技能。",
+	"shiny": "异色",
 	"frequency": "帮忙间隔",
 	"carry limit": "持有上限",
 	"Main Skill & Sub Skills": "主技能・副技能",

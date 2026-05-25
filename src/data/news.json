@@ -2,6 +2,10 @@
 	"ResearchCalc": [],
 	"IvCalc": [
 		{
+			"date": "2026-05-25T09:10:00Z",
+			"id": "add drampa"
+		},
+		{
 			"date": "2026-05-21T11:00:00Z",
 			"id": "v3.5.0"
 		},

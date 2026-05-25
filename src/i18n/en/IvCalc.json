@@ -189,6 +189,7 @@
 	"berries desc": "A Pokémon that excels at collecting berries, such as being able to pick up many berries in a single helping.",
 	"ingredients desc": "A Pokémon that excels at collecting ingredients, such as being able to pick up many ingredients in a single helping.",
 	"skills desc": "A Pokémon that excels at triggering skills, such as having a special main skill or a high trigger rate. It can stock one extra main skill and may trigger its main skill twice in a single helping.",
+	"shiny": "Shiny",
 	"name": "Name",
 	"type": "Type",
 	"specialty": "Specialty",

@@ -19,6 +19,8 @@ interface IBoxFilterConfig {
 	filterTypes: PokemonType[];
 	/** Filter specialty */
 	filterSpecialty: PokemonSpecialty[];
+	/** Shiny or not */
+	shiny: boolean;
 	/** Filter ingredient */
 	ingredientName?: IngredientName;
 	/** Include only Pokemon with the ingredientName unlocked */
@@ -49,6 +51,8 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 	filterTypes: PokemonType[];
 	/** Filter specialty */
 	filterSpecialty: PokemonSpecialty[];
+	/** Shiny or not */
+	shiny: boolean;
 	/** Filter ingredient */
 	ingredientName?: IngredientName;
 	/** Include only Pokemon with the ingredientName unlocked */
@@ -73,6 +77,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 		this.name = values.name ?? "";
 		this.filterTypes = values.filterTypes ?? [];
 		this.filterSpecialty = values.filterSpecialty ?? [];
+		this.shiny = values.shiny ?? false;
 		this.ingredientName = values.ingredientName;
 		this.ingredientUnlockedOnly = values.ingredientUnlockedOnly ?? false;
 		this.mainSkillNames = values.mainSkillNames ?? [];
@@ -139,6 +144,9 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 			) {
 				return false;
 			}
+		}
+		if (this.shiny && !item.iv.shiny) {
+			return false;
 		}
 		if (this.mainSkillNames.length !== 0) {
 			if (

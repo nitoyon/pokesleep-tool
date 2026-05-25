@@ -119,7 +119,7 @@ const TypeInfoDialog = React.memo(
 					</article>
 					<div className="calculator">
 						<section>
-							<span className="lbl">
+							<span className="lbl" style={{ paddingRight: ".5rem" }}>
 								<strong>{t("berry strength calculator")}:</strong>
 							</span>
 							<div>

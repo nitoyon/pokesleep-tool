@@ -287,12 +287,13 @@ const StyledDialog = styled(Dialog)({
 			"& > header.control": {
 				position: "absolute",
 				top: ".8rem",
-				right: ".7rem",
+				right: "1rem",
 				"& > span.status > button": {
 					padding: 0,
 					lineHeight: 1.5,
 					fontSize: "0.7rem",
 					borderRadius: "0.5rem",
+					width: "4rem",
 				},
 				"& > span.shiny": {
 					"& > button": {
@@ -302,6 +303,7 @@ const StyledDialog = styled(Dialog)({
 						padding: "4px",
 						background: "#cccccc",
 						color: "#ffffff",
+						marginLeft: ".2rem",
 						"& > svg": {
 							width: 14,
 							height: 14,

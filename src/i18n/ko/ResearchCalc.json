@@ -6,9 +6,6 @@
 		"notice detail1": "굿 슬립 데이 동안에는, [$t(bonus)]의 배율을 변경하는 것을 잊지 마세요.",
 		"notice detail2": "[$t(sleep twice)]을 체크하면, 분할 수면했을 때 만날 수 있는 총 포켓몬 수를 확인할 수 있습니다."
 	},
-	"own research note": "밸런스 조정 후의 확률은 독자적인 조사를 통해 산출하고 있습니다.",
-	"rp collection": "식재료%와 기술%은 RP Collection 값에 기반합니다.",
-	"movie detail": "채널 구독・좋아요・댓글・하이브 등을 주시면 큰 힘이 됩니다!",
 	"sleep score table": "수면 스코어표",
 	"score is too low": "<score/>점에서 수면 측정이 실패할 수 있으므로, 17점 이상에서 측정하는 것을 권장합니다.",
 	"tracking title": "다음 절차에 따라 원하는 수면 스코어로 측정할 수 있습니다.",

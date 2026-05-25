@@ -192,6 +192,7 @@
 	"berries desc": "一次幫忙能獲得較多樹果等，擅長收集樹果的寶可夢。",
 	"ingredients desc": "一次幫忙能獲得較多食材等，擅長收集食材的寶可夢。",
 	"skills desc": "主技能特別或發動概率高等，擅長發動技能的寶可夢。可以多儲存一次主技能，且有時會在一次幫忙中連續發動兩次主技能。",
+	"shiny": "異色",
 	"frequency": "幫忙間隔",
 	"carry limit": "持有上限",
 	"Main Skill & Sub Skills": "主技能・副技能",
