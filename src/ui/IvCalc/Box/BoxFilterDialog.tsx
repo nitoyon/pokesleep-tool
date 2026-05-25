@@ -2,8 +2,10 @@ import CheckIcon from "@mui/icons-material/Check";
 import SearchIcon from "@mui/icons-material/Search";
 import {
 	Button,
+	Checkbox,
 	Dialog,
 	DialogActions,
+	FormControlLabel,
 	InputAdornment,
 	Switch,
 	Tab,
@@ -102,6 +104,9 @@ const BoxFilterDialog = React.memo(
 			},
 			[value, onChange],
 		);
+		const onShinyChange = useCallback(() => {
+			onChange(new BoxFilterConfig({ ...value, shiny: !value.shiny }));
+		}, [value, onChange]);
 		const onIngredientUnlockedOnlyChange = React.useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				onChange(
@@ -187,6 +192,15 @@ const BoxFilterDialog = React.memo(
 						{typeButtons}
 						<h4 style={{ margin: "1rem 0 0.5rem" }}>{t("specialty")}</h4>
 						{specialtyButtons}
+						<div>
+							<FormControlLabel
+								label={t("shiny")}
+								sx={{ mt: 1 }}
+								control={
+									<Checkbox checked={value.shiny} onChange={onShinyChange} />
+								}
+							/>
+						</div>
 					</div>
 					<div className="tabChild">
 						{ingButtons}

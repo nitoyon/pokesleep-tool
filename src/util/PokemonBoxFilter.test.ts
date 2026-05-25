@@ -167,6 +167,25 @@ describe("BoxFilterConfig", () => {
 			expect(filtered[0].iv.pokemonName).toBe("Pikachu");
 		});
 
+		test("filters by shiny", () => {
+			const shinyIv = new PokemonIv({ pokemonName: "Pikachu", shiny: true });
+			const normalIv = new PokemonIv({ pokemonName: "Pikachu", shiny: false });
+
+			const items = [
+				new PokemonBoxItem(shinyIv, "Shiny"),
+				new PokemonBoxItem(normalIv, "Normal"),
+			];
+
+			const config1 = new BoxFilterConfig({ shiny: true });
+			const filtered1 = config1.filter(items, false, mockT);
+			expect(filtered1.length).toBe(1);
+			expect(filtered1[0].nickname).toBe("Shiny");
+
+			const config2 = new BoxFilterConfig({ shiny: false });
+			const filtered2 = config2.filter(items, false, mockT);
+			expect(filtered2.length).toBe(2);
+		});
+
 		test("filters by main skill (Toxel with evolved=true, Amped nature)", () => {
 			const config = new BoxFilterConfig({
 				mainSkillNames: ["Ingredient Magnet S"],
