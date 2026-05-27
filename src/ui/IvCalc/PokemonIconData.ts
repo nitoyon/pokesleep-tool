@@ -232,7 +232,7 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.1, w: 1, h: 0.9, color: 1 },
 		],
 		normalPallet: ["#714e2d", "#f7d7d6"],
-		shinyPallet: ["#feced6", "#fef6ea"],
+		shinyPallet: ["#99de83", "#fef6ea"],
 	},
 	// Vulpix
 	"37": {
@@ -727,7 +727,7 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
 		],
 		normalPallet: ["#faedf4", "#f4d6e6"],
-		shinyPallet: ["#fef6fa", "#fed6e6"],
+		shinyPallet: ["#c4edf5", "#a0e3ef"],
 	},
 	// Chikorita
 	"152": {
@@ -1512,7 +1512,7 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.4, w: 1, h: 0.1, color: 1 },
 		],
 		normalPallet: ["#8d8d8d", "#fbe492"],
-		shinyPallet: ["#76b2ca", "#76b2ca"],
+		shinyPallet: ["#76b2ca", "#f0eaab"],
 	},
 	// Absol
 	"359": {
@@ -1913,7 +1913,7 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.9, w: 1, h: 0.2, color: 3 },
 		],
 		normalPallet: ["#656661", "#bf354f", "#f3f3f3", "#42413f"],
-		shinyPallet: ["#656661", "#bf354f", "#f3f3f3", "#42413f"],
+		shinyPallet: ["#332266", "#ab228f", "#f3f3f3", "#42223f"],
 	},
 	// Munna
 	"517": {
