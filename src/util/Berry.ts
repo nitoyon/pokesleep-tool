@@ -39,6 +39,9 @@ export function getBerryStrength(
 	fieldBonus = 0,
 	berryStrengthMultiplier = 1,
 ): number {
+	if (level === 0) {
+		return 0;
+	}
 	const b0 = berryBaseStrength[type];
 	const rawStrength = Math.max(
 		b0 + level - 1,

@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import { getBerryStrength } from "./Berry";
 
 describe("getBerryStrength", () => {
+	it("returns 0 at level 0", () => {
+		expect(getBerryStrength("normal", 0)).toBe(0);
+	});
+
 	it("returns base strength at level 1", () => {
 		expect(getBerryStrength("normal", 1)).toBe(28);
 		expect(getBerryStrength("fire", 1)).toBe(27);
