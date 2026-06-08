@@ -12,6 +12,7 @@ import type i18next from "i18next";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import {
+	getDracoMeteorBerryCount,
 	getIngredientDrawIngredients,
 	getLunarBlessingBerryCount,
 	getMaxSkillLevel,
@@ -105,7 +106,7 @@ const SkillTable = React.memo(
 	}) => {
 		const skill = value.versatileSkill;
 		if (skill.startsWith("Berry Burst")) {
-			return <BerryBurstTable value={value} />;
+			return <BerryBurstTable value={value} config={config} />;
 		} else if (skill === "Energy for Everyone S (Lunar Blessing)") {
 			return <LunarBlessingTable value={value} config={config} />;
 		} else {
@@ -172,48 +173,65 @@ const NormalTable = React.memo(
 	},
 );
 
-const BerryBurstTable = React.memo(({ value }: { value: PokemonIv }) => {
-	const { t } = useTranslation();
-	const skill: MainSkillName = value.versatileSkill;
-	const max = getMaxSkillLevel(skill);
-	const colMax = getMaxSkillLevel(value.pokemon.skill);
-	const isVersatile = value.pokemon.skill === "Versatile";
+const BerryBurstTable = React.memo(
+	({
+		value,
+		config,
+	}: {
+		value: PokemonIv;
+		config: SkillDetailDialogConfig;
+	}) => {
+		const { t } = useTranslation();
+		const skill: MainSkillName = value.versatileSkill;
+		const max = getMaxSkillLevel(skill);
+		const colMax = getMaxSkillLevel(value.pokemon.skill);
+		const isVersatile = value.pokemon.skill === "Versatile";
 
-	return (
-		<table>
-			<thead>
-				<tr>
-					<th rowSpan={2}>{t("skill level")}</th>
-					<th colSpan={3}>{t("berry")}</th>
-					{isVersatile && <th rowSpan={2}>{t("candy")}</th>}
-				</tr>
-				<tr>
-					<th>{t("total")}</th>
-					<th>{t("own")}</th>
-					<th>{t("teammates")}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{[...Array(colMax)].map((_, i) => {
-					const level = i + 1;
-					const burstLevel = Math.min(level, max);
-					const own = getSkillValue(skill, burstLevel);
-					const team = getSkillSubValue(skill, burstLevel);
-					const total = own + team * 4;
-					return (
-						<tr key={level}>
-							<td>Lv.{level}</td>
-							<td>{total}</td>
-							<td>{own}</td>
-							<td>{team}</td>
-							{isVersatile && <td>{getVersatileCandyCount(level, t)}</td>}
-						</tr>
-					);
-				})}
-			</tbody>
-		</table>
-	);
-});
+		return (
+			<table>
+				<thead>
+					<tr>
+						<th rowSpan={2}>{t("skill level")}</th>
+						<th colSpan={3}>{t("berry")}</th>
+						{isVersatile && <th rowSpan={2}>{t("candy")}</th>}
+					</tr>
+					<tr>
+						<th>{t("total")}</th>
+						<th>{t("own")}</th>
+						<th>{t("teammates")}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{[...Array(colMax)].map((_, i) => {
+						const level = i + 1;
+						const burstLevel = Math.min(level, max);
+						let own = getSkillValue(skill, burstLevel);
+						let team = getSkillSubValue(skill, burstLevel);
+						if (skill === "Berry Burst (Draco Meteor)") {
+							const count = getDracoMeteorBerryCount(
+								burstLevel,
+								config.species,
+								config.latiTwins,
+							);
+							own = count.myBerryCount;
+							team = count.othersBerryCount;
+						}
+						const total = own + team * 4;
+						return (
+							<tr key={level}>
+								<td>Lv.{level}</td>
+								<td>{total}</td>
+								<td>{own}</td>
+								<td>{team}</td>
+								{isVersatile && <td>{getVersatileCandyCount(level, t)}</td>}
+							</tr>
+						);
+					})}
+				</tbody>
+			</table>
+		);
+	},
+);
 
 const LunarBlessingTable = React.memo(
 	({

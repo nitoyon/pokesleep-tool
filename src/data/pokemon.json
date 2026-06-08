@@ -5318,28 +5318,28 @@
 		"specialty": "Skills",
 		"skill": "Berry Burst (Draco Meteor)",
 		"fp": 30,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2800,
+		"ingRate": 19.8,
+		"skillRate": 3,
 		"ancestor": null,
 		"evolutionCount": -1,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 19,
 		"ing1": {
-			"name": "unknown1",
+			"name": "tomato",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "egg",
+			"c2": 2,
+			"c3": 3
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "milk",
+			"c3": 4
 		}
 	},
 	{
