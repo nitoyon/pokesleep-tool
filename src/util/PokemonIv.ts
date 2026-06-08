@@ -584,8 +584,8 @@ class PokemonIv {
 	}
 
 	/**
-	 * Calculate frequency with helping bonus from other Pokemon.
-	 * @param count Number of other pokemon in the team with Helping Bonus sub-skill
+	 * Calculate frequency with helping bonus.
+	 * @param count Number of pokemon in the team with Helping Bonus sub-skill
 	 * @returns Frequency with helping bonus applied
 	 */
 	frequencyWithHelpingBonus(count: number): number {
@@ -611,7 +611,7 @@ class PokemonIv {
 
 	/**
 	 * Calculate base frequency with helping bonus and optional modifiers.
-	 * @param helpBonusCount Number of other pokemon in the team with Helping Bonus sub-skill
+	 * @param helpBonusCount Number of pokemon in the team with Helping Bonus sub-skill
 	 * @param isGoodCampTicketSet Whether good camp ticket is set
 	 * @param isMainBerry Whether this is the main berry in expert mode
 	 * @param isNonFavoriteBerry Whether this is a non-favorite berry in expert mode

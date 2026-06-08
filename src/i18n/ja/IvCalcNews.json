@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add latios": {
+				"headline": "$t(pokemons.Latios)のデータを追加しました。",
+				"detail": "$t(rp collection)"
+			},
 			"add drampa": {
 				"headline": "$t(pokemons.Drampa)のデータを追加しました。また、$t(box)に$t(shiny)のポケモンを登録できるようになりました。",
 				"detail": "$t(own research note)"

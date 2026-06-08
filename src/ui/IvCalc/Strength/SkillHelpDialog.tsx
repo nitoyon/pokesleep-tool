@@ -873,6 +873,7 @@ function getBerryBurstValueText(
 	const bonus = getEventBonus(param.event, param.customEventBonus).berryBurst;
 	const result = calculateBerryBurstStrength(
 		strength.pokemonIv,
+		getBerryBurstTeam(strength.pokemonIv, param),
 		strength.parameter,
 		bonus,
 		skillLevel,
@@ -996,7 +997,7 @@ function getBerryBurstConfigHtml(
 	const auto = settings.berryBurstTeam.auto;
 	const burstTeam = getBerryBurstTeam(iv, settings);
 	const maxSpecies =
-		burstTeam.filter((x) => x.type === iv.pokemon.type).length + 1;
+		burstTeam.members.filter((x) => x.type === iv.pokemon.type).length + 1;
 	const minSpecies = maxSpecies >= 2 ? 2 : 1;
 	const species = auto
 		? maxSpecies
@@ -1107,15 +1108,15 @@ function getBerryBurstConfigHtml(
 						<TypeSelect
 							size="small"
 							disabled={auto}
-							type={burstTeam[i].type}
+							type={burstTeam.members[i].type}
 							onChange={(type) => onBerryBurstTypeChange(i, type)}
 						/>
 						<span style={{ padding: "0 0.2rem 0 0.6rem" }}>Lv.</span>
 						{auto ? (
-							burstTeam[i].level
+							burstTeam.members[i].level
 						) : (
 							<LevelInput
-								value={burstTeam[i].level}
+								value={burstTeam.members[i].level}
 								sx={{ width: "1.2rem", fontSize: "0.9rem" }}
 								showSlider
 								onChange={(level) => onBerryBurstLevelChange(i, level)}
@@ -1123,7 +1124,10 @@ function getBerryBurstConfigHtml(
 						)}
 						<InfoButton
 							onClick={() =>
-								onBerryInfoClick(burstTeam[i].type, burstTeam[i].level)
+								onBerryInfoClick(
+									burstTeam.members[i].type,
+									burstTeam.members[i].level,
+								)
 							}
 						/>
 					</span>

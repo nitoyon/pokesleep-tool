@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add latios": {
+				"headline": "$t(pokemons.Latios)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
 			"add drampa": {
 				"headline": "$t(pokemons.Drampa)의 데이터를 추가했습니다. 또한, $t(box)에 $t(shiny) 포켓몬을 등록할 수 있게 되었습니다.",
 				"detail": "$t(own research note)"

@@ -243,6 +243,9 @@ export function getSkillValue(
 	if (skill === "Berry Burst (Disguise)") {
 		return [8, 10, 15, 17, 19, 21][skillLevel - 1];
 	}
+	if (skill === "Berry Burst (Draco Meteor)") {
+		return [18, 30, 37, 45, 49, 55][skillLevel - 1];
+	}
 	if (skill === "Berry Burst") {
 		return [11, 14, 21, 24, 27, 30][skillLevel - 1];
 	}
@@ -286,7 +289,7 @@ export function getSkillSubValue(
 	}
 
 	if (skill === "Berry Burst (Draco Meteor)") {
-		return [0, 0, 0, 0, 0, 0][skillLevel - 1];
+		return [1, 1, 2, 3, 4, 4][skillLevel - 1];
 	}
 	if (skill.startsWith("Berry Burst")) {
 		// Get the number of berries gathered from other members
@@ -355,13 +358,11 @@ export function getIngredientDrawIngredients(
 }
 
 /**
- * Returns the additional effect of the main skill for the given
+ * Returns the berry count of the main skill for the given
  * skill and level.
- * @param skill Name of the main skill.
  * @param skillLevel Level of the main skill.
- * @param firstIngredient First ingredient name. Used only for
- *                        `Ingredient Magnet S (Plus)`.
- * @returns Additional effect for the skill, or throws if not applicable.
+ * @param species Number of different species of same type Pokémon on the team.
+ * @returns Berry count for the skill, or throws if not applicable.
  */
 export function getLunarBlessingBerryCount(
 	skillLevel: number,
@@ -453,6 +454,124 @@ export function getLunarBlessingBerryCount(
 					return { myBerryCount: 31, othersBerryCount: 6 };
 				case 5:
 					return { myBerryCount: 32, othersBerryCount: 9 };
+			}
+			break;
+	}
+	throw new Error(
+		`Lunar Blessing doesn’t have a sub-value: ${skillLevel}, ${species}`,
+	);
+}
+
+/**
+ * Returns the berry count of the main skill for the given
+ * skill and level.
+ * @param skillLevel Level of the main skill.
+ * @param species Number of different species of same type Pokémon on the team.
+ * @param latiTwins Whether the team has Latios and Latias.
+ * @returns Berry count for the skill, or throws if not applicable.
+ */
+export function getDracoMeteorBerryCount(
+	skillLevel: number,
+	species: number,
+	latiTwins: boolean,
+): {
+	myBerryCount: number;
+	othersBerryCount: number;
+} {
+	let bonus = 0;
+	if (latiTwins) {
+		if (skillLevel < 5) {
+			bonus = skillLevel * 2;
+		} else if (skillLevel === 5) {
+			bonus = 9;
+		} else {
+			bonus = 10;
+		}
+	}
+
+	switch (skillLevel) {
+		case 1:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 12 + bonus, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 14 + bonus, othersBerryCount: 1 };
+				case 3:
+					return { myBerryCount: 18 + bonus, othersBerryCount: 1 };
+				case 4:
+					return { myBerryCount: 18 + bonus, othersBerryCount: 2 };
+				case 5:
+					return { myBerryCount: 20 + bonus, othersBerryCount: 2 };
+			}
+			break;
+		case 2:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 21 + bonus, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 24 + bonus, othersBerryCount: 1 };
+				case 3:
+					return { myBerryCount: 29 + bonus, othersBerryCount: 1 };
+				case 4:
+					return { myBerryCount: 30 + bonus, othersBerryCount: 2 };
+				case 5:
+					return { myBerryCount: 33 + bonus, othersBerryCount: 2 };
+			}
+			break;
+		case 3:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 29 + bonus, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 29 + bonus, othersBerryCount: 2 };
+				case 3:
+					return { myBerryCount: 35 + bonus, othersBerryCount: 2 };
+				case 4:
+					return { myBerryCount: 37 + bonus, othersBerryCount: 3 };
+				case 5:
+					return { myBerryCount: 41 + bonus, othersBerryCount: 3 };
+			}
+			break;
+		case 4:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 38 + bonus, othersBerryCount: 1 };
+				case 2:
+					return { myBerryCount: 39 + bonus, othersBerryCount: 2 };
+				case 3:
+					return { myBerryCount: 42 + bonus, othersBerryCount: 3 };
+				case 4:
+					return { myBerryCount: 45 + bonus, othersBerryCount: 4 };
+				case 5:
+					return { myBerryCount: 49 + bonus, othersBerryCount: 4 };
+			}
+			break;
+		case 5:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 43 + bonus, othersBerryCount: 2 };
+				case 2:
+					return { myBerryCount: 44 + bonus, othersBerryCount: 3 };
+				case 3:
+					return { myBerryCount: 48 + bonus, othersBerryCount: 4 };
+				case 4:
+					return { myBerryCount: 49 + bonus, othersBerryCount: 5 };
+				case 5:
+					return { myBerryCount: 53 + bonus, othersBerryCount: 5 };
+			}
+			break;
+		case 6:
+			switch (species) {
+				case 1:
+					return { myBerryCount: 48 + bonus, othersBerryCount: 3 };
+				case 2:
+					return { myBerryCount: 50 + bonus, othersBerryCount: 4 };
+				case 3:
+					return { myBerryCount: 55 + bonus, othersBerryCount: 4 };
+				case 4:
+					return { myBerryCount: 55 + bonus, othersBerryCount: 5 };
+				case 5:
+					return { myBerryCount: 58 + bonus, othersBerryCount: 5 };
 			}
 			break;
 	}
