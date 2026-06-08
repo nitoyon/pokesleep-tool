@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add latios": {
+				"headline": "Added data for $t(pokemons.Latios).",
+				"detail": "$t(rp collection)"
+			},
 			"add drampa": {
 				"headline": "Added data for $t(pokemons.Drampa). Also, shiny Pokémon can now be added to $t(box).",
 				"detail": "$t(own research note)"
