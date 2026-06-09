@@ -360,8 +360,8 @@ class PokemonRp {
 				return [2800, 3902, 5273, 6975, 9317, 12438][this.iv.skillLevel - 1];
 			}
 			if (this.iv.pokemon.skill === "Berry Burst (Draco Meteor)") {
-				// Lv1: 2379-2381
-				// Lv2: 3385 or 3386
+				// Lv1, Lv2: fixed
+				// Lv3: 4667~4671
 				// Lv3~Lv6: Charge Energy S x5.95 (estimation)
 				return [2380, 3385, 4670, 6443, 8901, 12292][this.iv.skillLevel - 1];
 			}
