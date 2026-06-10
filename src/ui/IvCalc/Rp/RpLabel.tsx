@@ -21,7 +21,7 @@ const RpLabel = React.memo(
 		const { t } = useTranslation();
 		const isEstimated =
 			iv.level > maxLevel ||
-			(iv.pokemon.skill === "Berry Burst (Draco Meteor)" && iv.skillLevel >= 3);
+			(iv.pokemon.skill === "Berry Burst (Draco Meteor)" && iv.skillLevel >= 4);
 
 		const clickHandler = React.useCallback(() => {
 			if (onClick !== undefined) {
