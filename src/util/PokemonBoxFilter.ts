@@ -224,6 +224,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 			this.name === "" &&
 			this.filterTypes.length === 0 &&
 			this.filterSpecialty.length === 0 &&
+			this.shiny === false &&
 			this.ingredientName === undefined &&
 			this.mainSkillNames.length === 0 &&
 			this.subSkillNames.length === 0 &&

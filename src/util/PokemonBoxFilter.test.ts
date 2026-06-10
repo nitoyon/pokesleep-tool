@@ -544,6 +544,11 @@ describe("BoxFilterConfig", () => {
 			expect(config.isEmpty).toBe(false);
 		});
 
+		test("returns false when shiny is true", () => {
+			const config = new BoxFilterConfig({ shiny: true });
+			expect(config.isEmpty).toBe(false);
+		});
+
 		test("returns false when ingredientName is set", () => {
 			const config = new BoxFilterConfig({ ingredientName: "apple" });
 			expect(config.isEmpty).toBe(false);
