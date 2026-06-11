@@ -569,9 +569,9 @@ function calculateAsleepHelpCount(
 	if (param.tapFrequencyAwake === NoTap) {
 		ret.total.all += asleepHelpCounts[0];
 		ret.total.sneakySnacking += asleepHelpCounts[0];
-		ret.berryHelpCount = asleepHelpCounts[0];
+		ret.berryHelpCount += asleepHelpCounts[0];
 		ret.berryCount = ret.berryHelpCount * ret.berryCountPerSneakySnacking;
-		ret.berrySneakySnackingCount = asleepHelpCounts[0];
+		ret.berrySneakySnackingCount = ret.berryHelpCount;
 		return;
 	}
 

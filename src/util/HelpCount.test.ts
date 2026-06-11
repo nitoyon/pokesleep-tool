@@ -175,6 +175,7 @@ describe("calculateHelpCount", () => {
 		expect(result.total.normal).toBe(0);
 		expect(result.awake.normal).toBe(0);
 		expect(result.awake.sneakySnacking).not.toBe(0);
+		expect(result.berryHelpCount).toBeCloseTo(result.total.sneakySnacking);
 	});
 
 	test("returns zeroed result for placeholder pokemon with frequency 0", () => {
