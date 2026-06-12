@@ -76,6 +76,36 @@ describe("normalizeState", () => {
 			expect(newState.parameter.favoriteType[0]).toBe("normal");
 		});
 
+		test("should update favoriteType when event has one fixedBerries", () => {
+			const state = { ...baseState };
+			state.parameter.event = "latios and the soul dew 1st week";
+			state.parameter.fieldIndex = 7;
+			state.parameter.favoriteType = ["normal", "fire", "dragon"];
+			state.pokemonIv = new PokemonIv({ pokemonName: "Venusaur" });
+
+			const newState = normalizeState(state);
+
+			// The favoriteType should be updated if the event has fixedBerries
+			expect(newState.parameter.favoriteType[0]).toBe("dragon");
+			expect(newState.parameter.favoriteType[1]).toBe("fire");
+			expect(newState.parameter.favoriteType[2]).toBe("dragon");
+		});
+
+		test("should update favoriteType when event has two fixedBerries", () => {
+			const state = { ...baseState };
+			state.parameter.event = "holiday 2025";
+			state.parameter.fieldIndex = 7;
+			state.parameter.favoriteType = ["normal", "ice", "fire"];
+			state.pokemonIv = new PokemonIv({ pokemonName: "Venusaur" });
+
+			const newState = normalizeState(state);
+
+			// The favoriteType should be updated if the event has fixedBerries
+			expect(newState.parameter.favoriteType[0]).toBe("ice");
+			expect(newState.parameter.favoriteType[1]).toBe("steel");
+			expect(newState.parameter.favoriteType[2]).toBe("fire");
+		});
+
 		test("should update favoriteType when event has three fixedBerries", () => {
 			const state = { ...baseState };
 			state.parameter.event = "raikou entei suicune research 1st week";
@@ -89,6 +119,21 @@ describe("normalizeState", () => {
 			expect(newState.parameter.favoriteType[0]).toBe("electric");
 			expect(newState.parameter.favoriteType[1]).toBe("fire");
 			expect(newState.parameter.favoriteType[2]).toBe("water");
+		});
+
+		test("should be able to swap main berry when event has three fixedBerries", () => {
+			const state = { ...baseState };
+			state.parameter.event = "raikou entei suicune research 1st week";
+			state.parameter.fieldIndex = 0;
+			state.parameter.favoriteType = ["fire", "water", "electric"];
+			state.pokemonIv = new PokemonIv({ pokemonName: "Venusaur" });
+
+			const newState = normalizeState(state);
+
+			// The favoriteType should be updated if the event has fixedBerries
+			expect(newState.parameter.favoriteType[0]).toBe("fire");
+			expect(newState.parameter.favoriteType[1]).toBe("water");
+			expect(newState.parameter.favoriteType[2]).toBe("electric");
 		});
 	});
 

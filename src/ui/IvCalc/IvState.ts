@@ -1,6 +1,6 @@
 import { getEventBonus } from "../../data/events";
 import { isExpertField } from "../../data/fields";
-import { PokemonTypes } from "../../data/pokemons";
+import { type PokemonType, PokemonTypes } from "../../data/pokemons";
 import i18n from "../../i18n";
 import PokemonBox, { type PokemonBoxItem } from "../../util/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
@@ -393,13 +393,18 @@ export function normalizeState(state: IvState): IvState {
 	) {
 		let fixRequired = false;
 		const isExpert = isExpertField(state.parameter.fieldIndex);
-		for (let i = 0; i < 3; i++) {
-			if (event.fixedBerries[i] !== null) {
+		const allNonNull = event.fixedBerries.every((b) => b !== null);
+		if (allNonNull) {
+			// Set-based check: all required types must be present in favoriteType
+			fixRequired = event.fixedBerries.some(
+				(b) => !state.parameter.favoriteType.includes(b as PokemonType),
+			);
+		} else {
+			// Position-based check: each non-null slot must match
+			for (let i = 0; i < 3; i++) {
 				if (
-					(isExpert &&
-						!state.parameter.favoriteType.includes(event.fixedBerries[i])) ||
-					(!isExpert &&
-						state.parameter.favoriteType[i] !== event.fixedBerries[i])
+					event.fixedBerries[i] !== null &&
+					state.parameter.favoriteType[i] !== event.fixedBerries[i]
 				) {
 					fixRequired = true;
 					break;
@@ -407,16 +412,24 @@ export function normalizeState(state: IvState): IvState {
 			}
 		}
 		if (fixRequired) {
-			state.parameter.favoriteType = [...event.fixedBerries];
-			if (state.parameter.favoriteType[1] === null) {
-				state.parameter.favoriteType[1] =
-					PokemonTypes.find((x) => !state.parameter.favoriteType.includes(x)) ??
-					"normal";
-			}
-			if (state.parameter.favoriteType[2] === null) {
-				state.parameter.favoriteType[2] =
-					PokemonTypes.find((x) => !state.parameter.favoriteType.includes(x)) ??
-					"normal";
+			const orig = [...state.parameter.favoriteType];
+			if (isExpert) {
+				state.parameter.favoriteType = [
+					event.fixedBerries[0] ?? orig[0],
+					event.fixedBerries[1] ?? orig[1],
+					event.fixedBerries[2] ?? orig[2],
+				];
+			} else {
+				const newType: (PokemonType | null)[] = [...event.fixedBerries];
+				if (newType[1] === null) {
+					newType[1] =
+						PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
+				}
+				if (newType[2] === null) {
+					newType[2] =
+						PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
+				}
+				state.parameter.favoriteType = newType as PokemonType[];
 			}
 		}
 	}
