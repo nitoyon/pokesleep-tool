@@ -1216,6 +1216,66 @@ export function getCurrentFavoriteBerries(parameter: StrengthParameter): {
 }
 
 /**
+ * Normalize a StrengthParameter by applying event fixedBerries favoriteType overrides.
+ * When the current event fixes berry types for the selected field, this function
+ * ensures `parameter.favoriteType` is consistent with those fixed berries.
+ * @param parameter The StrengthParameter to normalize.
+ * @returns A new StrengthParameter with favoriteType adjusted if necessary.
+ */
+export function normalizeStrengthParameter(
+	parameter: StrengthParameter,
+): StrengthParameter {
+	const event = getEventBonus(parameter.event, parameter.customEventBonus);
+
+	let fixRequired = false;
+	if (
+		event.fixedBerries.length === 3 &&
+		event.fixedAreas.includes(parameter.fieldIndex)
+	) {
+		const allNonNull = event.fixedBerries.every((b) => b !== null);
+		if (allNonNull) {
+			fixRequired = event.fixedBerries.some(
+				(b) => !parameter.favoriteType.includes(b as PokemonType),
+			);
+		} else {
+			for (let i = 0; i < 3; i++) {
+				if (
+					event.fixedBerries[i] !== null &&
+					parameter.favoriteType[i] !== event.fixedBerries[i]
+				) {
+					fixRequired = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if (!fixRequired) {
+		return parameter;
+	}
+
+	const orig = [...parameter.favoriteType];
+	const isExpert = isExpertField(parameter.fieldIndex);
+	if (isExpert) {
+		parameter.favoriteType = [
+			event.fixedBerries[0] ?? orig[0],
+			event.fixedBerries[1] ?? orig[1],
+			event.fixedBerries[2] ?? orig[2],
+		];
+	} else {
+		const newType: (PokemonType | null)[] = [...event.fixedBerries];
+		if (newType[1] === null) {
+			newType[1] = PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
+		}
+		if (newType[2] === null) {
+			newType[2] = PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
+		}
+		parameter.favoriteType = newType as PokemonType[];
+	}
+	return parameter;
+}
+
+/**
  * Create a StrengthParameter from Partial<StrengthParameter>.
  * @param param The partial values to overwrite default values.
  * @returns The resulting StrengthParameter.
