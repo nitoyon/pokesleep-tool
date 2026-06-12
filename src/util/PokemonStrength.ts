@@ -1226,12 +1226,12 @@ export function normalizeStrengthParameter(
 	parameter: StrengthParameter,
 ): StrengthParameter {
 	const event = getEventBonus(parameter.event, parameter.customEventBonus);
+
+	let fixRequired = false;
 	if (
 		event.fixedBerries.length === 3 &&
 		event.fixedAreas.includes(parameter.fieldIndex)
 	) {
-		let fixRequired = false;
-		const isExpert = isExpertField(parameter.fieldIndex);
 		const allNonNull = event.fixedBerries.every((b) => b !== null);
 		if (allNonNull) {
 			fixRequired = event.fixedBerries.some(
@@ -1248,29 +1248,31 @@ export function normalizeStrengthParameter(
 				}
 			}
 		}
-		if (fixRequired) {
-			const orig = [...parameter.favoriteType];
-			if (isExpert) {
-				parameter.favoriteType = [
-					event.fixedBerries[0] ?? orig[0],
-					event.fixedBerries[1] ?? orig[1],
-					event.fixedBerries[2] ?? orig[2],
-				];
-			} else {
-				const newType: (PokemonType | null)[] = [...event.fixedBerries];
-				if (newType[1] === null) {
-					newType[1] =
-						PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
-				}
-				if (newType[2] === null) {
-					newType[2] =
-						PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
-				}
-				parameter.favoriteType = newType as PokemonType[];
-			}
-		}
 	}
-	return { ...parameter };
+
+	if (!fixRequired) {
+		return parameter;
+	}
+
+	const orig = [...parameter.favoriteType];
+	const isExpert = isExpertField(parameter.fieldIndex);
+	if (isExpert) {
+		parameter.favoriteType = [
+			event.fixedBerries[0] ?? orig[0],
+			event.fixedBerries[1] ?? orig[1],
+			event.fixedBerries[2] ?? orig[2],
+		];
+	} else {
+		const newType: (PokemonType | null)[] = [...event.fixedBerries];
+		if (newType[1] === null) {
+			newType[1] = PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
+		}
+		if (newType[2] === null) {
+			newType[2] = PokemonTypes.find((x) => !newType.includes(x)) ?? "normal";
+		}
+		parameter.favoriteType = newType as PokemonType[];
+	}
+	return parameter;
 }
 
 /**
