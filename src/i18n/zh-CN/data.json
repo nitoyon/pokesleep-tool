@@ -89,5 +89,26 @@
 		"Alola": "第7世代 (阿罗拉)",
 		"Galar": "第8世代 (伽勒尔)",
 		"Paldea": "第9世代 (帕底亚)"
+	},
+	"ingredients": {
+		"leek": "粗枝大葱",
+		"mushroom": "品鲜蘑菇",
+		"egg": "特选蛋",
+		"potato": "窝心洋芋",
+		"apple": "特选苹果",
+		"herb": "火辣香草",
+		"sausage": "豆制肉",
+		"milk": "哞哞鲜奶",
+		"honey": "甜甜蜜",
+		"oil": "纯粹油",
+		"ginger": "暖暖姜",
+		"tomato": "好眠番茄",
+		"cacao": "放松可可",
+		"tail": "美味尾巴",
+		"soy": "萌绿大豆",
+		"corn": "萌绿玉米",
+		"coffee": "醒脑咖啡豆",
+		"pumpkin": "沉甸甸南瓜",
+		"avocado": "嫩亮鳄梨"
 	}
 }
