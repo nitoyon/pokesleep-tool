@@ -70,6 +70,7 @@ const BoxExportDialog = React.memo(
 						fullWidth
 						rows={6}
 						value={value}
+						slotProps={{ htmlInput: { wrap: "off" } }}
 					/>
 					<div
 						style={{

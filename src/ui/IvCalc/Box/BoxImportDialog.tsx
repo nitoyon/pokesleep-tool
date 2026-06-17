@@ -74,6 +74,7 @@ const BoxImportDialog = React.memo(
 							rows={6}
 							value={value}
 							onChange={onValueChange}
+							slotProps={{ htmlInput: { wrap: "off" } }}
 						/>
 					</DialogContent>
 					<DialogActions>
