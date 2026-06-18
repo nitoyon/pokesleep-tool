@@ -16,6 +16,7 @@ import type PokemonBox from "../../../util/PokemonBox";
 import SelectEx from "../../common/SelectEx";
 
 type BoxExportFormat = "custom" | "csv" | "tsv";
+type BoxExportDestination = "clipboard" | "file";
 
 const BoxExportDialog = React.memo(
 	({
@@ -30,6 +31,8 @@ const BoxExportDialog = React.memo(
 		const [copiedMessageVisible, setCopiedMessageVisible] =
 			React.useState(false);
 		const [format, setFormat] = React.useState<BoxExportFormat>("custom");
+		const [destination, setDestination] =
+			React.useState<BoxExportDestination>("clipboard");
 		const { t } = useTranslation();
 
 		const value = React.useMemo(() => {
@@ -39,10 +42,6 @@ const BoxExportDialog = React.memo(
 			return exportToCsvTsv(box.items, t, format);
 		}, [box.items, format, t]);
 
-		const onFormatChange = React.useCallback((value: string) => {
-			setFormat(value as BoxExportFormat);
-		}, []);
-
 		const onCopy = React.useCallback(() => {
 			copyToClipboard(value)
 				.then(() => {
@@ -50,9 +49,26 @@ const BoxExportDialog = React.memo(
 				})
 				.catch(() => {});
 		}, [value]);
+
 		const onCopiedMessageClose = React.useCallback(() => {
 			setCopiedMessageVisible(false);
 		}, []);
+
+		const onFormatChange = React.useCallback((value: string) => {
+			setFormat(value as BoxExportFormat);
+		}, []);
+
+		const onDestinationChange = React.useCallback((value: string) => {
+			setDestination(value as BoxExportDestination);
+		}, []);
+
+		const onExport = React.useCallback(() => {
+			if (destination === "clipboard") {
+				onCopy();
+			} else {
+				exportToFile(value, format);
+			}
+		}, [destination, onCopy, format, value]);
 
 		return (
 			<Dialog open={open} onClose={onClose}>
@@ -93,9 +109,29 @@ const BoxExportDialog = React.memo(
 							<MenuItem value="tsv">TSV</MenuItem>
 						</SelectEx>
 					</div>
+					<div
+						style={{
+							marginTop: "0.2rem",
+							display: "flex",
+							flex: "0 auto",
+						}}
+					>
+						<span
+							style={{
+								fontSize: "0.9rem",
+								marginRight: "auto",
+							}}
+						>
+							{t("output destination")}:
+						</span>
+						<SelectEx value={destination} onChange={onDestinationChange}>
+							<MenuItem value="clipboard">{t("clipboard")}</MenuItem>
+							<MenuItem value="file">{t("file")}</MenuItem>
+						</SelectEx>
+					</div>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={onCopy}>{t("copy to clipboard")}</Button>
+					<Button onClick={onExport}>{t("export")}</Button>
 					<Button onClick={onClose}>{t("close")}</Button>
 				</DialogActions>
 				<Snackbar
@@ -108,5 +144,22 @@ const BoxExportDialog = React.memo(
 		);
 	},
 );
+
+function exportToFile(value: string, format: BoxExportFormat) {
+	const ext = format === "custom" ? "txt" : format;
+	const now = new Date();
+	const pad = (n: number) => String(n).padStart(2, "0");
+	const timestamp =
+		`${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}` +
+		`${pad(now.getHours())}${pad(now.getMinutes())}`;
+	const filename = `box${timestamp}.${ext}`;
+	const blob = new Blob([value], { type: "text/plain" });
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = filename;
+	a.click();
+	URL.revokeObjectURL(url);
+}
 
 export default BoxExportDialog;
