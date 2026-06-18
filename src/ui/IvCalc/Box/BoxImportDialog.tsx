@@ -4,6 +4,7 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	MenuItem,
 	Snackbar,
 	TextField,
 } from "@mui/material";
@@ -15,6 +16,9 @@ import {
 	importFromCsvTsv,
 } from "../../../util/Formatter/BoxImporter";
 import type PokemonBox from "../../../util/PokemonBox";
+import SelectEx from "../../common/SelectEx";
+
+type BoxImportMethod = "clipboard" | "file";
 
 const BoxImportDialog = React.memo(
 	({
@@ -27,7 +31,9 @@ const BoxImportDialog = React.memo(
 		onClose: () => void;
 	}) => {
 		const [value, setValue] = React.useState("");
+		const [method, setMethod] = React.useState<BoxImportMethod>("clipboard");
 		const [importedMessage, setImportedMessage] = React.useState("");
+		const fileInputRef = React.useRef<HTMLInputElement>(null);
 		const { t } = useTranslation();
 
 		const onValueChange = React.useCallback(
@@ -37,21 +43,51 @@ const BoxImportDialog = React.memo(
 			[],
 		);
 
+		const onMethodChange = React.useCallback((v: string) => {
+			setMethod(v as BoxImportMethod);
+			setValue("");
+		}, []);
+
+		const onFileButtonClick = React.useCallback(() => {
+			fileInputRef.current?.click();
+		}, []);
+
 		const onClose_ = React.useCallback(() => {
 			setValue("");
 			onClose();
 		}, [onClose]);
 
+		const importHandler = React.useCallback(
+			(text: string) => {
+				const added = importToBox(text, box, t);
+				if (added === 0) {
+					setImportedMessage(t("failed to import"));
+				} else {
+					box.save();
+					setImportedMessage(t("imported N pokemon", { n: added }));
+					onClose_();
+				}
+			},
+			[box, t, onClose_],
+		);
+
 		const onImportClick = React.useCallback(() => {
-			const added = importToBox(value, box, t);
-			if (added === 0) {
-				setImportedMessage(t("failed to import"));
-			} else {
-				box.save();
-				setImportedMessage(t("imported N pokemon", { n: added }));
-				onClose_();
-			}
-		}, [box, t, onClose_, value]);
+			importHandler(value);
+		}, [importHandler, value]);
+
+		const onFileChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				const file = e.target.files?.[0];
+				if (!file) return;
+				const reader = new FileReader();
+				reader.onload = (ev) => {
+					importHandler((ev.target?.result as string) ?? "");
+				};
+				reader.readAsText(file);
+				e.target.value = "";
+			},
+			[importHandler],
+		);
 
 		const onImportedMessageClose = React.useCallback(() => {
 			setImportedMessage("");
@@ -64,21 +100,66 @@ const BoxImportDialog = React.memo(
 				<Dialog open={open} onClose={onClose_}>
 					<DialogTitle>{t("import")}</DialogTitle>
 					<DialogContent>
-						<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
-							{t("import message")}
-						</p>
-						<TextField
-							label={t("box data")}
-							multiline
-							fullWidth
-							rows={6}
-							value={value}
-							onChange={onValueChange}
-							slotProps={{ htmlInput: { wrap: "off" } }}
-						/>
+						{method === "clipboard" ? (
+							<>
+								<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
+									{t("import message")}
+								</p>
+								<TextField
+									label={t("box data")}
+									multiline
+									fullWidth
+									rows={6}
+									value={value}
+									onChange={onValueChange}
+									slotProps={{ htmlInput: { wrap: "off" } }}
+								/>
+							</>
+						) : (
+							<>
+								<p style={{ fontSize: "0.9rem", margin: "0 0 0.5rem 0" }}>
+									{t("import message file")}
+								</p>
+								<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
+									{t("import message file2")}
+								</p>
+								<input
+									ref={fileInputRef}
+									type="file"
+									accept=".txt,.csv,.tsv"
+									style={{ display: "none" }}
+									onChange={onFileChange}
+								/>
+								<Button variant="outlined" onClick={onFileButtonClick}>
+									{t("select file")}
+								</Button>
+							</>
+						)}
+						<div
+							style={{
+								marginTop: "1.2rem",
+								display: "flex",
+								flex: "0 auto",
+							}}
+						>
+							<span
+								style={{
+									fontSize: "0.9rem",
+									marginRight: "auto",
+								}}
+							>
+								{t("import method")}:
+							</span>
+							<SelectEx value={method} onChange={onMethodChange}>
+								<MenuItem value="clipboard">{t("clipboard")}</MenuItem>
+								<MenuItem value="file">{t("file")}</MenuItem>
+							</SelectEx>
+						</div>
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={onImportClick}>{t("import")}</Button>
+						{method === "clipboard" && (
+							<Button onClick={onImportClick}>{t("import")}</Button>
+						)}
 						<Button onClick={onClose_}>{t("close")}</Button>
 					</DialogActions>
 				</Dialog>
