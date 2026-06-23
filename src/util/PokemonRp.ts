@@ -3,7 +3,7 @@ import { getBerryStrength } from "./Berry";
 import type PokemonIv from "./PokemonIv";
 import type SubSkill from "./SubSkill";
 
-export const maxLevel = 65;
+export const maxLevel = 70;
 
 export const ingredientStrength: { [ing in IngredientName]: number } = {
 	leek: 185,
@@ -360,10 +360,7 @@ class PokemonRp {
 				return [2800, 3902, 5273, 6975, 9317, 12438][this.iv.skillLevel - 1];
 			}
 			if (this.iv.pokemon.skill === "Berry Burst (Draco Meteor)") {
-				// Lv1, Lv2, Lv3, Lv6: setled
-				// Lv4: 6442-6445
-				// Lv4, Lv5: Charge Energy S x5.95 (estimation)
-				return [2380, 3385, 4670, 6445, 8901, 12294][this.iv.skillLevel - 1];
+				return [2380, 3385, 4670, 6445, 8898, 12294][this.iv.skillLevel - 1];
 			}
 			if (
 				this.iv.pokemon.skill === "Berry Burst (Disguise)" ||

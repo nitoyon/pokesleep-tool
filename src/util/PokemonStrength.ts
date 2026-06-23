@@ -90,7 +90,7 @@ export interface StrengthParameter extends EnergyParameter {
 	fieldBonus: number;
 
 	/** Pokemon level (0: current level, Others: specified level) */
-	level: 0 | 10 | 25 | 30 | 50 | 55 | 60 | 75 | 100;
+	level: 0 | 10 | 25 | 30 | 50 | 55 | 60 | 70 | 75 | 80 | 100;
 
 	/** Calculate with evolved Pokemon */
 	evolved: boolean;
@@ -1631,7 +1631,7 @@ export function loadStrengthParameter(): StrengthParameter {
 
 	if (
 		typeof json.level === "number" &&
-		[0, 10, 25, 30, 50, 55, 60, 75, 100].includes(json.level)
+		[0, 10, 25, 30, 50, 55, 60, 70, 75, 80, 100].includes(json.level)
 	) {
 		ret.level = json.level;
 	}

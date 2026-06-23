@@ -12,14 +12,15 @@ const totalExpToTheLevel: number[] = [
 	10598, 11284, 11992, 12721, 13469, 14235, 15020, 15823, 16644, 17483, 18340,
 	19215, 20108, 21018, 21946, 22891, 23854, 24834, 25831, 26846, 27878, 28927,
 	29993, 31355, 32917, 34664, 36610, 38805, 41084, 43488, 46021, 48687, 51493,
-	54358, 57280, 60257, 63286, 66363,
+	54358, 57280, 60257, 63286, 66363, 69499, 72686, 75926, 79220, 82566,
 ];
 
 const dreamShardsPerCandy: number[] = [
 	0, 0, 14, 18, 22, 27, 30, 34, 39, 44, 48, 50, 52, 53, 56, 59, 62, 66, 68, 71,
 	74, 78, 81, 85, 88, 92, 95, 100, 105, 111, 117, 122, 126, 130, 136, 143, 151,
 	160, 167, 174, 184, 192, 201, 211, 221, 227, 236, 250, 264, 279, 295, 309,
-	323, 338, 356, 372, 391, 437, 486, 538, 593, 651, 698, 750, 804, 866,
+	323, 338, 356, 372, 391, 437, 486, 538, 593, 651, 698, 750, 804, 866, 933,
+	1005, 1082, 1164, 1251,
 ];
 
 const expTypeRate: { [key in ExpType]: number } = {
@@ -93,6 +94,7 @@ export default function calcExpAndCandy(
 	expGot: number,
 	dstLevel: number,
 	boost: BoostEvent,
+	ver360: boolean = false,
 ): CalcExpAndCandyResult {
 	const srcLevel = iv.level;
 	if (
@@ -119,7 +121,7 @@ export default function calcExpAndCandy(
 	const shardRate = boost === "none" ? 1 : boost === "mini" ? 4 : 5;
 	for (let i = srcLevel; i < dstLevel; i++) {
 		const requiredExp = calcExp(i, i + 1, iv) - carry;
-		const expPerCandy = calcExpPerCandy(i, iv.nature, boost);
+		const expPerCandy = calcExpPerCandy(i, iv.nature, boost, ver360);
 		const requiredCandy = Math.ceil(requiredExp / expPerCandy);
 		shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
 		candy += Math.ceil(requiredExp / expPerCandy);
@@ -144,6 +146,7 @@ export function calcLevelByCandy(
 	dstLevel: number,
 	candy: number,
 	boost: BoostEvent,
+	ver360: boolean = false,
 ): CalcLevelResult {
 	const srcLevel = iv.level;
 
@@ -157,7 +160,7 @@ export function calcLevelByCandy(
 	let level: number;
 	for (level = srcLevel; level < dstLevel; level++) {
 		const requiredExp = calcExp(level, level + 1, iv) - carry;
-		const expPerCandy = calcExpPerCandy(level, iv.nature, boost);
+		const expPerCandy = calcExpPerCandy(level, iv.nature, boost, ver360);
 		const requiredCandy = Math.ceil(requiredExp / expPerCandy);
 		const candyToUse = Math.min(requiredCandy, candyLeft);
 		shards += dreamShardsPerCandy[level + 1] * candyToUse * shardRate;
@@ -186,14 +189,27 @@ function calcExpPerCandy(
 	level: number,
 	nature: Nature,
 	boost: BoostEvent,
+	ver360: boolean,
 ): number {
 	const boostFactor = boost !== "none" ? 2 : 1;
 	if (level < 25) {
+		if (ver360) {
+			return (
+				(nature.isExpGainsUp ? 47 : nature.isExpGainsDown ? 34 : 40) *
+				boostFactor
+			);
+		}
 		return (
 			(nature.isExpGainsUp ? 41 : nature.isExpGainsDown ? 29 : 35) * boostFactor
 		);
 	}
 	if (level < 30) {
+		if (ver360) {
+			return (
+				(nature.isExpGainsUp ? 41 : nature.isExpGainsDown ? 29 : 35) *
+				boostFactor
+			);
+		}
 		return (
 			(nature.isExpGainsUp ? 35 : nature.isExpGainsDown ? 25 : 30) * boostFactor
 		);

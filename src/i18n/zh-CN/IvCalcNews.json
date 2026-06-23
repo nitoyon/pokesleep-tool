@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.6.0pre": {
+				"headline": "已初步对应 Ver.3.6.0 中的等级上限开放及糖果获得经验值的变更。",
+				"detail": "升至Lv.70所需的经验值和梦之碎片是基于以往增长量的推测值。Lv.66以后的果实能量和SP为推测值。"
+			},
 			"add latios": {
 				"headline": "添加了$t(pokemons.Latios)的数据。",
 				"detail": "$t(rp collection)"

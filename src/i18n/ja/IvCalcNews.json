@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.6.0pre": {
+				"headline": "Ver.3.6.0でのレベル上限開放およびアメで得られる経験値量の変更に仮対応しました。",
+				"detail": "Lv.70までの必要経験値・ゆめのかけらはこれまでの増加量からの推測値です。Lv66以降のきのみエナジーやSPは推測値です。"
+			},
 			"add latios": {
 				"headline": "$t(pokemons.Latios)のデータを追加しました。",
 				"detail": "$t(rp collection)"

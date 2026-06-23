@@ -7,8 +7,8 @@ describe("SubSkillList constructor", () => {
 		expect(s.lv10).toBe(null);
 		expect(s.lv25).toBe(null);
 		expect(s.lv50).toBe(null);
-		expect(s.lv75).toBe(null);
-		expect(s.lv100).toBe(null);
+		expect(s.lv70).toBe(null);
+		expect(s.lv80).toBe(null);
 	});
 
 	test("argument given", () => {

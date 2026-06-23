@@ -93,8 +93,9 @@ export const LevelInput = React.memo(
 						{!max100 && <Button onClick={() => onButtonClick(40)}>40</Button>}
 						<Button onClick={() => onButtonClick(50)}>50</Button>
 						<Button onClick={() => onButtonClick(60)}>60</Button>
-						<Button onClick={() => onButtonClick(65)}>65</Button>
-						{max100 && <Button onClick={() => onButtonClick(75)}>75</Button>}
+						{!max100 && <Button onClick={() => onButtonClick(65)}>65</Button>}
+						<Button onClick={() => onButtonClick(70)}>70</Button>
+						{max100 && <Button onClick={() => onButtonClick(80)}>80</Button>}
 						{max100 && <Button onClick={() => onButtonClick(100)}>100</Button>}
 					</div>
 				</LevelSelectorPopup>
