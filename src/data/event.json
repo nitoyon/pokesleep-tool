@@ -1,24 +1,19 @@
 {
 	"drowsy": [
 		{
-			"name": "Latios",
-			"day": "2026-06-22",
+			"name": "GSD",
+			"day": "2026-06-29",
 			"bonus": 1.5
 		},
 		{
 			"name": "GSD",
-			"day": "2026-05-30",
-			"bonus": 1.5
-		},
-		{
-			"name": "GSD",
-			"day": "2026-05-31",
+			"day": "2026-06-30",
 			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
-			"bonus": 2
+			"bonus": 3
 		},
 		{
 			"name": "GSD",
-			"day": "2026-06-01",
+			"day": "2026-07-01",
 			"bonus": 1.5
 		}
 	],
