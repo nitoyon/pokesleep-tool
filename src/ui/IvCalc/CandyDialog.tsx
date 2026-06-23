@@ -117,7 +117,7 @@ const CandyDialog = React.memo(
 			currentLevel: iv.level,
 			targetLevel: maxLevel,
 		});
-		const [maxExpLeft, setMaxExpLeft] = React.useState(0);
+		const [maxExpLeft, setMaxExpLeft] = React.useState(-1);
 		const [config, setConfig] = React.useState<CandyConfig>({
 			tabIndex: 0,
 			pokemonCandy: 500,
@@ -139,7 +139,7 @@ const CandyDialog = React.memo(
 		// first time when this dialog is open
 		const shouldReset = React.useCallback(() => {
 			// first time
-			if (maxExpLeft === 0) {
+			if (maxExpLeft < 0) {
 				return true;
 			}
 
