@@ -44,11 +44,19 @@ const FixedLevelSelect = React.memo(
 		);
 
 		return (
-			<SelectEx sx={sx} value={value.level} onChange={onLevelChange}>
+			<SelectEx
+				sx={sx}
+				menuSx={{
+					display: "grid",
+					gridTemplateColumns: "1fr 1fr",
+				}}
+				value={value.level}
+				onChange={onLevelChange}
+			>
 				<MenuItem dense value={0}>
 					{t("current level")}
 				</MenuItem>
-				<Divider />
+				<Divider style={{ gridColumn: "1 / -1" }} />
 				<MenuItem dense value={10}>
 					Lv. 10
 				</MenuItem>
