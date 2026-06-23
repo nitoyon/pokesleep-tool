@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.6.0pre": {
+				"headline": "Ver.3.6.0의 레벨 상한 개방 및 사탕으로 얻는 경험치 변경에 임시 대응하였습니다.",
+				"detail": "Lv.70까지의 필요 경험치와 꿈의 조각은 지금까지의 증가량을 토대로 한 추정치입니다. Lv.66 이후의 나무열매 에너지와 SP는 추정치입니다."
+			},
 			"add latios": {
 				"headline": "$t(pokemons.Latios)의 데이터를 추가했습니다.",
 				"detail": "$t(rp collection)"

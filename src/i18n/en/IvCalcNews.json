@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.6.0pre": {
+				"headline": "Preliminary support for the level cap increase and candy EXP changes in Ver.3.6.0.",
+				"detail": "Required EXP and Dream Shards up to Lv.70 are estimated based on previous incremental rates. Berry energy and RP from Lv.66 onwards are estimated values."
+			},
 			"add latios": {
 				"headline": "Added data for $t(pokemons.Latios).",
 				"detail": "$t(rp collection)"

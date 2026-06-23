@@ -2,6 +2,10 @@
 	"ResearchCalc": [],
 	"IvCalc": [
 		{
+			"date": "2026-06-23T13:10:00Z",
+			"id": "v3.6.0pre"
+		},
+		{
 			"date": "2026-06-08T09:14:00Z",
 			"id": "add latios"
 		},
