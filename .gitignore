@@ -19,6 +19,9 @@ src/data/spo.json
 # production
 /dist
 
+# dev sw.js
+/public/sw.js
+
 # misc
 .DS_Store
 .env.local

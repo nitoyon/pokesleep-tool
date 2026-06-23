@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"lib": ["WebWorker", "esnext"],
+		"allowJs": false,
+		"noImplicitAny": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"isolatedModules": true,
+		"composite": true,
+		"outDir": "dist"
+	},
+	"include": ["src/sw.ts"]
+}

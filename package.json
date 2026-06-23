@@ -19,7 +19,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"typecheck": "tsc --noEmit && tsc --noEmit -p scripts/tsconfig.json",
+		"typecheck": "tsc --noEmit && tsc --noEmit -p scripts/tsconfig.json && tsc --noEmit -p tsconfig.sw.json",
 		"fmt": "biome format --write",
 		"lint": "oxlint && biome check --error-on-warnings",
 		"lint:fix": "oxlint --fix && biome check --write --error-on-warnings",
