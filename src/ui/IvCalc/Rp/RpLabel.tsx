@@ -19,11 +19,7 @@ const RpLabel = React.memo(
 		onClick?: () => void;
 	}) => {
 		const { t } = useTranslation();
-		const isEstimated =
-			iv.level > maxLevel - 5 ||
-			(iv.pokemon.skill === "Berry Burst (Draco Meteor)" &&
-				iv.skillLevel >= 4 &&
-				iv.skillLevel <= 5);
+		const isEstimated = iv.level > maxLevel - 5;
 
 		const clickHandler = React.useCallback(() => {
 			if (onClick !== undefined) {
