@@ -32,7 +32,9 @@ const FixedLevelSelect = React.memo(
 								| 50
 								| 55
 								| 60
+								| 70
 								| 75
+								| 80
 								| 100,
 						},
 					},
@@ -65,8 +67,14 @@ const FixedLevelSelect = React.memo(
 				<MenuItem dense value={65}>
 					Lv. 65
 				</MenuItem>
+				<MenuItem dense value={70}>
+					Lv. 70
+				</MenuItem>
 				<MenuItem dense value={75}>
 					Lv. 75
+				</MenuItem>
+				<MenuItem dense value={80}>
+					Lv. 80
 				</MenuItem>
 				<MenuItem dense value={100}>
 					Lv. 100

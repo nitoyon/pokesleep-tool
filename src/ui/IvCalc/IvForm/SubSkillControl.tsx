@@ -35,25 +35,22 @@ const SubSkillControl = React.memo(
 	}) => {
 		const [open, setOpen] = React.useState(false);
 		const [editingLevel, setEditingLevel] = React.useState<
-			10 | 25 | 50 | 75 | 100
+			10 | 25 | 50 | 70 | 80
 		>(10);
 
 		const onClick = React.useCallback(
 			(event: React.MouseEvent<HTMLButtonElement>) => {
 				setEditingLevel(
-					parseInt(event.currentTarget.name, 10) as 10 | 25 | 50 | 75 | 100,
+					parseInt(event.currentTarget.name, 10) as 10 | 25 | 50 | 70 | 80,
 				);
 				setOpen(true);
 			},
 			[],
 		);
 
-		const onLevelChange = React.useCallback(
-			(level: 10 | 25 | 50 | 75 | 100) => {
-				setEditingLevel(level);
-			},
-			[],
-		);
+		const onLevelChange = React.useCallback((level: 10 | 25 | 50 | 70 | 80) => {
+			setEditingLevel(level);
+		}, []);
 
 		const onPopupClosed = React.useCallback(() => {
 			setOpen(false);
@@ -64,8 +61,8 @@ const SubSkillControl = React.memo(
 				<SubSkillButton level={10} value={value.lv10} onClick={onClick} />
 				<SubSkillButton level={25} value={value.lv25} onClick={onClick} />
 				<SubSkillButton level={50} value={value.lv50} onClick={onClick} />
-				<SubSkillButton level={75} value={value.lv75} onClick={onClick} />
-				<SubSkillButton level={100} value={value.lv100} onClick={onClick} />
+				<SubSkillButton level={70} value={value.lv70} onClick={onClick} />
+				<SubSkillButton level={80} value={value.lv80} onClick={onClick} />
 				<EditSubSkillDialog
 					open={open}
 					level={editingLevel}
@@ -200,10 +197,10 @@ const EditSubSkillDialog = React.memo(
 	}: {
 		open: boolean;
 		value: SubSkillList;
-		level: 10 | 25 | 50 | 75 | 100;
+		level: 10 | 25 | 50 | 70 | 80;
 		onChange: (event: SubSkillChangeEvent) => void;
 		onClose: () => void;
-		onLevelChange: (level: 10 | 25 | 50 | 75 | 100) => void;
+		onLevelChange: (level: 10 | 25 | 50 | 70 | 80) => void;
 	}) => {
 		const { t } = useTranslation();
 
@@ -230,10 +227,10 @@ const EditSubSkillDialog = React.memo(
 					onLevelChange(25);
 				} else if (newValue.lv50 === null) {
 					onLevelChange(50);
-				} else if (newValue.lv75 === null) {
-					onLevelChange(75);
-				} else if (newValue.lv100 === null) {
-					onLevelChange(100);
+				} else if (newValue.lv70 === null) {
+					onLevelChange(70);
+				} else if (newValue.lv80 === null) {
+					onLevelChange(80);
 				} else {
 					onClose();
 				}

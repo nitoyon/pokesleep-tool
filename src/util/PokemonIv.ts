@@ -975,10 +975,10 @@ class PokemonIv {
 	 *
 	 * * 5bit  : Sub-skill Lv25
 	 * * 5bit  : Sub-skill Lv50
-	 * * 5bit  : Sub-skill Lv75
+	 * * 5bit  : Sub-skill Lv70
 	 * * 1bit  : reserved
 	 *
-	 * * 5bit  : Sub-skill Lv100
+	 * * 5bit  : Sub-skill Lv80
 	 * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
 	 * * 4bit  : Versatile skill index (0: not set, 1-12: VersatileCandidates index)
 	 * * 4bit  : reserved
@@ -1018,13 +1018,13 @@ class PokemonIv {
 		array16[3] =
 			(this.subSkills.lv25 === null ? 31 : this.subSkills.lv25.index) +
 			((this.subSkills.lv50 === null ? 31 : this.subSkills.lv50.index) << 5) +
-			((this.subSkills.lv75 === null ? 31 : this.subSkills.lv75.index) << 10);
+			((this.subSkills.lv70 === null ? 31 : this.subSkills.lv70.index) << 10);
 		const versatileIndex =
 			this.pokemon.skill === "Versatile"
 				? VersatileCandidates.indexOf(this.versatileSkill) + 1
 				: 0;
 		array16[4] =
-			(this.subSkills.lv100 === null ? 31 : this.subSkills.lv100.index) +
+			(this.subSkills.lv80 === null ? 31 : this.subSkills.lv80.index) +
 			(this.ribbon << 5) +
 			(versatileIndex << 8);
 
@@ -1153,8 +1153,8 @@ class PokemonIv {
 			lv10: getSubSkill((array16[2] >> 11) & 31, 10),
 			lv25: getSubSkill((array16[3] >> 0) & 31, 25),
 			lv50: getSubSkill((array16[3] >> 5) & 31, 50),
-			lv75: getSubSkill((array16[3] >> 10) & 31, 75),
-			lv100: getSubSkill((array16[4] >> 0) & 31, 100),
+			lv70: getSubSkill((array16[3] >> 10) & 31, 75),
+			lv80: getSubSkill((array16[4] >> 0) & 31, 100),
 		});
 
 		// ribbon

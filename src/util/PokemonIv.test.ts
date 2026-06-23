@@ -472,8 +472,8 @@ describe("PokemonIV", () => {
 					lv10: new SubSkill("Berry Finding S"),
 					lv25: new SubSkill("Helping Speed S"),
 					lv50: new SubSkill("Ingredient Finder M"),
-					lv75: new SubSkill("Inventory Up L"),
-					lv100: new SubSkill("Skill Level Up S"),
+					lv70: new SubSkill("Inventory Up L"),
+					lv80: new SubSkill("Skill Level Up S"),
 				}),
 			});
 			expect(iv.serialize()).toBe("gS8AppABDSUL");
@@ -1385,8 +1385,8 @@ describe("PokemonIV", () => {
 		expect(iv2.subSkills.lv10?.name).toBe(iv1.subSkills.lv10?.name);
 		expect(iv2.subSkills.lv25?.name).toBe(iv1.subSkills.lv25?.name);
 		expect(iv2.subSkills.lv50?.name).toBe(iv1.subSkills.lv50?.name);
-		expect(iv2.subSkills.lv75?.name).toBe(iv1.subSkills.lv75?.name);
-		expect(iv2.subSkills.lv100?.name).toBe(iv1.subSkills.lv100?.name);
+		expect(iv2.subSkills.lv70?.name).toBe(iv1.subSkills.lv70?.name);
+		expect(iv2.subSkills.lv80?.name).toBe(iv1.subSkills.lv80?.name);
 		expect(iv2.ribbon).toBe(iv1.ribbon);
 		expect(iv2.shiny).toBe(iv1.shiny);
 		expect(iv2.versatileSkill).toBe(iv1.versatileSkill);

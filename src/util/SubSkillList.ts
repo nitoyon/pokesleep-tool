@@ -7,8 +7,8 @@ export interface SubSkillListProps {
 	lv10: SubSkill | null;
 	lv25: SubSkill | null;
 	lv50: SubSkill | null;
-	lv75: SubSkill | null;
-	lv100: SubSkill | null;
+	lv70: SubSkill | null;
+	lv80: SubSkill | null;
 }
 
 /**
@@ -31,8 +31,8 @@ class SubSkillList {
 			lv10: props?.lv10 ?? null,
 			lv25: props?.lv25 ?? null,
 			lv50: props?.lv50 ?? null,
-			lv75: props?.lv75 ?? null,
-			lv100: props?.lv100 ?? null,
+			lv70: props?.lv70 ?? null,
+			lv80: props?.lv80 ?? null,
 		};
 	}
 
@@ -75,8 +75,8 @@ class SubSkillList {
 		}
 		if (updates.lv25 !== undefined) applyUpdate("lv25", updates.lv25);
 		if (updates.lv50 !== undefined) applyUpdate("lv50", updates.lv50);
-		if (updates.lv75 !== undefined) applyUpdate("lv75", updates.lv75);
-		if (updates.lv100 !== undefined) applyUpdate("lv100", updates.lv100);
+		if (updates.lv70 !== undefined) applyUpdate("lv70", updates.lv70);
+		if (updates.lv80 !== undefined) applyUpdate("lv80", updates.lv80);
 
 		return new SubSkillList(newValue);
 	}
@@ -91,8 +91,8 @@ class SubSkillList {
 			this.lv10?.name === list.lv10?.name &&
 			this.lv25?.name === list.lv25?.name &&
 			this.lv50?.name === list.lv50?.name &&
-			this.lv75?.name === list.lv75?.name &&
-			this.lv100?.name === list.lv100?.name
+			this.lv70?.name === list.lv70?.name &&
+			this.lv80?.name === list.lv80?.name
 		);
 	}
 
@@ -132,18 +132,18 @@ class SubSkillList {
 			ret.push(this.value.lv50);
 		}
 
-		if (level < 75) {
+		if (level < 70) {
 			return ret;
 		}
-		if (this.value.lv75 !== null) {
-			ret.push(this.value.lv75);
+		if (this.value.lv70 !== null) {
+			ret.push(this.value.lv70);
 		}
 
-		if (level < 100) {
+		if (level < 80) {
 			return ret;
 		}
-		if (this.value.lv100 !== null) {
-			ret.push(this.value.lv100);
+		if (this.value.lv80 !== null) {
+			ret.push(this.value.lv80);
 		}
 
 		return ret;
@@ -167,10 +167,10 @@ class SubSkillList {
 		if (this.value.lv50?.name === subSkill.name) {
 			return 2;
 		}
-		if (this.value.lv75?.name === subSkill.name) {
+		if (this.value.lv70?.name === subSkill.name) {
 			return 3;
 		}
-		if (this.value.lv100?.name === subSkill.name) {
+		if (this.value.lv80?.name === subSkill.name) {
 			return 4;
 		}
 		return -1;
@@ -179,9 +179,9 @@ class SubSkillList {
 	/**
 	 * Get the level of the sub skill.
 	 * @param subSkill Sub skill to be searched.
-	 * @returns Level (10, 25, 50, 75, 100) if found, -1 if not found.
+	 * @returns Level (10, 25, 50, 70, 80) if found, -1 if not found.
 	 */
-	getSubSkillLevel(subSkill: SubSkill | null): -1 | 10 | 25 | 50 | 75 | 100 {
+	getSubSkillLevel(subSkill: SubSkill | null): -1 | 10 | 25 | 50 | 70 | 80 {
 		const index = this.getSubSkillIndex(subSkill);
 		switch (index) {
 			case 0:
@@ -191,9 +191,9 @@ class SubSkillList {
 			case 2:
 				return 50;
 			case 3:
-				return 75;
+				return 70;
 			case 4:
-				return 100;
+				return 80;
 			default:
 				return -1;
 		}
@@ -204,7 +204,7 @@ class SubSkillList {
 	 * @param level Level to get the index.
 	 * @returns 0 to 4 if valid level is given, -1 if invalid level is given.
 	 */
-	getIndex(level: 10 | 25 | 50 | 75 | 100) {
+	getIndex(level: 10 | 25 | 50 | 70 | 80) {
 		switch (level) {
 			case 10:
 				return 0;
@@ -212,9 +212,9 @@ class SubSkillList {
 				return 1;
 			case 50:
 				return 2;
-			case 75:
+			case 70:
 				return 3;
-			case 100:
+			case 80:
 				return 4;
 			default:
 				return -1;
@@ -233,13 +233,13 @@ class SubSkillList {
 	get lv50(): SubSkill | null {
 		return this.value.lv50;
 	}
-	/** Get the sub skill for level 75. */
-	get lv75(): SubSkill | null {
-		return this.value.lv75;
+	/** Get the sub skill for level 70. */
+	get lv70(): SubSkill | null {
+		return this.value.lv70;
 	}
-	/** Get the sub skill for level 100. */
-	get lv100(): SubSkill | null {
-		return this.value.lv100;
+	/** Get the sub skill for level 80. */
+	get lv80(): SubSkill | null {
+		return this.value.lv80;
 	}
 }
 
