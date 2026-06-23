@@ -20,7 +20,7 @@ const RpLabel = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		const isEstimated =
-			iv.level > maxLevel ||
+			iv.level > maxLevel - 5 ||
 			(iv.pokemon.skill === "Berry Burst (Draco Meteor)" &&
 				iv.skillLevel >= 4 &&
 				iv.skillLevel <= 5);

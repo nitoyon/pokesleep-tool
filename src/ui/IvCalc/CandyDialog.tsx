@@ -247,10 +247,29 @@ const CandyDialog = React.memo(
 			return null;
 		}
 
+		const isEstimated =
+			levelInfo.targetLevel >= 66 ||
+			(levelInfo.currentLevel <= 29 && config.expFactor !== 0 && config.ver360);
+
 		return (
 			<>
 				<StyledDialog open={open} onClose={onClose}>
 					<DialogContent>
+						{isEstimated && (
+							<span
+								style={{
+									position: "absolute",
+									border: "1px solid red",
+									background: "#ffeeee",
+									color: "red",
+									fontSize: "0.7rem",
+									borderRadius: "0.5rem",
+									padding: "0 0.3rem",
+								}}
+							>
+								{t("estimated value")}
+							</span>
+						)}
 						<LevelForm
 							levelInfo={levelInfo}
 							maxExpLeft={maxExpLeft}

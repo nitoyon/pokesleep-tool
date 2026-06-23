@@ -3,7 +3,7 @@ import { getBerryStrength } from "./Berry";
 import type PokemonIv from "./PokemonIv";
 import type SubSkill from "./SubSkill";
 
-export const maxLevel = 65;
+export const maxLevel = 70;
 
 export const ingredientStrength: { [ing in IngredientName]: number } = {
 	leek: 185,
