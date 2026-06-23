@@ -93,6 +93,7 @@ export default function calcExpAndCandy(
 	expGot: number,
 	dstLevel: number,
 	boost: BoostEvent,
+	ver360: boolean = false,
 ): CalcExpAndCandyResult {
 	const srcLevel = iv.level;
 	if (
@@ -119,7 +120,7 @@ export default function calcExpAndCandy(
 	const shardRate = boost === "none" ? 1 : boost === "mini" ? 4 : 5;
 	for (let i = srcLevel; i < dstLevel; i++) {
 		const requiredExp = calcExp(i, i + 1, iv) - carry;
-		const expPerCandy = calcExpPerCandy(i, iv.nature, boost);
+		const expPerCandy = calcExpPerCandy(i, iv.nature, boost, ver360);
 		const requiredCandy = Math.ceil(requiredExp / expPerCandy);
 		shards += dreamShardsPerCandy[i + 1] * requiredCandy * shardRate;
 		candy += Math.ceil(requiredExp / expPerCandy);
@@ -144,6 +145,7 @@ export function calcLevelByCandy(
 	dstLevel: number,
 	candy: number,
 	boost: BoostEvent,
+	ver360: boolean = false,
 ): CalcLevelResult {
 	const srcLevel = iv.level;
 
@@ -157,7 +159,7 @@ export function calcLevelByCandy(
 	let level: number;
 	for (level = srcLevel; level < dstLevel; level++) {
 		const requiredExp = calcExp(level, level + 1, iv) - carry;
-		const expPerCandy = calcExpPerCandy(level, iv.nature, boost);
+		const expPerCandy = calcExpPerCandy(level, iv.nature, boost, ver360);
 		const requiredCandy = Math.ceil(requiredExp / expPerCandy);
 		const candyToUse = Math.min(requiredCandy, candyLeft);
 		shards += dreamShardsPerCandy[level + 1] * candyToUse * shardRate;
@@ -186,14 +188,27 @@ function calcExpPerCandy(
 	level: number,
 	nature: Nature,
 	boost: BoostEvent,
+	ver360: boolean,
 ): number {
 	const boostFactor = boost !== "none" ? 2 : 1;
 	if (level < 25) {
+		if (ver360) {
+			return (
+				(nature.isExpGainsUp ? 47 : nature.isExpGainsDown ? 34 : 40) *
+				boostFactor
+			);
+		}
 		return (
 			(nature.isExpGainsUp ? 41 : nature.isExpGainsDown ? 29 : 35) * boostFactor
 		);
 	}
 	if (level < 30) {
+		if (ver360) {
+			return (
+				(nature.isExpGainsUp ? 41 : nature.isExpGainsDown ? 29 : 35) *
+				boostFactor
+			);
+		}
 		return (
 			(nature.isExpGainsUp ? 35 : nature.isExpGainsDown ? 25 : 30) * boostFactor
 		);

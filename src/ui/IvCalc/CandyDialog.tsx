@@ -83,6 +83,8 @@ type CandyConfig = {
 	score: number;
 	/** Usage pattern for growth incense */
 	growthIncense: GrowthIncensePolicy;
+	/** Simulate ver 3.6.0 */
+	ver360: boolean;
 };
 
 /** Adds Candy Boost costs to CalcLevelResult */
@@ -128,6 +130,7 @@ const CandyDialog = React.memo(
 			expBonus: iv.hasSleepExpBonusInActiveSubSkills ? 1 : 0,
 			score: 100,
 			growthIncense: "none",
+			ver360: false,
 		});
 		const [shouldRender, setShouldRender] = React.useState(false);
 		const [turnCandyOpen, setTurnCandyOpen] = React.useState(false);
@@ -230,6 +233,7 @@ const CandyDialog = React.memo(
 					levelInfo.expGot,
 					levelInfo.targetLevel,
 					config.candyBoost,
+					config.ver360,
 				);
 				setConfig({ ...config, pokemonCandy: result.candy });
 			}
@@ -493,6 +497,7 @@ const NormalCandyForm = React.memo(
 			levelInfo.expGot,
 			levelInfo.targetLevel,
 			config.candyBoost,
+			config.ver360,
 		);
 
 		const onExpFactorChange = React.useCallback(
@@ -513,6 +518,16 @@ const NormalCandyForm = React.memo(
 				onChange({
 					...config,
 					candyBoost: value,
+				});
+			},
+			[config, onChange],
+		);
+
+		const onVer360Change = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({
+					...config,
+					ver360: e.target.checked,
 				});
 			},
 			[config, onChange],
@@ -574,6 +589,14 @@ const NormalCandyForm = React.memo(
 								{t("normal candy boost")}
 							</ToggleButton>
 						</ToggleButtonGroup>
+					</section>
+					<section>
+						<span className="lbl">Ver.3.6.0:</span>
+						<Switch
+							checked={config.ver360}
+							size="small"
+							onChange={onVer360Change}
+						/>
 					</section>
 				</div>
 			</>
@@ -637,6 +660,7 @@ const calculateDetailCandy = (
 					levelInfo.targetLevel,
 					config.pokemonCandy,
 					config.candyBoost,
+					config.ver360,
 				);
 				notBoosted = calcLevelByCandy(
 					iv,
@@ -644,6 +668,7 @@ const calculateDetailCandy = (
 					levelInfo.targetLevel,
 					config.pokemonCandy * 2,
 					"none",
+					config.ver360,
 				);
 				break;
 			case "candy":
@@ -653,6 +678,7 @@ const calculateDetailCandy = (
 					levelInfo.targetLevel,
 					Math.min(config.boostCandyCount, config.pokemonCandy),
 					config.candyBoost,
+					config.ver360,
 				);
 				boosted.candyLeft = config.pokemonCandy - boosted.candyUsed;
 				notBoosted = calcLevelByCandy(
@@ -661,6 +687,7 @@ const calculateDetailCandy = (
 					levelInfo.targetLevel,
 					Math.min(config.boostCandyCount, config.pokemonCandy) * 2,
 					"none",
+					config.ver360,
 				);
 				break;
 			case "level": {
@@ -675,6 +702,7 @@ const calculateDetailCandy = (
 					boostLevel,
 					config.pokemonCandy,
 					config.candyBoost,
+					config.ver360,
 				);
 				boosted.expLeft =
 					calcExp(boosted.level, levelInfo.targetLevel, levelInfo.iv) -
@@ -685,6 +713,7 @@ const calculateDetailCandy = (
 					config.boostLevel,
 					config.pokemonCandy * 2,
 					"none",
+					config.ver360,
 				);
 				break;
 			}
@@ -705,6 +734,7 @@ const calculateDetailCandy = (
 		levelInfo.targetLevel,
 		candyBoostResult.candyLeft,
 		"none",
+		config.ver360,
 	);
 
 	let sleepResult: CalcDayToGetSleepExpResult | undefined;
@@ -749,6 +779,16 @@ const DetailCandyForm = React.memo(
 				onChange({
 					...config,
 					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+				});
+			},
+			[config, onChange],
+		);
+
+		const onVer360Change = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({
+					...config,
+					ver360: e.target.checked,
 				});
 			},
 			[config, onChange],
@@ -899,6 +939,14 @@ const DetailCandyForm = React.memo(
 								</StyledNatureDownEffect>
 							</MenuItem>
 						</SelectEx>
+					</section>
+					<section>
+						<span className="lbl">Ver.3.6.0:</span>
+						<Switch
+							checked={config.ver360}
+							size="small"
+							onChange={onVer360Change}
+						/>
 					</section>
 				</div>
 				<div className="form">
