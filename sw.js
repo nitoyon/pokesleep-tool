@@ -1,4 +1,1 @@
-// do nothing
-self.addEventListener("fetch", () => {
-	// Do nothing, just satisfy the PWA install criteria
-});
+(function(){"use strict";const o="html-cache-v1",r="asset-cache-v1",h=/\/([^/]+)-[A-Za-z0-9]{8}\.(js|css)$/;self.addEventListener("install",t=>{self.skipWaiting()}),self.addEventListener("activate",t=>{t.waitUntil(self.clients.claim())}),self.addEventListener("fetch",t=>{const e=new URL(t.request.url);if(e.origin!==self.location.origin)return;const n=e.pathname.match(h);if(n){const a=n[1],c=n[2];t.respondWith(l(t.request,a,c))}else t.request.mode==="navigate"&&t.respondWith(f(t.request))});async function l(t,e,s){const n=await caches.open(r),a=await n.match(t);if(a)return a;const c=await fetch(t);if(!c.ok)return c;const u=new RegExp(`/${e}-[A-Za-z0-9_-]{8,}\\.${s}$`);for(const i of await n.keys())i.url!==t.url&&u.test(new URL(i.url).pathname)&&n.delete(i);return n.put(t,c.clone()),c}async function f(t){try{const e=await fetch(t);return(await caches.open(o)).put(t,e.clone()),e}catch{return await caches.match(t)??new Response("Offline",{status:503})}}})();
