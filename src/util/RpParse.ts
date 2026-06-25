@@ -14,6 +14,7 @@ type CsvData = {
 	subSkill1: SubSkill | null;
 	subSkill2: SubSkill | null;
 	subSkill3: SubSkill | null;
+	subSkill4: SubSkill | null;
 	ing2: IngredientName;
 	ing3: IngredientName;
 };
@@ -63,6 +64,16 @@ export function parseTsv(text: string): Record<string, RpData[]> {
 			parts[8] = parts[7];
 			parts[7] = "";
 		}
+
+		// Pad DataLVL50-59 without Ing3 to 10 columns
+		if (parts.length === 9) {
+			parts.push("");
+		}
+
+		// Convert DataLVL50+ to DataLVL70+ format
+		if (parts.length === 10) {
+			parts.splice(8, 0, "");
+		}
 		const name = fixName(parts[0]);
 		if (typeof ret[name] === "undefined") {
 			ret[name] = [];
@@ -82,8 +93,11 @@ export function parseTsv(text: string): Record<string, RpData[]> {
 			subSkill3: !subSkillNames.includes(parts[7])
 				? null
 				: new SubSkill(parts[7] as SubSkillType),
-			ing2: convertIngName(parts[8]),
-			ing3: convertIngName(parts[9]),
+			subSkill4: !subSkillNames.includes(parts[8])
+				? null
+				: new SubSkill(parts[8] as SubSkillType),
+			ing2: convertIngName(parts[9]),
+			ing3: convertIngName(parts[10]),
 		};
 
 		// Convert TSV data to PokemonIv
@@ -96,6 +110,7 @@ export function parseTsv(text: string): Record<string, RpData[]> {
 				lv10: datum.subSkill1,
 				lv25: datum.subSkill2,
 				lv50: datum.subSkill3,
+				lv70: datum.subSkill4,
 			}),
 		});
 

@@ -94,6 +94,24 @@ describe("Energy", () => {
 		expect(ret.Blastoise[0].iv.ingredient.charAt(2)).toBe("B");
 	});
 
+	test("Lvl70-", () => {
+		const ret = parseTsv(
+			"Blastoise	70	6995	Brave	6	Helping Speed S	Helping Speed M	Helping Bonus	Skill Trigger M	Soothing Cacao	Soothing Cacao",
+		);
+		expect("Blastoise" in ret).toBe(true);
+		expect(ret.Blastoise.length).toBe(1);
+		expect(ret.Blastoise[0].iv.level).toBe(70);
+		expect(ret.Blastoise[0].rp).toBe(6995);
+		expect(ret.Blastoise[0].iv.nature.name).toBe("Brave");
+		expect(ret.Blastoise[0].iv.skillLevel).toBe(6);
+		expect(ret.Blastoise[0].iv.subSkills.lv10?.name).toBe("Helping Speed S");
+		expect(ret.Blastoise[0].iv.subSkills.lv25?.name).toBe("Helping Speed M");
+		expect(ret.Blastoise[0].iv.subSkills.lv50?.name).toBe("Helping Bonus");
+		expect(ret.Blastoise[0].iv.subSkills.lv70?.name).toBe("Skill Trigger M");
+		expect(ret.Blastoise[0].iv.ingredient.charAt(1)).toBe("B");
+		expect(ret.Blastoise[0].iv.ingredient.charAt(2)).toBe("B");
+	});
+
 	test("Submissions 10", () => {
 		const ret = parseTsv(
 			"Wobbuffet	11	667	Careful	1	Inventory Up S				",

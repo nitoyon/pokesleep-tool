@@ -19,15 +19,16 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.script.json",
+		"typecheck": "tsc --noEmit && tsc --noEmit -p scripts/tsconfig.json",
 		"fmt": "biome format --write",
 		"lint": "oxlint && biome check --error-on-warnings",
 		"lint:fix": "oxlint --fix && biome check --write --error-on-warnings",
 		"verify": "npm run typecheck && npm run lint && npm run test -- run && npm run build",
 		"preview": "vite preview",
-		"rpfit": "npx ts-node --project tsconfig.script.json scripts/rpfit.ts",
-		"rptest": "npx ts-node --project tsconfig.script.json scripts/rptest.ts",
-		"skillvaluefit": "npx ts-node --project tsconfig.script.json scripts/skillvaluefit.ts",
+		"rpfit": "npx ts-node --project scripts/tsconfig.json scripts/rpfit.ts",
+		"rptest": "npx ts-node --project scripts/tsconfig.json scripts/rptest.ts",
+		"skillvaluefit": "npx ts-node --project scripts/tsconfig.json scripts/skillvaluefit.ts",
+		"ingredientgfit": "npx ts-node --project scripts/tsconfig.json scripts/ingredientgfit.ts",
 		"test": "vitest"
 	},
 	"devDependencies": {
