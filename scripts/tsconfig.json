@@ -16,6 +16,5 @@
 		"resolveJsonModule": true,
 		"noEmit": true,
 		"jsx": "preserve"
-	},
-	"include": ["scripts"]
+	}
 }
