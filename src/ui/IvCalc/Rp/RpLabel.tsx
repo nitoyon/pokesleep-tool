@@ -19,7 +19,7 @@ const RpLabel = React.memo(
 		onClick?: () => void;
 	}) => {
 		const { t } = useTranslation();
-		const isEstimated = iv.level > maxLevel - 5;
+		const isEstimated = iv.level > maxLevel;
 
 		const clickHandler = React.useCallback(() => {
 			if (onClick !== undefined) {
