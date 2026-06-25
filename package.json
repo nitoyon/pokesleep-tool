@@ -28,6 +28,7 @@
 		"rpfit": "npx ts-node --project tsconfig.script.json scripts/rpfit.ts",
 		"rptest": "npx ts-node --project tsconfig.script.json scripts/rptest.ts",
 		"skillvaluefit": "npx ts-node --project tsconfig.script.json scripts/skillvaluefit.ts",
+		"ingredientgfit": "npx ts-node --project tsconfig.script.json scripts/ingredientgfit.ts",
 		"test": "vitest"
 	},
 	"devDependencies": {
