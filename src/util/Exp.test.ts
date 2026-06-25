@@ -16,8 +16,8 @@ describe("calcExpAndCandy", () => {
 		expect(iv.nature.isExpGainsUp).toBe(true);
 
 		const res = calcExpAndCandy(iv, 0, 30, "none");
-		expect(res.candy).toBe(269);
-		expect(res.shards).toBe(22421);
+		expect(res.candy).toBe(233);
+		expect(res.shards).toBe(19376);
 	});
 
 	test("level 10->50 (EXP up)", () => {
@@ -29,8 +29,8 @@ describe("calcExpAndCandy", () => {
 		expect(iv.nature.isExpGainsUp).toBe(true);
 
 		const res = calcExpAndCandy(iv, 0, 50, "none");
-		expect(res.candy).toBe(869);
-		expect(res.shards).toBe(142044);
+		expect(res.candy).toBe(832);
+		expect(res.shards).toBe(138736);
 	});
 
 	test("level 12->30 (EXP down)", () => {
@@ -42,8 +42,8 @@ describe("calcExpAndCandy", () => {
 		expect(iv.nature.isExpGainsUp).toBe(false);
 
 		const res = calcExpAndCandy(iv, 0, 30, "none");
-		expect(res.candy).toBe(354);
-		expect(res.shards).toBe(30283);
+		expect(res.candy).toBe(309);
+		expect(res.shards).toBe(26383);
 	});
 
 	test("level 12->50 (EXP down)", () => {
@@ -55,8 +55,8 @@ describe("calcExpAndCandy", () => {
 		expect(iv.nature.isExpGainsUp).toBe(false);
 
 		const res = calcExpAndCandy(iv, 0, 50, "none");
-		expect(res.candy).toBe(1211);
-		expect(res.shards).toBe(201134);
+		expect(res.candy).toBe(1165);
+		expect(res.shards).toBe(196946);
 	});
 
 	test("level 12->50", () => {
@@ -66,8 +66,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 0, 50, "none");
-		expect(res.candy).toBe(1014);
-		expect(res.shards).toBe(168703);
+		expect(res.candy).toBe(975);
+		expect(res.shards).toBe(165252);
 	});
 
 	test("level 12->50 (exp got)", () => {
@@ -77,8 +77,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 75, 50, "none");
-		expect(res.candy).toBe(1011);
-		expect(res.shards).toBe(168364);
+		expect(res.candy).toBe(973);
+		expect(res.shards).toBe(165091);
 	});
 
 	test("level 12->50 (mini)", () => {
@@ -88,8 +88,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 0, 50, "mini");
-		expect(res.candy).toBe(507);
-		expect(res.shards).toBe(337200);
+		expect(res.candy).toBe(488);
+		expect(res.shards).toBe(331012);
 	});
 
 	test("level 12->50 (unlimited)", () => {
@@ -99,8 +99,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 0, 50, "unlimited");
-		expect(res.candy).toBe(507);
-		expect(res.shards).toBe(421500);
+		expect(res.candy).toBe(488);
+		expect(res.shards).toBe(413765);
 	});
 
 	test("level 14->31 (Dratini)", () => {
@@ -110,8 +110,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 0, 31, "none");
-		expect(res.candy).toBe(449);
-		expect(res.shards).toBe(41133);
+		expect(res.candy).toBe(395);
+		expect(res.shards).toBe(36283);
 	});
 
 	test("level 28->35 (Entei)", () => {
@@ -121,8 +121,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 0, 35, "none");
-		expect(res.candy).toBe(360);
-		expect(res.shards).toBe(45910);
+		expect(res.candy).toBe(348);
+		expect(res.shards).toBe(44542);
 	});
 
 	test("level 26->29 (Darkrai)", () => {
@@ -132,8 +132,8 @@ describe("calcExpAndCandy", () => {
 		});
 
 		const res = calcExpAndCandy(iv, 0, 29, "none");
-		expect(res.candy).toBe(147);
-		expect(res.shards).toBe(15501);
+		expect(res.candy).toBe(126);
+		expect(res.shards).toBe(13283);
 	});
 });
 
@@ -147,12 +147,12 @@ describe("calcLevelByCandy", () => {
 		// Required candy: 314, Required shards: 26,131
 		const res = calcLevelByCandy(iv, 0, 30, 350, "none");
 		expect(res.exp).toBe(10432);
-		expect(res.expLeft).toBe(-8);
+		expect(res.expLeft).toBe(-13);
 		expect(res.level).toBe(30);
-		expect(res.shards).toBe(26131);
-		expect(res.candyUsed).toBe(314);
-		expect(res.candyLeft).toBe(36);
-		expect(res.expGot).toBe(8);
+		expect(res.shards).toBe(22688);
+		expect(res.candyUsed).toBe(273);
+		expect(res.candyLeft).toBe(77);
+		expect(res.expGot).toBe(13);
 	});
 
 	test("level 10->30 with insufficient candy (no boost)", () => {
@@ -163,10 +163,10 @@ describe("calcLevelByCandy", () => {
 
 		const res = calcLevelByCandy(iv, 0, 30, 100, "none");
 		expect(res.exp).toBe(10432);
-		expect(res.expLeft).toBe(6932);
-		expect(res.level).toBe(18);
-		expect(res.expGot).toBe(161);
-		expect(res.shards).toBe(5922);
+		expect(res.expLeft).toBe(6432);
+		expect(res.level).toBe(19);
+		expect(res.expGot).toBe(178);
+		expect(res.shards).toBe(6081);
 		expect(res.candyUsed).toBe(100);
 		expect(res.candyLeft).toBe(0);
 	});
@@ -180,11 +180,11 @@ describe("calcLevelByCandy", () => {
 		const res = calcLevelByCandy(iv, 0, 30, 314, "none");
 		expect(res.level).toBe(30);
 		expect(res.exp).toBe(10432);
-		expect(res.expLeft).toBe(-8);
-		expect(res.shards).toBe(26131);
-		expect(res.candyUsed).toBe(314);
-		expect(res.candyLeft).toBe(0);
-		expect(res.expGot).toBe(8);
+		expect(res.expLeft).toBe(-13);
+		expect(res.shards).toBe(22688);
+		expect(res.candyUsed).toBe(273);
+		expect(res.candyLeft).toBe(41);
+		expect(res.expGot).toBe(13);
 	});
 
 	test("level 12->50 with enough candy (mini boost)", () => {
@@ -195,12 +195,12 @@ describe("calcLevelByCandy", () => {
 
 		const res = calcLevelByCandy(iv, 0, 50, 1000, "mini");
 		expect(res.exp).toBe(27712);
-		expect(res.expLeft).toBe(-28);
+		expect(res.expLeft).toBe(-48);
 		expect(res.level).toBe(50);
-		expect(res.expGot).toBe(28);
-		expect(res.shards).toBe(337200);
-		expect(res.candyUsed).toBe(507);
-		expect(res.candyLeft).toBe(493);
+		expect(res.expGot).toBe(48);
+		expect(res.shards).toBe(331012);
+		expect(res.candyUsed).toBe(488);
+		expect(res.candyLeft).toBe(512);
 	});
 
 	test("level 12->50 with enough candy (unlimited boost)", () => {
@@ -211,12 +211,12 @@ describe("calcLevelByCandy", () => {
 
 		const res = calcLevelByCandy(iv, 0, 50, 1000, "unlimited");
 		expect(res.exp).toBe(27712);
-		expect(res.expLeft).toBe(-28);
+		expect(res.expLeft).toBe(-48);
 		expect(res.level).toBe(50);
-		expect(res.expGot).toBe(28);
-		expect(res.shards).toBe(421500);
-		expect(res.candyUsed).toBe(507);
-		expect(res.candyLeft).toBe(493);
+		expect(res.expGot).toBe(48);
+		expect(res.shards).toBe(413765);
+		expect(res.candyUsed).toBe(488);
+		expect(res.candyLeft).toBe(512);
 	});
 
 	test("mini boost uses correct shard multiplier", () => {
