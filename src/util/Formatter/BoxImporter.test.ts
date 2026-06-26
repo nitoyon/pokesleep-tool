@@ -465,6 +465,34 @@ describe("importFromCsvTsv", () => {
 		});
 	});
 
+	describe("extra columns are ignored", () => {
+		test("extra column at the beginning does not affect import", () => {
+			const header = "ExtraCol,Pokémon";
+			const row = "ignored,Pikachu";
+			const result = importFromCsvTsv(`${header}\n${row}`, "csv", t);
+			expect(result.items).toHaveLength(1);
+			expect(result.items[0].iv.pokemonName).toBe("Pikachu");
+		});
+
+		test("multiple extra columns do not affect import", () => {
+			const header = "Extra1,Pokémon,Extra2,Extra3";
+			const row = "x,Pikachu,z,z";
+			const result = importFromCsvTsv(`${header}\n${row}`, "csv", t);
+			expect(result.items).toHaveLength(1);
+			expect(result.items[0].iv.pokemonName).toBe("Pikachu");
+			expect(result.warnings).toHaveLength(0);
+		});
+
+		test("TSV: extra column does not affect import", () => {
+			const header = "Nickname\tPokémon\tExtraCol";
+			const row = "\tPikachu\tignored";
+			const result = importFromCsvTsv(`${header}\n${row}`, "tsv", t);
+			expect(result.items).toHaveLength(1);
+			expect(result.items[0].iv.pokemonName).toBe("Pikachu");
+			expect(result.warnings).toHaveLength(0);
+		});
+	});
+
 	describe("warnings", () => {
 		test("unknown pokemon generates warning with pokemon field", () => {
 			const result = importFromCsvTsv(

@@ -85,6 +85,8 @@
 	"confirm add to box": "確定要將此寶可夢新增到盒子嗎？",
 	"export": "導出",
 	"import": "導入",
+	"output format": "輸出格式",
+	"custom format": "簡單（自訂格式）",
 	"pokemon in the box is edited": "盒子裡的寶可夢已被編輯。請儲存以反映在盒子。",
 	"box is full": "盒子已經滿了。請整理。",
 	"box is empty": "尚未添加任何寶可夢。",

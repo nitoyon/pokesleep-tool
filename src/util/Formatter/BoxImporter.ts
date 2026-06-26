@@ -10,17 +10,16 @@ import { type IngredientType, IngredientTypes } from "../PokemonRp";
 import SubSkill, { type SubSkillType } from "../SubSkill";
 import SubSkillList from "../SubSkillList";
 import { CsvParser } from "./CsvFormatter";
-import {
-	DEFAULT_FIELD_ORDER,
-	type FieldName,
-	HEADER_ALIASES,
-	normalizeHeader,
-} from "./FieldMap";
 import { TsvParser } from "./TsvFormatter";
 
 export type BoxImportFormat = "custom" | "csv" | "tsv";
 
-export type ImportWarning = { row: number; fields: FieldName[] };
+export type ImportWarning = {
+	row: number;
+	fields: FieldName[];
+	error?: unknown;
+	message: string;
+};
 
 export type CsvTsvImportResult = {
 	items: Array<{ iv: PokemonIv; nickname: string }>;
@@ -30,6 +29,7 @@ export type CsvTsvImportResult = {
 type CsvTsvFormat = "csv" | "tsv";
 
 type RowReader = { get(col: string): string };
+
 type FieldGetter = (row: RowReader, field: FieldName) => string;
 
 type ReverseMaps = {
@@ -40,9 +40,43 @@ type ReverseMaps = {
 	ingredient: Map<string, IngredientName>;
 };
 
-function normalizeKey(s: string): string {
-	return s.toLowerCase().replace(/\s/g, "");
-}
+export type FieldName =
+	| "nickname"
+	| "pokemon"
+	| "level"
+	| "skillLevel"
+	| "ing1"
+	| "ing2"
+	| "ing3"
+	| "mainSkill"
+	| "nature"
+	| "lv10"
+	| "lv25"
+	| "lv50"
+	| "lv70"
+	| "lv80"
+	| "ribbon"
+	| "shiny";
+
+// Well-known header labels (English and translated) mapped to canonical field names
+export const HEADER_ALIASES: Array<[string[], FieldName]> = [
+	[["nickname"], "nickname"],
+	[["Pokemon", "Pokémon"], "pokemon"],
+	[["level"], "level"],
+	[["skill level"], "skillLevel"],
+	[["ing 1", "Ingredient 1"], "ing1"],
+	[["ing 2", "Ingredient 2"], "ing2"],
+	[["ing 3", "Ingredient 3"], "ing3"],
+	[["main skill"], "mainSkill"],
+	[["nature"], "nature"],
+	[["lv10"], "lv10"],
+	[["lv25"], "lv25"],
+	[["lv50"], "lv50"],
+	[["lv70"], "lv70"],
+	[["lv80"], "lv80"],
+	[["ribbon", "sleeping time shared"], "ribbon"],
+	[["shiny"], "shiny"],
+];
 
 /**
  * Import box items from CSV or TSV.
@@ -84,18 +118,11 @@ export function importFromCsvTsv(
 		if (hasHeader) {
 			return "";
 		}
-		// Positional fallback: use DEFAULT_FIELD_ORDER index against raw headers
-		const defaultIdx = DEFAULT_FIELD_ORDER.indexOf(field);
-		if (defaultIdx >= 0 && defaultIdx < parser.headers.length) {
-			return row.get(parser.headers[defaultIdx]);
-		}
 		return "";
 	};
 
 	const rows = parser.parse(dataLines);
-
 	const maps = initializeReverseMap(t);
-
 	const items: Array<{ iv: PokemonIv; nickname: string }> = [];
 	const warnings: ImportWarning[] = [];
 
@@ -112,10 +139,21 @@ export function importFromCsvTsv(
 			if (result.kind === "ok") {
 				items.push({ iv: result.iv, nickname: result.nickname });
 			} else {
-				warnings.push({ row: rowNumber, fields: result.fields });
+				warnings.push({
+					row: rowNumber,
+					fields: result.fields,
+					message: result.fields
+						.map((f) => fieldDisplayName(f, t))
+						.join(t("text separator")),
+				});
 			}
-		} catch {
-			warnings.push({ row: rowNumber, fields: [] });
+		} catch (e) {
+			warnings.push({
+				row: rowNumber,
+				fields: [],
+				error: e,
+				message: e instanceof Error ? e.message : String(e),
+			});
 		}
 	}
 
@@ -302,26 +340,26 @@ function buildFieldColumnMap(
 	const labelToField = new Map<string, FieldName>();
 	for (const [aliases, field] of HEADER_ALIASES) {
 		for (const alias of aliases) {
-			labelToField.set(normalizeHeader(alias), field);
+			labelToField.set(normalizeKey(alias), field);
 		}
 	}
 	// Add translated labels
-	labelToField.set(normalizeHeader(t("nickname")), "nickname");
-	labelToField.set(normalizeHeader(t("pokemon")), "pokemon");
-	labelToField.set(normalizeHeader(t("level")), "level");
-	labelToField.set(normalizeHeader(t("skill level")), "skillLevel");
-	labelToField.set(normalizeHeader(t("ing n", { n: 1 })), "ing1");
-	labelToField.set(normalizeHeader(t("ing n", { n: 2 })), "ing2");
-	labelToField.set(normalizeHeader(t("ing n", { n: 3 })), "ing3");
-	labelToField.set(normalizeHeader(t("main skill")), "mainSkill");
-	labelToField.set(normalizeHeader(t("nature")), "nature");
-	labelToField.set(normalizeHeader(t("sleeping time shared")), "ribbon");
-	labelToField.set(normalizeHeader(t("shiny")), "shiny");
+	labelToField.set(normalizeKey(t("nickname")), "nickname");
+	labelToField.set(normalizeKey(t("pokemon")), "pokemon");
+	labelToField.set(normalizeKey(t("level")), "level");
+	labelToField.set(normalizeKey(t("skill level")), "skillLevel");
+	labelToField.set(normalizeKey(t("ing n", { n: 1 })), "ing1");
+	labelToField.set(normalizeKey(t("ing n", { n: 2 })), "ing2");
+	labelToField.set(normalizeKey(t("ing n", { n: 3 })), "ing3");
+	labelToField.set(normalizeKey(t("main skill")), "mainSkill");
+	labelToField.set(normalizeKey(t("nature")), "nature");
+	labelToField.set(normalizeKey(t("sleeping time shared")), "ribbon");
+	labelToField.set(normalizeKey(t("shiny")), "shiny");
 
 	// Map FieldName -> raw column name string
 	const fieldToColumn = new Map<FieldName, string>();
 	for (const header of headers) {
-		const field = labelToField.get(normalizeHeader(header));
+		const field = labelToField.get(normalizeKey(header));
 		if (field !== undefined && !fieldToColumn.has(field)) {
 			fieldToColumn.set(field, header);
 		}
@@ -362,4 +400,30 @@ function initializeReverseMap(t: TFunction): ReverseMaps {
 	}
 
 	return { pokemon, nature, subSkill, versatileSkill, ingredient };
+}
+
+function normalizeKey(s: string): string {
+	return s.toLowerCase().replace(/\s/g, "");
+}
+
+function fieldDisplayName(field: FieldName, t: TFunction): string {
+	const map: Record<FieldName, string> = {
+		nickname: t("nickname"),
+		pokemon: t("pokemon"),
+		level: t("level"),
+		skillLevel: t("skill level"),
+		ing1: t("ing n", { n: 1 }),
+		ing2: t("ing n", { n: 2 }),
+		ing3: t("ing n", { n: 3 }),
+		mainSkill: t("main skill"),
+		nature: t("nature"),
+		lv10: "lv10",
+		lv25: "lv25",
+		lv50: "lv50",
+		lv70: "lv70",
+		lv80: "lv80",
+		ribbon: t("sleeping time shared"),
+		shiny: t("shiny"),
+	};
+	return map[field] ?? field;
 }

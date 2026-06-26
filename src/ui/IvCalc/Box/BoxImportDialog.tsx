@@ -7,8 +7,13 @@ import {
 	Snackbar,
 	TextField,
 } from "@mui/material";
+import type { TFunction } from "i18next";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import {
+	detectFormat,
+	importFromCsvTsv,
+} from "../../../util/Formatter/BoxImporter";
 import type PokemonBox from "../../../util/PokemonBox";
 
 const BoxImportDialog = React.memo(
@@ -38,7 +43,7 @@ const BoxImportDialog = React.memo(
 		}, [onClose]);
 
 		const onImportClick = React.useCallback(() => {
-			const added = importToBox(value, box);
+			const added = importToBox(value, box, t);
 			if (added === 0) {
 				setImportedMessage(t("failed to import"));
 			} else {
@@ -87,7 +92,18 @@ const BoxImportDialog = React.memo(
 	},
 );
 
-function importToBox(value: string, box: PokemonBox): number {
+function importToBox(value: string, box: PokemonBox, t: TFunction): number {
+	const detectedFormat = detectFormat(value);
+	if (detectedFormat === "custom") {
+		return importCustomToBox(value, box);
+	} else if (detectedFormat === "csv" || detectedFormat === "tsv") {
+		return importCsvTsvToBox(value, detectedFormat, box, t);
+	} else {
+		return 0;
+	}
+}
+
+function importCustomToBox(value: string, box: PokemonBox): number {
 	const lines = value.split(/\n/g);
 	let added = 0;
 	for (const line of lines) {
@@ -99,6 +115,24 @@ function importToBox(value: string, box: PokemonBox): number {
 			continue;
 		}
 		box.add(data.iv, data.nickname);
+		added++;
+	}
+	return added;
+}
+
+function importCsvTsvToBox(
+	value: string,
+	format: "csv" | "tsv",
+	box: PokemonBox,
+	t: TFunction,
+): number {
+	const items = importFromCsvTsv(value, format, t);
+	let added = 0;
+	for (const item of items) {
+		if (!box.canAdd) {
+			break;
+		}
+		box.add(item.iv, item.nickname);
 		added++;
 	}
 	return added;

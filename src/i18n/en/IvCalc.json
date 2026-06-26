@@ -85,6 +85,8 @@
 	"confirm add to box": "Are you sure you want to add this Pokémon to the box?",
 	"export": "Export",
 	"import": "Import",
+	"output format": "Output format",
+	"custom format": "Simple (custom)",
 	"pokemon in the box is edited": "The Pokémon in the box have been edited. Please save to apply the changes to the box.",
 	"box is full": "The box is full. Please delete the unnecessary Pokémon.",
 	"box is empty": "No Pokémon have been registered yet.",
