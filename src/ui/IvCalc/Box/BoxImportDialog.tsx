@@ -38,20 +38,7 @@ const BoxImportDialog = React.memo(
 		}, [onClose]);
 
 		const onImportClick = React.useCallback(() => {
-			const lines = value.split(/\n/g);
-			let added = 0;
-			for (const line of lines) {
-				if (!box.canAdd) {
-					break;
-				}
-				const data = box.deserializeItem(line);
-				if (data === null) {
-					continue;
-				}
-				box.add(data.iv, data.nickname);
-				added++;
-			}
-
+			const added = importToBox(value, box);
 			if (added === 0) {
 				setImportedMessage(t("failed to import"));
 			} else {
@@ -99,5 +86,22 @@ const BoxImportDialog = React.memo(
 		);
 	},
 );
+
+function importToBox(value: string, box: PokemonBox): number {
+	const lines = value.split(/\n/g);
+	let added = 0;
+	for (const line of lines) {
+		if (!box.canAdd) {
+			break;
+		}
+		const data = box.deserializeItem(line);
+		if (data === null) {
+			continue;
+		}
+		box.add(data.iv, data.nickname);
+		added++;
+	}
+	return added;
+}
 
 export default BoxImportDialog;
