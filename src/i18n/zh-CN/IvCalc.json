@@ -83,6 +83,8 @@
 	"confirm add to box": "确定要将此宝可梦添加到盒子吗？",
 	"export": "导出",
 	"import": "导入",
+	"output format": "输出格式",
+	"custom format": "简单（自定义格式）",
 	"pokemon in the box is edited": "盒子里的宝可梦已被修改。如需反映到盒子中请保存。",
 	"box is full": "盒子已经满了。请整理。",
 	"box is empty": "尚未添加任何宝可梦。",
