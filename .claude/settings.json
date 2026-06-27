@@ -1,25 +1,25 @@
 {
 	"permissions": {
 		"allow": [
-			"Bash(npm run:*)",
-			"Bash(npm test:*)",
-			"Bash(git add:*)",
-			"Bash(git commit:*)",
-			"Bash(git diff:*)",
-			"Bash(git log:*)",
-			"Bash(git show:*)",
-			"Bash(git status:*)",
-			"Bash(git grep:*)",
-			"Bash(npx vitest:*)",
-			"Bash(npx biome:*)",
-			"Bash(npx oxlint:*)",
-			"Bash(grep:*)",
-			"Bash(ls:*)",
+			"Bash(npm run *)",
+			"Bash(npm test *)",
+			"Bash(git add *)",
+			"Bash(git commit *)",
+			"Bash(git diff *)",
+			"Bash(git log *)",
+			"Bash(git show *)",
+			"Bash(git status *)",
+			"Bash(git grep *)",
+			"Bash(npx vitest *)",
+			"Bash(npx biome *)",
+			"Bash(npx oxlint *)",
+			"Bash(grep *)",
+			"Bash(ls *)",
 			"Read(./**)",
 			"Edit(./**)"
 		],
-		"deny": ["Read(~/.ssh/**)", "Bash(rm -rf:*)", "Bash(sudo:*)"],
-		"ask": ["Bash(git push:*)", "Bash(git merge:*)", "Bash(git rebase:*)"]
+		"deny": ["Read(~/.ssh/**)", "Bash(rm -rf *)", "Bash(sudo *)"],
+		"ask": ["Bash(git push *)", "Bash(git merge *)", "Bash(git rebase *)"]
 	},
 	"includeCoAuthoredBy": false,
 	"hooks": {
