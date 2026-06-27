@@ -13,6 +13,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import {
 	detectFormat,
+	type ImportWarning,
 	importFromCsvTsv,
 } from "../../../util/Formatter/BoxImporter";
 import type PokemonBox from "../../../util/PokemonBox";
@@ -33,6 +34,9 @@ const BoxImportDialog = React.memo(
 		const [value, setValue] = React.useState("");
 		const [method, setMethod] = React.useState<BoxImportMethod>("clipboard");
 		const [importedMessage, setImportedMessage] = React.useState("");
+		const [warnings, setWarnings] = React.useState<ImportWarning[]>([]);
+		const [importedCount, setImportedCount] = React.useState(0);
+		const [warningDetailOpen, setWarningDetailOpen] = React.useState(false);
 		const fileInputRef = React.useRef<HTMLInputElement>(null);
 		const { t } = useTranslation();
 
@@ -59,14 +63,22 @@ const BoxImportDialog = React.memo(
 
 		const importHandler = React.useCallback(
 			(text: string) => {
-				const added = importToBox(text, box, t);
-				if (added === 0) {
+				const result = importToBox(text, box, t);
+				if (result.added === 0 && result.warnings.length === 0) {
 					setImportedMessage(t("failed to import"));
-				} else {
-					box.save();
-					setImportedMessage(t("imported N pokemon", { n: added }));
-					onClose_();
+					return;
 				}
+				if (result.added > 0) {
+					box.save();
+				}
+				if (result.warnings.length > 0) {
+					setWarnings(result.warnings);
+					setImportedCount(result.added);
+					setWarningDetailOpen(true);
+				} else {
+					setImportedMessage(t("imported N pokemon", { n: result.added }));
+				}
+				onClose_();
 			},
 			[box, t, onClose_],
 		);
@@ -93,6 +105,12 @@ const BoxImportDialog = React.memo(
 			setImportedMessage("");
 		}, []);
 
+		const onWarningDetailClose = React.useCallback(() => {
+			setWarningDetailOpen(false);
+			setWarnings([]);
+			setImportedCount(0);
+		}, []);
+
 		const importedMessageVisible = importedMessage !== "";
 
 		return (
@@ -100,29 +118,26 @@ const BoxImportDialog = React.memo(
 				<Dialog open={open} onClose={onClose_}>
 					<DialogTitle>{t("import")}</DialogTitle>
 					<DialogContent>
+						<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
+							{method === "clipboard"
+								? t("import message clipboard")
+								: t("import message file")}
+						</p>
+						<p style={{ fontSize: "0.9rem", margin: "1rem 0" }}>
+							{t("import message notice")}
+						</p>
 						{method === "clipboard" ? (
-							<>
-								<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
-									{t("import message")}
-								</p>
-								<TextField
-									label={t("box data")}
-									multiline
-									fullWidth
-									rows={6}
-									value={value}
-									onChange={onValueChange}
-									slotProps={{ htmlInput: { wrap: "off" } }}
-								/>
-							</>
+							<TextField
+								label={t("box data")}
+								multiline
+								fullWidth
+								rows={6}
+								value={value}
+								onChange={onValueChange}
+								slotProps={{ htmlInput: { wrap: "off" } }}
+							/>
 						) : (
 							<>
-								<p style={{ fontSize: "0.9rem", margin: "0 0 0.5rem 0" }}>
-									{t("import message file")}
-								</p>
-								<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
-									{t("import message file2")}
-								</p>
 								<input
 									ref={fileInputRef}
 									type="file"
@@ -169,19 +184,67 @@ const BoxImportDialog = React.memo(
 					onClose={onImportedMessageClose}
 					message={importedMessage}
 				/>
+				<ImportWarningDialog
+					open={warningDetailOpen}
+					onClose={onWarningDetailClose}
+					warnings={warnings}
+					importedCount={importedCount}
+				/>
 			</>
 		);
 	},
 );
 
-function importToBox(value: string, box: PokemonBox, t: TFunction): number {
+function ImportWarningDialog({
+	open,
+	onClose,
+	warnings,
+	importedCount,
+}: {
+	open: boolean;
+	onClose: () => void;
+	warnings: ImportWarning[];
+	importedCount: number;
+}) {
+	const { t } = useTranslation();
+	return (
+		<Dialog open={open} onClose={onClose}>
+			<DialogTitle>
+				{t("N items failed to read", { n: warnings.length })}
+			</DialogTitle>
+			<DialogContent>
+				{importedCount > 0 && (
+					<p>{t("imported N pokemon", { n: importedCount })}</p>
+				)}
+				<p>{t("failed to read detail")}</p>
+				<ul>
+					{warnings.map((w) => (
+						<li key={w.row}>
+							{t("row N", { row: w.row })}
+							{w.message ?? ""}
+						</li>
+					))}
+				</ul>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={onClose}>{t("close")}</Button>
+			</DialogActions>
+		</Dialog>
+	);
+}
+
+function importToBox(
+	value: string,
+	box: PokemonBox,
+	t: TFunction,
+): { added: number; warnings: ImportWarning[] } {
 	const detectedFormat = detectFormat(value);
 	if (detectedFormat === "custom") {
-		return importCustomToBox(value, box);
+		return { added: importCustomToBox(value, box), warnings: [] };
 	} else if (detectedFormat === "csv" || detectedFormat === "tsv") {
 		return importCsvTsvToBox(value, detectedFormat, box, t);
 	} else {
-		return 0;
+		return { added: 0, warnings: [] };
 	}
 }
 
@@ -207,8 +270,8 @@ function importCsvTsvToBox(
 	format: "csv" | "tsv",
 	box: PokemonBox,
 	t: TFunction,
-): number {
-	const items = importFromCsvTsv(value, format, t);
+): { added: number; warnings: ImportWarning[] } {
+	const { items, warnings } = importFromCsvTsv(value, format, t);
 	let added = 0;
 	for (const item of items) {
 		if (!box.canAdd) {
@@ -217,7 +280,7 @@ function importCsvTsvToBox(
 		box.add(item.iv, item.nickname);
 		added++;
 	}
-	return added;
+	return { added, warnings };
 }
 
 export default BoxImportDialog;
