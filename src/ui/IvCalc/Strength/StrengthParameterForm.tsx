@@ -5,7 +5,6 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	FormControl,
 	MenuItem,
 	Select,
 	type SelectChangeEvent,
@@ -13,11 +12,10 @@ import {
 	Switch,
 	ToggleButton,
 	ToggleButtonGroup,
-	Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { getActiveHelpBonus } from "../../../data/events";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import {
@@ -26,8 +24,8 @@ import {
 } from "../../../util/PokemonStrength";
 import MessageDialog from "../../Dialog/MessageDialog";
 import InfoButton from "../InfoButton";
-import { LevelInput } from "../IvForm/LevelControl";
 import type { IvAction } from "../IvState";
+import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import AreaControlGroup from "./AreaControlGroup";
 import EventConfigDialog from "./EventConfigDialog";
 import FixedLevelSelect from "./FixedLevelSelect";
@@ -80,7 +78,6 @@ const StrengthSettingForm = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		const [pityProcHelpOpen, setPityProcHelpOpen] = React.useState(false);
-		const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
 		const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
 		const [initializeConfirmOpen, setInitializeConfirmOpen] =
 			React.useState(false);
@@ -90,12 +87,6 @@ const StrengthSettingForm = React.memo(
 		}, []);
 		const onPityProcHelpClose = React.useCallback(() => {
 			setPityProcHelpOpen(false);
-		}, []);
-		const onRecipeBonusInfoClick = React.useCallback(() => {
-			setRecipeBonusHelpOpen(true);
-		}, []);
-		const onRecipeBonusHelpClose = React.useCallback(() => {
-			setRecipeBonusHelpOpen(false);
 		}, []);
 
 		const onChange = React.useCallback(
@@ -165,18 +156,6 @@ const StrengthSettingForm = React.memo(
 		const onEditEnergyClick = React.useCallback(() => {
 			dispatch({ type: "openEnergyDialog" });
 		}, [dispatch]);
-		const onRecipeBonusChange = React.useCallback(
-			(e: SelectChangeEvent) => {
-				onChange({ ...value, recipeBonus: parseInt(e.target.value, 10) });
-			},
-			[onChange, value],
-		);
-		const onRecipeLevelChange = React.useCallback(
-			(recipeLevel: number) => {
-				onChange({ ...value, recipeLevel });
-			},
-			[onChange, value],
-		);
 		const onInitializeClick = React.useCallback(() => {
 			setInitializeConfirmOpen(true);
 		}, []);
@@ -304,82 +283,7 @@ const StrengthSettingForm = React.memo(
 						<Button onClick={onEditEnergyClick}>{t("edit")}</Button>
 					</section>
 				</Collapse>
-				<section className="mt">
-					<span className="lbl">
-						{t("recipe bonus")}:<InfoButton onClick={onRecipeBonusInfoClick} />
-					</span>
-					<FormControl size="small">
-						<Select
-							variant="standard"
-							value={value.recipeBonus.toString()}
-							onChange={onRecipeBonusChange}
-						>
-							<MenuItem value={0}>
-								0%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									({t("mixed recipe")})
-								</small>
-							</MenuItem>
-							<MenuItem value={19}>
-								19%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(7{t("range separator")}16 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={20}>
-								20%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(20{t("range separator")}22 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={21}>
-								21%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(23{t("range separator")}26 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={25}>
-								25%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(17{t("range separator")}35 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={35}>
-								35%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(35{t("range separator")}56 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={48}>
-								48%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(49{t("range separator")}77 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={61}>
-								61%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(78{t("range separator")}102 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-							<MenuItem value={78}>
-								78%{" "}
-								<small style={{ paddingLeft: "0.3rem" }}>
-									(103{t("range separator")}115 {t("ingredients unit")})
-								</small>
-							</MenuItem>
-						</Select>
-					</FormControl>
-				</section>
-				<section>
-					<span className="lbl">{t("average recipe level")}:</span>
-					<LevelInput
-						value={value.recipeLevel}
-						onChange={onRecipeLevelChange}
-						showSlider
-						sx={{ width: "2rem" }}
-					/>
-				</section>
+				<RecipeBonusLevelForm value={value} onChange={onChange} />
 				<section className="mt">
 					<Button onClick={onInitializeClick} variant="outlined">
 						{t("initialize all parameters")}
@@ -389,10 +293,6 @@ const StrengthSettingForm = React.memo(
 					open={initializeConfirmOpen}
 					onClose={onInitializeConfirmClose}
 					dispatch={dispatch}
-				/>
-				<RecipeBonusHelpDialog
-					open={recipeBonusHelpOpen}
-					onClose={onRecipeBonusHelpClose}
 				/>
 				<MessageDialog
 					open={pityProcHelpOpen}
@@ -411,35 +311,6 @@ const StrengthSettingForm = React.memo(
 					onChange={onChange}
 				/>
 			</StyledSettingForm>
-		);
-	},
-);
-
-const RecipeBonusHelpDialog = React.memo(
-	({ open, onClose }: { open: boolean; onClose: () => void }) => {
-		const { t } = useTranslation();
-
-		return (
-			<Dialog open={open} onClose={onClose}>
-				<DialogContent>
-					<Typography
-						sx={{
-							marginBottom: "16px",
-						}}
-					>
-						<Trans
-							i18nKey="recipe bonus help"
-							components={{
-								raenonx: <a href={t("recipe bonus list")}>raenonx</a>,
-							}}
-						/>
-					</Typography>
-					<Typography variant="body2">{t("recipe strength help")}</Typography>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={onClose}>{t("close")}</Button>
-				</DialogActions>
-			</Dialog>
 		);
 	},
 );
