@@ -89,5 +89,26 @@
 		"Alola": "Gen 7 (Alola)",
 		"Galar": "Gen 8 (Galar)",
 		"Paldea": "Gen 9 (Paldea)"
+	},
+	"ingredients": {
+		"leek": "Large Leek",
+		"mushroom": "Tasty Mushroom",
+		"egg": "Fancy Egg",
+		"potato": "Soft Potato",
+		"apple": "Fancy Apple",
+		"herb": "Fiery Herb",
+		"sausage": "Bean Sausage",
+		"milk": "Moomoo Milk",
+		"honey": "Honey",
+		"oil": "Pure Oil",
+		"ginger": "Warming Ginger",
+		"tomato": "Snoozy Tomato",
+		"cacao": "Soothing Cacao",
+		"tail": "Slowpoke Tail",
+		"soy": "Greengrass Soybeans",
+		"corn": "Greengrass Corn",
+		"coffee": "Rousing Coffee",
+		"pumpkin": "Plump Pumpkin",
+		"avocado": "Glossy Avocado"
 	}
 }

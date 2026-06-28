@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"box csv": {
+				"headline": "$t(box)的导出·导入现已支持CSV·TSV格式。",
+				"detail": "可以在导出界面选择格式。$t(import message notice)"
+			},
 			"v3.6.0": {
 				"headline": "已正式对应 Ver.3.6.0 中的等级上限开放及糖果获得经验值的变更。",
 				"detail": "升至Lv.70所需的经验值、梦之碎片和SP的系数是通过独自的调查计算的。"

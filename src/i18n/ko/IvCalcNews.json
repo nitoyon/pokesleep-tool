@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"box csv": {
+				"headline": "$t(box) 내보내기·가져오기가 CSV·TSV 형식에 대응했습니다.",
+				"detail": "내보내기 화면에서 형식을 선택할 수 있습니다. $t(import message notice)"
+			},
 			"v3.6.0": {
 				"headline": "Ver.3.6.0의 레벨 상한 개방 및 사탕으로 얻는 경험치 변경에 정식 대응하였습니다.",
 				"detail": "Lv.70까지의 필요 경험치, 꿈의 조각, SP 계수는 독자적인 조사를 통해 산출하고 있습니다."
