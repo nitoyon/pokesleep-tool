@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"box csv": {
+				"headline": "$t(box) export/import now supports CSV and TSV formats.",
+				"detail": "You can select the format in the export screen. $t(import message notice)"
+			},
 			"v3.6.0": {
 				"headline": "Officially added full support for the level cap increase and candy EXP changes in Ver.3.6.0.",
 				"detail": "The coefficients for required EXP, Dream Shards, and RP up to Lv.70 are determined through our own research."
