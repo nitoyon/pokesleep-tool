@@ -2,7 +2,7 @@
 	"IvCalc": {
 		"news": {
 			"box csv": {
-				"headline": "$t(box)のエクスポート・インポーが CSV・TSV 形式に対応しました。",
+				"headline": "$t(box)のエクスポート・インポートが CSV・TSV 形式に対応しました。",
 				"detail": "エクスポート画面でフォーマットを選択できます。$t(import message notice)"
 			},
 			"v3.6.0": {
