@@ -5343,6 +5343,312 @@
 		}
 	},
 	{
+		"id": 387,
+		"name": "Turtwig",
+		"arrival": "2026-07-13",
+		"sleepType": "dozing",
+		"exp": 600,
+		"type": "grass",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 5,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 387,
+		"evolutionCount": 0,
+		"evolutionLeft": 2,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 388,
+		"name": "Grotle",
+		"arrival": "2026-07-13",
+		"sleepType": "dozing",
+		"exp": 600,
+		"type": "grass",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 12,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 387,
+		"evolutionCount": 1,
+		"evolutionLeft": 1,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 389,
+		"name": "Torterra",
+		"arrival": "2026-07-13",
+		"sleepType": "dozing",
+		"exp": 600,
+		"type": "ground",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 30,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 387,
+		"evolutionCount": 2,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 390,
+		"name": "Chimchar",
+		"arrival": "2026-07-13",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "fire",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 5,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 390,
+		"evolutionCount": 0,
+		"evolutionLeft": 2,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 391,
+		"name": "Monferno",
+		"arrival": "2026-07-13",
+		"sleepType": "slumbering",
+		"exp": 600,
+		"type": "fighting",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 12,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 390,
+		"evolutionCount": 1,
+		"evolutionLeft": 1,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 392,
+		"name": "Infernape",
+		"arrival": "2026-07-13",
+		"sleepType": "slumbering",
+		"exp": 600,
+		"type": "fighting",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 20,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 390,
+		"evolutionCount": 2,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 393,
+		"name": "Piplup",
+		"arrival": "2026-07-13",
+		"sleepType": "slumbering",
+		"exp": 600,
+		"type": "water",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 5,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 393,
+		"evolutionCount": 0,
+		"evolutionLeft": 2,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 394,
+		"name": "Prinplup",
+		"arrival": "2026-07-13",
+		"sleepType": "slumbering",
+		"exp": 600,
+		"type": "water",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 12,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 393,
+		"evolutionCount": 1,
+		"evolutionLeft": 1,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 395,
+		"name": "Empoleon",
+		"arrival": "2026-07-13",
+		"sleepType": "slumbering",
+		"exp": 600,
+		"type": "steel",
+		"specialty": "unknown",
+		"skill": "unknwon",
+		"fp": 20,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 393,
+		"evolutionCount": 2,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
 		"id": 403,
 		"name": "Shinx",
 		"arrival": "2024-10-02",

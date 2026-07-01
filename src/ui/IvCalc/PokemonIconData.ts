@@ -1624,6 +1624,111 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#76bde7", "#fdfdfd"],
 		shinyPallet: ["#aff2d7", "#fdfdfd"],
 	},
+	// Turtwig
+	"387": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.2, color: 1 },
+			{ x: 0, y: 0.8, w: 1, h: 0.2, color: 2 },
+		],
+		normalPallet: ["#dcf599", "#ba8342", "#efed77"],
+		shinyPallet: ["#bdf3d8", "#af9e5e", "#fbfe6e"],
+	},
+	// Grotle
+	"388": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.6, color: 1 },
+			{ x: 0, y: 0, w: 1, h: 0.35, color: 2 },
+		],
+		normalPallet: ["#d3ef94", "#f4e464", "#7ad565"],
+		shinyPallet: ["#dddd77", "#b4efcb", "#62916d"],
+	},
+	// Torterra
+	"389": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
+			{ x: 0, y: 0.5, w: 1, h: 0.15, color: 2 },
+		],
+		normalPallet: ["#8ed166", "#b59258", "#ffffff"],
+		shinyPallet: ["#a2c383", "#bab264", "#ffffff"],
+	},
+	// Chimchar
+	"390": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0.3, w: 1, h: 1, r: 0.3, color: 1 },
+			{ x: 0.3, y: 0.2, w: 0.4, h: 0.2, r: 0.2, color: 0 },
+			{ x: -0.06, y: 0.6, w: 0.15, h: 0.25, r: 0.1, color: 2 },
+			{ x: 0.91, y: 0.6, w: 0.15, h: 0.25, r: 0.1, color: 2 },
+		],
+		normalPallet: ["#e7b65f", "#fafab2", "#da7c5c"],
+		shinyPallet: ["#e290a2", "#faf3b9", "#ce6d61"],
+	},
+	// Monferno
+	"391": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0.5, w: 1, h: 0.5, color: 3 },
+			{ x: 0, y: 0.4, w: 1, h: 0.1, color: 1 },
+			{ x: 0, y: 0.5, w: 1, h: 0.1, color: 2 },
+		],
+		normalPallet: ["#ecc358", "#7dccdc", "#db6755", "#f5f2d2"],
+		shinyPallet: ["#db4950", "#9a69b5", "#9a474c", "#faf3b9"],
+	},
+	// Infernape
+	"392": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.2, color: 1 },
+			{ x: 0, y: 0.2, w: 1, h: 0.1, color: 2 },
+			{ x: 0, y: 0.3, w: 1, h: 0.1, color: 3 },
+			{ x: 0, y: 0.5, w: 1, h: 0.4, color: 4 },
+		],
+		normalPallet: ["#ffffff", "#de6c60", "#e39354", "#fcfc80", "#dd9955"],
+		shinyPallet: ["#ffffff", "#db4950", "#e49472", "#f7eda3", "#bf6a7a"],
+	},
+	// Piplup
+	"393": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.4, color: 1 },
+			{ x: -0.3, y: 0.2, w: 0.7, h: 1, r: 0.4, color: 2 },
+			{ x: 0.6, y: 0.2, w: 0.7, h: 1, r: 0.4, color: 2 },
+			{ x: 0, y: 0.6, w: 1, h: 1, color: 2 },
+			{ x: 0.3, y: 0.55, w: 0.4, h: 0.35, r: 0.3, color: 3 },
+		],
+		normalPallet: ["#abe6f8", "#71b6e5", "#ffffff", "#f0e682"],
+		shinyPallet: ["#d6fcf5", "#88cee5", "#ffffff", "#f9f479"],
+	},
+	// Prinplup
+	"394": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.2, color: 1 },
+			{ x: 0, y: 0.2, w: 1, h: 0.3, color: 2 },
+			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
+			{ x: 0.3, y: 0.55, w: 0.1, h: 0.12, r: 0.1, color: 3 },
+			{ x: 0.3, y: 0.72, w: 0.1, h: 0.12, r: 0.1, color: 3 },
+			{ x: 0.6, y: 0.55, w: 0.1, h: 0.12, r: 0.1, color: 3 },
+			{ x: 0.6, y: 0.72, w: 0.1, h: 0.12, r: 0.1, color: 3 },
+		],
+		normalPallet: ["#aff5fd", "#f0e682", "#5b96ce", "#ffffff"],
+		shinyPallet: ["#d6f7f2", "#fcfc88", "#69ccdd", "#ffffff"],
+	},
+	// Empoleon
+	"395": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.1, color: 1 },
+			{ x: 0, y: 0.1, w: 1, h: 0.1, color: 2 },
+			{ x: 0, y: 0.6, w: 1, h: 0.4, color: 3 },
+			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
+		],
+		normalPallet: ["#3c454d", "#f1e16d", "#7ac1ea", "#4a5960"],
+		shinyPallet: ["#456479", "#fafdb2", "#bce7ee", "#263f4e"],
+	},
 	// Shinx
 	"403": {
 		rects: [
