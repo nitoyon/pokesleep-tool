@@ -443,7 +443,7 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.7, w: 1, h: 0.5, r: 0.3, color: 1 },
 		],
 		normalPallet: ["#f7c0d5", "#fbf4d7"],
-		shinyPallet: ["#fee6f6", "#fee6f6"],
+		shinyPallet: ["#f8e8f3", "#feffe6"],
 	},
 	// Slowbro
 	"80": {

@@ -38,6 +38,7 @@
 	],
 	"none": "なし",
 	"enabled": "あり",
+	"unknown": "不明",
 	"multiplier": "倍率",
 	"range separator": "～",
 	"text separator": "、",

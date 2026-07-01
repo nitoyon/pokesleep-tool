@@ -40,6 +40,9 @@ const SpecialtyButton = React.memo(
 			case "Skills":
 				spec = "skill";
 				break;
+			default:
+				spec = "unknown";
+				break;
 		}
 
 		if (disabled === true) {
@@ -77,6 +80,7 @@ const StyledDisabledButton = styled("span")({
 	"&.berry": { backgroundColor: "#24d76a" },
 	"&.ingredient": { backgroundColor: "#fab855" },
 	"&.skill": { backgroundColor: "#44a2fd" },
+	"&.unknown": { backgroundColor: "#999" },
 });
 
 const StyledSpecialtyButton = styled(Button)({
@@ -103,6 +107,7 @@ const StyledSpecialtyButton = styled(Button)({
 	"&.ingredient.checked": { backgroundColor: "#f3dcb3" },
 	"&.skill": { backgroundColor: "#44a2fd" },
 	"&.skill.checked": { backgroundColor: "#b8d0fa" },
+	"&.unknown": { backgroundColor: "#999" },
 });
 
 export default SpecialtyButton;

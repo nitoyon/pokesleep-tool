@@ -38,6 +38,7 @@
 	],
 	"none": "无",
 	"enabled": "启用",
+	"unknown": "未知",
 	"multiplier": "倍率",
 	"range separator": "～",
 	"text separator": "，",
