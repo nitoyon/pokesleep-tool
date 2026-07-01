@@ -5,15 +5,10 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	FormControl,
-	MenuItem,
-	Select,
-	type SelectChangeEvent,
-	Typography,
 } from "@mui/material";
 import type i18next from "i18next";
 import React from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { getEventBonus } from "../../../data/events";
 import { NoTap } from "../../../util/Energy";
 import {
@@ -30,11 +25,10 @@ import {
 	recipeLevelBonus,
 	type StrengthResult,
 } from "../../../util/PokemonStrength";
-import InfoButton from "../InfoButton";
 import IngredientCountIcon from "../IngredientCountIcon";
 import IngredientIcon from "../IngredientIcon";
-import { LevelInput } from "../IvForm/LevelControl";
 import type { IvAction } from "../IvState";
+import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 
 const IngHelpDialog = React.memo(
@@ -52,34 +46,12 @@ const IngHelpDialog = React.memo(
 		onClose: () => void;
 	}) => {
 		const { t } = useTranslation();
-		const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
 		const onChange = React.useCallback(
 			(value: StrengthParameter) => {
 				dispatch({ type: "changeParameter", payload: { parameter: value } });
 			},
 			[dispatch],
 		);
-		const onRecipeBonusChange = React.useCallback(
-			(e: SelectChangeEvent) => {
-				onChange({
-					...strength.parameter,
-					recipeBonus: parseInt(e.target.value, 10),
-				});
-			},
-			[onChange, strength.parameter],
-		);
-		const onRecipeLevelChange = React.useCallback(
-			(recipeLevel: number) => {
-				onChange({ ...strength.parameter, recipeLevel });
-			},
-			[onChange, strength.parameter],
-		);
-		const onRecipeBonusInfoClick = React.useCallback(() => {
-			setRecipeBonusHelpOpen(true);
-		}, []);
-		const onRecipeBonusHelpClose = React.useCallback(() => {
-			setRecipeBonusHelpOpen(false);
-		}, []);
 
 		if (!open) {
 			return null;
@@ -156,10 +128,7 @@ const IngHelpDialog = React.memo(
 						<div>
 							<span className="box box5">{round2(recipeRate)}</span>
 						</div>
-						<span>
-							{t("recipe multiplier")}
-							<InfoButton onClick={onRecipeBonusInfoClick} />
-						</span>
+						<span>{t("recipe multiplier")}</span>
 						<footer>
 							<>(</>
 							{round2(
@@ -184,88 +153,14 @@ const IngHelpDialog = React.memo(
 							</>
 						)}
 					</article>
-					<section style={{ marginTop: "1.8rem" }}>
-						<span className="lbl">{t("recipe bonus")}:</span>
-						<FormControl size="small">
-							<Select
-								variant="standard"
-								value={strength.parameter.recipeBonus.toString()}
-								onChange={onRecipeBonusChange}
-							>
-								<MenuItem value={0}>
-									0%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										({t("mixed recipe")})
-									</small>
-								</MenuItem>
-								<MenuItem value={19}>
-									19%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(7{t("range separator")}16 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={20}>
-									20%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(20{t("range separator")}22 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={21}>
-									21%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(23{t("range separator")}26 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={25}>
-									25%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(17{t("range separator")}35 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={35}>
-									35%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(35{t("range separator")}56 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={48}>
-									48%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(49{t("range separator")}77 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={61}>
-									61%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(78{t("range separator")}102 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-								<MenuItem value={78}>
-									78%{" "}
-									<small style={{ paddingLeft: "0.3rem" }}>
-										(103{t("range separator")}115 {t("ingredients unit")})
-									</small>
-								</MenuItem>
-							</Select>
-						</FormControl>
-					</section>
-					<section>
-						<span className="lbl">{t("average recipe level")}:</span>
-						<LevelInput
-							value={strength.parameter.recipeLevel}
-							onChange={onRecipeLevelChange}
-							showSlider
-							sx={{ width: "2rem" }}
-						/>
-					</section>
+					<RecipeBonusLevelForm
+						value={strength.parameter}
+						onChange={onChange}
+					/>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={onClose}>{t("close")}</Button>
 				</DialogActions>
-				<RecipeBonusHelpDialog
-					open={recipeBonusHelpOpen}
-					onClose={onRecipeBonusHelpClose}
-				/>
 			</StyledInfoDialog>
 		);
 	},
@@ -334,34 +229,5 @@ function getIngDetail(
 		</>
 	);
 }
-
-const RecipeBonusHelpDialog = React.memo(
-	({ open, onClose }: { open: boolean; onClose: () => void }) => {
-		const { t } = useTranslation();
-
-		return (
-			<Dialog open={open} onClose={onClose}>
-				<DialogContent>
-					<Typography
-						sx={{
-							marginBottom: "16px",
-						}}
-					>
-						<Trans
-							i18nKey="recipe bonus help"
-							components={{
-								raenonx: <a href={t("recipe bonus list")}>raenonx</a>,
-							}}
-						/>
-					</Typography>
-					<Typography variant="body2">{t("recipe strength help")}</Typography>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={onClose}>{t("close")}</Button>
-				</DialogActions>
-			</Dialog>
-		);
-	},
-);
 
 export default IngHelpDialog;

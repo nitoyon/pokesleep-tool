@@ -326,6 +326,11 @@ export const recipeLevelBonus: { [key: number]: number } = {
 	63: 221,
 	64: 227,
 	65: 234,
+	66: 239,
+	67: 243,
+	68: 247, // estimated
+	69: 251, // estimated
+	70: 256, // estimated
 };
 
 /** Valid recipe level values (1-65) */
