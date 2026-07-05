@@ -44,12 +44,14 @@ const StyledInputForm = styled("div")({
 const IvForm = React.memo(
 	({
 		fixMode,
+		hideCandyButton,
 		parameter,
 		pokemonIv,
 		dispatch,
 		onChange,
 	}: {
 		fixMode?: boolean;
+		hideCandyButton?: boolean;
 		parameter: StrengthParameter;
 		pokemonIv: PokemonIv;
 		dispatch: (action: IvAction) => void;
@@ -112,6 +114,7 @@ const IvForm = React.memo(
 				<div className="table">
 					<div>{t("pokemon")}:</div>
 					<PokemonTextField
+						hideCandyButton={hideCandyButton}
 						iv={pokemonIv}
 						fixMode={fixMode}
 						onChange={onPokemonNameChange}
