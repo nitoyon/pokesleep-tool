@@ -22,30 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React from 'react';
-import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
-import { MushroomIconPaths } from './MushroomIcon';
-import { SausageIconPaths } from './SausageIcon';
-import { SoyIconPaths } from './SoyIcon';
-import { CoffeeIconPaths } from './CoffeeIcon';
+import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
+import React from "react";
+import { CoffeeIconPaths } from "./CoffeeIcon";
+import { MushroomIconPaths } from "./MushroomIcon";
+import { SausageIconPaths } from "./SausageIcon";
+import { SoyIconPaths } from "./SoyIcon";
 
 const SuperLuckIcon = React.memo((props: SvgIconProps) => {
-    return (
-        <SvgIcon {...props} viewBox="0 0 200 200">
-            <g transform="translate(0, 0) scale(0.48)">
-                <MushroomIconPaths />
-            </g>
-            <g transform="translate(104, 0) scale(0.48)">
-                <SausageIconPaths />
-            </g>
-            <g transform="translate(0, 104) scale(0.48)">
-                <SoyIconPaths />
-            </g>
-            <g transform="translate(104,104) scale(0.48)">
-                <CoffeeIconPaths />
-            </g>
-        </SvgIcon>
-    );
+	return (
+		<SvgIcon {...props} viewBox="0 0 200 200">
+			<g transform="translate(0, 0) scale(0.48)">
+				<MushroomIconPaths />
+			</g>
+			<g transform="translate(104, 0) scale(0.48)">
+				<SausageIconPaths />
+			</g>
+			<g transform="translate(0, 104) scale(0.48)">
+				<SoyIconPaths />
+			</g>
+			<g transform="translate(104,104) scale(0.48)">
+				<CoffeeIconPaths />
+			</g>
+		</SvgIcon>
+	);
 });
 
 export default SuperLuckIcon;

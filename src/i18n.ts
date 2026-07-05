@@ -1,22 +1,60 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from './i18n/en.json';
-import ja from './i18n/ja.json';
-import ko from './i18n/ko.json';
-import zhcn from './i18n/zh-CN.json';
-import zhtw from './i18n/zh-TW.json';
+import en from "./i18n/en";
 
-const resources = {en,ja,ko, 'zh-CN': zhcn, 'zh-TW': zhtw};
+export const LANGUAGE_NAMES: Record<string, string> = {
+	en: "English",
+	ja: "日本語 (Japanese)",
+	ko: "한국어 (Korean)",
+	"zh-CN": "简体中文 (Simplified Chinese)",
+	"zh-TW": "繁體中文 (Traditional Chinese)",
+};
 
-i18n
-    .use(initReactI18next) // passes i18n down to react-i18next
-    .init({
-        resources,
-        lng: "en",
-        fallbackLng: "en",
-        interpolation: {
-            escapeValue: false
-        }
-    });
+const initPromise = i18n.use(initReactI18next).init({
+	resources: { en },
+	lng: "en",
+	fallbackLng: "en",
+	interpolation: {
+		escapeValue: false,
+	},
+	partialBundledLanguages: true,
+});
+
+export async function loadLanguage(lang: string): Promise<void> {
+	await initPromise;
+	if (lang === "en" || i18n.hasResourceBundle(lang, "translation")) {
+		return;
+	}
+	let data: Record<string, unknown>;
+	switch (lang) {
+		case "ja":
+			data = (await import("./i18n/ja.js")).default as Record<string, unknown>;
+			break;
+		case "ko":
+			data = (await import("./i18n/ko.js")).default as Record<string, unknown>;
+			break;
+		case "zh-CN":
+			data = (await import("./i18n/zh-CN.js")).default as Record<
+				string,
+				unknown
+			>;
+			break;
+		case "zh-TW":
+			data = (await import("./i18n/zh-TW.js")).default as Record<
+				string,
+				unknown
+			>;
+			break;
+		default:
+			return;
+	}
+	i18n.addResourceBundle(
+		lang,
+		"translation",
+		data.translation as Record<string, unknown>,
+		true,
+		true,
+	);
+}
 
 export default i18n;

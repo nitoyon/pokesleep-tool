@@ -11,7 +11,9 @@ Feel free to [contribute](CONTRIBUTING.md)!
 
 Install Node.js v22.19+.
 
-Clone this repository, and run `npm install`.
+1. Clone this repository
+2. Run `npm install`.
+3. Run `npx lefthook install`
 
 ### `npm run dev`
 
@@ -22,7 +24,7 @@ You may also see any lint errors in the console.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `dist` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\

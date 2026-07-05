@@ -1,161 +1,187 @@
-import React from 'react';
-import { styled } from '@mui/system';
-import AppConfig, { AppConfigContext, AppType } from './AppConfig';
-import News, { NewsArticle } from '../data/news';
-import { Button, Dialog, DialogActions, IconButton } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import CloseIcon from '@mui/icons-material/Close';
-import { useTranslation } from 'react-i18next'
-import PokemonBox from '../util/PokemonBox';
+import CloseIcon from "@mui/icons-material/Close";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { Button, Dialog, DialogActions, IconButton } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import News, { type NewsArticle } from "../data/news";
+import type PokemonBox from "../util/PokemonBox";
+import type AppConfig from "./AppConfig";
+import { AppConfigContext, type AppType } from "./AppConfig";
 
-interface NewsInfoProps {
-    appType: AppType;
-    onAppConfigChange: (config: AppConfig) => void;
-    box: PokemonBox;
-}
+const NewsInfo = React.memo(
+	({
+		appType,
+		onAppConfigChange,
+		box,
+	}: {
+		appType: AppType;
+		onAppConfigChange: (config: AppConfig) => void;
+		box: PokemonBox;
+	}) => {
+		const { t } = useTranslation();
+		const appConfig = React.useContext(AppConfigContext);
+		const onDetailClick = React.useCallback(() => {
+			setDialogOpen(true);
+		}, []);
+		const onCloseDialog = React.useCallback(() => {
+			setDialogOpen(false);
+		}, []);
+		const [dialogOpen, setDialogOpen] = React.useState(false);
 
-const NewsInfo = React.memo(({appType, onAppConfigChange, box}: NewsInfoProps) => {
-    const { t } = useTranslation();
-    const appConfig = React.useContext(AppConfigContext);
-    const [dialogOpen, setDialogOpen] = React.useState(false);
-    const onDetailClick = React.useCallback(() => {
-        setDialogOpen(true);
-    }, []);
-    const onCloseDialog = React.useCallback(() => {
-        setDialogOpen(false);
-    }, []);
-    
-    if (box.isReadonlyMode()) return null;
-    
-    const articles = News.getArticles(appType);
-    if (articles.length === 0) {
-        return <></>;
-    }
+		if (box.isReadonlyMode()) {
+			return null;
+		}
 
-    const article = articles[0];
-    const closedAtricleId = appConfig.news[appType];
-    if (article.id === closedAtricleId) {
-        return <></>;
-    }
-    const onClose = () => {
-        const newConfig = {
-            ...appConfig,
-            news: {...appConfig.news},
-        };
-        newConfig.news[appType] = article.id;
-        onAppConfigChange(newConfig);
-    };
+		const articles = News.getArticles(appType);
+		if (articles.length === 0) {
+			return null;
+		}
 
-    return <StyledNewsInfo>
-        <InfoOutlinedIcon/>
-        <div>
-            <span dangerouslySetInnerHTML={{__html: t(`${appType}.news.${article.id}.headline`)}}/>
-            <Button onClick={onDetailClick}>[{t("details")}]</Button>
-        </div>
-        <IconButton onClick={onClose}><CloseIcon/></IconButton>
-        <NewsArticleDialog open={dialogOpen} onClose={onCloseDialog}
-            appType={appType} article={article}/>
-    </StyledNewsInfo>;
+		const article = articles[0];
+		const closedAtricleId = appConfig.news[appType];
+		if (article.id === closedAtricleId) {
+			return null;
+		}
+		const onClose = () => {
+			const newConfig = {
+				...appConfig,
+				news: { ...appConfig.news },
+			};
+			newConfig.news[appType] = article.id;
+			onAppConfigChange(newConfig);
+		};
+
+		const html = t(`${appType}.news.${article.id}.headline`);
+		return (
+			<StyledNewsInfo>
+				<InfoOutlinedIcon />
+				<div>
+					{/** biome-ignore lint/security/noDangerouslySetInnerHtml: headline is embeded in i18 files */}
+					<span dangerouslySetInnerHTML={{ __html: html }} />
+					<Button onClick={onDetailClick}>[{t("details")}]</Button>
+				</div>
+				<IconButton onClick={onClose}>
+					<CloseIcon />
+				</IconButton>
+				<NewsArticleDialog
+					open={dialogOpen}
+					onClose={onCloseDialog}
+					appType={appType}
+					article={article}
+				/>
+			</StyledNewsInfo>
+		);
+	},
+);
+
+const StyledNewsInfo = styled("div")({
+	margin: "0.2rem .2rem",
+	background: "#e5f6fd",
+	border: "1px solid #d9e9e9",
+	color: "#014343",
+	borderRadius: "0.5rem",
+	display: "grid",
+	gridTemplateColumns: "26px 1fr 40px",
+	"& > svg": {
+		color: "#0288d1",
+		width: "18px",
+		height: "18px",
+		padding: "4px",
+	},
+	"& > div": {
+		fontSize: "0.8rem",
+		padding: "0.2rem 0",
+		color: "#014480",
+		"& > span": {
+			marginRight: ".3rem",
+		},
+		"& > button": {
+			padding: 0,
+			minWidth: 0,
+			fontSize: "0.8rem",
+		},
+	},
+	"& > button": {
+		width: "40px",
+		height: "40px",
+	},
 });
 
-const StyledNewsInfo = styled('div')({
-    margin: '0.2rem .2rem',
-    background: '#e5f6fd',
-    border: '1px solid #d9e9e9',
-    color: '#014343',
-    borderRadius: '0.5rem',
-    display: 'grid',
-    gridTemplateColumns: '26px 1fr 40px',
-    '& > svg': {
-        color: '#0288d1',
-        width: '18px',
-        height: '18px',
-        padding: '4px',
-    },
-    '& > div': {
-        fontSize: '0.8rem',
-        padding: '0.2rem 0',
-        color: '#014480',
-        '& > span': {
-            marginRight: '.3rem',
-        },
-        '& > button': {
-            padding: 0,
-            minWidth: 0,
-            fontSize: '0.8rem',
-        },
-    },
-    '& > button': {
-        width: '40px',
-        height: '40px',
-    }
-});
+export const NewsArticleDialog = React.memo(
+	({
+		appType,
+		article,
+		open,
+		onClose,
+	}: {
+		appType: string;
+		article: NewsArticle;
+		open: boolean;
+		onClose: () => void;
+	}) => {
+		const { t, i18n } = useTranslation();
+		if (!open) {
+			return null;
+		}
 
-const NewsArticleDialog = React.memo(({appType, article, open, onClose}: {
-    appType: string,
-    article: NewsArticle,
-    open: boolean,
-    onClose: () => void,
-}) => {
-    const { t, i18n } = useTranslation();
-    if (!open) {
-        return <></>;
-    }
+		const lines = t(`${appType}.news.${article.id}.detail`).split(/\n/g);
+		const title = t(`${appType}.news.${article.id}.headline`);
 
-    const lines = t(`${appType}.news.${article.id}.detail`).split(/\n/g);
-    const title = t(`${appType}.news.${article.id}.headline`);
+		let date = "";
+		if (Intl?.RelativeTimeFormat) {
+			const diff = Math.max(0, Date.now() - article.date.getTime());
+			const formatter = new Intl.RelativeTimeFormat(i18n.language, {
+				style: "long",
+			});
+			if (diff > 31536000000) {
+				date = article.date.toLocaleDateString();
+			} else if (diff > 2592000000) {
+				date = formatter.format(-Math.floor(diff / 2592000000), "month");
+			} else if (diff > 86400000) {
+				date = formatter.format(-Math.floor(diff / 86400000), "day");
+			} else if (diff > 3600000) {
+				date = formatter.format(-Math.floor(diff / 3600000), "hour");
+			} else {
+				date = formatter.format(-Math.floor(diff / 60000), "minute");
+			}
+		} else {
+			date = article.date.toLocaleDateString();
+		}
 
-    let date = "";
-    if (Intl && Intl.RelativeTimeFormat) {
-        const diff = Math.max(0, new Date().getTime() - article.date.getTime());
-        const formatter = new Intl.RelativeTimeFormat(i18n.language, { style: 'long' });
-        if (diff > 31536000000) {
-            date = formatter.format(-Math.floor(diff / 31536000000), 'year');
-        }
-        else if (diff > 2592000000) {
-            date = formatter.format(-Math.floor(diff / 2592000000), 'month');
-        }
-        else if (diff > 86400000) {
-            date = formatter.format(-Math.floor(diff / 86400000), 'day');
-        }
-        else if (diff > 3600000) {
-            date = formatter.format(-Math.floor(diff / 3600000), 'hour');
-        }
-        else {
-            date = formatter.format(-Math.floor(diff / 60000), 'minute');
-        }
-    }
-    else {
-        date = article.date.toLocaleDateString();
-    }
-    
-    return <StyledNewsArticleDialog open={open} onClose={onClose}>
-        <time>{date}</time>
-        <header dangerouslySetInnerHTML={{__html: title}}/>
-        {lines.map((x, i) => <p key={i}>{x}</p>)}
-        <DialogActions disableSpacing>
-            <Button onClick={onClose}>{t('close')}</Button>
-        </DialogActions>
-    </StyledNewsArticleDialog>;
-});
+		return (
+			<StyledNewsArticleDialog open={open} onClose={onClose}>
+				<time>{date}</time>
+				{/** biome-ignore lint/security/noDangerouslySetInnerHtml: title is embeded in i18 files */}
+				<header dangerouslySetInnerHTML={{ __html: title }} />
+				{lines.map((x) => (
+					<p key={x}>{x}</p>
+				))}
+				<DialogActions disableSpacing>
+					<Button onClick={onClose}>{t("close")}</Button>
+				</DialogActions>
+			</StyledNewsArticleDialog>
+		);
+	},
+);
 
 const StyledNewsArticleDialog = styled(Dialog)({
-    '& .MuiPaper-root': {
-        padding: '1rem 1rem 0 1rem',
-        '& > time': {
-            fontSize: '0.7rem',
-            color: '#888',
-        },
-        '& > header': {
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            marginBottom: '0.3rem',
-        },
-        '& > p': {
-            fontSize: '0.9rem',
-            margin: '0.4rem 0 0 0',
-        },
-    },
+	"& .MuiPaper-root": {
+		padding: "1rem 1rem 0 1rem",
+		"& > time": {
+			fontSize: "0.7rem",
+			color: "#888",
+		},
+		"& > header": {
+			fontSize: "1rem",
+			fontWeight: "bold",
+			marginBottom: "0.3rem",
+		},
+		"& > p": {
+			fontSize: "0.9rem",
+			margin: "0.4rem 0 0 0",
+		},
+	},
 });
 
 export default NewsInfo;

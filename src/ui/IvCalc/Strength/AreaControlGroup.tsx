@@ -1,45 +1,67 @@
-import React from 'react';
-import { Collapse, Switch } from '@mui/material';
-import AreaBonusControl from './AreaBonusControl';
-import FavoriteBerrySelect from './FavoriteBerrySelect';
-import ResearchAreaSelect from './ResearchAreaSelect';
-import { StrengthParameter, whistlePeriod } from '../../../util/PokemonStrength';
-import { useTranslation } from 'react-i18next';
+import { Collapse, Switch } from "@mui/material";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { whistlePeriod } from "../../../util/Energy";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import AreaBonusControl from "./AreaBonusControl";
+import FavoriteBerrySelect from "./FavoriteBerrySelect";
+import ResearchAreaSelect from "./ResearchAreaSelect";
 
-const AreaSelectControl = React.memo(({value, onChange}: {
-    onChange: (value: StrengthParameter) => void,
-    value: StrengthParameter,
-}) => {
-    const { t } = useTranslation();
+const AreaSelectControl = React.memo(
+	({
+		value,
+		onChange,
+	}: {
+		onChange: (value: StrengthParameter) => void;
+		value: StrengthParameter;
+	}) => {
+		const { t } = useTranslation();
 
-    const onFieldBonusChange = React.useCallback((fieldBonus: number) => {
-        onChange({...value, fieldBonus});
-    }, [onChange, value]);
-    const onGoodCampTicketChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({...value, isGoodCampTicketSet: e.target.checked});
-    }, [onChange, value]);
+		const onFieldBonusChange = React.useCallback(
+			(fieldBonus: number) => {
+				onChange({ ...value, fieldBonus });
+			},
+			[onChange, value],
+		);
+		const onGoodCampTicketChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({ ...value, isGoodCampTicketSet: e.target.checked });
+			},
+			[onChange, value],
+		);
 
-    const isNotWhistle = (value.period !== whistlePeriod);
-    return <>
-        <section className="first">
-            <label>{t('research area')}:</label>
-            <ResearchAreaSelect value={value} fontSize="0.9rem"
-                onChange={onChange}/>
-        </section>
-        <FavoriteBerrySelect value={value} onChange={onChange}/>
-        <section>
-            <label>{t('area bonus')}:</label>
-            <AreaBonusControl value={value.fieldBonus}
-                onChange={onFieldBonusChange}/>
-        </section>
-        <Collapse in={isNotWhistle}>
-            <section>
-                <label>{t('good camp ticket')}:</label>
-                <Switch checked={value.isGoodCampTicketSet} size="small"
-                    onChange={onGoodCampTicketChange}/>
-            </section>
-        </Collapse>
-    </>;
-});
+		const isNotWhistle = value.period !== whistlePeriod;
+		return (
+			<>
+				<section className="first">
+					<span className="lbl">{t("research area")}:</span>
+					<ResearchAreaSelect
+						value={value}
+						fontSize="0.9rem"
+						onChange={onChange}
+					/>
+				</section>
+				<FavoriteBerrySelect value={value} onChange={onChange} />
+				<section>
+					<span className="lbl">{t("area bonus")}:</span>
+					<AreaBonusControl
+						value={value.fieldBonus}
+						onChange={onFieldBonusChange}
+					/>
+				</section>
+				<Collapse in={isNotWhistle}>
+					<section>
+						<span className="lbl">{t("good camp ticket")}:</span>
+						<Switch
+							checked={value.isGoodCampTicketSet}
+							size="small"
+							onChange={onGoodCampTicketChange}
+						/>
+					</section>
+				</Collapse>
+			</>
+		);
+	},
+);
 
 export default AreaSelectControl;

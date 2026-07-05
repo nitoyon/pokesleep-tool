@@ -15,6 +15,11 @@ Even just pointing out a typo or a broken link is genuinely appreciated.
 If you're not sure where to start, feel free to open an issue and ask.  
 We're happy to help guide you!
 
+## Before sending Pull Request
+
+- Run `npm run lint:fix`
+- Run `npm run test`
+
 ## Questions?
 
 If you have any questions or are unsure about something,  

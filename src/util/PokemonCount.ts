@@ -9,10 +9,10 @@ export type PokemonCount = 3 | 4 | 5 | 6 | 7 | 8;
  * @returns The number of Pokemons we can encounter.
  */
 export function getPokemonCount(powers: number[], power: number): PokemonCount {
-    for (let i = 1; i < 6; i++) {
-        if (power < powers[i]) {
-            return i + 2 as PokemonCount;
-        }
-    }
-    return 8;
+	for (let i = 1; i < 6; i++) {
+		if (power < powers[i]) {
+			return (i + 2) as PokemonCount;
+		}
+	}
+	return 8;
 }

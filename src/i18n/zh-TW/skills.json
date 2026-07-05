@@ -1,0 +1,224 @@
+{
+	"skills": {
+		"Ingredient Magnet S": {
+			"name": "食材獲取S",
+			"strength": "通過技能獲取的食材假定作為剩餘食材進行計算。",
+			"desc": "隨機獲得食材。",
+			"detail": "從曾經獲得過的食材中均等獲取3種。"
+		},
+		"Ingredient Magnet S (Plus)": {
+			"name": "正電 (食材獲取S)",
+			"strength": "$t(skills.Ingredient Magnet S.strength)不會考慮隊伍中是否有除了自己以外擁有「正電」或「負電」特性的寶可夢。",
+			"desc": "$t(skills.Ingredient Magnet S.desc)滿足特定條件時，會額外獲得食材。",
+			"detail": "隨機獲取的食材為：$t(skills.Ingredient Magnet S.detail)"
+		},
+		"Ingredient Magnet S (Present)": {
+			"name": "禮物 (食材獲取S)",
+			"strength": "$t(skills.Ingredient Magnet S.strength)根據 RaenonX 的彙總數據計算，獲取 $t(candy) 的機率為 34.4%。",
+			"desc": "$t(skills.Ingredient Magnet S.desc)有時候會額外獲得隊伍中1隻寶可夢的糖果。",
+			"detail": "$t(skills.Ingredient Magnet S.detail) 獲取$t(candy)的機率為34.4%（基於RaenonX統計數據）。"
+		},
+		"Charge Energy S": {
+			"name": "活力填充S",
+			"strength": "技能的效果沒有換算成合計能量值。如需估計對能量的影響，請嘗試變更 [$t(energy)] 的值並進行確認。",
+			"desc": "讓自己回復活力。",
+			"detail": "精力恢復量受發動者性格的影響。"
+		},
+		"Charge Energy S (Moonlight)": {
+			"name": "月光 (活力填充S)",
+			"strength": "$t(skills.Charge Energy S.strength)",
+			"desc": "$t(skills.Charge Energy S.desc)有時候還會讓隊伍的1隻寶可夢回復活力。",
+			"detail": "$t(skills.Charge Energy S.detail) 大成功時也有可能選中自己作為恢復對象。"
+		},
+		"Charge Strength S": {
+			"name": "能量填充S",
+			"strength": "",
+			"desc": "卡比獸的能量增加。",
+			"detail": "能量中會加入$t(area bonus)。"
+		},
+		"Charge Strength S (Random)": {
+			"name": "能量填充S (隨機)",
+			"strength": "",
+			"desc": "$t(skills.Charge Strength S.desc)",
+			"detail": "$t(skills.Charge Strength S.detail) $t(skills.random)"
+		},
+		"Charge Strength S (Stockpile)": {
+			"name": "蓄力 (能量填充S)",
+			"strength": "$t(base strength)的期望值使用 RaenonX 的彙總結果（吐出概率：26.5%）進行計算。",
+			"desc": "發動時會蓄積或噴放能量。在噴放能量時，會根據蓄積的次數增加卡比獸的能量。",
+			"detail": "$t(skills.Charge Strength S.detail) $t(skills.Charge Strength S (Stockpile).strength)"
+		},
+		"Charge Strength M": {
+			"name": "能量填充M",
+			"strength": "",
+			"desc": "$t(skills.Charge Strength S.desc)",
+			"detail": "$t(skills.Charge Strength S.detail)"
+		},
+		"Charge Strength M (Bad Dreams)": {
+			"name": "夢魘 (能量填充M)",
+			"strength": "對非$t(types.dark)類型寶可夢的$t(energy)減少效果（-12）未包含在$t(strength)的評估中。",
+			"desc": "卡比獸的能量增加，且讓幫手隊伍中惡屬性以外的寶可夢活力下降。",
+			"detail": "$t(skills.Charge Strength S.detail)"
+		},
+		"Dream Shard Magnet S": {
+			"name": "夢之碎片獲取S",
+			"strength": "",
+			"desc": "獲得夢之碎片。",
+			"detail": "在技能等級7以下，隨機版本的期望值高1.25倍。在技能等級8時，差距縮小為1.15倍。"
+		},
+		"Dream Shard Magnet S (Random)": {
+			"name": "夢之碎片獲取S (隨機)",
+			"strength": "",
+			"desc": "$t(skills.Dream Shard Magnet S.desc)",
+			"detail": "$t(skills.random)"
+		},
+		"Energizing Cheer S": {
+			"name": "活力療愈S",
+			"strength": "技能造成的體力回復沒有換算成合計能量值。",
+			"desc": "隨機讓隊伍的1隻寶可夢回復活力。",
+			"detail": "$t(skills.Energy for Everyone S.detail) 隊伍中精力最少的寶可夢更容易被選中。"
+		},
+		"Energizing Cheer S (Nuzzle)": {
+			"name": "蹭蹭臉頰 (活力療愈S)",
+			"strength": "$t(skills.Energizing Cheer S.strength)",
+			"desc": "$t(skills.Energizing Cheer S.desc)幸運的話，該寶可夢將會獲得主技能發動獎勵。",
+			"detail": "$t(skills.Energizing Cheer S.detail)\n獲得主技能可發動加成的機率，是目標寶可夢在\"$t(skill level) + 1\"次幫忙內發動技能的機率。"
+		},
+		"Energizing Cheer S (Heal Pulse)": {
+			"name": "治癒波動 (活力療愈S)",
+			"strength": "$t(skills.Energizing Cheer S.strength) 附加效果為$t(skills.Extra Helpful S.strength)",
+			"desc": "隨機讓隊伍的2隻寶可夢回復活力，並讓牠們立刻完成幫忙。滿足特定條件時，效果會進一步提升。",
+			"detail": "$t(skills.Energizing Cheer S.detail)"
+		},
+		"Metronome": {
+			"name": "揮指",
+			"strength": "$t(skills.Skill Copy.strength)",
+			"desc": "從多種主技能中隨機發動1種。",
+			"detail": "$t(skills.copy)\n不參與抽籤：$t(skills.Charge Strength M (Bad Dreams).name)、$t(skills.Ingredient Draw S.name)、$t(skills.Energizing Cheer S (Heal Pulse).name)（?）。"
+		},
+		"Energy for Everyone S": {
+			"name": "活力全體療癒S",
+			"strength": "如需估計對能量的影響，請嘗試變更 [$t(energy)] 的值並進行確認。",
+			"desc": "讓幫手隊伍的寶可夢回復活力。",
+			"detail": "精力恢復量受恢復對象性格的影響。"
+		},
+		"Energy for Everyone S (Lunar Blessing)": {
+			"name": "新月祈禱 (活力全體療癒S)",
+			"strength": "$t(skills.Energy for Everyone S.strength)",
+			"desc": "$t(skills.Energy for Everyone S.desc)還會獲得自己以及隊伍中的寶可夢會撿來的樹果。",
+			"detail": "$t(skills.Energy for Everyone S.detail) 隊伍中不同種類的超能力屬性寶可夢越多，獲取的樹果數量越多。"
+		},
+		"Energy for Everyone S (Berry Juice)": {
+			"name": "樹果汁 (活力全體療癒S)",
+			"strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+			"desc": "$t(skills.Energy for Everyone S.desc)有時候還會額外獲得樹果汁。",
+			"detail": "$t(skills.Energy for Everyone S.detail) 樹果汁最多可持有5個。獲取率約為20%。"
+		},
+		"Extra Helpful S": {
+			"name": "幫手支援S",
+			"strength": "顯示技能發動帶來的 [幫助次數] 。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
+			"desc": "幫手寶可夢中的某1隻會立刻完成幫忙。",
+			"detail": "包括自己在內隨機選擇目標。不會觸發主技能抽籤。不受$t(expert mode)和$t(event bonus)引起的樹果·食材數量變化的影響。"
+		},
+		"Cooking Power-Up S": {
+			"name": "料理強化S",
+			"strength": "",
+			"desc": "增加下一次料理時的鍋子容量，讓鍋子能多放食材。",
+			"detail": "增加的鍋容量在更換調查地點或進入下一週後仍會保留。最多可增加+200。"
+		},
+		"Cooking Power-Up S (Minus)": {
+			"name": "負電 (料理強化S)",
+			"strength": "只有當隊伍中有至少一隻擁有「正電」或「負電」主技能的寶可夢時，才會回復一隻隊伍成員的活力。",
+			"desc": "增加下一次料理時的鍋子容量。滿足特定條件時，還會隨機讓隊伍的1隻寶可夢回復活力。",
+			"detail": "$t(skills.Cooking Power-Up S.detail)\n追加效果：$t(skills.Energizing Cheer S.detail)"
+		},
+		"Tasty Chance S": {
+			"name": "料理成功S",
+			"strength": "顯示漂亮成功的機率增加百分比。技能的效果沒有換算成合計能量值。",
+			"desc": "料理漂亮成功的機率會提升。效果會持續到料理漂亮成功或移動營地為止。",
+			"detail": "大成功機率效果最多可疊加至+70%。料理時，以主技能效果加上基礎大成功機率（週一至週六10%，週日30%）的機率決定是否大成功。"
+		},
+		"Helper Boost": {
+			"name": "幫手加速",
+			"strength": "假定為同類型的3隻寶可夢。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
+			"desc": "隊伍中的所有寶可夢會立刻完成幫忙。滿足特定條件時，效果會進一步提升。",
+			"detail": "幫忙寶可夢可超過$t(carry limit)，最多持有999個樹果·食材。"
+		},
+		"Berry Burst": {
+			"name": "樹果遽增",
+			"strength": "",
+			"desc": "獲得樹果，另外還會獲得隊伍中的寶可夢會撿來的樹果。",
+			"detail": "無論普通幫忙獲得的樹果數量，按技能等級固定獲取一定數量的樹果。"
+		},
+		"Berry Burst (Disguise)": {
+			"name": "畫皮 (樹果遽增)",
+			"strength": "大成功機率根據 RaenonX 的統計數據 (18.5%)。",
+			"desc": "$t(skills.Berry Burst.desc)大成功時，效果增為3倍。",
+			"detail": "$t(skills.Berry Burst.detail) 大成功後，到下次調查前無法再次大成功。大成功機率為18.5%（RaenonX調查結果）。"
+		},
+		"Skill Copy": {
+			"name": "技能複製",
+			"strength": "由於效果難以估計、顯示技能發動的次數。技能的效果沒有換算成合計能量值。",
+			"desc": "會隨機複製隊伍中1隻寶可夢的主技能來發動。",
+			"detail": "$t(skills.copy)\n不可複製：$t(skills.Charge Strength M (Bad Dreams).name)、$t(skills.Energizing Cheer S (Heal Pulse).name)"
+		},
+		"Skill Copy (Transform)": {
+			"name": "變身 (技能複製)",
+			"strength": "$t(skills.Skill Copy.strength)",
+			"desc": "$t(skills.Skill Copy.desc)",
+			"detail": "$t(skills.Skill Copy.detail)"
+		},
+		"Skill Copy (Mimic)": {
+			"name": "模仿 (技能複製)",
+			"strength": "$t(skills.Skill Copy.strength)",
+			"desc": "$t(skills.Skill Copy.desc)",
+			"detail": "$t(skills.Skill Copy.detail)"
+		},
+		"Ingredient Draw S": {
+			"name": "食材精選S",
+			"strength": "技能獲取的食材是通過將$t(recipe bonus)應用於$t(strength2)來計算的。",
+			"desc": "從<ingredients/>中選取1種，依技能等級獲得對應數量的食材。",
+			"detail": "尚未發現的食材也會參與抽籤。"
+		},
+		"Ingredient Draw S (Super Luck)": {
+			"name": "超幸運 (食材精選S)",
+			"strength": "$t(skills.Ingredient Draw S.strength)撿取$t(dream shard)的機率使用 RaenonX 的彙總結果。",
+			"desc": "$t(skills.Ingredient Draw S.desc)少數情況下會獲得大量的夢之碎片而不是食材。",
+			"detail": "$t(skills.Ingredient Draw S.detail) 獲取$t(dream shard)的機率為11.2%和2.8%（RaenonX統計數據）。"
+		},
+		"Ingredient Draw S (Hyper Cutter)": {
+			"name": "怪力鉗 (食材精選S)",
+			"strength": "$t(skills.Ingredient Draw S.strength)$t(additional ingredient rate)使用 RaenonX 的彙總結果 (16.68%)。",
+			"desc": "$t(skills.Ingredient Draw S.desc)有時候會額外獲得食材。",
+			"detail": "$t(skills.Ingredient Draw S.detail) 大成功機率為16.68%（RaenonX調查）。"
+		},
+		"Cooking Assist S": {
+			"name": "料理輔助S",
+			"strength": ""
+		},
+		"Cooking Assist S (Bulk Up)": {
+			"name": "健美 (料理輔助S)",
+			"strength": "$t(skills.Ingredient Magnet S.strength)大成功的機率增加 % 不會換算為合計能量值。",
+			"desc": "$t(skills.Ingredient Magnet S.desc)不僅如此，料理漂亮成功的機率還會提升。效果會持續到料理漂亮成功或移動營地為止。",
+			"detail": "$t(skills.Ingredient Magnet S.detail) $t(skills.Tasty Chance S.detail)"
+		},
+		"Versatile": {
+			"name": "十項全能",
+			"strength": "",
+			"desc": "額外獲得隊伍中1隻寶可夢的糖果。",
+			"detail": "技能等級6以上時，如果運氣好，糖果數量可能會增加。據稱增加的機率為30%（RaenonX 調查）。"
+		},
+		"Berry Burst (Draco Meteor)": {
+			"name": "流星群 (樹果遽增)",
+			"strength": "",
+			"desc": "獲得自己以及隊伍中的寶可夢會撿來的樹果。隊伍中有越多不同種類的龍屬性幫手寶可夢，樹果數量就會增加得越多。隊伍中有拉帝亞斯時，自己獲得的樹果數量會增加得更多。",
+			"detail": ""
+		},
+		"unknown": {
+			"name": "(未知)",
+			"strength": "主技能還未確定。"
+		},
+		"random": "最小值與最大值之間分為151個等級。每個等級的選擇機率相同。",
+		"copy": "複製的技能以當前技能等級發動。"
+	}
+}

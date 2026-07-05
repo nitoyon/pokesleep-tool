@@ -1,0 +1,224 @@
+{
+	"skills": {
+		"Ingredient Magnet S": {
+			"name": "食材ゲットS",
+			"strength": "スキルによる食材は、余剰食材として利用されるものと仮定して計算しています。",
+			"desc": "ランダムで食材をゲットします。",
+			"detail": "入手したことのある食材の中から3種類を均等に取得します。"
+		},
+		"Ingredient Magnet S (Plus)": {
+			"name": "プラス (食材ゲットS)",
+			"strength": "$t(skills.Ingredient Magnet S.strength)追加食材は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ取得します。",
+			"desc": "$t(skills.Ingredient Magnet S.desc)自分以外にプラス・マイナスを持つポケモンがチームにいる場合、追加で1枠目の食材を取得します。",
+			"detail": "ランダムに取得する食材は、$t(skills.Ingredient Magnet S.detail)"
+		},
+		"Ingredient Magnet S (Present)": {
+			"name": "プレゼント (食材ゲットS)",
+			"strength": "$t(skills.Ingredient Magnet S.strength)$t(candy)を取得する確率は RaenonX での集計結果 34.4% を利用しています。",
+			"desc": "$t(skills.Ingredient Magnet S.desc)ときどき、チームのポケモン1匹の$t(candy)を4つゲットします。",
+			"detail": "$t(skills.Ingredient Magnet S.detail)$t(candy)を取得する確率は 34.4% です (RaenonX での集計結果)。"
+		},
+		"Charge Energy S": {
+			"name": "げんきチャージS",
+			"strength": "スキルの効果は、合計エナジー量には換算していません。エナジー量への影響を見積もるには、[$t(energy)] の値を変更して確認してください。",
+			"desc": "自分のげんきを回復します。",
+			"detail": "げんき回復量は発動者のせいかくの影響を受けます。"
+		},
+		"Charge Energy S (Moonlight)": {
+			"name": "つきのひかり (げんきチャージS)",
+			"strength": "$t(skills.Charge Energy S.strength)",
+			"desc": "$t(skills.Charge Energy S.desc)50%の確率で、チームのポケモン1匹のげんきを回復します。",
+			"detail": "$t(skills.Charge Energy S.detail)大成功時の回復対象は自分が選ばれることもあります。"
+		},
+		"Charge Strength S": {
+			"name": "エナジーチャージS",
+			"strength": "",
+			"desc": "カビゴンのエナジーを増やします。",
+			"detail": "エナジー量には$t(area bonus)が加算されます。"
+		},
+		"Charge Strength S (Random)": {
+			"name": "エナジーチャージS (ランダム)",
+			"strength": "",
+			"desc": "$t(skills.Charge Strength S.desc)",
+			"detail": "$t(skills.Charge Strength S.detail)$t(skills.random)"
+		},
+		"Charge Strength S (Stockpile)": {
+			"name": "たくわえる (エナジーチャージS)",
+			"strength": "$t(base strength)の期待値は RaenonX での集計結果 (はきだす確率: 26.5%) を利用して算出しています。",
+			"desc": "たくわえた回数に応じてカビゴンのエナジーを増やします。",
+			"detail": "$t(skills.Charge Strength S.detail)$t(skills.Charge Strength S (Stockpile).strength)"
+		},
+		"Charge Strength M": {
+			"name": "エナジーチャージM",
+			"strength": "",
+			"desc": "$t(skills.Charge Strength S.desc)",
+			"detail": "$t(skills.Charge Strength S.detail)"
+		},
+		"Charge Strength M (Bad Dreams)": {
+			"name": "ナイトメア (エナジーチャージM)",
+			"strength": "$t(types.dark)タイプ以外のポケモンに対する$t(energy)の減少効果 (-12) については、$t(strength)の評価に含めていません。",
+			"desc": "$t(skills.Charge Strength S.desc)同時に、チームのあくタイプ以外のげんきが12減ります。",
+			"detail": "$t(skills.Charge Strength S.detail)"
+		},
+		"Dream Shard Magnet S": {
+			"name": "ゆめのかけらゲットS",
+			"strength": "",
+			"desc": "ゆめのかけらをゲットします。",
+			"detail": "スキルレベル7までは獲得期待値が、ランダム版のほうが1.25倍多くなっています。スキルレベル8はランダム版との差が1.15倍に縮まっています。"
+		},
+		"Dream Shard Magnet S (Random)": {
+			"name": "ゆめのかけらゲットS (ランダム)",
+			"strength": "",
+			"desc": "$t(skills.Dream Shard Magnet S.desc)",
+			"detail": "$t(skills.random)"
+		},
+		"Energizing Cheer S": {
+			"name": "げんきエールS",
+			"strength": "スキルによるげんき回復は、合計エナジー量には換算していません。",
+			"desc": "ランダムでチームの1匹のげんきを回復します。",
+			"detail": "$t(skills.Energy for Everyone S.detail)チーム内でげんきが1番少ないおてつだいポケモンが選ばれやすくなっています。"
+		},
+		"Energizing Cheer S (Nuzzle)": {
+			"name": "ほっぺすりすり (げんきエールS)",
+			"strength": "$t(skills.Energizing Cheer S.strength)",
+			"desc": "$t(skills.Energizing Cheer S.desc)運がよければ、そのポケモンがメインスキル発動可能ボーナスを得ます。",
+			"detail": "$t(skills.Energizing Cheer S.detail)\nメインスキル発動可能ボーナスを得る確率は、対象となったポケモンのおてつだい「$t(skill level) + 1」回分の確率となっています。"
+		},
+		"Energizing Cheer S (Heal Pulse)": {
+			"name": "いやしのはどう (げんきエールS)",
+			"strength": "$t(skills.Energizing Cheer S.strength)追加効果は、$t(skills.Extra Helpful S.strength)",
+			"desc": "ランダムでチームの2匹のげんきを回復し、おてつだいをすぐに完了させます。チームにラティオスがいると、完了させるおてつだい回数が増加します。",
+			"detail": "$t(skills.Energizing Cheer S.detail)"
+		},
+		"Metronome": {
+			"name": "ゆびをふる",
+			"strength": "$t(skills.Skill Copy.strength)",
+			"desc": "たくさんのメインスキルの中からどれか1つをくりだします。",
+			"detail": "$t(skills.copy)\n抽選対象外: $t(skills.Charge Strength M (Bad Dreams).name)、$t(skills.Ingredient Draw S.name)、$t(skills.Energizing Cheer S (Heal Pulse).name) (?)。"
+		},
+		"Energy for Everyone S": {
+			"name": "げんきオールS",
+			"strength": "回復によるエナジー量への影響を見積もるには、[$t(energy)] の設定を変更して確認してください。",
+			"desc": "チームのポケモンのげんきを回復します。",
+			"detail": "げんき回復量は回復対象のせいかくの影響を受けます。"
+		},
+		"Energy for Everyone S (Lunar Blessing)": {
+			"name": "みかづきのいのり (げんきオールS)",
+			"strength": "$t(skills.Energy for Everyone S.strength)",
+			"desc": "チームのポケモンのげんきを回復し、自分とチームのきのみを獲得します。",
+			"detail": "$t(skills.Energy for Everyone S.detail)チームに異なるエスパータイプのポケモンが多いほど、獲得するきのみの数が増加します。"
+		},
+		"Energy for Everyone S (Berry Juice)": {
+			"name": "きのみジュース (げんきオールS)",
+			"strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+			"desc": "$t(skills.Energy for Everyone S.desc)ときどき、追加できのみジュースをゲットします。",
+			"detail": "$t(skills.Energy for Everyone S.detail)きのみジュースは最大5個まで保持できます。きのみジュースの取得率は約20%程度と考えられています。"
+		},
+		"Extra Helpful S": {
+			"name": "おてつだいサポートS",
+			"strength": "スキルによって発動する [おてつだい回数] を表示してます。合計エナジー量へは、1おてつだいあたり 300 (フィールドボーナスなしのとき) として計算しています。",
+			"desc": "チーム内の1匹のおてつだいがすぐに完了します。",
+			"detail": "自分を含めて対象がランダムに選ばれます。メインスキルの抽選は行われません。$t(expert mode)や$t(event bonus)によるきのみ・食材の数の変化の影響は受けません。"
+		},
+		"Cooking Power-Up S": {
+			"name": "料理パワーアップS",
+			"strength": "",
+			"desc": "次回の料理でなべ容量を増やします。",
+			"detail": "増やしたなべ容量は、リサーチフィールドを変えたり、次の週になっても維持されます。最大+200まで増やせます。"
+		},
+		"Cooking Power-Up S (Minus)": {
+			"name": "マイナス (料理パワーアップS)",
+			"strength": "チーム内のポケモン1匹のげんき回復は、自分以外に「プラス」か「マイナス」を持つポケモンがチームにいる場合のみ発生します。",
+			"desc": "$t(skills.Cooking Power-Up S.desc)自分以外にプラス・マイナスを持つポケモンがチームにいる場合、$t(skills.Energizing Cheer S.desc)",
+			"detail": "$t(skills.Cooking Power-Up S.detail)\n追加効果: $t(skills.Energizing Cheer S.detail)"
+		},
+		"Tasty Chance S": {
+			"name": "料理チャンスS",
+			"strength": "大成功の確率増加 % を表示しています。スキルの効果は、合計エナジー量には換算していません。",
+			"desc": "料理の大成功確率がアップします。効果は料理が大成功するか、フィールドを移動するまで続きます。",
+			"detail": "大成功確率の効果は最大+70%まで重ねがけできます。料理時には、メインスキルの効果に加えて基礎大成功確率 (月～土は10%、日曜は30%) を足した確率で、大成功するか決まります。"
+		},
+		"Helper Boost": {
+			"name": "おてつだいブースト",
+			"strength": "同タイプのポケモン 3 体と仮定しています。エナジー量への影響は、1おてつだいあたり 300 (フィールドボーナスなしのとき) として見積もっています。",
+			"desc": "チーム内のポケモン全員のおてつだいがすぐに完了します。チームに同一タイプの異なる種類のポケモンが多いほど効果量がアップします。",
+			"detail": "おてつだいポケモンは$t(carry limit)を超えて999個まで、きのみ・食材を保持できます。"
+		},
+		"Berry Burst": {
+			"name": "きのみバースト",
+			"strength": "",
+			"desc": "自分とチーム内のきのみを獲得します。",
+			"detail": "通常のおてつだいのきのみの数にかかわらず、スキルレベルごとに決まった個数のきのみを獲得します。"
+		},
+		"Berry Burst (Disguise)": {
+			"name": "ばけのかわ (きのみバースト)",
+			"strength": "大成功確率は RaenonX での集計結果 (18.5%) を利用しています。",
+			"desc": "$t(skills.Berry Burst.desc)大成功すると、3倍の個数を獲得します。",
+			"detail": "$t(skills.Berry Burst.detail)大成功すると、次のリサーチまでは大成功できません。大成功確率は 18.5% とされています (RaenonX 調査結果)。"
+		},
+		"Skill Copy": {
+			"name": "スキルコピー",
+			"strength": "効果を見積もることが難しいため、スキル発生回数を表示しています。スキルの効果は、合計エナジー量には換算していません。",
+			"desc": "チーム内の1匹のメインスキルをくりだします。",
+			"detail": "$t(skills.copy)\nコピー対象外: $t(skills.Charge Strength M (Bad Dreams).name)、$t(skills.Energizing Cheer S (Heal Pulse).name)"
+		},
+		"Skill Copy (Transform)": {
+			"name": "へんしん (スキルコピー)",
+			"strength": "$t(skills.Skill Copy.strength)",
+			"desc": "$t(skills.Skill Copy.desc)",
+			"detail": "$t(skills.Skill Copy.detail)"
+		},
+		"Skill Copy (Mimic)": {
+			"name": "ものまね (スキルコピー)",
+			"strength": "$t(skills.Skill Copy.strength)",
+			"desc": "$t(skills.Skill Copy.desc)",
+			"detail": "$t(skills.Skill Copy.detail)"
+		},
+		"Ingredient Draw S": {
+			"name": "食材セレクトS",
+			"strength": "スキルによる食材は$t(recipe bonus)を適用して$t(strength2)を計算しています。",
+			"desc": "<ingredients/>から1つが選ばれて、スキルレベルに応じた食材数をゲットします。",
+			"detail": "未発見の食材も抽選されます。"
+		},
+		"Ingredient Draw S (Super Luck)": {
+			"name": "きょううん (食材セレクトS)",
+			"strength": "$t(skills.Ingredient Draw S.strength)$t(dream shard)を取得する確率は RaenonX での集計結果を利用しています。",
+			"desc": "$t(skills.Ingredient Draw S.desc)まれに食材の代わりに、ゆめのかけらをゲットします。",
+			"detail": "$t(skills.Ingredient Draw S.detail)$t(dream shard)を取得する確率は 11.2%、2.8% とされています (RaenonX 調査結果)。"
+		},
+		"Ingredient Draw S (Hyper Cutter)": {
+			"name": "かいりきバサミ (食材セレクトS)",
+			"strength": "$t(skills.Ingredient Draw S.strength)$t(additional ingredient rate)は RaenonX での集計結果 (16.68%) を利用しています。",
+			"desc": "$t(skills.Ingredient Draw S.desc)ときどき、食材数が2倍になります。",
+			"detail": "$t(skills.Ingredient Draw S.detail)大成功する確率は 16.68% とされています (RaenonX 調べ)。"
+		},
+		"Cooking Assist S": {
+			"name": "料理アシストS",
+			"strength": ""
+		},
+		"Cooking Assist S (Bulk Up)": {
+			"name": "ビルドアップ (料理アシストS)",
+			"strength": "$t(skills.Ingredient Magnet S.strength)大成功の確率増加 % は合計エナジー量には換算していません。",
+			"desc": "$t(skills.Ingredient Magnet S.desc)さらに、$t(skills.Tasty Chance S.desc)",
+			"detail": "$t(skills.Ingredient Magnet S.detail)$t(skills.Tasty Chance S.detail)"
+		},
+		"Versatile": {
+			"name": "オールマイティー",
+			"strength": "",
+			"desc": "追加で、チームのポケモン1匹のアメをゲットします。",
+			"detail": "スキルレベル6以降は運が良ければアメの個数が増えます。増える確率は 30% とされています (RaenonX 調べ)。"
+		},
+		"Berry Burst (Draco Meteor)": {
+			"name": "りゅうせいぐん (きのみバースト)",
+			"strength": "",
+			"desc": "自分とチーム内のポケモンのきのみを獲得します。チームに異なる種類のドラゴンタイプのポケモンが多いほど、さらにきのみの数がUPします。チームにラティアスがいる場合、獲得する自分のきのみの数がさらにUPします。",
+			"detail": ""
+		},
+		"unknown": {
+			"name": "(不明)",
+			"strength": "メインスキルはまだ判明していません。"
+		},
+		"random": "最大値と最小値の間は151段階に等分されています。選択確率は等確率とされています。",
+		"copy": "コピー対象のスキルが現在のスキルレベルで発動します。"
+	}
+}

@@ -8,53 +8,52 @@
 // Read tsv from stdin (RP collection sheet format).
 // See src/util/RpParse.tsv for details
 
-import parseTsv, { RpData } from '../src/util/RpParse';
-import PokemonIv from '../src/util/PokemonIv';
-import PokemonRp from '../src/util/PokemonRp';
-import * as fs from 'fs';
+import * as fs from "node:fs";
+import type PokemonIv from "../src/util/PokemonIv";
+import PokemonRp from "../src/util/PokemonRp";
+import parseTsv, { type RpData } from "../src/util/RpParse";
 
 const baseSkillValue = parseInt(process.argv[2], 10);
-const fitValueOnly = process.argv.some(x => x === '--fitValueOnly');
+const fitValueOnly = false; //process.argv.some(x => x === '--fitValueOnly');
 
 function checkSkillValue(data: Record<string, RpData[]>, skillValue: number) {
-    for (const name of Object.keys(data)) {
-        if (!fit(data[name], skillValue)) {
-            return;
-        }
-    }
-    console.log(skillValue);
+	for (const name of Object.keys(data)) {
+		if (!rpFit(data[name], skillValue)) {
+			return;
+		}
+	}
+	console.log(skillValue);
 }
 
-function fit(data: RpData[], skillValue: number) {
-    let skills: number[] = [];
-    if (fitValueOnly) {
-        skills = [data[0].iv.pokemon.skillRate];
-    }
-    else {
-        for (let skill = 10; skill < 100; skill++) {
-            skills.push(skill / 10);
-        }
-    }
+function rpFit(data: RpData[], skillValue: number) {
+	let skills: number[] = [];
+	if (fitValueOnly) {
+		skills = [data[0].iv.pokemon.skillRate];
+	} else {
+		for (let skill = 10; skill < 100; skill++) {
+			skills.push(skill / 10);
+		}
+	}
 
-    for (const datum of data) {
-        skills = skills.filter(x => {
-            // [HACK] clone to clear cache
-            const iv = datum.iv.clone();
-            (iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
-                ...iv.pokemon,
-                skillRate: x,
-            };
-            const rp = new PokemonRp(iv);
-            Object.defineProperty(rp, "skillValue", {
-                get() {
-                    return skillValue;
-                },
-                configurable: true,
-            });
-            return rp.Rp === datum.rp;
-        });
-    }
-    return (skills.length > 0);
+	for (const datum of data) {
+		skills = skills.filter((x) => {
+			// [HACK] clone to clear cache
+			const iv = datum.iv.clone();
+			(iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+				...iv.pokemon,
+				skillRate: x,
+			};
+			const rp = new PokemonRp(iv);
+			Object.defineProperty(rp, "skillValue", {
+				get() {
+					return skillValue;
+				},
+				configurable: true,
+			});
+			return rp.Rp === datum.rp;
+		});
+	}
+	return skills.length > 0;
 }
 
 // Read from stdin
@@ -62,6 +61,20 @@ const tsv = fs.readFileSync(0).toString();
 console.log("read done");
 
 const data = parseTsv(tsv);
-for (let skillValue = baseSkillValue - 500; skillValue < baseSkillValue; skillValue++) {
-    checkSkillValue(data, skillValue);
+for (const name of Object.keys(data)) {
+	console.log(`- ${name}: ${data[name].length}`);
+	if (
+		!data[name].every((x) => data[name][0].iv.skillLevel === x.iv.skillLevel)
+	) {
+		console.error("ERROR: skill level isn't equal!!!");
+		process.exit(1);
+	}
+}
+
+for (
+	let skillValue = baseSkillValue - 500;
+	skillValue < baseSkillValue;
+	skillValue++
+) {
+	checkSkillValue(data, skillValue);
 }

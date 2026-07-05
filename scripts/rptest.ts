@@ -6,17 +6,19 @@
 // Read tsv from stdin (RP collection sheet format)
 // See src/util/RpParse.tsv for details
 
-import PokemonRp from '../src/util/PokemonRp';
-import parseTsv, { RpData } from '../src/util/RpParse';
-import * as fs from 'fs';
+import * as fs from "node:fs";
+import PokemonRp from "../src/util/PokemonRp";
+import parseTsv, { type RpData } from "../src/util/RpParse";
 
 function test(data: RpData[]) {
-    for (const datum of data) {
-        const rp = new PokemonRp(datum.iv).Rp;
-        if (datum.rp !== rp) {
-            console.log(`NOT MATCH: ${datum.iv.pokemonName} (Lv ${datum.iv.level}) should ${datum.rp} but ${rp}`);
-        }
-    }
+	for (const datum of data) {
+		const rp = new PokemonRp(datum.iv).Rp;
+		if (datum.rp !== rp) {
+			console.log(
+				`NOT MATCH: ${datum.iv.pokemonName} (Lv ${datum.iv.level}) should ${datum.rp} but ${rp}`,
+			);
+		}
+	}
 }
 
 // Read from stdin
@@ -25,5 +27,5 @@ console.log("read done");
 
 const data = parseTsv(tsv);
 for (const name of Object.keys(data)) {
-    test(data[name]);
+	test(data[name]);
 }
