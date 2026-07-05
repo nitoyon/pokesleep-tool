@@ -8,7 +8,7 @@ import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
 import BoxExportDialog from "./Box/BoxExportDialog";
 import BoxImportDialog from "./Box/BoxImportDialog";
 import BoxItemDialog from "./Box/BoxItemDialog";
-import BoxView from "./Box/BoxView";
+import BoxTabChild from "./Box/BoxTabChild";
 import IvForm from "./IvForm/IvForm";
 import { getInitialIvState, ivStateReducer } from "./IvState";
 import LowerTabHeader from "./LowerTabHeader";
@@ -121,7 +121,7 @@ const ResearchCalcApp = React.memo(() => {
 				</div>
 			)}
 			{state.lowerTabIndex === 1 && (
-				<BoxView
+				<BoxTabChild
 					items={state.box.items}
 					iv={state.pokemonIv}
 					selectedId={state.selectedItemId}

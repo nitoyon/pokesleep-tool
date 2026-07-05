@@ -48,12 +48,16 @@ const BoxView = React.memo(
 		selectedId,
 		parameter,
 		dispatch,
+		onSelect,
+		onEdit,
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
 		selectedId: number;
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
+		onSelect: (id: number) => void;
+		onEdit: (id: number) => void;
 	}) => {
 		const { t } = useTranslation();
 		const [sortConfig, setSortConfig] = React.useState(() =>
@@ -149,10 +153,12 @@ const BoxView = React.memo(
 						selected={item.id === selectedId}
 						dispatch={dispatch}
 						onCandyClick={onCandyClick}
+						onSelect={onSelect}
+						onEdit={onEdit}
 						selectedRef={item.id === selectedId ? selectedRef : undefined}
 					/>
 				)),
-			[sortedItems, dispatch, onCandyClick, selectedId],
+			[sortedItems, dispatch, onCandyClick, selectedId, onSelect, onEdit],
 		);
 		if (!sortConfig.descending) {
 			elms = [...elms].reverse();
@@ -282,6 +288,8 @@ interface BoxLargeItemProps {
 	selected: boolean;
 	dispatch: (action: IvAction) => void;
 	onCandyClick: (item: PokemonBoxItem) => void;
+	onSelect: (id: number) => void;
+	onEdit: (id: number) => void;
 	selectedRef?: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -291,6 +299,8 @@ const BoxLargeItem = React.memo(
 		selected,
 		dispatch,
 		onCandyClick,
+		onSelect,
+		onEdit,
 		selectedRef,
 	}: BoxLargeItemProps) => {
 		const { t } = useTranslation();
@@ -299,13 +309,13 @@ const BoxLargeItem = React.memo(
 		const isMenuOpen = Boolean(moreMenuAnchor);
 
 		const longPressRef = useLongPress(() => {
-			onMenuClick("select");
-			onMenuClick("edit");
+			onSelect(item.id);
+			onEdit(item.id);
 		}, 500);
 
 		const clickHandler = React.useCallback(() => {
-			dispatch({ type: "select", payload: { id: item.id } });
-		}, [dispatch, item.id]);
+			onSelect(item.id);
+		}, [onSelect, item.id]);
 		const onMoreIconClick = React.useCallback(
 			(event: React.MouseEvent<HTMLElement>) => {
 				setMoreMenuAnchor(event.currentTarget);
@@ -316,7 +326,7 @@ const BoxLargeItem = React.memo(
 			setMoreMenuAnchor(null);
 		}, []);
 		const onMenuClick = React.useCallback(
-			(type: string) => {
+			(type: "dup" | "remove") => {
 				dispatch({ type, payload: { id: item.id } } as IvAction);
 				setMoreMenuAnchor(null);
 			},
@@ -330,6 +340,10 @@ const BoxLargeItem = React.memo(
 			setMoreMenuAnchor(null);
 			onCandyClick(item);
 		}, [item, onCandyClick]);
+		const onEditClickHandler = React.useCallback(() => {
+			setMoreMenuAnchor(null);
+			onEdit(item.id);
+		}, [item.id, onEdit]);
 
 		return (
 			<StyledBoxLargeItem ref={selected ? selectedRef : null}>
@@ -361,7 +375,7 @@ const BoxLargeItem = React.memo(
 					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 				>
 					<MenuList>
-						<MenuItem onClick={() => onMenuClick("edit")}>
+						<MenuItem onClick={onEditClickHandler}>
 							<ListItemIcon>
 								<EditNoteOutlinedIcon />
 							</ListItemIcon>
