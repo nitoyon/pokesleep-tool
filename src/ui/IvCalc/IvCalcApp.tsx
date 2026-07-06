@@ -132,6 +132,7 @@ const ResearchCalcApp = React.memo(() => {
 			{state.lowerTabIndex === 2 && (
 				<StrengthSettingForm
 					value={state.parameter}
+					items={state.box.items}
 					hasHelpingBonus={state.pokemonIv.hasHelpingBonusInActiveSubSkills}
 					dispatch={dispatch}
 				/>

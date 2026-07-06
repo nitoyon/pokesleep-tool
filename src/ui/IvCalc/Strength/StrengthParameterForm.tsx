@@ -18,6 +18,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { getActiveHelpBonus } from "../../../data/events";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
+import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import {
 	createStrengthParameter,
 	type StrengthParameter,
@@ -25,6 +26,7 @@ import {
 import MessageDialog from "../../Dialog/MessageDialog";
 import InfoButton from "../InfoButton";
 import type { IvAction } from "../IvState";
+import OtherTeamMemberForm from "../Panel/OtherTeamMemberForm";
 import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import AreaControlGroup from "./AreaControlGroup";
 import EventConfigDialog from "./EventConfigDialog";
@@ -70,10 +72,12 @@ const StrengthSettingForm = React.memo(
 	({
 		dispatch,
 		value,
+		items,
 		hasHelpingBonus,
 	}: {
 		dispatch: React.Dispatch<IvAction>;
 		value: StrengthParameter;
+		items: PokemonBoxItem[];
 		hasHelpingBonus: boolean;
 	}) => {
 		const { t } = useTranslation();
@@ -253,8 +257,13 @@ const StrengthSettingForm = React.memo(
 						<MenuItem value={4}>{hasHelpingBonus ? "×5" : "×4"}</MenuItem>
 					</Select>
 				</section>
+				<OtherTeamMemberForm
+					parameter={value}
+					dispatch={dispatch}
+					items={items}
+				/>
 				<Collapse in={isNotWhistle}>
-					<section>
+					<section className="mt">
 						<span className="lbl">
 							{t("tap frequency")} ({t("awake")}):
 						</span>

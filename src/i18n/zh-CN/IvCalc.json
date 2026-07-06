@@ -61,6 +61,8 @@
 	"own": "自己",
 	"teammates": "其他",
 	"other team member": "其他编组成员",
+	"other team member info1": "用于计算[$t(subskill.Helping Bonus)]和$t(main skill)（如$t(skills.Extra Helpful S.name)）的$t(strength2)。",
+	"other team member info2": "计算时假定队伍中其他4只宝可梦都是这只宝可梦。另外，$t(subskill.Helping Bonus)的数量使用[$t(subskill.Helping Bonus)]中设置的值。",
 	"max skill level affected": "由于已启用「$t(calc with max skill level)」，因此以技能等级 <level/> 进行计算。",
 	"skill level bonus affected": "由于 <bonus/>，以技能等级 <level/> 进行计算。",
 	"skill strength": "技能 能量 (由主技能的种类和技能等级决定)",

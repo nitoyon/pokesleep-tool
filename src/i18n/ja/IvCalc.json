@@ -64,6 +64,8 @@
 	"own": "自分",
 	"teammates": "他",
 	"other team member": "他のメンバー",
+	"other team member info1": "[$t(subskill.Helping Bonus)]や$t(main skill)($t(skills.Extra Helpful S.name)など)の$t(strength2)計算に利用します。",
+	"other team member info2": "チームの他のメンバー4匹がこのポケモンであると仮定して計算します。ただし、$t(subskill.Helping Bonus)の数は[$t(subskill.Helping Bonus)]の設定値を利用します。",
 	"max skill level affected": "[$t(calc with max skill level)] が有効になっているため、スキルレベル <level/> で計算しています。",
 	"skill level bonus affected": "<bonus/>の効果により、スキルレベル <level/> で計算しています。",
 	"skill strength": "スキル エナジー (メインスキルの種類とスキルレベルから決まる値)",
