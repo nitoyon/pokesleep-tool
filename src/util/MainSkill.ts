@@ -717,5 +717,13 @@ export function matchMainSkillName(
 		}
 	}
 
+	// Treat "Energizing Cheer S (Heal Pulse)" as matching "Extra Helpful S"
+	if (
+		name === "Energizing Cheer S (Heal Pulse)" &&
+		match === "Extra Helpful S"
+	) {
+		return true;
+	}
+
 	return false;
 }
