@@ -463,6 +463,83 @@ describe("PokemonStrength", () => {
 		});
 	});
 
+	describe("strengthPerHelp based skillStrength", () => {
+		test("Extra Helpful S: skillStrength uses own and team member's per-help strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Growlithe",
+				level: 30,
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Pikachu",
+				level: 25,
+			});
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculateImpl();
+
+			const ownPerHelp =
+				(result.berryTotalStrength + result.ingStrength) / result.total.all;
+			const teamResult = new PokemonStrength(teamMember, param).calculateImpl();
+			const teamPerHelp =
+				(teamResult.berryTotalStrength + teamResult.ingStrength) /
+				teamResult.total.all;
+			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
+
+			const expected = result.skillValue * expectedStrengthPerHelp;
+			expect(result.skillStrength).toBeCloseTo(expected);
+		});
+
+		test("Helper Boost: skillStrength uses own and team member's per-help strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Raikou",
+				level: 30,
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Eevee",
+				level: 25,
+			});
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculateImpl();
+
+			const ownPerHelp =
+				(result.berryTotalStrength + result.ingStrength) / result.total.all;
+			const teamResult = new PokemonStrength(teamMember, param).calculateImpl();
+			const teamPerHelp =
+				(teamResult.berryTotalStrength + teamResult.ingStrength) /
+				teamResult.total.all;
+			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
+
+			const expected = result.skillValue * expectedStrengthPerHelp * 5;
+			expect(result.skillStrength).toBeCloseTo(expected);
+		});
+
+		test("Energizing Cheer S (Heal Pulse): skillStrength2 uses own and team member's per-help strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Latias",
+				level: 30,
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Vaporeon",
+				level: 25,
+			});
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculateImpl();
+
+			const ownPerHelp =
+				(result.berryTotalStrength + result.ingStrength) / result.total.all;
+			const teamResult = new PokemonStrength(teamMember, param).calculateImpl();
+			const teamPerHelp =
+				(teamResult.berryTotalStrength + teamResult.ingStrength) /
+				teamResult.total.all;
+			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
+
+			const expected = result.skillValue2 * expectedStrengthPerHelp * 2;
+			expect(result.skillStrength2).toBeCloseTo(expected);
+		});
+	});
+
 	describe("isSkillStrengthCalculated", () => {
 		test("returns false for skills with zero strength and true for skills with non-zero strength", () => {
 			// Test each skill

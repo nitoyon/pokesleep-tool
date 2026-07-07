@@ -458,7 +458,12 @@ class PokemonStrength {
 				skillValue2,
 				skillStrength2,
 				skillValuePerTrigger2,
-			} = this.getSkillValueAndStrength(helpCount.skillCount, param, bonus));
+			} = this.getSkillValueAndStrength(
+				helpCount.skillCount,
+				param,
+				bonus,
+				(berryTotalStrength + ingStrength) / helpCount.total.all,
+			));
 		}
 
 		const totalStrength =
@@ -499,6 +504,7 @@ class PokemonStrength {
 		skillCount: number,
 		param: StrengthParameter,
 		bonus: BonusEffects,
+		ownStrengthPerHelp: number,
 	): {
 		skillValue: number;
 		skillStrength: number;
@@ -517,6 +523,7 @@ class PokemonStrength {
 				bonus,
 				this.iv.pokemon.skill,
 				skillLevel,
+				ownStrengthPerHelp,
 			);
 		}
 
@@ -529,6 +536,7 @@ class PokemonStrength {
 			bonus,
 			mainSkill,
 			Math.min(skillLevel, maxSkillLevel),
+			ownStrengthPerHelp,
 		);
 
 		const successCount = getSkillSubValue("Versatile", skillLevel);
@@ -553,6 +561,7 @@ class PokemonStrength {
 		bonus: BonusEffects,
 		mainSkill: MainSkillName,
 		skillLevel: number,
+		ownStrengthPerHelp: number,
 	): {
 		skillValue: number;
 		skillStrength: number;
@@ -587,7 +596,18 @@ class PokemonStrength {
 		}
 		const skillValuePerTrigger = mainSkillBase * mainSkillFactor;
 		const skillValue = skillValuePerTrigger * skillCount;
-		const strengthPerHelp = 300 * (1 + param.fieldBonus / 100);
+		function computeStrengthPerHelp(): number {
+			const teamMemberResult = new PokemonStrength(
+				param.teamMember,
+				param,
+			).calculateImpl();
+			const teamHelpCountAll = teamMemberResult.total.all;
+			const teamPerHelp =
+				(teamMemberResult.berryTotalStrength + teamMemberResult.ingStrength) /
+				teamHelpCountAll;
+
+			return (ownStrengthPerHelp + 4 * teamPerHelp) / 5;
+		}
 
 		const ingInRecipeStrengthRate =
 			param.recipeBonus === 0
@@ -617,7 +637,7 @@ class PokemonStrength {
 					(param.latiTwins ? bonus : 0);
 				const skillValuePerTrigger2 = helpCount;
 				const skillValue2 = helpCount * skillCount;
-				const skillStrength2 = skillValue2 * strengthPerHelp * 2;
+				const skillStrength2 = skillValue2 * computeStrengthPerHelp() * 2;
 				return {
 					skillValue,
 					skillStrength: 0,
@@ -685,7 +705,7 @@ class PokemonStrength {
 			case "Extra Helpful S":
 				return {
 					skillValue,
-					skillStrength: skillValue * strengthPerHelp,
+					skillStrength: skillValue * computeStrengthPerHelp(),
 					skillValuePerTrigger,
 					skillValue2: 0,
 					skillStrength2: 0,
@@ -695,7 +715,7 @@ class PokemonStrength {
 			case "Helper Boost":
 				return {
 					skillValue,
-					skillStrength: skillValue * strengthPerHelp * 5,
+					skillStrength: skillValue * computeStrengthPerHelp() * 5,
 					skillValuePerTrigger,
 					skillValue2: 0,
 					skillStrength2: 0,
