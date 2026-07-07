@@ -271,6 +271,14 @@ export function createStrengthParameter(
 }
 
 /**
+ * Save StrengthParameter to localStorage.
+ * @param parameter The StrengthParameter to save.
+ */
+export function saveStrengthParameter(parameter: StrengthParameter) {
+	localStorage.setItem("PstStrenghParam", JSON.stringify(parameter));
+}
+
+/**
  * Load StrengthParameter fron localStorage.
  * @returns Loaded parameter.
  */

@@ -5,6 +5,7 @@ import {
 	loadStrengthParameter,
 	normalizeStrengthParameter,
 	type StrengthParameter,
+	saveStrengthParameter,
 } from "../../util/PokemonStrength";
 
 export type IvAction =
@@ -221,7 +222,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	if (type === "changeParameter") {
 		const value = action.payload.parameter;
 		const newState = normalizeState({ ...state, parameter: value });
-		localStorage.setItem("PstStrenghParam", JSON.stringify(newState.parameter));
+		saveStrengthParameter(newState.parameter);
 		return newState;
 	}
 	if (type === "openEnergyDialog") {

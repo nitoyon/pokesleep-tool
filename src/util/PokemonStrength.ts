@@ -52,6 +52,7 @@ export {
 	noFavoriteFieldIndex,
 	normalizeStrengthParameter,
 	type StrengthParameter,
+	saveStrengthParameter,
 } from "./StrengthParameter";
 
 /** Helping speed bonus for the main berry in Expert Mode */
