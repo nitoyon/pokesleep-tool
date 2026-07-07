@@ -48,7 +48,7 @@ const StyledSettingForm = styled("div")({
 		"& > span.lbl": {
 			marginRight: "auto",
 			marginTop: 0,
-			textWrap: "nowrap",
+			textWrap: "wrap",
 		},
 		"& > span > button": {
 			marginRight: 0,
@@ -81,16 +81,32 @@ const StrengthSettingForm = React.memo(
 		hasHelpingBonus: boolean;
 	}) => {
 		const { t } = useTranslation();
-		const [pityProcHelpOpen, setPityProcHelpOpen] = React.useState(false);
+		const [helpOpen, setHelpOpen] = React.useState(false);
+		const [helpMessage, setHelpMessage] = React.useState<React.ReactNode>(null);
 		const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
 		const [initializeConfirmOpen, setInitializeConfirmOpen] =
 			React.useState(false);
 
 		const onPityProcHelpClick = React.useCallback(() => {
-			setPityProcHelpOpen(true);
-		}, []);
+			setHelpMessage(
+				<>
+					<p>{t("pity proc help")}</p>
+					<p>{t("pity proc help2")}</p>
+				</>,
+			);
+			setHelpOpen(true);
+		}, [t]);
+		const addHelpingBonusEffectInfoClick = React.useCallback(() => {
+			setHelpMessage(
+				<>
+					<p>{t("helping bonus addition desc")}</p>
+					<p>{t("other member calculation")}</p>
+				</>,
+			);
+			setHelpOpen(true);
+		}, [t]);
 		const onPityProcHelpClose = React.useCallback(() => {
-			setPityProcHelpOpen(false);
+			setHelpOpen(false);
 		}, []);
 
 		const onChange = React.useCallback(
@@ -106,6 +122,12 @@ const StrengthSettingForm = React.memo(
 					...value,
 					helpBonusCount: parseInt(e.target.value, 10) as 0 | 1 | 2 | 3 | 4,
 				});
+			},
+			[onChange, value],
+		);
+		const onAddHelpingBonusEffectChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({ ...value, addHelpingBonusEffect: e.target.checked });
 			},
 			[onChange, value],
 		);
@@ -257,6 +279,16 @@ const StrengthSettingForm = React.memo(
 						<MenuItem value={4}>{hasHelpingBonus ? "×5" : "×4"}</MenuItem>
 					</Select>
 				</section>
+				<section>
+					<span className="lbl">
+						{t("helping bonus addition label")}:
+						<InfoButton onClick={addHelpingBonusEffectInfoClick} />
+					</span>
+					<Switch
+						checked={value.addHelpingBonusEffect}
+						onChange={onAddHelpingBonusEffectChange}
+					/>
+				</section>
 				<OtherTeamMemberForm
 					parameter={value}
 					dispatch={dispatch}
@@ -304,14 +336,9 @@ const StrengthSettingForm = React.memo(
 					dispatch={dispatch}
 				/>
 				<MessageDialog
-					open={pityProcHelpOpen}
+					open={helpOpen}
 					onClose={onPityProcHelpClose}
-					message={
-						<>
-							<p>{t("pity proc help")}</p>
-							<p>{t("pity proc help2")}</p>
-						</>
-					}
+					message={helpMessage}
 				/>
 				<EventConfigDialog
 					open={eventDetailOpen}

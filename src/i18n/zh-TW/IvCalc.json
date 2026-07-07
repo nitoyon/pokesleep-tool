@@ -282,6 +282,7 @@
 	"strength of x": "{{x}}的能量",
 	"helping bonus addition": "$t(subskill.Helping Bonus)的效果",
 	"helping bonus addition label": "將[$t(subskill.Helping Bonus)]帶來的$t(other team member)的$t(strength2)增加量包含在$t(total strength)中",
+	"helping bonus addition desc": "啟用此選項且寶可夢擁有[$t(subskill.Helping Bonus)]時，會將$t(other team member) 4名成員的$t(strength2)增加量加到$t(total strength)中。可以透過點擊$t(total strength)旁的[i]標記查看此增加量。",
 	"strength detail1": "可以確認寶可夢賺取的能量，食材，技能發動的次數。",
 	"strength detail2": "目前的計算邏輯有以下限制。",
 	"strength restriction2": "沒有考慮活力填充S所帶來的活力回復。",
