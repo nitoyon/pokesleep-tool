@@ -479,10 +479,11 @@ describe("PokemonStrength", () => {
 
 			const ownPerHelp =
 				(result.berryTotalStrength + result.ingStrength) / result.total.all;
-			const teamResult = new PokemonStrength(teamMember, param).calculateImpl();
-			const teamPerHelp =
-				(teamResult.berryTotalStrength + teamResult.ingStrength) /
-				teamResult.total.all;
+			const teamResult = new PokemonStrength(teamMember, {
+				...param,
+				period: -1,
+			}).calculateImpl();
+			const teamPerHelp = teamResult.totalStrength;
 			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
 
 			const expected = result.skillValue * expectedStrengthPerHelp;
@@ -504,10 +505,11 @@ describe("PokemonStrength", () => {
 
 			const ownPerHelp =
 				(result.berryTotalStrength + result.ingStrength) / result.total.all;
-			const teamResult = new PokemonStrength(teamMember, param).calculateImpl();
-			const teamPerHelp =
-				(teamResult.berryTotalStrength + teamResult.ingStrength) /
-				teamResult.total.all;
+			const teamResult = new PokemonStrength(teamMember, {
+				...param,
+				period: -1,
+			}).calculateImpl();
+			const teamPerHelp = teamResult.totalStrength;
 			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
 
 			const expected = result.skillValue * expectedStrengthPerHelp * 5;
@@ -529,14 +531,29 @@ describe("PokemonStrength", () => {
 
 			const ownPerHelp =
 				(result.berryTotalStrength + result.ingStrength) / result.total.all;
-			const teamResult = new PokemonStrength(teamMember, param).calculateImpl();
-			const teamPerHelp =
-				(teamResult.berryTotalStrength + teamResult.ingStrength) /
-				teamResult.total.all;
+			const teamResult = new PokemonStrength(teamMember, {
+				...param,
+				period: -1,
+			}).calculateImpl();
+			const teamPerHelp = teamResult.totalStrength;
 			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
 
 			const expected = result.skillValue2 * expectedStrengthPerHelp * 2;
 			expect(result.skillStrength2).toBeCloseTo(expected);
+		});
+
+		test("No infinite loop for Extra Helpful S", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Growlithe",
+				subSkills: new SubSkillList({ lv10: new SubSkill("Helping Bonus") }),
+				level: 30,
+			});
+			const teamMember = iv.clone();
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculate();
+
+			expect(result.skillStrength).toBeGreaterThan(0);
 		});
 	});
 

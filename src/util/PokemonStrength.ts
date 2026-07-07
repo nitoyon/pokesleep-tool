@@ -241,6 +241,18 @@ export interface BonusEffectsWithReason extends BonusEffects {
 	ingredientReason: "event" | "ex" | "none";
 }
 
+/**
+ * Cache for values that are derived solely from `StrengthParameter.teamMember`
+ * and therefore identical across every PokemonStrength calculation that
+ * shares the same StrengthParameter.
+ */
+export interface StrengthCache {
+	/** Cached strength per help of the team member. */
+	teamMemberPerHelp?: number;
+	/** Cached total strength of the team member. */
+	teamMemberStrength?: number;
+}
+
 function getMewSkillRate(
 	versatileSkill: MainSkillName,
 	mew: MewParameter,
@@ -266,10 +278,17 @@ class PokemonStrength {
 	private iv: PokemonIv;
 	private param: StrengthParameter;
 	private isWhistle: boolean;
+	private cache: StrengthCache;
 
-	constructor(iv: PokemonIv, param: StrengthParameter, decendantId?: number) {
+	constructor(
+		iv: PokemonIv,
+		param: StrengthParameter,
+		decendantId?: number,
+		cache?: StrengthCache,
+	) {
 		this.param = param;
 		this.isWhistle = false;
+		this.cache = cache ?? {};
 		if (param.period === whistlePeriod) {
 			this.isWhistle = true;
 			this.param = {
@@ -362,10 +381,7 @@ class PokemonStrength {
 			return result;
 		}
 
-		const teamMemberStrength = new PokemonStrength(
-			param.teamMember,
-			param,
-		).calculateImpl().totalStrength;
+		const teamMemberStrength = this.teamMemberStrength;
 
 		// current factor (ex: if helpBonusCount is 1, factor is 0.95)
 		const currentHelpingBonusEffect = 1 - 0.05 * param.helpBonusCount;
@@ -596,18 +612,9 @@ class PokemonStrength {
 		}
 		const skillValuePerTrigger = mainSkillBase * mainSkillFactor;
 		const skillValue = skillValuePerTrigger * skillCount;
-		function computeStrengthPerHelp(): number {
-			const teamMemberResult = new PokemonStrength(
-				param.teamMember,
-				param,
-			).calculateImpl();
-			const teamHelpCountAll = teamMemberResult.total.all;
-			const teamPerHelp =
-				(teamMemberResult.berryTotalStrength + teamMemberResult.ingStrength) /
-				teamHelpCountAll;
-
-			return (ownStrengthPerHelp + 4 * teamPerHelp) / 5;
-		}
+		const computeStrengthPerHelp = (): number => {
+			return (ownStrengthPerHelp + 4 * this.teamMemberPerHelp) / 5;
+		};
 
 		const ingInRecipeStrengthRate =
 			param.recipeBonus === 0
@@ -1020,6 +1027,41 @@ class PokemonStrength {
 			fixedBerries: targetEventBonus.fixedBerries,
 			fixedAreas: targetEventBonus.fixedAreas,
 		};
+	}
+
+	/**
+	 * Gets the team member's total strength, computed via `param.teamMember`.
+	 * The result is cached in `this.cache` so that it's calculated only once
+	 * per shared cache object.
+	 */
+	private get teamMemberStrength(): number {
+		if (this.cache.teamMemberStrength === undefined) {
+			const result = new PokemonStrength(this.param.teamMember, {
+				...this.param,
+				addHelpingBonusEffect: false,
+			}).calculateImpl();
+
+			this.cache.teamMemberStrength = result.totalStrength;
+		}
+		return this.cache.teamMemberStrength ?? 0;
+	}
+
+	/**
+	 * Gets the team member's strength per help, computed via
+	 * `param.teamMember`. The result is cached in `this.cache` so that it's
+	 * calculated only once per shared cache object.
+	 */
+	private get teamMemberPerHelp(): number {
+		if (this.cache.teamMemberPerHelp === undefined) {
+			const result = new PokemonStrength(this.param.teamMember, {
+				...this.param,
+				period: -1,
+				addHelpingBonusEffect: false,
+			}).calculateImpl();
+
+			this.cache.teamMemberPerHelp = result.totalStrength;
+		}
+		return this.cache.teamMemberPerHelp ?? 0;
 	}
 
 	/**
