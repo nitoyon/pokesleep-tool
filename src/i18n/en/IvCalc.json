@@ -281,7 +281,7 @@
 	"insufficient n candy": "You are short {{n}} candies.",
 	"strength of x": "Strength of {{x}}",
 	"helping bonus addition": "$t(subskill.Helping Bonus) effect",
-	"helping bonus addition label": "Add other members' strength gained through this Pokémon's [Helping Bonus]",
+	"helping bonus addition label": "Include the strength gained by other members via [$t(subskill.Helping Bonus)] in total strength",
 	"helping bonus addition note": "Calculated assuming $t(other team member) earn the same $t(strength2) as this Pokémon.",
 	"strength detail1": "You can check the strength, ingredients count, skill trigger count of your Pokémon.",
 	"strength detail2": "Currently, there are constraints in the calculation logic as follows:",
