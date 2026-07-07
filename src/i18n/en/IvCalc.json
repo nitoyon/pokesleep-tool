@@ -65,6 +65,7 @@
 	"other team member": "Other member",
 	"other team member info1": "Used to calculate $t(strength2) for [$t(subskill.Helping Bonus)] and $t(main skill) (such as $t(skills.Extra Helpful S.name)).",
 	"other team member info2": "Calculated assuming the other 4 members of the team are this Pokémon. Note that the number of helping bonuses uses the value set for [$t(subskill.Helping Bonus)].",
+	"other member calculation": "The strength is calculated assuming the other 4 members of the team are [$t(other team member)] in the [$t(parameter)] tab.",
 	"max skill level affected": "Calculated at skill level <level/> because [$t(calc with max skill level)] is enabled.",
 	"skill level bonus affected": "Calculated at skill level <level/> due to <bonus/>.",
 	"skill strength": "Skill strength (determined by the type of main skill and skill level)",

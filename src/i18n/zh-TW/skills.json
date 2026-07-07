@@ -116,7 +116,7 @@
 		},
 		"Extra Helpful S": {
 			"name": "幫手支援S",
-			"strength": "顯示技能發動帶來的 [幫助次數] 。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
+			"strength": "顯示技能發動帶來的 [幫助次數] 。$t(other member calculation)",
 			"desc": "幫手寶可夢中的某1隻會立刻完成幫忙。",
 			"detail": "包括自己在內隨機選擇目標。不會觸發主技能抽籤。不受$t(expert mode)和$t(event bonus)引起的樹果·食材數量變化的影響。"
 		},
@@ -140,7 +140,7 @@
 		},
 		"Helper Boost": {
 			"name": "幫手加速",
-			"strength": "假定為同類型的3隻寶可夢。能量總量以每次幫助 300（不含營地獎勵）進行計算。",
+			"strength": "假定為同類型的3隻寶可夢。$t(other member calculation)",
 			"desc": "隊伍中的所有寶可夢會立刻完成幫忙。滿足特定條件時，效果會進一步提升。",
 			"detail": "幫忙寶可夢可超過$t(carry limit)，最多持有999個樹果·食材。"
 		},

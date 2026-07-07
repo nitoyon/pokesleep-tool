@@ -65,6 +65,7 @@
 	"other team member": "다른 팀원",
 	"other team member info1": "[$t(subskill.Helping Bonus)]나 $t(main skill) ($t(skills.Extra Helpful S.name) 등)의 $t(strength2) 계산에 사용됩니다.",
 	"other team member info2": "팀의 다른 팀원 4마리가 이 포켓몬이라고 가정하여 계산합니다. 단, $t(subskill.Helping Bonus)의 수는 [$t(subskill.Helping Bonus)]의 설정값을 사용합니다.",
+	"other member calculation": "에너지는 팀의 다른 멤버 4마리가 [$t(parameter)]의 [$t(other team member)]라고 가정하고 계산합니다.",
 	"max skill level affected": "[$t(calc with max skill level)] 가 활성화되어 있어 스킬 레벨 <level/>로 계산됩니다.",
 	"skill level bonus affected": "<bonus/>에 따라 스킬 레벨 <level/>로 계산됩니다.",
 	"skill strength": "스킬 에너지 (메인 스킬의 종류와 스킬 레벨로 결정되는 값)",

@@ -116,7 +116,7 @@
 		},
 		"Extra Helpful S": {
 			"name": "Extra Helpful S",
-			"strength": "Displays the number of usual help you get by the skill. The impact on the total strength amount is estimated at 300 per usual help (without area bonuses).",
+			"strength": "Displays the number of usual help you get by the skill. $t(other member calculation)",
 			"desc": "Instantly gets you the usual help from a helper Pokémon.",
 			"detail": "The target is chosen randomly, including itself. No main skill is triggered. Not affected by berry/ingredient count changes from $t(expert mode) or $t(event bonus)."
 		},
@@ -140,7 +140,7 @@
 		},
 		"Helper Boost": {
 			"name": "Helper Boost",
-			"strength": "It is assumed that there are 3 Pokémon of the same type. The impact on the strength amount is estimated at 300 per usual help (without area bonuses).",
+			"strength": "It is assumed that there are 3 Pokémon of the same type. $t(other member calculation)",
 			"desc": "Instantly gets you the usual help from all Pokémon on your team. The effect increases the more different Pokémon of the same type are on your team.",
 			"detail": "Helper Pokémon can hold up to 999 Berries/ingredients, exceeding the carry limit."
 		},
