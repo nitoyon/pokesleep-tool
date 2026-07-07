@@ -9,6 +9,7 @@ import {
 	whistlePeriod,
 } from "./Energy";
 import { getMaxSkillLevel } from "./MainSkill";
+import PokemonIv from "./PokemonIv";
 
 /** Pseudo field index where all berries are favorites */
 export const allFavoriteFieldIndex = -2;
@@ -80,6 +81,9 @@ export interface StrengthParameter extends EnergyParameter {
 
 	/** Number of different species of same type Pokémon on the team */
 	helperBoostSpecies: number;
+
+	/** Other team member to calculate helping bonus and Extra Helpful */
+	teamMember: PokemonIv;
 
 	/** Berry burst team configuration */
 	berryBurstTeam: BerryBurstTeam & {
@@ -228,6 +232,8 @@ export function createStrengthParameter(
 		recipeLevel: 30,
 		helperBoostLevel: 6,
 		helperBoostSpecies: 4,
+		teamMember: new PokemonIv({ pokemonName: "Raichu", level: 60 }),
+
 		berryBurstTeam: {
 			auto: true,
 			species: 3,
@@ -289,7 +295,11 @@ export function saveStrengthParameter(parameter: StrengthParameter) {
 export function serializeStrengthParameter(
 	parameter: StrengthParameter,
 ): string {
-	return JSON.stringify(parameter);
+	const object = {
+		...parameter,
+		teamMember: parameter.teamMember.serialize(),
+	};
+	return JSON.stringify(object);
 }
 
 /**
@@ -484,6 +494,12 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 		[1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)
 	) {
 		ret.recipeLevel = json.recipeLevel;
+	}
+
+	if (typeof json.teamMember === "string") {
+		try {
+			ret.teamMember = PokemonIv.deserialize(json.teamMember);
+		} catch {}
 	}
 
 	if (typeof json.berryBurstTeam === "object") {
