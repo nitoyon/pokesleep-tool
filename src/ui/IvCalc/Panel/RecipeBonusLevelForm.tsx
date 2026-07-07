@@ -123,11 +123,6 @@ const RecipeBonusLevelForm = React.memo(
 						sx={{ width: "2rem" }}
 					/>
 				</section>
-				{value.recipeLevel >= 68 && (
-					<p style={{ fontSize: "0.8rem", color: "#666", textAlign: "right" }}>
-						{t("estimated beyond level", { level: 68 })}
-					</p>
-				)}
 				<RecipeBonusHelpDialog
 					open={recipeBonusHelpOpen}
 					onClose={onRecipeBonusHelpClose}

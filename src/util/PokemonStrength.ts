@@ -224,9 +224,9 @@ export const recipeLevelBonus: { [key: number]: number } = {
 	65: 234,
 	66: 239,
 	67: 243,
-	68: 247, // estimated
-	69: 251, // estimated
-	70: 256, // estimated
+	68: 248,
+	69: 252,
+	70: 258,
 };
 
 /**
