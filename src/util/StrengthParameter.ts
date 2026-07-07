@@ -275,7 +275,21 @@ export function createStrengthParameter(
  * @param parameter The StrengthParameter to save.
  */
 export function saveStrengthParameter(parameter: StrengthParameter) {
-	localStorage.setItem("PstStrenghParam", JSON.stringify(parameter));
+	localStorage.setItem(
+		"PstStrenghParam",
+		serializeStrengthParameter(parameter),
+	);
+}
+
+/**
+ * Serialize StrengthParameter to a JSON string.
+ * @param parameter The StrengthParameter to serialize.
+ * @returns The JSON string.
+ */
+export function serializeStrengthParameter(
+	parameter: StrengthParameter,
+): string {
+	return JSON.stringify(parameter);
 }
 
 /**
@@ -293,6 +307,17 @@ export function loadStrengthParameter(): StrengthParameter {
 	if (typeof json !== "object" || json === null) {
 		return ret;
 	}
+	return deserializeStrengthParameter(json);
+}
+
+/**
+ * Deserializes a StrengthParameter from JSON.
+ * @param json The JSON object to deserialize.
+ * @returns The deserialized StrengthParameter.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: json is untyped external data, validated field by field below
+export function deserializeStrengthParameter(json: any): StrengthParameter {
+	const ret: StrengthParameter = createStrengthParameter({});
 	if (
 		typeof json.period === "number" &&
 		[1, 3, 8, 16, 24, 168, whistlePeriod, -10, -30, -100].includes(json.period)
