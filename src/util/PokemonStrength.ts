@@ -344,7 +344,54 @@ class PokemonStrength {
 		return pokemonIv;
 	}
 
+	/**
+	 * Calculate the full strength result for this Pokémon, including the
+	 * helping-bonus effect gained by the other 4 team members when this
+	 * Pokémon has an active "Helping Bonus" sub-skill.
+	 */
 	calculate(): StrengthResult {
+		const result = this.calculateImpl();
+		const param = this.param;
+
+		if (
+			!(
+				param.addHelpingBonusEffect &&
+				this.pokemonIv.hasHelpingBonusInActiveSubSkills
+			)
+		) {
+			return result;
+		}
+
+		const teamMemberStrength = new PokemonStrength(
+			param.teamMember,
+			param,
+		).calculateImpl().totalStrength;
+
+		// current factor (ex: if helpBonusCount is 1, factor is 0.95)
+		const currentHelpingBonusEffect = 1 - 0.05 * param.helpBonusCount;
+		// new factor (ex: if helpBonusCount is 1, factor is 0.9)
+		const newHelpingBonusEffect = 1 - 0.05 * (param.helpBonusCount + 1);
+		// Increased strength rate (ex: helpBonusCount is 1, factor is 0.055...)
+		const rate = currentHelpingBonusEffect / newHelpingBonusEffect - 1;
+		// Strength gained by the other 4 team members based on the team
+		// member's own totalStrength
+		const helpingBonusStrength = teamMemberStrength * rate * 4;
+
+		return {
+			...result,
+			helpingBonusStrength,
+			totalStrength: result.totalStrength + helpingBonusStrength,
+		};
+	}
+
+	/**
+	 * Calculate the strength result for this Pokémon.
+	 *
+	 * This excludes the helping-bonus effect gained by other team members
+	 * (`helpingBonusStrength` is always 0 here). Use {@link calculate} to
+	 * get the full result including the helping-bonus contribution.
+	 */
+	calculateImpl(): StrengthResult {
 		const param = this.param;
 		const rp = new PokemonRp(this.iv);
 		const bonus = this.bonusEffects;
@@ -414,26 +461,11 @@ class PokemonStrength {
 			} = this.getSkillValueAndStrength(helpCount.skillCount, param, bonus));
 		}
 
-		let totalStrength =
+		const totalStrength =
 			(param.totalFlags[1] ? ingStrength : 0) +
 			(param.totalFlags[0] ? berryTotalStrength : 0) +
 			(param.totalFlags[2] ? skillStrength + skillStrength2 : 0);
-		let helpingBonusStrength = 0;
-		if (
-			param.addHelpingBonusEffect &&
-			this.pokemonIv.hasHelpingBonusInActiveSubSkills
-		) {
-			// current factor (ex: if helpBonusCount is 1, factor is 0.95)
-			const currentHelpingBonusEffect = 1 - 0.05 * param.helpBonusCount;
-			// new factor (ex: if helpBonusCount is 1, factor is 0.9)
-			const newHelpingBonusEffect = 1 - 0.05 * (param.helpBonusCount + 1);
-			// Increased strength rate (ex: helpBonusCount is 1, factor is 0.055...)
-			const rate = currentHelpingBonusEffect / newHelpingBonusEffect - 1;
-			// Assume that other 4 members gain totalStrength too
-			helpingBonusStrength = totalStrength * rate * 4;
-			// Add helpingBonusStrength to totalStrength
-			totalStrength += helpingBonusStrength;
-		}
+		const helpingBonusStrength = 0;
 
 		return {
 			...helpCount,

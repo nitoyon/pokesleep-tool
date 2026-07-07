@@ -362,6 +362,7 @@ describe("PokemonStrength", () => {
 			const param = createParam({
 				helpBonusCount: 0,
 				addHelpingBonusEffect: true,
+				teamMember: iv,
 			});
 			const strength = new PokemonStrength(iv, param);
 			const result = strength.calculate();
@@ -396,6 +397,7 @@ describe("PokemonStrength", () => {
 			const param = createParam({
 				helpBonusCount: 1,
 				addHelpingBonusEffect: true,
+				teamMember: iv,
 			});
 			const strength = new PokemonStrength(iv, param);
 			const result = strength.calculate();
@@ -414,6 +416,49 @@ describe("PokemonStrength", () => {
 			expect(result.helpingBonusStrength).toBeCloseTo(expectedHelpingBonus);
 			expect(result.totalStrength).toBeCloseTo(
 				baseTotal + expectedHelpingBonus,
+			);
+		});
+
+		test("calculates helpingBonusStrength based on the team member's own strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Raichu",
+				level: 10,
+				subSkills: new SubSkillList({ lv10: new SubSkill("Helping Bonus") }),
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Pikachu",
+				level: 60,
+			});
+
+			const param = createParam({
+				helpBonusCount: 0,
+				addHelpingBonusEffect: true,
+				teamMember,
+			});
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculate();
+
+			const teamMemberResult = new PokemonStrength(
+				teamMember,
+				param,
+			).calculateImpl();
+
+			const expectedRate = 1.0 / 0.95 - 1;
+			const expectedHelpingBonus =
+				teamMemberResult.totalStrength * expectedRate * 4;
+
+			expect(result.helpingBonusStrength).toBeCloseTo(expectedHelpingBonus);
+
+			// Sanity check: this should differ from the old self-based
+			// approximation (iv's own totalStrength instead of teamMember's).
+			const selfBaseTotal =
+				result.berryTotalStrength +
+				result.ingStrength +
+				result.skillStrength +
+				result.skillStrength2;
+			const selfBasedHelpingBonus = selfBaseTotal * expectedRate * 4;
+			expect(result.helpingBonusStrength).not.toBeCloseTo(
+				selfBasedHelpingBonus,
 			);
 		});
 	});
