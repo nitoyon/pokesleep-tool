@@ -948,15 +948,6 @@ class PokemonStrength {
 	get bonusEffects(): BonusEffectsWithReason {
 		const param = this.param;
 
-		if (this.isWhistle) {
-			return {
-				...emptyBonusEffects,
-				skillTriggerReason: "none",
-				skillLevelReason: "none",
-				ingredientReason: "none",
-			};
-		}
-
 		// event bonus
 		const eventBonus = getEventBonus(param.event, param.customEventBonus);
 		const targetEventBonus = getEventBonusIfTarget(
@@ -964,6 +955,18 @@ class PokemonStrength {
 			param.customEventBonus,
 			this.iv.pokemon,
 		);
+
+		// whistle and help count (usual help) is not affected
+		// by the event and expert bonus except for dish bonus
+		if (this.isWhistle || param.period < 0) {
+			return {
+				...emptyBonusEffects,
+				dish: eventBonus.dish,
+				skillTriggerReason: "none",
+				skillLevelReason: "none",
+				ingredientReason: "none",
+			};
+		}
 
 		// expert bonus
 		const isExpertMode = isExpertField(param.fieldIndex);

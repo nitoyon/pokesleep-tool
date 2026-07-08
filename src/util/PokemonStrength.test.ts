@@ -1075,6 +1075,69 @@ describe("PokemonStrength", () => {
 		});
 	});
 
+	describe("event bonus", () => {
+		test("berry bonus +1 (AlwaysTap)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({
+					tapFrequencyAwake: AlwaysTap,
+					tapFrequencyAsleep: AlwaysTap,
+				}),
+			).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({
+					event: "buncha berries week part 1",
+					tapFrequencyAwake: AlwaysTap,
+					tapFrequencyAsleep: AlwaysTap,
+				}),
+			).calculate();
+			expect(event.berryTotalStrength).toBeCloseTo(
+				normal.berryTotalStrength * 1.5,
+			);
+		});
+
+		test("berry bonus +1 (period = -1)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({ period: -1 }),
+			).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({
+					event: "buncha berries week part 1",
+					period: -1,
+				}),
+			).calculate();
+			expect(event.berryTotalStrength).toBe(normal.berryTotalStrength);
+		});
+
+		test("dish 1.5 (period 1day)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(iv, createParam({})).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({ event: "valentine 2025" }),
+			).calculate();
+			expect(event.ingStrength).toBeCloseTo(normal.ingStrength * 1.5);
+		});
+
+		test("dish 1.5 (period -10)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({ period: -10 }),
+			).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({ event: "valentine 2025", period: -10 }),
+			).calculate();
+			expect(event.ingStrength).toBeCloseTo(normal.ingStrength * 1.5);
+		});
+	});
+
 	describe("Mew base rate overrides", () => {
 		test("Mew uses param.mew", () => {
 			const param = createParam({
