@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"hb calc": {
+				"headline": "$t(subskill.Helping Bonus)や$t(skills.Extra Helpful S.name)などのエナジー計算を改善しました。",
+				"detail": "[$t(subskill.Helping Bonus)] のエナジー計算を次のように変更しました。\n• (これまで) 自分と同じエナジーを稼ぐポケモンが他に4匹いると仮定して計算。\n• (今後) [$t(parameter)] の [$t(other team member)] で指定したポケモンが他に4匹いると仮定して計算。\nこれにより、すべてポケモンで [$t(subskill.Helping Bonus)] が同じエナジーとして評価されるようになりました。\n\nあわせて、$t(skills.Extra Helpful S.name)・$t(skills.Helper Boost.name)・$t(skills.Energizing Cheer S (Heal Pulse).name)のエナジー量も、これまでの固定 300 エナジーを利用するのをやめ、[$t(other team member)] を利用して計算するように改善しました。"
+			},
 			"box csv": {
 				"headline": "$t(box)のエクスポート・インポートが CSV・TSV 形式に対応しました。",
 				"detail": "エクスポート画面でフォーマットを選択できます。$t(import message notice)"
