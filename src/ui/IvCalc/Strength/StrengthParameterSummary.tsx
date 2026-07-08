@@ -155,7 +155,8 @@ const StrengthParameterSummary = React.memo(
 		) {
 			activeEvents.unshift(parameter.event);
 		}
-		const isEventScheduled = activeEvents.length > 0;
+		const isEventVisible =
+			activeEvents.length > 0 || parameter.event !== "none";
 		const eventMenuItems = ["none", ...activeEvents, "custom"].map((x) => {
 			const name =
 				x === "none"
@@ -235,7 +236,7 @@ const StrengthParameterSummary = React.memo(
 						</TextLikeButton>
 					</span>
 				)}
-				{isEventScheduled && (
+				{isEventVisible && (
 					<span>
 						<SelectEx value={parameter.event} onChange={onEventChange}>
 							{eventMenuItems}
