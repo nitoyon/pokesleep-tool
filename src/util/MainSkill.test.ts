@@ -84,6 +84,17 @@ describe("MainSkill", () => {
 			expect(matchMainSkillName(murkrow, "Energy for Everyone S")).toBe(false);
 		});
 
+		test("special case: Energizing Cheer S (Heal Pulse) matches Extra Helpful S", () => {
+			const latias = pokemons.find((x) => x.name === "Latias");
+			if (latias === undefined) {
+				throw new Error("Latias not found in pokemons data");
+			}
+
+			expect(matchMainSkillName(latias, "Extra Helpful S")).toBe(true);
+			expect(matchMainSkillName(latias, "Energizing Cheer S")).toBe(true);
+			expect(matchMainSkillName(latias, "Berry Burst")).toBe(false);
+		});
+
 		describe("Mew versatile special cases", () => {
 			test("Mew with versatileSkill set matches that skill", () => {
 				const mew = pokemons.find((x) => x.name === "Mew");

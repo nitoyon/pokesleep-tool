@@ -127,7 +127,7 @@ const TotalStrengthDialog = React.memo(
 					/>
 					<CollapseEx show={param.addHelpingBonusEffect}>
 						<footer className="helpingBonusNote">
-							{t("helping bonus addition note")}
+							{t("other member calculation")}
 						</footer>
 					</CollapseEx>
 

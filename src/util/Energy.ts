@@ -2,7 +2,7 @@ import type { HelpEventBonus } from "../data/events";
 import { type BonusEffects, emptyBonusEffects } from "../data/events";
 import type { PokemonType } from "../data/pokemons";
 import type PokemonIv from "./PokemonIv";
-import type { ExpertEffects } from "./PokemonStrength";
+import type { ExpertEffects } from "./StrengthParameter";
 
 /** Efficiency list */
 type EfficiencyList = 2.222 | 1.923 | 1.724 | 1.515 | 1.0;

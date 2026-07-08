@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"hb calc": {
+				"headline": "Improved strength calculation for $t(subskill.Helping Bonus), $t(skills.Extra Helpful S.name), and more.",
+				"detail": "Changed how strength is calculated for [$t(subskill.Helping Bonus)] as follows.\n• (Previously) Assumed 4 other Pokémon earning the same strength as yourself.\n• (Now) Assumed 4 other Pokémon specified in [$t(other team member)] under [$t(parameter)] tab.\nThis means [$t(subskill.Helping Bonus)] is now evaluated as the same strength amount for all Pokémon.\n\nAlong with this, the strength amounts for $t(skills.Extra Helpful S.name), $t(skills.Helper Boost.name), and $t(skills.Energizing Cheer S (Heal Pulse).name) no longer use a fixed 300 strength, and are now calculated using [$t(other team member)] instead."
+			},
 			"box csv": {
 				"headline": "$t(box) export/import now supports CSV and TSV formats.",
 				"detail": "You can select the format in the export screen. $t(import message notice)"

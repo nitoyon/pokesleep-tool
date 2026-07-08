@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"hb calc": {
+				"headline": "改进了$t(subskill.Helping Bonus)、$t(skills.Extra Helpful S.name)等的能量计算。",
+				"detail": "将[$t(subskill.Helping Bonus)]的能量计算方式变更如下。\n• (以往) 假设有其他4只与自己获得相同能量的宝可梦来进行计算。\n• (今后) 假设有其他4只在[$t(parameter)]的[$t(other team member)]中指定的宝可梦来进行计算。\n这样一来，所有宝可梦的[$t(subskill.Helping Bonus)]都会被评估为相同的能量值。\n\n同时，$t(skills.Extra Helpful S.name)、$t(skills.Helper Boost.name)、$t(skills.Energizing Cheer S (Heal Pulse).name)的能量值也不再使用以往固定的300能量，而是改为使用[$t(other team member)]进行计算。"
+			},
 			"box csv": {
 				"headline": "$t(box)的导出·导入现已支持CSV·TSV格式。",
 				"detail": "可以在导出界面选择格式。$t(import message notice)"

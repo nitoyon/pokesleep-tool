@@ -9,10 +9,12 @@ const PokemonIcon = React.memo(
 		idForm,
 		shiny,
 		size,
+		radius,
 	}: {
 		idForm: number;
 		shiny: boolean;
 		size: number;
+		radius?: number;
 	}) => {
 		const appConfig = React.useContext(AppConfigContext);
 		if (appConfig.iconUrl?.match(/^https?:\/\//)) {
@@ -26,7 +28,13 @@ const PokemonIcon = React.memo(
 
 		const elements = createIconElements(idForm, shiny, size);
 		return (
-			<StyledIconContainer style={{ width: `${size}px`, height: `${size}px` }}>
+			<StyledIconContainer
+				style={{
+					width: `${size}px`,
+					height: `${size}px`,
+					borderRadius: `${radius ?? 8}px`,
+				}}
+			>
 				<svg
 					width={size}
 					height={size}
@@ -87,7 +95,6 @@ function createEmptyIconElement(size: number): React.ReactElement {
 
 const StyledIconContainer = styled("div")({
 	border: "1px solid #999",
-	borderRadius: ".5rem",
 	overflow: "hidden",
 });
 

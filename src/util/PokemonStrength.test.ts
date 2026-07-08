@@ -362,6 +362,7 @@ describe("PokemonStrength", () => {
 			const param = createParam({
 				helpBonusCount: 0,
 				addHelpingBonusEffect: true,
+				teamMember: iv,
 			});
 			const strength = new PokemonStrength(iv, param);
 			const result = strength.calculate();
@@ -396,6 +397,7 @@ describe("PokemonStrength", () => {
 			const param = createParam({
 				helpBonusCount: 1,
 				addHelpingBonusEffect: true,
+				teamMember: iv,
 			});
 			const strength = new PokemonStrength(iv, param);
 			const result = strength.calculate();
@@ -415,6 +417,143 @@ describe("PokemonStrength", () => {
 			expect(result.totalStrength).toBeCloseTo(
 				baseTotal + expectedHelpingBonus,
 			);
+		});
+
+		test("calculates helpingBonusStrength based on the team member's own strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Raichu",
+				level: 10,
+				subSkills: new SubSkillList({ lv10: new SubSkill("Helping Bonus") }),
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Pikachu",
+				level: 60,
+			});
+
+			const param = createParam({
+				helpBonusCount: 0,
+				addHelpingBonusEffect: true,
+				teamMember,
+			});
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculate();
+
+			const teamMemberResult = new PokemonStrength(
+				teamMember,
+				param,
+			).calculateImpl();
+
+			const expectedRate = 1.0 / 0.95 - 1;
+			const expectedHelpingBonus =
+				teamMemberResult.totalStrength * expectedRate * 4;
+
+			expect(result.helpingBonusStrength).toBeCloseTo(expectedHelpingBonus);
+
+			// Sanity check: this should differ from the old self-based
+			// approximation (iv's own totalStrength instead of teamMember's).
+			const selfBaseTotal =
+				result.berryTotalStrength +
+				result.ingStrength +
+				result.skillStrength +
+				result.skillStrength2;
+			const selfBasedHelpingBonus = selfBaseTotal * expectedRate * 4;
+			expect(result.helpingBonusStrength).not.toBeCloseTo(
+				selfBasedHelpingBonus,
+			);
+		});
+	});
+
+	describe("strengthPerHelp based skillStrength", () => {
+		test("Extra Helpful S: skillStrength uses own and team member's per-help strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Growlithe",
+				level: 30,
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Pikachu",
+				level: 25,
+			});
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculateImpl();
+
+			const ownPerHelp =
+				(result.berryTotalStrength + result.ingStrength) / result.total.all;
+			const teamResult = new PokemonStrength(teamMember, {
+				...param,
+				period: -1,
+			}).calculateImpl();
+			const teamPerHelp = teamResult.totalStrength;
+			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
+
+			const expected = result.skillValue * expectedStrengthPerHelp;
+			expect(result.skillStrength).toBeCloseTo(expected);
+		});
+
+		test("Helper Boost: skillStrength uses own and team member's per-help strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Raikou",
+				level: 30,
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Eevee",
+				level: 25,
+			});
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculateImpl();
+
+			const ownPerHelp =
+				(result.berryTotalStrength + result.ingStrength) / result.total.all;
+			const teamResult = new PokemonStrength(teamMember, {
+				...param,
+				period: -1,
+			}).calculateImpl();
+			const teamPerHelp = teamResult.totalStrength;
+			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
+
+			const expected = result.skillValue * expectedStrengthPerHelp * 5;
+			expect(result.skillStrength).toBeCloseTo(expected);
+		});
+
+		test("Energizing Cheer S (Heal Pulse): skillStrength2 uses own and team member's per-help strength", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Latias",
+				level: 30,
+			});
+			const teamMember = new PokemonIv({
+				pokemonName: "Vaporeon",
+				level: 25,
+			});
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculateImpl();
+
+			const ownPerHelp =
+				(result.berryTotalStrength + result.ingStrength) / result.total.all;
+			const teamResult = new PokemonStrength(teamMember, {
+				...param,
+				period: -1,
+			}).calculateImpl();
+			const teamPerHelp = teamResult.totalStrength;
+			const expectedStrengthPerHelp = (ownPerHelp + 4 * teamPerHelp) / 5;
+
+			const expected = result.skillValue2 * expectedStrengthPerHelp * 2;
+			expect(result.skillStrength2).toBeCloseTo(expected);
+		});
+
+		test("No infinite loop for Extra Helpful S", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Growlithe",
+				subSkills: new SubSkillList({ lv10: new SubSkill("Helping Bonus") }),
+				level: 30,
+			});
+			const teamMember = iv.clone();
+			const param = createParam({ teamMember });
+			const strength = new PokemonStrength(iv, param);
+			const result = strength.calculate();
+
+			expect(result.skillStrength).toBeGreaterThan(0);
 		});
 	});
 
@@ -933,6 +1072,69 @@ describe("PokemonStrength", () => {
 			expect(result.ingredients[2].count).toBe(
 				(result.ingHelpCount * result.ing3.count) / 3,
 			);
+		});
+	});
+
+	describe("event bonus", () => {
+		test("berry bonus +1 (AlwaysTap)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({
+					tapFrequencyAwake: AlwaysTap,
+					tapFrequencyAsleep: AlwaysTap,
+				}),
+			).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({
+					event: "buncha berries week part 1",
+					tapFrequencyAwake: AlwaysTap,
+					tapFrequencyAsleep: AlwaysTap,
+				}),
+			).calculate();
+			expect(event.berryTotalStrength).toBeCloseTo(
+				normal.berryTotalStrength * 1.5,
+			);
+		});
+
+		test("berry bonus +1 (period = -1)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({ period: -1 }),
+			).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({
+					event: "buncha berries week part 1",
+					period: -1,
+				}),
+			).calculate();
+			expect(event.berryTotalStrength).toBe(normal.berryTotalStrength);
+		});
+
+		test("dish 1.5 (period 1day)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(iv, createParam({})).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({ event: "valentine 2025" }),
+			).calculate();
+			expect(event.ingStrength).toBeCloseTo(normal.ingStrength * 1.5);
+		});
+
+		test("dish 1.5 (period -10)", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({ period: -10 }),
+			).calculate();
+			const event = new PokemonStrength(
+				iv,
+				createParam({ event: "valentine 2025", period: -10 }),
+			).calculate();
+			expect(event.ingStrength).toBeCloseTo(normal.ingStrength * 1.5);
 		});
 	});
 

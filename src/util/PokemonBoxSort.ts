@@ -12,6 +12,7 @@ import PokemonRp from "./PokemonRp";
 import PokemonStrength, {
 	type IngredientStrength,
 	isSkillStrengthZero,
+	type StrengthCache,
 	type StrengthParameter,
 } from "./PokemonStrength";
 
@@ -70,11 +71,14 @@ export function sortPokemonItems(
 		return [[], t("no pokemon found")];
 	}
 
-	// Prepare calculator
+	// Prepare calculator.
+	// `cache` is shared across every call so that the team member's strength
+	// (which is identical for every Pokemon in the box) is calculated once.
+	const cache: StrengthCache = {};
 	const calculator =
 		strengthCalculator ??
 		((iv: PokemonIv, param: StrengthParameter) =>
-			new PokemonStrength(iv, param).calculate());
+			new PokemonStrength(iv, param, undefined, cache).calculate());
 
 	// Create a shallow copy of `filtered` because Array.sort mutates it
 	filtered = [...filtered];
