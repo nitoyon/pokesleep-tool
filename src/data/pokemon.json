@@ -5414,7 +5414,7 @@
 		"id": 389,
 		"name": "Torterra",
 		"arrival": "2026-07-13",
-		"sleepType": "dozing",
+		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "ground",
 		"specialty": "unknown",
