@@ -1631,8 +1631,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0, w: 1, h: 0.2, color: 1 },
 			{ x: 0, y: 0.8, w: 1, h: 0.2, color: 2 },
 		],
-		normalPallet: ["#dcf599", "#ba8342", "#efed77"],
-		shinyPallet: ["#bdf3d8", "#af9e5e", "#fbfe6e"],
+		normalPallet: ["#e6fbae", "#d7a86e", "#faf776"],
+		shinyPallet: ["#b9e9ca", "#c7a767", "#f9f673"],
 	},
 	// Grotle
 	"388": {
@@ -1641,8 +1641,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0, w: 1, h: 0.6, color: 1 },
 			{ x: 0, y: 0, w: 1, h: 0.35, color: 2 },
 		],
-		normalPallet: ["#d3ef94", "#f4e464", "#7ad565"],
-		shinyPallet: ["#dddd77", "#b4efcb", "#62916d"],
+		normalPallet: ["#cce2ab", "#f8f054", "#6fc469"],
+		shinyPallet: ["#eef372", "#bef1cd", "#a0c77c"],
 	},
 	// Torterra
 	"389": {
@@ -1651,8 +1651,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
 			{ x: 0, y: 0.5, w: 1, h: 0.15, color: 2 },
 		],
-		normalPallet: ["#8ed166", "#b59258", "#ffffff"],
-		shinyPallet: ["#a2c383", "#bab264", "#ffffff"],
+		normalPallet: ["#71c66a", "#d7a36a", "#eff6fa"],
+		shinyPallet: ["#a0c57c", "#e1e36c", "#f7f8f3"],
 	},
 	// Chimchar
 	"390": {
@@ -1663,8 +1663,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: -0.06, y: 0.6, w: 0.15, h: 0.25, r: 0.1, color: 2 },
 			{ x: 0.91, y: 0.6, w: 0.15, h: 0.25, r: 0.1, color: 2 },
 		],
-		normalPallet: ["#e7b65f", "#fafab2", "#da7c5c"],
-		shinyPallet: ["#e290a2", "#faf3b9", "#ce6d61"],
+		normalPallet: ["#e6a14e", "#fcfab5", "#dd5d60"],
+		shinyPallet: ["#e595a4", "#fcfec2", "#be5468"],
 	},
 	// Monferno
 	"391": {
@@ -1674,8 +1674,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.4, w: 1, h: 0.1, color: 1 },
 			{ x: 0, y: 0.5, w: 1, h: 0.1, color: 2 },
 		],
-		normalPallet: ["#ecc358", "#7dccdc", "#db6755", "#f5f2d2"],
-		shinyPallet: ["#db4950", "#9a69b5", "#9a474c", "#faf3b9"],
+		normalPallet: ["#e9af4a", "#67a6e5", "#d85a58", "#f8e9d6"],
+		shinyPallet: ["#e595a4", "#9c7bd5", "#d06f84", "#fdfebb"],
 	},
 	// Infernape
 	"392": {
@@ -1686,8 +1686,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.3, w: 1, h: 0.1, color: 3 },
 			{ x: 0, y: 0.5, w: 1, h: 0.4, color: 4 },
 		],
-		normalPallet: ["#ffffff", "#de6c60", "#e39354", "#fcfc80", "#dd9955"],
-		shinyPallet: ["#ffffff", "#db4950", "#e49472", "#f7eda3", "#bf6a7a"],
+		normalPallet: ["#ffffff", "#dd6558", "#e9b54f", "#faf476", "#dd8857"],
+		shinyPallet: ["#ffffff", "#de6751", "#e29764", "#fdfebe", "#e595a2"],
 	},
 	// Piplup
 	"393": {
@@ -1699,8 +1699,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.6, w: 1, h: 1, color: 2 },
 			{ x: 0.3, y: 0.55, w: 0.4, h: 0.35, r: 0.3, color: 3 },
 		],
-		normalPallet: ["#abe6f8", "#71b6e5", "#ffffff", "#f0e682"],
-		shinyPallet: ["#d6fcf5", "#88cee5", "#ffffff", "#f9f479"],
+		normalPallet: ["#c3f6fc", "#6aa6f7", "#ffffff", "#f8ee7b"],
+		shinyPallet: ["#d9f6ec", "#7dccde", "#ffffff", "#fafb81"],
 	},
 	// Prinplup
 	"394": {
@@ -1714,8 +1714,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0.6, y: 0.55, w: 0.1, h: 0.12, r: 0.1, color: 3 },
 			{ x: 0.6, y: 0.72, w: 0.1, h: 0.12, r: 0.1, color: 3 },
 		],
-		normalPallet: ["#aff5fd", "#f0e682", "#5b96ce", "#ffffff"],
-		shinyPallet: ["#d6f7f2", "#fcfc88", "#69ccdd", "#ffffff"],
+		normalPallet: ["#c3f3fd", "#f6ea7c", "#5084c2", "#ffffff"],
+		shinyPallet: ["#c9faef", "#fafc8b", "#4a7d94", "#ffffff"],
 	},
 	// Empoleon
 	"395": {
@@ -1723,11 +1723,12 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
 			{ x: 0, y: 0, w: 1, h: 0.1, color: 1 },
 			{ x: 0, y: 0.1, w: 1, h: 0.1, color: 2 },
-			{ x: 0, y: 0.6, w: 1, h: 0.4, color: 3 },
+			{ x: 0, y: 0.4, w: 1, h: 0.3, color: 3 },
+			{ x: 0.45, y: 0.1, w: 0.1, h: 1, color: 2 },
 			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
 		],
-		normalPallet: ["#3c454d", "#f1e16d", "#7ac1ea", "#4a5960"],
-		shinyPallet: ["#456479", "#fafdb2", "#bce7ee", "#263f4e"],
+		normalPallet: ["#585c60", "#f5e46d", "#75a9e3", "#ffffff"],
+		shinyPallet: ["#4c8095", "#f9f474", "#c7f3f7", "#ffffff"],
 	},
 	// Shinx
 	"403": {
