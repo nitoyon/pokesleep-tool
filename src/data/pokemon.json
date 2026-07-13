@@ -5349,31 +5349,31 @@
 		"sleepType": "dozing",
 		"exp": 600,
 		"type": "grass",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Skills",
+		"skill": "Energy for Everyone S",
 		"fp": 5,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 4500,
+		"ingRate": 13.2,
+		"skillRate": 4.1,
 		"ancestor": 387,
 		"evolutionCount": 0,
 		"evolutionLeft": 2,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 12,
 		"ing1": {
-			"name": "unknown1",
+			"name": "mushroom",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "potato",
+			"c2": 3,
+			"c3": 5
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "ginger",
+			"c3": 6
 		}
 	},
 	{
@@ -5383,31 +5383,31 @@
 		"sleepType": "dozing",
 		"exp": 600,
 		"type": "grass",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Skills",
+		"skill": "Energy for Everyone S",
 		"fp": 12,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 3700,
+		"ingRate": 15,
+		"skillRate": 4.6,
 		"ancestor": 387,
 		"evolutionCount": 1,
 		"evolutionLeft": 1,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 14,
 		"ing1": {
-			"name": "unknown1",
+			"name": "mushroom",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "potato",
+			"c2": 3,
+			"c3": 5
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "ginger",
+			"c3": 6
 		}
 	},
 	{
@@ -5417,31 +5417,31 @@
 		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "ground",
-		"specialty": "unknown",
-		"skill": "unknwon",
-		"fp": 30,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"specialty": "Skills",
+		"skill": "Energy for Everyone S",
+		"fp": 20,
+		"frequency": 2900,
+		"ingRate": 15.6,
+		"skillRate": 4.8,
 		"ancestor": 387,
 		"evolutionCount": 2,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 17,
 		"ing1": {
-			"name": "unknown1",
+			"name": "mushroom",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "potato",
+			"c2": 3,
+			"c3": 5
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "ginger",
+			"c3": 6
 		}
 	},
 	{
@@ -5451,31 +5451,31 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "fire",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Skills",
+		"skill": "Berry Burst",
 		"fp": 5,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 4100,
+		"ingRate": 11.4,
+		"skillRate": 3.3,
 		"ancestor": 390,
 		"evolutionCount": 0,
 		"evolutionLeft": 2,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 10,
 		"ing1": {
-			"name": "unknown1",
+			"name": "herb",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "ginger",
+			"c2": 3,
+			"c3": 4
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "coffee",
+			"c3": 3
 		}
 	},
 	{
@@ -5485,31 +5485,31 @@
 		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "fighting",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Skills",
+		"skill": "Berry Burst",
 		"fp": 12,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 3100,
+		"ingRate": 11.4,
+		"skillRate": 3.3,
 		"ancestor": 390,
 		"evolutionCount": 1,
 		"evolutionLeft": 1,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 14,
 		"ing1": {
-			"name": "unknown1",
+			"name": "herb",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "ginger",
+			"c2": 3,
+			"c3": 4
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "coffee",
+			"c3": 3
 		}
 	},
 	{
@@ -5519,31 +5519,31 @@
 		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "fighting",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Skills",
+		"skill": "Berry Burst",
 		"fp": 20,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2400,
+		"ingRate": 10.6,
+		"skillRate": 3.3,
 		"ancestor": 390,
 		"evolutionCount": 2,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 18,
 		"ing1": {
-			"name": "unknown1",
+			"name": "herb",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "ginger",
+			"c2": 3,
+			"c3": 4
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "coffee",
+			"c3": 3
 		}
 	},
 	{
@@ -5553,31 +5553,31 @@
 		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "water",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Berries",
+		"skill": "Extra Helpful S",
 		"fp": 5,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 4500,
+		"ingRate": 15.9,
+		"skillRate": 2.6,
 		"ancestor": 393,
 		"evolutionCount": 0,
 		"evolutionLeft": 2,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 11,
 		"ing1": {
-			"name": "unknown1",
+			"name": "egg",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "leek",
+			"c2": 1,
+			"c3": 2
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "honey",
+			"c3": 4
 		}
 	},
 	{
@@ -5587,31 +5587,31 @@
 		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "water",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Berries",
+		"skill": "Extra Helpful S",
 		"fp": 12,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 3700,
+		"ingRate": 16.3,
+		"skillRate": 3.5,
 		"ancestor": 393,
 		"evolutionCount": 1,
 		"evolutionLeft": 1,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 15,
 		"ing1": {
-			"name": "unknown1",
+			"name": "egg",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "leek",
+			"c2": 1,
+			"c3": 2
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "honey",
+			"c3": 4
 		}
 	},
 	{
@@ -5621,31 +5621,31 @@
 		"sleepType": "slumbering",
 		"exp": 600,
 		"type": "steel",
-		"specialty": "unknown",
-		"skill": "unknwon",
+		"specialty": "Berries",
+		"skill": "Extra Helpful S",
 		"fp": 20,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 3200,
+		"ingRate": 16.8,
+		"skillRate": 3.8,
 		"ancestor": 393,
 		"evolutionCount": 2,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 18,
 		"ing1": {
-			"name": "unknown1",
+			"name": "egg",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "leek",
+			"c2": 1,
+			"c3": 2
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "honey",
+			"c3": 4
 		}
 	},
 	{
