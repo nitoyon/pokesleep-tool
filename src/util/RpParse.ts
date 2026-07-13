@@ -2,7 +2,7 @@ import type { IngredientName } from "../data/pokemons";
 import Nature from "./Nature";
 import PokemonIv from "./PokemonIv";
 import type { IngredientType } from "./PokemonRp";
-import SubSkill, { type SubSkillType } from "./SubSkill";
+import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
 
 type CsvData = {
@@ -42,7 +42,6 @@ type I18nDict = {
 export function parseTsv(text: string): Record<string, RpData[]> {
 	const ret: Record<string, RpData[]> = {};
 	const lines = text.split(/\r?\n/g);
-	const subSkillNames = SubSkill.allSubSkillNames as string[];
 	for (const line of lines) {
 		// Parse TSV data
 		if (line.trim() === "") {
@@ -84,18 +83,10 @@ export function parseTsv(text: string): Record<string, RpData[]> {
 			rp: parseInt(parts[2], 10),
 			nature: new Nature(fixNatures(parts[3])),
 			skillLevel: parseInt(parts[4], 10),
-			subSkill1: !subSkillNames.includes(parts[5])
-				? null
-				: new SubSkill(parts[5] as SubSkillType),
-			subSkill2: !subSkillNames.includes(parts[6])
-				? null
-				: new SubSkill(parts[6] as SubSkillType),
-			subSkill3: !subSkillNames.includes(parts[7])
-				? null
-				: new SubSkill(parts[7] as SubSkillType),
-			subSkill4: !subSkillNames.includes(parts[8])
-				? null
-				: new SubSkill(parts[8] as SubSkillType),
+			subSkill1: convertSubSkillName(parts[5]),
+			subSkill2: convertSubSkillName(parts[6]),
+			subSkill3: convertSubSkillName(parts[7]),
+			subSkill4: convertSubSkillName(parts[8]),
 			ing2: convertIngName(parts[9]),
 			ing3: convertIngName(parts[10]),
 		};
@@ -145,45 +136,122 @@ export function parseTsv(text: string): Record<string, RpData[]> {
 	return ret;
 }
 
+function convertSubSkillName(val: string): SubSkill | null {
+	switch (val) {
+		case "Berry Finding S":
+		case "樹果數量S":
+			return new SubSkill("Berry Finding S");
+		case "Dream Shard Bonus":
+		case "夢之碎片獎勵":
+			return new SubSkill("Dream Shard Bonus");
+		case "Energy Recovery Bonus":
+		case "活力回復獎勵":
+			return new SubSkill("Energy Recovery Bonus");
+		case "Helping Bonus":
+		case "幫手獎勵":
+			return new SubSkill("Helping Bonus");
+		case "Research EXP Bonus":
+		case "研究EXP獎勵":
+			return new SubSkill("Research EXP Bonus");
+		case "Sleep EXP Bonus":
+		case "睡眠EXP獎勵":
+			return new SubSkill("Sleep EXP Bonus");
+		case "Skill Level Up M":
+		case "技能等級提升M":
+			return new SubSkill("Skill Level Up M");
+		case "Skill Level Up S":
+		case "技能等級提升S":
+			return new SubSkill("Skill Level Up S");
+		case "Skill Trigger M":
+		case "技能機率提升M":
+			return new SubSkill("Skill Trigger M");
+		case "Skill Trigger S":
+		case "技能機率提升S":
+			return new SubSkill("Skill Trigger S");
+		case "Helping Speed M":
+		case "幫忙速度M":
+			return new SubSkill("Helping Speed M");
+		case "Helping Speed S":
+		case "幫忙速度S":
+			return new SubSkill("Helping Speed S");
+		case "Ingredient Finder M":
+		case "食材機率提升M":
+			return new SubSkill("Ingredient Finder M");
+		case "Ingredient Finder S":
+		case "食材機率提升S":
+			return new SubSkill("Ingredient Finder S");
+		case "Inventory Up L":
+		case "持有上限提升L":
+			return new SubSkill("Inventory Up L");
+		case "Inventory Up M":
+		case "持有上限提升M":
+			return new SubSkill("Inventory Up M");
+		case "Inventory Up S":
+		case "持有上限提升S":
+			return new SubSkill("Inventory Up S");
+		default:
+			return null;
+	}
+}
+
 function convertIngName(val: string): IngredientName {
 	switch (val) {
 		case "Large Leek":
+		case "粗枝大蔥":
 			return "leek";
 		case "Tasty Mushroom":
+		case "品鮮蘑菇":
 			return "mushroom";
 		case "Fancy Egg":
+		case "特選蛋":
 			return "egg";
 		case "Soft Potato":
+		case "窩心洋芋":
 			return "potato";
 		case "Fancy Apple":
+		case "特選蘋果":
 			return "apple";
 		case "Fiery Herb":
+		case "火辣香草":
 			return "herb";
 		case "Bean Sausage":
+		case "豆製肉":
 			return "sausage";
 		case "Moomoo Milk":
+		case "哞哞鮮奶":
 			return "milk";
 		case "Honey":
+		case "甜甜蜜":
 			return "honey";
 		case "Pure Oil":
+		case "純粹油":
 			return "oil";
 		case "Warming Ginger":
+		case "暖暖薑":
 			return "ginger";
 		case "Snoozy Tomato":
+		case "好眠番茄":
 			return "tomato";
 		case "Soothing Cacao":
+		case "放鬆可可":
 			return "cacao";
 		case "Slowpoke Tail":
+		case "美味尾巴":
 			return "tail";
 		case "Greengrass Soybeans":
+		case "萌綠大豆":
 			return "soy";
 		case "Greengrass Corn":
+		case "萌綠玉米":
 			return "corn";
 		case "Rousing Coffee":
+		case "醒腦咖啡豆":
 			return "coffee";
 		case "Plump Pumpkin":
+		case "沉甸甸南瓜":
 			return "pumpkin";
 		case "Glossy Avocado":
+		case "嫩亮酪梨":
 			return "avocado";
 		default:
 			return "unknown";

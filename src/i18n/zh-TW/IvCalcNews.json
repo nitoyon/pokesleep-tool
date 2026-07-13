@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add sinnoh": {
+				"headline": "已新增$t(pokemons.Turtwig)、$t(pokemons.Chimchar)與$t(pokemons.Piplup)的資料。",
+				"detail": "$t(rp collection)"
+			},
 			"hb calc": {
 				"headline": "改善了$t(subskill.Helping Bonus)、$t(skills.Extra Helpful S.name)等的能量計算。",
 				"detail": "將[$t(subskill.Helping Bonus)]的能量計算方式變更如下。\n• (以往) 假設有其他4隻與自己獲得相同能量的寶可夢來進行計算。\n• (今後) 假設有其他4隻在[$t(parameter)]的[$t(other team member)]中指定的寶可夢來進行計算。\n如此一來，所有寶可夢的[$t(subskill.Helping Bonus)]都會被評估為相同的能量值。\n\n同時，$t(skills.Extra Helpful S.name)、$t(skills.Helper Boost.name)、$t(skills.Energizing Cheer S (Heal Pulse).name)的能量值也不再使用以往固定的300能量，而是改為使用[$t(other team member)]進行計算。"
