@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add sinnoh": {
+				"headline": "$t(pokemons.Turtwig), $t(pokemons.Chimchar), 그리고 $t(pokemons.Piplup)의 데이터가 추가되었습니다.",
+				"detail": "$t(rp collection)"
+			},
 			"hb calc": {
 				"headline": "$t(subskill.Helping Bonus)나 $t(skills.Extra Helpful S.name) 등의 에너지 계산을 개선했습니다.",
 				"detail": "[$t(subskill.Helping Bonus)]의 에너지 계산을 다음과 같이 변경했습니다.\n• (지금까지) 자신과 같은 에너지를 버는 포켓몬이 그 외에 4마리 있다고 가정하여 계산.\n• (앞으로) [$t(parameter)]의 [$t(other team member)]에서 지정한 포켓몬이 그 외에 4마리 있다고 가정하여 계산.\n이를 통해 모든 포켓몬에서 [$t(subskill.Helping Bonus)]가 같은 에너지로 평가되게 되었습니다.\n\n아울러 $t(skills.Extra Helpful S.name)·$t(skills.Helper Boost.name)·$t(skills.Energizing Cheer S (Heal Pulse).name)의 에너지 양도, 지금까지의 고정 300 에너지를 사용하는 것을 그만두고, [$t(other team member)]를 이용해 계산하도록 개선했습니다."
