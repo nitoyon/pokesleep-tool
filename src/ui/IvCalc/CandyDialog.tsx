@@ -22,12 +22,13 @@ import calcExpAndCandy, {
 	type CalcExpAndCandyResult,
 	type CalcLevelResult,
 	calcDayToGetSleepExp,
+	calcDayToNapExp,
 	calcExp,
 	calcLevelByCandy,
 	type GrowthIncensePolicy,
 } from "../../util/Exp";
 import Nature, { type PlusMinusOneOrZero } from "../../util/Nature";
-import { clamp, formatWithComma } from "../../util/NumberUtil";
+import { clamp, formatWithComma, trunc } from "../../util/NumberUtil";
 import type PokemonIv from "../../util/PokemonIv";
 import { maxLevel } from "../../util/PokemonRp";
 import CollapseEx from "../common/CollapseEx";
@@ -77,12 +78,16 @@ type CandyConfig = {
 	boostLevel: number;
 	/** Dream shard cap to use candy boost */
 	boostShard: number;
+	/** Additional method */
+	additionalTraining: "sleep" | "nap";
 	/** Number of Sleep EXP Bonus (0-5) */
 	expBonus: number;
 	/** Expected average sleep score per day */
 	score: number;
 	/** Usage pattern for growth incense */
 	growthIncense: GrowthIncensePolicy;
+	/** Use relaxing nap ticket or not */
+	relaxingNapTicket: boolean;
 };
 
 /** Adds Candy Boost costs to CalcLevelResult */
@@ -125,9 +130,11 @@ const CandyDialog = React.memo(
 			boostCandyCount: 350,
 			boostLevel: 55,
 			boostShard: 300000,
+			additionalTraining: "sleep",
 			expBonus: iv.hasSleepExpBonusInActiveSubSkills ? 1 : 0,
 			score: 100,
 			growthIncense: "none",
+			relaxingNapTicket: false,
 		});
 		const [shouldRender, setShouldRender] = React.useState(false);
 		const [turnCandyOpen, setTurnCandyOpen] = React.useState(false);
@@ -601,6 +608,7 @@ const calculateDetailCandy = (
 	candyBoostResult: CalcLevelBoostResult;
 	normalCandyResult: CalcLevelBoostResult;
 	sleepResult?: CalcDayToGetSleepExpResult;
+	napResult?: CalcDayToGetSleepExpResult;
 } => {
 	let iv = levelInfo.iv.clone({
 		level: levelInfo.currentLevel,
@@ -708,20 +716,30 @@ const calculateDetailCandy = (
 	);
 
 	let sleepResult: CalcDayToGetSleepExpResult | undefined;
+	let napResult: CalcDayToGetSleepExpResult | undefined;
 	if (normalCandyResult.expLeft > 0) {
-		sleepResult = calcDayToGetSleepExp(
-			normalCandyResult.expLeft,
-			config.expBonus,
-			config.score,
-			iv.nature.expGainsRate,
-			config.growthIncense,
-		);
+		if (config.additionalTraining === "sleep") {
+			sleepResult = calcDayToGetSleepExp(
+				normalCandyResult.expLeft,
+				config.expBonus,
+				config.score,
+				iv.nature.expGainsRate,
+				config.growthIncense,
+			);
+		} else {
+			napResult = calcDayToNapExp(
+				normalCandyResult.expLeft,
+				iv.nature.expGainsRate,
+				config.relaxingNapTicket,
+			);
+		}
 	}
 
 	return {
 		candyBoostResult,
 		normalCandyResult: { ...normalCandyResult, extraShards: 0, candySaved: 0 },
 		sleepResult,
+		napResult,
 	};
 };
 
@@ -801,6 +819,26 @@ const DetailCandyForm = React.memo(
 			[config, levelInfo, onChange],
 		);
 
+		const onAdditionalTrainingChange = React.useCallback(
+			(expBonus: string) => {
+				onChange({
+					...config,
+					additionalTraining: expBonus as "sleep" | "nap",
+				});
+			},
+			[config, onChange],
+		);
+
+		const onRelaxingNapTicketChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({
+					...config,
+					relaxingNapTicket: e.target.checked,
+				});
+			},
+			[config, onChange],
+		);
+
 		const onExpBonusChange = React.useCallback(
 			(expBonus: string) => {
 				onChange({ ...config, expBonus: parseInt(expBonus, 10) });
@@ -825,7 +863,7 @@ const DetailCandyForm = React.memo(
 		const id = levelInfo.iv.pokemon.id;
 		const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
 
-		const { candyBoostResult, normalCandyResult, sleepResult } =
+		const { candyBoostResult, normalCandyResult, sleepResult, napResult } =
 			calculateDetailCandy(levelInfo, config);
 		const exp = candyBoostResult.exp;
 
@@ -867,6 +905,17 @@ const DetailCandyForm = React.memo(
 							iv={levelInfo.iv}
 							level={levelInfo.targetLevel}
 							value={sleepResult}
+						/>
+					</CollapseEx>
+					<CollapseEx show={napResult !== undefined}>
+						<section>
+							<span className="lbl">{t("nap island training")}:</span>
+							<div>{formatWithComma(napResult?.exp ?? 0)}</div>
+						</section>
+						<SleepResultPreview
+							iv={levelInfo.iv}
+							level={levelInfo.targetLevel}
+							value={napResult}
 						/>
 					</CollapseEx>
 				</div>
@@ -966,44 +1015,66 @@ const DetailCandyForm = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
+						<span className="lbl">{t("additional training")}:</span>
 						<SelectEx
-							value={config.expBonus}
-							onChange={onExpBonusChange}
-							sx={{ width: "1.5rem" }}
+							value={config.additionalTraining}
+							onChange={onAdditionalTrainingChange}
 						>
-							<MenuItem value={0}>0</MenuItem>
-							<MenuItem value={1}>1</MenuItem>
-							<MenuItem value={2}>2</MenuItem>
-							<MenuItem value={3}>3</MenuItem>
-							<MenuItem value={4}>4</MenuItem>
-							<MenuItem value={5}>5</MenuItem>
+							<MenuItem value="sleep">{t("sleep-based training")}</MenuItem>
+							<MenuItem value="nap">{t("nap island training")}</MenuItem>
 						</SelectEx>
 					</section>
-					<section>
-						<span className="lbl">{t("sleep score")}:</span>
-						<NumericSliderInput
-							value={config.score}
-							onChange={onScoreChange}
-							sx={{ width: "2rem", fontSize: "0.9rem" }}
-							min={1}
-							max={100}
-						/>
-					</section>
-					<section>
-						<span className="lbl">{t("growth incense")}:</span>
-						<SelectEx
-							value={config.growthIncense}
-							onChange={onIncenseChange}
-							sx={{ width: "auto", fontSize: "0.9rem" }}
-						>
-							<MenuItem value="none">{t("none")}</MenuItem>
-							<MenuItem value="fullMoon">{t("full moon")}</MenuItem>
-							<MenuItem value="gsd">{t("gsd")}</MenuItem>
-							<MenuItem value="every2Days">{t("every 2 days")}</MenuItem>
-							<MenuItem value="everyDay">{t("every day")}</MenuItem>
-						</SelectEx>
-					</section>
+					<CollapseEx show={config.additionalTraining === "nap"}>
+						<section>
+							<span className="lbl">{t("relaxing nap ticket")}:</span>
+							<Switch
+								checked={config.relaxingNapTicket}
+								size="small"
+								onChange={onRelaxingNapTicketChange}
+							/>
+						</section>
+					</CollapseEx>
+					<CollapseEx show={config.additionalTraining === "sleep"}>
+						<section>
+							<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
+							<SelectEx
+								value={config.expBonus}
+								onChange={onExpBonusChange}
+								sx={{ width: "1.5rem" }}
+							>
+								<MenuItem value={0}>0</MenuItem>
+								<MenuItem value={1}>1</MenuItem>
+								<MenuItem value={2}>2</MenuItem>
+								<MenuItem value={3}>3</MenuItem>
+								<MenuItem value={4}>4</MenuItem>
+								<MenuItem value={5}>5</MenuItem>
+							</SelectEx>
+						</section>
+						<section>
+							<span className="lbl">{t("sleep score")}:</span>
+							<NumericSliderInput
+								value={config.score}
+								onChange={onScoreChange}
+								sx={{ width: "2rem", fontSize: "0.9rem" }}
+								min={1}
+								max={100}
+							/>
+						</section>
+						<section>
+							<span className="lbl">{t("growth incense")}:</span>
+							<SelectEx
+								value={config.growthIncense}
+								onChange={onIncenseChange}
+								sx={{ width: "auto", fontSize: "0.9rem" }}
+							>
+								<MenuItem value="none">{t("none")}</MenuItem>
+								<MenuItem value="fullMoon">{t("full moon")}</MenuItem>
+								<MenuItem value="gsd">{t("gsd")}</MenuItem>
+								<MenuItem value="every2Days">{t("every 2 days")}</MenuItem>
+								<MenuItem value="everyDay">{t("every day")}</MenuItem>
+							</SelectEx>
+						</section>
+					</CollapseEx>
 				</div>
 			</>
 		);
@@ -1185,7 +1256,7 @@ const SleepResultPreview = React.memo(
 				</span>
 				<span className="shard">
 					<span>{date}</span>
-					<footer>({t("day unit", { count: value.days })})</footer>
+					<footer>({t("day unit", { count: trunc(value.days, 1) })})</footer>
 				</span>
 			</StyledPreview>
 		);

@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"nap island": {
+				"headline": "在糖果計算功能的[$t(details)]標籤頁中，現已支援模擬透過$t(nap island training)進行培育。",
+				"detail": "在糖果計算功能的[$t(details)]標籤頁中新增了[$t(additional training)]設定。將該值從[$t(sleep-based training)]變更為[$t(nap island training)]後，即可確認透過$t(nap island training)進行培育所需的天數。"
+			},
 			"add sinnoh": {
 				"headline": "已新增$t(pokemons.Turtwig)、$t(pokemons.Chimchar)與$t(pokemons.Piplup)的資料。",
 				"detail": "$t(rp collection)"

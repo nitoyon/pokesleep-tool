@@ -385,3 +385,37 @@ export function getMoonAge(date: Date): number {
 	const days = (date.getTime() - reference.getTime()) / (1000 * 60 * 60 * 24);
 	return ((days % lunarCycle) + lunarCycle) % lunarCycle;
 }
+
+/**
+ * Calculate the number of days needed to earn the specified EXP
+ * through Nap Island.
+ * @param exp Target EXP to earn.
+ * @param expGainRate The Pokémon's exp gain rate by its nature.
+ * @param today Today.
+ * @returns The number of days.
+ */
+export function calcDayToNapExp(
+	exp: number,
+	expGainRate: number,
+	ticket: boolean,
+): CalcDayToGetSleepExpResult {
+	const ret: CalcDayToGetSleepExpResult = {
+		exp,
+		expExceeded: 0,
+		days: Number.POSITIVE_INFINITY,
+		date: new Date(8640000000000000),
+	};
+
+	const baseExp = 150 * Math.max(expGainRate, 1) * (ticket ? 4 : 1);
+
+	// before 7 days are over: only gain half EXP
+	if (exp < baseExp * 3.5) {
+		ret.days = exp / (baseExp / 2);
+	} else {
+		ret.days = exp / baseExp;
+	}
+
+	ret.date = new Date();
+	ret.date.setDate(ret.date.getDate() + ret.days);
+	return ret;
+}
