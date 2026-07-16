@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"nap island": {
+				"headline": "アメ計算機能の [$t(details)] タブで $t(nap island training)での育成をシミュレーションできるようになりました。",
+				"detail": "アメ計算機能の [$t(details)] タブに、[$t(additional training)] の設定を追加しました。この値を [$t(sleep-based training)] から [$t(nap island training)] に変更すると、$t(nap island training)での育成に必要な日数を確認できます。"
+			},
 			"add sinnoh": {
 				"headline": "$t(pokemons.Turtwig)、$t(pokemons.Chimchar)、$t(pokemons.Piplup)たちのデータを追加しました。",
 				"detail": "$t(rp collection)"
