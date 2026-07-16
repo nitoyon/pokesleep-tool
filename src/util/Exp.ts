@@ -411,6 +411,8 @@ export function calcDayToNapExp(
 	// before 7 days are over: only gain half EXP
 	if (exp < baseExp * 3.5) {
 		ret.days = exp / (baseExp / 2);
+	} else if (exp < baseExp * 7) {
+		ret.days = 7;
 	} else {
 		ret.days = exp / baseExp;
 	}

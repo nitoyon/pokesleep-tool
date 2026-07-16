@@ -493,6 +493,7 @@ describe("calcDayToNapExp", () => {
 
 		expect(calcDayToNapExp(75, rate, ticket).days).toBeCloseTo(1);
 		expect(calcDayToNapExp(75 * 2, rate, ticket).days).toBeCloseTo(2);
+		expect(calcDayToNapExp(150 * 4, rate, ticket).days).toBeCloseTo(7);
 		expect(calcDayToNapExp(150 * 7, rate, ticket).days).toBeCloseTo(7);
 		expect(calcDayToNapExp(1500, rate, ticket).days).toBeCloseTo(10);
 	});
