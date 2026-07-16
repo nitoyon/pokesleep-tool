@@ -1,5 +1,6 @@
 import calcExpAndCandy, {
 	calcDayToGetSleepExp,
+	calcDayToNapExp,
 	calcLevelByCandy,
 	getNextFullMoon,
 } from "./Exp";
@@ -481,5 +482,52 @@ describe("calcDayToGetSleepExp", () => {
 			calcDayToGetSleepExp(exp, expBonus, score, expGainRate, policy, today)
 				.days,
 		).toBe(2);
+	});
+});
+
+describe("calcDayToNapExp", () => {
+	test("should calculate days (expGainRate=1, no ticket)", () => {
+		// 150 EXP / day
+		const rate = 1;
+		const ticket = false;
+
+		expect(calcDayToNapExp(75, rate, ticket).days).toBeCloseTo(1);
+		expect(calcDayToNapExp(75 * 2, rate, ticket).days).toBeCloseTo(2);
+		expect(calcDayToNapExp(150 * 7, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(1500, rate, ticket).days).toBeCloseTo(10);
+	});
+
+	test("should calculate days with ticket", () => {
+		// 600 EXP / day
+		const rate = 1;
+		const ticket = true;
+
+		expect(calcDayToNapExp(300 * 6.9, rate, ticket).days).toBeCloseTo(6.9);
+		expect(calcDayToNapExp(600 * 7, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(600 * 10, rate, ticket).days).toBeCloseTo(10);
+	});
+
+	test("should calculate days with expGainRate=1.18 (EXP up nature)", () => {
+		// 177 EXP / day
+		const rate = 1.18;
+		const ticket = false;
+
+		expect(calcDayToNapExp(88.5 * 6.9, rate, ticket).days).toBeCloseTo(6.9);
+		expect(calcDayToNapExp(177 * 7, rate, ticket).days).toBeCloseTo(7);
+	});
+
+	test("should calculate days with expGainRate=0.82 (EXP down nature, clamped to 1)", () => {
+		// 150 EXP / day
+		const rate = 0.82;
+		const ticket = false;
+
+		expect(calcDayToNapExp(75, rate, ticket).days).toBeCloseTo(1);
+		expect(calcDayToNapExp(75 * 6.9, rate, ticket).days).toBeCloseTo(6.9);
+		expect(calcDayToNapExp(150 * 7, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(1500, rate, ticket).days).toBeCloseTo(10);
+	});
+
+	test("should echo the input exp", () => {
+		expect(calcDayToNapExp(1234, 1, false).exp).toBe(1234);
 	});
 });
