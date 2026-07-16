@@ -413,6 +413,8 @@ export function calcDayToNapExp(
 		ret.days = exp / (baseExp / 2);
 	} else if (exp < baseExp * 7) {
 		ret.days = 7;
+		ret.exp = baseExp * 7;
+		ret.expExceeded = baseExp * 7 - exp;
 	} else {
 		ret.days = exp / baseExp;
 	}
