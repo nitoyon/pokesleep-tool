@@ -518,16 +518,6 @@ const CandyPanel = React.memo(
 			config.candyBoost,
 		);
 
-		const onExpFactorChange = React.useCallback(
-			(value: string) => {
-				onChange({
-					...config,
-					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
-				});
-			},
-			[config, onChange],
-		);
-
 		const onCanyBoostChange = React.useCallback(
 			(_: React.MouseEvent, value: BoostEvent) => {
 				if (value === null) {
@@ -565,23 +555,7 @@ const CandyPanel = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<span className="lbl">{t("nature")}:</span>
-						<SelectEx
-							onChange={onExpFactorChange}
-							value={config.expFactor.toString()}
-						>
-							<MenuItem value="1">
-								<StyledNatureUpEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureUpEffect>
-							</MenuItem>
-							<MenuItem value="0">{t("nature effect.EXP gains")} ーー</MenuItem>
-							<MenuItem value="-1">
-								<StyledNatureDownEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureDownEffect>
-							</MenuItem>
-						</SelectEx>
+						<NatureForm config={config} onChange={onChange} />
 					</section>
 					<section>
 						<span className="lbl">{t("candy boost")}:</span>
@@ -777,16 +751,6 @@ const DetailPanel = React.memo(
 			[config, onChange],
 		);
 
-		const onExpFactorChange = React.useCallback(
-			(value: string) => {
-				onChange({
-					...config,
-					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
-				});
-			},
-			[config, onChange],
-		);
-
 		const onCandyBoostEnabledChange = React.useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				onChange({
@@ -915,23 +879,7 @@ const DetailPanel = React.memo(
 						/>
 					</section>
 					<section>
-						<span className="lbl">{t("nature")}:</span>
-						<SelectEx
-							onChange={onExpFactorChange}
-							value={config.expFactor.toString()}
-						>
-							<MenuItem value="1">
-								<StyledNatureUpEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureUpEffect>
-							</MenuItem>
-							<MenuItem value="0">{t("nature effect.EXP gains")} ーー</MenuItem>
-							<MenuItem value="-1">
-								<StyledNatureDownEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureDownEffect>
-							</MenuItem>
-						</SelectEx>
+						<NatureForm config={config} onChange={onChange} />
 					</section>
 				</div>
 				<div className="form">
@@ -1015,6 +963,50 @@ const DetailPanel = React.memo(
 						<SleepConfigForm config={config} onChange={onChange} />
 					</CollapseEx>
 				</div>
+			</>
+		);
+	},
+);
+
+const NatureForm = React.memo(
+	({
+		config,
+		onChange,
+	}: {
+		config: CandyConfig;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onExpFactorChange = React.useCallback(
+			(value: string) => {
+				onChange({
+					...config,
+					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+				});
+			},
+			[config, onChange],
+		);
+
+		return (
+			<>
+				<span className="lbl">{t("nature")}:</span>
+				<SelectEx
+					onChange={onExpFactorChange}
+					value={config.expFactor.toString()}
+				>
+					<MenuItem value="1">
+						<StyledNatureUpEffect>
+							{t("nature effect.EXP gains")}
+						</StyledNatureUpEffect>
+					</MenuItem>
+					<MenuItem value="0">{t("nature effect.EXP gains")} ーー</MenuItem>
+					<MenuItem value="-1">
+						<StyledNatureDownEffect>
+							{t("nature effect.EXP gains")}
+						</StyledNatureDownEffect>
+					</MenuItem>
+				</SelectEx>
 			</>
 		);
 	},
