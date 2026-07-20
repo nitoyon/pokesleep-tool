@@ -619,7 +619,6 @@ const calculateDetailCandy = (
 					? new Nature("Serious")
 					: new Nature("Relaxed"),
 	});
-
 	const exp =
 		calcExp(levelInfo.currentLevel, levelInfo.targetLevel, levelInfo.iv) -
 		levelInfo.expGot;
@@ -697,7 +696,7 @@ const calculateDetailCandy = (
 				break;
 			}
 		}
-		iv = levelInfo.iv.clone({ level: boosted.level });
+		iv = iv.clone({ level: boosted.level });
 
 		candyBoostResult = {
 			...boosted,
