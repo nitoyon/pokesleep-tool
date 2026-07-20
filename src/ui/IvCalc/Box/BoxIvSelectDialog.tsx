@@ -44,15 +44,9 @@ const BoxIvSelectDialog = React.memo(
 		);
 
 		const onCloseHandler = React.useCallback(() => {
-			if (tabIndex === 0) {
-				onClose();
-				return;
-			}
-
-			// Call onSelect when tabIndex === 1 on close
 			onSelect(new PokemonBoxItem(pokemonIv));
 			onClose();
-		}, [onClose, onSelect, pokemonIv, tabIndex]);
+		}, [onClose, onSelect, pokemonIv]);
 
 		const onSelectHandler = React.useCallback(
 			(id: number) => {
