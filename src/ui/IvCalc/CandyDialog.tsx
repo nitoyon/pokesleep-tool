@@ -838,27 +838,6 @@ const DetailCandyForm = React.memo(
 			[config, onChange],
 		);
 
-		const onExpBonusChange = React.useCallback(
-			(expBonus: string) => {
-				onChange({ ...config, expBonus: parseInt(expBonus, 10) });
-			},
-			[config, onChange],
-		);
-
-		const onScoreChange = React.useCallback(
-			(score: number) => {
-				onChange({ ...config, score });
-			},
-			[config, onChange],
-		);
-
-		const onIncenseChange = React.useCallback(
-			(value: string) => {
-				onChange({ ...config, growthIncense: value as GrowthIncensePolicy });
-			},
-			[config, onChange],
-		);
-
 		const id = levelInfo.iv.pokemon.id;
 		const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
 
@@ -1034,47 +1013,86 @@ const DetailCandyForm = React.memo(
 						</section>
 					</CollapseEx>
 					<CollapseEx show={config.additionalTraining === "sleep"}>
-						<section>
-							<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
-							<SelectEx
-								value={config.expBonus}
-								onChange={onExpBonusChange}
-								sx={{ width: "1.5rem" }}
-							>
-								<MenuItem value={0}>0</MenuItem>
-								<MenuItem value={1}>1</MenuItem>
-								<MenuItem value={2}>2</MenuItem>
-								<MenuItem value={3}>3</MenuItem>
-								<MenuItem value={4}>4</MenuItem>
-								<MenuItem value={5}>5</MenuItem>
-							</SelectEx>
-						</section>
-						<section>
-							<span className="lbl">{t("sleep score")}:</span>
-							<NumericSliderInput
-								value={config.score}
-								onChange={onScoreChange}
-								sx={{ width: "2rem", fontSize: "0.9rem" }}
-								min={1}
-								max={100}
-							/>
-						</section>
-						<section>
-							<span className="lbl">{t("growth incense")}:</span>
-							<SelectEx
-								value={config.growthIncense}
-								onChange={onIncenseChange}
-								sx={{ width: "auto", fontSize: "0.9rem" }}
-							>
-								<MenuItem value="none">{t("none")}</MenuItem>
-								<MenuItem value="fullMoon">{t("full moon")}</MenuItem>
-								<MenuItem value="gsd">{t("gsd")}</MenuItem>
-								<MenuItem value="every2Days">{t("every 2 days")}</MenuItem>
-								<MenuItem value="everyDay">{t("every day")}</MenuItem>
-							</SelectEx>
-						</section>
+						<SleepConfigForm config={config} onChange={onChange} />
 					</CollapseEx>
 				</div>
+			</>
+		);
+	},
+);
+
+const SleepConfigForm = React.memo(
+	({
+		config,
+		onChange,
+	}: {
+		config: CandyConfig;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onExpBonusChange = React.useCallback(
+			(expBonus: string) => {
+				onChange({ ...config, expBonus: parseInt(expBonus, 10) });
+			},
+			[config, onChange],
+		);
+
+		const onScoreChange = React.useCallback(
+			(score: number) => {
+				onChange({ ...config, score });
+			},
+			[config, onChange],
+		);
+
+		const onIncenseChange = React.useCallback(
+			(value: string) => {
+				onChange({ ...config, growthIncense: value as GrowthIncensePolicy });
+			},
+			[config, onChange],
+		);
+
+		return (
+			<>
+				<section>
+					<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
+					<SelectEx
+						value={config.expBonus}
+						onChange={onExpBonusChange}
+						sx={{ width: "1.5rem" }}
+					>
+						<MenuItem value={0}>0</MenuItem>
+						<MenuItem value={1}>1</MenuItem>
+						<MenuItem value={2}>2</MenuItem>
+						<MenuItem value={3}>3</MenuItem>
+						<MenuItem value={4}>4</MenuItem>
+						<MenuItem value={5}>5</MenuItem>
+					</SelectEx>
+				</section>
+				<section>
+					<span className="lbl">{t("sleep score")}:</span>
+					<NumericSliderInput
+						value={config.score}
+						onChange={onScoreChange}
+						sx={{ width: "2rem", fontSize: "0.9rem" }}
+						min={1}
+						max={100}
+					/>
+				</section>
+				<section>
+					<span className="lbl">{t("growth incense")}:</span>
+					<SelectEx
+						value={config.growthIncense}
+						onChange={onIncenseChange}
+						sx={{ width: "auto", fontSize: "0.9rem" }}
+					>
+						<MenuItem value="none">{t("none")}</MenuItem>
+						<MenuItem value="fullMoon">{t("full moon")}</MenuItem>
+						<MenuItem value="gsd">{t("gsd")}</MenuItem>
+						<MenuItem value="every2Days">{t("every 2 days")}</MenuItem>
+						<MenuItem value="everyDay">{t("every day")}</MenuItem>
+					</SelectEx>
+				</section>
 			</>
 		);
 	},
