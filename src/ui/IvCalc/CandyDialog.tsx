@@ -828,16 +828,6 @@ const DetailCandyForm = React.memo(
 			[config, onChange],
 		);
 
-		const onRelaxingNapTicketChange = React.useCallback(
-			(e: React.ChangeEvent<HTMLInputElement>) => {
-				onChange({
-					...config,
-					relaxingNapTicket: e.target.checked,
-				});
-			},
-			[config, onChange],
-		);
-
 		const id = levelInfo.iv.pokemon.id;
 		const name = t(`pokemons.${getCandyName(id)}`).replace(/ \(.+/, "");
 
@@ -1003,20 +993,46 @@ const DetailCandyForm = React.memo(
 						</SelectEx>
 					</section>
 					<CollapseEx show={config.additionalTraining === "nap"}>
-						<section>
-							<span className="lbl">{t("relaxing nap ticket")}:</span>
-							<Switch
-								checked={config.relaxingNapTicket}
-								size="small"
-								onChange={onRelaxingNapTicketChange}
-							/>
-						</section>
+						<NapIslandForm config={config} onChange={onChange} />
 					</CollapseEx>
 					<CollapseEx show={config.additionalTraining === "sleep"}>
 						<SleepConfigForm config={config} onChange={onChange} />
 					</CollapseEx>
 				</div>
 			</>
+		);
+	},
+);
+
+const NapIslandForm = React.memo(
+	({
+		config,
+		onChange,
+	}: {
+		config: CandyConfig;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onRelaxingNapTicketChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({
+					...config,
+					relaxingNapTicket: e.target.checked,
+				});
+			},
+			[config, onChange],
+		);
+
+		return (
+			<section>
+				<span className="lbl">{t("relaxing nap ticket")}:</span>
+				<Switch
+					checked={config.relaxingNapTicket}
+					size="small"
+					onChange={onRelaxingNapTicketChange}
+				/>
+			</section>
 		);
 	},
 );
