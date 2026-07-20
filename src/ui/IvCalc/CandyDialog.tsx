@@ -259,18 +259,24 @@ const CandyDialog = React.memo(
 							maxExpLeft={maxExpLeft}
 							onLevelInfoChange={onLevelInfoChange}
 						/>
-						<Tabs value={config.tabIndex} onChange={onTabChange}>
-							<Tab label={t("simple")} value={0} />
-							<Tab label={t("details")} value={1} />
-						</Tabs>
-						{config.tabIndex === 0 && (
+						<StyledTabs
+							value={config.tabIndex}
+							onChange={onTabChange}
+							variant="scrollable"
+						>
+							<StyledTab label={t("candy")} value={0} />
+							<StyledTab label={t("sleep")} value={1} />
+							<StyledTab label={t("nap island training")} value={2} />
+							<StyledTab label={t("details")} value={3} />
+						</StyledTabs>
+						{config.tabIndex !== 3 && (
 							<NormalCandyForm
 								config={config}
 								levelInfo={levelInfo}
 								onChange={setConfig}
 							/>
 						)}
-						{config.tabIndex === 1 && (
+						{config.tabIndex === 3 && (
 							<DetailCandyForm
 								config={config}
 								levelInfo={levelInfo}
@@ -298,6 +304,16 @@ const CandyDialog = React.memo(
 		);
 	},
 );
+
+const StyledTabs = styled(Tabs)({
+	minHeight: "38px",
+});
+const StyledTab = styled(Tab)({
+	minHeight: "40px",
+	minWidth: 0,
+	padding: "10px 9px 0",
+	textTransform: "none",
+});
 
 const LevelForm = React.memo(
 	({
@@ -1132,7 +1148,7 @@ const StyledDialog = styled(Dialog)({
 			},
 			"& div.expResult": {
 				fontSize: "0.9rem",
-				margin: "0 .2rem 0",
+				margin: "0 0",
 				padding: "0.5rem 0.5rem 0 0.5rem",
 				"& > section": {
 					paddingTop: "0.2rem",
@@ -1143,7 +1159,7 @@ const StyledDialog = styled(Dialog)({
 				padding: "0.3rem 0.5rem",
 				borderRadius: "0.9rem",
 				fontSize: "0.9rem",
-				margin: "0.5rem .5rem 0",
+				margin: "0.5rem .3rem 0",
 			},
 			"& section": {
 				display: "flex",
