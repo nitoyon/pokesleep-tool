@@ -10,6 +10,7 @@ import {
 } from "./Energy";
 import { getMaxSkillLevel } from "./MainSkill";
 import PokemonIv from "./PokemonIv";
+import { maxLevel } from "./PokemonRp";
 
 /** Pseudo field index where all berries are favorites */
 export const allFavoriteFieldIndex = -2;
@@ -471,7 +472,7 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 	if (
 		typeof json.recipeLevel === "number" &&
 		1 <= json.recipeLevel &&
-		json.recipeLevel <= 65
+		json.recipeLevel <= maxLevel
 	) {
 		ret.recipeLevel = json.recipeLevel;
 	}
