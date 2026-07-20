@@ -2,18 +2,98 @@
 	"drowsy": [
 		{
 			"name": "GSD",
-			"day": "2026-06-29",
+			"day": "2026-07-28",
 			"bonus": 1.5
 		},
 		{
 			"name": "GSD",
-			"day": "2026-06-30",
+			"day": "2026-07-29",
+			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
+			"bonus": 2.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-07-30",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-08-27",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-08-28",
+			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
+			"bonus": 2
+		},
+		{
+			"name": "GSD",
+			"day": "2026-08-29",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-09-26",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-09-27",
+			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
+			"bonus": 2
+		},
+		{
+			"name": "GSD",
+			"day": "2026-09-28",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-10-25",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-10-26",
+			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
+			"bonus": 4
+		},
+		{
+			"name": "GSD",
+			"day": "2026-10-27",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-11-23",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-11-24",
 			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
 			"bonus": 3
 		},
 		{
 			"name": "GSD",
-			"day": "2026-07-01",
+			"day": "2026-11-25",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-12-23",
+			"bonus": 1.5
+		},
+		{
+			"name": "GSD",
+			"day": "2026-12-24",
+			"memo": "Mon: 4, Tue: 3, Wed: 2.5, Others: 2",
+			"bonus": 2
+		},
+		{
+			"name": "GSD",
+			"day": "2026-12-25",
 			"bonus": 1.5
 		}
 	],
