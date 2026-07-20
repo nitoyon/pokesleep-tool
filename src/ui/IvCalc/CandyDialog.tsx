@@ -269,8 +269,22 @@ const CandyDialog = React.memo(
 							<StyledTab label={t("nap island training")} value={2} />
 							<StyledTab label={t("details")} value={3} />
 						</StyledTabs>
-						{config.tabIndex !== 3 && (
+						{config.tabIndex === 0 && (
 							<CandyPanel
+								config={config}
+								levelInfo={levelInfo}
+								onChange={setConfig}
+							/>
+						)}
+						{config.tabIndex === 1 && (
+							<SleepPanel
+								config={config}
+								levelInfo={levelInfo}
+								onChange={setConfig}
+							/>
+						)}
+						{config.tabIndex === 2 && (
+							<NapIslandPanel
 								config={config}
 								levelInfo={levelInfo}
 								onChange={setConfig}
@@ -564,6 +578,118 @@ const CandyPanel = React.memo(
 							</ToggleButton>
 						</ToggleButtonGroup>
 					</section>
+				</div>
+			</>
+		);
+	},
+);
+
+const SleepPanel = React.memo(
+	({
+		config,
+		levelInfo,
+		onChange,
+	}: {
+		config: CandyConfig;
+		levelInfo: LevelInfo;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t, i18n } = useTranslation();
+
+		const iv = createConfigIv(levelInfo, config);
+		const exp =
+			calcExp(levelInfo.currentLevel, levelInfo.targetLevel, iv) -
+			levelInfo.expGot;
+		const result = calcDayToGetSleepExp(
+			exp,
+			config.expBonus,
+			config.score,
+			iv.nature.expGainsRate,
+			config.growthIncense,
+		);
+		const date = Intl.DateTimeFormat(i18n.language, {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		}).format(result.date);
+
+		return (
+			<>
+				<div className="expResult">
+					<section className="first">
+						<span className="lbl">{t("required exp")}:</span>
+						<div>{formatWithComma(exp)}</div>
+					</section>
+					<section>
+						<span className="lbl">{t("sleep-based training")}:</span>
+						<div>
+							<span>
+								{t("day unit", { count: result.days })}
+								<footer>({date})</footer>
+							</span>
+						</div>
+					</section>
+				</div>
+				<div className="form">
+					<section className="first">
+						<NatureForm config={config} onChange={onChange} />
+					</section>
+					<SleepConfigForm config={config} onChange={onChange} />
+				</div>
+			</>
+		);
+	},
+);
+
+const NapIslandPanel = React.memo(
+	({
+		config,
+		levelInfo,
+		onChange,
+	}: {
+		config: CandyConfig;
+		levelInfo: LevelInfo;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t, i18n } = useTranslation();
+
+		const iv = createConfigIv(levelInfo, config);
+		const exp =
+			calcExp(levelInfo.currentLevel, levelInfo.targetLevel, iv) -
+			levelInfo.expGot;
+		const result = calcDayToNapExp(
+			exp,
+			iv.nature.expGainsRate,
+			config.relaxingNapTicket,
+		);
+		const date = Intl.DateTimeFormat(i18n.language, {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		}).format(result.date);
+
+		return (
+			<>
+				<div className="expResult">
+					<section className="first">
+						<span className="lbl">{t("required exp")}:</span>
+						<div>{formatWithComma(exp)}</div>
+					</section>
+					<section>
+						<span className="lbl">{t("nap island training")}:</span>
+						<div>
+							<span>
+								{t("day unit", { count: trunc(result.days, 1) })}
+								<footer>({date})</footer>
+							</span>
+						</div>
+					</section>
+				</div>
+				<div className="form">
+					<section className="first">
+						<NatureForm config={config} onChange={onChange} />
+					</section>
+					<NapIslandForm config={config} onChange={onChange} />
 				</div>
 			</>
 		);
@@ -1163,6 +1289,10 @@ const StyledDialog = styled(Dialog)({
 				"& > div": {
 					display: "flex",
 					alignItems: "center",
+					textAlign: "right",
+					"& footer": {
+						fontSize: "0.6rem",
+					},
 				},
 				"& svg": {
 					width: "1rem",
