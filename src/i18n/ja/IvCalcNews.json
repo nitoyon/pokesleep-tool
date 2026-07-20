@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"nap island2": {
+				"headline": "アメ計算機能に [$t(sleep)] タブ・[$t(nap island training)] タブを追加しました。",
+				"detail": "アメ計算機能で$t(sleep-based training)と$t(nap island training)のシミュレーションを簡単に行えるようになりました。もはやアメ計算機能ではなくなってしまいましたが、互換性のためにアメ計算という名前は残しています。"
+			},
 			"nap island": {
 				"headline": "アメ計算機能の [$t(details)] タブで $t(nap island training)での育成をシミュレーションできるようになりました。",
 				"detail": "アメ計算機能の [$t(details)] タブに、[$t(additional training)] の設定を追加しました。この値を [$t(sleep-based training)] から [$t(nap island training)] に変更すると、$t(nap island training)での育成に必要な日数を確認できます。"

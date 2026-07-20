@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"nap island2": {
+				"headline": "Added [$t(sleep)] and [$t(nap island training)] tabs to the candy calculator.",
+				"detail": "The candy calculator now makes it easy to simulate $t(sleep-based training) and $t(nap island training). It's no longer just about candy, but let's keep calling it the \"Candy Calculator\" for compatibility's sake."
+			},
 			"nap island": {
 				"headline": "The [$t(details)] tab of the candy calculator can now simulate training with $t(nap island training).",
 				"detail": "Added an [$t(additional training)] setting to the [$t(details)] tab of the candy calculator. Changing this value from [$t(sleep-based training)] to [$t(nap island training)] lets you check the number of days needed for training with $t(nap island training)."

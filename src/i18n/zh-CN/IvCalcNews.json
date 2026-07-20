@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"nap island2": {
+				"headline": "在糖果计算功能中新增了[$t(sleep)]标签页和[$t(nap island training)]标签页。",
+				"detail": "现在可以在糖果计算功能中轻松模拟$t(sleep-based training)和$t(nap island training)。已经不太算是糖果计算了呢……不过为了兼容性，这个名字还是先留着吧。"
+			},
 			"nap island": {
 				"headline": "在糖果计算功能的[$t(details)]标签页中，现已支持模拟通过$t(nap island training)进行培养。",
 				"detail": "在糖果计算功能的[$t(details)]标签页中新增了[$t(additional training)]设置。将该值从[$t(sleep-based training)]变更为[$t(nap island training)]后，即可确认通过$t(nap island training)进行培养所需的天数。"
