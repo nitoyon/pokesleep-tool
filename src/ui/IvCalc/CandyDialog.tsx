@@ -270,14 +270,14 @@ const CandyDialog = React.memo(
 							<StyledTab label={t("details")} value={3} />
 						</StyledTabs>
 						{config.tabIndex !== 3 && (
-							<NormalCandyForm
+							<CandyPanel
 								config={config}
 								levelInfo={levelInfo}
 								onChange={setConfig}
 							/>
 						)}
 						{config.tabIndex === 3 && (
-							<DetailCandyForm
+							<DetailPanel
 								config={config}
 								levelInfo={levelInfo}
 								onChange={setConfig}
@@ -490,7 +490,7 @@ const StyledLevel = styled("div")({
 	},
 });
 
-const NormalCandyForm = React.memo(
+const CandyPanel = React.memo(
 	({
 		config,
 		levelInfo,
@@ -758,7 +758,7 @@ const calculateDetailCandy = (
 	};
 };
 
-const DetailCandyForm = React.memo(
+const DetailPanel = React.memo(
 	({
 		config,
 		levelInfo,
