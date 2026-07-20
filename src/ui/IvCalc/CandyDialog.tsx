@@ -502,15 +502,7 @@ const CandyPanel = React.memo(
 	}) => {
 		const { t } = useTranslation();
 
-		const iv = levelInfo.iv.clone({
-			level: levelInfo.currentLevel,
-			nature:
-				config.expFactor === 1
-					? new Nature("Timid")
-					: config.expFactor === 0
-						? new Nature("Serious")
-						: new Nature("Relaxed"),
-		});
+		const iv = createConfigIv(levelInfo, config);
 		const result: CalcExpAndCandyResult = calcExpAndCandy(
 			iv,
 			levelInfo.expGot,
@@ -578,6 +570,18 @@ const CandyPanel = React.memo(
 	},
 );
 
+function createConfigIv(levelInfo: LevelInfo, config: CandyConfig) {
+	return levelInfo.iv.clone({
+		level: levelInfo.currentLevel,
+		nature:
+			config.expFactor === 1
+				? new Nature("Timid")
+				: config.expFactor === 0
+					? new Nature("Serious")
+					: new Nature("Relaxed"),
+	});
+}
+
 /**
  * Calculate results for the detail candy form.
  *
@@ -600,15 +604,7 @@ const calculateDetailCandy = (
 	sleepResult?: CalcDayToGetSleepExpResult;
 	napResult?: CalcDayToGetSleepExpResult;
 } => {
-	let iv = levelInfo.iv.clone({
-		level: levelInfo.currentLevel,
-		nature:
-			config.expFactor === 1
-				? new Nature("Timid")
-				: config.expFactor === 0
-					? new Nature("Serious")
-					: new Nature("Relaxed"),
-	});
+	let iv = createConfigIv(levelInfo, config);
 	const exp =
 		calcExp(levelInfo.currentLevel, levelInfo.targetLevel, levelInfo.iv) -
 		levelInfo.expGot;
