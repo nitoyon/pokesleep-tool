@@ -259,19 +259,39 @@ const CandyDialog = React.memo(
 							maxExpLeft={maxExpLeft}
 							onLevelInfoChange={onLevelInfoChange}
 						/>
-						<Tabs value={config.tabIndex} onChange={onTabChange}>
-							<Tab label={t("simple")} value={0} />
-							<Tab label={t("details")} value={1} />
-						</Tabs>
+						<StyledTabs
+							value={config.tabIndex}
+							onChange={onTabChange}
+							variant="scrollable"
+						>
+							<StyledTab label={t("candy")} value={0} />
+							<StyledTab label={t("sleep")} value={1} />
+							<StyledTab label={t("nap island training")} value={2} />
+							<StyledTab label={t("details")} value={3} />
+						</StyledTabs>
 						{config.tabIndex === 0 && (
-							<NormalCandyForm
+							<CandyPanel
 								config={config}
 								levelInfo={levelInfo}
 								onChange={setConfig}
 							/>
 						)}
 						{config.tabIndex === 1 && (
-							<DetailCandyForm
+							<SleepPanel
+								config={config}
+								levelInfo={levelInfo}
+								onChange={setConfig}
+							/>
+						)}
+						{config.tabIndex === 2 && (
+							<NapIslandPanel
+								config={config}
+								levelInfo={levelInfo}
+								onChange={setConfig}
+							/>
+						)}
+						{config.tabIndex === 3 && (
+							<DetailPanel
 								config={config}
 								levelInfo={levelInfo}
 								onChange={setConfig}
@@ -298,6 +318,16 @@ const CandyDialog = React.memo(
 		);
 	},
 );
+
+const StyledTabs = styled(Tabs)({
+	minHeight: "38px",
+});
+const StyledTab = styled(Tab)({
+	minHeight: "40px",
+	minWidth: 0,
+	padding: "10px 9px 0",
+	textTransform: "none",
+});
 
 const LevelForm = React.memo(
 	({
@@ -474,7 +504,7 @@ const StyledLevel = styled("div")({
 	},
 });
 
-const NormalCandyForm = React.memo(
+const CandyPanel = React.memo(
 	({
 		config,
 		levelInfo,
@@ -486,30 +516,12 @@ const NormalCandyForm = React.memo(
 	}) => {
 		const { t } = useTranslation();
 
-		const iv = levelInfo.iv.clone({
-			level: levelInfo.currentLevel,
-			nature:
-				config.expFactor === 1
-					? new Nature("Timid")
-					: config.expFactor === 0
-						? new Nature("Serious")
-						: new Nature("Relaxed"),
-		});
+		const iv = createConfigIv(levelInfo, config);
 		const result: CalcExpAndCandyResult = calcExpAndCandy(
 			iv,
 			levelInfo.expGot,
 			levelInfo.targetLevel,
 			config.candyBoost,
-		);
-
-		const onExpFactorChange = React.useCallback(
-			(value: string) => {
-				onChange({
-					...config,
-					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
-				});
-			},
-			[config, onChange],
 		);
 
 		const onCanyBoostChange = React.useCallback(
@@ -549,23 +561,7 @@ const NormalCandyForm = React.memo(
 				</div>
 				<div className="form">
 					<section className="first">
-						<span className="lbl">{t("nature")}:</span>
-						<SelectEx
-							onChange={onExpFactorChange}
-							value={config.expFactor.toString()}
-						>
-							<MenuItem value="1">
-								<StyledNatureUpEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureUpEffect>
-							</MenuItem>
-							<MenuItem value="0">{t("nature effect.EXP gains")} ーー</MenuItem>
-							<MenuItem value="-1">
-								<StyledNatureDownEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureDownEffect>
-							</MenuItem>
-						</SelectEx>
+						<NatureForm config={config} onChange={onChange} />
 					</section>
 					<section>
 						<span className="lbl">{t("candy boost")}:</span>
@@ -587,6 +583,130 @@ const NormalCandyForm = React.memo(
 		);
 	},
 );
+
+const SleepPanel = React.memo(
+	({
+		config,
+		levelInfo,
+		onChange,
+	}: {
+		config: CandyConfig;
+		levelInfo: LevelInfo;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t, i18n } = useTranslation();
+
+		const iv = createConfigIv(levelInfo, config);
+		const exp =
+			calcExp(levelInfo.currentLevel, levelInfo.targetLevel, iv) -
+			levelInfo.expGot;
+		const result = calcDayToGetSleepExp(
+			exp,
+			config.expBonus,
+			config.score,
+			iv.nature.expGainsRate,
+			config.growthIncense,
+		);
+		const date = Intl.DateTimeFormat(i18n.language, {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		}).format(result.date);
+
+		return (
+			<>
+				<div className="expResult">
+					<section className="first">
+						<span className="lbl">{t("required exp")}:</span>
+						<div>{formatWithComma(exp)}</div>
+					</section>
+					<section>
+						<span className="lbl">{t("sleep-based training")}:</span>
+						<div>
+							<span>
+								{t("day unit", { count: result.days })}
+								<footer>({date})</footer>
+							</span>
+						</div>
+					</section>
+				</div>
+				<div className="form">
+					<section className="first">
+						<NatureForm config={config} onChange={onChange} />
+					</section>
+					<SleepConfigForm config={config} onChange={onChange} />
+				</div>
+			</>
+		);
+	},
+);
+
+const NapIslandPanel = React.memo(
+	({
+		config,
+		levelInfo,
+		onChange,
+	}: {
+		config: CandyConfig;
+		levelInfo: LevelInfo;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t, i18n } = useTranslation();
+
+		const iv = createConfigIv(levelInfo, config);
+		const exp =
+			calcExp(levelInfo.currentLevel, levelInfo.targetLevel, iv) -
+			levelInfo.expGot;
+		const result = calcDayToNapExp(
+			exp,
+			iv.nature.expGainsRate,
+			config.relaxingNapTicket,
+		);
+		const date = Intl.DateTimeFormat(i18n.language, {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		}).format(result.date);
+
+		return (
+			<>
+				<div className="expResult">
+					<section className="first">
+						<span className="lbl">{t("required exp")}:</span>
+						<div>{formatWithComma(exp)}</div>
+					</section>
+					<section>
+						<span className="lbl">{t("nap island training")}:</span>
+						<div>
+							<span>
+								{t("day unit", { count: trunc(result.days, 1) })}
+								<footer>({date})</footer>
+							</span>
+						</div>
+					</section>
+				</div>
+				<div className="form">
+					<section className="first">
+						<NatureForm config={config} onChange={onChange} />
+					</section>
+					<NapIslandForm config={config} onChange={onChange} />
+				</div>
+			</>
+		);
+	},
+);
+
+function createConfigIv(levelInfo: LevelInfo, config: CandyConfig) {
+	return levelInfo.iv.clone({
+		level: levelInfo.currentLevel,
+		nature:
+			config.expFactor === 1
+				? new Nature("Timid")
+				: config.expFactor === 0
+					? new Nature("Serious")
+					: new Nature("Relaxed"),
+	});
+}
 
 /**
  * Calculate results for the detail candy form.
@@ -610,15 +730,7 @@ const calculateDetailCandy = (
 	sleepResult?: CalcDayToGetSleepExpResult;
 	napResult?: CalcDayToGetSleepExpResult;
 } => {
-	let iv = levelInfo.iv.clone({
-		level: levelInfo.currentLevel,
-		nature:
-			config.expFactor === 1
-				? new Nature("Timid")
-				: config.expFactor === 0
-					? new Nature("Serious")
-					: new Nature("Relaxed"),
-	});
+	let iv = createConfigIv(levelInfo, config);
 	const exp =
 		calcExp(levelInfo.currentLevel, levelInfo.targetLevel, levelInfo.iv) -
 		levelInfo.expGot;
@@ -742,7 +854,7 @@ const calculateDetailCandy = (
 	};
 };
 
-const DetailCandyForm = React.memo(
+const DetailPanel = React.memo(
 	({
 		config,
 		levelInfo,
@@ -757,16 +869,6 @@ const DetailCandyForm = React.memo(
 		const onPokemonCandyChange = React.useCallback(
 			(pokemonCandy: number) => {
 				onChange({ ...config, pokemonCandy });
-			},
-			[config, onChange],
-		);
-
-		const onExpFactorChange = React.useCallback(
-			(value: string) => {
-				onChange({
-					...config,
-					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
-				});
 			},
 			[config, onChange],
 		);
@@ -824,37 +926,6 @@ const DetailCandyForm = React.memo(
 					...config,
 					additionalTraining: expBonus as "sleep" | "nap",
 				});
-			},
-			[config, onChange],
-		);
-
-		const onRelaxingNapTicketChange = React.useCallback(
-			(e: React.ChangeEvent<HTMLInputElement>) => {
-				onChange({
-					...config,
-					relaxingNapTicket: e.target.checked,
-				});
-			},
-			[config, onChange],
-		);
-
-		const onExpBonusChange = React.useCallback(
-			(expBonus: string) => {
-				onChange({ ...config, expBonus: parseInt(expBonus, 10) });
-			},
-			[config, onChange],
-		);
-
-		const onScoreChange = React.useCallback(
-			(score: number) => {
-				onChange({ ...config, score });
-			},
-			[config, onChange],
-		);
-
-		const onIncenseChange = React.useCallback(
-			(value: string) => {
-				onChange({ ...config, growthIncense: value as GrowthIncensePolicy });
 			},
 			[config, onChange],
 		);
@@ -930,23 +1001,7 @@ const DetailCandyForm = React.memo(
 						/>
 					</section>
 					<section>
-						<span className="lbl">{t("nature")}:</span>
-						<SelectEx
-							onChange={onExpFactorChange}
-							value={config.expFactor.toString()}
-						>
-							<MenuItem value="1">
-								<StyledNatureUpEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureUpEffect>
-							</MenuItem>
-							<MenuItem value="0">{t("nature effect.EXP gains")} ーー</MenuItem>
-							<MenuItem value="-1">
-								<StyledNatureDownEffect>
-									{t("nature effect.EXP gains")}
-								</StyledNatureDownEffect>
-							</MenuItem>
-						</SelectEx>
+						<NatureForm config={config} onChange={onChange} />
 					</section>
 				</div>
 				<div className="form">
@@ -1024,57 +1079,166 @@ const DetailCandyForm = React.memo(
 						</SelectEx>
 					</section>
 					<CollapseEx show={config.additionalTraining === "nap"}>
-						<section>
-							<span className="lbl">{t("relaxing nap ticket")}:</span>
-							<Switch
-								checked={config.relaxingNapTicket}
-								size="small"
-								onChange={onRelaxingNapTicketChange}
-							/>
-						</section>
+						<NapIslandForm config={config} onChange={onChange} />
 					</CollapseEx>
 					<CollapseEx show={config.additionalTraining === "sleep"}>
-						<section>
-							<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
-							<SelectEx
-								value={config.expBonus}
-								onChange={onExpBonusChange}
-								sx={{ width: "1.5rem" }}
-							>
-								<MenuItem value={0}>0</MenuItem>
-								<MenuItem value={1}>1</MenuItem>
-								<MenuItem value={2}>2</MenuItem>
-								<MenuItem value={3}>3</MenuItem>
-								<MenuItem value={4}>4</MenuItem>
-								<MenuItem value={5}>5</MenuItem>
-							</SelectEx>
-						</section>
-						<section>
-							<span className="lbl">{t("sleep score")}:</span>
-							<NumericSliderInput
-								value={config.score}
-								onChange={onScoreChange}
-								sx={{ width: "2rem", fontSize: "0.9rem" }}
-								min={1}
-								max={100}
-							/>
-						</section>
-						<section>
-							<span className="lbl">{t("growth incense")}:</span>
-							<SelectEx
-								value={config.growthIncense}
-								onChange={onIncenseChange}
-								sx={{ width: "auto", fontSize: "0.9rem" }}
-							>
-								<MenuItem value="none">{t("none")}</MenuItem>
-								<MenuItem value="fullMoon">{t("full moon")}</MenuItem>
-								<MenuItem value="gsd">{t("gsd")}</MenuItem>
-								<MenuItem value="every2Days">{t("every 2 days")}</MenuItem>
-								<MenuItem value="everyDay">{t("every day")}</MenuItem>
-							</SelectEx>
-						</section>
+						<SleepConfigForm config={config} onChange={onChange} />
 					</CollapseEx>
 				</div>
+			</>
+		);
+	},
+);
+
+const NatureForm = React.memo(
+	({
+		config,
+		onChange,
+	}: {
+		config: CandyConfig;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onExpFactorChange = React.useCallback(
+			(value: string) => {
+				onChange({
+					...config,
+					expFactor: parseInt(value, 10) as PlusMinusOneOrZero,
+				});
+			},
+			[config, onChange],
+		);
+
+		return (
+			<>
+				<span className="lbl">{t("nature")}:</span>
+				<SelectEx
+					onChange={onExpFactorChange}
+					value={config.expFactor.toString()}
+				>
+					<MenuItem value="1">
+						<StyledNatureUpEffect>
+							{t("nature effect.EXP gains")}
+						</StyledNatureUpEffect>
+					</MenuItem>
+					<MenuItem value="0">{t("nature effect.EXP gains")} ーー</MenuItem>
+					<MenuItem value="-1">
+						<StyledNatureDownEffect>
+							{t("nature effect.EXP gains")}
+						</StyledNatureDownEffect>
+					</MenuItem>
+				</SelectEx>
+			</>
+		);
+	},
+);
+
+const NapIslandForm = React.memo(
+	({
+		config,
+		onChange,
+	}: {
+		config: CandyConfig;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onRelaxingNapTicketChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({
+					...config,
+					relaxingNapTicket: e.target.checked,
+				});
+			},
+			[config, onChange],
+		);
+
+		return (
+			<section>
+				<span className="lbl">{t("relaxing nap ticket")}:</span>
+				<Switch
+					checked={config.relaxingNapTicket}
+					size="small"
+					onChange={onRelaxingNapTicketChange}
+				/>
+			</section>
+		);
+	},
+);
+
+const SleepConfigForm = React.memo(
+	({
+		config,
+		onChange,
+	}: {
+		config: CandyConfig;
+		onChange: (config: CandyConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onExpBonusChange = React.useCallback(
+			(expBonus: string) => {
+				onChange({ ...config, expBonus: parseInt(expBonus, 10) });
+			},
+			[config, onChange],
+		);
+
+		const onScoreChange = React.useCallback(
+			(score: number) => {
+				onChange({ ...config, score });
+			},
+			[config, onChange],
+		);
+
+		const onIncenseChange = React.useCallback(
+			(value: string) => {
+				onChange({ ...config, growthIncense: value as GrowthIncensePolicy });
+			},
+			[config, onChange],
+		);
+
+		return (
+			<>
+				<section>
+					<span className="lbl">{t("subskill.Sleep EXP Bonus")}:</span>
+					<SelectEx
+						value={config.expBonus}
+						onChange={onExpBonusChange}
+						sx={{ width: "1.5rem" }}
+					>
+						<MenuItem value={0}>0</MenuItem>
+						<MenuItem value={1}>1</MenuItem>
+						<MenuItem value={2}>2</MenuItem>
+						<MenuItem value={3}>3</MenuItem>
+						<MenuItem value={4}>4</MenuItem>
+						<MenuItem value={5}>5</MenuItem>
+					</SelectEx>
+				</section>
+				<section>
+					<span className="lbl">{t("sleep score")}:</span>
+					<NumericSliderInput
+						value={config.score}
+						onChange={onScoreChange}
+						sx={{ width: "2rem", fontSize: "0.9rem" }}
+						min={1}
+						max={100}
+					/>
+				</section>
+				<section>
+					<span className="lbl">{t("growth incense")}:</span>
+					<SelectEx
+						value={config.growthIncense}
+						onChange={onIncenseChange}
+						sx={{ width: "auto", fontSize: "0.9rem" }}
+					>
+						<MenuItem value="none">{t("none")}</MenuItem>
+						<MenuItem value="fullMoon">{t("full moon")}</MenuItem>
+						<MenuItem value="gsd">{t("gsd")}</MenuItem>
+						<MenuItem value="every2Days">{t("every 2 days")}</MenuItem>
+						<MenuItem value="everyDay">{t("every day")}</MenuItem>
+					</SelectEx>
+				</section>
 			</>
 		);
 	},
@@ -1098,7 +1262,7 @@ const StyledDialog = styled(Dialog)({
 			},
 			"& div.expResult": {
 				fontSize: "0.9rem",
-				margin: "0 .2rem 0",
+				margin: "0 0",
 				padding: "0.5rem 0.5rem 0 0.5rem",
 				"& > section": {
 					paddingTop: "0.2rem",
@@ -1109,7 +1273,7 @@ const StyledDialog = styled(Dialog)({
 				padding: "0.3rem 0.5rem",
 				borderRadius: "0.9rem",
 				fontSize: "0.9rem",
-				margin: "0.5rem .5rem 0",
+				margin: "0.5rem .3rem 0",
 			},
 			"& section": {
 				display: "flex",
@@ -1125,6 +1289,10 @@ const StyledDialog = styled(Dialog)({
 				"& > div": {
 					display: "flex",
 					alignItems: "center",
+					textAlign: "right",
+					"& footer": {
+						fontSize: "0.6rem",
+					},
 				},
 				"& svg": {
 					width: "1rem",
