@@ -1198,7 +1198,10 @@ export function getCurrentFavoriteBerries(parameter: StrengthParameter): {
 			}
 		}
 		types = [...parameter.favoriteType];
-	} else if (defaultAreaBerries.length === 3) {
+	} else if (
+		defaultAreaBerries.length === 3 &&
+		!isExpertField(parameter.fieldIndex)
+	) {
 		// type is fixed by the current area
 		reasons = ["set for field", "set for field", "set for field"];
 		types = defaultAreaBerries;

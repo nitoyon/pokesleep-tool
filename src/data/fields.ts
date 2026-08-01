@@ -88,6 +88,9 @@ export function getFavoriteBerries(index: number): PokemonType[] {
 		// Greengrass Isle (Expert)
 		case 7:
 			return [];
+		// Cyan Beach (Expert)
+		case 8:
+			return ["water", "fairy", "flying"];
 	}
 	return [];
 }
