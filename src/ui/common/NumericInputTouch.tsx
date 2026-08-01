@@ -115,6 +115,7 @@ const NumericInputTouch = React.memo(
 					transform: computed.transform,
 					top: inputRect.top - containerRect.top,
 					left: inputRect.left - containerRect.left,
+					textAlign: computed.textAlign as React.CSSProperties["textAlign"],
 				});
 			}, []);
 
