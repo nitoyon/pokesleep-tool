@@ -81,6 +81,18 @@ export type CalcDayToGetSleepExpResult = {
 	date: Date;
 };
 
+/** Result of calcDayToNapExp function. */
+export type CalcDayToGetNapExpResult = CalcDayToGetSleepExpResult & {
+	/** Total minutes required to get nap EXP */
+	minutes: number;
+	/** Days required to get nap EXP */
+	d: number;
+	/** Hours required to get nap EXP */
+	h: number;
+	/** Minutes required to get nap EXP */
+	m: number;
+};
+
 /**
  * Calculate the experience and candy required to level up a Pokémon.
  * @param iv The Pokémon's IV containing the current level and nature.
@@ -390,19 +402,26 @@ export function getMoonAge(date: Date): number {
  * Calculate the number of days needed to earn the specified EXP
  * through Nap Island.
  * @param exp Target EXP to earn.
+ * @param accumulatedExp Accumulated EXP (Already earned).
  * @param expGainRate The Pokémon's exp gain rate by its nature.
  * @param today Today.
  * @returns The number of days.
  */
 export function calcDayToNapExp(
 	exp: number,
+	accumulatedExp: number,
 	expGainRate: number,
 	ticket: boolean,
-): CalcDayToGetSleepExpResult {
-	const ret: CalcDayToGetSleepExpResult = {
-		exp,
+): CalcDayToGetNapExpResult {
+	const requiredExp = Math.max(0, exp - accumulatedExp);
+	const ret: CalcDayToGetNapExpResult = {
+		exp: requiredExp,
 		expExceeded: 0,
 		days: Number.POSITIVE_INFINITY,
+		minutes: Number.POSITIVE_INFINITY,
+		d: Number.POSITIVE_INFINITY,
+		h: Number.POSITIVE_INFINITY,
+		m: Number.POSITIVE_INFINITY,
 		date: new Date(8640000000000000),
 	};
 
@@ -410,16 +429,20 @@ export function calcDayToNapExp(
 
 	// before 7 days are over: only gain half EXP
 	if (exp < baseExp * 3.5) {
-		ret.days = exp / (baseExp / 2);
+		ret.days = requiredExp / (baseExp / 2);
 	} else if (exp < baseExp * 7) {
 		ret.days = 7;
 		ret.exp = baseExp * 7;
-		ret.expExceeded = baseExp * 7 - exp;
+		ret.expExceeded = baseExp * 7 - requiredExp;
 	} else {
-		ret.days = exp / baseExp;
+		ret.days = requiredExp / baseExp;
 	}
+	ret.minutes = Math.ceil(ret.days * 24 * 60);
+	ret.d = Math.floor(ret.minutes / 24 / 60);
+	ret.h = Math.floor(ret.minutes / 60) % 24;
+	ret.m = ret.minutes % 60;
 
 	ret.date = new Date();
-	ret.date.setDate(ret.date.getDate() + ret.days);
+	ret.date.setTime(ret.date.getTime() + ret.minutes * 60 * 1000);
 	return ret;
 }

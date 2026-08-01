@@ -491,12 +491,12 @@ describe("calcDayToNapExp", () => {
 		const rate = 1;
 		const ticket = false;
 
-		expect(calcDayToNapExp(75, rate, ticket).days).toBeCloseTo(1);
-		expect(calcDayToNapExp(75 * 2, rate, ticket).days).toBeCloseTo(2);
-		expect(calcDayToNapExp(150 * 7, rate, ticket).days).toBeCloseTo(7);
-		expect(calcDayToNapExp(1500, rate, ticket).days).toBeCloseTo(10);
+		expect(calcDayToNapExp(75, 0, rate, ticket).days).toBeCloseTo(1);
+		expect(calcDayToNapExp(75 * 2, 0, rate, ticket).days).toBeCloseTo(2);
+		expect(calcDayToNapExp(150 * 7, 0, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(1500, 0, rate, ticket).days).toBeCloseTo(10);
 
-		const res = calcDayToNapExp(150 * 4, rate, ticket);
+		const res = calcDayToNapExp(150 * 4, 0, rate, ticket);
 		expect(res.days).toBeCloseTo(7);
 		expect(res.exp).toBe(150 * 7);
 		expect(res.expExceeded).toBe(150 * 7 - 150 * 4);
@@ -507,9 +507,9 @@ describe("calcDayToNapExp", () => {
 		const rate = 1;
 		const ticket = true;
 
-		expect(calcDayToNapExp(300 * 6.9, rate, ticket).days).toBeCloseTo(6.9);
-		expect(calcDayToNapExp(600 * 7, rate, ticket).days).toBeCloseTo(7);
-		expect(calcDayToNapExp(600 * 10, rate, ticket).days).toBeCloseTo(10);
+		expect(calcDayToNapExp(300 * 6.9, 0, rate, ticket).days).toBeCloseTo(6.9);
+		expect(calcDayToNapExp(600 * 7, 0, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(600 * 10, 0, rate, ticket).days).toBeCloseTo(10);
 	});
 
 	test("should calculate days with expGainRate=1.18 (EXP up nature)", () => {
@@ -517,8 +517,8 @@ describe("calcDayToNapExp", () => {
 		const rate = 1.18;
 		const ticket = false;
 
-		expect(calcDayToNapExp(88.5 * 6.9, rate, ticket).days).toBeCloseTo(6.9);
-		expect(calcDayToNapExp(177 * 7, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(88.5 * 6.9, 0, rate, ticket).days).toBeCloseTo(6.9);
+		expect(calcDayToNapExp(177 * 7, 0, rate, ticket).days).toBeCloseTo(7);
 	});
 
 	test("should calculate days with expGainRate=0.82 (EXP down nature, clamped to 1)", () => {
@@ -526,13 +526,13 @@ describe("calcDayToNapExp", () => {
 		const rate = 0.82;
 		const ticket = false;
 
-		expect(calcDayToNapExp(75, rate, ticket).days).toBeCloseTo(1);
-		expect(calcDayToNapExp(75 * 6.9, rate, ticket).days).toBeCloseTo(6.9);
-		expect(calcDayToNapExp(150 * 7, rate, ticket).days).toBeCloseTo(7);
-		expect(calcDayToNapExp(1500, rate, ticket).days).toBeCloseTo(10);
+		expect(calcDayToNapExp(75, 0, rate, ticket).days).toBeCloseTo(1);
+		expect(calcDayToNapExp(75 * 6.9, 0, rate, ticket).days).toBeCloseTo(6.9);
+		expect(calcDayToNapExp(150 * 7, 0, rate, ticket).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(1500, 0, rate, ticket).days).toBeCloseTo(10);
 	});
 
 	test("should echo the input exp", () => {
-		expect(calcDayToNapExp(1234, 1, false).exp).toBe(1234);
+		expect(calcDayToNapExp(1234, 0, 1, false).exp).toBe(1234);
 	});
 });

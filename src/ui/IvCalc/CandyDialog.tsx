@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { getCandyName } from "../../data/pokemons";
 import calcExpAndCandy, {
 	type BoostEvent,
+	type CalcDayToGetNapExpResult,
 	type CalcDayToGetSleepExpResult,
 	type CalcExpAndCandyResult,
 	type CalcLevelResult,
@@ -88,6 +89,8 @@ type CandyConfig = {
 	growthIncense: GrowthIncensePolicy;
 	/** Use relaxing nap ticket or not */
 	relaxingNapTicket: boolean;
+	/** Accumulated EXP at Nap Iasland */
+	accumulatedExp: number;
 };
 
 /** Adds Candy Boost costs to CalcLevelResult */
@@ -135,6 +138,7 @@ const CandyDialog = React.memo(
 			score: 100,
 			growthIncense: "none",
 			relaxingNapTicket: false,
+			accumulatedExp: 0,
 		});
 		const [shouldRender, setShouldRender] = React.useState(false);
 		const [turnCandyOpen, setTurnCandyOpen] = React.useState(false);
@@ -653,19 +657,35 @@ const NapIslandPanel = React.memo(
 	}) => {
 		const { t, i18n } = useTranslation();
 
+		const onAccumulatedExpChange = React.useCallback(
+			(accumulatedExp: number) => {
+				onChange({
+					...config,
+					accumulatedExp,
+				});
+			},
+			[config, onChange],
+		);
+
 		const iv = createConfigIv(levelInfo, config);
 		const exp =
 			calcExp(levelInfo.currentLevel, levelInfo.targetLevel, iv) -
 			levelInfo.expGot;
 		const result = calcDayToNapExp(
 			exp,
+			config.accumulatedExp,
 			iv.nature.expGainsRate,
 			config.relaxingNapTicket,
 		);
+		const d = result.d;
+		const h = result.h;
+		const m = result.m;
 		const date = Intl.DateTimeFormat(i18n.language, {
 			year: "numeric",
 			month: "short",
 			day: "numeric",
+			hour: "numeric",
+			minute: "numeric",
 		}).format(result.date);
 
 		return (
@@ -679,7 +699,7 @@ const NapIslandPanel = React.memo(
 						<span className="lbl">{t("nap island training")}:</span>
 						<div>
 							<span>
-								{t("day unit", { count: trunc(result.days, 1) })}
+								{d > 0 ? t("dhhmm", { d, h, m }) : t("hhmm_short", { h, m })}
 								<footer>({date})</footer>
 							</span>
 						</div>
@@ -690,6 +710,16 @@ const NapIslandPanel = React.memo(
 						<NatureForm config={config} onChange={onChange} />
 					</section>
 					<NapIslandForm config={config} onChange={onChange} />
+					<section>
+						<span className="lbl">{t("accumulated exp")}:</span>
+						<NumericSliderInput
+							value={config.accumulatedExp}
+							sx={{ width: "3.5rem", fontSize: "0.9rem" }}
+							min={0}
+							max={exp === 0 ? 9999 : exp}
+							onChange={onAccumulatedExpChange}
+						/>
+					</section>
 				</div>
 			</>
 		);
@@ -728,7 +758,7 @@ const calculateDetailCandy = (
 	candyBoostResult: CalcLevelBoostResult;
 	normalCandyResult: CalcLevelBoostResult;
 	sleepResult?: CalcDayToGetSleepExpResult;
-	napResult?: CalcDayToGetSleepExpResult;
+	napResult?: CalcDayToGetNapExpResult;
 } => {
 	let iv = createConfigIv(levelInfo, config);
 	const exp =
@@ -827,7 +857,7 @@ const calculateDetailCandy = (
 	);
 
 	let sleepResult: CalcDayToGetSleepExpResult | undefined;
-	let napResult: CalcDayToGetSleepExpResult | undefined;
+	let napResult: CalcDayToGetNapExpResult | undefined;
 	if (normalCandyResult.expLeft > 0) {
 		if (config.additionalTraining === "sleep") {
 			sleepResult = calcDayToGetSleepExp(
@@ -840,6 +870,7 @@ const calculateDetailCandy = (
 		} else {
 			napResult = calcDayToNapExp(
 				normalCandyResult.expLeft,
+				0,
 				iv.nature.expGainsRate,
 				config.relaxingNapTicket,
 			);
