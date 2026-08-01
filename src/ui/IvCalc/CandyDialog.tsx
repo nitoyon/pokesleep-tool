@@ -88,6 +88,8 @@ type CandyConfig = {
 	growthIncense: GrowthIncensePolicy;
 	/** Use relaxing nap ticket or not */
 	relaxingNapTicket: boolean;
+	/** Accumulated EXP at Nap Iasland */
+	accumulatedExp: number;
 };
 
 /** Adds Candy Boost costs to CalcLevelResult */
@@ -135,6 +137,7 @@ const CandyDialog = React.memo(
 			score: 100,
 			growthIncense: "none",
 			relaxingNapTicket: false,
+			accumulatedExp: 0,
 		});
 		const [shouldRender, setShouldRender] = React.useState(false);
 		const [turnCandyOpen, setTurnCandyOpen] = React.useState(false);
@@ -653,12 +656,23 @@ const NapIslandPanel = React.memo(
 	}) => {
 		const { t, i18n } = useTranslation();
 
+		const onAccumulatedExpChange = React.useCallback(
+			(accumulatedExp: number) => {
+				onChange({
+					...config,
+					accumulatedExp,
+				});
+			},
+			[config, onChange],
+		);
+
 		const iv = createConfigIv(levelInfo, config);
 		const exp =
 			calcExp(levelInfo.currentLevel, levelInfo.targetLevel, iv) -
 			levelInfo.expGot;
 		const result = calcDayToNapExp(
 			exp,
+			config.accumulatedExp,
 			iv.nature.expGainsRate,
 			config.relaxingNapTicket,
 		);
@@ -690,6 +704,16 @@ const NapIslandPanel = React.memo(
 						<NatureForm config={config} onChange={onChange} />
 					</section>
 					<NapIslandForm config={config} onChange={onChange} />
+					<section>
+						<span className="lbl">{t("accumulated exp")}:</span>
+						<NumericSliderInput
+							value={config.accumulatedExp}
+							sx={{ width: "3.5rem", fontSize: "0.9rem" }}
+							min={0}
+							max={exp === 0 ? 9999 : exp}
+							onChange={onAccumulatedExpChange}
+						/>
+					</section>
 				</div>
 			</>
 		);
