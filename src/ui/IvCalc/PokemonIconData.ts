@@ -2127,6 +2127,18 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#ae7376", "#ebb76a", "#ffffff", "#55524e"],
 		shinyPallet: ["#5682c6", "#9e9a96", "#fefefe", "#3e5a96"],
 	},
+	// Hawlucha
+	"701": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.1, color: 1 },
+			{ x: 0, y: 0.1, w: 1, h: 0.2, color: 2 },
+			{ x: 0, y: 0.4, w: 1, h: 0.4, color: 3 },
+			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 4 },
+		],
+		normalPallet: ["#ffffff", "#e4914a", "#7fd6ae", "#d7586c", "#f8ee6e"],
+		shinyPallet: ["#9e4558", "#a9c562", "#818597", "#404249", "#f8ee6e"],
+	},
 	// Sylveon
 	"700": {
 		rects: [

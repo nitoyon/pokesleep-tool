@@ -6769,6 +6769,40 @@
 		}
 	},
 	{
+		"id": 701,
+		"name": "Hawlucha",
+		"arrival": "2026-08-10",
+		"sleepType": "slumbering",
+		"exp": 600,
+		"type": "flying",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 16,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": null,
+		"evolutionCount": -1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 2,
+			"c2": 5,
+			"c3": 7
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
 		"id": 702,
 		"name": "Dedenne",
 		"arrival": "2024-03-11",
