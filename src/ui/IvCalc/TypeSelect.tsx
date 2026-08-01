@@ -10,6 +10,7 @@ const TypeSelect = React.memo(
 		type,
 		disabled,
 		deletable,
+		candidates,
 		onChange,
 		onClick,
 		onDelete,
@@ -18,6 +19,7 @@ const TypeSelect = React.memo(
 		type: PokemonType;
 		disabled?: boolean;
 		deletable?: boolean;
+		candidates?: PokemonType[];
 		onChange: (value: PokemonType) => void;
 		onClick?: (value: PokemonType) => void;
 		onDelete?: (value: PokemonType) => void;
@@ -48,7 +50,7 @@ const TypeSelect = React.memo(
 			setOpen(false);
 		}, []);
 
-		const menuItems = PokemonTypes.map((t) => (
+		const menuItems = (candidates ?? PokemonTypes).map((t) => (
 			<TypeButton
 				key={t}
 				type={t}

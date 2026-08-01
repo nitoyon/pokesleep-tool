@@ -2,7 +2,7 @@ import { MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { isExpertField } from "../../../data/fields";
+import { getFavoriteBerries, isExpertField } from "../../../data/fields";
 import type { PokemonType } from "../../../data/pokemons";
 import {
 	type ExpertEffects,
@@ -23,6 +23,13 @@ const FavoriteBerrySelect = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		const expert = isExpertField(value.fieldIndex);
+		const candidates = React.useMemo(() => {
+			const berries = getFavoriteBerries(value.fieldIndex);
+			if (expert && berries.length === 3) {
+				return berries;
+			}
+			return undefined;
+		}, [value, expert]);
 		const { types, reasons } = React.useMemo(
 			() => getCurrentFavoriteBerries(value),
 			[value],
@@ -90,6 +97,7 @@ const FavoriteBerrySelect = React.memo(
 								<TypeSelect
 									type={types[0]}
 									size="small"
+									candidates={candidates}
 									onChange={onFavoriteBerryChange1}
 								/>
 							) : (
