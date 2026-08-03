@@ -186,7 +186,6 @@
 	"lottery count": "추첨을 진행한 횟수",
 	"always 81%+": "항상 81% 이상",
 	"charge energy not implemented": "현재로서는, 기력 차지S 에 의한 기력 회수가 계산에 포함되지 않았습니다.",
-	"berry juice assumption": "나무열매쥬스 획득 확률은 RaenonX의 잠정값 (20%)을 사용합니다.",
 	"help yield": "$t(berry)$t(ingredient)수",
 	"help yield description": "도움 {{n}}회당 획득하는 $t(berry)・$t(ingredient)의 평균 수량입니다.",
 	"helps for cap": "최대 필요 $t(help count)",

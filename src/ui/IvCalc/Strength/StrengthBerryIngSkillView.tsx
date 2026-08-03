@@ -323,23 +323,6 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 						<InfoButton onClick={onStockInfoClick} />
 					</footer>
 				)}
-				{strength.pokemonIv.pokemon.skill ===
-					"Energy for Everyone S (Berry Juice)" && (
-					<div
-						style={{
-							gridColumn: "1 / -1",
-							border: "1px solid red",
-							background: "#ffeeee",
-							color: "red",
-							fontSize: "0.8rem",
-							borderRadius: "0.5rem",
-							margin: ".2rem .5rem 0",
-							padding: "0 0.3rem",
-						}}
-					>
-						{t("berry juice assumption")}
-					</div>
-				)}
 				<BerryHelpDialog
 					open={berryHelpOpen}
 					onClose={onBerryHelpClose}

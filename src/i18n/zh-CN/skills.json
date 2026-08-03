@@ -110,7 +110,7 @@
 		},
 		"Energy for Everyone S (Berry Juice)": {
 			"name": "树果汁 (活力全体疗愈S)",
-			"strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+			"strength": "$t(skills.Energy for Everyone S.strength)树果汁获取概率基于 RaenonX 的统计数据 (18.5%)。",
 			"desc": "$t(skills.Energy for Everyone S.desc)有时候还会额外获得树果汁。",
 			"detail": "$t(skills.Energy for Everyone S.detail) 树果汁最多可持有5个。获取率约为20%。"
 		},

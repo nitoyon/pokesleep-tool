@@ -186,7 +186,6 @@
 	"lottery count": "Lottery count",
 	"always 81%+": "Always 81%+",
 	"charge energy not implemented": "Currently, energy recovery via Charge Energy S is not included in the calculations.",
-	"berry juice assumption": "The Berry Juice acquisition rate uses the RaenonX tentative value (20%).",
 	"help yield": "Yield",
 	"help yield description": "The average number of berries and ingredients collected over {{n}} helps.",
 	"helps for cap": "Required helps for cap",

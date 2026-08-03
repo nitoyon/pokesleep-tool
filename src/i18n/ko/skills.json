@@ -110,7 +110,7 @@
 		},
 		"Energy for Everyone S (Berry Juice)": {
 			"name": "나무열매쥬스 (기력 올S)",
-			"strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+			"strength": "$t(skills.Energy for Everyone S.strength)나무열매쥬스 획득 확률은 RaenonX의 데이터(18.5%)를 기반으로 합니다.",
 			"desc": "$t(skills.Energy for Everyone S.desc) 가끔 나무열매쥬스를 추가로 획득한다.",
 			"detail": "$t(skills.Energy for Everyone S.detail) 나무열매 주스는 최대 5개까지 보유할 수 있습니다. 획득률은 약 20% 정도로 알려져 있습니다."
 		},

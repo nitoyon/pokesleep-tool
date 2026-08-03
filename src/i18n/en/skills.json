@@ -110,7 +110,7 @@
 		},
 		"Energy for Everyone S (Berry Juice)": {
 			"name": "Berry Juice (Energy for Everyone S)",
-			"strength": "$t(skills.Energy for Everyone S.strength) $t(berry juice assumption)",
+			"strength": "$t(skills.Energy for Everyone S.strength) The Berry Juice acquisition rate is based on RaenonX's data (18.5%).",
 			"desc": "$t(skills.Energy for Everyone S.desc) Sometimes, in addition, gets Berry Juice.",
 			"detail": "$t(skills.Energy for Everyone S.detail) Berry Juice can be held up to 5. The acquisition rate is estimated at approximately 20%."
 		},

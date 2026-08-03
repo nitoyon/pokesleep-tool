@@ -187,7 +187,6 @@
 	"lottery count": "抽選回数",
 	"always 81%+": "常に81%以上",
 	"charge energy not implemented": "現在、げんきチャージSによるげんき回復は考慮されていません。",
-	"berry juice assumption": "きのみジュース取得確率は RaenonX の暫定値 (20%) を利用しています。",
 	"help yield": "$t(berry)$t(ingredient)数",
 	"help yield description": "おてつだい{{n}}回で拾う「$t(berry)・$t(ingredient)」の平均個数。",
 	"helps for cap": "最大貯め必要$t(help count)",

@@ -110,7 +110,7 @@
 		},
 		"Energy for Everyone S (Berry Juice)": {
 			"name": "きのみジュース (げんきオールS)",
-			"strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+			"strength": "$t(skills.Energy for Everyone S.strength)きのみジュース取得確率は RaenonX での集計結果 (18.5%) を利用しています。",
 			"desc": "$t(skills.Energy for Everyone S.desc)ときどき、追加できのみジュースをゲットします。",
 			"detail": "$t(skills.Energy for Everyone S.detail)きのみジュースは最大5個まで保持できます。きのみジュースの取得率は約20%程度と考えられています。"
 		},

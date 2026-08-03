@@ -184,7 +184,6 @@
 	"lottery count": "抽选次数",
 	"always 81%+": "始终超过81%",
 	"charge energy not implemented": "目前不考虑活力填充 S 的带来的活力回复。",
-	"berry juice assumption": "树果汁获取概率使用 RaenonX 的暂定值 (20%)。",
 	"help yield": "$t(berry)$t(ingredient)数量",
 	"help yield description": "每$t(help count)次可获得的$t(berry)和$t(ingredient)的平均数量。",
 	"helps for cap": "最大所需$t(help count)",

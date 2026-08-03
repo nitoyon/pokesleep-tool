@@ -96,11 +96,25 @@ export const superLuckShardRate = 0.112;
 export const superLuckShard5Rate = 0.028;
 
 /**
+ * Great Success rate for Disguise
+ *
+ * ref: https://pks.raenonx.cc/en/mainskill/info/16
+ */
+export const disguiseSuccessRate = 0.185;
+
+/**
  * Success proberbility for Hyper Cutter
  *
  * ref: https://pks.raenonx.cc/en/mainskill/24
  */
 export const hyperCutterSuccess = 0.1668;
+
+/**
+ * Berry Juice aqquisition rate
+ *
+ * ref: https://pks.raenonx.cc/en/mainskill/info/32
+ */
+export const berryJuiceRate = 0.185;
 
 export function getMaxSkillLevel(skill: MainSkillName): 6 | 7 | 8 {
 	if (

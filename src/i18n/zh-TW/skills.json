@@ -110,7 +110,7 @@
 		},
 		"Energy for Everyone S (Berry Juice)": {
 			"name": "樹果汁 (活力全體療癒S)",
-			"strength": "$t(skills.Energy for Everyone S.strength)$t(berry juice assumption)",
+			"strength": "$t(skills.Energy for Everyone S.strength)樹果汁獲取機率根據 RaenonX 的統計數據 (18.5%)。",
 			"desc": "$t(skills.Energy for Everyone S.desc)有時候還會額外獲得樹果汁。",
 			"detail": "$t(skills.Energy for Everyone S.detail) 樹果汁最多可持有5個。獲取率約為20%。"
 		},

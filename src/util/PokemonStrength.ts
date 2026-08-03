@@ -15,6 +15,8 @@ import {
 } from "./HelpCount";
 import type { MainSkillName } from "./MainSkill";
 import {
+	berryJuiceRate,
+	disguiseSuccessRate,
 	getDracoMeteorBerryCount,
 	getIngredientDrawIngredients,
 	getLunarBlessingBerryCount,
@@ -655,15 +657,13 @@ class PokemonStrength {
 				};
 			}
 			case "Energy for Everyone S (Berry Juice)":
-				// Use probability 20% at RaenonX
-				// https://pks.raenonx.cc/en/mainskill/info/32
 				return {
 					skillValue,
 					skillStrength: 0,
 					skillValuePerTrigger,
-					skillValue2: 0.2 * skillCount,
+					skillValue2: berryJuiceRate * skillCount,
 					skillStrength2: 0,
-					skillValuePerTrigger2: 0.2,
+					skillValuePerTrigger2: berryJuiceRate,
 				};
 			case "Energy for Everyone S (Lunar Blessing)": {
 				const ret = calculateBerryBurstStrength(
@@ -740,7 +740,8 @@ class PokemonStrength {
 
 				// Calculate great success
 				// https://pks.raenonx.cc/en/docs/view/calc/main-skill#disguise
-				const successRate = 1 - (1 - 0.18) ** (skillCount / days);
+				const successRate =
+					1 - (1 - disguiseSuccessRate) ** (skillCount / days);
 
 				const strength = ret.total * skillCount + ret.total * successRate * 2;
 				return {
