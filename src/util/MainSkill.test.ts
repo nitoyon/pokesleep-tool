@@ -183,5 +183,37 @@ describe("MainSkill", () => {
 				).toBe(false);
 			});
 		});
+
+		describe("Riolu evolution special cases", () => {
+			test("Riolu evolves to Dream Shard Magnet S (Aura Sphere), matching both Dream Shard Magnet S and Charge Strength S", () => {
+				const riolu = pokemons.find((x) => x.name === "Riolu");
+				if (riolu === undefined) {
+					throw new Error("Riolu not found in pokemons data");
+				}
+				const iv = new PokemonIv({ pokemonName: "Riolu" });
+
+				expect(
+					matchMainSkillName(riolu, "Dream Shard Magnet S", true, iv),
+				).toBe(true);
+				expect(matchMainSkillName(riolu, "Charge Strength S", true, iv)).toBe(
+					true,
+				);
+				expect(matchMainSkillName(riolu, "Ingredient Magnet S", true, iv)).toBe(
+					false,
+				);
+			});
+
+			test("Riolu without evolved flag keeps its normal skill", () => {
+				const riolu = pokemons.find((x) => x.name === "Riolu");
+				if (riolu === undefined) {
+					throw new Error("Riolu not found in pokemons data");
+				}
+				const iv = new PokemonIv({ pokemonName: "Riolu" });
+
+				expect(matchMainSkillName(riolu, "Charge Strength S", false, iv)).toBe(
+					false,
+				);
+			});
+		});
 	});
 });
