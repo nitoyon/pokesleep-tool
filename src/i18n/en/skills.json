@@ -72,6 +72,12 @@
 			"desc": "$t(skills.Dream Shard Magnet S.desc)",
 			"detail": "$t(skills.random)"
 		},
+		"Dream Shard Magnet S (Aura Sphere)": {
+			"name": "Aura Sphere (Dream Shard Magnet S)",
+			"strength": "",
+			"desc": "Gets Dream Shards and Snorlax gains additional Strength.",
+			"detail": "$t(skills.Dream Shard Magnet S.detail)"
+		},
 		"Energizing Cheer S": {
 			"name": "Energizing Cheer S",
 			"strength": "Energy recovery by this skill is not counted towards the total strength amount.",

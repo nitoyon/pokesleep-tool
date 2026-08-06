@@ -512,6 +512,9 @@ function getSkillValueText2(
 	if (skill === "Cooking Assist S (Bulk Up)") {
 		return getNormalSkillValueText(t, t("tasty chance increase"));
 	}
+	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
+		return getChargeStrengthValueText(strength, skillLevel, t);
+	}
 	return [null, null];
 }
 
@@ -605,16 +608,19 @@ function getChargeStrengthValueText(
 			</small>
 		);
 	}
-	const val = getSkillValue(skill, skillLevel);
+	const val =
+		skill === "Dream Shard Magnet S (Aura Sphere)"
+			? getSkillSubValue(skill, skillLevel)
+			: getSkillValue(skill, skillLevel);
 	return [
 		<>
 			{text}
 			<br />
-			<span className="box box4">{val}</span> × (1 +{" "}
+			<span className="box box4">{formatWithComma(val)}</span> × (1 +{" "}
 			<span className="box box5">{param.fieldBonus}%</span>)
 			<ul className="detail">
 				<li>
-					<span className="box box4">{val}</span>:{" "}
+					<span className="box box4">{formatWithComma(val)}</span>:{" "}
 					{t("base value", { value: t("strength2") })}
 					{detail}
 				</li>
@@ -675,7 +681,10 @@ function getDreamShardMagnetValueText(
 	const bonus = getEventBonus(param.event, param.customEventBonus);
 	const shardBonus = bonus.dreamShard;
 	const text = t("value per skill", { value: t("dream shard") });
-	if (skill === "Dream Shard Magnet S") {
+	if (
+		skill === "Dream Shard Magnet S" ||
+		skill === "Dream Shard Magnet S (Aura Sphere)"
+	) {
 		if (shardBonus === 1) {
 			return [text, null];
 		} else {

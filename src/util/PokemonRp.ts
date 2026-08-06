@@ -381,6 +381,12 @@ class PokemonRp {
 					this.iv.skillLevel - 1
 				];
 			}
+			if (this.iv.pokemon.skill === "Dream Shard Magnet S (Aura Sphere)") {
+				// 1-7: estimated
+				return [1001, 1424, 1964, 2712, 3744, 5173, 6754, 8543][
+					this.iv.skillLevel - 1
+				];
+			}
 			return [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303][
 				this.iv.skillLevel - 1
 			];

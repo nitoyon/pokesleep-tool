@@ -72,6 +72,12 @@
 			"desc": "$t(skills.Dream Shard Magnet S.desc)",
 			"detail": "$t(skills.random)"
 		},
+		"Dream Shard Magnet S (Aura Sphere)": {
+			"name": "はどうだん (ゆめのかけらゲットS)",
+			"strength": "",
+			"desc": "ゆめのかけらをゲットし、さらにカビゴンのエナジーを増やします。",
+			"detail": "$t(skills.Dream Shard Magnet S.detail)"
+		},
 		"Energizing Cheer S": {
 			"name": "げんきエールS",
 			"strength": "スキルによるげんき回復は、合計エナジー量には換算していません。",

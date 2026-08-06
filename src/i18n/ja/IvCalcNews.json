@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.7.0": {
+				"headline": "v3.7.0 でのバランス調整に対応しました。",
+				"detail": "$t(own research note)"
+			},
 			"nap island2": {
 				"headline": "アメ計算機能に [$t(sleep)] タブ・[$t(nap island training)] タブを追加しました。",
 				"detail": "アメ計算機能で$t(sleep-based training)と$t(nap island training)のシミュレーションを簡単に行えるようになりました。もはやアメ計算機能ではなくなってしまいましたが、互換性のためにアメ計算という名前は残しています。"

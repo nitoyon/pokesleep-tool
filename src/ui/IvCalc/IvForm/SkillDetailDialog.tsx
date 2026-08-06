@@ -359,7 +359,10 @@ function getSkillUnit(skill: MainSkillName, t: typeof i18next.t): string {
 	if (skill.startsWith("Charge Strength S")) {
 		return t("expected value", { value: t("strength2") });
 	}
-	if (skill === "Dream Shard Magnet S") {
+	if (
+		skill === "Dream Shard Magnet S" ||
+		skill === "Dream Shard Magnet S (Aura Sphere)"
+	) {
 		return t("dream shard");
 	}
 	if (skill === "Dream Shard Magnet S (Random)") {
@@ -395,6 +398,9 @@ function getSkillUnit2(
 	}
 	if (skill === "Dream Shard Magnet S (Random)") {
 		return t("range value", { value: "" });
+	}
+	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
+		return t("strength2");
 	}
 	if (skill === "Ingredient Draw S (Super Luck)") {
 		return t("dream shard");
@@ -500,6 +506,12 @@ function getSkillValue2Text(
 		const base = getSkillSubValue(skill, level);
 		const bonus = level <= 2 ? 1 : level <= 5 ? 2 : 3;
 		return base + (config.latiTwins ? bonus : 0);
+	}
+
+	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
+		const value = getSkillSubValue(skill, level);
+		const b = 1 + config.areaBonus / 100;
+		return t("num", { n: Math.floor(value * b) });
 	}
 
 	return null;
@@ -656,7 +668,10 @@ const ConfigForm = React.memo(
 
 		const skill = value.versatileSkill;
 
-		if (skill.startsWith("Charge Strength")) {
+		if (
+			skill.startsWith("Charge Strength") ||
+			skill === "Dream Shard Magnet S (Aura Sphere)"
+		) {
 			return (
 				<StyledConfigForm>
 					<section>

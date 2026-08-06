@@ -72,6 +72,12 @@
 			"desc": "$t(skills.Dream Shard Magnet S.desc)",
 			"detail": "$t(skills.random)"
 		},
+		"Dream Shard Magnet S (Aura Sphere)": {
+			"name": "波导弹 (梦之碎片获取S)",
+			"strength": "",
+			"desc": "获得梦之碎片，且增加卡比兽的能量。",
+			"detail": "$t(skills.Dream Shard Magnet S.detail)"
+		},
 		"Energizing Cheer S": {
 			"name": "活力疗愈S",
 			"strength": "技能造成的体力回复没有换算成合计能量值。",

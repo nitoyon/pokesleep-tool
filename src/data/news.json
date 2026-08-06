@@ -2,6 +2,10 @@
 	"ResearchCalc": [],
 	"IvCalc": [
 		{
+			"date": "2026-08-06T10:20:00Z",
+			"id": "v3.7.0"
+		},
+		{
 			"date": "2026-07-20T15:20:00Z",
 			"id": "nap island2"
 		},

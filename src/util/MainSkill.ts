@@ -5,6 +5,8 @@ import {
 } from "../data/pokemons";
 import type PokemonIv from "./PokemonIv";
 
+const rioluId = 447;
+
 export type MainSkillName =
 	| "Ingredient Magnet S"
 	| "Ingredient Magnet S (Plus)"
@@ -18,6 +20,7 @@ export type MainSkillName =
 	| "Charge Strength M (Bad Dreams)"
 	| "Dream Shard Magnet S"
 	| "Dream Shard Magnet S (Random)"
+	| "Dream Shard Magnet S (Aura Sphere)"
 	| "Energizing Cheer S"
 	| "Energizing Cheer S (Nuzzle)"
 	| "Energizing Cheer S (Heal Pulse)"
@@ -120,6 +123,7 @@ export function getMaxSkillLevel(skill: MainSkillName): 6 | 7 | 8 {
 	if (
 		skill === "Dream Shard Magnet S" ||
 		skill === "Dream Shard Magnet S (Random)" ||
+		skill === "Dream Shard Magnet S (Aura Sphere)" ||
 		skill === "Versatile"
 	) {
 		return 8;
@@ -245,7 +249,10 @@ export function getSkillValue(
 				throw new Error(`invalid species count: ${species}`);
 		}
 	}
-	if (skill === "Dream Shard Magnet S") {
+	if (
+		skill === "Dream Shard Magnet S" ||
+		skill === "Dream Shard Magnet S (Aura Sphere)"
+	) {
 		return [240, 340, 480, 670, 920, 1260, 1800, 2500][skillLevel - 1];
 	}
 	if (skill === "Dream Shard Magnet S (Random)") {
@@ -336,6 +343,9 @@ export function getSkillSubValue(
 	if (skill === "Versatile") {
 		// additional candy count
 		return [0, 0, 0, 0, 0, 1, 2, 3][skillLevel - 1];
+	}
+	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
+		return [200, 285, 393, 542, 748, 1033, 1501, 2042][skillLevel - 1];
 	}
 	throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
@@ -697,6 +707,11 @@ export function matchMainSkillName(
 			: "Cooking Power-Up S (Minus)";
 	}
 
+	// Special case: Riolu matches upon evolution
+	if (evolved && pokemon.id === rioluId) {
+		name = "Dream Shard Magnet S (Aura Sphere)";
+	}
+
 	// `name` should start with `match`
 	// (ex) `Charge Strength S (Stockpile)` matches `Charge Strength S`
 	if (name.startsWith(match)) {
@@ -735,6 +750,14 @@ export function matchMainSkillName(
 	if (
 		name === "Energizing Cheer S (Heal Pulse)" &&
 		match === "Extra Helpful S"
+	) {
+		return true;
+	}
+
+	// Tream "Dream Shard Magnet S (Aura Sphere)" as matching "Charge Strength S"
+	if (
+		name === "Dream Shard Magnet S (Aura Sphere)" &&
+		match === "Charge Strength S"
 	) {
 		return true;
 	}
