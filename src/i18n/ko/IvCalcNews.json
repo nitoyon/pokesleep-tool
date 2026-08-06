@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.7.0": {
+				"headline": "v3.7.0의 밸런스 조정에 대응하였습니다.",
+				"detail": "$t(own research note)"
+			},
 			"nap island2": {
 				"headline": "사탕 계산 기능에 [$t(sleep)] 탭과 [$t(nap island training)] 탭을 추가했습니다.",
 				"detail": "사탕 계산 기능에서 $t(sleep-based training)과 $t(nap island training)의 시뮬레이션을 간편하게 할 수 있게 되었습니다. 이제는 사탕 계산 기능이라고 하기도 뭐하지만, 호환성을 위해 '사탕 계산'이라는 이름은 그대로 남겨둘까 합니다."

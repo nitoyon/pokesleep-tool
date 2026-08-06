@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.7.0": {
+				"headline": "已因應 v3.7.0 的平衡性調整。",
+				"detail": "$t(own research note)"
+			},
 			"nap island2": {
 				"headline": "在糖果計算功能中新增了[$t(sleep)]標籤頁和[$t(nap island training)]標籤頁。",
 				"detail": "現在可以在糖果計算功能中輕鬆模擬$t(sleep-based training)和$t(nap island training)。已經不太算是糖果計算了呢……不過為了相容性，這個名字還是先留著吧。"

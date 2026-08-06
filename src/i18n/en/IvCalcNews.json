@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.7.0": {
+				"headline": "Updated the data with balance adjustments in version 3.7.0",
+				"detail": "$t(own research note)"
+			},
 			"nap island2": {
 				"headline": "Added [$t(sleep)] and [$t(nap island training)] tabs to the candy calculator.",
 				"detail": "The candy calculator now makes it easy to simulate $t(sleep-based training) and $t(nap island training). It's no longer just about candy, but let's keep calling it the \"Candy Calculator\" for compatibility's sake."
