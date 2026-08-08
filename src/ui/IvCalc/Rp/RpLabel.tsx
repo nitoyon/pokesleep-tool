@@ -19,11 +19,7 @@ const RpLabel = React.memo(
 		onClick?: () => void;
 	}) => {
 		const { t } = useTranslation();
-		const isEstimated =
-			iv.level > maxLevel ||
-			(iv.pokemon.skill === "Dream Shard Magnet S (Aura Sphere)" &&
-				iv.skillLevel >= 1 &&
-				iv.skillLevel <= 7);
+		const isEstimated = iv.level > maxLevel;
 
 		const clickHandler = React.useCallback(() => {
 			if (onClick !== undefined) {
