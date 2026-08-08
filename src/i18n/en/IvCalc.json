@@ -22,6 +22,8 @@
 	"expert ing effect": "Ingredient +1",
 	"expert ing effect2": "(Ing specialty sometimes +2)",
 	"expert skill effect": "Main skill x1.25",
+	"main berry bonus": "$t(frequency) bonus (main berry)",
+	"non favorite berry penalty": "$t(frequency) penalty (non favorite berry)",
 	"rp": "RP",
 	"strength2": "Strength",
 	"rating": "Rating",

@@ -13,7 +13,11 @@ import type {
 	IngredientSlot,
 	InventoryBonus,
 } from "./PokemonIv";
-import type { BonusEffectsWithReason } from "./PokemonStrength";
+import {
+	type BonusEffectsWithReason,
+	expertMainBerrySpeedBonus,
+	expertNonFavoriteBerrySpeedPenalty,
+} from "./PokemonStrength";
 
 /**
  * Represents help count split by normal and sneaky snacking.
@@ -374,11 +378,14 @@ function calculateBaseFreqAndBonus(
 	const isMainBerry = isExpertMode && param.favoriteType[0] === iv.pokemon.type;
 	const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
 
+	const cbex = param.fieldIndex === 8;
 	const baseFreq = iv.getBaseFrequency(
 		helpBonusCount,
 		param.isGoodCampTicketSet,
 		isMainBerry,
 		isNonFavoriteBerry,
+		cbex ? param.cbexBonus / 100 : expertMainBerrySpeedBonus,
+		cbex ? param.cbexPenalty / 100 : expertNonFavoriteBerrySpeedPenalty,
 	);
 	const inventoryBonus = {
 		berry: bonus.berry,

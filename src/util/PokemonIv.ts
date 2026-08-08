@@ -622,12 +622,14 @@ class PokemonIv {
 		isGoodCampTicketSet: boolean,
 		isMainBerry: boolean,
 		isNonFavoriteBerry: boolean,
+		mainBerrySpeedBonus: number = expertMainBerrySpeedBonus,
+		nonFavoriteBerrySpeedPenalty: number = expertNonFavoriteBerrySpeedPenalty,
 	): number {
 		return (
 			(this.frequencyWithHelpingBonus(helpBonusCount) /
 				(isGoodCampTicketSet ? 1.2 : 1)) *
-			(isMainBerry ? 1 - expertMainBerrySpeedBonus : 1) *
-			(isNonFavoriteBerry ? 1 + expertNonFavoriteBerrySpeedPenalty : 1)
+			(isMainBerry ? 1 - mainBerrySpeedBonus : 1) *
+			(isNonFavoriteBerry ? 1 + nonFavoriteBerrySpeedPenalty : 1)
 		);
 	}
 

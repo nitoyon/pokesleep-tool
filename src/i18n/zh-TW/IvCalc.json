@@ -6,7 +6,6 @@
 		"notice detail1": "用來確認将来的 SP 和能量、有助於制定養成計劃！",
 		"notice detail2": "此外，我們在 <YouTube>YouTube 頻道</YouTube> 上發佈了使用方法的講解影片。請務必觀看。"
 	},
-	"relativetime": "RT: {{val, relativetime}}",
 	"no favorite berries": "沒有喜歡的樹果",
 	"all favorite berries": "全部是喜歡的樹果",
 	"expert mode": "EX模式",
@@ -23,6 +22,8 @@
 	"expert ing effect": "食材+1",
 	"expert ing effect2": "（$t(specialty)為食材時，有時候+2）",
 	"expert skill effect": "技能1.25倍",
+	"main berry bonus": "$t(frequency)加成（主要樹果）",
+	"non favorite berry penalty": "$t(frequency)懲罰（非喜好樹果）",
 	"rp": "SP",
 	"strength2": "能量",
 	"rating": "個体評價",
