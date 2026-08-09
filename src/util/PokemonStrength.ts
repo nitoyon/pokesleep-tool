@@ -694,9 +694,10 @@ class PokemonStrength {
 				};
 
 			case "Dream Shard Magnet S (Aura Sphere)": {
-				const strength =
+				const strength = Math.ceil(
 					getSkillSubValue(mainSkill, skillLevel) *
-					(1 + param.fieldBonus / 100);
+						(1 + param.fieldBonus / 100),
+				);
 				return {
 					skillValue,
 					skillStrength: 0,
@@ -712,11 +713,14 @@ class PokemonStrength {
 			case "Charge Strength S":
 			case "Charge Strength S (Random)":
 			case "Charge Strength S (Stockpile)": {
-				const strength = skillValue * (1 + param.fieldBonus / 100);
+				const strengthPerTrigger = Math.ceil(
+					mainSkillBase * (1 + param.fieldBonus / 100),
+				);
+				const strength = strengthPerTrigger * skillCount;
 				return {
 					skillValue: strength,
 					skillStrength: strength,
-					skillValuePerTrigger: mainSkillBase * (1 + param.fieldBonus / 100),
+					skillValuePerTrigger: strengthPerTrigger,
 					skillValue2: 0,
 					skillStrength2: 0,
 					skillValuePerTrigger2: 0,

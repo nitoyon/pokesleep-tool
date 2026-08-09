@@ -439,7 +439,7 @@ function getSkillValueText(
 	}
 
 	if (skill.startsWith("Charge Strength")) {
-		return t("num", { n: Math.floor(n * (1 + config.areaBonus / 100)) });
+		return t("num", { n: Math.ceil(n * (1 + config.areaBonus / 100)) });
 	}
 
 	const baseText = t("num", { n });
@@ -475,9 +475,9 @@ function getSkillValue2Text(
 		const b = 1 + config.areaBonus / 100;
 		return (
 			<small>
-				{t("num", { n: Math.floor(range[0] * b) })}
+				{t("num", { n: Math.ceil(range[0] * b) })}
 				{t("range separator")}
-				{t("num", { n: Math.floor(range[1] * b) })}
+				{t("num", { n: Math.ceil(range[1] * b) })}
 			</small>
 		);
 	}
@@ -511,7 +511,7 @@ function getSkillValue2Text(
 	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
 		const value = getSkillSubValue(skill, level);
 		const b = 1 + config.areaBonus / 100;
-		return t("num", { n: Math.floor(value * b) });
+		return t("num", { n: Math.ceil(value * b) });
 	}
 
 	return null;
