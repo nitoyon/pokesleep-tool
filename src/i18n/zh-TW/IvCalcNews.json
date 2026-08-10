@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add hawlucha": {
+				"headline": "新增了$t(pokemons.Hawlucha)和$t(area.8)的資料。",
+				"detail": "$t(own research note)"
+			},
 			"v3.7.0": {
 				"headline": "已因應 v3.7.0 的平衡性調整。",
 				"detail": "$t(own research note)"
