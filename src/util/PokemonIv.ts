@@ -1,3 +1,4 @@
+import { cbexFieldIndex } from "../data/fields";
 import pokemons, {
 	getDecendants,
 	type IngredientName,
@@ -15,6 +16,8 @@ import Nature from "./Nature";
 import { clamp, trunc } from "./NumberUtil";
 import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
+	cbexMainBerrySpeedBonus,
+	cbexNonFavoriteBerrySpeedPenalty,
 	expertFavoriteIngredientAdditionalBonus,
 	expertFavoriteIngredientBonus,
 	ggexMainBerrySpeedBonus,
@@ -622,9 +625,15 @@ class PokemonIv {
 		isGoodCampTicketSet: boolean,
 		isMainBerry: boolean,
 		isNonFavoriteBerry: boolean,
-		mainBerrySpeedBonus: number = ggexMainBerrySpeedBonus,
-		nonFavoriteBerrySpeedPenalty: number = ggexNonFavoriteBerrySpeedPenalty,
+		fieldIndex: number = 7,
 	): number {
+		const isCbex = fieldIndex === cbexFieldIndex;
+		const mainBerrySpeedBonus = isCbex
+			? cbexMainBerrySpeedBonus
+			: ggexMainBerrySpeedBonus;
+		const nonFavoriteBerrySpeedPenalty = isCbex
+			? cbexNonFavoriteBerrySpeedPenalty
+			: ggexNonFavoriteBerrySpeedPenalty;
 		return (
 			(this.frequencyWithHelpingBonus(helpBonusCount) /
 				(isGoodCampTicketSet ? 1.2 : 1)) *
