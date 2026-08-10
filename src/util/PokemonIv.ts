@@ -17,8 +17,8 @@ import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
 	expertFavoriteIngredientAdditionalBonus,
 	expertFavoriteIngredientBonus,
-	expertMainBerrySpeedBonus,
-	expertNonFavoriteBerrySpeedPenalty,
+	ggexMainBerrySpeedBonus,
+	ggexNonFavoriteBerrySpeedPenalty,
 } from "./PokemonStrength";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
@@ -622,8 +622,8 @@ class PokemonIv {
 		isGoodCampTicketSet: boolean,
 		isMainBerry: boolean,
 		isNonFavoriteBerry: boolean,
-		mainBerrySpeedBonus: number = expertMainBerrySpeedBonus,
-		nonFavoriteBerrySpeedPenalty: number = expertNonFavoriteBerrySpeedPenalty,
+		mainBerrySpeedBonus: number = ggexMainBerrySpeedBonus,
+		nonFavoriteBerrySpeedPenalty: number = ggexNonFavoriteBerrySpeedPenalty,
 	): number {
 		return (
 			(this.frequencyWithHelpingBonus(helpBonusCount) /

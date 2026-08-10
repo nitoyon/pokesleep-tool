@@ -15,8 +15,8 @@ import type {
 } from "./PokemonIv";
 import {
 	type BonusEffectsWithReason,
-	expertMainBerrySpeedBonus,
-	expertNonFavoriteBerrySpeedPenalty,
+	ggexMainBerrySpeedBonus,
+	ggexNonFavoriteBerrySpeedPenalty,
 } from "./PokemonStrength";
 
 /**
@@ -384,8 +384,8 @@ function calculateBaseFreqAndBonus(
 		param.isGoodCampTicketSet,
 		isMainBerry,
 		isNonFavoriteBerry,
-		cbex ? param.cbexBonus / 100 : expertMainBerrySpeedBonus,
-		cbex ? param.cbexPenalty / 100 : expertNonFavoriteBerrySpeedPenalty,
+		cbex ? param.cbexBonus / 100 : ggexMainBerrySpeedBonus,
+		cbex ? param.cbexPenalty / 100 : ggexNonFavoriteBerrySpeedPenalty,
 	);
 	const inventoryBonus = {
 		berry: bonus.berry,

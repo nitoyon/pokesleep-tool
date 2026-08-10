@@ -57,9 +57,6 @@ export {
 	saveStrengthParameter,
 } from "./StrengthParameter";
 
-/** Helping speed bonus for the main berry in Expert Mode */
-export const expertMainBerrySpeedBonus = 0.1;
-
 /** Skill level bonus for the main berry in Expert Mode */
 export const expertMainSkillLevelBonus = 1;
 
@@ -82,8 +79,11 @@ export const expertFavoriteIngredientAdditionalBonus = 0.5;
 /** Ingredient bonus for the favorite berry in Expert Mode */
 export const expertFavoriteSkillTriggerBonus = 1.25;
 
+/** Helping speed bonus for the main berry in Expert Mode */
+export const ggexMainBerrySpeedBonus = 0.1;
+
 /** Helping speed penalty for non-favorite berries in Expert Mode */
-export const expertNonFavoriteBerrySpeedPenalty = 0.15;
+export const ggexNonFavoriteBerrySpeedPenalty = 0.15;
 
 /**
  * Respresents the result of ingredient strength calculation.
