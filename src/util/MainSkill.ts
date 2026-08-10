@@ -372,6 +372,9 @@ export function getIngredientDrawIngredients(
 		// Crustle
 		case 557:
 			return ["potato", "oil", "avocado"];
+		// Hawlucha
+		case 701:
+			return ["herb", "ginger", "sausage"];
 		// Ribombee
 		case 742:
 			return ["honey", "oil", "corn"];
