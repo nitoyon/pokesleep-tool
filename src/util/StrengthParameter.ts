@@ -220,8 +220,6 @@ export function createStrengthParameter(
 		sleepScore: 100,
 		isGoodCampTicketSet: false,
 		expertEffect: "berry",
-		cbexBonus: 15,
-		cbexPenalty: 20,
 		event: "none",
 		level: 0,
 		evolved: false,
@@ -376,22 +374,6 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 		ExpertEffectsList.includes(json.expertEffect)
 	) {
 		ret.expertEffect = json.expertEffect;
-	}
-	if (
-		typeof json.cbexBonus === "number" &&
-		Math.floor(json.cbexBonus) === json.cbexBonus &&
-		json.cbexBonus >= 0 &&
-		json.cbexBonus <= 100
-	) {
-		ret.cbexBonus = Math.floor(json.cbexBonus);
-	}
-	if (
-		typeof json.cbexPenalty === "number" &&
-		Math.floor(json.cbexPenalty) === json.cbexPenalty &&
-		json.cbexPenalty >= 0 &&
-		json.cbexPenalty <= 100
-	) {
-		ret.cbexPenalty = Math.floor(json.cbexPenalty);
 	}
 
 	if (

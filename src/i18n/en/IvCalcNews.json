@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add hawlucha": {
+				"headline": "Added data for $t(pokemons.Hawlucha) and $t(area.8).",
+				"detail": "$t(own research note)"
+			},
 			"v3.7.0": {
 				"headline": "Updated the data with balance adjustments in version 3.7.0",
 				"detail": "$t(own research note)"

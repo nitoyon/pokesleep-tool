@@ -4,7 +4,11 @@ import {
 	getEventBonus,
 	getEventBonusIfTarget,
 } from "../data/events";
-import { getFavoriteBerries, isExpertField } from "../data/fields";
+import {
+	cbexFieldIndex,
+	getFavoriteBerries,
+	isExpertField,
+} from "../data/fields";
 import type { PokemonType } from "../data/pokemons";
 import { getBerryStrength } from "./Berry";
 import Energy, { AlwaysTap, type EnergyResult, whistlePeriod } from "./Energy";
@@ -57,9 +61,6 @@ export {
 	saveStrengthParameter,
 } from "./StrengthParameter";
 
-/** Helping speed bonus for the main berry in Expert Mode */
-export const expertMainBerrySpeedBonus = 0.1;
-
 /** Skill level bonus for the main berry in Expert Mode */
 export const expertMainSkillLevelBonus = 1;
 
@@ -82,8 +83,20 @@ export const expertFavoriteIngredientAdditionalBonus = 0.5;
 /** Ingredient bonus for the favorite berry in Expert Mode */
 export const expertFavoriteSkillTriggerBonus = 1.25;
 
-/** Helping speed penalty for non-favorite berries in Expert Mode */
-export const expertNonFavoriteBerrySpeedPenalty = 0.15;
+/** Helping speed bonus for the main berry in Green Grass (Expert) */
+export const ggexMainBerrySpeedBonus = 0.1;
+
+/** Helping speed penalty for non-favorite berries in Green Grass (Expert) */
+export const ggexNonFavoriteBerrySpeedPenalty = 0.15;
+
+/** Helping speed bonus for the main berry in Cyan Beach (Expert) */
+export const cbexMainBerrySpeedBonus = 0.2;
+
+/** Helping speed penalty for non-favorite berries in Cyan Beach (Expert) */
+export const cbexNonFavoriteBerrySpeedPenalty = 0.35;
+
+/** Carry Limit bonus for Cyan Beach (Expert) */
+export const cbexCarryLimitAdd = 5;
 
 /**
  * Respresents the result of ingredient strength calculation.
@@ -1019,6 +1032,9 @@ class PokemonStrength {
 		const eventSkillLevel = targetEventBonus.skillLevel;
 		const eventIngredient = targetEventBonus.ingredient;
 
+		const isCbex = param.fieldIndex === cbexFieldIndex;
+		const exCarryLimitAdd = isCbex ? cbexCarryLimitAdd : 0;
+
 		return {
 			skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger) as
 				| 1
@@ -1036,7 +1052,7 @@ class PokemonStrength {
 			berry: targetEventBonus.berry,
 			ingredient:
 				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
-			carryLimitAdd: targetEventBonus.carryLimitAdd,
+			carryLimitAdd: targetEventBonus.carryLimitAdd + exCarryLimitAdd,
 			carryLimitMul: targetEventBonus.carryLimitMul,
 			ingredientReason: expertIngredient > eventIngredient ? "ex" : "event",
 			dreamShard: eventBonus.dreamShard,

@@ -1,6 +1,9 @@
 import fields_ from "./field.json";
 import type { PokemonType } from "./pokemons";
 
+/** Area index for Cyan Beach (Expert) */
+export const cbexFieldIndex = 8;
+
 export interface FieldData {
 	/** field index */
 	index: number;

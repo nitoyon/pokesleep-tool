@@ -53,9 +53,6 @@ export interface EnergyParameter {
 	 */
 	expertEffect: ExpertEffects;
 
-	cbexBonus: number;
-	cbexPenalty: number;
-
 	/**
 	 * Energy restored by 'energy for all' main skill.
 	 */

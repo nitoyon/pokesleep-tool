@@ -795,6 +795,33 @@ describe("PokemonStrength", () => {
 			});
 		});
 
+		describe("cbex carry limit bonus", () => {
+			test("Cyan Beach (Expert) field adds 5 to carryLimit", () => {
+				const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+				const resultCbex = new PokemonStrength(
+					iv,
+					createParam({
+						fieldIndex: 8,
+						favoriteType: ["electric", "fire", "water"],
+						period: 8,
+						tapFrequencyAwake: NoTap,
+						expertEffect: "skill",
+					}),
+				).calculate();
+				const resultNonCbex = new PokemonStrength(
+					iv,
+					createParam({
+						fieldIndex: 7,
+						favoriteType: ["electric", "fire", "water"],
+						period: 8,
+						tapFrequencyAwake: NoTap,
+						expertEffect: "skill",
+					}),
+				).calculate();
+				expect(resultCbex.carryLimit).toBe(resultNonCbex.carryLimit + 5);
+			});
+		});
+
 		describe("main berry skill level bonus", () => {
 			test("main berry pokemon has higher skillValuePerTrigger than sub berry (Slaking, Ingredient Magnet S)", () => {
 				// Slaking is normal type with "Ingredient Magnet S" (non-zero skill strength)

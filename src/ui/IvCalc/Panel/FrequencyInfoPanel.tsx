@@ -394,7 +394,7 @@ export const FrequencyForm = React.memo(
 				} else {
 					onStateChange({
 						...state,
-						carryLimitAdd: v as 0 | 8 | 15,
+						carryLimitAdd: v,
 						carryLimitMul: 1,
 					});
 				}

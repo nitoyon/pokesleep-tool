@@ -29,7 +29,7 @@ export type FrequencyInfoState = {
 	/** Ingredient bonus from event */
 	ingredient: 0 | 1;
 	/** Carry limit bonus from event (add) */
-	carryLimitAdd: 0 | 8 | 15;
+	carryLimitAdd: number;
 	/** Carry limit bonus from event (multiply) */
 	carryLimitMul: 1 | 1.5;
 	/** Expert mode enabled */

@@ -2136,8 +2136,8 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.4, w: 1, h: 0.4, color: 3 },
 			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 4 },
 		],
-		normalPallet: ["#ffffff", "#e4914a", "#7fd6ae", "#d7586c", "#f8ee6e"],
-		shinyPallet: ["#9e4558", "#a9c562", "#818597", "#404249", "#f8ee6e"],
+		normalPallet: ["#ffffff", "#e28e45", "#82dbaf", "#dd5567", "#faf66b"],
+		shinyPallet: ["#c54d60", "#c3d86c", "#9597ce", "#5e5c64", "#f5e381"],
 	},
 	// Sylveon
 	"700": {

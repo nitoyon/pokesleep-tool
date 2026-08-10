@@ -278,7 +278,7 @@ export interface BonusEffects {
 	/** Energy recovery bonus by dish */
 	energyFromDish: 0 | 5;
 	/** Carry limit bonus (add) */
-	carryLimitAdd: 0 | 8 | 15;
+	carryLimitAdd: number;
 	/** Carry limit bonus (multiply) */
 	carryLimitMul: 1 | 1.5;
 	/**
@@ -469,7 +469,7 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
 		}
 		if (
 			typeof effects.carryLimitAdd === "number" &&
-			[8, 15].includes(effects.carryLimitAdd)
+			[0, 8, 15].includes(effects.carryLimitAdd)
 		) {
 			ret.effects.carryLimitAdd = effects.carryLimitAdd;
 		}

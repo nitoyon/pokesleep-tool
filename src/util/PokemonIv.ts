@@ -1,3 +1,4 @@
+import { cbexFieldIndex } from "../data/fields";
 import pokemons, {
 	getDecendants,
 	type IngredientName,
@@ -15,10 +16,12 @@ import Nature from "./Nature";
 import { clamp, trunc } from "./NumberUtil";
 import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
+	cbexMainBerrySpeedBonus,
+	cbexNonFavoriteBerrySpeedPenalty,
 	expertFavoriteIngredientAdditionalBonus,
 	expertFavoriteIngredientBonus,
-	expertMainBerrySpeedBonus,
-	expertNonFavoriteBerrySpeedPenalty,
+	ggexMainBerrySpeedBonus,
+	ggexNonFavoriteBerrySpeedPenalty,
 } from "./PokemonStrength";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
@@ -42,7 +45,7 @@ export interface InventoryBonus {
 	/** Ingredient count bonus from events (0 or 1) */
 	ingredient: 0 | 1;
 	/** Carry limit bonus (add) */
-	carryLimitAdd: 0 | 8 | 15;
+	carryLimitAdd: number;
 	/** Carry limit bonus (multiply) */
 	carryLimitMul: 1 | 1.5;
 	/**
@@ -622,9 +625,15 @@ class PokemonIv {
 		isGoodCampTicketSet: boolean,
 		isMainBerry: boolean,
 		isNonFavoriteBerry: boolean,
-		mainBerrySpeedBonus: number = expertMainBerrySpeedBonus,
-		nonFavoriteBerrySpeedPenalty: number = expertNonFavoriteBerrySpeedPenalty,
+		fieldIndex: number = 7,
 	): number {
+		const isCbex = fieldIndex === cbexFieldIndex;
+		const mainBerrySpeedBonus = isCbex
+			? cbexMainBerrySpeedBonus
+			: ggexMainBerrySpeedBonus;
+		const nonFavoriteBerrySpeedPenalty = isCbex
+			? cbexNonFavoriteBerrySpeedPenalty
+			: ggexNonFavoriteBerrySpeedPenalty;
 		return (
 			(this.frequencyWithHelpingBonus(helpBonusCount) /
 				(isGoodCampTicketSet ? 1.2 : 1)) *
