@@ -12,7 +12,6 @@ import {
 import CollapseEx from "../../common/CollapseEx";
 import TypeButton from "../TypeButton";
 import TypeSelect from "../TypeSelect";
-import AreaBonusControl from "./AreaBonusControl";
 
 const FavoriteBerrySelect = React.memo(
 	({
@@ -82,25 +81,6 @@ const FavoriteBerrySelect = React.memo(
 		const onExpertEffectChange = React.useCallback(
 			(expertEffect: ExpertEffects) => {
 				onChange({ ...value, expertEffect });
-			},
-			[onChange, value],
-		);
-
-		const onCbexBonusChange = React.useCallback(
-			(cbexBonus: number) => {
-				onChange({
-					...value,
-					cbexBonus,
-				});
-			},
-			[onChange, value],
-		);
-		const onCbexPenaltyChange = React.useCallback(
-			(cbexPenalty: number) => {
-				onChange({
-					...value,
-					cbexPenalty,
-				});
 			},
 			[onChange, value],
 		);
@@ -182,24 +162,6 @@ const FavoriteBerrySelect = React.memo(
 							onChange={onExpertEffectChange}
 						/>
 					</section>
-				)}
-				{value.fieldIndex === 8 && (
-					<>
-						<section>
-							<span className="lbl">{t("main berry bonus")}:</span>
-							<AreaBonusControl
-								value={value.cbexBonus}
-								onChange={onCbexBonusChange}
-							/>
-						</section>
-						<section>
-							<span className="lbl">{t("non favorite berry penalty")}:</span>
-							<AreaBonusControl
-								value={value.cbexPenalty}
-								onChange={onCbexPenaltyChange}
-							/>
-						</section>
-					</>
 				)}
 			</CollapseEx>
 		);
