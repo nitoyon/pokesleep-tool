@@ -42,7 +42,7 @@ export interface InventoryBonus {
 	/** Ingredient count bonus from events (0 or 1) */
 	ingredient: 0 | 1;
 	/** Carry limit bonus (add) */
-	carryLimitAdd: 0 | 8 | 15;
+	carryLimitAdd: number;
 	/** Carry limit bonus (multiply) */
 	carryLimitMul: 1 | 1.5;
 	/**
