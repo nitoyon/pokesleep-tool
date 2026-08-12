@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const NotFixedWarning = React.memo(({ fieldIndex }: { fieldIndex: number }) => {
 	const { t } = useTranslation();
-	const isVisible = fieldIndex > 7;
+	const isVisible = fieldIndex > 8;
 
 	return (
 		<Collapse in={isVisible}>
