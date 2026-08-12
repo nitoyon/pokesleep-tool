@@ -495,6 +495,18 @@ describe("PokemonIV", () => {
 			compareIv(iv, ret);
 		});
 
+		test("Pikachu (Captain)", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Pikachu (Captain)",
+				skillLevel: 1,
+			});
+			expect(iv.form).toBe(11);
+			expect(iv.idForm).toBe(25 + (11 << 12));
+
+			const ret = PokemonIv.deserialize(iv.serialize());
+			compareIv(iv, ret);
+		});
+
 		test("ribbon", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Bulbasaur",

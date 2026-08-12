@@ -188,6 +188,18 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#3d3532", "#ffe14f", "#cd5f59", "#fefcf3"],
 		shinyPallet: ["#646566", "#f1d46d", "#fa5a56", "#fefefa"],
 	},
+	// Pikachu (Captain)
+	"45081": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 0.15, color: 0 },
+			{ x: 0, y: 0.15, w: 1, h: 0.85, color: 1 },
+			{ x: 0.59, y: 0.6, w: 0.4, h: 0.3, r: 0.2, color: 2 },
+			{ x: 0.66, y: 0.84, w: 0.29, h: 0.13, r: 0.04, color: 3 },
+			{ x: 0.73, y: 0.74, w: 0.15, h: 0.15, r: 0.1, color: 4 },
+		],
+		normalPallet: ["#3d3532", "#ffe14f", "#f4f4f4", "#777777", "#eadd8b"],
+		shinyPallet: ["#646566", "#f1d46d", "#f4f4f4", "#777777", "#eadd8b"],
+	},
 	// Raichu
 	"26": {
 		rects: [
@@ -2688,6 +2700,41 @@ const pokemonRectData: { [id: string]: IconData } = {
 		],
 		normalPallet: ["#f4e07f", "#fdffde"],
 		shinyPallet: ["#fec2c2", "#fefede"],
+	},
+	// Tinkatink
+	"957": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.15, color: 1 },
+			{ x: 0.7, y: 0.7, w: 0.3, h: 0.3, r: 0.2, color: 2 },
+			{ x: 0.64, y: 0.76, w: 0.3, h: 0.3, r: 0.2, color: 3 },
+		],
+		normalPallet: ["#e27eb2", "#eebedd", "#8b7bc3", "#d1cbe9"],
+		shinyPallet: ["#e27eb2", "#eebedd", "#8e4c5b", "#e9ad7f"],
+	},
+	// Tinkatuff
+	"958": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.2, color: 1 },
+			{ x: 0, y: 0.2, w: 1, h: 0.07, color: 2 },
+			{ x: 0.65, y: 0.65, w: 0.4, h: 0.4, r: 0.2, color: 3 },
+			{ x: 0.55, y: 0.7, w: 0.4, h: 0.4, r: 0.2, color: 4 },
+		],
+		normalPallet: ["#e27eb2", "#f8e7e6", "#eebedd", "#8b7bc3", "#d1cbe9"],
+		shinyPallet: ["#e27eb2", "#f8e7e6", "#eebedd", "#8e4c5b", "#e9ad7f"],
+	},
+	// Tinkaton
+	"959": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.3, color: 2 },
+			{ x: 0, y: 0.08, w: 1, h: 0.15, color: 1 },
+			{ x: 0.6, y: 0.55, w: 0.5, h: 0.5, r: 0.3, color: 3 },
+			{ x: 0.5, y: 0.6, w: 0.5, h: 0.5, r: 0.3, color: 4 },
+		],
+		normalPallet: ["#e27eb2", "#f8e7e6", "#eebedd", "#8b7bc3", "#d1cbe9"],
+		shinyPallet: ["#e27eb2", "#f8e7e6", "#eebedd", "#8e4c5b", "#e9ad7f"],
 	},
 	// Pawmot
 	"923": {

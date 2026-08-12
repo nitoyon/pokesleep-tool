@@ -21,7 +21,8 @@ export type ValidFormType =
 	| "Small"
 	| "Medium"
 	| "Large"
-	| "Jumbo";
+	| "Jumbo"
+	| "Captain";
 
 export type FormType = undefined | ValidFormType;
 

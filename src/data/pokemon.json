@@ -648,6 +648,41 @@
 		"form": "Halloween"
 	},
 	{
+		"id": 25,
+		"name": "Pikachu (Captain)",
+		"arrival": "2026-08-17",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "electric",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 7,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": null,
+		"evolutionCount": -1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "apple",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "ginger",
+			"c2": 2,
+			"c3": 3
+		},
+		"ing3": {
+			"name": "egg",
+			"c3": 3
+		},
+		"form": "Captain"
+	},
+	{
 		"id": 26,
 		"name": "Raichu",
 		"arrival": "2023-07-17",
@@ -8102,6 +8137,108 @@
 		"ing3": {
 			"name": "egg",
 			"c3": 5
+		}
+	},
+	{
+		"id": 957,
+		"name": "Tinkatink",
+		"arrival": "2026-08-17",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "fairy",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 5,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 957,
+		"evolutionCount": 0,
+		"evolutionLeft": 2,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 958,
+		"name": "Tinkatuff",
+		"arrival": "2026-08-17",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "fairy",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 12,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 957,
+		"evolutionCount": 1,
+		"evolutionLeft": 1,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 959,
+		"name": "Tinkaton",
+		"arrival": "2026-08-17",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "fairy",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 20,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 957,
+		"evolutionCount": 2,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
 		}
 	},
 	{
