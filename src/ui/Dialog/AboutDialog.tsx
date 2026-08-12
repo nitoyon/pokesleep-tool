@@ -71,6 +71,8 @@ export default function AboutDialog({ open, onClose }: AboutDialogProps) {
 							raenonx: <a href="https://pks.raenonx.cc/">RaenonX</a>,
 						}}
 					/>
+				</Typography>
+				<Typography>
 					<Trans i18nKey="about4" />
 				</Typography>
 			</DialogContent>
