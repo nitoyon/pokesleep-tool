@@ -193,9 +193,10 @@ const pokemonRectData: { [id: string]: IconData } = {
 		rects: [
 			{ x: 0, y: 0, w: 1, h: 0.15, color: 0 },
 			{ x: 0, y: 0.15, w: 1, h: 0.85, color: 1 },
+			{ x: 0.65, y: 0.85, w: 0.29, h: 0.13, r: 0.04, color: 3 },
 			{ x: 0.59, y: 0.6, w: 0.4, h: 0.3, r: 0.2, color: 2 },
-			{ x: 0.66, y: 0.84, w: 0.29, h: 0.13, r: 0.04, color: 3 },
-			{ x: 0.73, y: 0.74, w: 0.15, h: 0.15, r: 0.1, color: 4 },
+			{ x: 0.65, y: 0.85, w: 0.29, h: 0.1, r: 0.01, color: 3 },
+			{ x: 0.72, y: 0.74, w: 0.15, h: 0.15, r: 0.1, color: 4 },
 		],
 		normalPallet: ["#3d3532", "#ffe14f", "#f4f4f4", "#777777", "#eadd8b"],
 		shinyPallet: ["#646566", "#f1d46d", "#f4f4f4", "#777777", "#eadd8b"],
