@@ -654,17 +654,17 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "electric",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Berries",
+		"skill": "Ingredient Magnet S",
 		"fp": 7,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2500,
+		"ingRate": 17.5,
+		"skillRate": 1.8,
 		"ancestor": null,
 		"evolutionCount": -1,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 21,
 		"ing1": {
 			"name": "apple",
 			"c1": 1,
@@ -8146,31 +8146,31 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "fairy",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Berries",
+		"skill": "Charge Strength M",
 		"fp": 5,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 4500,
+		"ingRate": 20.2,
+		"skillRate": 1.6,
 		"ancestor": 957,
 		"evolutionCount": 0,
 		"evolutionLeft": 2,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 12,
 		"ing1": {
-			"name": "unknown1",
+			"name": "tomato",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "cacao",
+			"c2": 2,
+			"c3": 3
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "potato",
+			"c3": 3
 		}
 	},
 	{
@@ -8180,31 +8180,31 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "fairy",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Berries",
+		"skill": "Charge Strength M",
 		"fp": 12,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 3300,
+		"ingRate": 18.6,
+		"skillRate": 1.8,
 		"ancestor": 957,
 		"evolutionCount": 1,
 		"evolutionLeft": 1,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 16,
 		"ing1": {
-			"name": "unknown1",
+			"name": "tomato",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "cacao",
+			"c2": 2,
+			"c3": 3
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "potato",
+			"c3": 3
 		}
 	},
 	{
@@ -8214,31 +8214,31 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "fairy",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Berries",
+		"skill": "Charge Strength M",
 		"fp": 20,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2400,
+		"ingRate": 18.5,
+		"skillRate": 2,
 		"ancestor": 957,
 		"evolutionCount": 2,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 20,
 		"ing1": {
-			"name": "unknown1",
+			"name": "tomato",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "cacao",
+			"c2": 2,
+			"c3": 3
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "potato",
+			"c3": 3
 		}
 	},
 	{

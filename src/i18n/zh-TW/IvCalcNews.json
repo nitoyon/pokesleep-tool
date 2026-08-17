@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add captain": {
+				"headline": "新增了$t(pokemons.Pikachu (Captain))和$t(pokemons.Tinkaton)的資料。",
+				"detail": "$t(rp collection)"
+			},
 			"add hawlucha": {
 				"headline": "新增了$t(pokemons.Hawlucha)和$t(area.8)的資料。",
 				"detail": "$t(own research note)"

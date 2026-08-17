@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add captain": {
+				"headline": "$t(pokemons.Pikachu (Captain))と$t(pokemons.Tinkaton)のデータを追加しました。",
+				"detail": "$t(rp collection)"
+			},
 			"add hawlucha": {
 				"headline": "$t(pokemons.Hawlucha)と$t(area.8)のデータを追加しました。",
 				"detail": "$t(own research note)"
