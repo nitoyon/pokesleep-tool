@@ -140,57 +140,76 @@ function convertSubSkillName(val: string): SubSkill | null {
 	switch (val) {
 		case "Berry Finding S":
 		case "樹果數量S":
+		case "きのみの数S":
 			return new SubSkill("Berry Finding S");
 		case "Dream Shard Bonus":
 		case "夢之碎片獎勵":
+		case "ゆめのかけらボーナス":
 			return new SubSkill("Dream Shard Bonus");
 		case "Energy Recovery Bonus":
 		case "活力回復獎勵":
+		case "げんき回復ボーナス":
 			return new SubSkill("Energy Recovery Bonus");
 		case "Helping Bonus":
 		case "幫手獎勵":
+		case "おてつだいボーナス":
 			return new SubSkill("Helping Bonus");
 		case "Research EXP Bonus":
 		case "研究EXP獎勵":
+		case "リサーチEXPボーナス":
 			return new SubSkill("Research EXP Bonus");
 		case "Sleep EXP Bonus":
 		case "睡眠EXP獎勵":
+		case "睡眠EXPボーナス":
 			return new SubSkill("Sleep EXP Bonus");
 		case "Skill Level Up M":
 		case "技能等級提升M":
+		case "スキルレベルアップM":
 			return new SubSkill("Skill Level Up M");
 		case "Skill Level Up S":
 		case "技能等級提升S":
+		case "スキルレベルアップS":
 			return new SubSkill("Skill Level Up S");
 		case "Skill Trigger M":
 		case "技能機率提升M":
+		case "スキル確率アップM":
 			return new SubSkill("Skill Trigger M");
 		case "Skill Trigger S":
 		case "技能機率提升S":
+		case "スキル確率アップS":
 			return new SubSkill("Skill Trigger S");
 		case "Helping Speed M":
 		case "幫忙速度M":
+		case "おてつだいスピードM":
 			return new SubSkill("Helping Speed M");
 		case "Helping Speed S":
 		case "幫忙速度S":
+		case "おてつだいスピードS":
 			return new SubSkill("Helping Speed S");
 		case "Ingredient Finder M":
 		case "食材機率提升M":
+		case "食材確率アップM":
 			return new SubSkill("Ingredient Finder M");
 		case "Ingredient Finder S":
 		case "食材機率提升S":
+		case "食材確率アップS":
 			return new SubSkill("Ingredient Finder S");
 		case "Inventory Up L":
 		case "持有上限提升L":
+		case "最大所持数アップL":
 			return new SubSkill("Inventory Up L");
 		case "Inventory Up M":
 		case "持有上限提升M":
+		case "最大所持数アップM":
 			return new SubSkill("Inventory Up M");
 		case "Inventory Up S":
 		case "持有上限提升S":
+		case "最大所持数アップS":
 			return new SubSkill("Inventory Up S");
-		default:
+		case "":
 			return null;
+		default:
+			throw new Error(`unknown subskill: ${val}`);
 	}
 }
 
@@ -198,63 +217,84 @@ function convertIngName(val: string): IngredientName {
 	switch (val) {
 		case "Large Leek":
 		case "粗枝大蔥":
+		case "ふといながねぎ":
 			return "leek";
 		case "Tasty Mushroom":
 		case "品鮮蘑菇":
+		case "あじわいキノコ":
 			return "mushroom";
 		case "Fancy Egg":
 		case "特選蛋":
+		case "とくせんエッグ":
 			return "egg";
 		case "Soft Potato":
 		case "窩心洋芋":
+		case "ほっこりポテト":
 			return "potato";
 		case "Fancy Apple":
 		case "特選蘋果":
+		case "とくせんリンゴ":
 			return "apple";
 		case "Fiery Herb":
 		case "火辣香草":
+		case "げきからハーブ":
 			return "herb";
 		case "Bean Sausage":
 		case "豆製肉":
+		case "マメミート":
 			return "sausage";
 		case "Moomoo Milk":
 		case "哞哞鮮奶":
+		case "モーモーミルク":
 			return "milk";
 		case "Honey":
 		case "甜甜蜜":
+		case "あまいミツ":
 			return "honey";
 		case "Pure Oil":
 		case "純粹油":
+		case "ピュアなオイル":
 			return "oil";
 		case "Warming Ginger":
 		case "暖暖薑":
+		case "あったかジンジャー":
 			return "ginger";
 		case "Snoozy Tomato":
 		case "好眠番茄":
+		case "あんみんトマト":
 			return "tomato";
 		case "Soothing Cacao":
 		case "放鬆可可":
+		case "リラックスカカオ":
 			return "cacao";
 		case "Slowpoke Tail":
 		case "美味尾巴":
+		case "おいしいシッポ":
 			return "tail";
 		case "Greengrass Soybeans":
 		case "萌綠大豆":
+		case "ワカクサ大豆":
 			return "soy";
 		case "Greengrass Corn":
 		case "萌綠玉米":
+		case "ワカクサコーン":
 			return "corn";
 		case "Rousing Coffee":
 		case "醒腦咖啡豆":
+		case "めざましコーヒー":
 			return "coffee";
 		case "Plump Pumpkin":
 		case "沉甸甸南瓜":
+		case "ずっしりカボチャ":
 			return "pumpkin";
 		case "Glossy Avocado":
 		case "嫩亮酪梨":
+		case "つやつやアボカド":
 			return "avocado";
-		default:
+		case "":
 			return "unknown";
+		default:
+			throw new Error(`unknown ing: ${val}`);
 	}
 }
 
