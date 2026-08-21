@@ -393,6 +393,9 @@ const EventBonusTextField = React.memo(
 					<MenuItem key="1" value={1} dense>
 						{t("none")}
 					</MenuItem>
+					<MenuItem key="1.3" value={1.3} dense>
+						×1.3
+					</MenuItem>
 					<MenuItem key="1.5" value={1.5} dense>
 						×1.5
 					</MenuItem>

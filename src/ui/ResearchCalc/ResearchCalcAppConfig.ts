@@ -86,7 +86,7 @@ export function loadConfig(): InputAreaData {
 	}
 	if (
 		typeof json.bonus === "number" &&
-		[1, 1.5, 2, 2.5, 3, 4].includes(json.bonus)
+		[1, 1.3, 1.5, 2, 2.5, 3, 4].includes(json.bonus)
 	) {
 		config.bonus = json.bonus;
 	}
