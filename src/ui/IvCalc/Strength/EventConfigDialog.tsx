@@ -357,6 +357,25 @@ const EventConfigDialog = React.memo(
 			},
 			[value, onChange],
 		);
+		const onPotSizeChange = React.useCallback(
+			(_: React.MouseEvent, val: number | null) => {
+				if (val === null) {
+					return;
+				}
+				onChange({
+					...value,
+					event: "custom",
+					customEventBonus: {
+						...value.customEventBonus,
+						effects: {
+							...value.customEventBonus.effects,
+							potSize: val as 1 | 1.6 | 2,
+						},
+					},
+				});
+			},
+			[value, onChange],
+		);
 
 		if (!open) {
 			return null;
@@ -652,6 +671,22 @@ const EventConfigDialog = React.memo(
 							>
 								<ToggleButton value={0}>{t("none")}</ToggleButton>
 								<ToggleButton value={5}>+5</ToggleButton>
+							</ToggleButtonGroup>
+						</div>
+					</section>
+					<section>
+						<span>{t("pot size")}:</span>
+						<div>
+							<ToggleButtonGroup
+								size="small"
+								exclusive
+								style={{ textTransform: "none" }}
+								value={value.customEventBonus.effects.potSize}
+								onChange={onPotSizeChange}
+							>
+								<ToggleButton value={1}>{t("none")}</ToggleButton>
+								<ToggleButton value={1.6}>×1.6</ToggleButton>
+								<ToggleButton value={2}>×2</ToggleButton>
 							</ToggleButtonGroup>
 						</div>
 					</section>

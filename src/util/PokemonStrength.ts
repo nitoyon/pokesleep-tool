@@ -1054,6 +1054,7 @@ class PokemonStrength {
 				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
 			carryLimitAdd: targetEventBonus.carryLimitAdd + exCarryLimitAdd,
 			carryLimitMul: targetEventBonus.carryLimitMul,
+			potSize: targetEventBonus.potSize,
 			ingredientReason: expertIngredient > eventIngredient ? "ex" : "event",
 			dreamShard: eventBonus.dreamShard,
 			ingredientMagnet: eventBonus.ingredientMagnet,

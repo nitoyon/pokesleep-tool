@@ -310,7 +310,8 @@
 				"ingredientMagnet": 1.5,
 				"ingredientDraw": 1.5,
 				"dish": 1.25,
-				"energyFromDish": 5
+				"energyFromDish": 5,
+				"potSize": 2
 			}
 		},
 		{
@@ -430,7 +431,8 @@
 				"ingredientMagnet": 1.5,
 				"ingredientDraw": 1.5,
 				"dish": 1.5,
-				"energyFromDish": 5
+				"energyFromDish": 5,
+				"potSize": 1.6
 			}
 		},
 		{
