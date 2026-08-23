@@ -1,6 +1,9 @@
 import fields_ from "./field.json";
 import type { PokemonType } from "./pokemons";
 
+/** Area index for Greengrass Isle (Expert) */
+export const ggexFieldIndex = 7;
+
 /** Area index for Cyan Beach (Expert) */
 export const cbexFieldIndex = 8;
 

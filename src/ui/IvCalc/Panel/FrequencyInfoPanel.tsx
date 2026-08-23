@@ -8,9 +8,11 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { cbexFieldIndex, ggexFieldIndex } from "../../../data/fields";
 import { calculateInventoryDistribution } from "../../../util/PokemonInventory";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { InventoryBonus } from "../../../util/PokemonIv";
+import { cbexCarryLimitAdd } from "../../../util/PokemonStrength";
 import { formatHoursLong, formatHoursShort } from "../../../util/TimeUtil";
 import { useElementWidth } from "../../common/Hook";
 import SelectEx from "../../common/SelectEx";
@@ -91,6 +93,7 @@ export const FrequencyInfoPreview = React.memo(
 				state.campTicket,
 				state.expertMode && state.expertBerry === 0,
 				state.expertMode && state.expertBerry === 2,
+				state.fieldIndex,
 			);
 			return (
 				<EnergyPreviewPanel baseFreq={baseFreq} display={state.displayValue} />
@@ -118,6 +121,7 @@ const FullPreview = React.memo(
 			state.campTicket,
 			state.expertMode && state.expertBerry === 0,
 			state.expertMode && state.expertBerry === 2,
+			state.fieldIndex,
 		);
 		const freq = baseFreq * [1, 1, 0.66, 0.58, 0.52, 0.45][state.energy];
 
@@ -130,10 +134,15 @@ const FullPreview = React.memo(
 
 		// Calculate distribution data
 		const chartData = React.useMemo(() => {
+			const isCbexMainBerry =
+				state.expertMode &&
+				state.fieldIndex === cbexFieldIndex &&
+				state.expertBerry === 0;
+			const exCarryLimitAdd = isCbexMainBerry ? cbexCarryLimitAdd : 0;
 			const bonus: InventoryBonus = {
 				berry: state.berry,
 				ingredient: state.ingredient,
-				carryLimitAdd: state.carryLimitAdd,
+				carryLimitAdd: state.carryLimitAdd + exCarryLimitAdd,
 				carryLimitMul: state.carryLimitMul,
 				expertIng:
 					state.expertMode &&
@@ -407,6 +416,12 @@ export const FrequencyForm = React.memo(
 			},
 			[state, onStateChange],
 		);
+		const onFieldIndexChange = React.useCallback(
+			(value: string) => {
+				onStateChange({ ...state, fieldIndex: parseInt(value, 10) });
+			},
+			[state, onStateChange],
+		);
 		const onExpertBerryChange = React.useCallback(
 			(_: React.MouseEvent, value: string | null) => {
 				if (value !== null) {
@@ -562,6 +577,20 @@ export const FrequencyForm = React.memo(
 							/>
 						</div>
 						<Collapse in={state.expertMode}>
+							<div className="line">
+								<span className="indent lbl">{t("research area")}:</span>
+								<SelectEx
+									value={state.fieldIndex}
+									onChange={onFieldIndexChange}
+								>
+									<MenuItem value={ggexFieldIndex}>
+										{t(`area.${ggexFieldIndex}`)}
+									</MenuItem>
+									<MenuItem value={cbexFieldIndex}>
+										{t(`area.${cbexFieldIndex}`)}
+									</MenuItem>
+								</SelectEx>
+							</div>
 							<div className="line">
 								<span className="indent lbl">{t("berry")}:</span>
 								<ToggleButtonGroup

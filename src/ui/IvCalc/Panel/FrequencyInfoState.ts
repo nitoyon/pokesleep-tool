@@ -1,4 +1,4 @@
-import { isExpertField } from "../../../data/fields";
+import { ggexFieldIndex, isExpertField } from "../../../data/fields";
 import type PokemonIv from "../../../util/PokemonIv";
 import PokemonStrength, {
 	type StrengthParameter,
@@ -34,6 +34,8 @@ export type FrequencyInfoState = {
 	carryLimitMul: 1 | 1.5;
 	/** Expert mode enabled */
 	expertMode: boolean;
+	/** Field index */
+	fieldIndex: number;
 	/** Expert berry selection (0=main, 1=sub, 2=others) */
 	expertBerry: number;
 	/** Expert ingredient bonus effect */
@@ -57,6 +59,7 @@ export function createDefaultState(): FrequencyInfoState {
 		carryLimitAdd: 0,
 		carryLimitMul: 1,
 		expertMode: false,
+		fieldIndex: ggexFieldIndex,
 		expertBerry: 2,
 		expertIngBonus: 0,
 		displayValue: defaultDisplayValue,
@@ -73,6 +76,7 @@ export function createFrequencyState(
 ): FrequencyInfoState {
 	const effect = new PokemonStrength(iv, parameter).bonusEffects;
 	const expertMode = isExpertField(parameter.fieldIndex);
+	const fieldIndex = expertMode ? parameter.fieldIndex : ggexFieldIndex;
 	const expertBerry = !expertMode
 		? defaultState.expertBerry
 		: parameter.favoriteType[0] === iv.pokemon.type
@@ -91,6 +95,7 @@ export function createFrequencyState(
 		carryLimitAdd: effect.carryLimitAdd,
 		carryLimitMul: effect.carryLimitMul,
 		expertMode,
+		fieldIndex,
 		expertBerry,
 		expertIngBonus: parameter.expertEffect === "ing" ? 1 : 0,
 	};
