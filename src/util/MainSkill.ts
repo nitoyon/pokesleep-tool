@@ -45,6 +45,8 @@ export type MainSkillName =
 	| "Cooking Assist S (Bulk Up)"
 	| "Versatile"
 	| "Berry Burst (Draco Meteor)"
+	| "Berry Zone"
+	| "Berry Zone (Psystrike)"
 	| "unknown";
 
 export const MainSkillNames: Readonly<MainSkillName[]> = [
@@ -64,6 +66,7 @@ export const MainSkillNames: Readonly<MainSkillName[]> = [
 	"Skill Copy",
 	"Ingredient Draw S",
 	"Cooking Assist S",
+	"Berry Zone",
 ];
 
 /** Versatile candidates */
