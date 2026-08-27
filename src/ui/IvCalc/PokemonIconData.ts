@@ -733,6 +733,15 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#faba50", "#f7ecbf"],
 		shinyPallet: ["#a2da9e", "#fefee2"],
 	},
+	// Mewtwo
+	"150": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0.8, w: 1, h: 0.2, color: 1 },
+		],
+		normalPallet: ["#f8eef8", "#ccbbdd"],
+		shinyPallet: ["#f8eef8", "#aadd88"],
+	},
 	// Mew
 	"151": {
 		rects: [
