@@ -269,7 +269,7 @@ const IngMenuItem = styled(MenuItem)({
 const SkillMenuItem = styled(MenuItem)({
 	maxWidth: "12rem",
 	fontSize: "0.8rem",
-	paddingLeft: "4px",
+	padding: "0 4px",
 	textWrap: "wrap",
 	"& > svg": {
 		width: "18px",

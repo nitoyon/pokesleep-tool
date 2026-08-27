@@ -209,6 +209,9 @@ describe("JSON data verification", () => {
 			if (pokemon.ancestor === null) {
 				expect(pokemon.evolutionCount, `id=${pokemon.name}`).toBe(-1);
 			}
+			if (pokemon.evolutionCount === -1) {
+				expect(pokemon.ancestor).toBeNull();
+			}
 		}
 	});
 
@@ -275,7 +278,8 @@ describe("JSON data verification", () => {
 				pokemon.skill === "Helper Boost" ||
 				pokemon.skill === "Energy for Everyone S (Lunar Blessing)" ||
 				pokemon.skill === "Energizing Cheer S (Heal Pulse)" ||
-				pokemon.skill === "Berry Burst (Draco Meteor)"
+				pokemon.skill === "Berry Burst (Draco Meteor)" ||
+				pokemon.skill === "Berry Zone (Psystrike)"
 			) {
 				expect(pokemon.exp).toBe(1080);
 				continue;
