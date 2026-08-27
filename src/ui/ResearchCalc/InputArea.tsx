@@ -11,7 +11,11 @@ import {
 import { styled } from "@mui/system";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getDrowsyBonus, isInLatiosEvent } from "../../data/events";
+import {
+	getDrowsyBonus,
+	isInMewtwoEvent1stWeek,
+	isInMewtwoEvent2ndWeek,
+} from "../../data/events";
 import fields, { type FieldData, MAX_STRENGTH } from "../../data/fields";
 import Rank from "../../util/Rank";
 import ArrowButton from "../common/ArrowButton";
@@ -97,15 +101,15 @@ function InputArea({ data, onChange: onchange }: InputAreaProps) {
 		[onchange],
 	);
 
-	const onLatiosChange = useCallback(
-		(isLatiosOnTeam: boolean) => {
-			onchange?.({ isLatiosOnTeam });
+	const onMewtwoChange = useCallback(
+		(isMewtwoOnTeam: boolean) => {
+			onchange?.({ isMewtwoOnTeam, isMewOnTeam: false });
 		},
 		[onchange],
 	);
-	const onLatiasChange = useCallback(
-		(isLatiasOnTeam: boolean) => {
-			onchange?.({ isLatiasOnTeam });
+	const onMewChange = useCallback(
+		(isMewOnTeam: boolean) => {
+			onchange?.({ isMewOnTeam, isMewtwoOnTeam: false });
 		},
 		[onchange],
 	);
@@ -169,16 +173,16 @@ function InputArea({ data, onChange: onchange }: InputAreaProps) {
 						<EventBonusTextField value={data.bonus} onChange={onBonusChange} />
 					</div>
 					<TeamCheckbox
-						type="Latios"
+						type="Mewtwo"
 						bonus={data.bonus}
-						value={data.isLatiosOnTeam}
-						onChange={onLatiosChange}
+						value={data.isMewtwoOnTeam}
+						onChange={onMewtwoChange}
 					/>
 					<TeamCheckbox
-						type="Latias"
+						type="Mew"
 						bonus={data.bonus}
-						value={data.isLatiasOnTeam}
-						onChange={onLatiasChange}
+						value={data.isMewOnTeam}
+						onChange={onMewChange}
 					/>
 					<SecondSleepCheckbox
 						value={data.secondSleep}
@@ -441,12 +445,14 @@ const TeamCheckbox = React.memo(
 		onChange,
 	}: {
 		bonus: number;
-		type: "Latios" | "Latias";
+		type: "Mewtwo" | "Mew";
 		value: boolean;
 		onChange: (value: boolean) => void;
 	}) => {
 		const { t } = useTranslation();
-		const [open, setOpen] = React.useState(isInLatiosEvent());
+		const [open, setOpen] = React.useState(
+			isInMewtwoEvent1stWeek() || isInMewtwoEvent2ndWeek,
+		);
 		const handler = React.useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				onChange(e.target.checked);
@@ -456,7 +462,7 @@ const TeamCheckbox = React.memo(
 
 		React.useEffect(() => {
 			const interval = setInterval(() => {
-				const val = isInLatiosEvent();
+				const val = isInMewtwoEvent1stWeek() || isInMewtwoEvent2ndWeek;
 				if (val !== open) {
 					setOpen(val);
 					if (!val) {

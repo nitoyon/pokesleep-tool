@@ -1,4 +1,7 @@
-import { isInLatiosEvent } from "../../data/events";
+import {
+	isInMewtwoEvent1stWeek,
+	isInMewtwoEvent2ndWeek,
+} from "../../data/events";
 import fields from "../../data/fields";
 
 /** Sleep tracking configuration. */
@@ -32,11 +35,11 @@ export interface InputAreaData {
 	/** whether to do two sleep sessions in one day */
 	secondSleep: boolean;
 
-	/** Latios on your team */
-	isLatiosOnTeam: boolean;
+	/** Mew on your team */
+	isMewOnTeam: boolean;
 
-	/** Latias on your team */
-	isLatiasOnTeam: boolean;
+	/** Mewtwo on your team */
+	isMewtwoOnTeam: boolean;
 
 	/** Tracking configuration (undefined when not tracking) */
 	tracking?: TrackingData;
@@ -44,10 +47,16 @@ export interface InputAreaData {
 
 export function updateActualBonus(data: InputAreaData): InputAreaData {
 	let bonus = data.bonus;
-	if (isInLatiosEvent()) {
-		if (data.isLatiosOnTeam && data.isLatiasOnTeam) {
+	if (isInMewtwoEvent1stWeek()) {
+		if (data.isMewtwoOnTeam || data.isMewOnTeam) {
+			bonus = Math.max(data.bonus, 1.1);
+		}
+	}
+
+	if (isInMewtwoEvent2ndWeek()) {
+		if (data.isMewtwoOnTeam) {
 			bonus = Math.max(data.bonus, 1.3);
-		} else if (data.isLatiosOnTeam || data.isLatiasOnTeam) {
+		} else if (data.isMewOnTeam) {
 			bonus = Math.max(data.bonus, 1.1);
 		}
 	}
@@ -61,8 +70,8 @@ export function loadConfig(): InputAreaData {
 		strength: 73120,
 		bonus: 1,
 		secondSleep: false,
-		isLatiosOnTeam: false,
-		isLatiasOnTeam: false,
+		isMewOnTeam: false,
+		isMewtwoOnTeam: false,
 		tracking: undefined,
 	};
 
@@ -94,11 +103,11 @@ export function loadConfig(): InputAreaData {
 		config.secondSleep = json.secondSleep;
 	}
 
-	if (typeof json.isLatiosOnTeam === "boolean") {
-		config.isLatiosOnTeam = json.isLatiosOnTeam;
+	if (typeof json.isMewOnTeam === "boolean") {
+		config.isMewOnTeam = json.isMewOnTeam;
 	}
-	if (typeof json.isLatiasOnTeam === "boolean") {
-		config.isLatiasOnTeam = json.isLatiasOnTeam;
+	if (typeof json.isMewtwoOnTeam === "boolean") {
+		config.isMewtwoOnTeam = json.isMewtwoOnTeam;
 	}
 
 	if (

@@ -493,11 +493,19 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
 	return ret;
 }
 
-export function isInLatiosEvent() {
+export function isInMewtwoEvent1stWeek() {
 	const now = new Date();
 	return (
-		new Date("2026-06-08T04:00:00") <= now &&
-		now <= new Date("2026-06-22T04:00:00")
+		new Date("2026-09-14T04:00:00") <= now &&
+		now <= new Date("2026-09-21T04:00:00")
+	);
+}
+
+export function isInMewtwoEvent2ndWeek() {
+	const now = new Date();
+	return (
+		new Date("2026-09-21T04:00:00") <= now &&
+		now <= new Date("2026-09-28T04:00:00")
 	);
 }
 
