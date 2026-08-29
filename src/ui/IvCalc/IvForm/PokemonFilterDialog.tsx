@@ -208,7 +208,7 @@ const TypeTab = React.memo(
 					>
 						<ToggleButton value="all">{t("all")}</ToggleButton>
 						<ToggleButton value="non">{t("non-evolve")}</ToggleButton>
-						<ToggleButton value="final">{t("final-evoltion")}</ToggleButton>
+						<ToggleButton value="final">{t("final-evolution")}</ToggleButton>
 					</StyledToggleButtonGroup>
 				</div>
 			</>
