@@ -3,6 +3,8 @@ import {
 	Dialog,
 	DialogActions,
 	DialogContent,
+	FormControlLabel,
+	Switch,
 	TextField,
 	ToggleButton,
 	ToggleButtonGroup,
@@ -52,6 +54,16 @@ export default function SettingsDialog({
 		</ToggleButton>
 	));
 
+	const onTapRippleEffectChange = React.useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			onAppConfigChange({
+				...appConfig,
+				tapRippleEffect: event.target.checked,
+			});
+		},
+		[appConfig, onAppConfigChange],
+	);
+
 	// icon
 	let iconUrlInvalid = false;
 	let iconUrlErrorMessage = "";
@@ -100,6 +112,17 @@ export default function SettingsDialog({
 					>
 						{buttons}
 					</ToggleButtonGroup>
+					<div>
+						<FormControlLabel
+							control={
+								<Switch
+									checked={appConfig.tapRippleEffect}
+									onChange={onTapRippleEffectChange}
+								/>
+							}
+							label={t("tap ripple effect")}
+						/>
+					</div>
 					{app === "IvCalc" && (
 						<>
 							<h3 style={{ margin: "1rem 0 0 0" }}>{t("custom icon")}</h3>
