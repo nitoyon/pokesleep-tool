@@ -31,7 +31,7 @@
 	"rp tab warning level": "[$t(strength2)] 標籤中指定了等級 {{level}}，但[$t(rp)] 標籤顯示的是寶可夢當前等級下的性能。",
 	"rp tab warning field": "[$t(strength2)] 標籤中指定了 {{field}}，但[$t(rp)] 標籤顯示的是沒有 $t(area bonus)、沒有喜好樹果的性能。",
 	"strength, ingredients, skill count": "能量、食材數、技能次數",
-	"the amount under the following condition": "顯示在以下條件下的數量。",
+	"the amount under the following condition": "[$t(rp)] 標籤顯示的是以下條件下的能量、食材數、技能次數。",
 	"use strength tab if you want to change these condition": "如果您想更改這些條件，請使用[$t(strength2)] 標籤。",
 	"helps per 5 hours": "5小時的幫助次數",
 	"berry rate": "樹果機率",

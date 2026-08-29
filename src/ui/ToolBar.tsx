@@ -3,6 +3,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import {
 	Divider,
@@ -19,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import type AppConfig from "./AppConfig";
 import type { AppType } from "./AppConfig";
 import AboutDialog from "./Dialog/AboutDialog";
+import FaqDialog from "./Dialog/FaqDialog";
 import HowToDialog from "./Dialog/HowToDialog";
 import NewsListDialog from "./Dialog/NewsListDialog";
 import SettingsDialog from "./Dialog/SettingsDialog";
@@ -86,6 +88,14 @@ export default function ToolBar({
 	const onNewsDialogClose = () => {
 		setIsNewsDialogOpen(false);
 	};
+	const [isFaqDialogOpen, setIsFaqDialogOpen] = useState(false);
+	const faqMenuClick = () => {
+		setIsFaqDialogOpen(true);
+		setMoreMenuAnchor(null);
+	};
+	const onFaqDialogClose = () => {
+		setIsFaqDialogOpen(false);
+	};
 
 	return (
 		<StyledAppBar>
@@ -136,6 +146,14 @@ export default function ToolBar({
 					</ListItemIcon>
 					{t("about")}
 				</MenuItem>
+				{app === "IvCalc" && (
+					<MenuItem onClick={faqMenuClick}>
+						<ListItemIcon>
+							<QuestionAnswerOutlinedIcon />
+						</ListItemIcon>
+						{t("faq")}
+					</MenuItem>
+				)}
 				<MenuItem onClick={languageMenuClick}>
 					<ListItemIcon>
 						<SettingsOutlinedIcon />
@@ -156,6 +174,7 @@ export default function ToolBar({
 				onClose={onLanguageDialogClose}
 			/>
 			<NewsListDialog open={isNewsDialogOpen} onClose={onNewsDialogClose} />
+			<FaqDialog open={isFaqDialogOpen} onClose={onFaqDialogClose} />
 		</StyledAppBar>
 	);
 }

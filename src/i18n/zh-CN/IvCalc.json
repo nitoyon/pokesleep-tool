@@ -28,7 +28,7 @@
 	"rp tab warning level": "[$t(strength2)] 标签中指定了等级 {{level}}，但[$t(rp)] 标签显示的是宝可梦当前等级下的性能。",
 	"rp tab warning field": "[$t(strength2)] 标签中指定了 {{field}}，但[$t(rp)] 标签显示的是没有 $t(area bonus)、没有喜好果的性能。",
 	"strength, ingredients, skill count": "能量、食材数、技能次数",
-	"the amount under the following condition": "显示在以下条件下的数量。",
+	"the amount under the following condition": "[$t(rp)] 标签显示的是以下条件下的能量、食材数、技能次数。",
 	"use strength tab if you want to change these condition": "如果您想更改这些条件，请使用[$t(strength2)] 标签。",
 	"helps per 5 hours": "5小时的帮助次数",
 	"berry rate": "树果几率",

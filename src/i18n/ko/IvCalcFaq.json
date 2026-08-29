@@ -1,0 +1,46 @@
+{
+	"IvCalc": {
+		"faq": {
+			"rp and strength": {
+				"question": "[$t(rp)] 탭과 [$t(strength2)] 탭 중 어느 것을 사용하면 되나요?",
+				"answer": "처음이시라면 [$t(rp)] 탭이 정보가 적어 포켓몬을 간단하게 비교할 수 있습니다.\n\n반면 [$t(strength2)] 탭에서는 조건을 바꿔 가며 에너지와 $t(ing count)·$t(skill count)를 자세히 확인할 수 있습니다.\n\n도구에 익숙해지면 [$t(strength2)] 탭에서 자신의 플레이 스타일에 맞춘 $t(parameter)를 설정해 비교하는 것을 추천합니다."
+			},
+			"rp and strength difference": {
+				"question": "[$t(rp)] 탭과 [$t(strength2)] 탭의 차이는 무엇인가요?",
+				"answer": "$t(rp tab condition list)"
+			},
+			"daytime performance": {
+				"question": "낮 시간대에 운용할 때의 성능을 확인하려면?",
+				"answer": "[$t(strength2)] 탭에서 [$t(1day)]로 되어 있는 부분을 [$t(8hours)] 등으로 변경합니다.\n\n이렇게 하면 낮에 자주 탭할 수 있을 때의 성능을 비교할 수 있습니다."
+			},
+			"compare new pokemon": {
+				"question": "새로운 포켓몬을 잡았을 때는 어떻게 비교하면 되나요?",
+				"answer": "$t(box)에 육성이 끝났거나 육성할 예정인 포켓몬을 등록해 둡니다.\n1. 위쪽 탭은 [$t(strength2)], 아래쪽 탭은 [$t(box)]를 선택합니다.\n1. 잡은 포켓몬을 박스에 등록합니다.\n1. $t(box)의 정렬 순서를 비교하고 싶은 지표( [$t(total strength)]·[$t(ingredient)]·[$t(skill)] 등)로 변경합니다.\n1. 박스의 정렬 순서로 어느 포켓몬이 더 강한지 비교합니다.\n\n힌트\n* $t(box) 왼쪽 아래의 [$t(current level)]을 변경하면 특정 레벨에서의 강함을 비교할 수 있습니다.\n* $t(tap frequency)를 변경하면 성능이 역전되기도 하므로 비교는 신중하게 하세요.\n* $t(expert mode)나 $t(event bonus)에 따라 강함이 역전되기도 하므로 검토는 신중하게 하세요.\n* $t(berry) 포켓몬의 경우 $t(tap frequency)를 [$t(none)]으로 설정하면 $t(sneaky snacking) 시의 에너지를 비교할 수 있습니다."
+			},
+			"compare expert mode": {
+				"question": "이번 주에는 $t(expert mode) $t(research area)에 왔습니다. 활약할 수 있는 포켓몬을 알고 싶습니다.",
+				"answer": "$t(box)에 현재 레벨로 포켓몬을 등록해 둡니다.\n1. 위쪽 탭은 [$t(strength2)], 아래쪽 탭은 [$t(box)]를 선택합니다.\n1. $t(research area)와 $t(favorite berry)를 설정합니다.\n1. $t(box)의 정렬 순서를 비교하고 싶은 지표( [$t(total strength)]·[$t(ingredient)]·[$t(skill)] 등)로 변경합니다.\n1. 박스의 정렬 순서로 어느 포켓몬이 활약할 수 있는지 확인합니다."
+			},
+			"box edit": {
+				"question": "$t(box)의 포켓몬을 편집하려면?",
+				"answer": "편집하고 싶은 포켓몬의 아이콘을 길게 누르세요.\n\n레벨을 변경할 경우에는 [$t(parameter)]의 [$t(level)]을 변경하는 것이 더 간편합니다."
+			},
+			"box delete": {
+				"question": "$t(box)에 등록한 포켓몬을 삭제하려면?",
+				"answer": "1. 삭제하고 싶은 포켓몬을 선택합니다.\n1. 포켓몬 오른쪽 위에 나타나는 [︙] 표시를 누릅니다.\n1. 메뉴에서 [$t(delete)]를 선택합니다."
+			},
+			"restore parameter": {
+				"question": "[$t(strength2)] 탭의 표시가 이상해져서 되돌릴 수 없게 되었습니다.",
+				"answer": "$t(parameter)를 이것저것 변경하다 보면 어디를 변경했는지 알 수 없게 될 수 있습니다. 그럴 때는 [$t(parameter)] 탭 맨 아래에 있는 [$t(initialize all parameters)] 버튼을 누르세요. 박스는 사라지지 않으니 안심하세요."
+			},
+			"tips": {
+				"question": "편리한 기능을 알고 싶습니다.",
+				"answer": "여러 곳에 [i] 표시가 있습니다. 이것을 눌러 보면 다양한 계산의 상세 내용이나 설정이 나옵니다. 부담 없이 시험해 보세요."
+			},
+			"question": {
+				"question": "질문이 있거나 요청·버그 신고가 있습니다.",
+				"answer": "[X (Twitter)](https://x.com/$t(x username)) 또는 [GitHub](https://github.com/nitoyon/pokesleep-tool/discussions)로 연락해 주세요."
+			}
+		}
+	}
+}

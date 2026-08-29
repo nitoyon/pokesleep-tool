@@ -27,7 +27,7 @@
 			},
 			"hb calc": {
 				"headline": "改善了$t(subskill.Helping Bonus)、$t(skills.Extra Helpful S.name)等的能量計算。",
-				"detail": "將[$t(subskill.Helping Bonus)]的能量計算方式變更如下。\n• (以往) 假設有其他4隻與自己獲得相同能量的寶可夢來進行計算。\n• (今後) 假設有其他4隻在[$t(parameter)]的[$t(other team member)]中指定的寶可夢來進行計算。\n如此一來，所有寶可夢的[$t(subskill.Helping Bonus)]都會被評估為相同的能量值。\n\n同時，$t(skills.Extra Helpful S.name)、$t(skills.Helper Boost.name)、$t(skills.Energizing Cheer S (Heal Pulse).name)的能量值也不再使用以往固定的300能量，而是改為使用[$t(other team member)]進行計算。"
+				"detail": "將[$t(subskill.Helping Bonus)]的能量計算方式變更如下。\n* **(以往)** 假設有其他4隻與自己獲得相同能量的寶可夢來進行計算。\n* **(今後)** 假設有其他4隻在[$t(parameter)]的[$t(other team member)]中指定的寶可夢來進行計算。\n如此一來，所有寶可夢的[$t(subskill.Helping Bonus)]都會被評估為相同的能量值。\n\n同時，$t(skills.Extra Helpful S.name)、$t(skills.Helper Boost.name)、$t(skills.Energizing Cheer S (Heal Pulse).name)的能量值也不再使用以往固定的300能量，而是改為使用[$t(other team member)]進行計算。"
 			},
 			"box csv": {
 				"headline": "$t(box)的匯出·匯入現已支援CSV·TSV格式。",
@@ -58,7 +58,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"add sandshrew": {
-				"headline": "新增了$t(pokemons.Sandshrew)和$t(pokemons.Sandslash)的資料，並更新了$t(pokemons.Togedemaru)的資料。支援了$t(pity proc)・$t(tap frequency)的模擬（<a href='https://youtu.be/kEX2myG-wS8'>講解影片</a>）。",
+				"headline": "新增了$t(pokemons.Sandshrew)和$t(pokemons.Sandslash)的資料，並更新了$t(pokemons.Togedemaru)的資料。支援了$t(pity proc)・$t(tap frequency)的模擬（[講解影片](https://youtu.be/kEX2myG-wS8)）。",
 				"detail": "$t(rp collection)$t(movie detail)"
 			},
 			"add latias": {
@@ -74,7 +74,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"latias research": {
-				"headline": "現在可以以圖表形式顯示$t(time to full inventory)了（<a href='https://youtu.be/C7Ik6U9JsEM'>講解影片</a>）。",
+				"headline": "現在可以以圖表形式顯示$t(time to full inventory)了（[講解影片](https://youtu.be/C7Ik6U9JsEM)）。",
 				"detail": "可以透過[$t(frequency)]右側的 [i] 標記或[$t(full inventory while sleeping (short))]右側的 [i] 標記來確認。詳情請觀看講解影片。\n此外，已支援拉帝亞斯調查的模擬。"
 			},
 			"add mew": {
@@ -98,7 +98,7 @@
 				"detail": "如果您在1月7日至9日期間首次打開工具，盒子中的$t(pokemons.Clodsire)資料可能已消失。對此造成的不便深表歉意。"
 			},
 			"candy movie": {
-				"headline": "<a href='https://youtu.be/-1I4s8jwiUs'>糖果計算功能的使用方法影片</a>已發佈。",
+				"headline": "[糖果計算功能的使用方法影片](https://youtu.be/-1I4s8jwiUs)已發佈。",
 				"detail": "$t(movie detail)"
 			},
 			"holiday2025": {

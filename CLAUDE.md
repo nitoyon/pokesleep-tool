@@ -25,7 +25,5 @@ For details, see `docs`.
 
 ## Policy
 
-- You are a manager and an agent orchestrator. You must never implement anything yourself; delegate everything to sub-agents or task agents.
-- Break tasks down into smaller parts and run them through a PDCA cycle.
 - At the end of each task, execute `npm run verify` and create a commit.
 - Strict TypeScript configuration with `noImplicitAny` enabled

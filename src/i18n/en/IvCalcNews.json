@@ -27,7 +27,7 @@
 			},
 			"hb calc": {
 				"headline": "Improved strength calculation for $t(subskill.Helping Bonus), $t(skills.Extra Helpful S.name), and more.",
-				"detail": "Changed how strength is calculated for [$t(subskill.Helping Bonus)] as follows.\n• (Previously) Assumed 4 other Pokémon earning the same strength as yourself.\n• (Now) Assumed 4 other Pokémon specified in [$t(other team member)] under [$t(parameter)] tab.\nThis means [$t(subskill.Helping Bonus)] is now evaluated as the same strength amount for all Pokémon.\n\nAlong with this, the strength amounts for $t(skills.Extra Helpful S.name), $t(skills.Helper Boost.name), and $t(skills.Energizing Cheer S (Heal Pulse).name) no longer use a fixed 300 strength, and are now calculated using [$t(other team member)] instead."
+				"detail": "Changed how strength is calculated for [$t(subskill.Helping Bonus)] as follows.\n* **(Previously)** Assumed 4 other Pokémon earning the same strength as yourself.\n* **(Now)** Assumed 4 other Pokémon specified in [$t(other team member)] under [$t(parameter)] tab.\nThis means [$t(subskill.Helping Bonus)] is now evaluated as the same strength amount for all Pokémon.\n\nAlong with this, the strength amounts for $t(skills.Extra Helpful S.name), $t(skills.Helper Boost.name), and $t(skills.Energizing Cheer S (Heal Pulse).name) no longer use a fixed 300 strength, and are now calculated using [$t(other team member)] instead."
 			},
 			"box csv": {
 				"headline": "$t(box) export/import now supports CSV and TSV formats.",
@@ -58,7 +58,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"add sandshrew": {
-				"headline": "Added data for $t(pokemons.Sandshrew) and $t(pokemons.Sandslash), and updated $t(pokemons.Togedemaru)'s data. $t(pity proc) and $t(tap frequency) simulation are now supported (<a href='https://youtu.be/kEX2myG-wS8'>Tutorial video</a>).",
+				"headline": "Added data for $t(pokemons.Sandshrew) and $t(pokemons.Sandslash), and updated $t(pokemons.Togedemaru)'s data. $t(pity proc) and $t(tap frequency) simulation are now supported ([Tutorial video](https://youtu.be/kEX2myG-wS8)).",
 				"detail": "$t(rp collection) $t(movie detail)"
 			},
 			"add latias": {
@@ -74,7 +74,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"latias research": {
-				"headline": "$t(time to full inventory) can now be displayed as a graph (<a href='https://youtu.be/C7Ik6U9JsEM'>tutorial video</a>).",
+				"headline": "$t(time to full inventory) can now be displayed as a graph ([tutorial video](https://youtu.be/C7Ik6U9JsEM)).",
 				"detail": "You can check it from the [i] mark to the right of [$t(frequency)] or the [i] mark to the right of [$t(full inventory while sleeping (short))]. See the tutorial video for details.\nAlso, simulation for the Latias Research event is now supported."
 			},
 			"add mew": {
@@ -98,7 +98,7 @@
 				"detail": "If you opened the tool between January 7-9, $t(pokemons.Clodsire) data may have disappeared from the box. We sincerely apologize for the inconvenience."
 			},
 			"candy movie": {
-				"headline": "<a href='https://youtu.be/-1I4s8jwiUs'>Video tutorial for candy calculation feature</a> has been published.",
+				"headline": "[Video tutorial for candy calculation feature](https://youtu.be/-1I4s8jwiUs) has been published.",
 				"detail": "$t(movie detail)"
 			},
 			"holiday2025": {

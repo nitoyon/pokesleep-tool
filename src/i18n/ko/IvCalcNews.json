@@ -27,7 +27,7 @@
 			},
 			"hb calc": {
 				"headline": "$t(subskill.Helping Bonus)나 $t(skills.Extra Helpful S.name) 등의 에너지 계산을 개선했습니다.",
-				"detail": "[$t(subskill.Helping Bonus)]의 에너지 계산을 다음과 같이 변경했습니다.\n• (지금까지) 자신과 같은 에너지를 버는 포켓몬이 그 외에 4마리 있다고 가정하여 계산.\n• (앞으로) [$t(parameter)]의 [$t(other team member)]에서 지정한 포켓몬이 그 외에 4마리 있다고 가정하여 계산.\n이를 통해 모든 포켓몬에서 [$t(subskill.Helping Bonus)]가 같은 에너지로 평가되게 되었습니다.\n\n아울러 $t(skills.Extra Helpful S.name)·$t(skills.Helper Boost.name)·$t(skills.Energizing Cheer S (Heal Pulse).name)의 에너지 양도, 지금까지의 고정 300 에너지를 사용하는 것을 그만두고, [$t(other team member)]를 이용해 계산하도록 개선했습니다."
+				"detail": "[$t(subskill.Helping Bonus)]의 에너지 계산을 다음과 같이 변경했습니다.\n* **(지금까지)** 자신과 같은 에너지를 버는 포켓몬이 그 외에 4마리 있다고 가정하여 계산.\n* **(앞으로)** [$t(parameter)]의 [$t(other team member)]에서 지정한 포켓몬이 그 외에 4마리 있다고 가정하여 계산.\n이를 통해 모든 포켓몬에서 [$t(subskill.Helping Bonus)]가 같은 에너지로 평가되게 되었습니다.\n\n아울러 $t(skills.Extra Helpful S.name)·$t(skills.Helper Boost.name)·$t(skills.Energizing Cheer S (Heal Pulse).name)의 에너지 양도, 지금까지의 고정 300 에너지를 사용하는 것을 그만두고, [$t(other team member)]를 이용해 계산하도록 개선했습니다."
 			},
 			"box csv": {
 				"headline": "$t(box) 내보내기·가져오기가 CSV·TSV 형식에 대응했습니다.",
@@ -58,7 +58,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"add sandshrew": {
-				"headline": "$t(pokemons.Sandshrew)・$t(pokemons.Sandslash)의 데이터를 추가하고, $t(pokemons.Togedemaru)의 데이터를 업데이트했습니다. $t(pity proc)・$t(tap frequency) 시뮬레이션에 대응했습니다 (<a href='https://youtu.be/kEX2myG-wS8'>설명 동영상</a>).",
+				"headline": "$t(pokemons.Sandshrew)・$t(pokemons.Sandslash)의 데이터를 추가하고, $t(pokemons.Togedemaru)의 데이터를 업데이트했습니다. $t(pity proc)・$t(tap frequency) 시뮬레이션에 대응했습니다 ([설명 동영상](https://youtu.be/kEX2myG-wS8)).",
 				"detail": "$t(rp collection)$t(movie detail)"
 			},
 			"add latias": {
@@ -74,7 +74,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"latias research": {
-				"headline": "$t(time to full inventory)를 그래프로 표시할 수 있게 되었습니다 (<a href='https://youtu.be/C7Ik6U9JsEM'>설명 동영상</a>).",
+				"headline": "$t(time to full inventory)를 그래프로 표시할 수 있게 되었습니다 ([설명 동영상](https://youtu.be/C7Ik6U9JsEM)).",
 				"detail": "[$t(frequency)] 오른쪽의 [i] 마크나 [$t(full inventory while sleeping (short))] 오른쪽의 [i] 마크에서 확인할 수 있습니다. 자세한 내용은 설명 동영상을 참조하세요.\n또한, 라티아스 리서치 시뮬레이션에 대응하였습니다."
 			},
 			"add mew": {
@@ -98,7 +98,7 @@
 				"detail": "1월 7일~9일 사이에 도구를 새로 연 경우, 박스 내 $t(pokemons.Clodsire)의 데이터가 사라진 상태였습니다. 불편을 끼쳐드려 죄송합니다."
 			},
 			"candy movie": {
-				"headline": "<a href='https://youtu.be/-1I4s8jwiUs'>사탕 계산 기능 사용법 동영상</a>을 공개했습니다.",
+				"headline": "[사탕 계산 기능 사용법 동영상](https://youtu.be/-1I4s8jwiUs)을 공개했습니다.",
 				"detail": "$t(movie detail)"
 			},
 			"holiday2025": {

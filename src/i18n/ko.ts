@@ -2,6 +2,7 @@ import common from "./ko/common.json";
 import data from "./ko/data.json";
 import events from "./ko/events.json";
 import IvCalc from "./ko/IvCalc.json";
+import IvCalcFaq from "./ko/IvCalcFaq.json";
 import IvCalcNews from "./ko/IvCalcNews.json";
 import pokemons from "./ko/pokemons.json";
 import ResearchCalc from "./ko/ResearchCalc.json";
@@ -13,9 +14,11 @@ export default {
 		...ResearchCalc,
 		...IvCalc,
 		...IvCalcNews,
+		...IvCalcFaq,
 		IvCalc: {
 			...IvCalc.IvCalc,
 			...IvCalcNews.IvCalc,
+			...IvCalcFaq.IvCalc,
 		},
 		...events,
 		...skills,

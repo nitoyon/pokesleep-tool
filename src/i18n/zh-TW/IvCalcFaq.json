@@ -1,0 +1,46 @@
+{
+	"IvCalc": {
+		"faq": {
+			"rp and strength": {
+				"question": "[$t(rp)] 標籤和 [$t(strength2)] 標籤該用哪一個？",
+				"answer": "如果您是新手，[$t(rp)] 標籤資訊較少，可以更簡單地比較寶可夢。\n\n而 [$t(strength2)] 標籤可以在改變條件的同時，詳細查看能量以及$t(ing count)、$t(skill count)。\n\n熟悉本工具後，建議在 [$t(strength2)] 標籤中設定符合自己遊玩風格的$t(parameter)來進行比較。"
+			},
+			"rp and strength difference": {
+				"question": "[$t(rp)] 標籤和 [$t(strength2)] 標籤有什麼差別？",
+				"answer": "$t(rp tab condition list)"
+			},
+			"daytime performance": {
+				"question": "如何查看白天運用時的效能？",
+				"answer": "在 [$t(strength2)] 標籤中，將顯示為 [$t(1day)] 的地方改為 [$t(8hours)] 等。\n\n這樣就可以比較白天能夠頻繁點擊時的效能。"
+			},
+			"compare new pokemon": {
+				"question": "抓到新的寶可夢時該如何比較？",
+				"answer": "先在$t(box)中登錄已經培養或預計培養的寶可夢。\n1. 上方標籤選擇 [$t(strength2)]，下方標籤選擇 [$t(box)]。\n1. 將抓到的寶可夢登錄到盒子中。\n1. 將$t(box)的排序方式改為想要比較的指標（如 [$t(total strength)]、[$t(ingredient)]、[$t(skill)] 等）。\n1. 依照盒子的排列順序，比較哪隻寶可夢更強。\n\n提示\n* 更改$t(box)左下方的 [$t(current level)]，可以比較特定等級下的強度。\n* 更改$t(tap frequency)後效能有可能逆轉，因此比較時請謹慎。\n* 依$t(expert mode)或$t(event bonus)的不同，強度也可能逆轉，因此請謹慎判斷。\n* 對於$t(berry)寶可夢，將$t(tap frequency)設為 [$t(none)]，即可比較$t(sneaky snacking)時的能量。"
+			},
+			"compare expert mode": {
+				"question": "這週來到了$t(expert mode)的$t(research area)。想知道能夠大顯身手的寶可夢。",
+				"answer": "先在$t(box)中依目前等級登錄寶可夢。\n1. 上方標籤選擇 [$t(strength2)]，下方標籤選擇 [$t(box)]。\n1. 設定$t(research area)和$t(favorite berry)。\n1. 將$t(box)的排序方式改為想要比較的指標（如 [$t(total strength)]、[$t(ingredient)]、[$t(skill)] 等）。\n1. 依照盒子的排列順序，確認哪隻寶可夢能夠大顯身手。"
+			},
+			"box edit": {
+				"question": "如何編輯$t(box)中的寶可夢？",
+				"answer": "請長按想要編輯的寶可夢圖示。\n\n如果只是更改等級，更改 [$t(parameter)] 中的 [$t(level)] 會更方便。"
+			},
+			"box delete": {
+				"question": "如何刪除已登錄到$t(box)中的寶可夢？",
+				"answer": "1. 選擇想要刪除的寶可夢。\n1. 點擊寶可夢右上方出現的 [︙] 標記。\n1. 從選單中選擇 [$t(delete)]。"
+			},
+			"restore parameter": {
+				"question": "[$t(strength2)] 標籤的顯示變得奇怪，無法復原了。",
+				"answer": "在不斷更改$t(parameter)的過程中，可能會搞不清楚改了哪裡。這種時候，請點擊 [$t(parameter)] 標籤最下方的 [$t(initialize all parameters)] 按鈕。盒子不會被清空，請放心。"
+			},
+			"tips": {
+				"question": "想了解方便的功能。",
+				"answer": "各處都有 [i] 標記。點擊它就會顯示各種計算的詳細內容和設定。請隨意嘗試。"
+			},
+			"question": {
+				"question": "有問題，或是有需求、bug 回報。",
+				"answer": "請透過 [X (Twitter)](https://x.com/$t(x username)) 或 [GitHub](https://github.com/nitoyon/pokesleep-tool/discussions) 與我們聯絡。"
+			}
+		}
+	}
+}

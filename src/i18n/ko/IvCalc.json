@@ -31,7 +31,7 @@
 	"rp tab warning level": "[$t(strength2)] 탭에서는 레벨 {{level}}이(가) 지정되어 있지만, [$t(rp)] 탭에서는 포켓몬의 현재 레벨에서의 성능을 표시하고 있습니다.",
 	"rp tab warning field": "[$t(strength2)] 탭에서는 {{field}}이(가) 지정되어 있지만, [$t(rp)] 탭에서는 $t(area bonus) 없음·선호 열매 없음일 때의 성능을 표시하고 있습니다.",
 	"strength, ingredients, skill count": "에너지, 재료 수, 스킬 횟수",
-	"the amount under the following condition": "다음 조건에서의 양을 표시하고 있습니다.",
+	"the amount under the following condition": "[$t(rp)] 탭에서는 다음 조건에서의 에너지·재료 수·스킬 횟수를 표시하고 있습니다.",
 	"use strength tab if you want to change these condition": "이 조건을 변경하려면 [$t(strength2)] 탭을 사용하세요.",
 	"helps per 5 hours": "5시간 동안의 도우미 횟수",
 	"berry rate": "열매 확률",

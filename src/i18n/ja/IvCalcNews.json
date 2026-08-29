@@ -27,7 +27,7 @@
 			},
 			"hb calc": {
 				"headline": "$t(subskill.Helping Bonus)や$t(skills.Extra Helpful S.name)などのエナジー計算を改善しました。",
-				"detail": "[$t(subskill.Helping Bonus)] のエナジー計算を次のように変更しました。\n• (これまで) 自分と同じエナジーを稼ぐポケモンが他に4匹いると仮定して計算。\n• (今後) [$t(parameter)] の [$t(other team member)] で指定したポケモンが他に4匹いると仮定して計算。\nこれにより、すべてポケモンで [$t(subskill.Helping Bonus)] が同じエナジーとして評価されるようになりました。\n\nあわせて、$t(skills.Extra Helpful S.name)・$t(skills.Helper Boost.name)・$t(skills.Energizing Cheer S (Heal Pulse).name)のエナジー量も、これまでの固定 300 エナジーを利用するのをやめ、[$t(other team member)] を利用して計算するように改善しました。"
+				"detail": "[$t(subskill.Helping Bonus)] のエナジー計算を次のように変更しました。\n* **(これまで)** 自分と同じエナジーを稼ぐポケモンが他に4匹いると仮定して計算。\n* **(今後)** [$t(parameter)] の [$t(other team member)] で指定したポケモンが他に4匹いると仮定して計算。\nこれにより、すべてポケモンで [$t(subskill.Helping Bonus)] が同じエナジーとして評価されるようになりました。\n\nあわせて、$t(skills.Extra Helpful S.name)・$t(skills.Helper Boost.name)・$t(skills.Energizing Cheer S (Heal Pulse).name)のエナジー量も、これまでの固定 300 エナジーを利用するのをやめ、[$t(other team member)] を利用して計算するように改善しました。"
 			},
 			"box csv": {
 				"headline": "$t(box)のエクスポート・インポートが CSV・TSV 形式に対応しました。",
@@ -58,7 +58,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"add sandshrew": {
-				"headline": "サンドのデータを追加し、$t(pokemons.Togedemaru)のデータを更新しました。$t(pity proc)・$t(tap frequency)のシミュレーションに対応しました (<a href='https://youtu.be/kEX2myG-wS8'>解説動画</a>)。",
+				"headline": "サンドのデータを追加し、$t(pokemons.Togedemaru)のデータを更新しました。$t(pity proc)・$t(tap frequency)のシミュレーションに対応しました ([解説動画](https://youtu.be/kEX2myG-wS8))。",
 				"detail": "$t(rp collection)$t(movie detail)"
 			},
 			"add latias": {
@@ -74,7 +74,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"latias research": {
-				"headline": "$t(time to full inventory)をグラフ表示できるようになりました (<a href='https://youtu.be/C7Ik6U9JsEM'>解説動画</a>)。",
+				"headline": "$t(time to full inventory)をグラフ表示できるようになりました ([解説動画](https://youtu.be/C7Ik6U9JsEM))。",
 				"detail": "[$t(frequency)] の右の [i] マークや [$t(full inventory while sleeping (short))] の右の [i] マークから確認できます。詳しくは解説動画をごらんください。\nまた、ラティアスリサーチのシミュレーションに対応しました。"
 			},
 			"add mew": {
@@ -98,7 +98,7 @@
 				"detail": "1月7日～9日の間にツールを新規に開いた場合、ボックス内から$t(pokemons.Clodsire)のデータが消えてしまう状態になっていました。ご迷惑をおかけしてしまい、申し訳ございません。"
 			},
 			"candy movie": {
-				"headline": "<a href='https://youtu.be/-1I4s8jwiUs'>アメ計算機能の使い方動画</a>を公開しました。",
+				"headline": "[アメ計算機能の使い方動画](https://youtu.be/-1I4s8jwiUs)を公開しました。",
 				"detail": "$t(movie detail)"
 			},
 			"holiday2025": {
