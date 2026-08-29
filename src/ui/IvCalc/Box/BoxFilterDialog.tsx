@@ -11,6 +11,8 @@ import {
 	Tab,
 	Tabs,
 	TextField,
+	ToggleButton,
+	ToggleButtonGroup,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useCallback } from "react";
@@ -107,6 +109,20 @@ const BoxFilterDialog = React.memo(
 		const onShinyChange = useCallback(() => {
 			onChange(new BoxFilterConfig({ ...value, shiny: !value.shiny }));
 		}, [value, onChange]);
+		const onRarityChange = useCallback(
+			(_: React.MouseEvent, val: string | null) => {
+				if (val === null || value.filterRarity === val) {
+					return;
+				}
+				onChange(
+					new BoxFilterConfig({
+						...value,
+						filterRarity: val as "all" | "legendary" | "mythical",
+					}),
+				);
+			},
+			[value, onChange],
+		);
 		const onIngredientUnlockedOnlyChange = React.useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				onChange(
@@ -192,6 +208,7 @@ const BoxFilterDialog = React.memo(
 						{typeButtons}
 						<h4 style={{ margin: "1rem 0 0.5rem" }}>{t("specialty")}</h4>
 						{specialtyButtons}
+						<h4 style={{ margin: "1rem 0 0" }}>{t("other qualities")}</h4>
 						<div>
 							<FormControlLabel
 								label={t("shiny")}
@@ -201,6 +218,15 @@ const BoxFilterDialog = React.memo(
 								}
 							/>
 						</div>
+						<StyledToggleButtonGroup
+							value={value.filterRarity}
+							exclusive
+							onChange={onRarityChange}
+						>
+							<ToggleButton value="all">{t("all")}</ToggleButton>
+							<ToggleButton value="legendary">{t("legendary")}</ToggleButton>
+							<ToggleButton value="mythical">{t("mythical")}</ToggleButton>
+						</StyledToggleButtonGroup>
 					</div>
 					<div className="tabChild">
 						{ingButtons}
@@ -268,6 +294,19 @@ const StyledTab = styled(Tab)({
 	minWidth: "0",
 	padding: "6px clamp(6px, 1vw, 8px)",
 	textTransform: "none",
+});
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
+	"& > button": {
+		textTransform: "none",
+		lineHeight: 1,
+	},
+	"& > button:first-of-type": {
+		borderRadius: "1rem 0 0 1rem",
+	},
+	"& > button:last-of-type": {
+		borderRadius: "0 1rem 1rem 0",
+	},
 });
 
 const MainSkillTab = React.memo(
