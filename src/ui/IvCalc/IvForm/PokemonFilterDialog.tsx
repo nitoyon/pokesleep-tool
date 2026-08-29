@@ -172,6 +172,20 @@ const TypeTab = React.memo(
 			},
 			[value, onChange],
 		);
+		const onRarityChange = useCallback(
+			(_: React.MouseEvent, val: string | null) => {
+				if (val === null || value.filterRarity === val) {
+					return;
+				}
+				onChange(
+					new PokemonFilterConfig({
+						...value,
+						filterRarity: val as "all" | "legendary" | "mythical",
+					}),
+				);
+			},
+			[value, onChange],
+		);
 
 		const buttons: React.ReactElement[] = PokemonTypes.map((type) => (
 			<TypeButton
@@ -200,7 +214,7 @@ const TypeTab = React.memo(
 					{specialtyButtons}
 				</div>
 				<div>
-					<h4 style={{ margin: "1rem 0 0.5rem" }}>{t("evolve")}</h4>
+					<h4 style={{ margin: "1rem 0 0.5rem" }}>{t("other qualities")}</h4>
 					<StyledToggleButtonGroup
 						value={value.filterEvolve}
 						exclusive
@@ -208,7 +222,17 @@ const TypeTab = React.memo(
 					>
 						<ToggleButton value="all">{t("all")}</ToggleButton>
 						<ToggleButton value="non">{t("non-evolve")}</ToggleButton>
-						<ToggleButton value="final">{t("final-evoltion")}</ToggleButton>
+						<ToggleButton value="final">{t("final-evolution")}</ToggleButton>
+					</StyledToggleButtonGroup>
+
+					<StyledToggleButtonGroup
+						value={value.filterRarity}
+						exclusive
+						onChange={onRarityChange}
+					>
+						<ToggleButton value="all">{t("all")}</ToggleButton>
+						<ToggleButton value="legendary">{t("legendary")}</ToggleButton>
+						<ToggleButton value="mythical">{t("mythical")}</ToggleButton>
 					</StyledToggleButtonGroup>
 				</div>
 			</>
@@ -345,6 +369,10 @@ const MainSkillTab = React.memo(
 );
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
+	marginTop: "0.4rem",
+	"&:first-of-type": {
+		marginTop: "0",
+	},
 	"& > button": {
 		textTransform: "none",
 		lineHeight: 1,

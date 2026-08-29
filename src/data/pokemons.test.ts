@@ -1,5 +1,9 @@
 import { assert } from "vitest";
-import pokemons, { getCandyName, getDecendants } from "./pokemons";
+import pokemons, {
+	getCandyName,
+	getDecendants,
+	getPokemonRarity,
+} from "./pokemons";
 
 describe("getDecendants", () => {
 	test("returns itself when non evolved pokemon is specified", () => {
@@ -143,6 +147,30 @@ describe("getDecendants", () => {
 		expect(decendants[0].name).toBe("Toxel");
 		expect(decendants[1].name).toBe("Toxtricity (Amped)");
 		expect(decendants[2].name).toBe("Toxtricity (Low Key)");
+	});
+});
+
+describe("getPokemonRarity", () => {
+	const rarityOf = (name: string) => {
+		const p = pokemons.find((x) => x.name === name);
+		if (p === undefined) {
+			assert.fail(`${name} should not be undefined`);
+		}
+		return getPokemonRarity(p);
+	};
+
+	test("returns 'normal' for ordinary Pokémon", () => {
+		expect(rarityOf("Pikachu")).toBe("normal");
+	});
+
+	test("returns 'legendary' for 1080 EXP Pokémon", () => {
+		expect(rarityOf("Raikou")).toBe("legendary");
+		expect(rarityOf("Mewtwo")).toBe("legendary");
+	});
+
+	test("returns 'mythical' for 1320 EXP Pokémon", () => {
+		expect(rarityOf("Darkrai")).toBe("mythical");
+		expect(rarityOf("Mew")).toBe("mythical");
 	});
 });
 

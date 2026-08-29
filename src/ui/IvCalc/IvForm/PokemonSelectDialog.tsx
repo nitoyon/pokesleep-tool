@@ -13,11 +13,14 @@ import { styled } from "@mui/system";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import pokemons, {
+	getPokemonRarity,
 	type IngredientName,
 	IngredientNames,
+	type PokemonRarityFilter,
 	type PokemonSpecialty,
 	type PokemonType,
 	PokemonTypes,
+	RarityNames,
 	SpecialtyNames,
 } from "../../../data/pokemons";
 import {
@@ -165,6 +168,8 @@ export class PokemonFilterConfig {
 	filterType: PokemonType | null;
 	/** Specialty */
 	filterSpecialty: PokemonSpecialty[];
+	/** Filter rarity ('all' means no filter) */
+	filterRarity: PokemonRarityFilter;
 	/** Filter by evolve */
 	filterEvolve: "all" | "non" | "final";
 	/** Fileter by ingredient name. */
@@ -182,6 +187,7 @@ export class PokemonFilterConfig {
 	constructor(values: Partial<PokemonFilterConfig>) {
 		this.filterType = values.filterType ?? null;
 		this.filterSpecialty = values.filterSpecialty ?? [];
+		this.filterRarity = values.filterRarity ?? "all";
 		this.filterEvolve = values.filterEvolve ?? "all";
 		this.ingredientName = values.ingredientName ?? "unknown";
 		this.ingredientA = values.ingredientA ?? true;
@@ -206,6 +212,13 @@ export class PokemonFilterConfig {
 				.filterSpecialty as PokemonSpecialty[];
 			if (filterSpecialty.every((x) => SpecialtyNames.includes(x))) {
 				this.filterSpecialty = filterSpecialty;
+			}
+		}
+		if (typeof (json as { filterRarity: unknown }).filterRarity === "string") {
+			const filterRarity = (json as { filterRarity: unknown })
+				.filterRarity as PokemonRarityFilter;
+			if (filterRarity === "all" || RarityNames.includes(filterRarity)) {
+				this.filterRarity = filterRarity;
 			}
 		}
 		if (typeof (json as { filterEvolve: unknown }).filterEvolve === "string") {
@@ -252,6 +265,7 @@ export class PokemonFilterConfig {
 		return (
 			this.filterEvolve !== "all" ||
 			this.filterSpecialty.length > 0 ||
+			this.filterRarity !== "all" ||
 			this.filterType !== null ||
 			this.ingredientName !== "unknown" ||
 			this.mainSkillNames.length > 0
@@ -306,6 +320,13 @@ export class PokemonFilterConfig {
 				(option) =>
 					option.specialty === "All" ||
 					this.filterSpecialty.includes(option.specialty),
+			);
+		}
+
+		// filter by rarity
+		if (this.filterRarity !== "all") {
+			ret = ret.filter(
+				(option) => getPokemonRarity(option) === this.filterRarity,
 			);
 		}
 
