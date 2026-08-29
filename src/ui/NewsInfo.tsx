@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import News, { type NewsArticle } from "../data/news";
 import type AppConfig from "./AppConfig";
 import { AppConfigContext, type AppType } from "./AppConfig";
+import MarkdownBlockElement from "./common/MarkdownBlockElement";
 
 const NewsInfo = React.memo(
 	({
@@ -118,8 +119,8 @@ export const NewsArticleDialog = React.memo(
 			return null;
 		}
 
-		const lines = t(`${appType}.news.${article.id}.detail`).split(/\n/g);
 		const title = t(`${appType}.news.${article.id}.headline`);
+		const text = t(`${appType}.news.${article.id}.detail`);
 
 		let date = "";
 		if (Intl?.RelativeTimeFormat) {
@@ -147,9 +148,7 @@ export const NewsArticleDialog = React.memo(
 				<time>{date}</time>
 				{/** biome-ignore lint/security/noDangerouslySetInnerHtml: title is embeded in i18 files */}
 				<header dangerouslySetInnerHTML={{ __html: title }} />
-				{lines.map((x) => (
-					<p key={x}>{x}</p>
-				))}
+				<MarkdownBlockElement text={text} />
 				<DialogActions disableSpacing>
 					<Button onClick={onClose}>{t("close")}</Button>
 				</DialogActions>
@@ -173,6 +172,13 @@ const StyledNewsArticleDialog = styled(Dialog)({
 		"& > p": {
 			fontSize: "0.9rem",
 			margin: "0.4rem 0 0 0",
+		},
+		"& > ul": {
+			margin: "0.5rem 0",
+			padding: "0 0 0 1.2rem",
+			"& > li": {
+				fontSize: "0.9rem",
+			},
 		},
 	},
 });
