@@ -1,0 +1,35 @@
+{
+	"ResearchCalc": [],
+	"IvCalc": [
+		{
+			"id": "rp and strength"
+		},
+		{
+			"id": "rp and strength difference"
+		},
+		{
+			"id": "daytime performance"
+		},
+		{
+			"id": "compare new pokemon"
+		},
+		{
+			"id": "compare expert mode"
+		},
+		{
+			"id": "box edit"
+		},
+		{
+			"id": "box delete"
+		},
+		{
+			"id": "restore parameter"
+		},
+		{
+			"id": "tips"
+		},
+		{
+			"id": "question"
+		}
+	]
+}

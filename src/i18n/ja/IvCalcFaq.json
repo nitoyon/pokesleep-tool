@@ -1,0 +1,46 @@
+{
+	"IvCalc": {
+		"faq": {
+			"rp and strength": {
+				"question": "[$t(rp)] タブと [$t(strength2)] タブのどちらを使えばよい？",
+				"answer": "初心者の方は [$t(rp)] タブのほうが情報が少なく、シンプルにポケモンを比較できます。\n\n一方、[$t(strength2)] タブでは、条件を変えながらエナジーや$t(ing count)・$t(skill count)を細かく確認できます。\n\nツールに慣れてきたら、[$t(strength2)] タブで、自分のプレイスタイルに合わせた$t(parameter)を設定して比較することをお勧めします。"
+			},
+			"rp and strength difference": {
+				"question": "[$t(rp)] タブと [$t(strength2)] タブの違いは？",
+				"answer": "$t(rp tab condition list)"
+			},
+			"daytime performance": {
+				"question": "日中運用のときの性能を確認するには？",
+				"answer": "[$t(strength2)] タブで、[$t(1day)] となっているところを [$t(8hours)] などに変更します。\n\nこれにより、日中の頻繁にタップできるときの性能を比較できます。"
+			},
+			"compare new pokemon": {
+				"question": "新しいポケモンを捕まえたときにはどう比較すればよい？",
+				"answer": "$t(box)に育成済み・育成予定のポケモンを登録しておきます。\n1. 上のタブは [$t(strength2)]、下のタブは [$t(box)] を選択します。\n1. 捕まえたポケモンをボックスに登録します。\n1. $t(box)のソート順を比較したい指標 ( [$t(total strength)]・[$t(ingredient)]・[$t(skill)] など) に変更します。\n1. ボックスの並び順で、どちらのポケモンのほうが強いか比較します。\n\nヒント\n* $t(box)の左下の [$t(current level)] を変更すると、特定のレベルでの強さの比較ができます。\n* $t(tap frequency)を変更すると、性能が逆転することもあるので比較は慎重に。\n* $t(expert mode)や$t(event bonus)によっては強さが逆転することもあるので検討は慎重に。\n* $t(berry)ポケモンの場合は、$t(tap frequency)を [$t(none)] に設定すると、$t(sneaky snacking)のときのエナジーを比較できます。"
+			},
+			"compare expert mode": {
+				"question": "$t(expert mode)に来ました。今週活躍できるポケモンを知りたい。",
+				"answer": "$t(box)に現在のレベルでポケモンを登録しておきます。\n1. 上のタブは [$t(strength2)]、下のタブは [$t(box)] を選択します。\n1. $t(research area)と$t(favorite berry)を設定します。\n1. $t(box)のソート順を比較したい指標 ( [$t(total strength)]・[$t(ingredient)]・[$t(skill)] など) に変更します。\n1. ボックスの並び順で、どのポケモンが活躍できるかを確認します。"
+			},
+			"box edit": {
+				"question": "$t(box)のポケモンを編集するには？",
+				"answer": "編集したいポケモンのアイコンを長押ししてください。\n\nレベルを変更する場合は、[$t(parameter)] の [$t(level)] を変更するほうが手軽です。"
+			},
+			"box delete": {
+				"question": "$t(box)に登録したポケモンを削除するには？",
+				"answer": "1. 削除したいポケモンを選択します。\n1. ポケモンの右上に出てくる [︙] マークを押します。\n1. メニューから [$t(delete)] を選択します。"
+			},
+			"restore parameter": {
+				"question": "[$t(strength2)] タブの表示が変になって戻せなくなりました。",
+				"answer": "$t(parameter)をいろいろと変更していると、どこを変更したかが分からなくなるかもしれません。そんなときには、[$t(parameter)] タブの一番下にある [$t(initialize all parameters)] ボタンを押してください。ボックスは消えないので安心ください。"
+			},
+			"tips": {
+				"question": "便利な機能を知りたい。",
+				"answer": "いろいろなところに [i] マークがあります。これを押してみると、いろいろな計算の詳細や設定が出てきます。気楽に試してみてください。"
+			},
+			"question": {
+				"question": "質問がある、もしくは要望・不具合報告がある。",
+				"answer": "[X (twitter)](https://x.com/$t(x username)) または [GitHub](https://github.com/nitoyon/pokesleep-tool/discussions) までご連絡ください。"
+			}
+		}
+	}
+}

@@ -1,0 +1,46 @@
+{
+	"IvCalc": {
+		"faq": {
+			"rp and strength": {
+				"question": "Should I use the [$t(rp)] tab or the [$t(strength2)] tab?",
+				"answer": "If you are new, the [$t(rp)] tab shows less information and lets you compare Pokémon more simply.\n\nThe [$t(strength2)] tab, on the other hand, lets you check strength, ingredient count, and skill count in detail while changing the conditions.\n\nOnce you get used to the tool, we recommend comparing Pokémon on the [$t(strength2)] tab with parameter values set to match your own play style."
+			},
+			"rp and strength difference": {
+				"question": "What is the difference between the [$t(rp)] tab and the [$t(strength2)] tab?",
+				"answer": "$t(rp tab condition list)"
+			},
+			"daytime performance": {
+				"question": "How can I check performance for daytime play?",
+				"answer": "On the [$t(strength2)] tab, change the [$t(1day)] setting to [$t(8hours)] or similar.\n\nThis lets you compare performance when you can tap frequently during the day."
+			},
+			"compare new pokemon": {
+				"question": "How should I compare a Pokémon I have just caught?",
+				"answer": "First, add the Pokémon you have already raised or plan to raise to your box.\n1. Select [$t(strength2)] for the top tab and [$t(box)] for the bottom tab.\n1. Add the Pokémon you caught to the box.\n1. Change the box sort order to the metric you want to compare (such as [$t(total strength)], [$t(ingredient)], or [$t(skill)]).\n1. Use the box order to see which Pokémon is stronger.\n\nTips\n* Changing [$t(current level)] at the bottom-left of the box lets you compare strength at a specific level.\n* Changing the tap frequency can sometimes reverse the results, so compare carefully.\n* Results can also flip depending on the expert mode or event bonus, so consider carefully.\n* For berry Pokémon, setting the tap frequency to [$t(none)] lets you compare strength while sneaky snacking."
+			},
+			"compare expert mode": {
+				"question": "This week I moved to an Expert-mode research area, and I want to know which Pokémon can perform well.",
+				"answer": "First, register your Pokémon in the box at their current level.\n1. Select [$t(strength2)] for the top tab and [$t(box)] for the bottom tab.\n1. Set the research area and favorite berry.\n1. Change the box sort order to the metric you want to compare (such as [$t(total strength)], [$t(ingredient)], or [$t(skill)]).\n1. Use the box order to see which Pokémon will perform well."
+			},
+			"box edit": {
+				"question": "How do I edit a Pokémon in the box?",
+				"answer": "Press and hold the icon of the Pokémon you want to edit.\n\nIf you only want to change the level, it is easier to change [$t(level)] in the [$t(parameter)] section."
+			},
+			"box delete": {
+				"question": "How do I delete a Pokémon from the box?",
+				"answer": "1. Select the Pokémon you want to delete.\n1. Press the [︙] icon that appears at the top-right of the Pokémon.\n1. Choose [$t(delete)] from the menu."
+			},
+			"restore parameter": {
+				"question": "The [$t(strength2)] tab looks wrong and I can't get it back to normal.",
+				"answer": "After making lots of changes to the parameter settings, you may lose track of what you changed. When that happens, press the [$t(initialize all parameters)] button at the bottom of the [$t(parameter)] tab. Your box will not be cleared, so there is nothing to worry about."
+			},
+			"tips": {
+				"question": "I want to know about handy features.",
+				"answer": "There are [i] icons all over the app. Tapping one shows details about the calculations and extra settings. Feel free to explore them."
+			},
+			"question": {
+				"question": "I have a question, request, or bug report.",
+				"answer": "Please contact us on [X (Twitter)](https://x.com/$t(x username)) or [GitHub](https://github.com/nitoyon/pokesleep-tool/discussions)."
+			}
+		}
+	}
+}
