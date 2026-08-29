@@ -140,6 +140,28 @@ export type PokemonSpecialty =
 	| "All"
 	| "unknown";
 
+/**
+ * Rarity of the Pokémon, derived from its EXP type.
+ *
+ * This is an internal filter value and is not translated.
+ */
+export type PokemonRarity = "normal" | "legendary" | "mythical";
+
+/**
+ * Rarity value used by filters.
+ *
+ * `"all"` means the rarity filter is disabled.
+ */
+export type PokemonRarityFilter = "all" | PokemonRarity;
+
+/** Rarity values selectable in filters. */
+export const RarityNames: PokemonRarityFilter[] = [
+	"all",
+	"normal",
+	"legendary",
+	"mythical",
+];
+
 export const IngredientNames: IngredientName[] = [
 	"leek",
 	"mushroom",
@@ -266,6 +288,27 @@ export function getDecendants(
 		.filter((x) => x.form === pokemon.form)
 		.filter((x) => includeNonFinal || x.evolutionLeft === 0)
 		.sort((a, b) => (a.id === pokemon.ancestor ? -1 : a.id - b.id));
+}
+
+/**
+ * Gets the rarity of the given Pokémon.
+ *
+ * The rarity is derived from the EXP required to reach level 25:
+ * - 1080 EXP -> "legendary" (e.g. Raikou, Entei, Suicune)
+ * - 1320 EXP -> "mythical" (e.g. Darkrai)
+ * - otherwise -> "normal"
+ *
+ * @param pokemon The Pokémon data.
+ * @returns The rarity of the Pokémon.
+ */
+export function getPokemonRarity(pokemon: PokemonData): PokemonRarity {
+	if (pokemon.exp === 1320) {
+		return "mythical";
+	}
+	if (pokemon.exp === 1080) {
+		return "legendary";
+	}
+	return "normal";
 }
 
 /**

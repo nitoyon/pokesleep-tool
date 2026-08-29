@@ -23,6 +23,7 @@ describe("BoxFilterConfig", () => {
 			expect(config.name).toBe("");
 			expect(config.filterTypes).toEqual([]);
 			expect(config.filterSpecialty).toEqual([]);
+			expect(config.filterRarity).toBe("all");
 			expect(config.ingredientName).toBeUndefined();
 			expect(config.ingredientUnlockedOnly).toBe(false);
 			expect(config.mainSkillNames).toEqual([]);
@@ -165,6 +166,47 @@ describe("BoxFilterConfig", () => {
 			// Pikachu's specialty is "Berries" so it should be in the results
 			expect(filtered.length).toBe(1);
 			expect(filtered[0].iv.pokemonName).toBe("Pikachu");
+		});
+
+		test("filters by rarity (legendary)", () => {
+			const config = new BoxFilterConfig({ filterRarity: "legendary" });
+
+			const items = [
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Raikou" })),
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Darkrai" })),
+			];
+
+			const filtered = config.filter(items, false, mockT);
+			expect(filtered.length).toBe(1);
+			expect(filtered[0].iv.pokemonName).toBe("Raikou");
+		});
+
+		test("filters by rarity (mythical)", () => {
+			const config = new BoxFilterConfig({ filterRarity: "mythical" });
+
+			const items = [
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Raikou" })),
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Darkrai" })),
+			];
+
+			const filtered = config.filter(items, false, mockT);
+			expect(filtered.length).toBe(1);
+			expect(filtered[0].iv.pokemonName).toBe("Darkrai");
+		});
+
+		test("does not filter by rarity when set to 'all'", () => {
+			const config = new BoxFilterConfig({ filterRarity: "all" });
+
+			const items = [
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Raikou" })),
+				new PokemonBoxItem(new PokemonIv({ pokemonName: "Darkrai" })),
+			];
+
+			const filtered = config.filter(items, false, mockT);
+			expect(filtered.length).toBe(3);
 		});
 
 		test("filters by shiny", () => {
@@ -467,6 +509,11 @@ describe("BoxFilterConfig", () => {
 			expect(config.defaultTabIndex).toBe(0);
 		});
 
+		test("returns 0 for rarity filter", () => {
+			const config = new BoxFilterConfig({ filterRarity: "legendary" });
+			expect(config.defaultTabIndex).toBe(0);
+		});
+
 		test("returns 1 for ingredient filter", () => {
 			const config = new BoxFilterConfig({ ingredientName: "apple" });
 			expect(config.defaultTabIndex).toBe(1);
@@ -541,6 +588,11 @@ describe("BoxFilterConfig", () => {
 
 		test("returns false when filterSpecialty is set", () => {
 			const config = new BoxFilterConfig({ filterSpecialty: ["Berries"] });
+			expect(config.isEmpty).toBe(false);
+		});
+
+		test("returns false when filterRarity is set", () => {
+			const config = new BoxFilterConfig({ filterRarity: "legendary" });
 			expect(config.isEmpty).toBe(false);
 		});
 
