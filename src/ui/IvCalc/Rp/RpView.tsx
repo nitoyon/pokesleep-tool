@@ -114,6 +114,8 @@ const RpView = React.memo(
 					/>
 					<RpInfoDialog
 						isError={isError}
+						level={state.parameter.level}
+						fieldIndex={state.parameter.fieldIndex}
 						open={rpInfoOpen}
 						onClose={onRpInfoClose}
 					/>
@@ -141,10 +143,14 @@ const RpView = React.memo(
 const RpInfoDialog = React.memo(
 	({
 		isError,
+		level,
+		fieldIndex,
 		open,
 		onClose,
 	}: {
 		isError: boolean;
+		level: number;
+		fieldIndex: number;
 		open: boolean;
 		onClose: () => void;
 	}) => {
@@ -156,7 +162,15 @@ const RpInfoDialog = React.memo(
 			return (
 				<StyledRpInfoDialog open={open} onClose={onClose}>
 					<article>
-						{t("go to strength tab to show the current condition values")}
+						{fieldIndex >= 0 && (
+							<p>
+								{t("rp tab warning field", { field: t(`area.${fieldIndex}`) })}
+							</p>
+						)}
+						{level > 0 && <p>{t("rp tab warning level", { level })}</p>}
+						<p>
+							{t("go to strength tab to show the current condition values")}
+						</p>
 					</article>
 					<DialogActions>
 						<Button onClick={onClose}>{t("close")}</Button>
