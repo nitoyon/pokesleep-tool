@@ -15,6 +15,7 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 import News, { type NewsArticle } from "../../data/news";
+import MarkdownInlineElement from "../common/MarkdownInlineElement";
 import { NewsArticleDialog } from "../NewsInfo";
 
 interface NewsListDialogProps {
@@ -93,8 +94,9 @@ const NewsListDialog = React.memo(({ open, onClose }: NewsListDialogProps) => {
 								>
 									<ListItemText
 										primary={
-											// biome-ignore lint/security/noDangerouslySetInnerHtml: title is embeded in i18 files
-											<span dangerouslySetInnerHTML={{ __html: html }} />
+											<span>
+												<MarkdownInlineElement text={html} />
+											</span>
 										}
 										secondary={formatRelativeDate(article, i18n.language)}
 									/>
