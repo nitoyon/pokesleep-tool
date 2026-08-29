@@ -8,6 +8,7 @@ import News, { type NewsArticle } from "../data/news";
 import type AppConfig from "./AppConfig";
 import { AppConfigContext, type AppType } from "./AppConfig";
 import MarkdownBlockElement from "./common/MarkdownBlockElement";
+import MarkdownInlineElement from "./common/MarkdownInlineElement";
 
 const NewsInfo = React.memo(
 	({
@@ -46,13 +47,14 @@ const NewsInfo = React.memo(
 			onAppConfigChange(newConfig);
 		};
 
-		const html = t(`${appType}.news.${article.id}.headline`);
+		const headline = t(`${appType}.news.${article.id}.headline`);
 		return (
 			<StyledNewsInfo>
 				<InfoOutlinedIcon />
 				<div>
-					{/** biome-ignore lint/security/noDangerouslySetInnerHtml: headline is embeded in i18 files */}
-					<span dangerouslySetInnerHTML={{ __html: html }} />
+					<span>
+						<MarkdownInlineElement text={headline} />
+					</span>
 					<Button onClick={onDetailClick}>[{t("details")}]</Button>
 				</div>
 				<IconButton onClick={onClose}>
@@ -146,8 +148,9 @@ export const NewsArticleDialog = React.memo(
 		return (
 			<StyledNewsArticleDialog open={open} onClose={onClose}>
 				<time>{date}</time>
-				{/** biome-ignore lint/security/noDangerouslySetInnerHtml: title is embeded in i18 files */}
-				<header dangerouslySetInnerHTML={{ __html: title }} />
+				<header>
+					<MarkdownInlineElement text={title} />
+				</header>
 				<MarkdownBlockElement text={text} />
 				<DialogActions disableSpacing>
 					<Button onClick={onClose}>{t("close")}</Button>

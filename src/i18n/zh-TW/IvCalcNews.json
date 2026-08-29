@@ -58,7 +58,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"add sandshrew": {
-				"headline": "新增了$t(pokemons.Sandshrew)和$t(pokemons.Sandslash)的資料，並更新了$t(pokemons.Togedemaru)的資料。支援了$t(pity proc)・$t(tap frequency)的模擬（<a href='https://youtu.be/kEX2myG-wS8'>講解影片</a>）。",
+				"headline": "新增了$t(pokemons.Sandshrew)和$t(pokemons.Sandslash)的資料，並更新了$t(pokemons.Togedemaru)的資料。支援了$t(pity proc)・$t(tap frequency)的模擬（[講解影片](https://youtu.be/kEX2myG-wS8)）。",
 				"detail": "$t(rp collection)$t(movie detail)"
 			},
 			"add latias": {
@@ -74,7 +74,7 @@
 				"detail": "$t(rp collection)"
 			},
 			"latias research": {
-				"headline": "現在可以以圖表形式顯示$t(time to full inventory)了（<a href='https://youtu.be/C7Ik6U9JsEM'>講解影片</a>）。",
+				"headline": "現在可以以圖表形式顯示$t(time to full inventory)了（[講解影片](https://youtu.be/C7Ik6U9JsEM)）。",
 				"detail": "可以透過[$t(frequency)]右側的 [i] 標記或[$t(full inventory while sleeping (short))]右側的 [i] 標記來確認。詳情請觀看講解影片。\n此外，已支援拉帝亞斯調查的模擬。"
 			},
 			"add mew": {
@@ -98,7 +98,7 @@
 				"detail": "如果您在1月7日至9日期間首次打開工具，盒子中的$t(pokemons.Clodsire)資料可能已消失。對此造成的不便深表歉意。"
 			},
 			"candy movie": {
-				"headline": "<a href='https://youtu.be/-1I4s8jwiUs'>糖果計算功能的使用方法影片</a>已發佈。",
+				"headline": "[糖果計算功能的使用方法影片](https://youtu.be/-1I4s8jwiUs)已發佈。",
 				"detail": "$t(movie detail)"
 			},
 			"holiday2025": {
