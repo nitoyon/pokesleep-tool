@@ -3,7 +3,7 @@
 		"faq": {
 			"rp and strength": {
 				"question": "Should I use the [$t(rp)] tab or the [$t(strength2)] tab?",
-				"answer": "If you are new, the [$t(rp)] tab shows less information and lets you compare Pokémon more simply.\n\nThe [$t(strength2)] tab, on the other hand, lets you check strength, ingredient count, and skill count in detail while changing the conditions.\n\nOnce you get used to the tool, we recommend comparing Pokémon on the [$t(strength2)] tab with parameter values set to match your own play style."
+				"answer": "If you are new, the [$t(rp)] tab shows less information and lets you compare Pokémon more simply.\n\nThe [$t(strength2)] tab, on the other hand, lets you check strength, ingredient count, and skill count in detail while changing the conditions.\n\nOnce you get used to the tool, we recommend moving to the [$t(strength2)] tab and comparing Pokémon with parameter values set to match your own play style."
 			},
 			"rp and strength difference": {
 				"question": "What is the difference between the [$t(rp)] tab and the [$t(strength2)] tab?",
@@ -14,7 +14,7 @@
 				"answer": "On the [$t(strength2)] tab, change the [$t(1day)] setting to [$t(8hours)] or similar.\n\nThis lets you compare performance when you can tap frequently during the day."
 			},
 			"compare new pokemon": {
-				"question": "How should I compare a Pokémon I have just caught?",
+				"question": "How should I compare a Pokémon I have just caught with the ones I already have?",
 				"answer": "First, add the Pokémon you have already raised or plan to raise to your box.\n1. Select [$t(strength2)] for the top tab and [$t(box)] for the bottom tab.\n1. Add the Pokémon you caught to the box.\n1. Change the box sort order to the metric you want to compare (such as [$t(total strength)], [$t(ingredient)], or [$t(skill)]).\n1. Use the box order to see which Pokémon is stronger.\n\nTips\n* Changing [$t(current level)] at the bottom-left of the box lets you compare strength at a specific level.\n* Changing the tap frequency can sometimes reverse the results, so compare carefully.\n* Results can also flip depending on the expert mode or event bonus, so consider carefully.\n* For berry Pokémon, setting the tap frequency to [$t(none)] lets you compare strength while sneaky snacking."
 			},
 			"compare expert mode": {
@@ -23,7 +23,7 @@
 			},
 			"box edit": {
 				"question": "How do I edit a Pokémon in the box?",
-				"answer": "Press and hold the icon of the Pokémon you want to edit.\n\nIf you only want to change the level, it is easier to change [$t(level)] in the [$t(parameter)] section."
+				"answer": "Press and hold the icon of the Pokémon you want to edit.\n\nIf you want to change the levels of multiple Pokémon in the box at once while comparing them, it is easier to change [$t(level)] in the [$t(parameter)] section."
 			},
 			"box delete": {
 				"question": "How do I delete a Pokémon from the box?",

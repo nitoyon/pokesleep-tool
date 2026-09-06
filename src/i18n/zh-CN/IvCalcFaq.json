@@ -3,7 +3,7 @@
 		"faq": {
 			"rp and strength": {
 				"question": "[$t(rp)] 标签和 [$t(strength2)] 标签应该用哪一个？",
-				"answer": "如果您是新手，[$t(rp)] 标签信息较少，可以更简单地比较宝可梦。\n\n而 [$t(strength2)] 标签可以在改变条件的同时，详细查看能量以及$t(ing count)、$t(skill count)。\n\n熟悉本工具后，建议在 [$t(strength2)] 标签中设置符合自己游玩风格的$t(parameter)来进行比较。"
+				"answer": "如果您是新手，[$t(rp)] 标签信息较少，可以更简单地比较宝可梦。\n\n而 [$t(strength2)] 标签可以在改变条件的同时，详细查看能量以及$t(ing count)、$t(skill count)。\n\n熟悉本工具后，建议切换到 [$t(strength2)] 标签，设置符合自己游玩风格的$t(parameter)来进行比较。"
 			},
 			"rp and strength difference": {
 				"question": "[$t(rp)] 标签和 [$t(strength2)] 标签有什么区别？",
@@ -14,7 +14,7 @@
 				"answer": "在 [$t(strength2)] 标签中，将显示为 [$t(1day)] 的地方改为 [$t(8hours)] 等。\n\n这样就可以比较白天能够频繁点击时的性能。"
 			},
 			"compare new pokemon": {
-				"question": "抓到新的宝可梦时应该如何比较？",
+				"question": "抓到新的宝可梦时，想和已有的宝可梦比较该怎么做？",
 				"answer": "先在$t(box)中登记已经培养或计划培养的宝可梦。\n1. 上方标签选择 [$t(strength2)]，下方标签选择 [$t(box)]。\n1. 将抓到的宝可梦登记到盒子中。\n1. 将$t(box)的排序方式改为想要比较的指标（如 [$t(total strength)]、[$t(ingredient)]、[$t(skill)] 等）。\n1. 根据盒子的排列顺序，比较哪只宝可梦更强。\n\n提示\n* 更改$t(box)左下方的 [$t(current level)]，可以比较特定等级下的强度。\n* 更改$t(tap frequency)后性能有可能逆转，因此比较时请谨慎。\n* 根据$t(expert mode)或$t(event bonus)的不同，强度也可能逆转，因此请谨慎判断。\n* 对于$t(berry)宝可梦，将$t(tap frequency)设为 [$t(none)]，即可比较$t(sneaky snacking)时的能量。"
 			},
 			"compare expert mode": {
@@ -23,7 +23,7 @@
 			},
 			"box edit": {
 				"question": "如何编辑$t(box)中的宝可梦？",
-				"answer": "请长按想要编辑的宝可梦图标。\n\n如果只是更改等级，更改 [$t(parameter)] 中的 [$t(level)] 会更方便。"
+				"answer": "请长按想要编辑的宝可梦图标。\n\n如果要一次性更改盒子中多只宝可梦的等级并进行比较，更改 [$t(parameter)] 中的 [$t(level)] 会更方便。"
 			},
 			"box delete": {
 				"question": "如何删除已登记到$t(box)中的宝可梦？",

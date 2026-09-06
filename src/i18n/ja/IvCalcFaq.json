@@ -3,7 +3,7 @@
 		"faq": {
 			"rp and strength": {
 				"question": "[$t(rp)] タブと [$t(strength2)] タブのどちらを使えばよい？",
-				"answer": "初心者の方は [$t(rp)] タブのほうが情報が少なく、シンプルにポケモンを比較できます。\n\n一方、[$t(strength2)] タブでは、条件を変えながらエナジーや$t(ing count)・$t(skill count)を細かく確認できます。\n\nツールに慣れてきたら、[$t(strength2)] タブで、自分のプレイスタイルに合わせた$t(parameter)を設定して比較することをお勧めします。"
+				"answer": "初心者の方は [$t(rp)] タブのほうが情報が少なく、シンプルにポケモンを比較できます。\n\n一方、[$t(strength2)] タブでは、条件を変えながらエナジーや$t(ing count)・$t(skill count)を細かく確認できます。\n\nツールに慣れてきたら、[$t(strength2)] タブに移行して、自分のプレイスタイルに合わせた$t(parameter)を設定して比較することをお勧めします。"
 			},
 			"rp and strength difference": {
 				"question": "[$t(rp)] タブと [$t(strength2)] タブの違いは？",
@@ -14,7 +14,7 @@
 				"answer": "[$t(strength2)] タブで、[$t(1day)] となっているところを [$t(8hours)] などに変更します。\n\nこれにより、日中の頻繁にタップできるときの性能を比較できます。"
 			},
 			"compare new pokemon": {
-				"question": "新しいポケモンを捕まえたときにはどう比較すればよい？",
+				"question": "新しいポケモンを捕まえたときに、既存のポケモンと比較するにはどう比較すればよい？",
 				"answer": "$t(box)に育成済み・育成予定のポケモンを登録しておきます。\n1. 上のタブは [$t(strength2)]、下のタブは [$t(box)] を選択します。\n1. 捕まえたポケモンをボックスに登録します。\n1. $t(box)のソート順を比較したい指標 ( [$t(total strength)]・[$t(ingredient)]・[$t(skill)] など) に変更します。\n1. ボックスの並び順で、どちらのポケモンのほうが強いか比較します。\n\nヒント\n* $t(box)の左下の [$t(current level)] を変更すると、特定のレベルでの強さの比較ができます。\n* $t(tap frequency)を変更すると、性能が逆転することもあるので比較は慎重に。\n* $t(expert mode)や$t(event bonus)によっては強さが逆転することもあるので検討は慎重に。\n* $t(berry)ポケモンの場合は、$t(tap frequency)を [$t(none)] に設定すると、$t(sneaky snacking)のときのエナジーを比較できます。"
 			},
 			"compare expert mode": {
@@ -23,7 +23,7 @@
 			},
 			"box edit": {
 				"question": "$t(box)のポケモンを編集するには？",
-				"answer": "編集したいポケモンのアイコンを長押ししてください。\n\nレベルを変更する場合は、[$t(parameter)] の [$t(level)] を変更するほうが手軽です。"
+				"answer": "編集したいポケモンのアイコンを長押ししてください。\n\n$t(box)の中の複数のポケモンのレベルを一括して変更しながら比較する場合は、[$t(parameter)] の [$t(level)] を変更するほうが手軽です。"
 			},
 			"box delete": {
 				"question": "$t(box)に登録したポケモンを削除するには？",
