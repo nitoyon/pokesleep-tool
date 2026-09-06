@@ -323,6 +323,23 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 						<InfoButton onClick={onStockInfoClick} />
 					</footer>
 				)}
+				{(strength.parameter.event.startsWith("pursue mewtwo") ||
+					strength.pokemonIv.pokemonName === "Mewtwo") && (
+					<div
+						style={{
+							gridColumn: "1 / -1",
+							border: "1px solid red",
+							background: "#ffeeee",
+							color: "red",
+							fontSize: "0.8rem",
+							borderRadius: "0.5rem",
+							margin: ".2rem .5rem 0",
+							padding: "0 0.3rem",
+						}}
+					>
+						{t("mewtwo warning")}
+					</div>
+				)}
 				<BerryHelpDialog
 					open={berryHelpOpen}
 					onClose={onBerryHelpClose}

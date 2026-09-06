@@ -81,6 +81,7 @@
 	"estimated value": "Estimated",
 	"rate is not fixed": "The ingredient% and skill% for this Pokémon are not yet confirmed, so provisional values are displayed.",
 	"rate is not fixed title": "{{name}}'s stats are not confirmed. You can simulate by changing the provisional values.",
+	"mewtwo warning": "Simulation of \"Very Big Mago Berries\" and \"$t(skills.Berry Zone.name)\" is not currently supported.",
 	"low chance": "Low",
 	"medium chance": "Medium",
 	"high chance": "High",

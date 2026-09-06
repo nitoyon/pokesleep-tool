@@ -80,6 +80,7 @@
 	"estimated value": "推測値",
 	"rate is not fixed": "このポケモンの食材確率・スキル確率は未確定であるため、暫定の値を表示しています。",
 	"rate is not fixed title": "{{name}}の性能は未確定です。暫定値を変更してシミュレーションできます。",
+	"mewtwo warning": "「とてもおおきなマゴのみ」と「$t(skills.Berry Zone.name)」のシミュレーションには対応していません。",
 	"low chance": "低め",
 	"medium chance": "ふつう",
 	"high chance": "高め",
