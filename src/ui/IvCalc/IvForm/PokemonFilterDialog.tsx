@@ -370,6 +370,7 @@ const MainSkillTab = React.memo(
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
 	marginTop: "0.4rem",
+	display: "block",
 	"&:first-of-type": {
 		marginTop: "0",
 	},
