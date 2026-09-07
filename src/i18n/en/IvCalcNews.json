@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"mew": {
+				"headline": "Now fully supports simulation for $t(pokemons.Mew).",
+				"detail": "$t(skills.Versatile.strength)"
+			},
 			"add captain": {
 				"headline": "Added data for $t(pokemons.Pikachu (Captain)) and $t(pokemons.Tinkaton).",
 				"detail": "$t(rp collection)"
