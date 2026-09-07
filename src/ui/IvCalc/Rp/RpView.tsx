@@ -63,7 +63,6 @@ const RpView = React.memo(
 		// because RateNotFixedDialog is shown in RpView for Mew)
 		const strengthParameter: StrengthParameter = createStrengthParameter({
 			helpBonusCount: pokemonIv.hasHelpingBonusInActiveSubSkills ? 1 : 0,
-			mew: { ...state.parameter.mew },
 		});
 		const strength = new PokemonStrength(
 			pokemonIv,

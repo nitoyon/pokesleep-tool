@@ -122,6 +122,13 @@ export const hyperCutterSuccess = 0.1668;
  */
 export const berryJuiceRate = 0.185;
 
+/**
+ * Versatile success rate
+ *
+ * ref: https://pks.raenonx.cc/en/mainskill/info/34
+ */
+export const versatileSuccessRate = 0.3;
+
 export function getMaxSkillLevel(skill: MainSkillName): 6 | 7 | 8 {
 	if (
 		skill === "Dream Shard Magnet S" ||
