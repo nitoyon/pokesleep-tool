@@ -210,9 +210,9 @@
 		},
 		"Versatile": {
 			"name": "Versatile",
-			"strength": "",
-			"desc": "Additionally, get Candy for 1 Pokémon on your team.",
-			"detail": "From skill level 6 onward, there is a chance to get extra Candy. The chance is said to be 30% (per RaenonX)."
+			"strength": "The skill% and the chance of getting extra Candy (30%) use aggregated results from RaenonX.",
+			"desc": "Additionally, get Candy for 1 Pokémon on your team. From skill level 6 onward, there is a chance to get extra Candy.",
+			"detail": "The chance is said to be 30% (per RaenonX)."
 		},
 		"Berry Burst (Draco Meteor)": {
 			"name": "Draco Meteor (Berry Burst)",

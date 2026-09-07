@@ -32,6 +32,7 @@ import {
 	superLuckIngRate,
 	superLuckShard5Rate,
 	superLuckShardRate,
+	versatileSuccessRate,
 } from "./MainSkill";
 import type PokemonIv from "./PokemonIv";
 import type { IngredientSlot } from "./PokemonIv";
@@ -43,7 +44,6 @@ import {
 	allFavoriteFieldIndex,
 	type BerryBurstTeam,
 	type BerryBurstTeamMember,
-	type MewParameter,
 	noFavoriteFieldIndex,
 	type StrengthParameter,
 } from "./StrengthParameter";
@@ -54,7 +54,6 @@ export {
 	createStrengthParameter,
 	type ExpertEffects,
 	loadStrengthParameter,
-	type MewParameter,
 	noFavoriteFieldIndex,
 	normalizeStrengthParameter,
 	type StrengthParameter,
@@ -268,22 +267,21 @@ export interface StrengthCache {
 	teamMemberStrength?: number;
 }
 
-function getMewSkillRate(
-	versatileSkill: MainSkillName,
-	mew: MewParameter,
-): number {
+function getMewSkillRate(versatileSkill: MainSkillName): number {
+	// ref: https://pks.raenonx.cc/en/mainskill/info/34
 	if (
 		versatileSkill === "Charge Strength S (Random)" ||
 		versatileSkill === "Charge Energy S"
 	) {
-		return mew.skill1;
-	} else if (
-		versatileSkill === "Energy for Everyone S" ||
-		versatileSkill === "Berry Burst"
-	) {
-		return mew.skill3;
+		return 6.4;
+	} else if (versatileSkill === "Energizing Cheer S") {
+		return 4.39;
+	} else if (versatileSkill === "Energy for Everyone S") {
+		return 3.37;
+	} else if (versatileSkill === "Berry Burst") {
+		return 2.84;
 	}
-	return mew.skill2;
+	return 4;
 }
 
 /**
@@ -321,8 +319,7 @@ class PokemonStrength {
 		// Apply Mew overrides
 		if (this.iv.pokemon.name === "Mew") {
 			this.iv = this.iv.clone({
-				baseIngRate: param.mew.ing,
-				baseSkillRate: getMewSkillRate(this.iv.versatileSkill, param.mew),
+				baseSkillRate: getMewSkillRate(this.iv.versatileSkill),
 			});
 		}
 	}
@@ -571,7 +568,7 @@ class PokemonStrength {
 		);
 
 		const successCount = getSkillSubValue("Versatile", skillLevel);
-		ret.skillValuePerTrigger2 = 1 + (successCount * param.mew.success) / 100;
+		ret.skillValuePerTrigger2 = 1 + successCount * versatileSuccessRate;
 		ret.skillValue2 = ret.skillValuePerTrigger2 * skillCount;
 		return ret;
 	}
