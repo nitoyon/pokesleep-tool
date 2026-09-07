@@ -143,7 +143,9 @@ const SkillHelpDialog = React.memo(
 
 		const iv = strength.pokemonIv;
 		const skill = iv.versatileSkill.replace(" (Random)", "");
-		const footnote = t(`skills.${skill}.strength`, { defaultValue: "" });
+		const footnote =
+			t(`skills.${skill}.strength`, { defaultValue: "" }) +
+			(iv.pokemon.skill === "Versatile" ? t("skills.Versatile.strength") : "");
 		const skillName = iv.versatileSkill;
 		const isCountOnly =
 			skillName === "Metronome" || skillName.startsWith("Skill Copy");
