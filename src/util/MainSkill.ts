@@ -369,6 +369,15 @@ export function getIngredientDrawIngredients(
 	pokemon: PokemonData,
 ): IngredientName[] {
 	const id = pokemon.ancestor ?? pokemon.id;
+	return getIngredientDrawIngredientsById(id);
+}
+
+/**
+ * Get the ingredient list for Ingredient Draw S based on the Pokémon ID.
+ * @param id Pokémon ID.
+ * @returns Ingredient list.
+ */
+export function getIngredientDrawIngredientsById(id: number): IngredientName[] {
 	switch (id) {
 		// Sandshrew
 		case 27:
@@ -389,9 +398,7 @@ export function getIngredientDrawIngredients(
 		case 742:
 			return ["honey", "oil", "corn"];
 	}
-	throw new Error(
-		`Unknown Pokémon for Ingredient Draw S: ${pokemon.name} (id: ${id})`,
-	);
+	throw new Error(`Unknown Pokémon for Ingredient Draw S: ${id}`);
 }
 
 /**
