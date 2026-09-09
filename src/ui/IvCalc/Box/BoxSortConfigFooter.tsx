@@ -268,6 +268,7 @@ const IngMenuItem = styled(MenuItem)({
 });
 const SkillMenuItem = styled(MenuItem)({
 	maxWidth: "12rem",
+	minHeight: "2rem",
 	fontSize: "0.8rem",
 	padding: "0 4px",
 	textWrap: "wrap",
