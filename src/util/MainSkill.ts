@@ -328,13 +328,11 @@ export function getSkillSubValue(
 	}
 
 	if (skill === "Ingredient Magnet S (Plus)") {
-		// Get additional ingredient count
-		if (firstIngredient === "coffee") {
-			return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
-		} else if (firstIngredient === "milk") {
+		if (firstIngredient === "milk") {
 			return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
 		}
-		throw new Error(`invalid ingredient: ${firstIngredient}`);
+		// Coffee, Skill Copy, Metronome
+		return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
 	}
 	if (skill === "Ingredient Magnet S (Present)") {
 		return 4;
