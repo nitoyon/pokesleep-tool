@@ -1,6 +1,7 @@
 import { emptyBonusEffects } from "../../data/events";
 import type { IngredientName } from "../../data/pokemons";
 import type { PokemonBoxItem } from "../PokemonBox";
+import PokemonIv from "../PokemonIv";
 import { ingredientStrength } from "../PokemonRp";
 import type { IngredientStrength, StrengthParameter } from "../PokemonStrength";
 import { buildMemberProfiles } from "./MemberProfile";
@@ -15,6 +16,7 @@ import type {
 } from "./Types";
 
 const emptyTotal: TeamMemberStrengthResult = {
+	iv: new PokemonIv({ pokemonName: "Bulbasaur" }),
 	bonus: {
 		...emptyBonusEffects,
 		skillTriggerReason: "none",
@@ -180,6 +182,7 @@ function buildTeamStrengthResult(
 			(param.totalFlags[2] ? avgSkillStrength : 0);
 
 		return {
+			iv: profile.iv,
 			bonus: profile.bonus,
 			berryRawStrength: profile.berryRawStrength,
 			berryStrength: profile.berryStrength,
@@ -226,6 +229,7 @@ function buildTeamStrengthResult(
 	}
 
 	const total: TeamMemberStrengthResult = {
+		iv: new PokemonIv({ pokemonName: "Bulbasaur" }),
 		bonus: {
 			...emptyBonusEffects,
 			skillTriggerReason: "none",

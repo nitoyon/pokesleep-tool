@@ -69,6 +69,7 @@ export interface TeamProgress {
  * when used as the `total` field of {@link TeamStrengthResult}).
  */
 export interface TeamMemberStrengthResult {
+	iv: PokemonIv;
 	bonus: BonusEffectsWithReason;
 
 	/** Berry strength per help, without field bonus. */

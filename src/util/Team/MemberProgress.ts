@@ -5,10 +5,9 @@ import type { MemberProfile, MemberProgress, TeamMember } from "./Types";
  * Build the initial {@link MemberProgress} for a single team member at the
  * start of a simulation iteration.
  *
- * @param profile - The member's profile (used for the initial energy value).
  * @returns A fully populated MemberProgress with all accumulators reset.
  */
-export function createMemberProgress(profile: MemberProfile): MemberProgress {
+export function createMemberProgress(): MemberProgress {
 	const progress: MemberProgress = {
 		energy: 0,
 		lastRecoverySec: 0,
@@ -42,6 +41,6 @@ export function createMemberProgress(profile: MemberProfile): MemberProgress {
 export function createTeamMembers(profiles: MemberProfile[]): TeamMember[] {
 	return profiles.map((profile) => ({
 		profile,
-		progress: createMemberProgress(profile),
+		progress: createMemberProgress(),
 	}));
 }

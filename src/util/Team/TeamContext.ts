@@ -35,7 +35,7 @@ export function createTeamContext(
  */
 export function resetTeamContext(sim: TeamContext): void {
 	for (const member of sim.members) {
-		member.progress = createMemberProgress(member.profile);
+		member.progress = createMemberProgress();
 	}
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
