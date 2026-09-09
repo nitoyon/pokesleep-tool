@@ -96,6 +96,9 @@ function createEmptyIconElement(size: number): React.ReactElement {
 const StyledIconContainer = styled("div")({
 	border: "1px solid #999",
 	overflow: "hidden",
+	"& > svg": {
+		display: "block",
+	},
 });
 
 export default PokemonIcon;
