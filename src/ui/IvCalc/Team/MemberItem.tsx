@@ -1,10 +1,13 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import CheckIcon from "@mui/icons-material/Check";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import OutboxIcon from "@mui/icons-material/Outbox";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import {
 	ButtonBase,
+	Divider,
+	Icon,
 	IconButton,
 	ListItemIcon,
 	Menu,
@@ -23,17 +26,26 @@ const MemberItem = React.memo(
 	({
 		index,
 		item,
+		enabled = true,
 		onChange,
 	}: {
 		index: number;
 		item?: PokemonBoxItem;
+		enabled?: boolean;
 		onChange: (event: MemberEvent) => void;
 	}) => {
 		if (item === undefined) {
 			return <EmptyMemberItem index={index} onChange={onChange} />;
 		}
 
-		return <ValidMemberBox index={index} item={item} onChange={onChange} />;
+		return (
+			<ValidMemberBox
+				index={index}
+				item={item}
+				enabled={enabled}
+				onChange={onChange}
+			/>
+		);
 	},
 );
 
@@ -77,10 +89,12 @@ const ValidMemberBox = React.memo(
 	({
 		index,
 		item,
+		enabled,
 		onChange,
 	}: {
 		index: number;
 		item: PokemonBoxItem;
+		enabled: boolean;
 		onChange: (event: MemberEvent) => void;
 	}) => {
 		const { t } = useTranslation();
@@ -119,7 +133,7 @@ const ValidMemberBox = React.memo(
 		const isMenuOpen = Boolean(moreMenuAnchor);
 
 		return (
-			<StyledMember>
+			<StyledMember className={enabled ? undefined : "disabled"}>
 				<ButtonBase onClick={onPokemonClick} ref={longPressRef}>
 					<header>
 						<span className="lv">Lv.</span>
@@ -156,6 +170,11 @@ const ValidMemberBox = React.memo(
 							</ListItemIcon>
 							{t("delete")}
 						</MenuItem>
+						<Divider />
+						<MenuItem onClick={() => onAction("toggleEnabled")}>
+							<ListItemIcon>{enabled ? <Icon /> : <CheckIcon />}</ListItemIcon>
+							{t("disable")}
+						</MenuItem>
 					</MenuList>
 				</Menu>
 			</StyledMember>
@@ -167,7 +186,12 @@ const StyledMember = styled("div")({
 	border: "1px solid #aaa",
 	borderRadius: "10px",
 	position: "relative",
+	"&.disabled > button:first-of-type": {
+		filter: "grayscale(0.8)",
+		opacity: 0.4,
+	},
 	"& > button:first-of-type": {
+		background: "#f9f9ee",
 		borderRadius: "10px",
 		fontFamily: `"M PLUS 1p"`,
 		display: "flex",

@@ -39,8 +39,19 @@ const MemberList = React.memo(
 					});
 					return;
 				}
+
+				if (event.action === "toggleEnabled") {
+					const cur = state.teamMembers[event.index];
+					if (cur !== undefined) {
+						dispatch({
+							type: "setTeamMemberEnabled",
+							payload: { index: event.index, enabled: !cur.enabled },
+						});
+					}
+					return;
+				}
 			},
-			[dispatch],
+			[dispatch, state.teamMembers],
 		);
 
 		const onBoxDialogClose = React.useCallback(() => {
@@ -59,16 +70,20 @@ const MemberList = React.memo(
 
 		return (
 			<StyledTeamView>
-				<MemberItem index={0} item={state.teamMembers[0]} onChange={onChange} />
-				<MemberItem index={1} item={state.teamMembers[1]} onChange={onChange} />
-				<MemberItem index={2} item={state.teamMembers[2]} onChange={onChange} />
-				<MemberItem index={3} item={state.teamMembers[3]} onChange={onChange} />
-				<MemberItem index={4} item={state.teamMembers[4]} onChange={onChange} />
+				{[0, 1, 2, 3, 4].map((i) => (
+					<MemberItem
+						key={i}
+						index={i}
+						item={state.teamMembers[i]?.item}
+						enabled={state.teamMembers[i]?.enabled ?? true}
+						onChange={onChange}
+					/>
+				))}
 				<EditMemberDialog
 					action={editAction}
 					open={boxDialogOpen}
 					items={state.box.items}
-					item={state.teamMembers[editingIndex]}
+					item={state.teamMembers[editingIndex]?.item}
 					parameter={state.parameter}
 					dispatch={dispatch}
 					onClose={onBoxDialogClose}

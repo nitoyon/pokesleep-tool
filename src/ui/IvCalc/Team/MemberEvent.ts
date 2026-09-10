@@ -6,6 +6,8 @@ export type MemberAction =
 	| "editiv"
 	/** Open box and change pokemon */
 	| "openbox"
+	/** Toggle whether this member is included in the calculation */
+	| "toggleEnabled"
 	/** Clear current pokemon */
 	| "clear";
 

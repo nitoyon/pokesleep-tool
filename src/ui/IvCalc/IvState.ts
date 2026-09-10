@@ -56,7 +56,20 @@ export type IvAction =
 	| {
 			type: "setTeamMember";
 			payload: { index: number; item: PokemonBoxItem | undefined };
+	  }
+	| {
+			type: "setTeamMemberEnabled";
+			payload: { index: number; enabled: boolean };
 	  };
+
+/**
+ * A single team slot: the box item assigned to it plus whether it is
+ * currently included in the team strength calculation.
+ */
+export type TeamMemberSlot = {
+	item: PokemonBoxItem;
+	enabled: boolean;
+};
 
 const initialBox = new PokemonBox();
 initialBox.load();
@@ -76,7 +89,7 @@ type IvState = {
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
 	alertMessage: string;
-	teamMembers: (PokemonBoxItem | undefined)[];
+	teamMembers: (TeamMemberSlot | undefined)[];
 };
 
 /**
@@ -346,8 +359,24 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 
 	if (type === "setTeamMember") {
 		const { index, item } = action.payload;
+		const teamMembers = state.teamMembers.map((x, i) => {
+			if (i !== index) {
+				return x;
+			}
+			if (item === undefined) {
+				return undefined;
+			}
+			// Keep the current enabled state when replacing the pokemon
+			// (e.g. editing IV) so a disabled slot stays disabled.
+			return { item, enabled: x?.enabled ?? true };
+		});
+		return { ...state, teamMembers };
+	}
+
+	if (type === "setTeamMemberEnabled") {
+		const { index, enabled } = action.payload;
 		const teamMembers = state.teamMembers.map((x, i) =>
-			i === index ? item : x,
+			i === index && x !== undefined ? { ...x, enabled } : x,
 		);
 		return { ...state, teamMembers };
 	}

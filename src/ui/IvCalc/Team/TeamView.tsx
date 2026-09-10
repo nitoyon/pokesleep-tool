@@ -13,7 +13,11 @@ const TeamView = React.memo(
 		state: IvState;
 		dispatch: (action: IvAction) => void;
 	}) => {
-		const results = simulateTeam(state.teamMembers, state.parameter);
+		const activeMembers = React.useMemo(
+			() => state.teamMembers.map((m) => (m?.enabled ? m.item : undefined)),
+			[state.teamMembers],
+		);
+		const results = simulateTeam(activeMembers, state.parameter);
 
 		return (
 			<>
