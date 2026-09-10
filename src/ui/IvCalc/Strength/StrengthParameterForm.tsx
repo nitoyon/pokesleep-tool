@@ -27,7 +27,7 @@ import OtherTeamMemberForm from "../Panel/OtherTeamMemberForm";
 import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import AreaControlGroup from "./AreaControlGroup";
 import EventSelectControl from "./EventSelectControl";
-import FixedLevelSelect from "./FixedLevelSelect";
+import LevelEvolvedControlGroup from "./LevelEvolvedControlGroup";
 import PeriodSelect from "./PeriodSelect";
 import TapFrequencyControl from "./TapFrequencyControl";
 
@@ -83,15 +83,6 @@ const StrengthSettingForm = React.memo(
 		const [initializeConfirmOpen, setInitializeConfirmOpen] =
 			React.useState(false);
 
-		const onPityProcHelpClick = React.useCallback(() => {
-			setHelpMessage(
-				<>
-					<p>{t("pity proc help")}</p>
-					<p>{t("pity proc help2")}</p>
-				</>,
-			);
-			setHelpOpen(true);
-		}, [t]);
 		const addHelpingBonusEffectInfoClick = React.useCallback(() => {
 			setHelpMessage(
 				<>
@@ -124,24 +115,6 @@ const StrengthSettingForm = React.memo(
 		const onAddHelpingBonusEffectChange = React.useCallback(
 			(e: React.ChangeEvent<HTMLInputElement>) => {
 				onChange({ ...value, addHelpingBonusEffect: e.target.checked });
-			},
-			[onChange, value],
-		);
-		const onEvolvedChange = React.useCallback(
-			(e: React.ChangeEvent<HTMLInputElement>) => {
-				onChange({ ...value, evolved: e.target.checked });
-			},
-			[onChange, value],
-		);
-		const onMaxSkillLevelChange = React.useCallback(
-			(e: React.ChangeEvent<HTMLInputElement>) => {
-				onChange({ ...value, maxSkillLevel: e.target.checked });
-			},
-			[onChange, value],
-		);
-		const onPityProcChange = React.useCallback(
-			(e: React.ChangeEvent<HTMLInputElement>) => {
-				onChange({ ...value, pityProc: e.target.checked });
 			},
 			[onChange, value],
 		);
@@ -179,28 +152,11 @@ const StrengthSettingForm = React.memo(
 					<span className="lbl">{t("event")}:</span>
 					<EventSelectControl value={value} onChange={onChange} />
 				</section>
-				<section className="mt">
-					<span className="lbl">{t("level")}:</span>
-					<FixedLevelSelect dispatch={dispatch} value={value} />
-				</section>
-				<section>
-					<span className="lbl">{t("calc with evolved")}:</span>
-					<Switch checked={value.evolved} onChange={onEvolvedChange} />
-				</section>
-				<section>
-					<span className="lbl">{t("calc with max skill level")}:</span>
-					<Switch
-						checked={value.maxSkillLevel}
-						onChange={onMaxSkillLevelChange}
-					/>
-				</section>
-				<section>
-					<span className="lbl">
-						{t("include pity proc")}:
-						<InfoButton onClick={onPityProcHelpClick} />
-					</span>
-					<Switch checked={value.pityProc} onChange={onPityProcChange} />
-				</section>
+				<LevelEvolvedControlGroup
+					dispatch={dispatch}
+					value={value}
+					onChange={onChange}
+				/>
 				<section className="mt">
 					<span className="lbl">{t("helping bonus")}:</span>
 					<Select
