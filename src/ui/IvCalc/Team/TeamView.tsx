@@ -4,6 +4,7 @@ import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
 import DailyView from "./DailyView";
 import MemberList from "./MemberList";
+import TeamParameterPanel from "./TeamParameterPanel";
 
 const TeamView = React.memo(
 	({
@@ -22,6 +23,7 @@ const TeamView = React.memo(
 		return (
 			<>
 				<DailyView results={results.members} />
+				<TeamParameterPanel state={state} dispatch={dispatch} />
 				<MemberList state={state} dispatch={dispatch} />
 			</>
 		);

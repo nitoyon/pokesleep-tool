@@ -25,9 +25,11 @@ const StrengthParameterSummary = React.memo(
 	({
 		state,
 		dispatch,
+		onEditClick: onEditClickProp,
 	}: {
 		state: IvState;
 		dispatch: React.Dispatch<IvAction>;
+		onEditClick?: () => void;
 	}) => {
 		const { t } = useTranslation();
 		const [areaDialogOpen, setAreaDialogOpen] = React.useState(false);
@@ -35,8 +37,12 @@ const StrengthParameterSummary = React.memo(
 		const parameter = state.parameter;
 
 		const onEditClick = React.useCallback(() => {
+			if (onEditClickProp !== undefined) {
+				onEditClickProp();
+				return;
+			}
 			dispatch({ type: "changeLowerTab", payload: { index: 2 } });
-		}, [dispatch]);
+		}, [dispatch, onEditClickProp]);
 
 		const onAreaClick = React.useCallback(() => {
 			setAreaDialogOpen(true);
