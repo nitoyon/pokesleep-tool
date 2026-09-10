@@ -9,7 +9,6 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { NoTap } from "../../../util/Energy";
 import { clamp } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
 import type {
@@ -20,7 +19,7 @@ import { AmountOfSleep } from "../../../util/TimeUtil";
 import { useElementWidth } from "../../common/Hook";
 import { EnergyChart } from "../Chart/EnergyChart";
 import type { IvAction } from "../IvState";
-import TapFrequencyControl from "../Strength/TapFrequencyControl";
+import TapFrequencyControlGroup from "../Strength/TapFrequencyControlGroup";
 
 const EnergyPanel = React.memo(
 	({
@@ -133,33 +132,14 @@ const EnergyPanel = React.memo(
 			},
 			[dispatch, parameter],
 		);
-		const onTapFrequencyAwakeChange = React.useCallback(
-			(tapFrequencyAwake: number) => {
+		const onParameterChange = React.useCallback(
+			(parameter: StrengthParameter) => {
 				dispatch({
 					type: "changeParameter",
-					payload: {
-						parameter: {
-							...parameter,
-							tapFrequencyAwake,
-						},
-					},
+					payload: { parameter },
 				});
 			},
-			[dispatch, parameter],
-		);
-		const onTapFrequencyAsleepChange = React.useCallback(
-			(tapFrequencyAsleep: number) => {
-				dispatch({
-					type: "changeParameter",
-					payload: {
-						parameter: {
-							...parameter,
-							tapFrequencyAsleep,
-						},
-					},
-				});
-			},
-			[dispatch, parameter],
+			[dispatch],
 		);
 
 		if (!open) {
@@ -175,128 +155,90 @@ const EnergyPanel = React.memo(
 				<EnergyChart width={width} period={parameter.period} result={energy} />
 				<Collapse in={!parameter.isEnergyAlwaysFull}>
 					<section ref={dialogRef}>
-						<div>
-							<span className="lbl">
-								{t("skills.Energy for Everyone S.name")}:
-							</span>
-							<div>
-								<Select
-									variant="standard"
-									value={parameter.e4eEnergy.toString()}
-									onChange={onRestoreEnergyChange}
-								>
-									<MenuItem value={5}>5</MenuItem>
-									<MenuItem value={7}>7</MenuItem>
-									<MenuItem value={9}>9</MenuItem>
-									<MenuItem value={11}>11</MenuItem>
-									<MenuItem value={15}>15</MenuItem>
-									<MenuItem value={18}>18</MenuItem>
-								</Select>
-								<span style={{ margin: "0 0.5rem" }}>×</span>
-								<Select
-									variant="standard"
-									value={parameter.e4eCount.toString()}
-									onChange={onSkillCountChange}
-								>
-									<MenuItem value={0}>0</MenuItem>
-									<MenuItem value={1}>1</MenuItem>
-									<MenuItem value={2}>2</MenuItem>
-									<MenuItem value={3}>3</MenuItem>
-									<MenuItem value={4}>4</MenuItem>
-									<MenuItem value={5}>5</MenuItem>
-									<MenuItem value={6}>6</MenuItem>
-									<MenuItem value={7}>7</MenuItem>
-									<MenuItem value={8}>8</MenuItem>
-									<MenuItem value={9}>9</MenuItem>
-									<MenuItem value={10}>10</MenuItem>
-								</Select>
-							</div>
-						</div>
-						<div>
-							<span className="lbl">
-								{t("subskill.Energy Recovery Bonus")}:
-							</span>
-							<Select
-								variant="standard"
-								value={parameter.recoveryBonusCount.toString()}
-								onChange={onRecoveryBonusCountChange}
-							>
-								<MenuItem value={0}>
-									{hasRecoveryBonus ? "×1" : t("none")}
-								</MenuItem>
-								<MenuItem value={1}>{hasRecoveryBonus ? "×2" : "×1"}</MenuItem>
-								<MenuItem value={2}>{hasRecoveryBonus ? "×3" : "×2"}</MenuItem>
-								<MenuItem value={3}>{hasRecoveryBonus ? "×4" : "×3"}</MenuItem>
-								<MenuItem value={4}>{hasRecoveryBonus ? "×5" : "×4"}</MenuItem>
-							</Select>
-						</div>
-						<div>
-							<span className="lbl">{t("sleep score")}:</span>
-							<div>
-								<TextField
-									variant="standard"
-									type="number"
-									size="small"
-									value={isScoreEmpty ? "" : parameter.sleepScore}
-									onChange={onScoreChange}
-									slotProps={{
-										htmlInput: { min: 0, max: 100 },
-									}}
-								/>
-							</div>
-						</div>
+						<span className="lbl">
+							{t("skills.Energy for Everyone S.name")}:
+						</span>
+						<Select
+							variant="standard"
+							value={parameter.e4eEnergy.toString()}
+							onChange={onRestoreEnergyChange}
+						>
+							<MenuItem value={5}>5</MenuItem>
+							<MenuItem value={7}>7</MenuItem>
+							<MenuItem value={9}>9</MenuItem>
+							<MenuItem value={11}>11</MenuItem>
+							<MenuItem value={15}>15</MenuItem>
+							<MenuItem value={18}>18</MenuItem>
+						</Select>
+						<span style={{ margin: "0 0.5rem" }}>×</span>
+						<Select
+							variant="standard"
+							value={parameter.e4eCount.toString()}
+							onChange={onSkillCountChange}
+						>
+							<MenuItem value={0}>0</MenuItem>
+							<MenuItem value={1}>1</MenuItem>
+							<MenuItem value={2}>2</MenuItem>
+							<MenuItem value={3}>3</MenuItem>
+							<MenuItem value={4}>4</MenuItem>
+							<MenuItem value={5}>5</MenuItem>
+							<MenuItem value={6}>6</MenuItem>
+							<MenuItem value={7}>7</MenuItem>
+							<MenuItem value={8}>8</MenuItem>
+							<MenuItem value={9}>9</MenuItem>
+							<MenuItem value={10}>10</MenuItem>
+						</Select>
+					</section>
+					<section>
+						<span className="lbl">{t("subskill.Energy Recovery Bonus")}:</span>
+						<Select
+							variant="standard"
+							value={parameter.recoveryBonusCount.toString()}
+							onChange={onRecoveryBonusCountChange}
+						>
+							<MenuItem value={0}>
+								{hasRecoveryBonus ? "×1" : t("none")}
+							</MenuItem>
+							<MenuItem value={1}>{hasRecoveryBonus ? "×2" : "×1"}</MenuItem>
+							<MenuItem value={2}>{hasRecoveryBonus ? "×3" : "×2"}</MenuItem>
+							<MenuItem value={3}>{hasRecoveryBonus ? "×4" : "×3"}</MenuItem>
+							<MenuItem value={4}>{hasRecoveryBonus ? "×5" : "×4"}</MenuItem>
+						</Select>
+					</section>
+					<section>
+						<span className="lbl">{t("sleep score")}:</span>
+						<TextField
+							variant="standard"
+							type="number"
+							size="small"
+							value={isScoreEmpty ? "" : parameter.sleepScore}
+							onChange={onScoreChange}
+							slotProps={{
+								htmlInput: { min: 0, max: 100 },
+							}}
+						/>
 					</section>
 				</Collapse>
 				<section>
-					<div>
-						<span className="lbl">{t("always 81%+")}:</span>
-						<div>
-							<Switch
-								size="small"
-								checked={parameter.isEnergyAlwaysFull}
-								onChange={onAlways100Change}
-							/>
-						</div>
-					</div>
+					<span className="lbl">{t("always 81%+")}:</span>
+					<Switch
+						size="small"
+						checked={parameter.isEnergyAlwaysFull}
+						onChange={onAlways100Change}
+					/>
 				</section>
 				<section>
-					<div>
-						<span className="lbl">{t("good camp ticket")}:</span>
-						<div>
-							<Switch
-								size="small"
-								checked={parameter.isGoodCampTicketSet}
-								onChange={onGoodCampTicketChange}
-							/>
-						</div>
-					</div>
+					<span className="lbl">{t("good camp ticket")}:</span>
+					<Switch
+						size="small"
+						checked={parameter.isGoodCampTicketSet}
+						onChange={onGoodCampTicketChange}
+					/>
 				</section>
-				<section>
-					<div>
-						<span className="lbl">
-							{t("tap frequency")} ({t("awake")}):
-						</span>
-						<TapFrequencyControl
-							max={10}
-							value={parameter.tapFrequencyAwake}
-							onChange={onTapFrequencyAwakeChange}
-						/>
-					</div>
-					<div>
-						<span className="lbl">
-							{t("tap frequency")} ({t("asleep")}):
-						</span>
-						{parameter.tapFrequencyAwake === NoTap ? (
-							<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
-						) : (
-							<TapFrequencyControl
-								max={8}
-								value={parameter.tapFrequencyAsleep}
-								onChange={onTapFrequencyAsleepChange}
-							/>
-						)}
-					</div>
-				</section>
+				<TapFrequencyControlGroup
+					value={parameter}
+					onChange={onParameterChange}
+				/>
 				<footer>
 					<section className="first">
 						<span className="lbl">{t("average help efficiency")}:</span>
@@ -374,27 +316,25 @@ const StyledEnergyPanel = styled("div")({
 	width: "100%",
 	"& section": {
 		padding: "0 1rem",
-		"& > div": {
-			display: "flex",
-			flex: "0 auto",
-			flexWrap: "wrap",
-			alignItems: "center",
-			"& > span.lbl": {
-				marginRight: "auto",
-				fontSize: "0.9rem",
-				"&.indent": {
-					marginLeft: "1rem",
-				},
+		display: "flex",
+		flex: "0 auto",
+		flexWrap: "wrap",
+		alignItems: "center",
+		"& > span.lbl": {
+			marginRight: "auto",
+			fontSize: "0.9rem",
+			"&.indent": {
+				marginLeft: "1rem",
 			},
-			"& .MuiSelect-select": {
-				paddingTop: "1px",
-				paddingBottom: "1px",
-				fontSize: "0.9rem",
-			},
-			"& input.MuiInput-input": {
-				fontSize: "0.9rem",
-				paddingBottom: 0,
-			},
+		},
+		"& .MuiSelect-select": {
+			paddingTop: "1px",
+			paddingBottom: "1px",
+			fontSize: "0.9rem",
+		},
+		"& input.MuiInput-input": {
+			fontSize: "0.9rem",
+			paddingBottom: 0,
 		},
 	},
 	"& > footer": {
@@ -406,12 +346,17 @@ const StyledEnergyPanel = styled("div")({
 		"& section": {
 			display: "grid",
 			gridTemplateColumns: "1fr fit-content(200px)",
+			alignItems: "stretch",
 			marginTop: "0.4rem",
 			"&.first": {
 				marginTop: 0,
 			},
 			padding: 0,
 			"& > div": {
+				display: "flex",
+				flex: "0 auto",
+				flexWrap: "wrap",
+				alignItems: "center",
 				textAlign: "right",
 			},
 			"& > footer": {
