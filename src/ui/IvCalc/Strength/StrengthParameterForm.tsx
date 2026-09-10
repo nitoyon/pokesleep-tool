@@ -10,13 +10,10 @@ import {
 	type SelectChangeEvent,
 	Snackbar,
 	Switch,
-	ToggleButton,
-	ToggleButtonGroup,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { getActiveHelpBonus } from "../../../data/events";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import {
@@ -29,7 +26,7 @@ import type { IvAction } from "../IvState";
 import OtherTeamMemberForm from "../Panel/OtherTeamMemberForm";
 import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import AreaControlGroup from "./AreaControlGroup";
-import EventConfigDialog from "./EventConfigDialog";
+import EventSelectControl from "./EventSelectControl";
 import FixedLevelSelect from "./FixedLevelSelect";
 import PeriodSelect from "./PeriodSelect";
 import TapFrequencyControl from "./TapFrequencyControl";
@@ -83,7 +80,6 @@ const StrengthSettingForm = React.memo(
 		const { t } = useTranslation();
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const [helpMessage, setHelpMessage] = React.useState<React.ReactNode>(null);
-		const [eventDetailOpen, setEventDetailOpen] = React.useState(false);
 		const [initializeConfirmOpen, setInitializeConfirmOpen] =
 			React.useState(false);
 
@@ -149,24 +145,6 @@ const StrengthSettingForm = React.memo(
 			},
 			[onChange, value],
 		);
-		const onEventChange = React.useCallback(
-			(_: React.MouseEvent, val: string | null) => {
-				if (val === null) {
-					return;
-				}
-				if (val === "advanced") {
-					val = "custom";
-				}
-				onChange({ ...value, event: val });
-			},
-			[onChange, value],
-		);
-		const onEventDetailClick = React.useCallback(() => {
-			setEventDetailOpen(true);
-		}, []);
-		const onEventDetailClose = React.useCallback(() => {
-			setEventDetailOpen(false);
-		}, []);
 		const onTapFrequencyAwakeChange = React.useCallback(
 			(tapFrequencyAwake: number) => {
 				onChange({ ...value, tapFrequencyAwake });
@@ -189,28 +167,6 @@ const StrengthSettingForm = React.memo(
 			setInitializeConfirmOpen(false);
 		}, []);
 
-		const scheduledEvents = getActiveHelpBonus(new Date())
-			.map((x) => x.name)
-			.reverse();
-		let prevEventName = "";
-		const eventToggles = ["none", ...scheduledEvents, "advanced"].map((x) => {
-			let curEventName = t(`events.${x}`);
-			if (
-				prevEventName.replace(/\(.*/, "") === curEventName.replace(/\(.*/, "")
-			) {
-				curEventName = curEventName.replace(/.*\(/, "").replace(")", "");
-			}
-			prevEventName = curEventName;
-			return (
-				<ToggleButton key={x} value={x} style={{ textTransform: "none" }}>
-					{curEventName}
-				</ToggleButton>
-			);
-		});
-		const eventName = ["none", ...scheduledEvents].includes(value.event)
-			? value.event
-			: "advanced";
-
 		const isNotWhistle = value.period !== whistlePeriod;
 		return (
 			<StyledSettingForm>
@@ -221,27 +177,7 @@ const StrengthSettingForm = React.memo(
 				<AreaControlGroup value={value} onChange={onChange} />
 				<section className="mt">
 					<span className="lbl">{t("event")}:</span>
-					<div
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "flex-end",
-						}}
-					>
-						<ToggleButtonGroup
-							size="small"
-							exclusive
-							value={eventName}
-							onChange={onEventChange}
-						>
-							{eventToggles}
-						</ToggleButtonGroup>
-						<Collapse in={eventName === "advanced"}>
-							<Button onClick={onEventDetailClick}>
-								{t("configure event details")}
-							</Button>
-						</Collapse>
-					</div>
+					<EventSelectControl value={value} onChange={onChange} />
 				</section>
 				<section className="mt">
 					<span className="lbl">{t("level")}:</span>
@@ -339,12 +275,6 @@ const StrengthSettingForm = React.memo(
 					open={helpOpen}
 					onClose={onPityProcHelpClose}
 					message={helpMessage}
-				/>
-				<EventConfigDialog
-					open={eventDetailOpen}
-					onClose={onEventDetailClose}
-					value={value}
-					onChange={onChange}
 				/>
 			</StyledSettingForm>
 		);
