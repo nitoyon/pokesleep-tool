@@ -9,7 +9,6 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { NoTap } from "../../../util/Energy";
 import { clamp } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
 import type {
@@ -20,7 +19,7 @@ import { AmountOfSleep } from "../../../util/TimeUtil";
 import { useElementWidth } from "../../common/Hook";
 import { EnergyChart } from "../Chart/EnergyChart";
 import type { IvAction } from "../IvState";
-import TapFrequencyControl from "../Strength/TapFrequencyControl";
+import TapFrequencyControlGroup from "../Strength/TapFrequencyControlGroup";
 
 const EnergyPanel = React.memo(
 	({
@@ -133,33 +132,14 @@ const EnergyPanel = React.memo(
 			},
 			[dispatch, parameter],
 		);
-		const onTapFrequencyAwakeChange = React.useCallback(
-			(tapFrequencyAwake: number) => {
+		const onParameterChange = React.useCallback(
+			(parameter: StrengthParameter) => {
 				dispatch({
 					type: "changeParameter",
-					payload: {
-						parameter: {
-							...parameter,
-							tapFrequencyAwake,
-						},
-					},
+					payload: { parameter },
 				});
 			},
-			[dispatch, parameter],
-		);
-		const onTapFrequencyAsleepChange = React.useCallback(
-			(tapFrequencyAsleep: number) => {
-				dispatch({
-					type: "changeParameter",
-					payload: {
-						parameter: {
-							...parameter,
-							tapFrequencyAsleep,
-						},
-					},
-				});
-			},
-			[dispatch, parameter],
+			[dispatch],
 		);
 
 		if (!open) {
@@ -255,30 +235,10 @@ const EnergyPanel = React.memo(
 						onChange={onGoodCampTicketChange}
 					/>
 				</section>
-				<section>
-					<span className="lbl">
-						{t("tap frequency")} ({t("awake")}):
-					</span>
-					<TapFrequencyControl
-						max={10}
-						value={parameter.tapFrequencyAwake}
-						onChange={onTapFrequencyAwakeChange}
-					/>
-				</section>
-				<section>
-					<span className="lbl">
-						{t("tap frequency")} ({t("asleep")}):
-					</span>
-					{parameter.tapFrequencyAwake === NoTap ? (
-						<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
-					) : (
-						<TapFrequencyControl
-							max={8}
-							value={parameter.tapFrequencyAsleep}
-							onChange={onTapFrequencyAsleepChange}
-						/>
-					)}
-				</section>
+				<TapFrequencyControlGroup
+					value={parameter}
+					onChange={onParameterChange}
+				/>
 				<footer>
 					<section className="first">
 						<span className="lbl">{t("average help efficiency")}:</span>

@@ -7,15 +7,17 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { NoTap } from "../../../util/Energy";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
 import type PokemonStrength from "../../../util/PokemonStrength";
-import type { StrengthResult } from "../../../util/PokemonStrength";
+import type {
+	StrengthParameter,
+	StrengthResult,
+} from "../../../util/PokemonStrength";
 import InfoButton from "../InfoButton";
 import type { IvAction } from "../IvState";
 import BerryStrengthDialog from "./BerryStrengthDialog";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
-import TapFrequencyControl from "./TapFrequencyControl";
+import TapFrequencyControlGroup from "./TapFrequencyControlGroup";
 
 const BerryHelpDialog = React.memo(
 	({
@@ -41,23 +43,11 @@ const BerryHelpDialog = React.memo(
 		}, []);
 
 		const parameter = strength.parameter;
-		const onTapFrequencyAwakeChange = React.useCallback(
-			(tapFrequencyAwake: number) => {
-				dispatch({
-					type: "changeParameter",
-					payload: { parameter: { ...parameter, tapFrequencyAwake } },
-				});
+		const onParameterChange = React.useCallback(
+			(parameter: StrengthParameter) => {
+				dispatch({ type: "changeParameter", payload: { parameter } });
 			},
-			[dispatch, parameter],
-		);
-		const onTapFrequencyAsleepChange = React.useCallback(
-			(tapFrequencyAsleep: number) => {
-				dispatch({
-					type: "changeParameter",
-					payload: { parameter: { ...parameter, tapFrequencyAsleep } },
-				});
-			},
-			[dispatch, parameter],
+			[dispatch],
 		);
 
 		if (!open) {
@@ -151,32 +141,11 @@ const BerryHelpDialog = React.memo(
 						</span>
 					</article>
 					{parameter.period > 0 && (
-						<>
-							<section style={{ marginTop: "1.8rem" }}>
-								<span className="lbl">
-									{t("tap frequency")} ({t("awake")}):
-								</span>
-								<TapFrequencyControl
-									max={10}
-									value={parameter.tapFrequencyAwake}
-									onChange={onTapFrequencyAwakeChange}
-								/>
-							</section>
-							<section>
-								<span className="lbl">
-									{t("tap frequency")} ({t("asleep")}):
-								</span>
-								{parameter.tapFrequencyAwake === NoTap ? (
-									<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
-								) : (
-									<TapFrequencyControl
-										max={8}
-										value={parameter.tapFrequencyAsleep}
-										onChange={onTapFrequencyAsleepChange}
-									/>
-								)}
-							</section>
-						</>
+						<TapFrequencyControlGroup
+							value={parameter}
+							onChange={onParameterChange}
+							mt="1.8rem"
+						/>
 					)}
 				</DialogContent>
 				<DialogActions>

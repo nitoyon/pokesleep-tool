@@ -14,7 +14,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { NoTap, whistlePeriod } from "../../../util/Energy";
+import { whistlePeriod } from "../../../util/Energy";
 import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import {
 	createStrengthParameter,
@@ -29,7 +29,7 @@ import AreaControlGroup from "./AreaControlGroup";
 import EventSelectControl from "./EventSelectControl";
 import LevelEvolvedControlGroup from "./LevelEvolvedControlGroup";
 import PeriodSelect from "./PeriodSelect";
-import TapFrequencyControl from "./TapFrequencyControl";
+import TapFrequencyControlGroup from "./TapFrequencyControlGroup";
 
 const StyledSettingForm = styled("div")({
 	padding: "0 1rem",
@@ -118,18 +118,6 @@ const StrengthSettingForm = React.memo(
 			},
 			[onChange, value],
 		);
-		const onTapFrequencyAwakeChange = React.useCallback(
-			(tapFrequencyAwake: number) => {
-				onChange({ ...value, tapFrequencyAwake });
-			},
-			[onChange, value],
-		);
-		const onTapFrequencyAsleepChange = React.useCallback(
-			(tapFrequencyAsleep: number) => {
-				onChange({ ...value, tapFrequencyAsleep });
-			},
-			[onChange, value],
-		);
 		const onEditEnergyClick = React.useCallback(() => {
 			dispatch({ type: "openEnergyDialog" });
 		}, [dispatch]);
@@ -187,30 +175,11 @@ const StrengthSettingForm = React.memo(
 					items={items}
 				/>
 				<Collapse in={isNotWhistle}>
-					<section className="mt">
-						<span className="lbl">
-							{t("tap frequency")} ({t("awake")}):
-						</span>
-						<TapFrequencyControl
-							max={10}
-							value={value.tapFrequencyAwake}
-							onChange={onTapFrequencyAwakeChange}
-						/>
-					</section>
-					<section>
-						<span className="lbl">
-							{t("tap frequency")} ({t("asleep")}):
-						</span>
-						{value.tapFrequencyAwake === NoTap ? (
-							<span style={{ fontSize: "0.9rem" }}>{t("none")}</span>
-						) : (
-							<TapFrequencyControl
-								max={8}
-								value={value.tapFrequencyAsleep}
-								onChange={onTapFrequencyAsleepChange}
-							/>
-						)}
-					</section>
+					<TapFrequencyControlGroup
+						value={value}
+						onChange={onChange}
+						mt="1rem"
+					/>
 					<section className="mt">
 						<span className="lbl">{t("energy")}:</span>
 						<Button onClick={onEditEnergyClick}>{t("edit")}</Button>
