@@ -6,8 +6,8 @@ import { BaseSkill } from "./BaseSkill";
  * Energizing Cheer S.
  */
 export class EnergizingCheerSkill extends BaseSkill {
-	apply(_member: TeamMember, tapSec: number, sim: TeamContext): void {
-		addEnergizingCheer(tapSec, this.skillValue, sim, this.rng);
+	apply(member: TeamMember, tapSec: number, sim: TeamContext): void {
+		addEnergizingCheer(member, tapSec, this.skillValue, sim, this.rng);
 	}
 }
 
@@ -18,6 +18,7 @@ export class EnergizingCheerSkill extends BaseSkill {
  * Exported because it's also used by other skills.
  */
 export function addEnergizingCheer(
+	member: TeamMember,
 	tapSec: number,
 	diff: number,
 	sim: TeamContext,
@@ -37,20 +38,17 @@ export function addEnergizingCheer(
 		const candidates = energies.filter((e) => e.energy === minEnergy);
 		const index =
 			candidates[Math.floor((_rand / border) * candidates.length)].index;
-		addEnergyTo(
-			index,
-			diff * sim.members[index].profile.energyRecoveryFactor,
-			sim,
-		);
+		const energy = diff * sim.members[index].profile.energyRecoveryFactor;
+
+		member.progress.skillEnergizingCheer += energy;
+		addEnergyTo(index, energy, sim);
 		return index;
 	} else {
 		// 35% chance to select target from all members
 		const index = Math.floor((_rand - border) * energies.length);
-		addEnergyTo(
-			index,
-			diff * sim.members[index].profile.energyRecoveryFactor,
-			sim,
-		);
+		const energy = diff * sim.members[index].profile.energyRecoveryFactor;
+		member.progress.skillEnergizingCheer += energy;
+		addEnergyTo(index, energy, sim);
 		return index;
 	}
 }

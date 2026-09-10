@@ -85,11 +85,24 @@ export interface TeamMemberStrengthResult {
 
 	/** Average number of skill triggers over the period. */
 	skillCount: number;
-	/** Strength contribution from primary skill effects (e.g. Charge Strength). */
+	/** Average skill strength over the period. */
 	skillStrength: number;
+	/** Average extra help over the period. */
+	skillExtraHelp: number;
+	/** Average helper boost over the period. */
+	skillHelperBoost: number;
+	/** Average Energizing Cheer over the period. */
+	skillEnergizingCheer: number;
+	/** Average Energy for Everyone over the period. */
+	skillEnergyForEveryone: number;
 
-	/** Strength contribution from Helping Bonus sub-skill (currently unused). */
-	helpingBonusStrength: number;
+	/** Average Dream Shards over the period. */
+	skillDreamShards: number;
+	/** Average pot extended size over the period. */
+	skillPotExtended: number;
+	/** Average extra tasty rate over the period. */
+	skillExtraTastyRate: number;
+
 	/** Combined total strength over the period, filtered by totalFlags. */
 	totalStrength: number;
 }
@@ -204,6 +217,14 @@ export interface MemberProgress {
 	skillStockCount: 0 | 1 | 2;
 	/** Accumulated primary skill strength in this iteration. */
 	skillStrength: number;
+	/** Accumulated extra help in this iteration. */
+	skillExtraHelp: number;
+	/** Accumulated helper boost in this iteration. */
+	skillHelperBoost: number;
+	/** Accumulated Energizing Cheer in this iteration. */
+	skillEnergizingCheer: number;
+	/** Accumulated Energy for Everyone in this iteration. */
+	skillEnergyForEveryone: number;
 	/** Accumulated Dream Shards in this iteration. */
 	skillDreamShards: number;
 	/** Accumulated pot extended size in this iteration. */
@@ -235,4 +256,11 @@ export interface IterationResult {
 	ingCounts: Map<IngredientName, number>;
 	skillCount: number;
 	skillStrength: number;
+	skillExtraHelp: number;
+	skillHelperBoost: number;
+	skillEnergizingCheer: number;
+	skillEnergyForEveryone: number;
+	skillDreamShards: number;
+	skillPotExtended: number;
+	skillExtraTastyRate: number;
 }

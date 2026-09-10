@@ -24,9 +24,10 @@ export class HelperBoostSkill extends BaseSkill {
 		this.count = getSkillValue(profile.skillName, profile.skillLevel, species);
 	}
 
-	apply(_member: TeamMember, _tapSec: number, sim: TeamContext): void {
-		for (const member of sim.members) {
-			member.progress.pendingExtraHelp += this.count;
+	apply(member: TeamMember, _tapSec: number, sim: TeamContext): void {
+		member.progress.skillHelperBoost += this.count;
+		for (const m of sim.members) {
+			m.progress.pendingExtraHelp += this.count;
 		}
 	}
 }

@@ -30,6 +30,7 @@ export class EnergyForEveryoneLunarBlessingSkill extends BaseSkill {
 
 	apply(member: TeamMember, _tapSec: number, sim: TeamContext): void {
 		const { progress } = member;
+		member.progress.skillEnergyForEveryone += this.skillValue;
 		addEnergyToAll(this.skillValue, sim);
 		progress.skillStrength += this.skillValue2;
 	}

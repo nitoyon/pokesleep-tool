@@ -30,7 +30,7 @@ export class CookingPowerUpMinusSkill extends CookingPowerUpSkill {
 		super.apply(member, tapSec, sim);
 
 		if (this.skillValue2 !== 0) {
-			addEnergizingCheer(tapSec, this.skillValue2, sim, this.rng);
+			addEnergizingCheer(member, tapSec, this.skillValue2, sim, this.rng);
 		}
 	}
 }

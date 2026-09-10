@@ -17,8 +17,9 @@ export class ExtraHelpfulSkill extends BaseSkill {
 		this.count = getSkillValue(profile.skillName, profile.skillLevel);
 	}
 
-	apply(_member: TeamMember, _tapSec: number, sim: TeamContext): void {
+	apply(member: TeamMember, _tapSec: number, sim: TeamContext): void {
 		const index = Math.floor(this.rng() * sim.members.length);
+		member.progress.skillExtraHelp += this.count;
 		sim.members[index].progress.pendingExtraHelp += this.count;
 	}
 }

@@ -17,11 +17,15 @@ describe("addEnergizingCheer", () => {
 			createTestMember({ index: 0 }),
 			createTestMember({ index: 1 }),
 		]);
-		expect(addEnergizingCheer(0, 20, sim, createConstRng(0))).toBe(0);
+		expect(
+			addEnergizingCheer(sim.members[0], 0, 20, sim, createConstRng(0)),
+		).toBe(0);
 		expect(sim.members[0].progress.pendingEnergy).toBe(20);
 
 		// floor((0.5 / 0.65) * 2) = 1
-		expect(addEnergizingCheer(0, 20, sim, createConstRng(0.5))).toBe(1);
+		expect(
+			addEnergizingCheer(sim.members[0], 0, 20, sim, createConstRng(0.5)),
+		).toBe(1);
 		expect(sim.members[1].progress.pendingEnergy).toBe(20);
 	});
 
@@ -30,7 +34,9 @@ describe("addEnergizingCheer", () => {
 			createTestMember({ index: 0 }),
 			createTestMember({ index: 1 }, { energy: 5 }),
 		]);
-		expect(addEnergizingCheer(0, 20, sim, createConstRng(0.6))).toBe(1);
+		expect(
+			addEnergizingCheer(sim.members[0], 0, 20, sim, createConstRng(0.6)),
+		).toBe(1);
 		expect(sim.members[1].progress.pendingEnergy).toBe(20);
 	});
 
@@ -42,7 +48,9 @@ describe("addEnergizingCheer", () => {
 			createTestMember({ index: 3 }),
 		]);
 		// floor((0.99 - 0.65) * 4) = floor(1.36) = 1
-		expect(addEnergizingCheer(0, 12, sim, createConstRng(0.99))).toBe(1);
+		expect(
+			addEnergizingCheer(sim.members[0], 0, 12, sim, createConstRng(0.99)),
+		).toBe(1);
 		expect(sim.members[1].progress.pendingEnergy).toBe(12);
 	});
 });

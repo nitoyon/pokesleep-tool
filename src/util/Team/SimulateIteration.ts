@@ -31,6 +31,13 @@ export function runIteration(sim: TeamContext): IterationResult[] {
 		ingCounts: progress.ingCounts,
 		skillCount: progress.skillCount,
 		skillStrength: progress.skillStrength,
+		skillExtraHelp: progress.skillExtraHelp,
+		skillHelperBoost: progress.skillHelperBoost,
+		skillEnergizingCheer: progress.skillEnergizingCheer,
+		skillEnergyForEveryone: progress.skillEnergyForEveryone,
+		skillDreamShards: progress.skillDreamShards,
+		skillPotExtended: progress.skillPotExtended,
+		skillExtraTastyRate: progress.skillExtraTastyRate,
 	}));
 }
 

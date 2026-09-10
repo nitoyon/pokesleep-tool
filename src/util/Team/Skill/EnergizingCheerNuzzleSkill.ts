@@ -8,7 +8,13 @@ import { addEnergizingCheer } from "./EnergizingCheer";
 export class EnergizingCheerNuzzleSkill extends BaseSkill {
 	apply(member: TeamMember, tapSec: number, sim: TeamContext): void {
 		const { profile } = member;
-		const index = addEnergizingCheer(tapSec, this.skillValue, sim, this.rng);
+		const index = addEnergizingCheer(
+			member,
+			tapSec,
+			this.skillValue,
+			sim,
+			this.rng,
+		);
 		addSkillActivationBonus(index, profile.iv.skillLevel, sim, this.rng);
 	}
 }

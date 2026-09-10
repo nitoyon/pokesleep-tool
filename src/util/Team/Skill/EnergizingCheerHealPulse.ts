@@ -28,12 +28,20 @@ export class EnergizingCheerHealPulseSkill extends BaseSkill {
 		}
 	}
 
-	apply(_member: TeamMember, tapSec: number, sim: TeamContext): void {
-		addHealPulse(tapSec, this.skillValue, this.skillValue2, sim, this.rng);
+	apply(member: TeamMember, tapSec: number, sim: TeamContext): void {
+		addHealPulse(
+			member,
+			tapSec,
+			this.skillValue,
+			this.skillValue2,
+			sim,
+			this.rng,
+		);
 	}
 }
 
 function addHealPulse(
+	member: TeamMember,
 	tapSec: number,
 	skillValue: number,
 	skillValue2: number,
@@ -41,7 +49,7 @@ function addHealPulse(
 	rng: () => number,
 ): void {
 	// find first target
-	const index1 = addEnergizingCheer(tapSec, skillValue, sim, rng);
+	const index1 = addEnergizingCheer(member, tapSec, skillValue, sim, rng);
 
 	//create temporary sim object excluding index member
 	const sim2 = { ...sim };
@@ -49,10 +57,11 @@ function addHealPulse(
 	sim2.members.splice(index1, 1);
 
 	// find second target
-	const index2 = addEnergizingCheer(tapSec, skillValue, sim2, rng);
+	const index2 = addEnergizingCheer(member, tapSec, skillValue, sim2, rng);
 
 	// add help count
 	const helpCount = skillValue2;
+	member.progress.skillExtraHelp += helpCount * 2;
 	sim.members[index1].progress.pendingExtraHelp += helpCount;
 	sim.members[index2].progress.pendingExtraHelp += helpCount;
 }

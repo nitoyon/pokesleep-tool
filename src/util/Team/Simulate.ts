@@ -28,7 +28,13 @@ const emptyTotal: TeamMemberStrengthResult = {
 	ingredients: [],
 	skillCount: 0,
 	skillStrength: 0,
-	helpingBonusStrength: 0,
+	skillExtraHelp: 0,
+	skillHelperBoost: 0,
+	skillEnergizingCheer: 0,
+	skillEnergyForEveryone: 0,
+	skillDreamShards: 0,
+	skillPotExtended: 0,
+	skillExtraTastyRate: 0,
 	totalStrength: 0,
 };
 
@@ -37,6 +43,13 @@ type AccumulatedResult = {
 	ingCounts: Map<IngredientName, number>;
 	skillCount: number;
 	skillStrength: number;
+	skillExtraHelp: number;
+	skillHelperBoost: number;
+	skillEnergizingCheer: number;
+	skillEnergyForEveryone: number;
+	skillDreamShards: number;
+	skillPotExtended: number;
+	skillExtraTastyRate: number;
 };
 
 /**
@@ -85,7 +98,13 @@ function initializeAccumulatedResult(
 		ingCounts: new Map<IngredientName, number>(),
 		skillCount: 0,
 		skillStrength: 0,
-		skillStrength2: 0,
+		skillExtraHelp: 0,
+		skillHelperBoost: 0,
+		skillEnergizingCheer: 0,
+		skillEnergyForEveryone: 0,
+		skillDreamShards: 0,
+		skillPotExtended: 0,
+		skillExtraTastyRate: 0,
 	}));
 
 	return accumulated;
@@ -103,6 +122,13 @@ function addResultToAccumulatedResult(
 		acc.berryTotalStrength += result.berryTotalStrength;
 		acc.skillCount += result.skillCount;
 		acc.skillStrength += result.skillStrength;
+		acc.skillEnergizingCheer += result.skillEnergizingCheer;
+		acc.skillEnergyForEveryone += result.skillEnergyForEveryone;
+		acc.skillExtraHelp += result.skillExtraHelp;
+		acc.skillHelperBoost += result.skillHelperBoost;
+		acc.skillDreamShards += result.skillDreamShards;
+		acc.skillPotExtended += result.skillPotExtended;
+		acc.skillExtraTastyRate += result.skillExtraTastyRate;
 
 		for (const [name, count] of result.ingCounts) {
 			acc.ingCounts.set(name, (acc.ingCounts.get(name) ?? 0) + count);
@@ -127,6 +153,9 @@ function buildTeamStrengthResult(
 		const avgBerryTotalStrength = acc.berryTotalStrength / iterations;
 		const avgSkillCount = acc.skillCount / iterations;
 		const avgSkillStrength = acc.skillStrength / iterations;
+		const avgSkillDreamShards = acc.skillDreamShards / iterations;
+		const avgSkillPotExtended = acc.skillPotExtended / iterations;
+		const avgSkillExtraTastyRate = acc.skillExtraTastyRate / iterations;
 
 		const ingredients: IngredientStrength[] = Array.from(
 			acc.ingCounts.entries(),
@@ -159,7 +188,13 @@ function buildTeamStrengthResult(
 			ingredients,
 			skillCount: avgSkillCount,
 			skillStrength: avgSkillStrength,
-			helpingBonusStrength: 0,
+			skillExtraHelp: acc.skillExtraHelp / iterations,
+			skillHelperBoost: acc.skillHelperBoost / iterations,
+			skillEnergizingCheer: acc.skillEnergizingCheer / iterations,
+			skillEnergyForEveryone: acc.skillEnergyForEveryone / iterations,
+			skillDreamShards: avgSkillDreamShards,
+			skillPotExtended: avgSkillPotExtended,
+			skillExtraTastyRate: avgSkillExtraTastyRate,
 			totalStrength: totalStrength,
 		};
 	});
@@ -207,8 +242,20 @@ function buildTeamStrengthResult(
 		ingredients: Array.from(totalIngMap.values()),
 		skillCount: validMembers.reduce((s, m) => s + m.skillCount, 0),
 		skillStrength: validMembers.reduce((s, m) => s + m.skillStrength, 0),
-		helpingBonusStrength: validMembers.reduce(
-			(s, m) => s + m.helpingBonusStrength,
+		skillExtraHelp: validMembers.reduce((s, m) => s + m.skillExtraHelp, 0),
+		skillHelperBoost: validMembers.reduce((s, m) => s + m.skillHelperBoost, 0),
+		skillEnergizingCheer: validMembers.reduce(
+			(s, m) => s + m.skillEnergizingCheer,
+			0,
+		),
+		skillEnergyForEveryone: validMembers.reduce(
+			(s, m) => s + m.skillEnergyForEveryone,
+			0,
+		),
+		skillDreamShards: validMembers.reduce((s, m) => s + m.skillDreamShards, 0),
+		skillPotExtended: validMembers.reduce((s, m) => s + m.skillPotExtended, 0),
+		skillExtraTastyRate: validMembers.reduce(
+			(s, m) => s + m.skillExtraTastyRate,
 			0,
 		),
 		totalStrength: validMembers.reduce((s, m) => s + m.totalStrength, 0),
