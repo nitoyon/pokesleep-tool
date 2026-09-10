@@ -30,6 +30,9 @@ describe("applyHelp", () => {
 
 		expect(member.progress.nextHelpSec).toBe(2970);
 		expect(member.progress.berryTotalStrength).toBe(20);
+		expect(member.progress.help.all).toBe(2);
+		expect(member.progress.help.normal).toBe(2);
+		expect(member.progress.help.sneakySnacking).toBe(0);
 	});
 
 	test("bag usage detail: low rand selects berry branch", () => {
@@ -99,6 +102,9 @@ describe("applyHelp", () => {
 
 		expect(member.progress.berryTotalStrength).toBe(10 * 2);
 		expect(member.progress.ingCounts.get("apple")).toBe(21);
+		expect(member.progress.help.all).toBe(7);
+		expect(member.progress.help.normal).toBe(6);
+		expect(member.progress.help.sneakySnacking).toBe(1);
 	});
 
 	test("NoTap forces sneaky snacking from the start regardless of carryLimit", () => {
@@ -113,6 +119,9 @@ describe("applyHelp", () => {
 		applyHelp(990 * 3, sim, rng);
 
 		expect(member.progress.berryTotalStrength).toBe(3 * (10 * 2));
+		expect(member.progress.help.all).toBe(3);
+		expect(member.progress.help.normal).toBe(0);
+		expect(member.progress.help.sneakySnacking).toBe(3);
 	});
 
 	test("drawSkillCount: rng below noneProb keeps skillCount at 0", () => {
@@ -253,6 +262,11 @@ function createProgress(
 		sleeping: false,
 		nextHelpSec: -1,
 		helpsSinceSkill: 0,
+		help: {
+			all: 0,
+			normal: 0,
+			sneakySnacking: 0,
+		},
 		berryTotalStrength: 0,
 		ingCounts: new Map(),
 		skillCount: 0,

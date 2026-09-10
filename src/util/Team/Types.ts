@@ -208,6 +208,15 @@ export interface MemberProgress {
 	nextHelpSec: number;
 	/** Number of helps since the last skill trigger (used for pity-proc logic). */
 	helpsSinceSkill: number;
+	/** Helps performed. */
+	help: {
+		/** Total number (normal + sneaky snacking) */
+		all: number;
+		/** Help count stored in Pokemon's inventory */
+		normal: number;
+		/** Help count directly granted to Snorlax (all berries) */
+		sneakySnacking: number;
+	};
 	/** Accumulated berry strength over the iteration so far. */
 	berryTotalStrength: number;
 	/** Accumulated ingredient counts by name over the iteration so far. */

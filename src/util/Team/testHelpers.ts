@@ -83,6 +83,11 @@ export function createTestProgress(
 		sleeping: false,
 		nextHelpSec: -1,
 		helpsSinceSkill: 0,
+		help: {
+			all: 0,
+			normal: 0,
+			sneakySnacking: 0,
+		},
 		berryTotalStrength: 0,
 		ingCounts: new Map(),
 		skillCount: 0,

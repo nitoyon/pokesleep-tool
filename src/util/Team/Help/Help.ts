@@ -49,6 +49,9 @@ function applyHelpForMember(
 		param,
 		rng,
 	);
+	progress.help.all += helpCount;
+	progress.help.normal += normalHelpCount;
+	progress.help.sneakySnacking += helpCount - normalHelpCount;
 
 	// Skill lottery at tap time
 	const skillCount = drawSkillCount(

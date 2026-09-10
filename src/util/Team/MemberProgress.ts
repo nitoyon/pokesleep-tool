@@ -14,6 +14,11 @@ export function createMemberProgress(): MemberProgress {
 		sleeping: false,
 		nextHelpSec: -1,
 		helpsSinceSkill: 0,
+		help: {
+			all: 0,
+			normal: 0,
+			sneakySnacking: 0,
+		},
 		berryTotalStrength: 0,
 		ingCounts: new Map<IngredientName, number>(),
 		skillCount: 0,
