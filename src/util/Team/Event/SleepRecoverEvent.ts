@@ -13,9 +13,20 @@ export class SleepRecoverEvent implements SimulationEvent {
 	constructor(
 		private readonly sleepTimeSec: number,
 		private readonly dayLengthSec: number,
+		private readonly periodSec: number,
 	) {}
 
+	private get isShorterThanSleepSession(): boolean {
+		return this.periodSec < this.dayLengthSec - this.sleepTimeSec;
+	}
+
 	next(currentSec: number, sim: TeamContext): number {
+		if (this.isShorterThanSleepSession) {
+			return currentSec < this.periodSec
+				? this.periodSec
+				: Number.POSITIVE_INFINITY;
+		}
+
 		const sleeping = sim.members[0].progress.sleeping;
 		return phaseBoundarySec(
 			currentSec,
@@ -30,7 +41,7 @@ export class SleepRecoverEvent implements SimulationEvent {
 			const { profile, progress } = sim.members[i];
 
 			// entering sleep
-			if (!progress.sleeping) {
+			if (!this.isShorterThanSleepSession && !progress.sleeping) {
 				progress.sleeping = true;
 				continue;
 			}

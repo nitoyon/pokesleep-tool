@@ -46,7 +46,7 @@ function createEvents(sim: TeamContext): SimulationEvent[] {
 
 	// Initialize events
 	const energyEvents: SimulationEvent[] = [
-		new SleepRecoverEvent(sleepTimeSec, dayLengthSec),
+		new SleepRecoverEvent(sleepTimeSec, dayLengthSec, periodSec),
 		new CookEvent(sleepTimeSec, dayLengthSec),
 	];
 

@@ -60,6 +60,23 @@ describe("runIteration", () => {
 		expect(member.progress.help.all).toBeGreaterThan(0);
 	});
 
+	test("grants sleep recovery at period end without entering sleeping state when period is shorter than the sleep session", () => {
+		const sleepRecovery = 5;
+		const member = createTestMember({ sleepRecovery }, { energy: 100 });
+		const sim = createTestSim(
+			[member],
+			{ period: 1, tapFrequencyAwake: NoTap, tapFrequencyAsleep: NoTap },
+			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
+		);
+
+		runIteration(sim);
+
+		// -6 energy for 1h
+		// +5 energy for sleep recovery
+		expect(member.progress.energy).toBe(100 - 6 + sleepRecovery);
+		expect(member.progress.sleeping).toBe(false);
+	});
+
 	test("repeats the sleep/wake tap pattern across a multi-day period", () => {
 		const member = createTestMember();
 		const sim = createTestSim(
