@@ -62,18 +62,31 @@ type AccumulatedResult = {
  * @param iterations Number of Monte Carlo iterations (default 100).
  * @returns Per-member strength results plus an aggregated team total.
  */
+/**
+ * Build the placeholder result used when there is nothing to simulate
+ * (zero-length period, or no active members), and as the initial value
+ * shown while a background simulation is still in progress.
+ * @param members Array of up to 5 team members; undefined entries are empty slots.
+ * @returns A result with an empty total and no per-member results.
+ */
+export function createEmptyTeamStrengthResult(
+	members: (PokemonBoxItem | undefined)[],
+): TeamStrengthResult {
+	return { total: emptyTotal, members: members.map(() => undefined) };
+}
+
 export function simulateTeam(
 	members: (PokemonBoxItem | undefined)[],
 	param: StrengthParameter,
 	iterations = 3000,
 ): TeamStrengthResult {
 	if (param.period <= 0) {
-		return { total: emptyTotal, members: members.map(() => undefined) };
+		return createEmptyTeamStrengthResult(members);
 	}
 
 	const profiles = buildMemberProfiles(members, param);
 	if (profiles.length === 0) {
-		return { total: emptyTotal, members: members.map(() => undefined) };
+		return createEmptyTeamStrengthResult(members);
 	}
 	const sim = createTeamContext(profiles, param);
 	const accumulated = initializeAccumulatedResult(profiles);
