@@ -63,6 +63,7 @@ const DailyView = React.memo(
 					<SpecialtyButton specialty="Ingredients" disabled />
 				</div>
 				<StyledTotalArticle className="ing">
+					{ingNamesByCount.length === 0 && <>ー</>}
 					{ingNamesByCount.map((ing) => (
 						<span key={ing} className="ing2">
 							<IngredientIcon name={ing} />
@@ -82,17 +83,18 @@ const DailyView = React.memo(
 );
 
 const StyledDailyView = styled("div")({
-	margin: "1rem 0.5rem 0 0.5rem",
+	margin: "0 0.5rem 0 0.5rem",
 	display: "grid",
 	gap: "0.2rem 0.5rem",
 	gridTemplateColumns: "fit-content(3rem) 1fr",
 	"& > h2": {
 		gridColumn: "1 / -1",
-		fontSize: "1.1rem",
+		fontSize: "1.5rem",
 		margin: 0,
 		display: "flex",
-		"& > svg, & > span": {
-			verticalAlign: "middle",
+		alignItems: "center",
+		"& > span": {
+			transform: "scale(1, 0.9)",
 		},
 	},
 	"& > div.category": {
@@ -103,6 +105,7 @@ const StyledDailyView = styled("div")({
 
 const StyledTotalArticle = styled("div")({
 	fontSize: "0.8rem",
+	fontWeight: "bold",
 	"& > svg, & > span": {
 		verticalAlign: "middle",
 	},
@@ -124,26 +127,34 @@ const StyledTotalArticle = styled("div")({
 			verticalAlign: "middle",
 		},
 		"& > span": {
-			fontSize: "0.7rem",
 			verticalAlign: "middle",
 		},
 	},
-	"& > div > span.skill": {
+	"& > div.skilltotal > span.skill": {
 		whiteSpace: "nowrap",
-		"& > div": {
-			verticalAlign: "middle",
-			display: "inline-block",
-			marginRight: "0.1rem",
-		},
 		"& > svg": {
-			width: 14,
-			height: 14,
+			width: 16,
+			height: 16,
 			marginRight: "0.1rem",
 			verticalAlign: "middle",
 		},
 		"& > span": {
-			fontSize: "0.7rem",
 			paddingRight: "0.4rem",
+			verticalAlign: "middle",
+		},
+	},
+	"& > div.skillmember > span.skill": {
+		whiteSpace: "nowrap",
+		fontSize: "0.7rem",
+		fontWeight: "normal",
+		color: "#666",
+		"& > div": {
+			verticalAlign: "middle",
+			display: "inline-block",
+			marginRight: "0.15rem",
+		},
+		"& > span": {
+			paddingRight: "0.5rem",
 			verticalAlign: "middle",
 		},
 	},
@@ -177,7 +188,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillStrength > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="total">
 					<MainSkillIcon mainSkill="Charge Strength S" />
 					<span>{formatWithComma(totalSkillStrength)}</span>
 				</span>,
@@ -189,7 +200,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillExtraHelp > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="eh">
 					<MainSkillIcon mainSkill="Extra Helpful S" />
 					<span>{round1(totalSkillExtraHelp)}</span>
 				</span>,
@@ -201,7 +212,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillHelperBoost > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="helperboost">
 					<MainSkillIcon mainSkill="Helper Boost" />
 					<span>{round1(totalSkillHelperBoost)}</span>
 				</span>,
@@ -213,7 +224,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillEnergizingCheer > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="cheer">
 					<MainSkillIcon mainSkill="Energizing Cheer S" />
 					<span>{round1(totalSkillEnergizingCheer)}</span>
 				</span>,
@@ -225,7 +236,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillEnergyForEveryone > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="e4e">
 					<MainSkillIcon mainSkill="Energy for Everyone S" />
 					<span>{round1(totalSkillEnergyForEveryone)}</span>
 				</span>,
@@ -237,7 +248,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillShards > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="shards">
 					<MainSkillIcon mainSkill="Dream Shard Magnet S" />
 					<span>{formatWithComma(totalSkillShards)}</span>
 				</span>,
@@ -249,7 +260,7 @@ const SkillView = React.memo(
 		);
 		if (totalSkillPot > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="pot">
 					<MainSkillIcon mainSkill="Cooking Power-Up S" />
 					<span>{round1(totalSkillPot)}</span>
 				</span>,
@@ -261,17 +272,25 @@ const SkillView = React.memo(
 		);
 		if (totalSkillTasty > 0) {
 			skillByTotal.push(
-				<span className="skill">
+				<span className="skill" key="tasty">
 					<MainSkillIcon mainSkill="Tasty Chance S" />
 					<span>{round1(totalSkillTasty)}</span>
 				</span>,
 			);
 		}
 
+		if (skillByTotal.length === 0 && skillsByMember.length === 0) {
+			return <div>ー</div>;
+		}
+
 		return (
 			<>
-				{skillsByMember.length > 0 && <div>{skillsByMember}</div>}
-				{skillByTotal.length > 0 && <div>{skillByTotal}</div>}
+				{skillByTotal.length > 0 && (
+					<div className="skilltotal">{skillByTotal}</div>
+				)}
+				{skillsByMember.length > 0 && (
+					<div className="skillmember">{skillsByMember}</div>
+				)}
 			</>
 		);
 	},
