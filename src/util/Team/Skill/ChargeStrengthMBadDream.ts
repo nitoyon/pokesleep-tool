@@ -25,6 +25,7 @@ export class ChargeStrengthMBadDreamSkill extends BaseSkill {
 	apply(member: TeamMember, _tapSec: number, sim: TeamContext): void {
 		member.progress.skillStrength += this.skillValue;
 
+		member.progress.skillEnergyForEveryone -= 12;
 		for (const member of sim.members) {
 			if (member.profile.iv.pokemon.type === "dark") {
 				continue;

@@ -234,7 +234,7 @@ const SkillView = React.memo(
 			(sum, r) => sum + (r?.skillEnergyForEveryone ?? 0),
 			0,
 		);
-		if (totalSkillEnergyForEveryone > 0) {
+		if (totalSkillEnergyForEveryone !== 0) {
 			skillByTotal.push(
 				<span className="skill" key="e4e">
 					<MainSkillIcon mainSkill="Energy for Everyone S" />
