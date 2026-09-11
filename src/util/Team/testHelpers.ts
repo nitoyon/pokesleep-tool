@@ -16,6 +16,7 @@ import type {
 	Skill,
 	TeamContext,
 	TeamMember,
+	TeamProfile,
 } from "./Types";
 
 /**
@@ -179,6 +180,9 @@ export function createTestMember(
 export function createTestSim(
 	membersOrProfiles: (TeamMember | MemberProfile)[],
 	paramOverrides: Partial<StrengthParameter> = {},
+	teamProfileOverrides: Partial<
+		Pick<TeamProfile, "sleepTimeSec" | "dayLengthSec">
+	> = {},
 ): TeamContext {
 	const members: TeamMember[] = membersOrProfiles.map((m) =>
 		"progress" in m ? m : { profile: m, progress: createTestProgress() },
@@ -188,6 +192,7 @@ export function createTestSim(
 		teamProfile: {
 			sleepTimeSec: 86400,
 			dayLengthSec: 86400,
+			...teamProfileOverrides,
 			param: testParam(paramOverrides),
 		},
 		teamProgress: { potExtended: 0, extraTastyRate: 0 },

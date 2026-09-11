@@ -1,43 +1,56 @@
+import { AlwaysTap, NoTap, type TapFrequency } from "../../Energy";
 import { applyHelp } from "../Help/Help";
 import { applyPendingExtraHelp } from "../Help/PendingExtraHelp";
 import { applyPendingMainSkillActivation } from "../Help/PendingMainSkillActivation";
 import { applyPendingEnergy } from "../TeamEnergy";
 import type { SimulationEvent, TeamContext } from "../Types";
+import { phaseBoundarySec } from "./SleepBoundary";
 
 /**
- * AlwaysTap: each tap fires at the next whole-minute boundary after the
- * earliest pending help, so items are collected as soon as possible.
+ * Tap event whose cadence switches between tapFrequencyAwake and
+ * tapFrequencyAsleep depending on the team's current sleep state, and which
+ * always fires exactly at each sleep/wake boundary so nothing accumulated is
+ * left uncollected across the transition.
  */
-export class AlwaysTapEvent implements SimulationEvent {
-	next(_currentSec: number, sim: TeamContext): number | null {
-		const minHelp = Math.min(...sim.members.map((m) => m.progress.nextHelpSec));
-		const tapSec = Math.ceil(minHelp / 60) * 60;
-		return tapSec;
-	}
+export class PhaseAwareTapEvent implements SimulationEvent {
+	private lastTapSec = 0;
 
-	apply(tapSec: number, sim: TeamContext): void {
-		applyHelp(tapSec, sim);
-		applyPendingMainSkillActivation(sim, tapSec);
-		applyPendingExtraHelp(sim);
-		applyPendingEnergy(sim, tapSec);
-	}
-}
-
-/**
- * PeriodicTap: taps fire at fixed intervals (tapFreqSec) throughout the period.
- */
-export class PeriodicTapEvent implements SimulationEvent {
 	constructor(
-		private readonly tapFreqSec: number,
+		private readonly tapFreqAwakeMin: TapFrequency,
+		private readonly tapFreqAsleepMin: TapFrequency,
+		private readonly sleepTimeSec: number,
+		private readonly dayLengthSec: number,
 		private readonly periodSec: number,
 	) {}
 
-	next(currentSec: number, _sim: TeamContext): number | null {
-		const tapSec = currentSec + this.tapFreqSec;
+	next(currentSec: number, sim: TeamContext): number | null {
+		const sleeping = sim.members[0].progress.sleeping;
+		const boundarySec = phaseBoundarySec(
+			currentSec,
+			sleeping,
+			this.sleepTimeSec,
+			this.dayLengthSec,
+		);
+		const tapFreq = sleeping ? this.tapFreqAsleepMin : this.tapFreqAwakeMin;
+
+		let candidateSec: number;
+		if (tapFreq === NoTap) {
+			candidateSec = boundarySec;
+		} else if (tapFreq === AlwaysTap) {
+			const minHelp = Math.min(
+				...sim.members.map((m) => m.progress.nextHelpSec),
+			);
+			candidateSec = Math.ceil(minHelp / 60) * 60;
+		} else {
+			candidateSec = this.lastTapSec + tapFreq * 60;
+		}
+
+		const tapSec = Math.min(candidateSec, boundarySec);
 		return tapSec > this.periodSec ? null : tapSec;
 	}
 
 	apply(tapSec: number, sim: TeamContext): void {
+		this.lastTapSec = tapSec;
 		applyHelp(tapSec, sim);
 		applyPendingMainSkillActivation(sim, tapSec);
 		applyPendingExtraHelp(sim);

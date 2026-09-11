@@ -1,7 +1,6 @@
-import { AlwaysTap } from "../Energy";
 import { CookEvent } from "./Event/CookEvent";
 import { SleepRecoverEvent } from "./Event/SleepRecoverEvent";
-import { AlwaysTapEvent, PeriodicTapEvent } from "./Event/TapEvent";
+import { PhaseAwareTapEvent } from "./Event/TapEvent";
 import type { IterationResult, SimulationEvent, TeamContext } from "./Types";
 
 /**
@@ -51,10 +50,13 @@ function createEvents(sim: TeamContext): SimulationEvent[] {
 		new CookEvent(sleepTimeSec, dayLengthSec),
 	];
 
-	const tapEvent: SimulationEvent =
-		param.tapFrequencyAwake <= AlwaysTap
-			? new AlwaysTapEvent()
-			: new PeriodicTapEvent(param.tapFrequencyAwake * 60, periodSec);
+	const tapEvent: SimulationEvent = new PhaseAwareTapEvent(
+		param.tapFrequencyAwake,
+		param.tapFrequencyAsleep,
+		sleepTimeSec,
+		dayLengthSec,
+		periodSec,
+	);
 
 	return [...energyEvents, tapEvent];
 }

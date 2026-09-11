@@ -2,6 +2,7 @@ import { clamp } from "../../../util/NumberUtil";
 import { advanceHelpSchedule } from "../Help/Help";
 import { getEnergy, setEnergy } from "../TeamEnergy";
 import type { SimulationEvent, TeamContext } from "../Types";
+import { phaseBoundarySec } from "./SleepBoundary";
 
 /**
  * Fires at each sleep/wake boundary for all members simultaneously.
@@ -16,14 +17,12 @@ export class SleepRecoverEvent implements SimulationEvent {
 
 	next(currentSec: number, sim: TeamContext): number {
 		const sleeping = sim.members[0].progress.sleeping;
-		const day = Math.floor(currentSec / this.dayLengthSec);
-		const dayStart = day * this.dayLengthSec;
-		const sleepAt = this.sleepTimeSec + dayStart;
-		const wakeAt = (day + 1) * this.dayLengthSec;
-		if (!sleeping && sleepAt > currentSec) {
-			return sleepAt;
-		}
-		return wakeAt;
+		return phaseBoundarySec(
+			currentSec,
+			sleeping,
+			this.sleepTimeSec,
+			this.dayLengthSec,
+		);
 	}
 
 	apply(sec: number, sim: TeamContext): void {
