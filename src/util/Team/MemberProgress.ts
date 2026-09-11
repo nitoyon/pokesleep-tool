@@ -9,7 +9,7 @@ import type { MemberProfile, MemberProgress, TeamMember } from "./Types";
  */
 export function createMemberProgress(): MemberProgress {
 	const progress: MemberProgress = {
-		energy: 0,
+		energy: 100,
 		lastRecoverySec: 0,
 		sleeping: false,
 		nextHelpSec: -1,
