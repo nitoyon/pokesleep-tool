@@ -152,6 +152,7 @@ export function createTestProfile(
 		skillLevel: 1,
 		energyRecoveryFactor: 1,
 		maxSkillCount: 1,
+		isEnergyAlwaysFull: false,
 		skill: { initialize() {}, apply() {} },
 		...rest,
 	};

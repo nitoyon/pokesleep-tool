@@ -247,6 +247,7 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		skillLevel: 1,
 		energyRecoveryFactor: 1,
 		maxSkillCount: 1,
+		isEnergyAlwaysFull: false,
 		skill: defaultSkill,
 		...overrides,
 	};

@@ -149,6 +149,7 @@ export function buildMemberProfile(
 		skillLevel,
 		energyRecoveryFactor: recoveryFactor,
 		maxSkillCount: isSkillSpecialty ? 2 : 1,
+		isEnergyAlwaysFull: param.isEnergyAlwaysFull,
 		skill: createSkill("unknown"),
 	};
 }

@@ -186,6 +186,8 @@ export interface MemberProfile {
 	energyRecoveryFactor: number;
 	/** Max skill count (2 if specialty is Skills or All) */
 	maxSkillCount: 1 | 2;
+	/** Whether this member's energy is treated as always full (100), skipping all energy gain/loss. */
+	isEnergyAlwaysFull: boolean;
 	/** Per-family skill handler instance, holding any pre-computed per-trigger skill state. */
 	skill: Skill;
 }

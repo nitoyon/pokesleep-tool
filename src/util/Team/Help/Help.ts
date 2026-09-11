@@ -127,7 +127,8 @@ export function advanceHelpSchedule(
 
 /**
  * Schedule a member's next help time based on their energy at the given
- * second.
+ * second. Members with {@link MemberProfile.isEnergyAlwaysFull} are scheduled from
+ * full energy, handled inside {@link getEnergyByState}.
  * @param progress Current simulation progress for the member.
  * @param profile Profile for the member.
  * @param sec The second at which to evaluate energy and schedule from.
@@ -137,7 +138,7 @@ function scheduleNextHelp(
 	profile: MemberProfile,
 	sec: number,
 ): void {
-	const energy = getEnergyByState(progress, sec);
+	const energy = getEnergyByState(profile, progress, sec);
 	const freqRate = getFrequencyRateByEnergy(energy);
 	progress.nextHelpSec = sec + profile.baseFreq * freqRate;
 }

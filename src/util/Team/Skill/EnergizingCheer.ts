@@ -24,8 +24,8 @@ export function addEnergizingCheer(
 	sim: TeamContext,
 	rng: () => number = Math.random,
 ): number {
-	const energies = sim.members.map(({ progress }, index) => ({
-		energy: getEnergyByState(progress, tapSec),
+	const energies = sim.members.map(({ profile, progress }, index) => ({
+		energy: getEnergyByState(profile, progress, tapSec),
 		progress: progress,
 		index,
 	}));

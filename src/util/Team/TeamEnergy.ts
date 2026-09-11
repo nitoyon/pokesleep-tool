@@ -1,5 +1,5 @@
 import { clamp } from "../../util/NumberUtil";
-import type { MemberProgress, TeamContext } from "./Types";
+import type { MemberProfile, MemberProgress, TeamContext } from "./Types";
 
 /**
  * Add energy to a member by decaying it from lastRecoverySec to timeTo.
@@ -31,20 +31,28 @@ export function getEnergy(
 	memberIdx: number,
 	timeTo: number,
 ): number {
-	const progress = sim.members[memberIdx].progress;
-	return getEnergyByState(progress, timeTo);
+	const { profile, progress } = sim.members[memberIdx];
+	return getEnergyByState(profile, progress, timeTo);
 }
 
 /**
  * Get a member's energy by decaying it from lastRecoverySec to timeTo.
  *
+ * Members with {@link MemberProfile.isEnergyAlwaysFull} skip the decay entirely and
+ * are always reported as full (100).
+ *
+ * @param profile - Member simulation profile.
  * @param progress - Member simulation progress.
  * @param timeTo - Target time in seconds to advance to.
  */
 export function getEnergyByState(
+	profile: MemberProfile,
 	progress: MemberProgress,
 	timeTo: number,
 ): number {
+	if (profile.isEnergyAlwaysFull) {
+		return 100;
+	}
 	if (timeTo < progress.lastRecoverySec) {
 		throw new Error(
 			`getEnergy called with timeTo ${timeTo} < lastRecoverySec ${progress.lastRecoverySec}`,
@@ -59,6 +67,10 @@ export function getEnergyByState(
 /**
  * Set a member's energy and update their last recovery time.
  *
+ * Members with {@link MemberProfile.isEnergyAlwaysFull} skip the write entirely, so
+ * their energy stays untouched (reads always report full via
+ * {@link getEnergyByState}).
+ *
  * @param sim - Full iteration state.
  * @param memberIdx - Index of the member to advance.
  * @param timeTo - Target time in seconds to advance to.
@@ -70,7 +82,10 @@ export function setEnergy(
 	timeTo: number,
 	energy: number,
 ): void {
-	const progress = sim.members[memberIdx].progress;
+	const { profile, progress } = sim.members[memberIdx];
+	if (profile.isEnergyAlwaysFull) {
+		return;
+	}
 	if (timeTo < progress.lastRecoverySec) {
 		throw new Error(
 			`setEnergy called with timeTo ${timeTo} < lastRecoverySec ${progress.lastRecoverySec}`,
@@ -93,7 +108,11 @@ export function addPendingEnergy(
 	memberIdx: number,
 	diff: number,
 ): void {
-	sim.members[memberIdx].progress.pendingEnergy += diff;
+	const { profile, progress } = sim.members[memberIdx];
+	if (profile.isEnergyAlwaysFull) {
+		return;
+	}
+	progress.pendingEnergy += diff;
 }
 
 /**
