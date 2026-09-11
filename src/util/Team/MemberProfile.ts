@@ -1,3 +1,5 @@
+import { isExpertField } from "../../data/fields";
+import { whistlePeriod } from "../../util/Energy";
 import { getBerryStrength } from "../Berry";
 import { getMaxSkillLevel } from "../MainSkill";
 import type { PokemonBoxItem } from "../PokemonBox";
@@ -50,13 +52,19 @@ export function buildMemberProfile(
 	const bonus = strength.bonusEffects;
 
 	// Base frequency
-	// TODO: Consider Expert effects
+	const isWhistle = param.period === whistlePeriod;
+	const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
+	const isFavoriteBerry =
+		isExpertMode && param.favoriteType.includes(iv.pokemon.type);
+	const isMainBerry = isExpertMode && param.favoriteType[0] === iv.pokemon.type;
+	const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
 	const isGoodCamp = param.isGoodCampTicketSet;
 	const baseFreq = iv.getBaseFrequency(
 		helpBonusCount,
 		isGoodCamp,
-		false,
-		false,
+		isMainBerry,
+		isNonFavoriteBerry,
+		param.fieldIndex,
 	);
 
 	// wakeMax
@@ -89,7 +97,8 @@ export function buildMemberProfile(
 	// bagUsage
 	const normalBagUsage = iv.getBagUsagePerHelpDetail({
 		berry: bonus.berry,
-		ingredient: bonus.ingredient === 1.5 ? 1 : bonus.ingredient,
+		ingredient:
+			bonus.ingredientReason === "ex" ? 0 : (bonus.ingredient as 0 | 1),
 		carryLimitAdd: bonus.carryLimitAdd,
 		carryLimitMul: bonus.carryLimitMul,
 		expertIng: bonus.ingredientReason === "ex",
