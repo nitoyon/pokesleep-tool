@@ -1,5 +1,11 @@
 import { Popper } from "@mui/material";
 import { styled } from "@mui/system";
+import {
+	animated,
+	type SpringValue,
+	useSpring,
+	useTransition,
+} from "@react-spring/web";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { formatWithComma } from "../../../util/NumberUtil";
@@ -39,16 +45,30 @@ export const MemberStrengthChart = React.memo(
 		const svgRef = React.useRef<SVGSVGElement | null>(null);
 		const mouse = useSvgTouch(svgRef);
 
+		// Keep each result's original team-slot index (not the post-filter
+		// position) so a row's key — and thus its animation spring — stays
+		// tied to a specific team slot even when an earlier slot is
+		// toggled off/on and the visible rows compact.
 		const rows = React.useMemo(
 			() =>
-				results.filter((r): r is MemberStrengthChartResult => r !== undefined),
+				results
+					.map((r, slot) => (r === undefined ? null : { slot, result: r }))
+					.filter(
+						(r): r is { slot: number; result: MemberStrengthChartResult } =>
+							r !== null,
+					),
 			[results],
 		);
 
 		const { max: maxTotal, step: axisStep } = React.useMemo(() => {
 			const max = rows.reduce(
 				(m, r) =>
-					Math.max(m, r.berryTotalStrength + r.ingStrength + r.skillStrength),
+					Math.max(
+						m,
+						r.result.berryTotalStrength +
+							r.result.ingStrength +
+							r.result.skillStrength,
+					),
 				0,
 			);
 			return computeAxisScale(max);
@@ -94,12 +114,11 @@ export const MemberStrengthChart = React.memo(
 								maxValue={maxTotal}
 								step={axisStep}
 							/>
-							{rows.map((r, i) => (
+							{rows.map(({ slot, result }, i) => (
 								<MemberStrengthRow
-									// biome-ignore lint/suspicious/noArrayIndexKey: rows never reordered
-									key={i}
+									key={slot}
 									y={i * ROW_HEIGHT}
-									result={r}
+									result={result}
 									chartWidth={chartWidth}
 									maxValue={maxTotal}
 									highlighted={hoverIndex === i}
@@ -107,7 +126,10 @@ export const MemberStrengthChart = React.memo(
 							))}
 						</g>
 						{hoverIndex !== -1 && mouse !== null && (
-							<MemberStrengthHover mouse={mouse} result={rows[hoverIndex]} />
+							<MemberStrengthHover
+								mouse={mouse}
+								result={rows[hoverIndex].result}
+							/>
 						)}
 					</>
 				)}
@@ -128,30 +150,82 @@ const MemberStrengthAxis = React.memo(
 		maxValue: number;
 		step: number;
 	}) => {
-		const xScale = (v: number) => (maxValue === 0 ? 0 : (v / maxValue) * width);
 		const tickCount = step === 0 ? 0 : Math.round(maxValue / step);
 		const ticks = Array.from({ length: tickCount + 1 }, (_, i) => i * step);
 
+		// Remember the scale that was in effect before this render so a
+		// newly-appearing tick can slide in from the position it would have
+		// occupied under the old scale, instead of just fading in place.
+		const prevScaleRef = React.useRef({ maxValue, width });
+		const prevScale = prevScaleRef.current;
+		React.useEffect(() => {
+			prevScaleRef.current = { maxValue, width };
+		}, [maxValue, width]);
+
+		const transitions = useTransition<number, { x: number; opacity: number }>(
+			ticks,
+			{
+				keys: (v) => v,
+				from: (v) => ({
+					x: xScale(v, prevScale.maxValue, prevScale.width),
+					opacity: 0,
+				}),
+				enter: (v) => ({ x: xScale(v, maxValue, width), opacity: 1 }),
+				update: (v) => ({ x: xScale(v, maxValue, width), opacity: 1 }),
+				leave: (v) => ({ x: xScale(v, maxValue, width), opacity: 0 }),
+				config: { tension: 400, friction: 40 },
+			},
+		);
+
 		return (
 			<>
-				<g stroke="#ddd">
-					{ticks.map((v) => (
-						<line key={v} x1={xScale(v)} y1="0" x2={xScale(v)} y2={height} />
-					))}
-				</g>
-				<g fontSize="60%" fill="#999" textAnchor="middle">
-					{ticks.map((v) => (
-						<text
-							key={v}
-							alignmentBaseline="hanging"
-							x={xScale(v)}
-							y={height + 3}
-						>
-							{formatWithComma(v)}
-						</text>
-					))}
-				</g>
+				{transitions((style, v) => (
+					<AxisGridLine style={style} value={v} height={height} />
+				))}
 			</>
+		);
+	},
+);
+
+/** Position `v` would occupy on an axis of the given scale/width. */
+function xScale(v: number, maxValue: number, width: number): number {
+	return maxValue === 0 ? 0 : (v / maxValue) * width;
+}
+
+/** A single axis gridline + label that slides to its target x as it moves,
+ * appears, or disappears. */
+const AxisGridLine = React.memo(
+	({
+		style,
+		value,
+		height,
+	}: {
+		style: {
+			x: SpringValue<number>;
+			opacity: SpringValue<number>;
+		};
+		value: number;
+		height: number;
+	}) => {
+		const { x, opacity } = style;
+
+		return (
+			<animated.g
+				style={{ opacity }}
+				transform={x.to((x) => `translate(${x}, 0)`)}
+			>
+				<line x1={0} y1="0" x2={0} y2={height} stroke="#ddd" />
+				<text
+					alignmentBaseline="hanging"
+					x={0}
+					y={height + 3}
+					fontSize="60%"
+					fill="#999"
+					textAnchor="middle"
+				>
+					{formatWithComma(value)}
+				</text>
+			</animated.g>
 		);
 	},
 );
@@ -174,9 +248,18 @@ const MemberStrengthRow = React.memo(
 			maxValue === 0 ? 0 : (v / maxValue) * chartWidth;
 		const barY = y + (ROW_HEIGHT - BAR_HEIGHT) / 2;
 
-		const berryWidth = xScale(result.berryTotalStrength);
-		const ingWidth = xScale(result.ingStrength);
-		const skillWidth = xScale(result.skillStrength);
+		const targetBerryWidth = xScale(result.berryTotalStrength);
+		const targetIngWidth = xScale(result.ingStrength);
+		const targetSkillWidth = xScale(result.skillStrength);
+
+		const { berryWidth, ingX, ingWidth, skillX, skillWidth } = useSpring({
+			berryWidth: targetBerryWidth,
+			ingX: targetBerryWidth,
+			ingWidth: targetIngWidth,
+			skillX: targetBerryWidth + targetIngWidth,
+			skillWidth: targetSkillWidth,
+			config: { tension: 400, friction: 40 },
+		});
 
 		return (
 			<g>
@@ -196,7 +279,7 @@ const MemberStrengthRow = React.memo(
 					idForm={result.iv.idForm}
 					shiny={result.iv.shiny}
 				/>
-				<rect
+				<animated.rect
 					x={0}
 					y={barY}
 					width={berryWidth}
@@ -204,16 +287,16 @@ const MemberStrengthRow = React.memo(
 					fill={BERRY_COLOR}
 					opacity={0.85}
 				/>
-				<rect
-					x={berryWidth}
+				<animated.rect
+					x={ingX}
 					y={barY}
 					width={ingWidth}
 					height={BAR_HEIGHT}
 					fill={ING_COLOR}
 					opacity={0.85}
 				/>
-				<rect
-					x={berryWidth + ingWidth}
+				<animated.rect
+					x={skillX}
 					y={barY}
 					width={skillWidth}
 					height={BAR_HEIGHT}
