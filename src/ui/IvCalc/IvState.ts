@@ -185,7 +185,7 @@ function loadInitialIvStateCache(): IvStateCache {
 	if (
 		typeof json.tabIndex === "number" &&
 		json.tabIndex >= 0 &&
-		json.tabIndex <= 2
+		json.tabIndex <= 3
 	) {
 		ret.tabIndex = json.tabIndex;
 	}
