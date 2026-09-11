@@ -34,11 +34,15 @@ export function createTeamContext(
  * Monte Carlo run and reallocating it per iteration is costly.
  */
 export function resetTeamContext(sim: TeamContext): void {
+	const periodSec = Math.abs(sim.teamProfile.param.period) * 3600;
 	for (const member of sim.members) {
+		// The previous iteration's nextHelpSec lands past periodSec
+		const prevNextHelpSec = member.progress.nextHelpSec;
 		member.progress = {
 			...createMemberProgress(),
 			energy: member.progress.energy,
 			helpsSinceSkill: member.progress.helpsSinceSkill,
+			nextHelpSec: prevNextHelpSec === -1 ? -1 : prevNextHelpSec - periodSec,
 		};
 	}
 	sim.teamProgress.potExtended = 0;
