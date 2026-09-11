@@ -24,6 +24,11 @@ export class PhaseAwareTapEvent implements SimulationEvent {
 	) {}
 
 	next(currentSec: number, sim: TeamContext): number | null {
+		// skip loop
+		if (this.lastTapSec === this.periodSec) {
+			return null;
+		}
+
 		const sleeping = sim.members[0].progress.sleeping;
 		const boundarySec = phaseBoundarySec(
 			currentSec,
@@ -45,8 +50,7 @@ export class PhaseAwareTapEvent implements SimulationEvent {
 			candidateSec = this.lastTapSec + tapFreq * 60;
 		}
 
-		const tapSec = Math.min(candidateSec, boundarySec);
-		return tapSec > this.periodSec ? null : tapSec;
+		return Math.min(candidateSec, boundarySec, this.periodSec);
 	}
 
 	apply(tapSec: number, sim: TeamContext): void {
