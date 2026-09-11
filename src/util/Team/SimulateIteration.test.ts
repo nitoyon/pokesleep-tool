@@ -21,4 +21,14 @@ describe("runIteration", () => {
 		expect(result).toHaveLength(1);
 		expect(result[0].berryTotalStrength).toBeGreaterThan(0);
 	});
+
+	test("isEnergyAlwaysFull member always taps at the full-energy frequency over a 24h period", () => {
+		const member = createTestMember({ isEnergyAlwaysFull: true });
+		const sim = createTestSim([member], { period: 24 });
+
+		runIteration(sim);
+
+		const expectedHelpCount = Math.floor((24 * 60 * 60) / (2200 * 0.45));
+		expect(member.progress.help.all).toBe(expectedHelpCount);
+	});
 });
