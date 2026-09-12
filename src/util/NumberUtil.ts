@@ -1,24 +1,30 @@
 import type i18next from "i18next";
 
 export function round1(n: number) {
-	n = Math.round(n * 10);
+	const isNegative = n < 0;
+	n = Math.round(Math.abs(n) * 10);
+	const sign = isNegative && n !== 0 ? "-" : "";
 	const f = (n % 10).toString();
 	const d = formatWithComma(Math.floor(n / 10));
-	return `${d}.${f}`;
+	return `${sign}${d}.${f}`;
 }
 
 export function round2(n: number) {
-	n = Math.round(n * 100);
+	const isNegative = n < 0;
+	n = Math.round(Math.abs(n) * 100);
+	const sign = isNegative && n !== 0 ? "-" : "";
 	const f = (n % 100).toString().padStart(2, "0");
 	const d = formatWithComma(Math.floor(n / 100));
-	return `${d}.${f}`;
+	return `${sign}${d}.${f}`;
 }
 
 export function round3(n: number) {
-	n = Math.round(n * 1000);
+	const isNegative = n < 0;
+	n = Math.round(Math.abs(n) * 1000);
+	const sign = isNegative && n !== 0 ? "-" : "";
 	const f = (n % 1000).toString().padStart(3, "0");
 	const d = formatWithComma(Math.floor(n / 1000));
-	return `${d}.${f}`;
+	return `${sign}${d}.${f}`;
 }
 
 export function formatWithComma(n: number): string {

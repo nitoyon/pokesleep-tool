@@ -16,6 +16,12 @@ describe("round1", () => {
 	test("1.11", () => {
 		expect(round1(1.11)).toBe("1.1");
 	});
+	test("-1.11", () => {
+		expect(round1(-1.11)).toBe("-1.1");
+	});
+	test("-0.04", () => {
+		expect(round1(-0.04)).toBe("0.0");
+	});
 	test("1.15", () => {
 		expect(round1(1.15)).toBe("1.2");
 	});
@@ -39,6 +45,12 @@ describe("round2", () => {
 	});
 	test("1.112", () => {
 		expect(round2(1.112)).toBe("1.11");
+	});
+	test("-1.112", () => {
+		expect(round2(-1.112)).toBe("-1.11");
+	});
+	test("-0.001", () => {
+		expect(round2(-0.001)).toBe("0.00");
 	});
 	test("1.115", () => {
 		expect(round2(1.115)).toBe("1.12");
