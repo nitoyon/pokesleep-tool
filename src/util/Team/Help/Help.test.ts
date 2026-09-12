@@ -186,6 +186,7 @@ function createSim(
 	return {
 		members: [member],
 		teamProfile: {
+			isWhistle: false,
 			sleepTimeSec: 86400,
 			dayLengthSec: 86400,
 			// Default to no pity-proc

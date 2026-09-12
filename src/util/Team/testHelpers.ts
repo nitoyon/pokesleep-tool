@@ -190,6 +190,7 @@ export function createTestSim(
 	return {
 		members,
 		teamProfile: {
+			isWhistle: false,
 			sleepTimeSec: 86400,
 			dayLengthSec: 86400,
 			...teamProfileOverrides,

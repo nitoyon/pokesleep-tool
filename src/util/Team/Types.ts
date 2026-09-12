@@ -46,6 +46,8 @@ export interface TeamContext {
  * Immutable team-level configuration (analogous to MemberProfile).
  */
 export interface TeamProfile {
+	/** Wheather whistle simulation is enabled or not */
+	readonly isWhistle: boolean;
 	/** Time within a day at which the team falls asleep, in seconds. */
 	readonly sleepTimeSec: number;
 	/** Total day length in seconds (86400). */

@@ -6,6 +6,7 @@ import type { MemberProfile, TeamContext } from "./Types";
  * Build a fresh {@link TeamContext} for a single simulation iteration.
  */
 export function createTeamContext(
+	isWhistle: boolean,
 	profiles: MemberProfile[],
 	param: StrengthParameter,
 ): TeamContext {
@@ -16,6 +17,7 @@ export function createTeamContext(
 	return {
 		members: createTeamMembers(profiles),
 		teamProfile: {
+			isWhistle,
 			sleepTimeSec,
 			dayLengthSec,
 			param,

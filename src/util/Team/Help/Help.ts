@@ -55,6 +55,7 @@ function applyHelpForMember(
 
 	// Skill lottery at tap time
 	const skillCount = drawSkillCount(
+		sim.teamProfile.isWhistle,
 		param.pityProc,
 		progress,
 		profile,
@@ -228,12 +229,18 @@ function applySingleHelp(
  * Specialty (Skills / All): 0, 1, or 2 triggers.
  */
 function drawSkillCount(
+	isWhistle: boolean,
 	pityProc: boolean,
 	progress: MemberProgress,
 	profile: MemberProfile,
 	helpCount: number,
 	rng: () => number,
 ): number {
+	// No skill with whistle
+	if (isWhistle) {
+		return 0;
+	}
+
 	// No pity proc
 	if (!pityProc) {
 		const p = profile.skillRate;

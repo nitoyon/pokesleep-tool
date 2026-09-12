@@ -1,5 +1,6 @@
 import { emptyBonusEffects } from "../../data/events";
 import type { IngredientName } from "../../data/pokemons";
+import { AlwaysTap, whistlePeriod } from "../Energy";
 import type { PokemonBoxItem } from "../PokemonBox";
 import PokemonIv from "../PokemonIv";
 import { ingredientStrength } from "../PokemonRp";
@@ -66,15 +67,26 @@ export function simulateTeam(
 	param: StrengthParameter,
 	iterations = 3000,
 ): TeamStrengthResult {
-	if (param.period <= 0) {
+	if (param.period < 0) {
 		return createEmptyTeamStrengthResult(members);
+	}
+	const isWhistle = param.period === whistlePeriod;
+	if (isWhistle) {
+		param = {
+			...param,
+			period: 3,
+			isEnergyAlwaysFull: true,
+			isGoodCampTicketSet: false,
+			tapFrequencyAwake: AlwaysTap,
+			tapFrequencyAsleep: AlwaysTap,
+		};
 	}
 
 	const profiles = buildMemberProfiles(members, param);
 	if (profiles.length === 0) {
 		return createEmptyTeamStrengthResult(members);
 	}
-	const sim = createTeamContext(profiles, param);
+	const sim = createTeamContext(isWhistle, profiles, param);
 	const accumulated = initializeIterationResult(profiles);
 	for (let iter = 0; iter < iterations; iter++) {
 		resetTeamContext(sim);
