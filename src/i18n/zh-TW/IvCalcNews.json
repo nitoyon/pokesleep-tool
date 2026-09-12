@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"team": {
+				"headline": "新增了$t(team)功能。",
+				"detail": "$t(team info)"
+			},
 			"mew": {
 				"headline": "已正式對應$t(pokemons.Mew)的模擬。",
 				"detail": "$t(skills.Versatile.strength)"

@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"team": {
+				"headline": "Added the $t(team) feature.",
+				"detail": "$t(team info)"
+			},
 			"mew": {
 				"headline": "Now fully supports simulation for $t(pokemons.Mew).",
 				"detail": "$t(skills.Versatile.strength)"
