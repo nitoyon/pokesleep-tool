@@ -1,6 +1,7 @@
 import { CookEvent } from "./Event/CookEvent";
 import { SleepRecoverEvent } from "./Event/SleepRecoverEvent";
 import { PhaseAwareTapEvent } from "./Event/TapEvent";
+import { applyPendingExtraHelp } from "./Help/PendingExtraHelp";
 import type { IterationResult, SimulationEvent, TeamContext } from "./Types";
 
 /**
@@ -8,21 +9,31 @@ import type { IterationResult, SimulationEvent, TeamContext } from "./Types";
  * Returns per-member accumulators.
  */
 export function runIteration(sim: TeamContext): IterationResult[] {
-	const events: SimulationEvent[] = createEvents(sim);
-	const periodSec = Math.abs(sim.teamProfile.param.period) * 3600;
-
-	// Main event loop
-	let currentSec = 0;
-	while (true) {
-		const { sec, firedEvents } = findNextEvents(events, currentSec, sim);
-		if (sec > periodSec) {
-			break;
+	if (sim.teamProfile.param.period < 0) {
+		// help count
+		const helpCount = -sim.teamProfile.param.period;
+		for (const member of sim.members) {
+			member.progress.pendingExtraHelp = helpCount;
 		}
+		applyPendingExtraHelp(sim);
+	} else {
+		// initialize event
+		const events: SimulationEvent[] = createEvents(sim);
+		const periodSec = Math.abs(sim.teamProfile.param.period) * 3600;
 
-		for (const event of firedEvents) {
-			event.apply(sec, sim);
+		// Main event loop
+		let currentSec = 0;
+		while (true) {
+			const { sec, firedEvents } = findNextEvents(events, currentSec, sim);
+			if (sec > periodSec) {
+				break;
+			}
+
+			for (const event of firedEvents) {
+				event.apply(sec, sim);
+			}
+			currentSec = sec;
 		}
-		currentSec = sec;
 	}
 
 	return sim.members.map(({ progress }) => ({

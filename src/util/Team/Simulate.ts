@@ -67,9 +67,6 @@ export function simulateTeam(
 	param: StrengthParameter,
 	iterations = 3000,
 ): TeamStrengthResult {
-	if (param.period < 0) {
-		return createEmptyTeamStrengthResult(members);
-	}
 	const isWhistle = param.period === whistlePeriod;
 	if (isWhistle) {
 		param = {
