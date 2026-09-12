@@ -1,7 +1,14 @@
 import { describe, expect, test } from "vitest";
 import { NoTap } from "../Energy";
+import PokemonIv from "../PokemonIv";
 import { runIteration } from "./SimulateIteration";
-import { createTestMember, createTestSim } from "./testHelpers";
+import { initializeSkillValue } from "./Skill/SkillInitializer";
+import {
+	createTestMember,
+	createTestProfile,
+	createTestSim,
+	testParam,
+} from "./testHelpers";
 
 describe("runIteration", () => {
 	test("runs a single iteration with period = 3", () => {
@@ -89,5 +96,30 @@ describe("runIteration", () => {
 
 		expect(result).toHaveLength(1);
 		expect(result[0].berryTotalStrength).toBeGreaterThan(0);
+	});
+
+	test("runs a team including Mew (Versatile) and Mr. Mime (Skill Copy)", () => {
+		const mewIv = new PokemonIv({
+			pokemonName: "Mew",
+			level: 30,
+			versatileSkill: "Charge Strength S",
+		});
+		const profiles = [
+			createTestProfile({ index: 0, iv: mewIv, skillRate: 1 }),
+			createTestProfile({
+				index: 1,
+				pokemonName: "Mr. Mime",
+				skillRate: 1,
+			}),
+		];
+		initializeSkillValue(profiles, testParam({ pityProc: true }));
+
+		const sim = createTestSim(profiles, { pityProc: true }, {});
+		const result = runIteration(sim);
+
+		expect(result).toHaveLength(2);
+		expect(result[0].skillCount).toBeGreaterThan(0);
+		expect(result[0].skillStrength).toBeGreaterThan(0);
+		expect(result[1].skillCount).toBeGreaterThan(0);
 	});
 });

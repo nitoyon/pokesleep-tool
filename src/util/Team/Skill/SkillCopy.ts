@@ -92,7 +92,8 @@ export class SkillCopySkill extends BaseSkill {
 
 		// Ingredient-Draw: skills pick ingredients
 		// from the target's Pokémon
-		if (isIngredientDrawSkill(skillName)) {
+		// Versatile: resolves its actual skill from the target's Pokémon
+		if (isIngredientDrawSkill(skillName) || skillName === "Versatile") {
 			copiedProfile.iv = targetProfile.iv;
 		}
 

@@ -1,4 +1,5 @@
 import type { MainSkillName } from "../../MainSkill";
+import PokemonIv from "../../PokemonIv";
 import {
 	createConstRng,
 	createTestProfile,
@@ -156,6 +157,31 @@ describe("SkillCopySkill", () => {
 		expect(sim.members[0].progress.skillStrength).toBe(400);
 	});
 
+	test("copying a Versatile target resolves the target's own versatile skill, not the caster's", () => {
+		// Mr. Mime has no versatileSkill of its own; if the copied profile kept
+		// Mr. Mime's iv instead of Mew's, Versatile would resolve back into
+		// Skill Copy and recurse forever.
+		const mewIv = new PokemonIv({
+			pokemonName: "Mew",
+			level: 30,
+			versatileSkill: "Charge Strength S",
+		});
+		const mew = copyProfile(0, "Versatile", "Mew", mewIv);
+		const caster = copyProfile(1, "Skill Copy (Mimic)", "Mr. Mime");
+		const profiles = [caster, mew];
+
+		const skill = createSkill("Skill Copy (Mimic)", () => 0);
+		expect(() =>
+			skill.initialize(caster, profiles, testParam({ fieldBonus: 0 })),
+		).not.toThrow();
+
+		const sim = createTestSim(profiles);
+		expect(() => skill.apply(sim.members[0], 0, sim)).not.toThrow();
+
+		// targets[0] is Mew's Versatile, resolved to Charge Strength S.
+		expect(sim.members[0].progress.skillStrength).toBeGreaterThan(0);
+	});
+
 	test("field bonus scales the Charge Strength S fallback", () => {
 		const caster = copyProfile(0, "Skill Copy (Transform)");
 		const profiles = [caster, copyProfile(1, "Berry Burst (Draco Meteor)")];
@@ -174,6 +200,12 @@ function copyProfile(
 	index: number,
 	skillName: MainSkillName,
 	pokemonName = "Raichu",
+	iv?: PokemonIv,
 ) {
-	return createTestProfile({ index, skillName, pokemonName });
+	return createTestProfile({
+		index,
+		skillName,
+		pokemonName,
+		...(iv && { iv }),
+	});
 }
