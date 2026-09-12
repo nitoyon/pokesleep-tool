@@ -1313,6 +1313,7 @@ export function getBerryBurstTeam(
  * @param param Additional parameters including team composition and config flags.
  * @param bonus Berry burst effect bonus.
  * @param skillLevel The skill level to use, overriding the default if necessary.
+ * @param skillName The skill name, overriding the default if necessary.
  * @returns An object containing:
  *   - `total`: Total Berry Burst strength from all team members.
  *   - `members`: Breakdown of each member’s contribution with:
@@ -1328,23 +1329,25 @@ export function calculateBerryBurstStrength(
 	param: StrengthParameter,
 	bonus: number,
 	skillLevel?: number,
+	skillName?: MainSkillName,
 ): {
 	total: number;
 	members: { total: number; perBerry: number; count: number }[];
 } {
 	const _skillLevel = skillLevel ?? iv.skillLevel;
-	const skill =
-		iv.pokemon.skill === "Versatile" ? "Berry Burst" : iv.pokemon.skill;
+	const _skillName =
+		skillName ??
+		(iv.pokemon.skill === "Versatile" ? "Berry Burst" : iv.pokemon.skill);
 
 	// Get berry count
 	// Bonus is ceiled.
 	let myBerryCount: number, othersBerryCount: number;
-	switch (skill) {
+	switch (_skillName) {
 		case "Berry Burst":
 		case "Berry Burst (Disguise)":
-			myBerryCount = Math.ceil(bonus * getSkillValue(skill, _skillLevel));
+			myBerryCount = Math.ceil(bonus * getSkillValue(_skillName, _skillLevel));
 			othersBerryCount = Math.ceil(
-				bonus * getSkillSubValue(skill, _skillLevel),
+				bonus * getSkillSubValue(_skillName, _skillLevel),
 			);
 			break;
 		case "Energy for Everyone S (Lunar Blessing)": {
@@ -1372,17 +1375,17 @@ export function calculateBerryBurstStrength(
 	// Get the Berry Burst team members (types and levels)
 	const levels: number[] = [
 		iv.level,
-		team.members[0].level,
-		team.members[1].level,
-		team.members[2].level,
-		team.members[3].level,
+		team.members[0]?.level ?? 0,
+		team.members[1]?.level ?? 0,
+		team.members[2]?.level ?? 0,
+		team.members[3]?.level ?? 0,
 	];
 	const types: PokemonType[] = [
 		iv.pokemon.type,
-		team.members[0].type,
-		team.members[1].type,
-		team.members[2].type,
-		team.members[3].type,
+		team.members[0]?.type ?? "Normal",
+		team.members[1]?.type ?? "Normal",
+		team.members[2]?.type ?? "Normal",
+		team.members[3]?.type ?? "Normal",
 	];
 	const ret = {
 		total: 0,

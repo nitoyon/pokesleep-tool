@@ -23,6 +23,7 @@ function createBaseState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
+		teamMembers: [undefined, undefined, undefined, undefined, undefined],
 	};
 }
 
@@ -469,6 +470,108 @@ describe("ivStateReducer", () => {
 			const savedItem = newState.box.getById(itemId);
 			expect(savedItem?.iv.level).toBe(50);
 			expect(savedItem?.nickname).toBe("");
+		});
+	});
+
+	describe("setTeamMember action", () => {
+		test("should wrap item into an enabled slot", () => {
+			const item = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Raichu" }),
+				"MyRaichu",
+				-1,
+			);
+			const action: IvAction = {
+				type: "setTeamMember",
+				payload: { index: 2, item },
+			};
+
+			const newState = ivStateReducer(baseState, action);
+
+			expect(newState.teamMembers[2]).toEqual({ item, enabled: true });
+			expect(newState.teamMembers[0]).toBeUndefined();
+		});
+
+		test("should clear the slot when item is undefined", () => {
+			const item = new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }));
+			const state = {
+				...baseState,
+				teamMembers: baseState.teamMembers.map((x, i) =>
+					i === 1 ? { item, enabled: true } : x,
+				),
+			};
+			const action: IvAction = {
+				type: "setTeamMember",
+				payload: { index: 1, item: undefined },
+			};
+
+			const newState = ivStateReducer(state, action);
+
+			expect(newState.teamMembers[1]).toBeUndefined();
+		});
+
+		test("should keep the disabled state when replacing the pokemon", () => {
+			const oldItem = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Raichu" }),
+			);
+			const newItem = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Pikachu" }),
+			);
+			const state = {
+				...baseState,
+				teamMembers: baseState.teamMembers.map((x, i) =>
+					i === 0 ? { item: oldItem, enabled: false } : x,
+				),
+			};
+			const action: IvAction = {
+				type: "setTeamMember",
+				payload: { index: 0, item: newItem },
+			};
+
+			const newState = ivStateReducer(state, action);
+
+			expect(newState.teamMembers[0]).toEqual({
+				item: newItem,
+				enabled: false,
+			});
+		});
+	});
+
+	describe("setTeamMemberEnabled action", () => {
+		test("should toggle the enabled flag of the target slot only", () => {
+			const item0 = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Raichu" }),
+			);
+			const item1 = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Pikachu" }),
+			);
+			const state = {
+				...baseState,
+				teamMembers: baseState.teamMembers.map((x, i) => {
+					if (i === 0) return { item: item0, enabled: true };
+					if (i === 1) return { item: item1, enabled: true };
+					return x;
+				}),
+			};
+			const action: IvAction = {
+				type: "setTeamMemberEnabled",
+				payload: { index: 0, enabled: false },
+			};
+
+			const newState = ivStateReducer(state, action);
+
+			expect(newState.teamMembers[0]).toEqual({ item: item0, enabled: false });
+			expect(newState.teamMembers[1]).toEqual({ item: item1, enabled: true });
+		});
+
+		test("should not change state when the slot is empty", () => {
+			const action: IvAction = {
+				type: "setTeamMemberEnabled",
+				payload: { index: 3, enabled: false },
+			};
+
+			const newState = ivStateReducer(baseState, action);
+
+			expect(newState.teamMembers[3]).toBeUndefined();
 		});
 	});
 });

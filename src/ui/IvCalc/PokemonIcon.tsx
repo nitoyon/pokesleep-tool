@@ -49,7 +49,7 @@ const PokemonIcon = React.memo(
 	},
 );
 
-function createIconElements(
+export function createIconElements(
 	idForm: number,
 	shiny: boolean,
 	size: number,

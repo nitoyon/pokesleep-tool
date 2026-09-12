@@ -328,13 +328,11 @@ export function getSkillSubValue(
 	}
 
 	if (skill === "Ingredient Magnet S (Plus)") {
-		// Get additional ingredient count
-		if (firstIngredient === "coffee") {
-			return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
-		} else if (firstIngredient === "milk") {
+		if (firstIngredient === "milk") {
 			return [6, 7, 9, 10, 12, 13, 14][skillLevel - 1];
 		}
-		throw new Error(`invalid ingredient: ${firstIngredient}`);
+		// Coffee, Skill Copy, Metronome
+		return [6, 7, 8, 9, 10, 11, 12][skillLevel - 1];
 	}
 	if (skill === "Ingredient Magnet S (Present)") {
 		return 4;
@@ -369,6 +367,15 @@ export function getIngredientDrawIngredients(
 	pokemon: PokemonData,
 ): IngredientName[] {
 	const id = pokemon.ancestor ?? pokemon.id;
+	return getIngredientDrawIngredientsById(id);
+}
+
+/**
+ * Get the ingredient list for Ingredient Draw S based on the Pokémon ID.
+ * @param id Pokémon ID.
+ * @returns Ingredient list.
+ */
+export function getIngredientDrawIngredientsById(id: number): IngredientName[] {
 	switch (id) {
 		// Sandshrew
 		case 27:
@@ -389,9 +396,43 @@ export function getIngredientDrawIngredients(
 		case 742:
 			return ["honey", "oil", "corn"];
 	}
-	throw new Error(
-		`Unknown Pokémon for Ingredient Draw S: ${pokemon.name} (id: ${id})`,
-	);
+	throw new Error(`Unknown Pokémon for Ingredient Draw S: ${id}`);
+}
+
+/**
+ * Returns the additional effect of the main skill for the given
+ * skill and level.
+ * @param skill Name of the main skill.
+ * @param skillLevel Level of the main skill.
+ * @param stockpileCount Stockpile's number.
+ * @returns Additional effect for the skill, or throws if not applicable.
+ */
+export function getStockpileStrength(
+	skillLevel: number,
+	stockpileCount: number,
+): number {
+	if (stockpileCount !== 0) {
+		throw new Error(`Unsupported count: ${stockpileCount}`);
+	}
+
+	switch (skillLevel) {
+		case 1:
+			return 600;
+		case 2:
+			return 853;
+		case 3:
+			return 1177;
+		case 4:
+			return 1625;
+		case 5:
+			return 2243;
+		case 6:
+			return 3099;
+		case 7:
+			return 4502;
+		default:
+			throw new Error("invalid skill level");
+	}
 }
 
 /**

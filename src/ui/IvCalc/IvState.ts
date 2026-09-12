@@ -52,7 +52,24 @@ export type IvAction =
 	| {
 			type: "showAlert";
 			payload: { message: string };
+	  }
+	| {
+			type: "setTeamMember";
+			payload: { index: number; item: PokemonBoxItem | undefined };
+	  }
+	| {
+			type: "setTeamMemberEnabled";
+			payload: { index: number; enabled: boolean };
 	  };
+
+/**
+ * A single team slot: the box item assigned to it plus whether it is
+ * currently included in the team strength calculation.
+ */
+export type TeamMemberSlot = {
+	item: PokemonBoxItem;
+	enabled: boolean;
+};
 
 const initialBox = new PokemonBox();
 initialBox.load();
@@ -72,6 +89,7 @@ type IvState = {
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
 	alertMessage: string;
+	teamMembers: (TeamMemberSlot | undefined)[];
 };
 
 /**
@@ -128,6 +146,7 @@ export function getInitialIvState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
+		teamMembers: [undefined, undefined, undefined, undefined, undefined],
 	};
 
 	// Update initial pokemonIv
@@ -166,7 +185,7 @@ function loadInitialIvStateCache(): IvStateCache {
 	if (
 		typeof json.tabIndex === "number" &&
 		json.tabIndex >= 0 &&
-		json.tabIndex <= 2
+		json.tabIndex <= 3
 	) {
 		ret.tabIndex = json.tabIndex;
 	}
@@ -336,6 +355,30 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	}
 	if (type === "closeAlert") {
 		return { ...state, alertMessage: "" };
+	}
+
+	if (type === "setTeamMember") {
+		const { index, item } = action.payload;
+		const teamMembers = state.teamMembers.map((x, i) => {
+			if (i !== index) {
+				return x;
+			}
+			if (item === undefined) {
+				return undefined;
+			}
+			// Keep the current enabled state when replacing the pokemon
+			// (e.g. editing IV) so a disabled slot stays disabled.
+			return { item, enabled: x?.enabled ?? true };
+		});
+		return { ...state, teamMembers };
+	}
+
+	if (type === "setTeamMemberEnabled") {
+		const { index, enabled } = action.payload;
+		const teamMembers = state.teamMembers.map((x, i) =>
+			i === index && x !== undefined ? { ...x, enabled } : x,
+		);
+		return { ...state, teamMembers };
 	}
 
 	// following action requires item

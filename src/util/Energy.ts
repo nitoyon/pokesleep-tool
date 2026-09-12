@@ -429,8 +429,7 @@ class Energy {
 			curEvent.energyAfter = curEvent.energyBefore;
 			if (curEvent.type === "cook") {
 				curEvent.energyAfter +=
-					this.getEnergyRecoveryForCook(curEvent.energyBefore) +
-					energyFromDishBonus;
+					getEnergyRecoveryForCook(curEvent.energyBefore) + energyFromDishBonus;
 			} else if (curEvent.type === "e4e") {
 				curEvent.energyAfter = Math.min(
 					150,
@@ -654,34 +653,34 @@ class Energy {
 		}
 		return Math.round((total / time) * 1000) / 1000;
 	}
+}
 
-	getEnergyRecoveryForCook(energy: number) {
-		if (energy > 80) {
-			return 1;
-		}
-		if (energy > 70) {
-			return 2;
-		}
-		if (energy > 60) {
-			return 3;
-		}
-		if (energy > 50) {
-			return 4;
-		}
-		if (energy > 40) {
-			return 5;
-		}
-		if (energy > 30) {
-			return 6;
-		}
-		if (energy > 20) {
-			return 7;
-		}
-		if (energy > 10) {
-			return 8;
-		}
-		return 9;
+export function getEnergyRecoveryForCook(energy: number): number {
+	if (energy > 80) {
+		return 1;
 	}
+	if (energy > 70) {
+		return 2;
+	}
+	if (energy > 60) {
+		return 3;
+	}
+	if (energy > 50) {
+		return 4;
+	}
+	if (energy > 40) {
+		return 5;
+	}
+	if (energy > 30) {
+		return 6;
+	}
+	if (energy > 20) {
+		return 7;
+	}
+	if (energy > 10) {
+		return 8;
+	}
+	return 9;
 }
 
 export function getEfficiencyByEnergy(energy: number): EfficiencyList {

@@ -4,6 +4,7 @@ export interface MousePosition {
 	x: number;
 	y: number;
 	svgX: number;
+	svgY: number;
 }
 
 export function useSvgTouch(
@@ -27,7 +28,7 @@ export function useSvgTouch(
 				return;
 			}
 			const p = pt.matrixTransform(ctm.inverse());
-			setMousePos({ x, y, svgX: p.x });
+			setMousePos({ x, y, svgX: p.x, svgY: p.y });
 		},
 		[svgRef],
 	);
