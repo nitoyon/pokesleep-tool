@@ -61,9 +61,7 @@ import { loadConfig, saveConfig } from "./ui/AppConfig";
 		ins.style.verticalAlign = "baseline";
 		ins.style.zIndex = "2147483647";
 		ins.style.background = "#cccccc";
-		if (document.body.parentElement !== null) {
-			document.body.parentElement.appendChild(ins);
-		}
+		//document.body.appendChild(ins);
 	}
 
 	window.addEventListener("load", () => {
