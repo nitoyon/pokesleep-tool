@@ -137,26 +137,22 @@ function addResultToIterationResult(
 	}
 }
 
-function buildTeamStrengthResult(
+function buildMemberStrengthResult(
 	members: (PokemonBoxItem | undefined)[],
 	profiles: MemberProfile[],
 	accumulated: IterationResult[],
 	param: StrengthParameter,
 	iterations: number,
-): TeamStrengthResult {
+): (TeamMemberStrengthResult | undefined)[] {
 	let index = 0;
-	const memberResults = members.map((member) => {
+	return members.map((member) => {
 		if (!member) return undefined;
 		const profile = profiles[index++];
 		if (!profile) return undefined;
 
 		const acc = accumulated[profiles.indexOf(profile)];
 		const avgBerryTotalStrength = acc.berryTotalStrength / iterations;
-		const avgSkillCount = acc.skillCount / iterations;
 		const avgSkillStrength = acc.skillStrength / iterations;
-		const avgSkillDreamShards = acc.skillDreamShards / iterations;
-		const avgSkillPotExtended = acc.skillPotExtended / iterations;
-		const avgSkillExtraTastyRate = acc.skillExtraTastyRate / iterations;
 
 		const ingredients: IngredientStrength[] = Array.from(
 			acc.ingCounts.entries(),
@@ -188,22 +184,35 @@ function buildTeamStrengthResult(
 			berryTotalStrength: avgBerryTotalStrength,
 			ingStrength,
 			ingredients,
-			skillCount: avgSkillCount,
+			skillCount: acc.skillCount / iterations,
 			skillStrength: avgSkillStrength,
 			skillExtraHelp: acc.skillExtraHelp / iterations,
 			skillHelperBoost: acc.skillHelperBoost / iterations,
 			skillEnergizingCheer: acc.skillEnergizingCheer / iterations,
 			skillEnergyForEveryone: acc.skillEnergyForEveryone / iterations,
-			skillDreamShards: avgSkillDreamShards,
-			skillPotExtended: avgSkillPotExtended,
-			skillExtraTastyRate: avgSkillExtraTastyRate,
+			skillDreamShards: acc.skillDreamShards / iterations,
+			skillPotExtended: acc.skillPotExtended / iterations,
+			skillExtraTastyRate: acc.skillExtraTastyRate / iterations,
 			totalStrength: totalStrength,
 		};
 	});
+}
 
-	const validMembers = memberResults.filter(
-		(r): r is TeamMemberStrengthResult => r !== undefined,
+function buildTeamStrengthResult(
+	members: (PokemonBoxItem | undefined)[],
+	profiles: MemberProfile[],
+	accumulated: IterationResult[],
+	param: StrengthParameter,
+	iterations: number,
+): TeamStrengthResult {
+	const memberResults = buildMemberStrengthResult(
+		members,
+		profiles,
+		accumulated,
+		param,
+		iterations,
 	);
+	const validMembers = memberResults.filter((r) => r !== undefined);
 
 	// Merge ingredients by name
 	const totalIngMap = new Map<string, IngredientStrength>();
