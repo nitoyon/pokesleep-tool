@@ -5,6 +5,9 @@ import { useTranslation } from "react-i18next";
 import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
+import MarkdownBlockElement from "../../common/MarkdownBlockElement";
+import MessageDialog from "../../Dialog/MessageDialog";
+import InfoButton from "../InfoButton";
 import IngredientIcon from "../IngredientIcon";
 import MainSkillIcon from "../MainSkillIcon";
 import PokemonIcon from "../PokemonIcon";
@@ -29,6 +32,15 @@ interface DailyViewResult {
 
 const DailyView = React.memo(
 	({ results }: { results: (DailyViewResult | undefined)[] }) => {
+		const { t } = useTranslation();
+		const [helpOpen, setHelpOpen] = React.useState(false);
+		const onHelpClick = React.useCallback(() => {
+			setHelpOpen(true);
+		}, []);
+		const onHelpClose = React.useCallback(() => {
+			setHelpOpen(false);
+		}, []);
+
 		const total = results.reduce((sum, r) => sum + (r?.totalStrength ?? 0), 0);
 		const totalBerry = results.reduce(
 			(sum, r) => sum + (r?.berryTotalStrength ?? 0),
@@ -51,6 +63,7 @@ const DailyView = React.memo(
 				<h2>
 					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
 					<span>{formatWithComma(total)}</span>
+					<InfoButton onClick={onHelpClick} />
 				</h2>
 				<div className="category">
 					<SpecialtyButton specialty="Berries" disabled />
@@ -77,6 +90,11 @@ const DailyView = React.memo(
 				<StyledTotalArticle>
 					<SkillView results={results} />
 				</StyledTotalArticle>
+				<MessageDialog
+					open={helpOpen}
+					onClose={onHelpClose}
+					message={<MarkdownBlockElement text={t("team info")} />}
+				/>
 			</StyledDailyView>
 		);
 	},
