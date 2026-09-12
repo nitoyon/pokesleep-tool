@@ -40,20 +40,6 @@ const emptyTotal: TeamMemberStrengthResult = {
 	totalStrength: 0,
 };
 
-type AccumulatedResult = {
-	berryTotalStrength: number;
-	ingCounts: Map<IngredientName, number>;
-	skillCount: number;
-	skillStrength: number;
-	skillExtraHelp: number;
-	skillHelperBoost: number;
-	skillEnergizingCheer: number;
-	skillEnergyForEveryone: number;
-	skillDreamShards: number;
-	skillPotExtended: number;
-	skillExtraTastyRate: number;
-};
-
 /**
  * Simulate team strength using Monte Carlo simulation.
  *
@@ -89,11 +75,11 @@ export function simulateTeam(
 		return createEmptyTeamStrengthResult(members);
 	}
 	const sim = createTeamContext(profiles, param);
-	const accumulated = initializeAccumulatedResult(profiles);
+	const accumulated = initializeIterationResult(profiles);
 	for (let iter = 0; iter < iterations; iter++) {
 		resetTeamContext(sim);
 		const results = runIteration(sim);
-		addResultToAccumulatedResult(sim, accumulated, results);
+		addResultToIterationResult(sim, accumulated, results);
 	}
 
 	return buildTeamStrengthResult(
@@ -105,10 +91,10 @@ export function simulateTeam(
 	);
 }
 
-function initializeAccumulatedResult(
+function initializeIterationResult(
 	profiles: MemberProfile[],
-): AccumulatedResult[] {
-	const accumulated: AccumulatedResult[] = profiles.map(() => ({
+): IterationResult[] {
+	const accumulated: IterationResult[] = profiles.map(() => ({
 		berryTotalStrength: 0,
 		ingCounts: new Map<IngredientName, number>(),
 		skillCount: 0,
@@ -125,9 +111,9 @@ function initializeAccumulatedResult(
 	return accumulated;
 }
 
-function addResultToAccumulatedResult(
+function addResultToIterationResult(
 	sim: TeamContext,
-	accumulated: AccumulatedResult[],
+	accumulated: IterationResult[],
 	results: IterationResult[],
 ) {
 	for (let i = 0; i < sim.members.length; i++) {
@@ -154,7 +140,7 @@ function addResultToAccumulatedResult(
 function buildTeamStrengthResult(
 	members: (PokemonBoxItem | undefined)[],
 	profiles: MemberProfile[],
-	accumulated: AccumulatedResult[],
+	accumulated: IterationResult[],
 	param: StrengthParameter,
 	iterations: number,
 ): TeamStrengthResult {
