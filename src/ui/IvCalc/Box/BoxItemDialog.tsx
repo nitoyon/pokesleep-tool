@@ -54,6 +54,8 @@ const BoxItemDialog = React.memo(
 		onClose: () => void;
 		onChange: (value: PokemonBoxItem) => void;
 	}) => {
+		const { getContainer, onExited } = useDialogPortalContainer();
+
 		if (!isEdit) {
 			boxItem = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Venusaur" }),
@@ -64,12 +66,15 @@ const BoxItemDialog = React.memo(
 		if (boxItem === null) {
 			return null;
 		}
+
 		return (
 			<StyledDialog
 				open={open}
 				onClose={onClose}
 				fullScreen
 				slots={{ transition: Transition }}
+				slotProps={{ transition: { onExited } }}
+				container={getContainer}
 			>
 				<BoxItemDialogContent
 					originalBoxItem={boxItem}
@@ -280,6 +285,7 @@ const BoxItemDialogContent = React.memo(
 );
 
 const StyledDialog = styled(Dialog)({
+	zIndex: 2147483647,
 	"& div.MuiDialog-paper": {
 		"& > article": {
 			padding: ".5rem .5rem 4rem .5rem",
@@ -342,5 +348,36 @@ const StyledDialog = styled(Dialog)({
 		},
 	},
 });
+
+/**
+ * Creates the dialog's portal container lazily
+ */
+function useDialogPortalContainer() {
+	const containerRef = React.useRef<HTMLElement | null>(null);
+	const getContainer = React.useCallback(() => {
+		if (containerRef.current === null) {
+			const el = document.createElement("div");
+			document.documentElement.appendChild(el);
+			containerRef.current = el;
+		}
+		return containerRef.current;
+	}, []);
+	const onExited = React.useCallback(() => {
+		if (containerRef.current !== null) {
+			containerRef.current.remove();
+			containerRef.current = null;
+		}
+	}, []);
+	React.useEffect(() => {
+		return () => {
+			if (containerRef.current !== null) {
+				containerRef.current.remove();
+				containerRef.current = null;
+			}
+		};
+	}, []);
+
+	return { getContainer, onExited };
+}
 
 export default BoxItemDialog;
