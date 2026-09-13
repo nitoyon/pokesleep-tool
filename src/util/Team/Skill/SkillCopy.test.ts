@@ -195,6 +195,7 @@ describe("SkillCopySkill", () => {
 
 		// targets[0] is Mew's Versatile, resolved to Charge Strength M.
 		expect(sim.members[0].progress.skillStrength).toBe(6858);
+		expect(sim.members[0].progress.skillCandy).toBe(3);
 	});
 
 	test("copying Ingredient Draw (Ribombee)", () => {
