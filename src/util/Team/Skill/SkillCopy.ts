@@ -85,17 +85,10 @@ export class SkillCopySkill extends BaseSkill {
 		// Base the copied skill on the Skill Copy user, overriding only the
 		// skill identity and level.
 		const copiedProfile: MemberProfile = {
-			...casterProfile,
+			...targetProfile,
 			skillName,
 			skillLevel,
 		};
-
-		// Ingredient-Draw: skills pick ingredients
-		// from the target's Pokémon
-		// Versatile: resolves its actual skill from the target's Pokémon
-		if (isIngredientDrawSkill(skillName) || skillName === "Versatile") {
-			copiedProfile.iv = targetProfile.iv;
-		}
 
 		const skill = createSkill(skillName, this.rng);
 		skill.initialize(copiedProfile, profiles, param);
@@ -106,11 +99,4 @@ export class SkillCopySkill extends BaseSkill {
 		const target = this.targets[Math.floor(this.rng() * this.targets.length)];
 		target.skill.apply(member, tapSec, sim);
 	}
-}
-
-/**
- * Skills whose ingredient list comes from the Pokémon that owns the skill.
- */
-function isIngredientDrawSkill(skillName: MainSkillName): boolean {
-	return skillName.startsWith("Ingredient Draw S");
 }
