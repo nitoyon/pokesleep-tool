@@ -36,7 +36,6 @@ self.addEventListener(
 
 		const response: TeamSimulationResponse = {
 			requestId,
-			total: serializeMemberResult(result.total),
 			members: result.members.map((m) =>
 				m ? serializeMemberResult(m) : undefined,
 			),

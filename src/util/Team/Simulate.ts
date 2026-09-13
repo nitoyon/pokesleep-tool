@@ -1,8 +1,6 @@
-import { emptyBonusEffects } from "../../data/events";
 import type { IngredientName } from "../../data/pokemons";
 import { AlwaysTap, whistlePeriod } from "../Energy";
 import type { PokemonBoxItem } from "../PokemonBox";
-import PokemonIv from "../PokemonIv";
 import { ingredientStrength } from "../PokemonRp";
 import type { IngredientStrength, StrengthParameter } from "../PokemonStrength";
 import { buildMemberProfiles } from "./MemberProfile";
@@ -15,31 +13,6 @@ import type {
 	TeamMemberStrengthResult,
 	TeamStrengthResult,
 } from "./Types";
-
-const emptyTotal: TeamMemberStrengthResult = {
-	iv: new PokemonIv({ pokemonName: "Bulbasaur" }),
-	bonus: {
-		...emptyBonusEffects,
-		skillTriggerReason: "none",
-		skillLevelReason: "none",
-		ingredientReason: "none",
-	},
-	berryRawStrength: 0,
-	berryStrength: 0,
-	berryTotalStrength: 0,
-	ingStrength: 0,
-	ingredients: [],
-	skillCount: 0,
-	skillStrength: 0,
-	skillExtraHelp: 0,
-	skillHelperBoost: 0,
-	skillEnergizingCheer: 0,
-	skillEnergyForEveryone: 0,
-	skillDreamShards: 0,
-	skillPotExtended: 0,
-	skillExtraTastyRate: 0,
-	totalStrength: 0,
-};
 
 /**
  * Simulate team strength using Monte Carlo simulation.
@@ -59,7 +32,7 @@ const emptyTotal: TeamMemberStrengthResult = {
 export function createEmptyTeamStrengthResult(
 	members: (PokemonBoxItem | undefined)[],
 ): TeamStrengthResult {
-	return { total: emptyTotal, members: members.map(() => undefined) };
+	return { members: members.map(() => undefined) };
 }
 
 export function simulateTeam(
@@ -244,43 +217,5 @@ function buildTeamStrengthResult(
 			}
 		}
 	}
-
-	const total: TeamMemberStrengthResult = {
-		iv: new PokemonIv({ pokemonName: "Bulbasaur" }),
-		bonus: {
-			...emptyBonusEffects,
-			skillTriggerReason: "none",
-			skillLevelReason: "none",
-			ingredientReason: "none",
-		},
-		berryRawStrength: validMembers.reduce((s, m) => s + m.berryRawStrength, 0),
-		berryStrength: validMembers.reduce((s, m) => s + m.berryStrength, 0),
-		berryTotalStrength: validMembers.reduce(
-			(s, m) => s + m.berryTotalStrength,
-			0,
-		),
-		ingStrength: validMembers.reduce((s, m) => s + m.ingStrength, 0),
-		ingredients: Array.from(totalIngMap.values()),
-		skillCount: validMembers.reduce((s, m) => s + m.skillCount, 0),
-		skillStrength: validMembers.reduce((s, m) => s + m.skillStrength, 0),
-		skillExtraHelp: validMembers.reduce((s, m) => s + m.skillExtraHelp, 0),
-		skillHelperBoost: validMembers.reduce((s, m) => s + m.skillHelperBoost, 0),
-		skillEnergizingCheer: validMembers.reduce(
-			(s, m) => s + m.skillEnergizingCheer,
-			0,
-		),
-		skillEnergyForEveryone: validMembers.reduce(
-			(s, m) => s + m.skillEnergyForEveryone,
-			0,
-		),
-		skillDreamShards: validMembers.reduce((s, m) => s + m.skillDreamShards, 0),
-		skillPotExtended: validMembers.reduce((s, m) => s + m.skillPotExtended, 0),
-		skillExtraTastyRate: validMembers.reduce(
-			(s, m) => s + m.skillExtraTastyRate,
-			0,
-		),
-		totalStrength: validMembers.reduce((s, m) => s + m.totalStrength, 0),
-	};
-
-	return { total, members: memberResults };
+	return { members: memberResults };
 }

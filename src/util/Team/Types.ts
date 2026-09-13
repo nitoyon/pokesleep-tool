@@ -115,8 +115,6 @@ export interface TeamMemberStrengthResult {
  * aggregated total across all active members.
  */
 export interface TeamStrengthResult {
-	/** Aggregated totals across all active team members. */
-	total: TeamMemberStrengthResult;
 	/** Per-slot results; undefined for empty slots. */
 	members: (TeamMemberStrengthResult | undefined)[];
 }

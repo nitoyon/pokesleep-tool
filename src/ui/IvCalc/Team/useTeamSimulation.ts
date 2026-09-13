@@ -57,7 +57,6 @@ export function useTeamSimulation(
 				return;
 			}
 			setResult({
-				total: deserializeMemberResult(event.data.total),
 				members: event.data.members.map((m) =>
 					m ? deserializeMemberResult(m) : undefined,
 				),
