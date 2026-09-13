@@ -51,13 +51,15 @@ export function simulateTeam(
 		addResultToIterationResult(sim, accumulated, results);
 	}
 
-	return buildTeamStrengthResult(
-		members,
-		profiles,
-		accumulated,
-		param,
-		iterations,
-	);
+	return {
+		members: buildMemberStrengthResult(
+			members,
+			profiles,
+			accumulated,
+			param,
+			iterations,
+		),
+	};
 }
 
 /**
@@ -178,44 +180,4 @@ function buildMemberStrengthResult(
 			totalStrength: totalStrength,
 		};
 	});
-}
-
-function buildTeamStrengthResult(
-	members: (PokemonBoxItem | undefined)[],
-	profiles: MemberProfile[],
-	accumulated: IterationResult[],
-	param: StrengthParameter,
-	iterations: number,
-): TeamStrengthResult {
-	const memberResults = buildMemberStrengthResult(
-		members,
-		profiles,
-		accumulated,
-		param,
-		iterations,
-	);
-	const validMembers = memberResults.filter((r) => r !== undefined);
-
-	// Merge ingredients by name
-	const totalIngMap = new Map<string, IngredientStrength>();
-	for (const m of validMembers) {
-		for (const ing of m.ingredients) {
-			const existing = totalIngMap.get(ing.name);
-			if (existing) {
-				existing.count += ing.count;
-				existing.strength += ing.strength;
-			} else {
-				totalIngMap.set(ing.name, {
-					name: ing.name,
-					count: ing.count,
-					strength: ing.strength,
-					overflowCount: 0,
-					helpCount: 0,
-					countPerHelp: 0,
-					slots: [],
-				});
-			}
-		}
-	}
-	return { members: memberResults };
 }
