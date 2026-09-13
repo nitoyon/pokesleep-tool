@@ -196,6 +196,23 @@ describe("SkillCopySkill", () => {
 		// targets[0] is Mew's Versatile, resolved to Charge Strength M.
 		expect(sim.members[0].progress.skillStrength).toBe(6858);
 	});
+
+	test("copying Ingredient Draw (Ribombee)", () => {
+		const ribombee = copyProfile(0, "Ingredient Draw S", "Ribombee");
+		ribombee.skillLevel = 1;
+		const caster = copyProfile(1, "Skill Copy (Mimic)", "Mr. Mime");
+		caster.skillLevel = 7;
+		const profiles = [caster, ribombee];
+
+		const skill = createSkill("Skill Copy (Mimic)", () => 0);
+		expect(() =>
+			skill.initialize(caster, profiles, testParam({})),
+		).not.toThrow();
+
+		const sim = createTestSim(profiles);
+		skill.apply(sim.members[0], 0, sim);
+		expect(sim.members[0].progress.ingCounts.get("honey")).toBe(18);
+	});
 });
 
 function copyProfile(
