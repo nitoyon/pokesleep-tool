@@ -31,6 +31,7 @@ export function createMemberProgress(): MemberProgress {
 		skillDreamShards: 0,
 		skillPotExtended: 0,
 		skillExtraTastyRate: 0,
+		skillCandy: 0,
 		pendingHelp: 0,
 		pendingEnergy: 0,
 		pendingExtraHelp: 0,

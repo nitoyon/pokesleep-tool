@@ -157,31 +157,6 @@ describe("SkillCopySkill", () => {
 		expect(sim.members[0].progress.skillStrength).toBe(400);
 	});
 
-	test("copying a Versatile target resolves the target's own versatile skill, not the caster's", () => {
-		// Mr. Mime has no versatileSkill of its own; if the copied profile kept
-		// Mr. Mime's iv instead of Mew's, Versatile would resolve back into
-		// Skill Copy and recurse forever.
-		const mewIv = new PokemonIv({
-			pokemonName: "Mew",
-			level: 30,
-			versatileSkill: "Charge Strength S",
-		});
-		const mew = copyProfile(0, "Versatile", "Mew", mewIv);
-		const caster = copyProfile(1, "Skill Copy (Mimic)", "Mr. Mime");
-		const profiles = [caster, mew];
-
-		const skill = createSkill("Skill Copy (Mimic)", () => 0);
-		expect(() =>
-			skill.initialize(caster, profiles, testParam({ fieldBonus: 0 })),
-		).not.toThrow();
-
-		const sim = createTestSim(profiles);
-		expect(() => skill.apply(sim.members[0], 0, sim)).not.toThrow();
-
-		// targets[0] is Mew's Versatile, resolved to Charge Strength S.
-		expect(sim.members[0].progress.skillStrength).toBeGreaterThan(0);
-	});
-
 	test("field bonus scales the Charge Strength S fallback", () => {
 		const caster = copyProfile(0, "Skill Copy (Transform)");
 		const profiles = [caster, copyProfile(1, "Berry Burst (Draco Meteor)")];
@@ -193,6 +168,51 @@ describe("SkillCopySkill", () => {
 		skill.apply(sim.members[0], 0, sim);
 
 		expect(sim.members[0].progress.skillStrength).toBe(Math.ceil(400 * 1.5));
+	});
+
+	test("copying a Versatile target resolves the target's own versatile skill, not the caster's", () => {
+		// Mr. Mime has no versatileSkill of its own; if the copied profile kept
+		// Mr. Mime's iv instead of Mew's, Versatile would resolve back into
+		// Skill Copy and recurse forever.
+		const mewIv = new PokemonIv({
+			pokemonName: "Mew",
+			level: 30,
+			versatileSkill: "Charge Strength M",
+		});
+		const mew = copyProfile(0, "Versatile", "Mew", mewIv);
+		mew.skillLevel = 1;
+		const caster = copyProfile(1, "Skill Copy (Mimic)", "Mr. Mime");
+		caster.skillLevel = 7;
+		const profiles = [caster, mew];
+
+		const skill = createSkill("Skill Copy (Mimic)", () => 0);
+		expect(() =>
+			skill.initialize(caster, profiles, testParam({ fieldBonus: 0 })),
+		).not.toThrow();
+
+		const sim = createTestSim(profiles);
+		expect(() => skill.apply(sim.members[0], 0, sim)).not.toThrow();
+
+		// targets[0] is Mew's Versatile, resolved to Charge Strength M.
+		expect(sim.members[0].progress.skillStrength).toBe(6858);
+		expect(sim.members[0].progress.skillCandy).toBe(3);
+	});
+
+	test("copying Ingredient Draw (Ribombee)", () => {
+		const ribombee = copyProfile(0, "Ingredient Draw S", "Ribombee");
+		ribombee.skillLevel = 1;
+		const caster = copyProfile(1, "Skill Copy (Mimic)", "Mr. Mime");
+		caster.skillLevel = 7;
+		const profiles = [caster, ribombee];
+
+		const skill = createSkill("Skill Copy (Mimic)", () => 0);
+		expect(() =>
+			skill.initialize(caster, profiles, testParam({})),
+		).not.toThrow();
+
+		const sim = createTestSim(profiles);
+		skill.apply(sim.members[0], 0, sim);
+		expect(sim.members[0].progress.ingCounts.get("honey")).toBe(18);
 	});
 });
 

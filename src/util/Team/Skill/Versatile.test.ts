@@ -75,6 +75,18 @@ describe("VersatileSkill", () => {
 			Math.ceil(200 + ((800 - 200) * 149) / 150),
 		);
 	});
+
+	test("skill level 8 to bring 4 candy when success", () => {
+		const mew = createMewProfile("Charge Strength M", { skillLevel: 8 });
+		const profiles = [mew];
+		const skill = createSkill("Versatile", () => 0);
+		skill.initialize(mew, profiles, testParam({ fieldBonus: 0 }));
+
+		const sim = createTestSim(profiles);
+		skill.apply(sim.members[0], 0, sim);
+		expect(sim.members[0].progress.skillStrength).toBe(6858);
+		expect(sim.members[0].progress.skillCandy).toBe(4);
+	});
 });
 
 /** Convenience: a Mew profile whose Versatile skill is `versatileSkill`. */

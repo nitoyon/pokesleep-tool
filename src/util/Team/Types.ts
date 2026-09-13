@@ -105,6 +105,8 @@ export interface TeamMemberStrengthResult {
 	skillPotExtended: number;
 	/** Average extra tasty rate over the period. */
 	skillExtraTastyRate: number;
+	/** Average candy over the period */
+	skillCandy: number;
 
 	/** Combined total strength over the period, filtered by totalFlags. */
 	totalStrength: number;
@@ -115,8 +117,6 @@ export interface TeamMemberStrengthResult {
  * aggregated total across all active members.
  */
 export interface TeamStrengthResult {
-	/** Aggregated totals across all active team members. */
-	total: TeamMemberStrengthResult;
 	/** Per-slot results; undefined for empty slots. */
 	members: (TeamMemberStrengthResult | undefined)[];
 }
@@ -245,6 +245,8 @@ export interface MemberProgress {
 	skillPotExtended: number;
 	/** Accumulated extra tasty rate in this iteration. */
 	skillExtraTastyRate: number;
+	/** Accumulated candy in this iteration. */
+	skillCandy: number;
 	/** Help count advanced by a CookEvent/SleepRecoverEvent catch-up */
 	pendingHelp: number;
 	/** Pending energy amount queued by addPendingEnergy, applied atomically by applyPendingEnergy. */
@@ -277,4 +279,5 @@ export interface IterationResult {
 	skillDreamShards: number;
 	skillPotExtended: number;
 	skillExtraTastyRate: number;
+	skillCandy: number;
 }

@@ -18,7 +18,6 @@ export interface TeamSimulationRequest {
  */
 export interface TeamSimulationResponse {
 	requestId: number;
-	total: SerializedMemberResult;
 	members: (SerializedMemberResult | undefined)[];
 }
 
