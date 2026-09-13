@@ -22,19 +22,6 @@ import type {
  * @param iterations Number of Monte Carlo iterations (default 100).
  * @returns Per-member strength results plus an aggregated team total.
  */
-/**
- * Build the placeholder result used when there is nothing to simulate
- * (zero-length period, or no active members), and as the initial value
- * shown while a background simulation is still in progress.
- * @param members Array of up to 5 team members; undefined entries are empty slots.
- * @returns A result with an empty total and no per-member results.
- */
-export function createEmptyTeamStrengthResult(
-	members: (PokemonBoxItem | undefined)[],
-): TeamStrengthResult {
-	return { members: members.map(() => undefined) };
-}
-
 export function simulateTeam(
 	members: (PokemonBoxItem | undefined)[],
 	param: StrengthParameter,
@@ -71,6 +58,19 @@ export function simulateTeam(
 		param,
 		iterations,
 	);
+}
+
+/**
+ * Build the placeholder result used when there is nothing to simulate
+ * (zero-length period, or no active members), and as the initial value
+ * shown while a background simulation is still in progress.
+ * @param members Array of up to 5 team members; undefined entries are empty slots.
+ * @returns A result with an empty total and no per-member results.
+ */
+export function createEmptyTeamStrengthResult(
+	members: (PokemonBoxItem | undefined)[],
+): TeamStrengthResult {
+	return { members: members.map(() => undefined) };
 }
 
 function initializeIterationResult(
