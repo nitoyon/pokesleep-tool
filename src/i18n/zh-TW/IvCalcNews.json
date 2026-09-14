@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add mewtwo": {
+				"headline": "新增了$t(pokemons.Mewtwo)的資料。",
+				"detail": "$t(rp collection)"
+			},
 			"team": {
 				"headline": "新增了$t(team)功能。",
 				"detail": "$t(team info)"
