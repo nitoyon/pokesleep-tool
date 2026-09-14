@@ -11,6 +11,7 @@ import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivism
 import React from "react";
 import type { IngredientName } from "../../data/pokemons";
 import type { MainSkillName } from "../../util/MainSkill";
+import BerryZoneIcon from "../Resources/BerryZoneIcon";
 import CandyIcon from "../Resources/CandyIcon";
 import CookingAssistIcon from "../Resources/CookingAssistIcon";
 import DreamShardIcon from "../Resources/DreamShardIcon";
@@ -93,8 +94,6 @@ const MainSkillIcon = React.memo(
 			case "Berry Burst":
 			case "Berry Burst (Disguise)":
 			case "Berry Burst (Draco Meteor)":
-			case "Berry Zone":
-			case "Berry Zone (Psystrike)":
 				return <LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />;
 			case "Dream Shard Magnet S":
 			case "Dream Shard Magnet S (Random)":
@@ -171,6 +170,14 @@ const MainSkillIcon = React.memo(
 			case "Skill Copy (Mimic)":
 			case "Skill Copy (Transform)":
 				return <StreamIcon sx={{ color: "#999" }} fontSize="small" />;
+			case "Berry Zone":
+				return <BerryZoneIcon fontSize="small" />;
+			case "Berry Zone (Psystrike)":
+				if (second === true) {
+					return <BerryZoneIcon fontSize="small" />;
+				} else {
+					return <LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />;
+				}
 			default:
 				return <>ー</>;
 		}

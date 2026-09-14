@@ -411,7 +411,10 @@ function getSkillValueText(
 	if (skill.startsWith("Charge Energy")) {
 		return getChargeEnergyValueText(strength, skillLevel, t);
 	}
-	if (skill.startsWith("Charge Strength")) {
+	if (
+		skill.startsWith("Charge Strength") ||
+		skill === "Berry Zone (Psystrike)"
+	) {
 		return getChargeStrengthValueText(strength, skillLevel, t);
 	}
 	if (
@@ -516,6 +519,9 @@ function getSkillValueText2(
 	}
 	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
 		return getChargeStrengthValueText(strength, skillLevel, t);
+	}
+	if (skill === "Berry Zone (Psystrike)") {
+		return getNormalSkillValueText(t, t("berry zone increase rate"));
 	}
 	return [null, null];
 }

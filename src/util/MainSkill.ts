@@ -213,6 +213,9 @@ export function getSkillValue(
 	if (skill === "Charge Strength M") {
 		return [880, 1251, 1726, 2383, 3290, 4546, 6858][skillLevel - 1];
 	}
+	if (skill === "Berry Zone (Psystrike)") {
+		return [1408, 2002, 2762, 3813, 5264, 7274][skillLevel - 1];
+	}
 	if (skill === "Charge Strength M (Bad Dreams)") {
 		return [2640, 3753, 5178, 7149, 9870, 13638, 18515][skillLevel - 1];
 	}
@@ -354,6 +357,9 @@ export function getSkillSubValue(
 	}
 	if (skill === "Dream Shard Magnet S (Aura Sphere)") {
 		return [200, 285, 393, 542, 748, 1033, 1501, 2042][skillLevel - 1];
+	}
+	if (skill === "Berry Zone (Psystrike)") {
+		return [0.6, 0.8, 1, 1.2, 1.6, 2][skillLevel - 1];
 	}
 	throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }
