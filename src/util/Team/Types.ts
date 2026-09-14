@@ -107,6 +107,8 @@ export interface TeamMemberStrengthResult {
 	skillExtraTastyRate: number;
 	/** Average candy over the period */
 	skillCandy: number;
+	/** Average berry zone over the period */
+	skillBerryZone: number;
 
 	/** Combined total strength over the period, filtered by totalFlags. */
 	totalStrength: number;
@@ -247,6 +249,8 @@ export interface MemberProgress {
 	skillExtraTastyRate: number;
 	/** Accumulated candy in this iteration. */
 	skillCandy: number;
+	/** Accumulated berry zone rate in this iteration. */
+	skillBerryZone: number;
 	/** Help count advanced by a CookEvent/SleepRecoverEvent catch-up */
 	pendingHelp: number;
 	/** Pending energy amount queued by addPendingEnergy, applied atomically by applyPendingEnergy. */
@@ -280,4 +284,5 @@ export interface IterationResult {
 	skillPotExtended: number;
 	skillExtraTastyRate: number;
 	skillCandy: number;
+	skillBerryZone: number;
 }

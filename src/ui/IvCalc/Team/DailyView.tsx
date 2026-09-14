@@ -28,6 +28,7 @@ interface DailyViewResult {
 	skillPotExtended: number;
 	skillExtraTastyRate: number;
 	skillCandy: number;
+	skillBerryZone: number;
 	ingredients: { name: IngredientName; count: number }[];
 }
 
@@ -306,6 +307,18 @@ const SkillView = React.memo(
 				<span className="skill" key="candy">
 					<MainSkillIcon mainSkill="Ingredient Magnet S (Present)" second />
 					<span>{round1(totalSkillCandy)}</span>
+				</span>,
+			);
+		}
+		const totalSkillBerryZone = results.reduce(
+			(sum, r) => sum + (r?.skillBerryZone ?? 0),
+			0,
+		);
+		if (totalSkillBerryZone > 0) {
+			skillByTotal.push(
+				<span className="skill" key="candy">
+					<MainSkillIcon mainSkill="Berry Zone" />
+					<span>{round1(totalSkillBerryZone)}</span>
 				</span>,
 			);
 		}

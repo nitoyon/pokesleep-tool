@@ -4,6 +4,7 @@ import { BaseSkill } from "./BaseSkill";
 import { BerryBurstSkill } from "./BerryBurst";
 import { BerryBurstDisguiseSkill } from "./BerryBurstDisguise";
 import { BerryBurstDracoMeteorSkill } from "./BerryBurstDracoMeteor";
+import { BerryZonePsystrike } from "./BerryZonePsystrike";
 import { ChargeEnergySkill } from "./ChargeEnergy";
 import { ChargeEnergySMoonlightSkill } from "./ChargeEnergySMoonlight";
 import { ChargeStrengthMBadDreamSkill } from "./ChargeStrengthMBadDream";
@@ -100,6 +101,6 @@ const skillMap: Record<MainSkillName, () => BaseSkill> = {
 	"Cooking Assist S (Bulk Up)": () => new CookingAssistBulkUpSkill(),
 	Versatile: () => new VersatileSkill(),
 	"Berry Zone": () => noopSkill,
-	"Berry Zone (Psystrike)": () => noopSkill,
+	"Berry Zone (Psystrike)": () => new BerryZonePsystrike(),
 	unknown: () => noopSkill,
 };

@@ -91,6 +91,7 @@ function initializeIterationResult(
 		skillPotExtended: 0,
 		skillExtraTastyRate: 0,
 		skillCandy: 0,
+		skillBerryZone: 0,
 	}));
 
 	return accumulated;
@@ -116,6 +117,7 @@ function addResultToIterationResult(
 		acc.skillPotExtended += result.skillPotExtended;
 		acc.skillExtraTastyRate += result.skillExtraTastyRate;
 		acc.skillCandy += result.skillCandy;
+		acc.skillBerryZone += result.skillBerryZone;
 
 		for (const [name, count] of result.ingCounts) {
 			acc.ingCounts.set(name, (acc.ingCounts.get(name) ?? 0) + count);
@@ -180,6 +182,7 @@ function buildMemberStrengthResult(
 			skillPotExtended: acc.skillPotExtended / iterations,
 			skillExtraTastyRate: acc.skillExtraTastyRate / iterations,
 			skillCandy: acc.skillCandy / iterations,
+			skillBerryZone: acc.skillBerryZone / iterations,
 			totalStrength: totalStrength,
 		};
 	});

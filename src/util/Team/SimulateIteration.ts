@@ -49,6 +49,7 @@ export function runIteration(sim: TeamContext): IterationResult[] {
 		skillPotExtended: progress.skillPotExtended,
 		skillExtraTastyRate: progress.skillExtraTastyRate,
 		skillCandy: progress.skillCandy,
+		skillBerryZone: progress.skillBerryZone,
 	}));
 }
 
