@@ -347,7 +347,11 @@ function getSkillUnit(skill: MainSkillName, t: typeof i18next.t): string {
 	) {
 		return t("nature effect.Energy recovery");
 	}
-	if (skill === "Charge Strength S" || skill.startsWith("Charge Strength M")) {
+	if (
+		skill === "Charge Strength S" ||
+		skill.startsWith("Charge Strength M") ||
+		skill === "Berry Zone (Psystrike)"
+	) {
 		return t("strength2");
 	}
 	if (
@@ -420,6 +424,9 @@ function getSkillUnit2(
 	if (skill === "Cooking Assist S (Bulk Up)") {
 		return t("tasty chance increase");
 	}
+	if (skill === "Berry Zone (Psystrike)") {
+		return t("skills.Berry Zone.name");
+	}
 	return undefined;
 }
 
@@ -438,7 +445,10 @@ function getSkillValueText(
 		return t("num", { n: multiplyEnergyFactor(n, config.energyNature) });
 	}
 
-	if (skill.startsWith("Charge Strength")) {
+	if (
+		skill.startsWith("Charge Strength") ||
+		skill === "Berry Zone (Psystrike)"
+	) {
 		return t("num", { n: Math.ceil(n * (1 + config.areaBonus / 100)) });
 	}
 
@@ -512,6 +522,10 @@ function getSkillValue2Text(
 		const value = getSkillSubValue(skill, level);
 		const b = 1 + config.areaBonus / 100;
 		return t("num", { n: Math.ceil(value * b) });
+	}
+
+	if (skill === "Berry Zone (Psystrike)") {
+		return `${getSkillSubValue(skill, level).toFixed(1)}%`;
 	}
 
 	return null;
@@ -670,7 +684,8 @@ const ConfigForm = React.memo(
 
 		if (
 			skill.startsWith("Charge Strength") ||
-			skill === "Dream Shard Magnet S (Aura Sphere)"
+			skill === "Dream Shard Magnet S (Aura Sphere)" ||
+			skill === "Berry Zone (Psystrike)"
 		) {
 			return (
 				<StyledConfigForm>
