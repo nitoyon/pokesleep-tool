@@ -941,6 +941,21 @@ class PokemonStrength {
 					skillValuePerTrigger2,
 				};
 			}
+			case "Berry Zone (Psystrike)": {
+				const strengthPerTrigger = Math.ceil(
+					mainSkillBase * (1 + param.fieldBonus / 100),
+				);
+				const strength = strengthPerTrigger * skillCount;
+				const rate = getSkillSubValue(mainSkill, skillLevel);
+				return {
+					skillValue: strength,
+					skillStrength: strength,
+					skillValuePerTrigger: strengthPerTrigger,
+					skillValue2: rate * skillCount,
+					skillStrength2: 0,
+					skillValuePerTrigger2: rate,
+				};
+			}
 			default:
 				return {
 					skillValue,
