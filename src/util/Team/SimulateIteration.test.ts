@@ -102,7 +102,7 @@ describe("runIteration", () => {
 		const mewIv = new PokemonIv({
 			pokemonName: "Mew",
 			level: 30,
-			versatileSkill: "Charge Strength S",
+			versatileSkill: "Charge Strength M",
 		});
 		const profiles = [
 			createTestProfile({ index: 0, iv: mewIv, skillRate: 1 }),
