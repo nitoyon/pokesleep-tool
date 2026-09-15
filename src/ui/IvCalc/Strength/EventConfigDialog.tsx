@@ -186,6 +186,25 @@ const EventConfigDialog = React.memo(
 			},
 			[value, onChange],
 		);
+		const onGlobalCarryLimitAddChange = React.useCallback(
+			(_: React.MouseEvent, val: number | null) => {
+				if (val === null) {
+					return;
+				}
+				onChange({
+					...value,
+					event: "custom",
+					customEventBonus: {
+						...value.customEventBonus,
+						effects: {
+							...value.customEventBonus.effects,
+							globalCarryLimitAdd: val as 0 | 8 | 15,
+						},
+					},
+				});
+			},
+			[value, onChange],
+		);
 		const onBerryChange = React.useCallback(
 			(_: React.MouseEvent, val: number | null) => {
 				if (val === null) {
@@ -566,6 +585,22 @@ const EventConfigDialog = React.memo(
 					</section>
 				</article>
 				<article className="transparent">
+					<section>
+						<span>{t("carry limit")}:</span>
+						<div>
+							<ToggleButtonGroup
+								size="small"
+								exclusive
+								style={{ textTransform: "none" }}
+								value={value.customEventBonus.effects.globalCarryLimitAdd}
+								onChange={onGlobalCarryLimitAddChange}
+							>
+								<ToggleButton value={0}>{t("none")}</ToggleButton>
+								<ToggleButton value={8}>+8</ToggleButton>
+								<ToggleButton value={15}>+15</ToggleButton>
+							</ToggleButtonGroup>
+						</div>
+					</section>
 					<section>
 						<span>{t("dream shards from main skills")}:</span>
 						<div>

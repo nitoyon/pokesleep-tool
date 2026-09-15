@@ -1064,8 +1064,12 @@ class PokemonStrength {
 			berry: targetEventBonus.berry,
 			ingredient:
 				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
-			carryLimitAdd: targetEventBonus.carryLimitAdd + exCarryLimitAdd,
+			carryLimitAdd:
+				targetEventBonus.carryLimitAdd +
+				eventBonus.globalCarryLimitAdd +
+				exCarryLimitAdd,
 			carryLimitMul: targetEventBonus.carryLimitMul,
+			globalCarryLimitAdd: 0, // already merged into carryLimitAdd above
 			potSize: targetEventBonus.potSize,
 			ingredientReason: expertIngredient > eventIngredient ? "ex" : "event",
 			dreamShard: eventBonus.dreamShard,

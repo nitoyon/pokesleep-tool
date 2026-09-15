@@ -244,6 +244,7 @@ export function createStrengthParameter(
 				energyFromDish: 0,
 				carryLimitAdd: 0,
 				carryLimitMul: 1,
+				globalCarryLimitAdd: 0,
 				potSize: 1,
 				fixedAreas: [],
 				fixedBerries: [],

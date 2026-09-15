@@ -2,8 +2,12 @@ import { assert } from "vitest";
 import {
 	BonusEventData,
 	DrowsyEventData,
+	fillBonusEffects,
 	getActiveHelpBonus,
 	getDrowsyBonus,
+	getEventBonus,
+	getEventBonusIfTarget,
+	type HelpEventBonus,
 } from "./events";
 import pokemons from "./pokemons";
 
@@ -143,4 +147,27 @@ test("BonusEventData.isTarget (multiple type)", () => {
 	expect(evt.isTarget(bulbasaur)).toBe(true);
 	expect(evt.isTarget(squirtle)).toBe(true);
 	expect(evt.isTarget(jigglypuff)).toBe(false);
+});
+
+test("globalCarryLimitAdd applies regardless of target", () => {
+	const custom: HelpEventBonus = {
+		target: { type: ["water"] },
+		effects: fillBonusEffects({ carryLimitAdd: 8, globalCarryLimitAdd: 15 }),
+	};
+	const bulbasaur = pokemons.find((x) => x.name === "Bulbasaur");
+	const squirtle = pokemons.find((x) => x.name === "Squirtle");
+	if (bulbasaur === undefined || squirtle === undefined) {
+		assert.fail("pokemon not found on pokemon.json");
+	}
+
+	// carryLimitAdd (targets-only) is returned only for the targeted pokemon
+	expect(getEventBonusIfTarget("custom", custom, squirtle).carryLimitAdd).toBe(
+		8,
+	);
+	expect(getEventBonusIfTarget("custom", custom, bulbasaur).carryLimitAdd).toBe(
+		0,
+	);
+
+	// globalCarryLimitAdd is returned unconditionally, without target filtering
+	expect(getEventBonus("custom", custom).globalCarryLimitAdd).toBe(15);
 });
