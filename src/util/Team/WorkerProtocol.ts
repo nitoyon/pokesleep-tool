@@ -19,6 +19,8 @@ export interface TeamSimulationRequest {
 export interface TeamSimulationResponse {
 	requestId: number;
 	members: (SerializedMemberResult | undefined)[];
+	/** Present when the worker failed to compute the simulation. */
+	error?: string;
 }
 
 /**

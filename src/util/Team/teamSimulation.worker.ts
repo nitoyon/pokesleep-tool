@@ -26,20 +26,29 @@ self.addEventListener(
 	(event: MessageEvent<TeamSimulationRequest>) => {
 		const { requestId, members, param } = event.data;
 
-		const boxItems = members.map((serializedIv) =>
-			serializedIv === null
-				? undefined
-				: new PokemonBoxItem(PokemonIv.deserialize(serializedIv)),
-		);
-		const parameter = deserializeStrengthParameter(param);
-		const result = simulateTeam(boxItems, parameter);
+		try {
+			const boxItems = members.map((serializedIv) =>
+				serializedIv === null
+					? undefined
+					: new PokemonBoxItem(PokemonIv.deserialize(serializedIv)),
+			);
+			const parameter = deserializeStrengthParameter(param);
+			const result = simulateTeam(boxItems, parameter);
 
-		const response: TeamSimulationResponse = {
-			requestId,
-			members: result.members.map((m) =>
-				m ? serializeMemberResult(m) : undefined,
-			),
-		};
-		self.postMessage(response);
+			const response: TeamSimulationResponse = {
+				requestId,
+				members: result.members.map((m) =>
+					m ? serializeMemberResult(m) : undefined,
+				),
+			};
+			self.postMessage(response);
+		} catch (e) {
+			const response: TeamSimulationResponse = {
+				requestId,
+				members: [],
+				error: e instanceof Error ? e.message : String(e),
+			};
+			self.postMessage(response);
+		}
 	},
 );

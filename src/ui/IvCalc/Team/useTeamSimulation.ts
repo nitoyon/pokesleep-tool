@@ -22,11 +22,12 @@ import {
 export function useTeamSimulation(
 	members: (PokemonBoxItem | undefined)[],
 	parameter: StrengthParameter,
-): { result: TeamStrengthResult; loading: boolean } {
+): { result: TeamStrengthResult; loading: boolean; error: string | null } {
 	const [result, setResult] = React.useState<TeamStrengthResult>(() =>
 		createEmptyTeamStrengthResult(members),
 	);
 	const [loading, setLoading] = React.useState(true);
+	const [error, setError] = React.useState<string | null>(null);
 	const workerPromiseRef = React.useRef<Promise<Worker> | null>(null);
 	const latestRequestIdRef = React.useRef(0);
 
@@ -45,6 +46,7 @@ export function useTeamSimulation(
 		let cancelled = false;
 		const requestId = ++latestRequestIdRef.current;
 		setLoading(true);
+		setError(null);
 
 		const request: TeamSimulationRequest = {
 			requestId,
@@ -56,11 +58,24 @@ export function useTeamSimulation(
 			if (event.data.requestId !== latestRequestIdRef.current) {
 				return;
 			}
+			if (event.data.error !== undefined) {
+				setError(event.data.error);
+				setLoading(false);
+				return;
+			}
 			setResult({
 				members: event.data.members.map((m) =>
 					m ? deserializeMemberResult(m) : undefined,
 				),
 			});
+			setLoading(false);
+		};
+
+		const handleError = (event: ErrorEvent) => {
+			if (requestId !== latestRequestIdRef.current) {
+				return;
+			}
+			setError(event.message);
 			setLoading(false);
 		};
 
@@ -71,12 +86,14 @@ export function useTeamSimulation(
 			}
 			worker = w;
 			w.addEventListener("message", handleMessage);
+			w.addEventListener("error", handleError);
 			w.postMessage(request);
 		});
 
 		return () => {
 			cancelled = true;
 			worker?.removeEventListener("message", handleMessage);
+			worker?.removeEventListener("error", handleError);
 		};
 	}, [members, parameter, getWorker]);
 
@@ -87,5 +104,5 @@ export function useTeamSimulation(
 		};
 	}, []);
 
-	return { result, loading };
+	return { result, loading, error };
 }
