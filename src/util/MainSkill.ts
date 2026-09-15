@@ -690,7 +690,7 @@ export function getSkillRandomRange(
 				case 6:
 					return [1033, 4132];
 				case 7:
-					return [1501, 6004];
+					return [1606, 6424];
 			}
 			break;
 		case "Charge Strength S (Stockpile)":
