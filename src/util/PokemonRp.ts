@@ -379,9 +379,10 @@ class PokemonRp {
 				return [1040, 1479, 2040, 2816, 3888, 5372, 6905, 8543][level - 1];
 			}
 			if (skill === "Berry Zone (Psystrike)") {
-				// SLv1: 2448-2450
+				// SLv1-2: Settled
+				// SLv4: 6548-6551
 				// SLv3-6: Estimated
-				return [2448, 3383, 4488, 5884, 8026, 10726][level - 1];
+				return [2450, 3383, 4488, 6550, 8026, 10726][level - 1];
 			}
 			return [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303][level - 1];
 		});
