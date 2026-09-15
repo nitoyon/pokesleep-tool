@@ -7,6 +7,7 @@ import type {
 	IngredientStrength,
 	StrengthParameter,
 } from "../PokemonStrength";
+import type { SkillMetrics } from "./SkillMetrics";
 
 /**
  * Common interface for all simulation events (tap events and energy events).
@@ -70,7 +71,7 @@ export interface TeamProgress {
  * Strength calculation result for a single team member (or the whole team
  * when used as the `total` field of {@link TeamStrengthResult}).
  */
-export interface TeamMemberStrengthResult {
+export interface TeamMemberStrengthResult extends SkillMetrics {
 	iv: PokemonIv;
 	bonus: BonusEffectsWithReason;
 
@@ -85,30 +86,6 @@ export interface TeamMemberStrengthResult {
 	ingStrength: number;
 	/** Per-ingredient breakdown of counts and strengths. */
 	ingredients: IngredientStrength[];
-
-	/** Average number of skill triggers over the period. */
-	skillCount: number;
-	/** Average skill strength over the period. */
-	skillStrength: number;
-	/** Average extra help over the period. */
-	skillExtraHelp: number;
-	/** Average helper boost over the period. */
-	skillHelperBoost: number;
-	/** Average Energizing Cheer over the period. */
-	skillEnergizingCheer: number;
-	/** Average Energy for Everyone over the period. */
-	skillEnergyForEveryone: number;
-
-	/** Average Dream Shards over the period. */
-	skillDreamShards: number;
-	/** Average pot extended size over the period. */
-	skillPotExtended: number;
-	/** Average extra tasty rate over the period. */
-	skillExtraTastyRate: number;
-	/** Average candy over the period */
-	skillCandy: number;
-	/** Average berry zone over the period */
-	skillBerryZone: number;
 
 	/** Combined total strength over the period, filtered by totalFlags. */
 	totalStrength: number;
@@ -199,7 +176,7 @@ export interface MemberProfile {
 /**
  * Internal type for per-member simulation progress that gets updated during the simulation loop.
  */
-export interface MemberProgress {
+export interface MemberProgress extends SkillMetrics {
 	/** Current energy level (0–150). */
 	energy: number;
 	/** Absolute time (seconds) of the last energy recovery. */
@@ -227,30 +204,8 @@ export interface MemberProgress {
 	berryTotalStrength: number;
 	/** Accumulated ingredient counts by name over the iteration so far. */
 	ingCounts: Map<IngredientName, number>;
-	/** Number of skill triggers accumulated this iteration. */
-	skillCount: number;
 	/** Number of skills currently stocked (0, 1, or 2). */
 	skillStockCount: 0 | 1 | 2;
-	/** Accumulated primary skill strength in this iteration. */
-	skillStrength: number;
-	/** Accumulated extra help in this iteration. */
-	skillExtraHelp: number;
-	/** Accumulated helper boost in this iteration. */
-	skillHelperBoost: number;
-	/** Accumulated Energizing Cheer in this iteration. */
-	skillEnergizingCheer: number;
-	/** Accumulated Energy for Everyone in this iteration. */
-	skillEnergyForEveryone: number;
-	/** Accumulated Dream Shards in this iteration. */
-	skillDreamShards: number;
-	/** Accumulated pot extended size in this iteration. */
-	skillPotExtended: number;
-	/** Accumulated extra tasty rate in this iteration. */
-	skillExtraTastyRate: number;
-	/** Accumulated candy in this iteration. */
-	skillCandy: number;
-	/** Accumulated berry zone rate in this iteration. */
-	skillBerryZone: number;
 	/** Help count advanced by a CookEvent/SleepRecoverEvent catch-up */
 	pendingHelp: number;
 	/** Pending energy amount queued by addPendingEnergy, applied atomically by applyPendingEnergy. */
@@ -271,18 +226,7 @@ export interface MemberProgress {
  * Per-member result returned by a single iteration of the simulation.
  * Contains only the accumulated output fields, not the internal simulation state.
  */
-export interface IterationResult {
+export interface IterationResult extends SkillMetrics {
 	berryTotalStrength: number;
 	ingCounts: Map<IngredientName, number>;
-	skillCount: number;
-	skillStrength: number;
-	skillExtraHelp: number;
-	skillHelperBoost: number;
-	skillEnergizingCheer: number;
-	skillEnergyForEveryone: number;
-	skillDreamShards: number;
-	skillPotExtended: number;
-	skillExtraTastyRate: number;
-	skillCandy: number;
-	skillBerryZone: number;
 }

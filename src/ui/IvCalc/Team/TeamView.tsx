@@ -25,14 +25,31 @@ const TeamView = React.memo(
 			() => state.teamMembers.map((m) => (m?.enabled ? m.item : undefined)),
 			[state.teamMembers],
 		);
-		const { result: results, loading } = useTeamSimulation(
-			activeMembers,
-			state.parameter,
-		);
+		const {
+			result: results,
+			loading,
+			error,
+		} = useTeamSimulation(activeMembers, state.parameter);
 
 		return (
 			<StyledDiv>
 				{loading && <CircularProgress className="loading" size={24} />}
+				{error !== null && (
+					<div
+						style={{
+							gridColumn: "1 / -1",
+							border: "1px solid red",
+							background: "#ffeeee",
+							color: "red",
+							fontSize: "0.8rem",
+							borderRadius: "0.5rem",
+							margin: ".2rem .5rem 0",
+							padding: "0 0.3rem",
+						}}
+					>
+						{error}
+					</div>
+				)}
 				<DailyView results={results.members} />
 				<div className="chart" ref={chartRef}>
 					<MemberStrengthChart width={chartWidth} results={results.members} />
