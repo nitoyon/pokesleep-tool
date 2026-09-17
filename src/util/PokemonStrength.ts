@@ -1,3 +1,4 @@
+import { getBigBerryRate } from "../data/BigBerry";
 import {
 	type BonusEffects,
 	emptyBonusEffects,
@@ -247,6 +248,10 @@ export const recipeLevelBonus: { [key: number]: number } = {
  * Represents BonusEffects and the source of each bonus.
  */
 export interface BonusEffectsWithReason extends BonusEffects {
+	/** Probability of getting the big berry (0.12 means 12%) */
+	bigBerryRate: number;
+	/** Number of big berries obtained */
+	bigBerryCount: number;
 	/** The source of the skill trigger bonus (event or expert mode). */
 	skillTriggerReason: "event" | "ex" | "none";
 	/** The source of the skill level bonus (event or expert mode). */
@@ -999,6 +1004,7 @@ class PokemonStrength {
 			param.customEventBonus,
 			this.iv.pokemon,
 		);
+		const bigBerryRate = getBigBerryRate(eventBonus.bigBerry, this.iv.pokemon);
 
 		// whistle and help count (usual help) is not affected
 		// by the event and expert bonus except for dish bonus
@@ -1006,6 +1012,8 @@ class PokemonStrength {
 			return {
 				...emptyBonusEffects,
 				dish: eventBonus.dish,
+				bigBerryRate: 0,
+				bigBerryCount: 0,
 				skillTriggerReason: "none",
 				skillLevelReason: "none",
 				ingredientReason: "none",
@@ -1070,6 +1078,7 @@ class PokemonStrength {
 				exCarryLimitAdd,
 			carryLimitMul: targetEventBonus.carryLimitMul,
 			globalCarryLimitAdd: 0, // already merged into carryLimitAdd above
+			bigBerry: eventBonus.bigBerry,
 			potSize: targetEventBonus.potSize,
 			ingredientReason: expertIngredient > eventIngredient ? "ex" : "event",
 			dreamShard: eventBonus.dreamShard,
@@ -1078,6 +1087,8 @@ class PokemonStrength {
 			skillIngredient: eventBonus.skillIngredient,
 			berryBurst: eventBonus.berryBurst,
 			dish: eventBonus.dish,
+			bigBerryRate: bigBerryRate.rate,
+			bigBerryCount: bigBerryRate.count,
 			energyFromDish: eventBonus.energyFromDish,
 			fixedBerries: targetEventBonus.fixedBerries,
 			fixedAreas: targetEventBonus.fixedAreas,

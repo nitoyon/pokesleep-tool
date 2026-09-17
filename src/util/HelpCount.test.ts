@@ -32,6 +32,8 @@ function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
 
 const emptyBonusBase: BonusEffectsWithReason = {
 	...emptyBonusEffects,
+	bigBerryRate: 0,
+	bigBerryCount: 0,
 	skillTriggerReason: "none",
 	skillLevelReason: "none",
 	ingredientReason: "none",

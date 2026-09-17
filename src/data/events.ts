@@ -137,6 +137,7 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
 		carryLimitAdd: data.carryLimitAdd ?? 0,
 		carryLimitMul: data.carryLimitMul ?? 1,
 		globalCarryLimitAdd: data.globalCarryLimitAdd ?? 0,
+		bigBerry: data.bigBerry ?? "",
 		fixedBerries: data.fixedBerries ?? [],
 		fixedAreas: data.fixedAreas ?? [],
 	};
@@ -288,6 +289,12 @@ export interface BonusEffects {
 	/** Carry limit bonus (add), applied to all pokemon regardless of `target` */
 	globalCarryLimitAdd: number;
 	/**
+	 * Name of the big berry event to be applied (used by {@link getBigBerryRate}).
+	 *
+	 * - Set to an empty string `""` when no big berry event is active.
+	 */
+	bigBerry: string;
+	/**
 	 * Types of berries that are fixed (i.e., not randomly selected).
 	 *
 	 * - Set to an empty array `[]` when berries are not fixed.
@@ -322,6 +329,7 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
 	carryLimitAdd: 0,
 	carryLimitMul: 1,
 	globalCarryLimitAdd: 0,
+	bigBerry: "",
 	fixedBerries: [],
 	fixedAreas: [],
 };
@@ -498,6 +506,9 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
 			[0, 8, 15].includes(effects.globalCarryLimitAdd)
 		) {
 			ret.effects.globalCarryLimitAdd = effects.globalCarryLimitAdd;
+		}
+		if (typeof effects.bigBerry === "string") {
+			ret.effects.bigBerry = effects.bigBerry;
 		}
 	}
 	return ret;

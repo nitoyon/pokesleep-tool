@@ -245,6 +245,7 @@ export function createStrengthParameter(
 				carryLimitAdd: 0,
 				carryLimitMul: 1,
 				globalCarryLimitAdd: 0,
+				bigBerry: "",
 				potSize: 1,
 				fixedAreas: [],
 				fixedBerries: [],
