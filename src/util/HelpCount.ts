@@ -7,12 +7,12 @@ import {
 	type EnergyResult,
 	NoTap,
 } from "./Energy";
+import {
+	bonusEffectToInventoryBonus,
+	type InventoryBonus,
+} from "./InventoryBonus";
 import type PokemonIv from "./PokemonIv";
-import type {
-	BagUsagePerHelpDetailItem,
-	IngredientSlot,
-	InventoryBonus,
-} from "./PokemonIv";
+import type { BagUsagePerHelpDetailItem, IngredientSlot } from "./PokemonIv";
 import type { BonusEffectsWithReason } from "./PokemonStrength";
 
 /**
@@ -381,14 +381,7 @@ function calculateBaseFreqAndBonus(
 		isNonFavoriteBerry,
 		param.fieldIndex,
 	);
-	const inventoryBonus = {
-		berry: bonus.berry,
-		ingredient:
-			bonus.ingredientReason === "ex" ? 0 : (bonus.ingredient as 0 | 1),
-		carryLimitAdd: bonus.carryLimitAdd,
-		carryLimitMul: bonus.carryLimitMul,
-		expertIng: isFavoriteBerry && param.expertEffect === "ing",
-	};
+	const inventoryBonus = bonusEffectToInventoryBonus(bonus);
 	return { baseFreq, inventoryBonus };
 }
 

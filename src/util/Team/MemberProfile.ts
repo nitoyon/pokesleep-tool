@@ -1,6 +1,7 @@
 import { isExpertField } from "../../data/fields";
 import { whistlePeriod } from "../../util/Energy";
 import { getBerryStrength } from "../Berry";
+import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
 import type { PokemonBoxItem } from "../PokemonBox";
 import type { StrengthParameter } from "../PokemonStrength";
@@ -95,14 +96,9 @@ export function buildMemberProfile(
 	);
 
 	// bagUsage
-	const normalBagUsage = iv.getBagUsagePerHelpDetail({
-		berry: bonus.berry,
-		ingredient:
-			bonus.ingredientReason === "ex" ? 0 : (bonus.ingredient as 0 | 1),
-		carryLimitAdd: bonus.carryLimitAdd,
-		carryLimitMul: bonus.carryLimitMul,
-		expertIng: bonus.ingredientReason === "ex",
-	});
+	const normalBagUsage = iv.getBagUsagePerHelpDetail(
+		bonusEffectToInventoryBonus(bonus),
+	);
 	const extraBagUsage = iv.getBagUsagePerHelpDetail({});
 
 	// Berry strengths

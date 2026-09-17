@@ -7,6 +7,7 @@ import pokemons, {
 	toxtricityId,
 	type ValidFormType,
 } from "../data/pokemons";
+import type { InventoryBonus } from "./InventoryBonus";
 import {
 	getMaxSkillLevel,
 	type MainSkillName,
@@ -36,26 +37,6 @@ export interface IngredientSlot {
 	count: number;
 	/** Slot index (ing1 -> 0, ing2 -> 1, ing3 -> 2) */
 	index: number;
-}
-
-/** Bonus that affect inventory consumption */
-export interface InventoryBonus {
-	/** Berry count bonus from events (0 or 1) */
-	berry: 0 | 1;
-	/** Ingredient count bonus from events (0 or 1) */
-	ingredient: 0 | 1;
-	/** Carry limit bonus (add) */
-	carryLimitAdd: number;
-	/** Carry limit bonus (multiply) */
-	carryLimitMul: 1 | 1.5;
-	/**
-	 * Whether expert mode ingredient bonus applies.
-	 * True if following condition are all met.
-	 * - Expert mode
-	 * - ExpertEffects is `ing`
-	 * - Favorite berry
-	 */
-	expertIng: boolean;
 }
 
 /**
