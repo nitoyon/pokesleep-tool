@@ -148,6 +148,8 @@ const FullPreview = React.memo(
 					state.expertMode &&
 					state.expertBerry !== 2 &&
 					state.expertIngBonus === 1,
+				bigBerryRate: 0,
+				bigBerryCount: 0,
 			};
 			const cdf = calculateInventoryDistribution(iv, state.campTicket, bonus);
 			cdf.unshift(0); // Add initial wait time for the first help
