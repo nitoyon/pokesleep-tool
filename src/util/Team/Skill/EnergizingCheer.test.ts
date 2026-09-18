@@ -134,8 +134,8 @@ describe("EnergizingCheerHealPulseSkill", () => {
 		expect(skill.skillValue).toBe(6);
 		expect(a.progress.pendingEnergy).toBe(6);
 		expect(b.progress.pendingEnergy).toBe(6);
-		expect(a.progress.pendingExtraHelp).toBe(6);
-		expect(b.progress.pendingExtraHelp).toBe(6);
+		expect(a.progress.pendingExtraHelp).toBe(1);
+		expect(b.progress.pendingExtraHelp).toBe(1);
 		expect(c.progress.pendingEnergy).toBe(0);
 		expect(c.progress.pendingExtraHelp).toBe(0);
 	});

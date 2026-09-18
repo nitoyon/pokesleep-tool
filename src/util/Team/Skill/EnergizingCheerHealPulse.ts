@@ -1,4 +1,4 @@
-import { getSkillValue } from "../../MainSkill";
+import { getSkillSubValue } from "../../MainSkill";
 import type { StrengthParameter } from "../../PokemonStrength";
 import type { MemberProfile, TeamContext, TeamMember } from "../Types";
 import { BaseSkill } from "./BaseSkill";
@@ -19,7 +19,7 @@ export class EnergizingCheerHealPulseSkill extends BaseSkill {
 
 		const skillName = profile.skillName;
 		const skillLevel = profile.skillLevel;
-		this.skillValue2 = getSkillValue(skillName, skillLevel);
+		this.skillValue2 = getSkillSubValue(skillName, skillLevel);
 		if (
 			profiles.some((x) => x.iv.pokemon.skill === "Berry Burst (Draco Meteor)")
 		) {
