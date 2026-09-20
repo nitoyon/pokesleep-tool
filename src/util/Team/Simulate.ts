@@ -85,6 +85,8 @@ function initializeIterationResult(
 ): IterationResult[] {
 	const accumulated: IterationResult[] = profiles.map(() => ({
 		berryTotalStrength: 0,
+		bigBerryHelpCount: 0,
+		bigBerryCount: 0,
 		ingCounts: new Map<IngredientName, number>(),
 		...zeroSkillMetrics(),
 	}));
@@ -102,6 +104,8 @@ function addResultToIterationResult(
 		const result = results[i];
 
 		acc.berryTotalStrength += result.berryTotalStrength;
+		acc.bigBerryHelpCount += result.bigBerryHelpCount;
+		acc.bigBerryCount += result.bigBerryCount;
 		addSkillMetrics(acc, result);
 
 		for (const [name, count] of result.ingCounts) {
@@ -155,6 +159,8 @@ function buildMemberStrengthResult(
 			berryRawStrength: profile.berryRawStrength,
 			berryStrength: profile.berryStrength,
 			berryTotalStrength: avgBerryTotalStrength,
+			bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
+			bigBerryCount: acc.bigBerryCount / iterations,
 			ingStrength,
 			ingredients,
 			...avgMetrics,

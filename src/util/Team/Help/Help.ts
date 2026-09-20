@@ -219,6 +219,21 @@ function applySingleHelp(
 			(progress.ingCounts.get(ingName) ?? 0) + count,
 		);
 	}
+
+	// Big berry: picked up along with the berry or ingredient of this help.
+	// It occupies the inventory, and the ones over the carry limit are not brought.
+	const { bigBerryRate, bigBerryCount } = profile.bonus;
+	if (
+		bigBerryRate > 0 &&
+		bigBerryCount > 0 &&
+		carryLimitLeft > 0 &&
+		rng() < bigBerryRate
+	) {
+		const count = Math.min(bigBerryCount, carryLimitLeft);
+		progress.bigBerryHelpCount++;
+		progress.bigBerryCount += count;
+		carryLimitLeft -= count;
+	}
 	return { carryLimitLeft, isNormalHelp: true };
 }
 

@@ -91,6 +91,8 @@ export function createTestProgress(
 			sneakySnacking: 0,
 		},
 		berryTotalStrength: 0,
+		bigBerryHelpCount: 0,
+		bigBerryCount: 0,
 		ingCounts: new Map(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),

@@ -21,6 +21,8 @@ export function createMemberProgress(): MemberProgress {
 			sneakySnacking: 0,
 		},
 		berryTotalStrength: 0,
+		bigBerryHelpCount: 0,
+		bigBerryCount: 0,
 		ingCounts: new Map<IngredientName, number>(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),
