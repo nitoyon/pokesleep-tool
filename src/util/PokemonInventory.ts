@@ -1,5 +1,5 @@
+import type { InventoryBonus } from "./InventoryBonus";
 import type PokemonIv from "./PokemonIv";
-import type { InventoryBonus } from "./PokemonIv";
 
 /**
  * Cumulative distribution function (CDF) array for inventory fill probability.

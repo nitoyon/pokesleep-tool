@@ -27,7 +27,7 @@ describe("runIteration", () => {
 		const result = runIteration(sim);
 
 		expect(result).toHaveLength(1);
-		expect(result[0].berryTotalStrength).toBeGreaterThan(0);
+		expect(result[0].berryStrength).toBeGreaterThan(0);
 	});
 
 	test("isEnergyAlwaysFull member always taps at the full-energy frequency over a 24h period", () => {
@@ -51,7 +51,7 @@ describe("runIteration", () => {
 		const result = runIteration(sim);
 
 		expect(result).toHaveLength(1);
-		expect(result[0].berryTotalStrength).toBeGreaterThan(0);
+		expect(result[0].berryStrength).toBeGreaterThan(0);
 	});
 
 	test("still taps at every sleep/wake transition when both frequencies are NoTap", () => {
@@ -95,7 +95,7 @@ describe("runIteration", () => {
 		const result = runIteration(sim);
 
 		expect(result).toHaveLength(1);
-		expect(result[0].berryTotalStrength).toBeGreaterThan(0);
+		expect(result[0].berryStrength).toBeGreaterThan(0);
 	});
 
 	test("runs a team including Mew (Versatile) and Mr. Mime (Skill Copy)", () => {

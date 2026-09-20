@@ -241,7 +241,9 @@ describe("PokemonStrength", () => {
 
 			// Verify result
 			expect(resultWhistle.skillCount).toBe(0);
-			expect(resultWhistle.berryStrength).toBe(result3Hours.berryStrength);
+			expect(resultWhistle.berryTotalStrength).toBe(
+				result3Hours.berryTotalStrength,
+			);
 			expect(resultWhistle.ingStrength).toBe(result3Hours.ingStrength);
 		});
 	});

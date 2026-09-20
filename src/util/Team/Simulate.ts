@@ -84,7 +84,9 @@ function initializeIterationResult(
 	profiles: MemberProfile[],
 ): IterationResult[] {
 	const accumulated: IterationResult[] = profiles.map(() => ({
-		berryTotalStrength: 0,
+		berryStrength: 0,
+		bigBerryHelpCount: 0,
+		bigBerryCount: 0,
 		ingCounts: new Map<IngredientName, number>(),
 		...zeroSkillMetrics(),
 	}));
@@ -101,7 +103,9 @@ function addResultToIterationResult(
 		const acc = accumulated[i];
 		const result = results[i];
 
-		acc.berryTotalStrength += result.berryTotalStrength;
+		acc.berryStrength += result.berryStrength;
+		acc.bigBerryHelpCount += result.bigBerryHelpCount;
+		acc.bigBerryCount += result.bigBerryCount;
 		addSkillMetrics(acc, result);
 
 		for (const [name, count] of result.ingCounts) {
@@ -124,7 +128,10 @@ function buildMemberStrengthResult(
 		if (!profile) return undefined;
 
 		const acc = accumulated[profiles.indexOf(profile)];
-		const avgBerryTotalStrength = acc.berryTotalStrength / iterations;
+		const avgBerryStrength = acc.berryStrength / iterations;
+		const avgBigBerryCount = acc.bigBerryCount / iterations;
+		const bigBerryStrength = profile.bigBerry1Strength * avgBigBerryCount;
+		const berryTotalStrength = avgBerryStrength + bigBerryStrength;
 		const avgMetrics = avgSkillMetrics(acc, iterations);
 
 		const ingredients: IngredientStrength[] = Array.from(
@@ -145,16 +152,20 @@ function buildMemberStrengthResult(
 		const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
 
 		const totalStrength =
-			(param.totalFlags[0] ? avgBerryTotalStrength : 0) +
+			(param.totalFlags[0] ? berryTotalStrength : 0) +
 			(param.totalFlags[1] ? ingStrength : 0) +
 			(param.totalFlags[2] ? avgMetrics.skillStrength : 0);
 
 		return {
 			iv: profile.iv,
 			bonus: profile.bonus,
-			berryRawStrength: profile.berryRawStrength,
-			berryStrength: profile.berryStrength,
-			berryTotalStrength: avgBerryTotalStrength,
+			berry1Strength: profile.berry1Strength,
+			berryStrength: avgBerryStrength,
+			bigBerry1Strength: profile.bigBerry1Strength,
+			bigBerryStrength,
+			berryTotalStrength,
+			bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
+			bigBerryCount: avgBigBerryCount,
 			ingStrength,
 			ingredients,
 			...avgMetrics,

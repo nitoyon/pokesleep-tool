@@ -56,7 +56,7 @@ const BerryHelpDialog = React.memo(
 
 		const param = strength.parameter;
 		const berryStrength = Math.ceil(
-			result.berryStrength * strength.berryStrengthBonus,
+			result.berry1Strength * strength.berryStrengthBonus,
 		);
 		const hasBerryCountBonus = result.bonus.berry > 0;
 		return (
@@ -64,7 +64,7 @@ const BerryHelpDialog = React.memo(
 				<DialogTitle>
 					<article>
 						<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-						{formatWithComma(Math.round(result.berryTotalStrength))}
+						{formatWithComma(Math.round(result.berryStrength))}
 					</article>
 					<footer>
 						<span className="box box1">{berryStrength}</span> ×{" "}

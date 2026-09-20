@@ -7,12 +7,12 @@ import {
 	type EnergyResult,
 	NoTap,
 } from "./Energy";
+import {
+	bonusEffectToInventoryBonus,
+	type InventoryBonus,
+} from "./InventoryBonus";
 import type PokemonIv from "./PokemonIv";
-import type {
-	BagUsagePerHelpDetailItem,
-	IngredientSlot,
-	InventoryBonus,
-} from "./PokemonIv";
+import type { BagUsagePerHelpDetailItem, IngredientSlot } from "./PokemonIv";
 import type { BonusEffectsWithReason } from "./PokemonStrength";
 
 /**
@@ -88,6 +88,10 @@ export interface HelpCountResult {
 	 * an event bonus for berries is active.
 	 */
 	berryCountPerSneakySnacking: number;
+	/** Big berry help count */
+	bigBerryHelpCount: number;
+	/** The number of big berries brought by the Pokémon.. */
+	bigBerryCount: number;
 	/** Ingredient rate */
 	ingRate: number;
 	/** Number of ingredient slots (e.g., AAA Lv60 → 3) */
@@ -200,6 +204,8 @@ export function calculateHelpCount(
 		ret.berryHelpCount *= countRate;
 		ret.berryNormalHelpCount *= countRate;
 		ret.berrySneakySnackingCount *= countRate;
+		ret.bigBerryHelpCount *= countRate;
+		ret.bigBerryCount *= countRate;
 		ret.ingHelpCount *= countRate;
 		ret.ingredients.forEach((x) => {
 			x.count *= countRate;
@@ -303,6 +309,8 @@ function initializeHelpCountResult(
 		berrySneakySnackingCount: 0,
 		berryCountPerNormalHelp: iv.berryCount + bonus.berry,
 		berryCountPerSneakySnacking: iv.berryCount,
+		bigBerryHelpCount: 0,
+		bigBerryCount: 0,
 		ingRate: iv.ingredientRate,
 		ingSlotCount,
 		ingHelpCount: 0,
@@ -381,14 +389,7 @@ function calculateBaseFreqAndBonus(
 		isNonFavoriteBerry,
 		param.fieldIndex,
 	);
-	const inventoryBonus = {
-		berry: bonus.berry,
-		ingredient:
-			bonus.ingredientReason === "ex" ? 0 : (bonus.ingredient as 0 | 1),
-		carryLimitAdd: bonus.carryLimitAdd,
-		carryLimitMul: bonus.carryLimitMul,
-		expertIng: isFavoriteBerry && param.expertEffect === "ing",
-	};
+	const inventoryBonus = bonusEffectToInventoryBonus(bonus);
 	return { baseFreq, inventoryBonus };
 }
 
@@ -402,7 +403,10 @@ function calculateTimeToFullInventory(
 ) {
 	const alwaysSnacking = param.tapFrequencyAwake === NoTap;
 	const alwaysTapAsleep = param.tapFrequencyAsleep === AlwaysTap;
-	const bagUsagePerHelp = iv.getBagUsagePerHelp(inventoryBonus);
+	// Big berries also occupy the inventory (on average bigBerryRate * bigBerryCount)
+	const bagUsagePerHelp =
+		iv.getBagUsagePerHelp(inventoryBonus) +
+		inventoryBonus.bigBerryRate * inventoryBonus.bigBerryCount;
 
 	if (baseFreq === 0) {
 		return 0;
@@ -507,6 +511,8 @@ function calculateAwakeHelpCount(
 		ret.berryCount += result.berryCount;
 		ret.berryNormalHelpCount += result.normalHelpCount * ret.berryRate;
 		ret.berrySneakySnackingCount += result.sneakySnackingCount;
+		ret.bigBerryHelpCount += result.bigBerryHelpCount;
+		ret.bigBerryCount += result.bigBerryCount;
 
 		const ingHelpCount = result.normalHelpCount * ret.ingRate;
 		ret.ingHelpCount += ingHelpCount;
@@ -591,6 +597,8 @@ function calculateAsleepHelpCount(
 		ret.berryCount += result.berryCount;
 		ret.berryNormalHelpCount += result.normalHelpCount * ret.berryRate;
 		ret.berrySneakySnackingCount += result.sneakySnackingCount;
+		ret.bigBerryHelpCount += result.bigBerryHelpCount;
+		ret.bigBerryCount += result.bigBerryCount;
 
 		const ingHelpCount = result.normalHelpCount * ret.ingRate;
 		ret.ingHelpCount += ingHelpCount;
@@ -642,6 +650,15 @@ function addAlwaysTapHelps(
 	ret.berryHelpCount += berryHelpCount;
 	ret.berryCount += berryHelpCount * ret.berryCountPerNormalHelp;
 	ret.berryNormalHelpCount += berryHelpCount;
+
+	// big berry (normal help only)
+	const bigBerryRate = ret.inventoryBonus.bigBerryRate ?? 0;
+	const bigBerryCount = ret.inventoryBonus.bigBerryCount ?? 0;
+	if (bigBerryRate > 0 && bigBerryCount > 0) {
+		const bigBerryHelpCount = helpCount * bigBerryRate;
+		ret.bigBerryHelpCount += bigBerryHelpCount;
+		ret.bigBerryCount += bigBerryHelpCount * bigBerryCount;
+	}
 
 	// ingredient
 	const ingHelpCount = helpCount * ret.ingRate;
@@ -835,6 +852,10 @@ export type HelpCountSimulationResult = {
 	sneakySnackingCount: number;
 	/** Expected total berry count */
 	berryCount: number;
+	/** Expected total big berry help count */
+	bigBerryHelpCount: number;
+	/** Expected total big berry count */
+	bigBerryCount: number;
 	/** Expected ingredient counts per ingredient kind index */
 	ingredientCount: number[];
 	/** Expected overflow ingredient count per slot index (0=ing1, 1=ing2, 2=ing3) */
@@ -853,11 +874,15 @@ export type HelpCountSimulationResult = {
 
 /**
  * Simulates inventory state transitions to compute expected sneaky snacking
- * count and expected ingredient counts after N help actions.
+ * count and expected item counts after N help actions.
  *
- * State is represented as `(berry, a, b, c)` where `a`, `b`, `c` are
- * ingredient counts. Note that if the Pokémon has fewer than 3 ingredient types,
- * B or C stay at 0.
+ * State is the used inventory space (berries + big berries + ingredients).
+ * The probability of each outcome does not depend on what is in the
+ * inventory, and the space left is the only thing that limits what a help
+ * can add, so the used space is enough to drive the transitions.
+ * The expected count of each item (berry, big berry, each ingredient) is
+ * accumulated from what every transition adds, weighted by the probability
+ * of the transition.
  *
  * The sneaky snacking count is derived from the cumulative probability
  * of the inventory being full at each step.
@@ -866,37 +891,47 @@ export type HelpCountSimulationResult = {
  * increasing `n` values extends from the previous computation.
  */
 export class HelpCountSimulation {
-	/** DP state maps: steps[i] maps encoded state key to probability. */
-	private steps: Map<number, number>[];
+	/**
+	 * Probability distribution of the used inventory space after the latest
+	 * computed step: `state[u]` is the probability that `u` slots are used and
+	 * the inventory is not full yet (0 <= u < carryLimit).
+	 */
+	private state: number[];
 	/** Probability that inventory is full by step i. */
 	private cumulativeFullProb: number[];
-	/** Expected berry count from states that became full by step i. */
-	private cumulativeFullBerryExpected: number[];
 	/**
-	 * Expected count of ingredient kind `j` from states that became full
-	 * by step `i`.
-	 *
-	 * (ex) `cumulativeFullIngExpected[5][0]` is the expected count
-	 * of ingredient A from states that became full by step 5.
+	 * Expected berry count brought by normal helps by step i.
+	 * (big berries and sneaky snacking are not included)
 	 */
-	private cumulativeFullIngExpected: number[][];
+	private cumulativeBerryExpected: number[];
+	/**
+	 * Expected count of ingredient kind `j` brought by normal helps by step `i`.
+	 *
+	 * (ex) `cumulativeIngExpected[5][0]` is the expected count
+	 * of ingredient A by step 5.
+	 */
+	private cumulativeIngExpected: number[][];
+	/** Expected number of normal helps where the big berry was picked up, by step i. */
+	private cumulativeBigBerryHelpCount: number[];
+	/** Expected number of big berries brought, by step i. */
+	private cumulativeBigBerryCount: number[];
 	/** Maximum inventory capacity. */
 	private carryLimit: number;
-	/** Encoding base = carryLimit + 1. */
-	private M: number;
 	/** Possible outcomes per help action. */
 	private bagUsage: BagUsagePerHelpDetailItem[];
+	/** Probability that the big berry is picked up along with a help. */
+	private bigBerryRate: number;
+	/** Number of big berries picked up at once. */
+	private bigBerryCount: number;
 	/** The number of berries obtained from sneaky snacking. */
 	private sneakySnackingBerryCount: number;
 	/**
 	 * Number of distinct ingredient kinds (1, 2, or 3).
 	 *
 	 * (ex) If the Pokémon has only 2 ingredient types (ABB),
-	 * this value is set to 2, and the state is represented
-	 * as `(berry, a, b, 0)`,
+	 * this value is set to 2.
 	 * (ex) If the Pokémon has only 1 ingredient types (AAA),
-	 * this value is set to 1, and the state is represented
-	 * as `(berry, a, 0, 0)`,
+	 * this value is set to 1.
 	 */
 	private numIngredientKinds: number;
 	/** Cumulative overflow per ingredient slot at each step. */
@@ -921,13 +956,12 @@ export class HelpCountSimulation {
 		skillRate?: number,
 		bonus?: Partial<InventoryBonus>,
 	) {
-		// calculate carryLimit and M
+		// calculate carryLimit
 		this.carryLimit = Math.ceil(
 			(iv.carryLimit + (bonus?.carryLimitAdd ?? 0)) *
 				(bonus?.carryLimitMul ?? 1) *
 				(isGoodCampTicketSet ? 1.2 : 1),
 		);
-		this.M = this.carryLimit + 1;
 
 		// Initialize ingNameToIndex
 		this.bagUsage = iv.getBagUsagePerHelpDetail(bonus);
@@ -937,6 +971,10 @@ export class HelpCountSimulation {
 		const numSlots = Math.max(
 			...this.bagUsage.map((usage) => usage.ingSlotIndex + 1),
 		);
+
+		// Initialize big berry
+		this.bigBerryRate = bonus?.bigBerryRate ?? 0;
+		this.bigBerryCount = bonus?.bigBerryCount ?? 0;
 
 		// Initialize sneaky snacking berry count
 		// If the berry bonus is active, we consider that the berry count
@@ -948,17 +986,18 @@ export class HelpCountSimulation {
 		this.isSkillSpecialty =
 			iv.pokemon.specialty === "Skills" || iv.pokemon.specialty === "All";
 
-		// Initialize steps
-		const initialState = new Map<number, number>();
-		initialState.set(this.encodeKey(0, 0, 0, 0), 1.0);
-		this.steps = [initialState];
+		// Initialize state: nothing in the inventory
+		this.state = Array.from<number>({ length: this.carryLimit }).fill(0);
+		this.state[0] = 1.0;
 
 		// Initialize cummulative arrays
 		this.cumulativeFullProb = [0];
-		this.cumulativeFullBerryExpected = [0];
-		this.cumulativeFullIngExpected = [
+		this.cumulativeBerryExpected = [0];
+		this.cumulativeIngExpected = [
 			Array.from<number>({ length: this.numIngredientKinds }).fill(0),
 		];
+		this.cumulativeBigBerryHelpCount = [0];
+		this.cumulativeBigBerryCount = [0];
 		this.cumulativeOverflowIngSlots = [
 			Array.from<number>({ length: numSlots }).fill(0),
 		];
@@ -987,6 +1026,8 @@ export class HelpCountSimulation {
 			normalHelpCount: lerp(lo.normalHelpCount, hi.normalHelpCount),
 			sneakySnackingCount: lerp(lo.sneakySnackingCount, hi.sneakySnackingCount),
 			berryCount: lerp(lo.berryCount, hi.berryCount),
+			bigBerryHelpCount: lerp(lo.bigBerryHelpCount, hi.bigBerryHelpCount),
+			bigBerryCount: lerp(lo.bigBerryCount, hi.bigBerryCount),
 			ingredientCount: lo.ingredientCount.map((v, i) =>
 				lerp(v, hi.ingredientCount[i]),
 			),
@@ -1006,7 +1047,7 @@ export class HelpCountSimulation {
 	 */
 	private computeN(n: number): HelpCountSimulationResult {
 		// Extend computation if needed
-		while (this.steps.length <= n) {
+		while (this.cumulativeFullProb.length <= n) {
 			this.computeStep();
 		}
 
@@ -1016,32 +1057,11 @@ export class HelpCountSimulation {
 			sneakySnackingCount += this.cumulativeFullProb[i];
 		}
 
-		// Calculate expected berries
-		// - berries from states that became full by step n
-		let berryCount = this.cumulativeFullBerryExpected[n];
-
-		// - berries from active states
-		const activeState = this.steps[n];
-		for (const [key, prob] of activeState) {
-			const [berry, , ,] = this.decodeKey(key);
-			berryCount += berry * prob;
-		}
-
-		// Calculate expected ingredients
-		// - ingredients from states that became full by step n
-		const ingredientCount = [...this.cumulativeFullIngExpected[n]];
-
-		// - ingredients from active states at step n
-		for (const [key, prob] of activeState) {
-			const [, a, b, c] = this.decodeKey(key);
-			ingredientCount[0] += a * prob;
-			if (this.numIngredientKinds >= 2) {
-				ingredientCount[1] += b * prob;
-			}
-			if (this.numIngredientKinds >= 3) {
-				ingredientCount[2] += c * prob;
-			}
-		}
+		// Calculate expected berries (big berries are not included)
+		// = berries from normal helps + berries from sneaky snacking
+		const berryCount =
+			this.cumulativeBerryExpected[n] +
+			sneakySnackingCount * this.sneakySnackingBerryCount;
 
 		const { skillOnce, skillTwice } = this.calculateSkillProbability(n);
 
@@ -1049,7 +1069,9 @@ export class HelpCountSimulation {
 			normalHelpCount: n - sneakySnackingCount,
 			sneakySnackingCount,
 			berryCount,
-			ingredientCount,
+			bigBerryHelpCount: this.cumulativeBigBerryHelpCount[n],
+			bigBerryCount: this.cumulativeBigBerryCount[n],
+			ingredientCount: [...this.cumulativeIngExpected[n]],
 			overflowIngsPerSlot: [...this.cumulativeOverflowIngSlots[n]],
 			skillOnce,
 			skillTwice,
@@ -1058,102 +1080,106 @@ export class HelpCountSimulation {
 
 	/**
 	 * Extends the DP by one step, applying every possible outcome to each
-	 * active state and accumulating full-inventory probabilities and
-	 * expected item counts into the cumulative arrays.
+	 * used inventory space and accumulating full-inventory probabilities and
+	 * the expected item counts added by the helps into the cumulative arrays.
 	 */
 	private computeStep(): void {
-		const stepIndex = this.steps.length;
-		const prevState = this.steps[stepIndex - 1];
-		const prevCumulativeProb = this.cumulativeFullProb[stepIndex - 1];
-		const prevCumulativeIng = this.cumulativeFullIngExpected[stepIndex - 1];
-		const prevCumulativeFullBerry =
-			this.cumulativeFullBerryExpected[stepIndex - 1];
+		const stepIndex = this.cumulativeFullProb.length;
 		const prevCumulativeOverflow =
 			this.cumulativeOverflowIngSlots[stepIndex - 1];
 
-		const nextState = new Map<number, number>();
+		const nextState = Array.from<number>({ length: this.carryLimit }).fill(0);
 		let newFullProb = 0;
-		const newFullIng = Array.from<number>({
+		let newBerry = 0;
+		const newIng = Array.from<number>({
 			length: this.numIngredientKinds,
 		}).fill(0);
-		let newFullBerry = 0;
+		let newBigBerryHelpProb = 0;
+		let newBigBerryCount = 0;
 		const newOverflowIngSlots = Array.from<number>({
 			length: prevCumulativeOverflow.length,
 		}).fill(0);
 
-		for (const [key, prob] of prevState) {
-			const [berry, a, b, c] = this.decodeKey(key);
-			const total = berry + a + b + c;
+		for (let used = 0; used < this.carryLimit; used++) {
+			const prob = this.state[used];
+			if (prob === 0) {
+				continue;
+			}
 
 			// Apply each outcome
 			for (const usage of this.bagUsage) {
 				const transitionProb = prob * usage.p;
-				let newBerry = berry,
-					newA = a,
-					newB = b,
-					newC = c;
+				let newUsed = used;
 
 				if (usage.name === "berry") {
-					newBerry += usage.count;
+					newBerry += usage.count * transitionProb;
+					newUsed += usage.count;
 				} else {
 					// Ingredient: cap added amount so total doesn't exceed carryLimit
-					const space = this.carryLimit - total;
+					const space = this.carryLimit - used;
 					const addCount = Math.min(usage.count, space);
 					const overflow = usage.count - addCount;
 					if (overflow > 0) {
 						newOverflowIngSlots[usage.ingSlotIndex] +=
 							overflow * transitionProb;
 					}
-					switch (usage.ingKindIndex) {
-						case 0:
-							newA += addCount;
-							break;
-						case 1:
-							newB += addCount;
-							break;
-						case 2:
-							newC += addCount;
-							break;
-					}
+					newIng[usage.ingKindIndex] += addCount * transitionProb;
+					newUsed += addCount;
 				}
 
-				const newTotal = newBerry + newA + newB + newC;
-				if (newTotal < this.carryLimit) {
-					const newKey = this.encodeKey(newBerry, newA, newB, newC);
-					const existing = nextState.get(newKey) ?? 0;
-					nextState.set(newKey, existing + transitionProb);
+				// Big berry: picked up along with the berry or ingredient of this
+				// help. They occupy the inventory, and the ones over the carry limit
+				// are not brought.
+				const bigBerryProb = transitionProb * this.bigBerryRate;
+				const noBigBerryProb = transitionProb - bigBerryProb;
+
+				// Without big berry
+				if (newUsed < this.carryLimit) {
+					nextState[newUsed] += noBigBerryProb;
 				} else {
-					// Inventory becomes full: accumulate immediately
-					newFullProb += transitionProb;
-					newFullBerry += newBerry * transitionProb;
-					newFullIng[0] += newA * transitionProb;
-					if (this.numIngredientKinds >= 2) {
-						newFullIng[1] += newB * transitionProb;
-					}
-					if (this.numIngredientKinds >= 3) {
-						newFullIng[2] += newC * transitionProb;
-					}
+					// Inventory becomes full
+					newFullProb += noBigBerryProb;
+				}
+
+				// With big berry
+				const bigBerrySpace = Math.max(0, this.carryLimit - newUsed);
+				const bigBerryCount = Math.min(this.bigBerryCount, bigBerrySpace);
+				if (bigBerryCount > 0) {
+					newBigBerryHelpProb += bigBerryProb;
+					newBigBerryCount += bigBerryCount * bigBerryProb;
+				}
+				const usedWithBigBerry = newUsed + bigBerryCount;
+				if (usedWithBigBerry < this.carryLimit) {
+					nextState[usedWithBigBerry] += bigBerryProb;
+				} else {
+					// Inventory becomes full
+					newFullProb += bigBerryProb;
 				}
 			}
 		}
 
-		this.steps.push(nextState);
-		this.cumulativeFullProb.push(prevCumulativeProb + newFullProb);
-		this.cumulativeFullBerryExpected.push(
-			prevCumulativeFullBerry +
-				prevCumulativeProb * this.sneakySnackingBerryCount +
-				newFullBerry,
+		this.state = nextState;
+		this.cumulativeFullProb.push(
+			this.cumulativeFullProb[stepIndex - 1] + newFullProb,
 		);
-
-		const cumulativeIng = prevCumulativeIng.map(
-			(v: number, i: number) => v + newFullIng[i],
+		this.cumulativeBerryExpected.push(
+			this.cumulativeBerryExpected[stepIndex - 1] + newBerry,
 		);
-		this.cumulativeFullIngExpected.push(cumulativeIng);
-
+		this.cumulativeIngExpected.push(
+			this.cumulativeIngExpected[stepIndex - 1].map(
+				(v: number, i: number) => v + newIng[i],
+			),
+		);
 		this.cumulativeOverflowIngSlots.push(
 			prevCumulativeOverflow.map(
 				(v: number, i: number) => v + newOverflowIngSlots[i],
 			),
+		);
+		this.cumulativeBigBerryHelpCount.push(
+			this.cumulativeBigBerryHelpCount[stepIndex - 1] + newBigBerryHelpProb,
+		);
+		this.cumulativeBigBerryCount.push(
+			this.cumulativeBigBerryCount[stepIndex - 1] + newBigBerryCount,
 		);
 	}
 
@@ -1202,34 +1228,5 @@ export class HelpCountSimulation {
 			}
 		}
 		return { skillOnce, skillTwice: Math.max(0, skillTwice) };
-	}
-
-	/**
-	 * Encodes a `(berry, a, b, c)` tuple into a single number using
-	 * mixed-radix encoding with base M.
-	 *
-	 * @param berry - Berry count.
-	 * @param a - Ingredient 0 count.
-	 * @param b - Ingredient 1 count.
-	 * @param c - Ingredient 2 count.
-	 */
-	private encodeKey(berry: number, a: number, b: number, c: number): number {
-		return ((berry * this.M + a) * this.M + b) * this.M + c;
-	}
-
-	/**
-	 * Decodes a single number back into a `(berry, a, b, c)` tuple
-	 * (inverse of {@link encodeKey}).
-	 *
-	 * @param key - Encoded state key.
-	 */
-	private decodeKey(key: number): [number, number, number, number] {
-		const c = key % this.M;
-		key = (key - c) / this.M;
-		const b = key % this.M;
-		key = (key - b) / this.M;
-		const a = key % this.M;
-		const berry = (key - a) / this.M;
-		return [berry, a, b, c];
 	}
 }

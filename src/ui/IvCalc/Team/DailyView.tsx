@@ -7,6 +7,7 @@ import { formatWithComma, round1 } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
 import MarkdownBlockElement from "../../common/MarkdownBlockElement";
 import MessageDialog from "../../Dialog/MessageDialog";
+import MagoBerry from "../../Resources/MagoBerry";
 import InfoButton from "../InfoButton";
 import IngredientIcon from "../IngredientIcon";
 import MainSkillIcon from "../MainSkillIcon";
@@ -17,7 +18,8 @@ import SpecialtyButton from "../SpecialtyButton";
 interface DailyViewResult {
 	iv: PokemonIv;
 	totalStrength: number;
-	berryTotalStrength: number;
+	berryStrength: number;
+	bigBerryStrength: number;
 	skillCount: number;
 	skillStrength: number;
 	skillExtraHelp: number;
@@ -45,7 +47,11 @@ const DailyView = React.memo(
 
 		const total = results.reduce((sum, r) => sum + (r?.totalStrength ?? 0), 0);
 		const totalBerry = results.reduce(
-			(sum, r) => sum + (r?.berryTotalStrength ?? 0),
+			(sum, r) => sum + (r?.berryStrength ?? 0),
+			0,
+		);
+		const totalBigBerry = results.reduce(
+			(sum, r) => sum + (r?.bigBerryStrength ?? 0),
 			0,
 		);
 
@@ -73,6 +79,12 @@ const DailyView = React.memo(
 				<StyledTotalArticle style={{ marginLeft: "-0.1rem" }}>
 					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
 					<span>{formatWithComma(totalBerry)}</span>
+					{totalBigBerry > 0 && (
+						<>
+							<MagoBerry sx={{ marginLeft: "0.5rem" }} />
+							<span>{formatWithComma(totalBigBerry)}</span>
+						</>
+					)}
 				</StyledTotalArticle>
 				<div className="category">
 					<SpecialtyButton specialty="Ingredients" disabled />

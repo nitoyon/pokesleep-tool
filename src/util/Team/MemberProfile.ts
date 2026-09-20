@@ -1,6 +1,7 @@
 import { isExpertField } from "../../data/fields";
 import { whistlePeriod } from "../../util/Energy";
 import { getBerryStrength } from "../Berry";
+import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
 import type { PokemonBoxItem } from "../PokemonBox";
 import type { StrengthParameter } from "../PokemonStrength";
@@ -95,24 +96,29 @@ export function buildMemberProfile(
 	);
 
 	// bagUsage
-	const normalBagUsage = iv.getBagUsagePerHelpDetail({
-		berry: bonus.berry,
-		ingredient:
-			bonus.ingredientReason === "ex" ? 0 : (bonus.ingredient as 0 | 1),
-		carryLimitAdd: bonus.carryLimitAdd,
-		carryLimitMul: bonus.carryLimitMul,
-		expertIng: bonus.ingredientReason === "ex",
-	});
+	const normalBagUsage = iv.getBagUsagePerHelpDetail(
+		bonusEffectToInventoryBonus(bonus),
+	);
 	const extraBagUsage = iv.getBagUsagePerHelpDetail({});
 
 	// Berry strengths
-	const berryRawStrength = getBerryStrength(iv.pokemon.type, iv.level);
-	const berryStrength = Math.ceil(
-		berryRawStrength * (1 + param.fieldBonus / 100),
+	const berry1Strength = Math.ceil(
+		getBerryStrength(iv.pokemon.type, iv.level) * (1 + param.fieldBonus / 100),
 	);
 	const berryStrengthWithBonus = Math.ceil(
-		berryStrength * strength.berryStrengthBonus,
+		berry1Strength * strength.berryStrengthBonus,
 	);
+	// TODO: assume only psychic big berry
+	const bigBerry1Strength =
+		bonus.bigBerryCount === 0
+			? 0
+			: getBerryStrength(
+					"psychic",
+					iv.level,
+					param.fieldBonus,
+					strength.berryStrengthBonus,
+					true,
+				);
 
 	// ingStrengthRate
 	const ingInRecipeStrengthRate =
@@ -150,8 +156,8 @@ export function buildMemberProfile(
 		normalBagUsage,
 		extraBagUsage,
 		carryLimit,
-		berryRawStrength,
-		berryStrength,
+		berry1Strength,
+		bigBerry1Strength,
 		berryStrengthWithBonus,
 		ingStrengthRate,
 		skillName,

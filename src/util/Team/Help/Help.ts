@@ -189,7 +189,7 @@ function applySingleHelp(
 ): { carryLimitLeft: number; isNormalHelp: boolean } {
 	// Sneaky snacking
 	if (carryLimitLeft === 0) {
-		progress.berryTotalStrength +=
+		progress.berryStrength +=
 			profile.berryStrengthWithBonus * profile.iv.berryCount;
 		return { carryLimitLeft, isNormalHelp: false };
 	}
@@ -207,8 +207,7 @@ function applySingleHelp(
 	}
 
 	if (outcome.name === "berry") {
-		progress.berryTotalStrength +=
-			profile.berryStrengthWithBonus * outcome.count;
+		progress.berryStrength += profile.berryStrengthWithBonus * outcome.count;
 		carryLimitLeft = Math.max(0, carryLimitLeft - outcome.count);
 	} else {
 		const ingName = outcome.name as IngredientName;
@@ -218,6 +217,21 @@ function applySingleHelp(
 			ingName,
 			(progress.ingCounts.get(ingName) ?? 0) + count,
 		);
+	}
+
+	// Big berry: picked up along with the berry or ingredient of this help.
+	// It occupies the inventory, and the ones over the carry limit are not brought.
+	const { bigBerryRate, bigBerryCount } = profile.bonus;
+	if (
+		bigBerryRate > 0 &&
+		bigBerryCount > 0 &&
+		carryLimitLeft > 0 &&
+		rng() < bigBerryRate
+	) {
+		const count = Math.min(bigBerryCount, carryLimitLeft);
+		progress.bigBerryHelpCount++;
+		progress.bigBerryCount += count;
+		carryLimitLeft -= count;
 	}
 	return { carryLimitLeft, isNormalHelp: true };
 }

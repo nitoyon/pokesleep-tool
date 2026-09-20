@@ -1,3 +1,4 @@
+import { getBigBerryRate } from "../data/BigBerry";
 import {
 	type BonusEffects,
 	emptyBonusEffects,
@@ -123,11 +124,15 @@ export interface StrengthResult
 	 */
 	helpingBonusStrength: number;
 
-	/** Strength per 1 berry (area bonus not included) */
-	berryRawStrength: number;
 	/** Strength per 1 berry (area bonus included) */
+	berry1Strength: number;
+	/** Strength got from berries */
 	berryStrength: number;
-	/** Total strength gained by berry */
+	/** Strength per 1 big berry */
+	bigBerry1Strength: number;
+	/** Strength got from big berries */
+	bigBerryStrength: number;
+	/** Total strength gained by berry and big berry */
 	berryTotalStrength: number;
 
 	/** Ingredient strength */
@@ -247,6 +252,10 @@ export const recipeLevelBonus: { [key: number]: number } = {
  * Represents BonusEffects and the source of each bonus.
  */
 export interface BonusEffectsWithReason extends BonusEffects {
+	/** Probability of getting the big berry (0.12 means 12%) */
+	bigBerryRate: number;
+	/** Number of big berries obtained */
+	bigBerryCount: number;
 	/** The source of the skill trigger bonus (event or expert mode). */
 	skillTriggerReason: "event" | "ex" | "none";
 	/** The source of the skill level bonus (event or expert mode). */
@@ -421,7 +430,6 @@ class PokemonStrength {
 	 */
 	calculateImpl(): StrengthResult {
 		const param = this.param;
-		const rp = new PokemonRp(this.iv);
 		const bonus = this.bonusEffects;
 		const energy = new Energy(this.iv).calculate(param, bonus);
 		const helpCount: HelpCountResult = calculateHelpCount(
@@ -451,8 +459,7 @@ class PokemonStrength {
 
 		// calc berry
 		const berryCountWithBonus = this.iv.berryCount + bonus.berry;
-		const berryRawStrength = rp.berryStrength;
-		const berryStrength = getBerryStrength(
+		const berry1Strength = getBerryStrength(
 			this.iv.pokemon.type,
 			this.iv.level,
 			param.fieldBonus,
@@ -463,13 +470,30 @@ class PokemonStrength {
 			param.fieldBonus,
 			this.berryStrengthBonus,
 		);
-		const berryTotalStrength =
+		const berryStrength =
 			berryStrengthWithBonus *
 				berryCountWithBonus *
 				helpCount.berryNormalHelpCount +
 			berryStrengthWithBonus *
 				this.iv.berryCount *
 				helpCount.total.sneakySnacking;
+
+		// TODO: assume only psychic big berry
+		const bigBerry1Strength =
+			helpCount.bigBerryCount === 0
+				? 0
+				: getBerryStrength(
+						"psychic",
+						this.iv.level,
+						param.fieldBonus,
+						this.berryStrengthBonus,
+						true,
+					);
+		const bigBerryStrength =
+			helpCount.bigBerryCount === 0
+				? 0
+				: bigBerry1Strength * helpCount.bigBerryCount;
+		const berryTotalStrength = berryStrength + bigBerryStrength;
 
 		// calc skill
 		let skillValue = 0,
@@ -508,8 +532,10 @@ class PokemonStrength {
 			helpingBonusStrength,
 			ingStrength,
 			ingredients,
+			berry1Strength,
 			berryStrength,
-			berryRawStrength,
+			bigBerry1Strength,
+			bigBerryStrength,
 			berryTotalStrength,
 			skillValue,
 			skillStrength,
@@ -999,6 +1025,7 @@ class PokemonStrength {
 			param.customEventBonus,
 			this.iv.pokemon,
 		);
+		const bigBerryRate = getBigBerryRate(eventBonus.bigBerry, this.iv.pokemon);
 
 		// whistle and help count (usual help) is not affected
 		// by the event and expert bonus except for dish bonus
@@ -1006,6 +1033,8 @@ class PokemonStrength {
 			return {
 				...emptyBonusEffects,
 				dish: eventBonus.dish,
+				bigBerryRate: 0,
+				bigBerryCount: 0,
 				skillTriggerReason: "none",
 				skillLevelReason: "none",
 				ingredientReason: "none",
@@ -1064,8 +1093,13 @@ class PokemonStrength {
 			berry: targetEventBonus.berry,
 			ingredient:
 				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
-			carryLimitAdd: targetEventBonus.carryLimitAdd + exCarryLimitAdd,
+			carryLimitAdd:
+				targetEventBonus.carryLimitAdd +
+				eventBonus.globalCarryLimitAdd +
+				exCarryLimitAdd,
 			carryLimitMul: targetEventBonus.carryLimitMul,
+			globalCarryLimitAdd: 0, // already merged into carryLimitAdd above
+			bigBerry: eventBonus.bigBerry,
 			potSize: targetEventBonus.potSize,
 			ingredientReason: expertIngredient > eventIngredient ? "ex" : "event",
 			dreamShard: eventBonus.dreamShard,
@@ -1074,6 +1108,8 @@ class PokemonStrength {
 			skillIngredient: eventBonus.skillIngredient,
 			berryBurst: eventBonus.berryBurst,
 			dish: eventBonus.dish,
+			bigBerryRate: bigBerryRate.rate,
+			bigBerryCount: bigBerryRate.count,
 			energyFromDish: eventBonus.energyFromDish,
 			fixedBerries: targetEventBonus.fixedBerries,
 			fixedAreas: targetEventBonus.fixedAreas,

@@ -9,9 +9,9 @@ import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { cbexFieldIndex, ggexFieldIndex } from "../../../data/fields";
+import type { InventoryBonus } from "../../../util/InventoryBonus";
 import { calculateInventoryDistribution } from "../../../util/PokemonInventory";
 import type PokemonIv from "../../../util/PokemonIv";
-import type { InventoryBonus } from "../../../util/PokemonIv";
 import { cbexCarryLimitAdd } from "../../../util/PokemonStrength";
 import { formatHoursLong, formatHoursShort } from "../../../util/TimeUtil";
 import { useElementWidth } from "../../common/Hook";
@@ -148,6 +148,8 @@ const FullPreview = React.memo(
 					state.expertMode &&
 					state.expertBerry !== 2 &&
 					state.expertIngBonus === 1,
+				bigBerryRate: 0,
+				bigBerryCount: 0,
 			};
 			const cdf = calculateInventoryDistribution(iv, state.campTicket, bonus);
 			cdf.unshift(0); // Add initial wait time for the first help

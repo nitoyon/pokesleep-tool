@@ -30,7 +30,7 @@ describe("applyHelp", () => {
 		applyHelp(2000, sim, rng);
 
 		expect(member.progress.nextHelpSec).toBe(2970);
-		expect(member.progress.berryTotalStrength).toBe(20);
+		expect(member.progress.berryStrength).toBe(20);
 		expect(member.progress.help.all).toBe(2);
 		expect(member.progress.help.normal).toBe(2);
 		expect(member.progress.help.sneakySnacking).toBe(0);
@@ -52,7 +52,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0.3, 0]);
 		applyHelp(990, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(20);
+		expect(member.progress.berryStrength).toBe(20);
 		expect(member.progress.ingCounts.size).toBe(0);
 	});
 
@@ -74,7 +74,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0.7, 0.9, 0]);
 		applyHelp(990 * 2, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(0);
+		expect(member.progress.berryStrength).toBe(0);
 		expect(member.progress.ingCounts.get("apple")).toBe(1);
 		expect(member.progress.ingCounts.get("ginger")).toBe(2);
 	});
@@ -101,7 +101,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0]);
 		applyHelp(990 * 7, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(10 * 2);
+		expect(member.progress.berryStrength).toBe(10 * 2);
 		expect(member.progress.ingCounts.get("apple")).toBe(21);
 		expect(member.progress.help.all).toBe(7);
 		expect(member.progress.help.normal).toBe(6);
@@ -119,10 +119,71 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0]);
 		applyHelp(990 * 3, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(3 * (10 * 2));
+		expect(member.progress.berryStrength).toBe(3 * (10 * 2));
 		expect(member.progress.help.all).toBe(3);
 		expect(member.progress.help.normal).toBe(0);
 		expect(member.progress.help.sneakySnacking).toBe(3);
+	});
+
+	describe("big berry", () => {
+		const berry2: BagUsagePerHelpDetailItem[] = [
+			{ name: "berry", count: 2, p: 1, ingSlotIndex: -1, ingKindIndex: -1 },
+		];
+
+		function createBigBerryMember(
+			bigBerryRate: number,
+			bigBerryCount: number,
+			carryLimit = 21,
+		): TeamMember {
+			const { bonus } = createProfile();
+			return createTeamMember({
+				bonus: { ...bonus, bigBerryRate, bigBerryCount },
+				normalBagUsage: berry2,
+				carryLimit,
+			});
+		}
+
+		test("rng below the rate brings big berries", () => {
+			const member = createBigBerryMember(0.3, 2);
+
+			// outcome, big berry (0.2 < 0.3), skill
+			applyHelp(990, createSim(member), createRandomQueue([0, 0.2, 0]));
+
+			expect(member.progress.bigBerryHelpCount).toBe(1);
+			expect(member.progress.bigBerryCount).toBe(2);
+		});
+
+		test("rng at or above the rate brings no big berries", () => {
+			const member = createBigBerryMember(0.3, 2);
+
+			applyHelp(990, createSim(member), createRandomQueue([0, 0.3, 0]));
+
+			expect(member.progress.bigBerryHelpCount).toBe(0);
+			expect(member.progress.bigBerryCount).toBe(0);
+		});
+
+		test("big berries occupy the inventory and are capped by the space left", () => {
+			// carryLimit 3: berry x2 leaves 1 slot, so only 1 of 2 big berries fits.
+			// The inventory is then full and the 2nd help is sneaky snacking.
+			const member = createBigBerryMember(1, 2, 3);
+
+			applyHelp(990 * 2, createSim(member), createRandomQueue([0, 0, 0]));
+
+			expect(member.progress.bigBerryHelpCount).toBe(1);
+			expect(member.progress.bigBerryCount).toBe(1);
+			expect(member.progress.help.normal).toBe(1);
+			expect(member.progress.help.sneakySnacking).toBe(1);
+		});
+
+		test("a full inventory leaves no room for big berries", () => {
+			// carryLimit 2: berry x2 fills the inventory, no rng is drawn for the big berry.
+			const member = createBigBerryMember(1, 2, 2);
+
+			applyHelp(990, createSim(member), createRandomQueue([0, 0]));
+
+			expect(member.progress.bigBerryHelpCount).toBe(0);
+			expect(member.progress.bigBerryCount).toBe(0);
+		});
 	});
 
 	test("drawSkillCount: rng below noneProb keeps skillCount at 0", () => {
@@ -241,8 +302,8 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		normalBagUsage: defaultBagUsageDetail,
 		extraBagUsage: defaultBagUsageDetail,
 		carryLimit: 21,
-		berryRawStrength: 10,
-		berryStrength: 10,
+		berry1Strength: 10,
+		bigBerry1Strength: 0,
 		berryStrengthWithBonus: 10,
 		ingStrengthRate: 1,
 		skillName: "Charge Strength S",
@@ -270,7 +331,9 @@ function createProgress(
 			normal: 0,
 			sneakySnacking: 0,
 		},
-		berryTotalStrength: 0,
+		berryStrength: 0,
+		bigBerryHelpCount: 0,
+		bigBerryCount: 0,
 		ingCounts: new Map(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),

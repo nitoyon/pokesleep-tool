@@ -9,7 +9,7 @@ describe("applyPendingExtraHelpForMember", () => {
 
 		applyPendingExtraHelpForMember(member, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(0);
+		expect(member.progress.berryStrength).toBe(0);
 		expect(member.progress.ingCounts.size).toBe(0);
 		expect(member.progress.pendingExtraHelp).toBe(0);
 	});
@@ -27,7 +27,7 @@ describe("applyPendingExtraHelpForMember", () => {
 
 		applyPendingExtraHelpForMember(member, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(20);
+		expect(member.progress.berryStrength).toBe(20);
 		expect(member.progress.ingCounts.size).toBe(0);
 		expect(member.progress.pendingExtraHelp).toBe(0);
 	});
@@ -46,7 +46,7 @@ describe("applyPendingExtraHelpForMember", () => {
 
 		applyPendingExtraHelpForMember(member, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(0);
+		expect(member.progress.berryStrength).toBe(0);
 		expect(member.progress.ingCounts.get("apple")).toBe(1);
 		expect(member.progress.ingCounts.get("ginger")).toBe(2);
 		expect(member.progress.pendingExtraHelp).toBe(0);
@@ -62,7 +62,7 @@ describe("applyPendingExtraHelpForMember", () => {
 		applyPendingExtraHelpForMember(member, rng);
 
 		expect(member.progress.ingCounts.get("apple")).toBe(6);
-		expect(member.progress.berryTotalStrength).toBe(0);
+		expect(member.progress.berryStrength).toBe(0);
 		expect(member.progress.pendingExtraHelp).toBe(0);
 	});
 });
@@ -84,7 +84,7 @@ function createTeamMember(
 			...profile,
 		} as MemberProfile,
 		progress: {
-			berryTotalStrength: 0,
+			berryStrength: 0,
 			ingCounts: new Map(),
 			pendingExtraHelp: 0,
 			...progress,

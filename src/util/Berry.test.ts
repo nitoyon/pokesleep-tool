@@ -42,4 +42,8 @@ describe("getBerryStrength", () => {
 			getBerryStrength("water", 1),
 		);
 	});
+
+	it("Big berry calculation", () => {
+		expect(getBerryStrength("psychic", 70, 85, 2, true)).toBe(5292);
+	});
 });
