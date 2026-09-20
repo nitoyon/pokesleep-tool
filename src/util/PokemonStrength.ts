@@ -124,8 +124,6 @@ export interface StrengthResult
 	 */
 	helpingBonusStrength: number;
 
-	/** Strength per 1 berry (area bonus not included) */
-	berryRawStrength: number;
 	/** Strength per 1 berry (area bonus included) */
 	berryStrength: number;
 	/** Total strength gained by berry */
@@ -426,7 +424,6 @@ class PokemonStrength {
 	 */
 	calculateImpl(): StrengthResult {
 		const param = this.param;
-		const rp = new PokemonRp(this.iv);
 		const bonus = this.bonusEffects;
 		const energy = new Energy(this.iv).calculate(param, bonus);
 		const helpCount: HelpCountResult = calculateHelpCount(
@@ -456,7 +453,6 @@ class PokemonStrength {
 
 		// calc berry
 		const berryCountWithBonus = this.iv.berryCount + bonus.berry;
-		const berryRawStrength = rp.berryStrength;
 		const berryStrength = getBerryStrength(
 			this.iv.pokemon.type,
 			this.iv.level,
@@ -514,7 +510,6 @@ class PokemonStrength {
 			ingStrength,
 			ingredients,
 			berryStrength,
-			berryRawStrength,
 			berryTotalStrength,
 			skillValue,
 			skillStrength,
