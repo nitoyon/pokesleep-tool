@@ -30,7 +30,7 @@ describe("applyHelp", () => {
 		applyHelp(2000, sim, rng);
 
 		expect(member.progress.nextHelpSec).toBe(2970);
-		expect(member.progress.berryTotalStrength).toBe(20);
+		expect(member.progress.berryStrength).toBe(20);
 		expect(member.progress.help.all).toBe(2);
 		expect(member.progress.help.normal).toBe(2);
 		expect(member.progress.help.sneakySnacking).toBe(0);
@@ -52,7 +52,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0.3, 0]);
 		applyHelp(990, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(20);
+		expect(member.progress.berryStrength).toBe(20);
 		expect(member.progress.ingCounts.size).toBe(0);
 	});
 
@@ -74,7 +74,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0.7, 0.9, 0]);
 		applyHelp(990 * 2, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(0);
+		expect(member.progress.berryStrength).toBe(0);
 		expect(member.progress.ingCounts.get("apple")).toBe(1);
 		expect(member.progress.ingCounts.get("ginger")).toBe(2);
 	});
@@ -101,7 +101,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0]);
 		applyHelp(990 * 7, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(10 * 2);
+		expect(member.progress.berryStrength).toBe(10 * 2);
 		expect(member.progress.ingCounts.get("apple")).toBe(21);
 		expect(member.progress.help.all).toBe(7);
 		expect(member.progress.help.normal).toBe(6);
@@ -119,7 +119,7 @@ describe("applyHelp", () => {
 		const rng = createRandomQueue([0]);
 		applyHelp(990 * 3, sim, rng);
 
-		expect(member.progress.berryTotalStrength).toBe(3 * (10 * 2));
+		expect(member.progress.berryStrength).toBe(3 * (10 * 2));
 		expect(member.progress.help.all).toBe(3);
 		expect(member.progress.help.normal).toBe(0);
 		expect(member.progress.help.sneakySnacking).toBe(3);
@@ -303,6 +303,7 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		extraBagUsage: defaultBagUsageDetail,
 		carryLimit: 21,
 		berry1Strength: 10,
+		bigBerry1Strength: 0,
 		berryStrengthWithBonus: 10,
 		ingStrengthRate: 1,
 		skillName: "Charge Strength S",
@@ -330,7 +331,7 @@ function createProgress(
 			normal: 0,
 			sneakySnacking: 0,
 		},
-		berryTotalStrength: 0,
+		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,
 		ingCounts: new Map(),

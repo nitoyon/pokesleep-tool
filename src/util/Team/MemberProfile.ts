@@ -108,6 +108,17 @@ export function buildMemberProfile(
 	const berryStrengthWithBonus = Math.ceil(
 		berry1Strength * strength.berryStrengthBonus,
 	);
+	// TODO: assume only psychic big berry
+	const bigBerry1Strength =
+		bonus.bigBerryCount === 0
+			? 0
+			: getBerryStrength(
+					"psychic",
+					iv.level,
+					param.fieldBonus,
+					strength.berryStrengthBonus,
+					true,
+				);
 
 	// ingStrengthRate
 	const ingInRecipeStrengthRate =
@@ -146,6 +157,7 @@ export function buildMemberProfile(
 		extraBagUsage,
 		carryLimit,
 		berry1Strength,
+		bigBerry1Strength,
 		berryStrengthWithBonus,
 		ingStrengthRate,
 		skillName,

@@ -77,7 +77,13 @@ export interface TeamMemberStrengthResult extends SkillMetrics {
 
 	/** Berry strength per help, including field bonus. */
 	berry1Strength: number;
-	/** Total berry strength over the period (averaged across iterations). */
+	/** Strength got from berries over the period (averaged across iterations). */
+	berryStrength: number;
+	/** Strength per 1 big berry. */
+	bigBerry1Strength: number;
+	/** Strength got from big berries over the period (averaged across iterations). */
+	bigBerryStrength: number;
+	/** Total strength gained by berry and big berry (averaged across iterations). */
 	berryTotalStrength: number;
 	/** Number of normal helps that brought big berries (averaged across iterations). */
 	bigBerryHelpCount: number;
@@ -156,6 +162,8 @@ export interface MemberProfile {
 	carryLimit: number;
 	/** berry strength including field bonus */
 	berry1Strength: number;
+	/** big berry strength including field bonus and favorite berry bonus */
+	bigBerry1Strength: number;
 	/** berry strength including field bonus and favorite berry bonus */
 	berryStrengthWithBonus: number;
 	/** ingredient strength rate */
@@ -202,7 +210,7 @@ export interface MemberProgress extends SkillMetrics {
 		sneakySnacking: number;
 	};
 	/** Accumulated berry strength over the iteration so far. */
-	berryTotalStrength: number;
+	berryStrength: number;
 	/** Number of normal helps that brought big berries over the iteration so far. */
 	bigBerryHelpCount: number;
 	/** Number of big berries brought over the iteration so far. */
@@ -232,7 +240,7 @@ export interface MemberProgress extends SkillMetrics {
  * Contains only the accumulated output fields, not the internal simulation state.
  */
 export interface IterationResult extends SkillMetrics {
-	berryTotalStrength: number;
+	berryStrength: number;
 	bigBerryHelpCount: number;
 	bigBerryCount: number;
 	ingCounts: Map<IngredientName, number>;
