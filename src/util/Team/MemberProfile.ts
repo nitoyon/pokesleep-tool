@@ -102,12 +102,11 @@ export function buildMemberProfile(
 	const extraBagUsage = iv.getBagUsagePerHelpDetail({});
 
 	// Berry strengths
-	const berryRawStrength = getBerryStrength(iv.pokemon.type, iv.level);
-	const berryStrength = Math.ceil(
-		berryRawStrength * (1 + param.fieldBonus / 100),
+	const berry1Strength = Math.ceil(
+		getBerryStrength(iv.pokemon.type, iv.level) * (1 + param.fieldBonus / 100),
 	);
 	const berryStrengthWithBonus = Math.ceil(
-		berryStrength * strength.berryStrengthBonus,
+		berry1Strength * strength.berryStrengthBonus,
 	);
 
 	// ingStrengthRate
@@ -146,8 +145,7 @@ export function buildMemberProfile(
 		normalBagUsage,
 		extraBagUsage,
 		carryLimit,
-		berryRawStrength,
-		berryStrength,
+		berry1Strength,
 		berryStrengthWithBonus,
 		ingStrengthRate,
 		skillName,
