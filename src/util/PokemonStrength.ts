@@ -126,7 +126,13 @@ export interface StrengthResult
 
 	/** Strength per 1 berry (area bonus included) */
 	berry1Strength: number;
-	/** Total strength gained by berry */
+	/** Strength got from berries */
+	berryStrength: number;
+	/** Strength per 1 big berry */
+	bigBerry1Strength: number;
+	/** Strength got from big berries */
+	bigBerryStrength: number;
+	/** Total strength gained by berry and big berry */
 	berryTotalStrength: number;
 
 	/** Ingredient strength */
@@ -464,13 +470,30 @@ class PokemonStrength {
 			param.fieldBonus,
 			this.berryStrengthBonus,
 		);
-		const berryTotalStrength =
+		const berryStrength =
 			berryStrengthWithBonus *
 				berryCountWithBonus *
 				helpCount.berryNormalHelpCount +
 			berryStrengthWithBonus *
 				this.iv.berryCount *
 				helpCount.total.sneakySnacking;
+
+		// TODO: assume only psychic big berry
+		const bigBerry1Strength =
+			helpCount.bigBerryCount === 0
+				? 0
+				: getBerryStrength(
+						"psychic",
+						this.iv.level,
+						param.fieldBonus,
+						this.berryStrengthBonus,
+						true,
+					);
+		const bigBerryStrength =
+			helpCount.bigBerryCount === 0
+				? 0
+				: bigBerry1Strength * helpCount.bigBerryCount;
+		const berryTotalStrength = berryStrength + bigBerryStrength;
 
 		// calc skill
 		let skillValue = 0,
@@ -510,6 +533,9 @@ class PokemonStrength {
 			ingStrength,
 			ingredients,
 			berry1Strength,
+			berryStrength,
+			bigBerry1Strength,
+			bigBerryStrength,
 			berryTotalStrength,
 			skillValue,
 			skillStrength,
