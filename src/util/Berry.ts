@@ -32,21 +32,22 @@ export const berryBaseStrength: { [type in PokemonType]: number } = {
  * @param level - Pokémon level.
  * @param fieldBonus - Area bonus in percent (e.g. 25 means 25%). Defaults to 0.
  * @param berryStrengthMultiplier - Multiplier for favorite berry etc. Defaults to 1.
+ * @param isBig - Big berry or not.
  */
 export function getBerryStrength(
 	type: PokemonType,
 	level: number,
 	fieldBonus = 0,
 	berryStrengthMultiplier = 1,
+	isBig: boolean = false,
 ): number {
 	if (level === 0) {
 		return 0;
 	}
 	const b0 = berryBaseStrength[type];
-	const rawStrength = Math.max(
-		b0 + level - 1,
-		Math.round(1.025 ** (level - 1) * b0),
-	);
+	const rawStrength =
+		Math.max(b0 + level - 1, Math.round(1.025 ** (level - 1) * b0)) *
+		(isBig ? 10 : 1);
 	const withFieldBonus = Math.ceil(rawStrength * (1 + fieldBonus / 100));
 	return Math.ceil(withFieldBonus * berryStrengthMultiplier);
 }
