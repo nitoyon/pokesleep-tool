@@ -56,7 +56,7 @@ const BerryHelpDialog = React.memo(
 
 		const param = strength.parameter;
 		const berryStrength = Math.ceil(
-			result.berryStrength * strength.berryStrengthBonus,
+			result.berry1Strength * strength.berryStrengthBonus,
 		);
 		const hasBerryCountBonus = result.bonus.berry > 0;
 		return (
