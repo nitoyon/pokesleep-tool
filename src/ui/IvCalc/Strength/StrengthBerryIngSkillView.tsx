@@ -168,11 +168,6 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 			dispatch({ type: "closeEnergyDialog" });
 		}, [dispatch]);
 
-		// format berry value
-		const berryStrength = formatWithComma(
-			Math.round(result.berryTotalStrength),
-		);
-
 		// summarize ing value
 		const ingArticle = getIngArticle(result, settings);
 
@@ -233,7 +228,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 						{t("berry")}
 						<InfoButton onClick={onBerryHelpClick} />
 					</h3>
-					<BerryArticle strength={berryStrength} />
+					<BerryArticle result={result} />
 					<footer>
 						<div>{round1(result.berryRate * 100)}%</div>
 						<div>

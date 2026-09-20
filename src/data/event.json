@@ -94,6 +94,7 @@
 				"skillTrigger": 1.5,
 				"skillLevel": 5,
 				"globalCarryLimitAdd": 15,
+				"bigBerry": "mewtwo1",
 				"fixedBerries": ["psychic", null, null],
 				"fixedAreas": [0, 7]
 			}
@@ -110,6 +111,7 @@
 				"skillTrigger": 1.5,
 				"skillLevel": 2,
 				"globalCarryLimitAdd": 8,
+				"bigBerry": "mewtwo1",
 				"fixedBerries": ["psychic", null, null],
 				"fixedAreas": [0, 7]
 			}
