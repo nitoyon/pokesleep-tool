@@ -20,7 +20,7 @@ describe("applyPendingExtraHelpForMember", () => {
 			{ name: "apple", count: 1, p: 0.4, ingSlotIndex: 0, ingKindIndex: 0 },
 		];
 		const member = createTeamMember(
-			{ extraBagUsage, berryStrengthWithBonus: 10 },
+			{ extraBagUsage, berry1Strength: 10 },
 			{ pendingExtraHelp: 1 },
 		);
 		const rng = createRandomQueue([0.3]);
@@ -39,7 +39,7 @@ describe("applyPendingExtraHelpForMember", () => {
 			{ name: "ginger", count: 2, p: 0.2, ingSlotIndex: 0, ingKindIndex: 0 },
 		];
 		const member = createTeamMember(
-			{ extraBagUsage, berryStrengthWithBonus: 10 },
+			{ extraBagUsage, berry1Strength: 10 },
 			{ pendingExtraHelp: 2 },
 		);
 		const rng = createRandomQueue([0.7, 0.9]);
@@ -80,7 +80,7 @@ function createTeamMember(
 			extraBagUsage: [
 				{ name: "berry", count: 1, p: 1, ingSlotIndex: -1, ingKindIndex: -1 },
 			],
-			berryStrengthWithBonus: 10,
+			berry1Strength: 10,
 			...profile,
 		} as MemberProfile,
 		progress: {

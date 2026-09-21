@@ -55,7 +55,7 @@ function applySingleExtraHelp(
 	const outcome = drawExtraBagUsage(profile.extraBagUsage, rng());
 
 	if (outcome.name === "berry") {
-		progress.berryStrength += profile.berryStrengthWithBonus * outcome.count;
+		progress.berryStrength += profile.berry1Strength * outcome.count;
 	} else {
 		progress.ingCounts.set(
 			outcome.name,

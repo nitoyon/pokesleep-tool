@@ -77,7 +77,7 @@ export interface TeamMemberStrengthResult extends SkillMetrics {
 	iv: PokemonIv;
 	bonus: BonusEffectsWithReason;
 
-	/** Berry strength per help, including field bonus. */
+	/** Berry strength per help, including field bonus and favorite berry bonus. */
 	berry1Strength: number;
 	/** Strength got from berries over the period (averaged across iterations). */
 	berryStrength: number;
@@ -162,12 +162,10 @@ export interface MemberProfile {
 	normalBagUsage: BagUsagePerHelpDetailItem[];
 	extraBagUsage: BagUsagePerHelpDetailItem[];
 	carryLimit: number;
-	/** berry strength including field bonus */
-	berry1Strength: number;
 	/** big berry strength including field bonus and favorite berry bonus */
 	bigBerry1Strength: number;
 	/** berry strength including field bonus and favorite berry bonus */
-	berryStrengthWithBonus: number;
+	berry1Strength: number;
 	/** ingredient strength rate */
 	ingStrengthRate: number;
 	/** skill name */
