@@ -5,6 +5,7 @@ import {
 	maxBerryZoneRate,
 } from "../../MainSkill";
 import type { StrengthParameter } from "../../PokemonStrength";
+import { updateBerryStrength } from "../MemberProgress";
 import type { MemberProfile, TeamContext, TeamMember } from "../Types";
 import { BaseSkill } from "./BaseSkill";
 
@@ -32,12 +33,21 @@ export class BerryZonePsystrike extends BaseSkill {
 
 	apply(member: TeamMember, _tapSec: number, sim: TeamContext): void {
 		member.progress.skillStrength += this.skillValue;
-		member.progress.skillBerryZone += this.zoneRate;
 
 		const { berryZoneRate } = sim.teamProgress;
-		berryZoneRate[this.berryType] = Math.min(
-			(berryZoneRate[this.berryType] ?? 0) + this.zoneRate,
-			maxBerryZoneRate,
-		);
+		const currentZoneRate = berryZoneRate[this.berryType] ?? 0;
+		if (currentZoneRate < maxBerryZoneRate) {
+			const newZoneRate = Math.min(
+				currentZoneRate + this.zoneRate,
+				maxBerryZoneRate,
+			);
+			berryZoneRate[this.berryType] = newZoneRate;
+			member.progress.skillBerryZone += newZoneRate - currentZoneRate;
+		}
+
+		// The zone rate is shared by the whole team, so refresh every member.
+		for (const m of sim.members) {
+			updateBerryStrength(m, sim.teamProfile.param, berryZoneRate);
+		}
 	}
 }

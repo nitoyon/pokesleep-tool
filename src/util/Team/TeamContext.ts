@@ -1,5 +1,9 @@
 import type { StrengthParameter } from "../PokemonStrength";
-import { createMemberProgress, createTeamMembers } from "./MemberProgress";
+import {
+	createMemberProgress,
+	createTeamMembers,
+	updateBerryStrength,
+} from "./MemberProgress";
 import type { MemberProfile, TeamContext } from "./Types";
 
 /**
@@ -54,4 +58,8 @@ export function resetTeamContext(sim: TeamContext): void {
 	sim.teamProgress.berryZoneRate = {
 		psychic: sim.teamProfile.param.berryZone.psychic,
 	};
+
+	for (const member of sim.members) {
+		updateBerryStrength(member, param, sim.teamProgress.berryZoneRate);
+	}
 }
