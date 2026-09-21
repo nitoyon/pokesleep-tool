@@ -231,6 +231,7 @@ function applySingleHelp(
 		const count = Math.min(bigBerryCount, carryLimitLeft);
 		progress.bigBerryHelpCount++;
 		progress.bigBerryCount += count;
+		progress.bigBerryStrength += profile.bigBerry1Strength * count;
 		carryLimitLeft -= count;
 	}
 	return { carryLimitLeft, isNormalHelp: true };

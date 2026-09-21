@@ -215,6 +215,8 @@ export interface MemberProgress extends SkillMetrics {
 	bigBerryHelpCount: number;
 	/** Number of big berries brought over the iteration so far. */
 	bigBerryCount: number;
+	/** Accumulated big berry strength over the iteration so far. */
+	bigBerryStrength: number;
 	/** Accumulated ingredient counts by name over the iteration so far. */
 	ingCounts: Map<IngredientName, number>;
 	/** Number of skills currently stocked (0, 1, or 2). */
@@ -241,6 +243,7 @@ export interface MemberProgress extends SkillMetrics {
  */
 export interface IterationResult extends SkillMetrics {
 	berryStrength: number;
+	bigBerryStrength: number;
 	bigBerryHelpCount: number;
 	bigBerryCount: number;
 	ingCounts: Map<IngredientName, number>;
