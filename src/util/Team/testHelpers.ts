@@ -144,6 +144,7 @@ export function createTestProfile(
 		],
 		carryLimit: 21,
 		ingStrengthRate: 1,
+		berryStrengthBonus: 1,
 		skillName: iv.pokemon.skill,
 		skillLevel: 1,
 		energyRecoveryFactor: 1,

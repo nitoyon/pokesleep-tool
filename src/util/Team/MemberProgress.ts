@@ -1,7 +1,6 @@
 import type { IngredientName } from "../../data/pokemons";
 import { getBerryStrength } from "../Berry";
 import type { StrengthParameter } from "../PokemonStrength";
-import { calcBerryStrengthBonus } from "../PokemonStrength";
 import { zeroSkillMetrics } from "./SkillMetrics";
 import type { MemberProfile, MemberProgress, TeamMember } from "./Types";
 
@@ -17,8 +16,7 @@ export function createMemberProgress(
 	profile: MemberProfile,
 	param: StrengthParameter,
 ): MemberProgress {
-	const { iv, bonus } = profile;
-	const berryStrengthBonus = calcBerryStrengthBonus(iv.pokemon.type, param);
+	const { iv, bonus, berryStrengthBonus } = profile;
 	const progress: MemberProgress = {
 		energy: 100,
 		lastRecoverySec: 0,
