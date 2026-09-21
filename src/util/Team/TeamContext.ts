@@ -25,6 +25,7 @@ export function createTeamContext(
 		teamProgress: {
 			potExtended: 0,
 			extraTastyRate: 0,
+			berryZoneRate: {},
 		},
 	};
 }
@@ -49,4 +50,5 @@ export function resetTeamContext(sim: TeamContext): void {
 	}
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
+	sim.teamProgress.berryZoneRate = {};
 }

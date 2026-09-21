@@ -1,4 +1,4 @@
-import type { IngredientName } from "../../data/pokemons";
+import type { IngredientName, PokemonType } from "../../data/pokemons";
 import type { MainSkillName } from "../../util/MainSkill";
 import type PokemonIv from "../PokemonIv";
 import type { BagUsagePerHelpDetailItem } from "../PokemonIv";
@@ -65,6 +65,8 @@ export interface TeamProgress {
 	potExtended: number;
 	/** Accumulated Extra Tasty rate bonus (percentage points) */
 	extraTastyRate: number;
+	/** Accumulated Berry Zone rate by berry type; types not listed have no bonus. */
+	berryZoneRate: Partial<Record<PokemonType, number>>;
 }
 
 /**
