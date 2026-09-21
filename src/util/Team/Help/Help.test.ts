@@ -138,6 +138,7 @@ describe("applyHelp", () => {
 			const { bonus } = createProfile();
 			return createTeamMember({
 				bonus: { ...bonus, bigBerryRate, bigBerryCount },
+				bigBerry1Strength: 100,
 				normalBagUsage: berry2,
 				carryLimit,
 			});
@@ -151,6 +152,7 @@ describe("applyHelp", () => {
 
 			expect(member.progress.bigBerryHelpCount).toBe(1);
 			expect(member.progress.bigBerryCount).toBe(2);
+			expect(member.progress.bigBerryStrength).toBe(100 * 2);
 		});
 
 		test("rng at or above the rate brings no big berries", () => {
@@ -160,6 +162,7 @@ describe("applyHelp", () => {
 
 			expect(member.progress.bigBerryHelpCount).toBe(0);
 			expect(member.progress.bigBerryCount).toBe(0);
+			expect(member.progress.bigBerryStrength).toBe(0);
 		});
 
 		test("big berries occupy the inventory and are capped by the space left", () => {
@@ -171,6 +174,7 @@ describe("applyHelp", () => {
 
 			expect(member.progress.bigBerryHelpCount).toBe(1);
 			expect(member.progress.bigBerryCount).toBe(1);
+			expect(member.progress.bigBerryStrength).toBe(100);
 			expect(member.progress.help.normal).toBe(1);
 			expect(member.progress.help.sneakySnacking).toBe(1);
 		});
@@ -334,6 +338,7 @@ function createProgress(
 		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,
+		bigBerryStrength: 0,
 		ingCounts: new Map(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),

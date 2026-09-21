@@ -93,6 +93,7 @@ export function createTestProgress(
 		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,
+		bigBerryStrength: 0,
 		ingCounts: new Map(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),

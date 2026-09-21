@@ -39,6 +39,7 @@ export function runIteration(sim: TeamContext): IterationResult[] {
 
 	return sim.members.map(({ progress }) => ({
 		berryStrength: progress.berryStrength,
+		bigBerryStrength: progress.bigBerryStrength,
 		bigBerryHelpCount: progress.bigBerryHelpCount,
 		bigBerryCount: progress.bigBerryCount,
 		ingCounts: progress.ingCounts,

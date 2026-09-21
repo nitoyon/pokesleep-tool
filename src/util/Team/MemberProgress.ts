@@ -23,6 +23,7 @@ export function createMemberProgress(): MemberProgress {
 		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,
+		bigBerryStrength: 0,
 		ingCounts: new Map<IngredientName, number>(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),
