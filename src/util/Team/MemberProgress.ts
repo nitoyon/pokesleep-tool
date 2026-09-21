@@ -1,4 +1,7 @@
 import type { IngredientName } from "../../data/pokemons";
+import { getBerryStrength } from "../Berry";
+import type { StrengthParameter } from "../PokemonStrength";
+import { calcBerryStrengthBonus } from "../PokemonStrength";
 import { zeroSkillMetrics } from "./SkillMetrics";
 import type { MemberProfile, MemberProgress, TeamMember } from "./Types";
 
@@ -6,9 +9,16 @@ import type { MemberProfile, MemberProgress, TeamMember } from "./Types";
  * Build the initial {@link MemberProgress} for a single team member at the
  * start of a simulation iteration.
  *
+ * @param profile Profile of the member.
+ * @param param Strength calculation parameters shared by all members.
  * @returns A fully populated MemberProgress with all accumulators reset.
  */
-export function createMemberProgress(): MemberProgress {
+export function createMemberProgress(
+	profile: MemberProfile,
+	param: StrengthParameter,
+): MemberProgress {
+	const { iv, bonus } = profile;
+	const berryStrengthBonus = calcBerryStrengthBonus(iv.pokemon.type, param);
 	const progress: MemberProgress = {
 		energy: 100,
 		lastRecoverySec: 0,
@@ -20,6 +30,23 @@ export function createMemberProgress(): MemberProgress {
 			normal: 0,
 			sneakySnacking: 0,
 		},
+		berry1Strength: getBerryStrength(
+			iv.pokemon.type,
+			iv.level,
+			param.fieldBonus,
+			berryStrengthBonus,
+		),
+		// TODO: assume only psychic big berry
+		bigBerry1Strength:
+			bonus.bigBerryCount === 0
+				? 0
+				: getBerryStrength(
+						"psychic",
+						iv.level,
+						param.fieldBonus,
+						berryStrengthBonus,
+						true,
+					),
 		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,
@@ -39,9 +66,12 @@ export function createMemberProgress(): MemberProgress {
 /**
  * Create the initial team member states for a simulation iteration.
  */
-export function createTeamMembers(profiles: MemberProfile[]): TeamMember[] {
+export function createTeamMembers(
+	profiles: MemberProfile[],
+	param: StrengthParameter,
+): TeamMember[] {
 	return profiles.map((profile) => ({
 		profile,
-		progress: createMemberProgress(),
+		progress: createMemberProgress(profile, param),
 	}));
 }
