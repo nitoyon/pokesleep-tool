@@ -77,12 +77,8 @@ export interface TeamMemberStrengthResult extends SkillMetrics {
 	iv: PokemonIv;
 	bonus: BonusEffectsWithReason;
 
-	/** Berry strength per help, including field bonus and favorite berry bonus. */
-	berry1Strength: number;
 	/** Strength got from berries over the period (averaged across iterations). */
 	berryStrength: number;
-	/** Strength per 1 big berry. */
-	bigBerry1Strength: number;
 	/** Strength got from big berries over the period (averaged across iterations). */
 	bigBerryStrength: number;
 	/** Total strength gained by berry and big berry (averaged across iterations). */

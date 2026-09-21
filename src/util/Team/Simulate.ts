@@ -161,9 +161,7 @@ function buildMemberStrengthResult(
 		return {
 			iv: profile.iv,
 			bonus: profile.bonus,
-			berry1Strength: profile.berry1Strength,
 			berryStrength: avgBerryStrength,
-			bigBerry1Strength: profile.bigBerry1Strength,
 			bigBerryStrength,
 			berryTotalStrength,
 			bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
