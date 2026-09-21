@@ -46,4 +46,9 @@ describe("getBerryStrength", () => {
 	it("Big berry calculation", () => {
 		expect(getBerryStrength("psychic", 70, 85, 2, true)).toBe(5292);
 	});
+
+	it("berryZoneRate calculation", () => {
+		expect(getBerryStrength("psychic", 50, 85, 2, true, 1.2)).toBe(3258);
+		expect(getBerryStrength("psychic", 50, 85, 2, false, 1.2)).toBe(326);
+	});
 });
