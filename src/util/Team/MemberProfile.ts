@@ -102,11 +102,11 @@ export function buildMemberProfile(
 	const extraBagUsage = iv.getBagUsagePerHelpDetail({});
 
 	// Berry strengths
-	const berry1Strength = Math.ceil(
-		getBerryStrength(iv.pokemon.type, iv.level) * (1 + param.fieldBonus / 100),
-	);
-	const berryStrengthWithBonus = Math.ceil(
-		berry1Strength * strength.berryStrengthBonus,
+	const berry1Strength = getBerryStrength(
+		iv.pokemon.type,
+		iv.level,
+		param.fieldBonus,
+		strength.berryStrengthBonus,
 	);
 	// TODO: assume only psychic big berry
 	const bigBerry1Strength =
@@ -156,9 +156,8 @@ export function buildMemberProfile(
 		normalBagUsage,
 		extraBagUsage,
 		carryLimit,
-		berry1Strength,
 		bigBerry1Strength,
-		berryStrengthWithBonus,
+		berry1Strength,
 		ingStrengthRate,
 		skillName,
 		skillLevel,

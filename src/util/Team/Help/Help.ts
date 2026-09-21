@@ -189,8 +189,7 @@ function applySingleHelp(
 ): { carryLimitLeft: number; isNormalHelp: boolean } {
 	// Sneaky snacking
 	if (carryLimitLeft === 0) {
-		progress.berryStrength +=
-			profile.berryStrengthWithBonus * profile.iv.berryCount;
+		progress.berryStrength += profile.berry1Strength * profile.iv.berryCount;
 		return { carryLimitLeft, isNormalHelp: false };
 	}
 
@@ -207,7 +206,7 @@ function applySingleHelp(
 	}
 
 	if (outcome.name === "berry") {
-		progress.berryStrength += profile.berryStrengthWithBonus * outcome.count;
+		progress.berryStrength += profile.berry1Strength * outcome.count;
 		carryLimitLeft = Math.max(0, carryLimitLeft - outcome.count);
 	} else {
 		const ingName = outcome.name as IngredientName;

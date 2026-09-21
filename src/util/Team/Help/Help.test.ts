@@ -20,7 +20,7 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			baseFreq: 2200,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
+			berry1Strength: 10,
 		});
 		const sim = createSim(member);
 
@@ -44,7 +44,7 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
+			berry1Strength: 10,
 		});
 
 		// 1st help (t=990): 0.3 < 0.6 => berry branch.
@@ -65,7 +65,7 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
+			berry1Strength: 10,
 		});
 
 		// 1st help (t=990): 0.7 -> apple x1
@@ -93,7 +93,7 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
+			berry1Strength: 10,
 			baseFreq: 2200,
 		});
 
@@ -111,7 +111,7 @@ describe("applyHelp", () => {
 	test("NoTap forces sneaky snacking from the start regardless of carryLimit", () => {
 		const member = createTeamMember({
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
+			berry1Strength: 10,
 			baseFreq: 2200,
 		});
 
@@ -307,9 +307,8 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		normalBagUsage: defaultBagUsageDetail,
 		extraBagUsage: defaultBagUsageDetail,
 		carryLimit: 21,
-		berry1Strength: 10,
 		bigBerry1Strength: 0,
-		berryStrengthWithBonus: 10,
+		berry1Strength: 10,
 		ingStrengthRate: 1,
 		skillName: "Charge Strength S",
 		skillLevel: 1,
