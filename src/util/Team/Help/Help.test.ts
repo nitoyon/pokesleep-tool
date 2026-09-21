@@ -20,7 +20,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			baseFreq: 2200,
 			carryLimit: 21,
-			berry1Strength: 10,
 		});
 		const sim = createSim(member);
 
@@ -44,7 +43,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berry1Strength: 10,
 		});
 
 		// 1st help (t=990): 0.3 < 0.6 => berry branch.
@@ -65,7 +63,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berry1Strength: 10,
 		});
 
 		// 1st help (t=990): 0.7 -> apple x1
@@ -93,7 +90,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berry1Strength: 10,
 			baseFreq: 2200,
 		});
 
@@ -111,7 +107,6 @@ describe("applyHelp", () => {
 	test("NoTap forces sneaky snacking from the start regardless of carryLimit", () => {
 		const member = createTeamMember({
 			carryLimit: 21,
-			berry1Strength: 10,
 			baseFreq: 2200,
 		});
 
@@ -136,12 +131,14 @@ describe("applyHelp", () => {
 			carryLimit = 21,
 		): TeamMember {
 			const { bonus } = createProfile();
-			return createTeamMember({
-				bonus: { ...bonus, bigBerryRate, bigBerryCount },
-				bigBerry1Strength: 100,
-				normalBagUsage: berry2,
-				carryLimit,
-			});
+			return createTeamMember(
+				{
+					bonus: { ...bonus, bigBerryRate, bigBerryCount },
+					normalBagUsage: berry2,
+					carryLimit,
+				},
+				{ bigBerry1Strength: 100 },
+			);
 		}
 
 		test("rng below the rate brings big berries", () => {
@@ -307,8 +304,6 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		normalBagUsage: defaultBagUsageDetail,
 		extraBagUsage: defaultBagUsageDetail,
 		carryLimit: 21,
-		bigBerry1Strength: 0,
-		berry1Strength: 10,
 		ingStrengthRate: 1,
 		skillName: "Charge Strength S",
 		skillLevel: 1,
@@ -335,6 +330,8 @@ function createProgress(
 			normal: 0,
 			sneakySnacking: 0,
 		},
+		berry1Strength: 10,
+		bigBerry1Strength: 0,
 		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,

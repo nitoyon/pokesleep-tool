@@ -158,10 +158,6 @@ export interface MemberProfile {
 	normalBagUsage: BagUsagePerHelpDetailItem[];
 	extraBagUsage: BagUsagePerHelpDetailItem[];
 	carryLimit: number;
-	/** big berry strength including field bonus and favorite berry bonus */
-	bigBerry1Strength: number;
-	/** berry strength including field bonus and favorite berry bonus */
-	berry1Strength: number;
 	/** ingredient strength rate */
 	ingStrengthRate: number;
 	/** skill name */
@@ -205,6 +201,10 @@ export interface MemberProgress extends SkillMetrics {
 		/** Help count directly granted to Snorlax (all berries) */
 		sneakySnacking: number;
 	};
+	/** berry strength including field bonus and favorite berry bonus */
+	berry1Strength: number;
+	/** big berry strength including field bonus and favorite berry bonus */
+	bigBerry1Strength: number;
 	/** Accumulated berry strength over the iteration so far. */
 	berryStrength: number;
 	/** Number of normal helps that brought big berries over the iteration so far. */
