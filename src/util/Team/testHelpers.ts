@@ -192,6 +192,6 @@ export function createTestSim(
 			...teamProfileOverrides,
 			param: testParam(paramOverrides),
 		},
-		teamProgress: { potExtended: 0, extraTastyRate: 0 },
+		teamProgress: { potExtended: 0, extraTastyRate: 0, berryZoneRate: {} },
 	};
 }

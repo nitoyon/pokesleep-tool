@@ -262,6 +262,7 @@ function createSim(
 		teamProgress: {
 			potExtended: 0,
 			extraTastyRate: 0,
+			berryZoneRate: {},
 		},
 	};
 }
