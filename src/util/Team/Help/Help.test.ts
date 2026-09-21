@@ -305,6 +305,7 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		extraBagUsage: defaultBagUsageDetail,
 		carryLimit: 21,
 		ingStrengthRate: 1,
+		berryStrengthBonus: 1,
 		skillName: "Charge Strength S",
 		skillLevel: 1,
 		energyRecoveryFactor: 1,

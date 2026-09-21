@@ -137,6 +137,7 @@ export function buildMemberProfile(
 		extraBagUsage,
 		carryLimit,
 		ingStrengthRate,
+		berryStrengthBonus: strength.berryStrengthBonus,
 		skillName,
 		skillLevel,
 		energyRecoveryFactor: recoveryFactor,

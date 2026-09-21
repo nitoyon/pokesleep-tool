@@ -160,6 +160,8 @@ export interface MemberProfile {
 	carryLimit: number;
 	/** ingredient strength rate */
 	ingStrengthRate: number;
+	/** berry strength multiplier (favorite berry / field bonus, etc.) */
+	berryStrengthBonus: number;
 	/** skill name */
 	skillName: MainSkillName;
 	/** skill level */
