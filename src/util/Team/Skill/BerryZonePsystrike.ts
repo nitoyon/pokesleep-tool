@@ -1,6 +1,7 @@
 import type { PokemonType } from "../../../data/pokemons";
 import { getSkillSubValue, getSkillValue } from "../../MainSkill";
 import type { StrengthParameter } from "../../PokemonStrength";
+import { updateBerryStrength } from "../MemberProgress";
 import type { MemberProfile, TeamContext, TeamMember } from "../Types";
 import { BaseSkill } from "./BaseSkill";
 
@@ -38,5 +39,10 @@ export class BerryZonePsystrike extends BaseSkill {
 			(berryZoneRate[this.berryType] ?? 0) + this.zoneRate,
 			MAX_BERRY_ZONE_RATE,
 		);
+
+		// The zone rate is shared by the whole team, so refresh every member.
+		for (const m of sim.members) {
+			updateBerryStrength(m, sim.teamProfile.param, berryZoneRate);
+		}
 	}
 }
