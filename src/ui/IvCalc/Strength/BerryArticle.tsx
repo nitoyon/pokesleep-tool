@@ -9,14 +9,15 @@ const BerryArticle = React.memo(({ result }: { result: StrengthResult }) => {
 	// format berry value
 	const berryStrength = formatWithComma(Math.round(result.berryStrength));
 	const bigBerryStrength = formatWithComma(Math.round(result.bigBerryStrength));
+	const hasBigBerry = bigBerryStrength !== "0";
 
 	return (
-		<StyledBerryArticle>
+		<StyledBerryArticle className={hasBigBerry ? "berry2" : "berry1"}>
 			<div>
 				<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
 				<span>{berryStrength}</span>
 			</div>
-			{bigBerryStrength !== "0" && (
+			{hasBigBerry && (
 				<div>
 					<MagoBerry />
 					<span>{bigBerryStrength}</span>
@@ -41,6 +42,14 @@ const StyledBerryArticle = styled("article")({
 		},
 		"& > svg": {
 			verticalAlign: "middle",
+		},
+	},
+	"&.berry2": {
+		lineHeight: "1.6",
+		fontSize: "0.8rem",
+		"& > div > svg": {
+			width: "16px",
+			height: "16px",
 		},
 	},
 });
