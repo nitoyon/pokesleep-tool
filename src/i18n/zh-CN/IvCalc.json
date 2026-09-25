@@ -79,7 +79,7 @@
 	"estimated value": "推测值",
 	"rate is not fixed": "该宝可梦的食材几率和技能几率尚未确定，因此显示的是临时值。",
 	"rate is not fixed title": "{{name}}的性能尚未确定。可以修改临时值进行模拟。",
-	"mewtwo warning": "「超大芒芒果」显示的是第1周的数量。暂不支持「$t(berry zone increase rate)」的模拟。",
+	"mewtwo warning": "暂不支持「$t(berry zone increase rate)」的模拟。",
 	"low chance": "低",
 	"medium chance": "普通",
 	"high chance": "高",

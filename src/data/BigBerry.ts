@@ -26,6 +26,7 @@ export function getBigBerryRate(
 	name: string,
 	pokemon: PokemonData,
 ): BigBerryRate {
+	// ref) https://x.com/RaenonX_JPstaff/status/2103469583285768659
 	if (name === "mewtwo1") {
 		if (pokemon.id === MEW_ID || pokemon.id === MEWTWO_ID) {
 			return { rate: 0.12, count: 2 };
@@ -34,6 +35,15 @@ export function getBigBerryRate(
 			return { rate: 0.06, count: 1 };
 		}
 		return { rate: 0.03, count: 1 };
+	}
+	if (name === "mewtwo2") {
+		if (pokemon.id === MEW_ID || pokemon.id === MEWTWO_ID) {
+			return { rate: 0.24, count: 2 };
+		}
+		if (pokemon.type === "psychic") {
+			return { rate: 0.1, count: 1 };
+		}
+		return { rate: 0.05, count: 1 };
 	}
 	return { rate: 0, count: 0 };
 }
