@@ -8,16 +8,16 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { getCandyName } from "../../data/pokemons";
+import { getCandyName } from "../../../data/pokemons";
 import calcCandyUsage, {
 	type CandyCount,
 	calcMaxCandy,
-} from "../../util/Candy";
-import { formatWithComma } from "../../util/NumberUtil";
-import type PokemonIv from "../../util/PokemonIv";
-import CollapseEx from "../common/CollapseEx";
-import NumericSliderInput from "../common/NumericSliderInput";
-import CandyIcon from "../Resources/CandyIcon";
+} from "../../../util/Candy";
+import { formatWithComma } from "../../../util/NumberUtil";
+import type PokemonIv from "../../../util/PokemonIv";
+import CollapseEx from "../../common/CollapseEx";
+import NumericSliderInput from "../../common/NumericSliderInput";
+import CandyIcon from "../../Resources/CandyIcon";
 
 /** Configuration for candy dialog */
 type TurnConfig = CandyCount & {

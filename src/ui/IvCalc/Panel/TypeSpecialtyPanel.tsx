@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { PokemonSpecialty, PokemonType } from "../../../data/pokemons";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import MessageDialog from "../../Dialog/MessageDialog";
-import TypeInfoDialog from "../Box/TypeInfoDialog";
+import TypeInfoDialog from "../Dialog/TypeInfoDialog";
 import type { IvAction } from "../IvState";
 import SpecialtyButton from "../SpecialtyButton";
 import TypeButton from "../TypeButton";

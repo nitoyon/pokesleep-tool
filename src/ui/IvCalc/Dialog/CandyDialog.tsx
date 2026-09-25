@@ -15,7 +15,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { getCandyName } from "../../data/pokemons";
+import { getCandyName } from "../../../data/pokemons";
 import calcExpAndCandy, {
 	type BoostEvent,
 	type CalcDayToGetNapExpResult,
@@ -27,24 +27,24 @@ import calcExpAndCandy, {
 	calcExp,
 	calcLevelByCandy,
 	type GrowthIncensePolicy,
-} from "../../util/Exp";
-import Nature, { type PlusMinusOneOrZero } from "../../util/Nature";
-import { clamp, formatWithComma, trunc } from "../../util/NumberUtil";
-import type PokemonIv from "../../util/PokemonIv";
-import { maxLevel } from "../../util/PokemonRp";
-import CollapseEx from "../common/CollapseEx";
-import NumericSliderInput from "../common/NumericSliderInput";
-import SelectEx from "../common/SelectEx";
-import SliderEx from "../common/SliderEx";
-import CandyIcon from "../Resources/CandyIcon";
-import DreamShardIcon from "../Resources/DreamShardIcon";
-import CandyTurnDialog from "./CandyTurnDialog";
-import { LevelInput } from "./IvForm/LevelControl";
+} from "../../../util/Exp";
+import Nature, { type PlusMinusOneOrZero } from "../../../util/Nature";
+import { clamp, formatWithComma, trunc } from "../../../util/NumberUtil";
+import type PokemonIv from "../../../util/PokemonIv";
+import { maxLevel } from "../../../util/PokemonRp";
+import CollapseEx from "../../common/CollapseEx";
+import NumericSliderInput from "../../common/NumericSliderInput";
+import SelectEx from "../../common/SelectEx";
+import SliderEx from "../../common/SliderEx";
+import CandyIcon from "../../Resources/CandyIcon";
+import DreamShardIcon from "../../Resources/DreamShardIcon";
+import { LevelInput } from "../IvForm/LevelControl";
 import {
 	StyledNatureDownEffect,
 	StyledNatureUpEffect,
-} from "./IvForm/NatureTextField";
-import PokemonIcon from "./PokemonIcon";
+} from "../IvForm/NatureTextField";
+import PokemonIcon from "../PokemonIcon";
+import CandyTurnDialog from "./CandyTurnDialog";
 
 /** IV and level information */
 type LevelInfo = {
