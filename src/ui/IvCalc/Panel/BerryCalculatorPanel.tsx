@@ -75,8 +75,7 @@ const BerryCalculatorPanel = React.memo(
 
 		React.useEffect(() => {
 			setPokemonLevel(level);
-			setMultiplier(calcBerryStrengthBonus(type, parameter));
-		}, [level, type, parameter]);
+		}, [level]);
 
 		const strength = getBerryStrength(
 			type,

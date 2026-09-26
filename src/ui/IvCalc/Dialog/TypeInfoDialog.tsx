@@ -14,7 +14,7 @@ import { getBerryRank, getBerryStrength } from "../../../util/Berry";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import type { IvAction } from "../IvState";
 import BerryCalculatorPanel from "../Panel/BerryCalculatorPanel";
-import TypeButton from "../TypeButton";
+import TypeSelect from "../TypeSelect";
 
 const TypeInfoDialog = React.memo(
 	({
@@ -32,21 +32,47 @@ const TypeInfoDialog = React.memo(
 		dispatch: (action: IvAction) => void;
 		onClose: () => void;
 	}) => {
-		const { t } = useTranslation();
-
 		if (!open) {
 			return null;
 		}
-
-		const favoriteFields = fields.filter(
-			(x) => getFavoriteBerries(x.index).indexOf(type) >= 0,
+		return (
+			<TypeInfoDialogContent
+				initialType={type}
+				level={level}
+				parameter={parameter}
+				dispatch={dispatch}
+				onClose={onClose}
+			/>
 		);
+	},
+);
+
+const TypeInfoDialogContent = React.memo(
+	({
+		initialType,
+		level,
+		parameter,
+		dispatch,
+		onClose,
+	}: {
+		initialType: PokemonType;
+		level: number;
+		parameter: StrengthParameter;
+		dispatch: (action: IvAction) => void;
+		onClose: () => void;
+	}) => {
+		const { t } = useTranslation();
+		const [type, setType] = React.useState<PokemonType>(initialType);
+
+		const favoriteFields = fields
+			.filter((x) => !x.expert)
+			.filter((x) => getFavoriteBerries(x.index).indexOf(type) >= 0);
 		const baseStrength = getBerryStrength(type, level);
 
 		return (
-			<Dialog open={open} onClose={onClose}>
+			<Dialog open onClose={onClose}>
 				<DialogTitle>
-					<TypeButton type={type} disabled />
+					<TypeSelect type={type} onChange={setType} />
 				</DialogTitle>
 				<StyledContent>
 					<article>
@@ -103,7 +129,6 @@ const StyledContent = styled(DialogContent)({
 		},
 		"& > div": {
 			marginRight: 0,
-			display: "flex",
 			alignItems: "center",
 			lineHeight: 1.2,
 		},
