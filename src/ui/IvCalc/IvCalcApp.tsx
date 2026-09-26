@@ -97,7 +97,9 @@ const ResearchCalcApp = React.memo(() => {
 					<StyledTab label={t("rating")} />
 					<StyledTab label={t("team")} />
 				</StyledTabs>
-				{state.tabIndex === 0 && <RpView state={state} width={width} />}
+				{state.tabIndex === 0 && (
+					<RpView state={state} width={width} dispatch={dispatch} />
+				)}
 				{state.tabIndex === 1 && (
 					<StrengthView state={state} dispatch={dispatch} />
 				)}

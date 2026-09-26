@@ -68,7 +68,7 @@ const RaderChartAxis = React.memo(({ r }: { r: number }) => {
 	return (
 		<>
 			<g fill="#666" fontSize="70%">
-				<text textAnchor="middle" x={x1} y={y1 - 10}>
+				<text textAnchor="middle" x={x1} y={y1 - 5}>
 					{t("berry")}
 				</text>
 				<text

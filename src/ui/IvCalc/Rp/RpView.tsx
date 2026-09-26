@@ -10,13 +10,23 @@ import PokemonStrength, {
 import RaderChart from "../Chart/RaderChart";
 import IngredientIcon from "../IngredientIcon";
 import type IvState from "../IvState";
+import type { IvAction } from "../IvState";
+import TypeSpecialtyPanel from "../Panel/TypeSpecialtyPanel";
 import BerryIngSkillView from "./BerryIngSkillView";
 import RpInfoDialog from "./RpInfoDialog";
 import RpLabel from "./RpLabel";
 import RpValueDialog from "./RpValueDialog";
 
 const RpView = React.memo(
-	({ state, width }: { state: IvState; width: number }) => {
+	({
+		state,
+		width,
+		dispatch,
+	}: {
+		state: IvState;
+		width: number;
+		dispatch: (action: IvAction) => void;
+	}) => {
 		const { t } = useTranslation();
 		const [rpInfoOpen, setRpInfoOpen] = React.useState(false);
 		const [rpValueOpen, setRpValueOpen] = React.useState(false);
@@ -70,13 +80,27 @@ const RpView = React.memo(
 		return (
 			<>
 				<div>
-					<RpLabel
-						rp={rpResult.rp}
-						iv={pokemonIv}
-						showIcon
-						isError={isError}
-						onClick={onRpInfoClick}
-					/>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+						}}
+					>
+						<RpLabel
+							rp={rpResult.rp}
+							iv={pokemonIv}
+							showIcon
+							isError={isError}
+							onClick={onRpInfoClick}
+						/>
+						<TypeSpecialtyPanel
+							type={pokemon.type}
+							specialty={pokemon.specialty}
+							level={pokemonIv.level}
+							parameter={state.parameter}
+							dispatch={dispatch}
+						/>
+					</div>
 					<BerryIngSkillView
 						berryValue={round1(rpResult.berryRp)}
 						berryProb={round1(rp.iv.berryRate * 100)}
