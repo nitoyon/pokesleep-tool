@@ -7,34 +7,44 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import type { PokemonType } from "../../../data/pokemons";
 import { getBerryStrength } from "../../../util/Berry";
 import { formatWithComma } from "../../../util/NumberUtil";
-import type PokemonIv from "../../../util/PokemonIv";
+import {
+	calcBerryStrengthBonus,
+	type StrengthParameter,
+} from "../../../util/PokemonStrength";
+import type { IvAction } from "../IvState";
+import BerryCalculatorPanel from "../Panel/BerryCalculatorPanel";
 import { StyledInfoDialog } from "./StrengthBerryIngSkillView";
 
 const BerryStrengthDialog = React.memo(
 	({
 		open,
 		onClose,
-		iv,
-		fieldBonus,
-		berryStrengthMultiplier,
+		type,
+		level,
+		parameter,
+		dispatch,
 	}: {
 		open: boolean;
 		onClose: () => void;
-		iv: PokemonIv;
-		fieldBonus: number;
-		berryStrengthMultiplier: number;
+		type: PokemonType;
+		level: number;
+		parameter: StrengthParameter;
+		dispatch: (action: IvAction) => void;
 	}) => {
 		const { t } = useTranslation();
 		if (!open) {
 			return null;
 		}
 
-		const berryRawStrength = getBerryStrength(iv.pokemon.type, iv.level);
+		const fieldBonus = parameter.fieldBonus;
+		const berryStrengthMultiplier = calcBerryStrengthBonus(type, parameter);
+		const berryRawStrength = getBerryStrength(type, level);
 		const berryStrength = getBerryStrength(
-			iv.pokemon.type,
-			iv.level,
+			type,
+			level,
 			fieldBonus,
 			berryStrengthMultiplier,
 		);
@@ -72,6 +82,14 @@ const BerryStrengthDialog = React.memo(
 						</div>
 						<span>{t("favorite berry")}</span>
 					</article>
+					<div style={{ padding: "0 0.5rem" }}>
+						<BerryCalculatorPanel
+							type={type}
+							level={level}
+							parameter={parameter}
+							dispatch={dispatch}
+						/>
+					</div>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={onClose}>{t("close")}</Button>
