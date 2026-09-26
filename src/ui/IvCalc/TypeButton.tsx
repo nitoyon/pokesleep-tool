@@ -57,6 +57,7 @@ const StyledTypeButton = styled(Button)({
 	padding: 0,
 	margin: "0.2rem",
 	borderRadius: "0.5rem",
+	textTransform: "none",
 	"&.MuiButton-sizeSmall": {
 		width: "4.6rem",
 		fontSize: "0.8rem",
