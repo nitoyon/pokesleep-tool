@@ -5,8 +5,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PokemonType } from "../../../data/pokemons";
 import { getBerryStrength } from "../../../util/Berry";
+import { formatWithComma } from "../../../util/NumberUtil";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { calcBerryStrengthBonus } from "../../../util/PokemonStrength";
+import RateTextField from "../../common/RateTextField";
 import { LevelInput } from "../IvForm/LevelControl";
 import type { IvAction } from "../IvState";
 import AreaBonusControl from "../Strength/AreaBonusControl";
@@ -28,6 +30,8 @@ const BerryCalculatorPanel = React.memo(
 		const [multiplier, setMultiplier] = React.useState(() =>
 			calcBerryStrengthBonus(type, parameter),
 		);
+		const [berryZoneRate, setBerryZoneRate] = React.useState(0);
+		const [isBig, setIsBig] = React.useState(false);
 
 		const onLevelChange = React.useCallback((value: number) => {
 			setPokemonLevel(value);
@@ -55,6 +59,20 @@ const BerryCalculatorPanel = React.memo(
 			[],
 		);
 
+		const onBerryZoneRateChange = React.useCallback((value: number) => {
+			setBerryZoneRate(value);
+		}, []);
+
+		const onSizeChange = React.useCallback(
+			(_event: React.MouseEvent<HTMLElement>, value: string) => {
+				if (value === null) {
+					return;
+				}
+				setIsBig(value === "big");
+			},
+			[],
+		);
+
 		React.useEffect(() => {
 			setPokemonLevel(level);
 			setMultiplier(calcBerryStrengthBonus(type, parameter));
@@ -65,6 +83,8 @@ const BerryCalculatorPanel = React.memo(
 			pokemonLevel,
 			parameter.fieldBonus,
 			multiplier,
+			isBig,
+			berryZoneRate,
 		);
 
 		return (
@@ -75,7 +95,7 @@ const BerryCalculatorPanel = React.memo(
 					</span>
 					<div>
 						<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-						{strength}
+						{formatWithComma(strength)}
 					</div>
 				</section>
 				<section>
@@ -103,6 +123,27 @@ const BerryCalculatorPanel = React.memo(
 						<ToggleButton value={1}>×1</ToggleButton>
 						<ToggleButton value={2}>×2</ToggleButton>
 						<ToggleButton value={2.4}>×2.4</ToggleButton>
+					</ToggleButtonGroup>
+				</section>
+				<section>
+					<span className="lbl">{t("skills.Berry Zone.name")}:</span>
+					<RateTextField
+						step={0.2}
+						min={0}
+						max={24}
+						value={berryZoneRate}
+						onChange={onBerryZoneRateChange}
+					/>
+				</section>
+				<section>
+					<span className="lbl">{t("size")}:</span>
+					<ToggleButtonGroup
+						value={isBig ? "big" : "normal"}
+						exclusive
+						onChange={onSizeChange}
+					>
+						<ToggleButton value="normal">{t("normal berry")}</ToggleButton>
+						<ToggleButton value="big">{t("big berry")}</ToggleButton>
 					</ToggleButtonGroup>
 				</section>
 			</StyledPanel>
@@ -135,6 +176,9 @@ const StyledPanel = styled("div")({
 			"& > div > input": {
 				fontSize: "0.9rem",
 				width: "3rem",
+			},
+			"& > button": {
+				textTransform: "none",
 			},
 		},
 		"& > div.MuiToggleButtonGroup-root > button": {
