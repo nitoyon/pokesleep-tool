@@ -31,7 +31,7 @@ import type PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { useLongPress } from "../../common/Hook";
 import CandyIcon from "../../Resources/CandyIcon";
-import CandyDialog from "../CandyDialog";
+import CandyDialog from "../Dialog/CandyDialog";
 import type { IvAction } from "../IvState";
 import PokemonFilterFooter, {
 	type PokemonFilterFooterConfig,

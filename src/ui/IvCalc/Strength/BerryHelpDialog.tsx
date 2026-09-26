@@ -54,7 +54,6 @@ const BerryHelpDialog = React.memo(
 			return null;
 		}
 
-		const param = strength.parameter;
 		const berryStrength = Math.ceil(
 			result.berry1Strength * strength.berryStrengthBonus,
 		);
@@ -154,9 +153,10 @@ const BerryHelpDialog = React.memo(
 				<BerryStrengthDialog
 					open={berryStrengthOpen}
 					onClose={onBerryStrengthInfoClose}
-					iv={strength.pokemonIv}
-					fieldBonus={param.fieldBonus}
-					berryStrengthMultiplier={strength.berryStrengthBonus}
+					type={strength.pokemonIv.pokemon.type}
+					level={strength.pokemonIv.level}
+					parameter={parameter}
+					dispatch={dispatch}
 				/>
 			</StyledInfoDialog>
 		);

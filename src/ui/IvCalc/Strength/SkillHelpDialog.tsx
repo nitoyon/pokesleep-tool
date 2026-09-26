@@ -16,7 +16,6 @@ import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { getEventBonus } from "../../../data/events";
 import type { PokemonType } from "../../../data/pokemons";
-import pokemons from "../../../data/pokemons";
 import { NoTap, whistlePeriod } from "../../../util/Energy";
 import {
 	getMaxSkillLevel,
@@ -38,7 +37,6 @@ import {
 	round1,
 	round2,
 } from "../../../util/NumberUtil";
-import PokemonIv from "../../../util/PokemonIv";
 import PokemonStrength, {
 	calculateBerryBurstStrength,
 	getBerryBurstTeam,
@@ -75,24 +73,20 @@ const SkillHelpDialog = React.memo(
 	}) => {
 		const { t } = useTranslation();
 		const [berryStrengthOpen, setBerryStrengthOpen] = React.useState(false);
-		const [berryIv, setBerryIv] = React.useState(strength.pokemonIv);
-		const [berryStrengthMultiplier, setBerryStrengthMultiplier] =
-			React.useState(1);
+		const [berryType, setBerryType] = React.useState<PokemonType>(
+			strength.pokemonIv.pokemon.type,
+		);
+		const [berryLevel, setBerryLevel] = React.useState(
+			strength.pokemonIv.level,
+		);
 		const [pityProcOpen, setPityProcOpen] = React.useState(false);
 		const onBerryInfoClick = React.useCallback(
 			(type: PokemonType, level: number) => {
 				setBerryStrengthOpen(true);
-				const iv = new PokemonIv({
-					pokemonName:
-						pokemons.find((x) => x.type === type)?.name ?? "Bulbasaur",
-					level,
-				});
-				setBerryIv(iv);
-				setBerryStrengthMultiplier(
-					new PokemonStrength(iv, strength.parameter).berryStrengthBonus,
-				);
+				setBerryType(type);
+				setBerryLevel(level);
 			},
-			[strength.parameter],
+			[],
 		);
 		const onBerryStrenthClose = React.useCallback(() => {
 			setBerryStrengthOpen(false);
@@ -385,9 +379,10 @@ const SkillHelpDialog = React.memo(
 				<BerryStrengthDialog
 					open={berryStrengthOpen}
 					onClose={onBerryStrenthClose}
-					iv={berryIv}
-					fieldBonus={settings.fieldBonus}
-					berryStrengthMultiplier={berryStrengthMultiplier}
+					type={berryType}
+					level={berryLevel}
+					parameter={settings}
+					dispatch={dispatch}
 				/>
 				<SkillPityProcDialog
 					open={pityProcOpen}

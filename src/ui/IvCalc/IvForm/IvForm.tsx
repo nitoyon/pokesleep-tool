@@ -6,7 +6,7 @@ import type PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { frequencyToString } from "../../../util/TimeUtil";
-import CandyDialog from "../CandyDialog";
+import CandyDialog from "../Dialog/CandyDialog";
 import InfoButton from "../InfoButton";
 import type { IvAction } from "../IvState";
 import FrequencyInfoDialog from "./FrequencyInfoDialog";

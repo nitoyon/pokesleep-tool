@@ -1,0 +1,214 @@
+import { Button, Dialog, DialogActions } from "@mui/material";
+import { styled } from "@mui/system";
+import React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import {
+	formatWithComma,
+	round1,
+	round2,
+	round3,
+} from "../../../util/NumberUtil";
+import type PokemonRp from "../../../util/PokemonRp";
+import { maxLevel, type RpStrengthResult } from "../../../util/PokemonRp";
+
+const RpValueDialog = React.memo(
+	({
+		open,
+		onClose,
+		rp,
+		rpResult,
+		rpType,
+	}: {
+		open: boolean;
+		onClose: () => void;
+		rp: PokemonRp;
+		rpResult: RpStrengthResult;
+		rpType: "berry" | "ingredient" | "skill";
+	}) => {
+		const { t } = useTranslation();
+		if (!open) {
+			return null;
+		}
+
+		let color = "",
+			rpVal = "";
+		const title = t(rpType);
+		const param1 = round2(rp.helpCountPer5Hour);
+		const desc1 = t("helps per 5 hours");
+		let param2 = "",
+			desc2 = "",
+			param3 = "",
+			desc3 = "",
+			param4 = "",
+			desc4 = "";
+		const bonus = rp.bonus;
+		const param5 = bonus.toString();
+		if (rpType === "berry") {
+			color = "#24d76a";
+			rpVal = round1(rpResult.berryRp);
+			param2 = `${round1(rp.iv.berryRate * 100)}%`;
+			desc2 = t("berry rate");
+			param3 = rp.berryStrength.toString();
+			desc3 = t("berry strength");
+			param4 = rp.iv.berryCount.toString();
+			desc4 = t("berry count");
+		} else if (rpType === "ingredient") {
+			color = "#fab855";
+			rpVal = round1(rpResult.ingredientRp);
+			param2 = `${round1(rp.iv.ingredientRate * 100)}%`;
+			desc2 = t("ingredient rate");
+			param3 = round1(rp.ingredientEnergy);
+			desc3 = t("ingredient strength");
+			param4 = round3(rp.ingredientG);
+			desc4 = t("ingredient factor");
+		} else {
+			color = "#44a2fd";
+			rpVal = round1(rpResult.skillRp);
+			param2 = `${round1(rp.iv.skillRate * 100)}%`;
+			desc2 = t("skill rate");
+			param3 = formatWithComma(rp.skillValue);
+			desc3 = t("skill strength");
+		}
+
+		return (
+			<StyledRpDialog open={open} onClose={onClose}>
+				<header>
+					<h1>
+						<span style={{ background: color }}>{title}</span>
+						<strong>{rpVal}</strong>
+					</h1>
+					<h2>
+						<span className="box box1">{param1}</span>
+						<> × </>
+						<span className="box box2">{param2}</span>
+						<> × </>
+						<span className="box box3">{param3}</span>
+						<> × </>
+						{param4 !== "" && (
+							<>
+								<span className="box box4">{param4}</span>×
+							</>
+						)}
+						<span className="box box5">{param5}</span>
+					</h2>
+				</header>
+				<article>
+					<div>
+						<span className="box box1">{param1}</span>
+					</div>
+					<span>{desc1}</span>
+					<div>
+						<span className="box box2">{param2}</span>
+					</div>
+					<span>{desc2}</span>
+					<div>
+						<span className="box box3">{param3}</span>
+					</div>
+					<span>{desc3}</span>
+					{param4 !== "" && (
+						<>
+							<div>
+								<span className="box box4">{param4}</span>
+							</div>
+							<span>{desc4}</span>
+						</>
+					)}
+					<div>
+						<span className="box box5">{param5}</span>
+					</div>
+					<span>
+						<Trans
+							i18nKey="bonus factor"
+							components={{
+								nature: <>{round2(rp.energyBonus)}</>,
+								subskill: <>{round2(rp.subSkillBonus)}</>,
+							}}
+						/>
+					</span>
+				</article>
+				<footer>
+					<p>
+						<Trans
+							i18nKey="rp formula"
+							components={{
+								link: (
+									<a href={t("rp formula doc url")}>
+										{t("rp formula doc title")}
+									</a>
+								),
+							}}
+						/>
+					</p>
+					<p>{t("estimated beyond level", { level: maxLevel })}</p>
+				</footer>
+				<DialogActions>
+					<Button onClick={onClose}>{t("close")}</Button>
+				</DialogActions>
+			</StyledRpDialog>
+		);
+	},
+);
+
+const StyledRpDialog = styled(Dialog)({
+	"& header": {
+		margin: "1rem",
+		"& > h1": {
+			fontSize: "1.5rem",
+			margin: 0,
+			"& > span": {
+				fontWeight: 400,
+				display: "inline-block",
+				width: "4rem",
+				fontSize: ".6rem",
+				padding: ".1rem 0",
+				textAlign: "center",
+				color: "white",
+				borderRadius: ".6rem",
+				verticalAlign: "50%",
+			},
+			"& > strong": {
+				paddingLeft: "0.5rem",
+			},
+		},
+		"& > h2": {
+			display: "inline-block",
+			fontWeight: "normal",
+			fontSize: "0.9rem",
+			margin: "0.3rem 0 0 0.5rem",
+			lineHeight: "1.9",
+		},
+	},
+
+	"& article": {
+		margin: "1rem .5rem 0 .5rem",
+		display: "grid",
+		gridGap: ".5rem",
+		rowGap: ".8rem",
+		gridTemplateColumns: "max-content 1fr",
+		fontSize: "0.9rem",
+		"& > div": {
+			textAlign: "right",
+		},
+	},
+	"& footer": {
+		margin: "1rem 1rem 0 1rem",
+		fontSize: "0.8rem",
+		"& > p": {
+			margin: ".5rem 0 0 0",
+		},
+	},
+	"& span.box": {
+		borderRadius: ".3rem",
+		padding: ".1rem .4rem",
+		margin: "0",
+		color: "white",
+		textAlign: "center",
+	},
+	"& span.box1": { background: "#1ebee1" },
+	"& span.box2": { background: "#27c18e" },
+	"& span.box3": { background: "#e7c300" },
+	"& span.box4": { background: "#ce5052" },
+	"& span.box5": { background: "#ce3fa3" },
+});
+
+export default RpValueDialog;

@@ -16,14 +16,11 @@ import { PokemonBoxItem } from "../../../util/PokemonBox";
 import PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
-import MessageDialog from "../../Dialog/MessageDialog";
 import IvForm from "../IvForm/IvForm";
 import type { IvAction } from "../IvState";
+import TypeSpecialtyPanel from "../Panel/TypeSpecialtyPanel";
 import PokemonIcon from "../PokemonIcon";
 import RpLabel from "../Rp/RpLabel";
-import SpecialtyButton from "../SpecialtyButton";
-import TypeButton from "../TypeButton";
-import TypeInfoDialog from "./TypeInfoDialog";
 
 // Full-screen transition
 // https://mui.com/material-ui/react-dialog/#full-screen-dialogs
@@ -106,8 +103,6 @@ const BoxItemDialogContent = React.memo(
 		const [nickname, setNickname] = React.useState<string>(
 			originalBoxItem.nickname,
 		);
-		const [typeOpen, setTypeOpen] = React.useState(false);
-		const [specialtyOpen, setSpecialtyOpen] = React.useState(false);
 		const [rp, setRp] = React.useState<number>(
 			new PokemonRp(boxItem.iv).calculate().rp,
 		);
@@ -124,12 +119,6 @@ const BoxItemDialogContent = React.memo(
 			},
 			[boxItem, localName, nickname],
 		);
-		const onTypeClick = React.useCallback(() => {
-			setTypeOpen(true);
-		}, []);
-		const onTypeClose = React.useCallback(() => {
-			setTypeOpen(false);
-		}, []);
 		const onShinyClick = React.useCallback(() => {
 			onFormChange(
 				boxItem.iv.clone({
@@ -169,13 +158,6 @@ const BoxItemDialogContent = React.memo(
 			onClose();
 		}, [isEdit, onChange, onClose, boxItem, nickname]);
 
-		const onSpecialtyClick = React.useCallback(() => {
-			setSpecialtyOpen(true);
-		}, []);
-		const onSpecialtyClose = React.useCallback(() => {
-			setSpecialtyOpen(false);
-		}, []);
-
 		let displayNickName = nickname;
 		if (!isEditingNickName && nickname === "") {
 			displayNickName = t(`pokemons.${boxItem.iv.pokemonName}`);
@@ -186,17 +168,13 @@ const BoxItemDialogContent = React.memo(
 				<article>
 					<RpLabel rp={rp} iv={boxItem.iv} />
 					<header className="control">
-						<span className="status">
-							<TypeButton
-								type={boxItem.iv.pokemon.type}
-								disabled
-								onClick={onTypeClick}
-							/>
-							<SpecialtyButton
-								specialty={boxItem.iv.pokemon.specialty}
-								onClick={onSpecialtyClick}
-							/>
-						</span>
+						<TypeSpecialtyPanel
+							type={boxItem.iv.pokemon.type}
+							specialty={boxItem.iv.pokemon.specialty}
+							level={boxItem.iv.level}
+							parameter={parameter}
+							dispatch={dispatch}
+						/>
 						{!boxItem.iv.isMythical && (
 							<span className="shiny">
 								<ToggleButton
@@ -240,40 +218,6 @@ const BoxItemDialogContent = React.memo(
 					<Button onClick={onCloseClick}>{t("close")}</Button>
 					{!isEdit && <Button onClick={onSaveClick}>{t("add")}</Button>}
 				</DialogActions>
-				<TypeInfoDialog
-					open={typeOpen}
-					onClose={onTypeClose}
-					type={boxItem.iv.pokemon.type}
-					level={boxItem.iv.level}
-					dispatch={dispatch}
-					parameter={parameter}
-				/>
-				<MessageDialog
-					open={specialtyOpen}
-					onClose={onSpecialtyClose}
-					message={
-						<>
-							<header>
-								{t("specialty")}
-								<>: </>
-								<SpecialtyButton
-									specialty={boxItem.iv.pokemon.specialty}
-									disabled
-								/>
-							</header>
-							<p>
-								{t(`${boxItem.iv.pokemon.specialty.toLowerCase()} desc`)}
-								{boxItem.iv.pokemon.specialty === "All" && (
-									<ul>
-										<li>{t("berries desc")}</li>
-										<li>{t("ingredients desc")}</li>
-										<li>{t("skills desc")}</li>
-									</ul>
-								)}
-							</p>
-						</>
-					}
-				/>
 			</>
 		);
 	},
@@ -288,13 +232,6 @@ const StyledDialog = styled(Dialog)({
 				position: "absolute",
 				top: ".8rem",
 				right: "1rem",
-				"& > span.status > button": {
-					padding: 0,
-					lineHeight: 1.5,
-					fontSize: "0.7rem",
-					borderRadius: "0.5rem",
-					width: "4rem",
-				},
 				"& > span.shiny": {
 					"& > button": {
 						border: 0,
