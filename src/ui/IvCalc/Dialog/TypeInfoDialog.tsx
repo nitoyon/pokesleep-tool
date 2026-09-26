@@ -67,7 +67,7 @@ const TypeInfoDialogContent = React.memo(
 		const favoriteFields = fields
 			.filter((x) => !x.expert)
 			.filter((x) => getFavoriteBerries(x.index).indexOf(type) >= 0);
-		const baseStrength = getBerryStrength(type, level);
+		const baseStrength = getBerryStrength(type, 1);
 
 		return (
 			<Dialog open onClose={onClose}>
