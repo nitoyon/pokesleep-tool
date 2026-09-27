@@ -19,9 +19,7 @@ const RpLabel = React.memo(
 		onClick?: () => void;
 	}) => {
 		const { t } = useTranslation();
-		const isEstimated =
-			iv.level > maxLevel ||
-			(iv.pokemon.name === "Mewtwo" && iv.skillLevel === 4);
+		const isEstimated = iv.level > maxLevel;
 
 		const clickHandler = React.useCallback(() => {
 			if (onClick !== undefined) {
