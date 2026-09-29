@@ -6667,6 +6667,74 @@
 		}
 	},
 	{
+		"id": 590,
+		"name": "Foongus",
+		"arrival": "2026-10-05",
+		"sleepType": "dozing",
+		"exp": 600,
+		"type": "poison",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 5,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 590,
+		"evolutionCount": 0,
+		"evolutionLeft": 1,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
+		"id": 591,
+		"name": "Amoonguss",
+		"arrival": "2026-10-05",
+		"sleepType": "dozing",
+		"exp": 600,
+		"type": "poison",
+		"specialty": "unknown",
+		"skill": "unknown",
+		"fp": 12,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 590,
+		"evolutionCount": 1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "unknown1",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "unknown2",
+			"c2": 0,
+			"c3": 0
+		},
+		"ing3": {
+			"name": "unknown3",
+			"c3": 0
+		}
+	},
+	{
 		"id": 627,
 		"name": "Rufflet",
 		"arrival": "2025-01-20",

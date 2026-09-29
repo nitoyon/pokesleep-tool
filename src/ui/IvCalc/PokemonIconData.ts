@@ -2085,6 +2085,46 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#a99073", "#c5ad8b", "#f0d083", "#e29672"],
 		shinyPallet: ["#9a8e86", "#b6a6a2", "#e2ea72", "#b6a6a2"],
 	},
+	// Foongus
+	"590": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 0.25, color: 0 },
+			{ x: 0.1, y: 0, w: 0.8, h: 1, r: 0.15, color: 0 },
+			{ x: 0.38, y: 0.5, w: 0.24, h: 0.24, r: 0.2, color: 1 },
+			{ x: 0, y: 0, w: 1, h: 0.1, color: 2 },
+			{ x: 0, y: 0.1, w: 1, h: 0.05, color: 3 },
+			{ x: 0, y: 0.25, w: 1, h: 0.08, color: 3 },
+		],
+		normalPallet: ["#f2efea", "#ffbbee", "#ee3930", "#69604c"],
+		shinyPallet: ["#f2efea", "#ffbbee", "#aa99e1", "#69604c"],
+	},
+	// Amoonguss
+	"591": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 0.25, color: 0 },
+			{ x: 0.3, y: 0.25, w: 0.37, h: 1, color: 0 },
+			{ x: 0, y: 0.5, w: 1, h: 0.3, color: 0 },
+			{ x: 0.4, y: 0.4, w: 0.2, h: 0.2, color: 1 },
+			{ x: 0.5, y: 0, w: 0.7, h: 0.25, color: 2 },
+			{ x: 0.9, y: 0.5, w: 0.3, h: 0.3, color: 2 },
+			{ x: 0, y: 0.5, w: 0.12, h: 0.3, color: 2 },
+			{ x: 0, y: 0, w: 1, h: 0.05, color: 3 },
+			{ x: 0.47, y: 0, w: 0.06, h: 0.3, color: 3 },
+			{ x: 0.3, y: 0.25, w: 0.06, h: 1, color: 3 },
+			{ x: 0.67, y: 0.25, w: 0.06, h: 1, color: 3 },
+			{ x: 0, y: 0.25, w: 1, h: 0.06, color: 3 },
+			{ x: 0, y: 0.5, w: 0.3, h: 0.06, color: 3 },
+			{ x: 0, y: 0.8, w: 0.3, h: 0.06, color: 3 },
+			{ x: 0.1, y: 0.5, w: 0.06, h: 0.3, color: 3 },
+			{ x: 0.67, y: 0.25, w: 0.4, h: 0.06, color: 3 },
+			{ x: 0.67, y: 0.5, w: 0.4, h: 0.06, color: 3 },
+			{ x: 0.67, y: 0.8, w: 0.4, h: 0.06, color: 3 },
+			{ x: 0.84, y: 0.5, w: 0.06, h: 0.3, color: 3 },
+			{ x: 0.3, y: 0.9, w: 0.4, h: 0.1, color: 3 },
+		],
+		normalPallet: ["#eeeeee", "#ffbbee", "#dd3980", "#69604c"],
+		shinyPallet: ["#eeeeee", "#ffbbee", "#aa99e1", "#69604c"],
+	},
 	// Rufflet
 	"627": {
 		rects: [
