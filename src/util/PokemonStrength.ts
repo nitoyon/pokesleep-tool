@@ -640,6 +640,9 @@ class PokemonStrength {
 				mainSkillBase * Math.max(bonus.ingredientDraw, bonus.skillIngredient),
 			);
 		}
+		if (mainSkill === "Cooking Assist S (Bulk Up)") {
+			mainSkillBase = Math.floor(mainSkillBase * bonus.skillIngredient);
+		}
 		if (mainSkill.startsWith("Dream Shard Magnet S")) {
 			mainSkillBase *= bonus.dreamShard;
 		}
