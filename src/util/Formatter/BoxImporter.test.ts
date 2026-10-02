@@ -604,6 +604,17 @@ describe("importFromCsvTsv", () => {
 			expect(result.items).toHaveLength(1);
 			expect(result.warnings).toHaveLength(0);
 		});
+
+		test("Darkrai: mainSkill does not generate warning", () => {
+			const result = importFromCsvTsv(
+				"Pokémon,Main Skill\nDarkrai,Charge Strength M (Bad Dreams)",
+				"csv",
+				t,
+			);
+			expect(result.items).toHaveLength(1);
+			expect(result.items[0].iv.pokemonName).toBe("Darkrai");
+			expect(result.warnings).toHaveLength(0);
+		});
 	});
 });
 

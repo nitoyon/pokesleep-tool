@@ -256,7 +256,7 @@ function parseBoxRow(
 
 	// Versatile skill
 	const mainSkillRaw = getField(row, "mainSkill").trim();
-	if (mainSkillRaw && pokemon.mythIng !== undefined) {
+	if (mainSkillRaw && pokemon.skill === "Versatile") {
 		const versatile = maps.versatileSkill.get(normalizeKey(mainSkillRaw));
 		if (!versatile) {
 			return { kind: "error", fields: ["mainSkill"] };
