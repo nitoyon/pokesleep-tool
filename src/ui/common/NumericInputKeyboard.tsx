@@ -9,7 +9,7 @@ import PopperMenu from "./PopperMenu";
  */
 const NumericInputKeyboard = React.memo(
 	React.forwardRef<NumericInputHandle, NumericInputProps>(
-		({ children, min, max, value, onChange, ...props }, ref) => {
+		({ children, min, max, step, value, onChange, ...props }, ref) => {
 			const [open, setOpen] = React.useState(false);
 			const [focused, setFocused] = React.useState(false);
 			const [rawText, setRawText] = React.useState(value.toString());
@@ -120,6 +120,7 @@ const NumericInputKeyboard = React.memo(
 								},
 								min,
 								max,
+								step,
 							},
 						}}
 						inputProps={{ inputMode: "numeric" }}

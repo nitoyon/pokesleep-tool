@@ -12,12 +12,13 @@ import SliderAndArrow from "./SliderAndArrow";
  */
 const NumericSliderInput = React.memo(
 	React.forwardRef<NumericInputHandle, NumericInputProps>(
-		({ min, max, value, onChange, ...props }, ref) => {
+		({ min, max, step, value, onChange, ...props }, ref) => {
 			return (
 				<NumericInput
 					ref={ref}
 					min={min}
 					max={max}
+					step={step}
 					value={value}
 					onChange={onChange}
 					{...props}
@@ -25,6 +26,7 @@ const NumericSliderInput = React.memo(
 					<SliderAndArrow
 						min={min ?? 0}
 						max={max ?? Number.MAX_SAFE_INTEGER}
+						step={step ?? 1}
 						sx={{ padding: "0.2rem 0.5rem", minWidth: "300px" }}
 						value={value}
 						onChange={onChange}

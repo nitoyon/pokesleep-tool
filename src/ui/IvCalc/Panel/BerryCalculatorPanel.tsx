@@ -8,10 +8,10 @@ import { getBerryStrength } from "../../../util/Berry";
 import { formatWithComma } from "../../../util/NumberUtil";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { calcBerryStrengthBonus } from "../../../util/PokemonStrength";
-import RateTextField from "../../common/RateTextField";
 import { LevelInput } from "../IvForm/LevelControl";
 import type { IvAction } from "../IvState";
 import AreaBonusControl from "../Strength/AreaBonusControl";
+import BerryZoneControl from "../Strength/BerryZoneControl";
 
 const BerryCalculatorPanel = React.memo(
 	({
@@ -126,10 +126,7 @@ const BerryCalculatorPanel = React.memo(
 				</section>
 				<section>
 					<span className="lbl">{t("skills.Berry Zone.name")}:</span>
-					<RateTextField
-						step={0.2}
-						min={0}
-						max={24}
+					<BerryZoneControl
 						value={berryZoneRate}
 						onChange={onBerryZoneRateChange}
 					/>

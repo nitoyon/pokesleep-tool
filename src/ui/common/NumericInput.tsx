@@ -31,6 +31,7 @@ export interface NumericInputHandle {
 export type NumericInputProps = Omit<InputProps, OmitProps> & {
 	min?: number;
 	max?: number;
+	step?: number;
 	value: number;
 	onChange: (value: number) => void;
 	children?: React.ReactNode;
@@ -42,13 +43,14 @@ export type NumericInputProps = Omit<InputProps, OmitProps> & {
  */
 const NumericInput = React.memo(
 	React.forwardRef<NumericInputHandle, NumericInputProps>(
-		({ min, max, value, onChange, children, ...props }, ref) => {
+		({ min, max, step, value, onChange, children, ...props }, ref) => {
 			if (canUseKeyboard) {
 				return (
 					<NumericInputKeyboard
 						ref={ref}
 						min={min}
 						max={max}
+						step={step}
 						value={value}
 						onChange={onChange}
 						{...props}
@@ -62,6 +64,7 @@ const NumericInput = React.memo(
 						ref={ref}
 						min={min}
 						max={max}
+						step={step}
 						value={value}
 						onChange={onChange}
 						{...props}

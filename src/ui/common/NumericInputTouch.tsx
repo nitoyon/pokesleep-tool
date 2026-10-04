@@ -7,11 +7,7 @@ import SubdirectoryArrowLeftIcon from "@mui/icons-material/SubdirectoryArrowLeft
 import { Button, Divider, IconButton, Input } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
-import {
-	clamp,
-	formatWithComma,
-	getFormatWithCommaPos,
-} from "../../util/NumberUtil";
+import { clamp, formatWithComma } from "../../util/NumberUtil";
 import type { NumericInputHandle, NumericInputProps } from "./NumericInput";
 import PopperMenu from "./PopperMenu";
 
@@ -47,9 +43,8 @@ const notifyNumpadVisibilityChange = (visible: boolean) => {
  */
 const NumericInputTouch = React.memo(
 	React.forwardRef<NumericInputHandle, NumericInputProps>(
-		({ children, min, max, value, onChange, ...props }, ref) => {
+		({ children, min, max, step, value, onChange, ...props }, ref) => {
 			const [open, setOpen] = React.useState(false);
-			const [isEmpty, setIsEmpty] = React.useState(false);
 			const [isNumpadVisible, setIsNumpadVisible] = React.useState(
 				globalIsNumpadVisible,
 			);
@@ -64,6 +59,30 @@ const NumericInputTouch = React.memo(
 
 			const minValue = min ?? 0;
 			const maxValue = max ?? Number.MAX_SAFE_INTEGER;
+			const decimals = getDecimalPlaces(step);
+			const showPeriod = decimals > 0;
+
+			/** Convert the value to raw text (without commas). */
+			const valueToText = React.useCallback(
+				(v: number): string =>
+					decimals > 0 ? Number(v.toFixed(decimals)).toString() : v.toString(),
+				[decimals],
+			);
+
+			/** Parse raw text. Empty text is treated as the minimum value. */
+			const parseText = React.useCallback(
+				(text: string): number =>
+					text === "" ? Math.max(0, minValue) : parseFloat(text),
+				[minValue],
+			);
+
+			// Raw text being edited (without commas). "" means empty.
+			// This is needed to keep intermediate text such as "1." or "".
+			const [rawText, setRawText] = React.useState(() => valueToText(value));
+			// Discard rawText if the value has been changed from outside
+			// (e.g. slider in children).
+			const editText =
+				parseText(rawText) === value ? rawText : valueToText(value);
 
 			// Subscribe to global numpad visibility changes
 			React.useEffect(() => {
@@ -79,14 +98,18 @@ const NumericInputTouch = React.memo(
 			// causing tap events to be dropped or processed incorrectly during rapid input.
 			const valueRef = React.useRef(value);
 			const cursorPosRef = React.useRef(cursorPos);
-			const isEmptyRef = React.useRef(isEmpty);
+			const textRef = React.useRef(editText);
 
 			// Keep refs in sync with state
 			React.useEffect(() => {
 				valueRef.current = value;
 				cursorPosRef.current = cursorPos;
-				isEmptyRef.current = isEmpty;
-			}, [value, cursorPos, isEmpty]);
+				textRef.current = editText;
+			}, [value, cursorPos, editText]);
+
+			// Use " " (space) to represent empty input to maintain input height
+			const displayText = formatRawText(open ? editText : valueToText(value));
+			const text = displayText === "" ? " " : displayText;
 
 			// Extract input element's computed style and position when open
 			React.useEffect(() => {
@@ -134,8 +157,7 @@ const NumericInputTouch = React.memo(
 
 				// Convert raw cursor position to display position (accounting for commas)
 				const range = document.createRange();
-				const displayText = isEmpty ? "" : formatWithComma(value);
-				const displayPos = getFormatWithCommaPos(value, cursorPos);
+				const displayPos = rawPosToDisplayPos(displayText, cursorPos);
 				const offset = Math.min(displayPos, displayText.length);
 
 				range.setStart(textNode, offset);
@@ -148,42 +170,46 @@ const NumericInputTouch = React.memo(
 					x: rect.left - mirrorRect.left,
 					y: rect.top - mirrorRect.top,
 				});
-			}, [open, cursorPos, value, isEmpty]);
+			}, [open, cursorPos, displayText]);
 
 			const onToggleClick = React.useCallback(() => {
 				globalIsNumpadVisible = !globalIsNumpadVisible;
 				notifyNumpadVisibilityChange(globalIsNumpadVisible);
 			}, []);
 
+			/** Start editing with the current value, cursor at the end. */
+			const startEditing = React.useCallback(() => {
+				const raw = valueToText(value);
+				textRef.current = raw;
+				cursorPosRef.current = raw.length;
+				setRawText(raw);
+				setCursorPos(raw.length);
+				setOpen(true);
+				setClearNext(true);
+			}, [value, valueToText]);
+
 			const onClick = React.useCallback(
 				(e: React.MouseEvent<HTMLInputElement>) => {
-					setIsEmpty(false);
-					const text = formatWithComma(value);
-
 					// First time open or mirror not ready, set cursor to end
 					if (!(open && mirrorRef.current)) {
-						setCursorPos(text.length);
-						setOpen(true);
-						setClearNext(true);
+						startEditing();
 						return;
 					}
 
 					// Find text node
 					const textNode = mirrorRef.current.firstChild;
 					if (textNode === null || textNode.nodeType !== Node.TEXT_NODE) {
-						setCursorPos(text.length);
-						setOpen(true);
-						setClearNext(true);
+						startEditing();
 						return;
 					}
 
 					// Find the character position closest to the click using Range API
 					const clickX = e.clientX;
 					const range = document.createRange();
-					let closestPos = text.length;
+					let closestPos = textRef.current.length;
 					let minDistance = Infinity;
 
-					for (let i = 0; i <= text.length; i++) {
+					for (let i = 0; i <= displayText.length; i++) {
 						range.setStart(textNode, 0);
 						range.setEnd(textNode, i);
 						const rect = range.getBoundingClientRect();
@@ -192,24 +218,43 @@ const NumericInputTouch = React.memo(
 						if (distance < minDistance) {
 							minDistance = distance;
 							// Convert display position to raw position (remove commas)
-							const rawPos = text.substring(0, i).replace(/,/g, "").length;
+							const rawPos = displayText
+								.substring(0, i)
+								.replace(/,/g, "").length;
 							closestPos = rawPos;
 						}
 					}
 
 					// Move cursor to the specified position
+					cursorPosRef.current = closestPos;
 					setCursorPos(closestPos);
 					setOpen(true);
 					setClearNext(false);
 				},
-				[open, value],
+				[open, displayText, startEditing],
 			);
 
 			const onClose = React.useCallback(() => {
-				setIsEmpty(false);
 				setOpen(false);
 				setClearNext(false);
-			}, []);
+				if (!open) {
+					return;
+				}
+
+				// Adjust the value to be a multiple of step
+				if (step !== undefined && step > 0) {
+					const cur = valueRef.current;
+					const rounded = clamp(
+						minValue,
+						Number((Math.round(cur / step) * step).toFixed(decimals)),
+						maxValue,
+					);
+					if (rounded !== cur) {
+						valueRef.current = rounded;
+						onChange(rounded);
+					}
+				}
+			}, [open, step, decimals, minValue, maxValue, onChange]);
 
 			// Expose focus and close methods to parent via ref
 			React.useImperativeHandle(
@@ -217,62 +262,128 @@ const NumericInputTouch = React.memo(
 				() => ({
 					focus: () => {
 						if (!open) {
-							setIsEmpty(false);
-							setCursorPos(value.toString().length);
-							setOpen(true);
-							setClearNext(true);
+							startEditing();
 						}
 						anchorRef.current?.querySelector("input")?.focus();
 					},
 					close: onClose,
 				}),
-				[onClose, open, value],
+				[onClose, open, startEditing],
+			);
+
+			/**
+			 * Update the text being edited and notify the parsed value.
+			 * @param newText New raw text (without commas).
+			 * @param newCursorPos New cursor position in the raw text.
+			 */
+			const applyText = React.useCallback(
+				(newText: string, newCursorPos: number) => {
+					// Prepend "0" when the text starts with "." (".5" -> "0.5")
+					if (newText.startsWith(".")) {
+						newText = `0${newText}`;
+						newCursorPos++;
+					}
+
+					// Remove leading zeros ("05" -> "5")
+					const leadingZeros = /^0+(?=\d)/.exec(newText)?.[0].length ?? 0;
+					if (leadingZeros > 0) {
+						newText = newText.slice(leadingZeros);
+						newCursorPos = Math.max(0, newCursorPos - leadingZeros);
+					}
+
+					// Truncate extra decimal digits
+					const periodPos = newText.indexOf(".");
+					if (
+						decimals > 0 &&
+						periodPos >= 0 &&
+						newText.length - periodPos - 1 > decimals
+					) {
+						newText = newText.slice(0, periodPos + 1 + decimals);
+						newCursorPos = Math.min(newCursorPos, newText.length);
+					}
+
+					const val = parseText(newText);
+					if (Number.isNaN(val)) {
+						return;
+					}
+					const clamped = clamp(minValue, val, maxValue);
+					if (clamped !== val) {
+						newText = valueToText(clamped);
+						newCursorPos = newText.length;
+					}
+
+					textRef.current = newText;
+					cursorPosRef.current = newCursorPos;
+					valueRef.current = clamped;
+					setRawText(newText);
+					setCursorPos(newCursorPos);
+					onChange(clamped);
+				},
+				[decimals, minValue, maxValue, onChange, parseText, valueToText],
 			);
 
 			const onDigitClick = React.useCallback(
 				(digit: number) => {
-					setIsEmpty(false);
 					const digitStr = digit.toString();
 
 					// If clearNext is true, replace entire value with the digit
 					if (clearNext) {
 						setClearNext(false);
-						const val = clamp(minValue, digit, maxValue);
-						onChange(val);
-						setCursorPos(val.toString().length);
+						applyText(digitStr, 1);
 						return;
 					}
 
-					const currentText = isEmptyRef.current
-						? "0"
-						: valueRef.current.toString();
+					const currentText = textRef.current;
 					const currentCursorPos = cursorPosRef.current;
+					if (currentText === "0") {
+						applyText(digitStr, 1);
+						return;
+					}
+
+					// Ignore input when the decimal part is already full
+					const periodPos = currentText.indexOf(".");
+					if (
+						decimals > 0 &&
+						periodPos >= 0 &&
+						currentCursorPos > periodPos &&
+						currentText.length - periodPos - 1 >= decimals
+					) {
+						return;
+					}
 
 					// Insert digit at cursor position
-					let newText: string;
-					if (currentText === "0") {
-						newText = digitStr;
-						setCursorPos(1);
-					} else {
-						newText =
-							currentText.slice(0, currentCursorPos) +
+					applyText(
+						currentText.slice(0, currentCursorPos) +
 							digitStr +
-							currentText.slice(currentCursorPos);
-						setCursorPos(currentCursorPos + 1);
-					}
-
-					let val = parseInt(newText, 10);
-					if (Number.isNaN(val)) {
-						return;
-					}
-					val = clamp(minValue, val, maxValue);
-					onChange(val);
-					if (val === maxValue) {
-						setCursorPos(val.toString().length);
-					}
+							currentText.slice(currentCursorPos),
+						currentCursorPos + 1,
+					);
 				},
-				[maxValue, minValue, onChange, clearNext],
+				[applyText, clearNext, decimals],
 			);
+
+			const onPeriodClick = React.useCallback(() => {
+				if (!showPeriod) {
+					return;
+				}
+
+				// If clearNext is true, replace entire value with "0."
+				if (clearNext) {
+					setClearNext(false);
+					applyText("0.", 2);
+					return;
+				}
+
+				const currentText = textRef.current;
+				const currentCursorPos = cursorPosRef.current;
+				if (currentText.includes(".")) {
+					return; // Period already exists
+				}
+				applyText(
+					`${currentText.slice(0, currentCursorPos)}.${currentText.slice(currentCursorPos)}`,
+					currentCursorPos + 1,
+				);
+			}, [applyText, clearNext, showPeriod]);
 
 			const onBackspaceClick = React.useCallback(() => {
 				setClearNext(false);
@@ -281,37 +392,42 @@ const NumericInputTouch = React.memo(
 					return; // Can't delete before the start
 				}
 
-				const currentText = valueRef.current.toString();
-				const currentIsEmpty = isEmptyRef.current;
-				if (currentText.length <= 1 || currentIsEmpty) {
-					setIsEmpty(true);
-					onChange(Math.max(0, minValue));
-					setCursorPos(0);
-				} else {
-					// Delete character before cursor
-					const newText =
-						currentText.slice(0, currentCursorPos - 1) +
-						currentText.slice(currentCursorPos);
-					const val = parseInt(newText, 10);
-					if (!Number.isNaN(val)) {
-						onChange(Math.max(val, minValue));
-						setCursorPos(currentCursorPos - 1);
-					}
+				// Delete character before cursor
+				const currentText = textRef.current;
+				applyText(
+					currentText.slice(0, currentCursorPos - 1) +
+						currentText.slice(currentCursorPos),
+					currentCursorPos - 1,
+				);
+			}, [applyText]);
+
+			const onDeleteClick = React.useCallback(() => {
+				setClearNext(false);
+				const currentCursorPos = cursorPosRef.current;
+				const currentText = textRef.current;
+				if (currentCursorPos >= currentText.length) {
+					return; // Can't delete after the end
 				}
-			}, [minValue, onChange]);
+
+				// Delete character at cursor position
+				applyText(
+					currentText.slice(0, currentCursorPos) +
+						currentText.slice(currentCursorPos + 1),
+					currentCursorPos,
+				);
+			}, [applyText]);
 
 			const onClearClick = React.useCallback(() => {
 				setClearNext(false);
-				setIsEmpty(true);
-				onChange(Math.max(0, minValue));
-				setCursorPos(0);
-			}, [minValue, onChange]);
+				applyText("", 0);
+			}, [applyText]);
 
 			const onNavMove = React.useCallback((diff: number) => {
 				setClearNext(false);
-				const max = isEmptyRef.current ? 0 : valueRef.current.toString().length;
-				const currentCursorPos = cursorPosRef.current;
-				setCursorPos(clamp(0, currentCursorPos + diff, max));
+				const max = textRef.current.length;
+				const newPos = clamp(0, cursorPosRef.current + diff, max);
+				cursorPosRef.current = newPos;
+				setCursorPos(newPos);
 			}, []);
 
 			const onKeyDown = React.useCallback(
@@ -320,6 +436,13 @@ const NumericInputTouch = React.memo(
 					if (e.key >= "0" && e.key <= "9") {
 						e.preventDefault();
 						onDigitClick(parseInt(e.key, 10));
+						return;
+					}
+
+					// Handle period
+					if (e.key === ".") {
+						e.preventDefault();
+						onPeriodClick();
 						return;
 					}
 
@@ -333,29 +456,7 @@ const NumericInputTouch = React.memo(
 					// Handle Delete (forward delete)
 					if (e.key === "Delete") {
 						e.preventDefault();
-						setClearNext(false);
-						const currentCursorPos = cursorPosRef.current;
-						const currentText = valueRef.current.toString();
-						const currentIsEmpty = isEmptyRef.current;
-
-						if (currentCursorPos >= currentText.length) {
-							return; // Can't delete after the end
-						}
-
-						if (currentText.length === 1 || currentIsEmpty) {
-							setIsEmpty(true);
-							onChange(Math.max(0, minValue));
-							setCursorPos(0);
-						} else {
-							// Delete character at cursor position
-							const newText =
-								currentText.slice(0, currentCursorPos) +
-								currentText.slice(currentCursorPos + 1);
-							const val = parseInt(newText, 10);
-							if (!Number.isNaN(val)) {
-								onChange(Math.max(val, minValue));
-							}
-						}
+						onDeleteClick();
 						return;
 					}
 
@@ -376,19 +477,14 @@ const NumericInputTouch = React.memo(
 					// Handle Home (move cursor to start)
 					if (e.key === "Home") {
 						e.preventDefault();
-						setClearNext(false);
-						setCursorPos(0);
+						onNavMove(-Number.MAX_SAFE_INTEGER);
 						return;
 					}
 
 					// Handle End (move cursor to end)
 					if (e.key === "End") {
 						e.preventDefault();
-						setClearNext(false);
-						const max = isEmptyRef.current
-							? 0
-							: valueRef.current.toString().length;
-						setCursorPos(max);
+						onNavMove(Number.MAX_SAFE_INTEGER);
 						return;
 					}
 
@@ -401,16 +497,13 @@ const NumericInputTouch = React.memo(
 				},
 				[
 					onDigitClick,
+					onPeriodClick,
 					onBackspaceClick,
+					onDeleteClick,
 					onNavMove,
 					onClose,
-					minValue,
-					onChange,
 				],
 			);
-
-			// Use " " (space) to represent empty input to maintain input height
-			const text = isEmpty ? " " : formatWithComma(value);
 
 			return (
 				<>
@@ -478,13 +571,28 @@ const NumericInputTouch = React.memo(
 									<IconButton className="ok" onClick={onClose}>
 										<SubdirectoryArrowLeftIcon />
 									</IconButton>
-									<IconButton className="nav" onClick={() => onNavMove(-1)}>
-										<ArrowBackOutlinedIcon />
-									</IconButton>
+									{showPeriod ? (
+										<div className="navPair">
+											<IconButton className="nav" onClick={() => onNavMove(-1)}>
+												<ArrowBackOutlinedIcon fontSize="small" />
+											</IconButton>
+											<IconButton className="nav" onClick={() => onNavMove(1)}>
+												<ArrowForwardOutlinedIcon fontSize="small" />
+											</IconButton>
+										</div>
+									) : (
+										<IconButton className="nav" onClick={() => onNavMove(-1)}>
+											<ArrowBackOutlinedIcon />
+										</IconButton>
+									)}
 									<IconButton onClick={() => onDigitClick(0)}>0</IconButton>
-									<IconButton className="nav" onClick={() => onNavMove(1)}>
-										<ArrowForwardOutlinedIcon />
-									</IconButton>
+									{showPeriod ? (
+										<IconButton onClick={onPeriodClick}>.</IconButton>
+									) : (
+										<IconButton className="nav" onClick={() => onNavMove(1)}>
+											<ArrowForwardOutlinedIcon />
+										</IconButton>
+									)}
 								</StyledNumpad>
 							)}
 						</div>
@@ -494,6 +602,48 @@ const NumericInputTouch = React.memo(
 		},
 	),
 );
+
+/**
+ * Returns the number of decimal places of the given step.
+ * @param step Step value (e.g. 0.2 -> 1, 0.25 -> 2, 1 -> 0).
+ */
+const getDecimalPlaces = (step: number | undefined): number => {
+	if (step === undefined || Number.isInteger(step)) {
+		return 0;
+	}
+	return step.toString().split(".")[1]?.length ?? 0;
+};
+
+/**
+ * Format raw text (without commas) for display.
+ * Commas are inserted into the integer part.
+ * @param raw Raw text such as "1234.5" or "12.".
+ * @returns Display text such as "1,234.5" or "12.".
+ */
+const formatRawText = (raw: string): string => {
+	const [intPart, fracPart] = raw.split(".");
+	const intText = intPart === "" ? "" : formatWithComma(parseInt(intPart, 10));
+	return fracPart === undefined ? intText : `${intText}.${fracPart}`;
+};
+
+/**
+ * Convert raw text position to display text position (accounting for commas).
+ */
+const rawPosToDisplayPos = (display: string, pos: number): number => {
+	let rawPos = 0;
+	let ret = 0;
+	while (rawPos < pos && ret < display.length) {
+		if (display[ret] !== ",") {
+			rawPos++;
+		}
+		ret++;
+	}
+	// Skip any commas after reaching target position
+	while (ret < display.length && display[ret] === ",") {
+		ret++;
+	}
+	return ret;
+};
 
 const StyledInputContainer = styled("div")({
 	position: "relative",
@@ -514,7 +664,7 @@ const StyledNumpad = styled("div")({
 		paddingTop: "0.6rem",
 	},
 	gap: "0.4rem",
-	"& > button": {
+	"& button": {
 		width: "4.3rem",
 		height: "3rem",
 		borderRadius: "1rem",
@@ -522,6 +672,17 @@ const StyledNumpad = styled("div")({
 		fontFamily: "inherit",
 		"&, &:hover, &:focus, &:active": {
 			background: "#ddd",
+		},
+	},
+	"& > .navPair": {
+		display: "flex",
+		width: "4.3rem",
+		gap: "0.2rem",
+		"& > button": {
+			flex: 1,
+			width: "auto",
+			minWidth: 0,
+			borderRadius: ".7rem",
 		},
 	},
 	"& > .close": {
@@ -536,7 +697,7 @@ const StyledNumpad = styled("div")({
 			background: "#ff944b",
 		},
 	},
-	"& > .nav": {
+	"& .nav": {
 		color: "#fff",
 		"&, &:hover, &:focus, &:active": {
 			background: "#c6e55e",
@@ -550,7 +711,6 @@ const StyledNumpad = styled("div")({
 		gridRow: "3 / span 2",
 		gridColumn: "4",
 		height: "6.4rem",
-		borderRadius: "1rem",
 	},
 });
 
