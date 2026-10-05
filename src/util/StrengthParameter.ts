@@ -1,6 +1,7 @@
 import events, { getEventBonus, loadHelpEventBonus } from "../data/events";
 import fields, { isExpertField } from "../data/fields";
 import { type PokemonType, PokemonTypes } from "../data/pokemons";
+import { clamp } from "../util/NumberUtil";
 import {
 	AlwaysTap,
 	type EnergyParameter,
@@ -8,7 +9,7 @@ import {
 	NoTap,
 	whistlePeriod,
 } from "./Energy";
-import { getMaxSkillLevel } from "./MainSkill";
+import { getMaxSkillLevel, maxBerryZoneRate } from "./MainSkill";
 import PokemonIv from "./PokemonIv";
 import { maxLevel } from "./PokemonRp";
 
@@ -90,6 +91,11 @@ export interface StrengthParameter extends EnergyParameter {
 	berryBurstTeam: BerryBurstTeam & {
 		/** Whether to calculate automatically using the default team */
 		auto: boolean;
+	};
+
+	/** Berry zone rate */
+	berryZone: {
+		psychic: number;
 	};
 
 	/** Latias/Latios twins are on the team */
@@ -227,6 +233,9 @@ export function createStrengthParameter(
 				{ type: "bug", level: 50 },
 				{ type: "psychic", level: 50 },
 			],
+		},
+		berryZone: {
+			psychic: 0,
 		},
 		customEventBonus: {
 			target: {},
@@ -506,6 +515,16 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 						json.berryBurstTeam.members[i].level;
 				}
 			}
+		}
+	}
+
+	if (typeof json.berryZone === "object") {
+		if (typeof json.berryZone.psychic === "number") {
+			ret.berryZone.psychic = clamp(
+				0,
+				json.berryZone.psychic,
+				maxBerryZoneRate,
+			);
 		}
 	}
 

@@ -33,6 +33,13 @@ describe("StrengthParameter", () => {
 			).toBe(true);
 		});
 
+		test("deserialize berryZone", () => {
+			const restored = deserializeStrengthParameter({
+				berryZone: { psychic: 10 },
+			});
+			expect(restored.berryZone.psychic).toBe(10);
+		});
+
 		test("falls back to default teamMember when json.teamMember is an invalid string", () => {
 			const restored = deserializeStrengthParameter({
 				teamMember: "not a valid serialized IV",
