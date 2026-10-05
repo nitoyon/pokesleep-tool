@@ -1167,6 +1167,37 @@ describe("PokemonStrength", () => {
 		});
 	});
 
+	describe("berry zone", () => {
+		// Lv 25 psychic berry strength is 50, so 24% bonus is exactly 62
+		test("psychic berry strength is multiplied by 1.24", () => {
+			const iv = new PokemonIv({ pokemonName: "Natu", level: 25 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({ fieldBonus: 0 }),
+			).calculate();
+			const zone = new PokemonStrength(
+				iv,
+				createParam({ fieldBonus: 0, berryZone: { psychic: 24 } }),
+			).calculate();
+			expect(normal.berryTotalStrength).toBeGreaterThan(0);
+			expect(zone.berryTotalStrength).toBe(normal.berryTotalStrength * 1.24);
+		});
+
+		test("non-psychic berry strength is not affected", () => {
+			const iv = new PokemonIv({ pokemonName: "Charmander", level: 25 });
+			const normal = new PokemonStrength(
+				iv,
+				createParam({ fieldBonus: 0 }),
+			).calculate();
+			const zone = new PokemonStrength(
+				iv,
+				createParam({ fieldBonus: 0, berryZone: { psychic: 24 } }),
+			).calculate();
+			expect(normal.berryTotalStrength).toBeGreaterThan(0);
+			expect(zone.berryTotalStrength).toBe(normal.berryTotalStrength);
+		});
+	});
+
 	describe("Mew base rate overrides", () => {
 		test("Mew uses param.mew", () => {
 			const param = createParam({});

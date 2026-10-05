@@ -464,17 +464,19 @@ class PokemonStrength {
 			this.iv.level,
 			param.fieldBonus,
 		);
-		const berryStrengthWithBonus = getBerryStrength(
+		const berry1StrengthWithBonus = getBerryStrength(
 			this.iv.pokemon.type,
 			this.iv.level,
 			param.fieldBonus,
 			this.berryStrengthBonus,
+			false,
+			this.iv.pokemon.type === "psychic" ? param.berryZone.psychic : 0,
 		);
 		const berryStrength =
-			berryStrengthWithBonus *
+			berry1StrengthWithBonus *
 				berryCountWithBonus *
 				helpCount.berryNormalHelpCount +
-			berryStrengthWithBonus *
+			berry1StrengthWithBonus *
 				this.iv.berryCount *
 				helpCount.total.sneakySnacking;
 
@@ -488,6 +490,7 @@ class PokemonStrength {
 						param.fieldBonus,
 						this.berryStrengthBonus,
 						true,
+						param.berryZone.psychic,
 					);
 		const bigBerryStrength =
 			helpCount.bigBerryCount === 0
