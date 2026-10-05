@@ -28,14 +28,19 @@ export function useSvgTouch(
 				return;
 			}
 			const p = pt.matrixTransform(ctm.inverse());
-			setMousePos({ x, y, svgX: p.x, svgY: p.y });
+			setMousePos({
+				x: x + window.scrollX,
+				y: y + window.scrollY,
+				svgX: p.x,
+				svgY: p.y,
+			});
 		},
 		[svgRef],
 	);
 
 	const onTouchMove = React.useCallback(
 		(e: TouchEvent) => {
-			updateMousePosition(e.touches[0].pageX, e.touches[0].pageY);
+			updateMousePosition(e.touches[0].clientX, e.touches[0].clientY);
 		},
 		[updateMousePosition],
 	);
@@ -47,7 +52,7 @@ export function useSvgTouch(
 			if ("ontouchstart" in window) {
 				return;
 			}
-			updateMousePosition(e.pageX, e.pageY);
+			updateMousePosition(e.clientX, e.clientY);
 		},
 		[updateMousePosition],
 	);
