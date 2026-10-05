@@ -1,5 +1,9 @@
 import type { StrengthParameter } from "../PokemonStrength";
-import { createMemberProgress, createTeamMembers } from "./MemberProgress";
+import {
+	createMemberProgress,
+	createTeamMembers,
+	updateBerryStrength,
+} from "./MemberProgress";
 import type { MemberProfile, TeamContext } from "./Types";
 
 /**
@@ -15,7 +19,7 @@ export function createTeamContext(
 	const sleepTimeSec = (1440 - sleepMinutes) * 60;
 
 	return {
-		members: createTeamMembers(profiles),
+		members: createTeamMembers(profiles, param),
 		teamProfile: {
 			isWhistle,
 			sleepTimeSec,
@@ -25,6 +29,7 @@ export function createTeamContext(
 		teamProgress: {
 			potExtended: 0,
 			extraTastyRate: 0,
+			berryZoneRate: {},
 		},
 	};
 }
@@ -36,12 +41,13 @@ export function createTeamContext(
  * Monte Carlo run and reallocating it per iteration is costly.
  */
 export function resetTeamContext(sim: TeamContext): void {
-	const periodSec = Math.abs(sim.teamProfile.param.period) * 3600;
+	const { param } = sim.teamProfile;
+	const periodSec = Math.abs(param.period) * 3600;
 	for (const member of sim.members) {
 		// The previous iteration's nextHelpSec lands past periodSec
 		const prevNextHelpSec = member.progress.nextHelpSec;
 		member.progress = {
-			...createMemberProgress(),
+			...createMemberProgress(member.profile, param),
 			energy: member.progress.energy,
 			helpsSinceSkill: member.progress.helpsSinceSkill,
 			nextHelpSec: prevNextHelpSec === -1 ? -1 : prevNextHelpSec - periodSec,
@@ -49,4 +55,11 @@ export function resetTeamContext(sim: TeamContext): void {
 	}
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
+	sim.teamProgress.berryZoneRate = {
+		psychic: sim.teamProfile.param.berryZone.psychic,
+	};
+
+	for (const member of sim.members) {
+		updateBerryStrength(member, param, sim.teamProgress.berryZoneRate);
+	}
 }

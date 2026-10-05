@@ -14,6 +14,7 @@ import { clamp } from "../../../util/NumberUtil";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import NumericSliderInput from "../../common/NumericSliderInput";
 import type { IvAction } from "../IvState";
+import BerryZoneForm from "../Panel/BerryZoneForm";
 import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import AreaControlGroup from "../Strength/AreaControlGroup";
 import EventSelectControl from "../Strength/EventSelectControl";
@@ -110,6 +111,7 @@ const TeamParameterDialog = React.memo(
 						/>
 					</Collapse>
 					<RecipeBonusLevelForm value={value} onChange={onChange} />
+					<BerryZoneForm value={value} onChange={onChange} />
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={onClose}>{t("close")}</Button>

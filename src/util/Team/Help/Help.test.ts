@@ -20,7 +20,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			baseFreq: 2200,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
 		});
 		const sim = createSim(member);
 
@@ -44,7 +43,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
 		});
 
 		// 1st help (t=990): 0.3 < 0.6 => berry branch.
@@ -65,7 +63,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
 		});
 
 		// 1st help (t=990): 0.7 -> apple x1
@@ -93,7 +90,6 @@ describe("applyHelp", () => {
 		const member = createTeamMember({
 			normalBagUsage: bagUsageDetail,
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
 			baseFreq: 2200,
 		});
 
@@ -111,7 +107,6 @@ describe("applyHelp", () => {
 	test("NoTap forces sneaky snacking from the start regardless of carryLimit", () => {
 		const member = createTeamMember({
 			carryLimit: 21,
-			berryStrengthWithBonus: 10,
 			baseFreq: 2200,
 		});
 
@@ -136,11 +131,14 @@ describe("applyHelp", () => {
 			carryLimit = 21,
 		): TeamMember {
 			const { bonus } = createProfile();
-			return createTeamMember({
-				bonus: { ...bonus, bigBerryRate, bigBerryCount },
-				normalBagUsage: berry2,
-				carryLimit,
-			});
+			return createTeamMember(
+				{
+					bonus: { ...bonus, bigBerryRate, bigBerryCount },
+					normalBagUsage: berry2,
+					carryLimit,
+				},
+				{ bigBerry1Strength: 100 },
+			);
 		}
 
 		test("rng below the rate brings big berries", () => {
@@ -151,6 +149,7 @@ describe("applyHelp", () => {
 
 			expect(member.progress.bigBerryHelpCount).toBe(1);
 			expect(member.progress.bigBerryCount).toBe(2);
+			expect(member.progress.bigBerryStrength).toBe(100 * 2);
 		});
 
 		test("rng at or above the rate brings no big berries", () => {
@@ -160,6 +159,7 @@ describe("applyHelp", () => {
 
 			expect(member.progress.bigBerryHelpCount).toBe(0);
 			expect(member.progress.bigBerryCount).toBe(0);
+			expect(member.progress.bigBerryStrength).toBe(0);
 		});
 
 		test("big berries occupy the inventory and are capped by the space left", () => {
@@ -171,6 +171,7 @@ describe("applyHelp", () => {
 
 			expect(member.progress.bigBerryHelpCount).toBe(1);
 			expect(member.progress.bigBerryCount).toBe(1);
+			expect(member.progress.bigBerryStrength).toBe(100);
 			expect(member.progress.help.normal).toBe(1);
 			expect(member.progress.help.sneakySnacking).toBe(1);
 		});
@@ -258,6 +259,7 @@ function createSim(
 		teamProgress: {
 			potExtended: 0,
 			extraTastyRate: 0,
+			berryZoneRate: {},
 		},
 	};
 }
@@ -302,10 +304,8 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		normalBagUsage: defaultBagUsageDetail,
 		extraBagUsage: defaultBagUsageDetail,
 		carryLimit: 21,
-		berry1Strength: 10,
-		bigBerry1Strength: 0,
-		berryStrengthWithBonus: 10,
 		ingStrengthRate: 1,
+		berryStrengthBonus: 1,
 		skillName: "Charge Strength S",
 		skillLevel: 1,
 		energyRecoveryFactor: 1,
@@ -331,9 +331,12 @@ function createProgress(
 			normal: 0,
 			sneakySnacking: 0,
 		},
+		berry1Strength: 10,
+		bigBerry1Strength: 0,
 		berryStrength: 0,
 		bigBerryHelpCount: 0,
 		bigBerryCount: 0,
+		bigBerryStrength: 0,
 		ingCounts: new Map(),
 		skillStockCount: 0,
 		...zeroSkillMetrics(),

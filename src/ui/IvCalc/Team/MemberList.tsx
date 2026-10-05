@@ -98,7 +98,7 @@ const StyledTeamView = styled("div")({
 	display: "grid",
 	gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
 	gridGap: ".4rem",
-	margin: "0.6rem 0.5rem 10rem",
+	margin: "0.6rem 0.5rem 25rem",
 	"& > article": {
 		display: "flex",
 		justifyContent: "center",

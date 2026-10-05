@@ -1,12 +1,11 @@
 import { IconButton, InputAdornment } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
+import { maxBerryZoneRate } from "../../../util/MainSkill";
 import NumericInput, {
 	type NumericInputHandle,
 } from "../../common/NumericInput";
 import SliderAndArrow from "../../common/SliderAndArrow";
-
-const maxRate = 24;
 
 const BerryZoneControl = React.memo(
 	({
@@ -31,7 +30,7 @@ const BerryZoneControl = React.memo(
 
 		// Generate percentage options (0%, 2%, 4%, ..., 24%)
 		const percentages: number[] = [];
-		for (let i = 0; i <= maxRate; i += 2) {
+		for (let i = 0; i <= maxBerryZoneRate; i += 2) {
 			percentages.push(i);
 		}
 
@@ -39,7 +38,7 @@ const BerryZoneControl = React.memo(
 			<NumericInput
 				ref={inputRef}
 				min={0}
-				max={maxRate}
+				max={maxBerryZoneRate}
 				step={0.2}
 				value={value}
 				onChange={onChange}
@@ -56,7 +55,7 @@ const BerryZoneControl = React.memo(
 				<div>
 					<SliderAndArrow
 						min={0}
-						max={maxRate}
+						max={maxBerryZoneRate}
 						step={0.2}
 						value={value}
 						onChange={onChange}

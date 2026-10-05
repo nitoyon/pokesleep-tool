@@ -129,6 +129,9 @@ export const berryJuiceRate = 0.185;
  */
 export const versatileSuccessRate = 0.3;
 
+/** Max berry zone rate */
+export const maxBerryZoneRate = 24;
+
 export function getMaxSkillLevel(skill: MainSkillName): 6 | 7 | 8 {
 	if (
 		skill === "Dream Shard Magnet S" ||

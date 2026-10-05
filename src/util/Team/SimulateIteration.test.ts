@@ -3,6 +3,8 @@ import { NoTap } from "../Energy";
 import PokemonIv from "../PokemonIv";
 import { runIteration } from "./SimulateIteration";
 import { initializeSkillValue } from "./Skill/SkillInitializer";
+import { createTeamContext, resetTeamContext } from "./TeamContext";
+import type { IterationResult, MemberProfile, TeamContext } from "./Types";
 import {
 	createTestMember,
 	createTestProfile,
@@ -121,5 +123,66 @@ describe("runIteration", () => {
 		expect(result[0].skillCount).toBeGreaterThan(0);
 		expect(result[0].skillStrength).toBeGreaterThan(0);
 		expect(result[1].skillCount).toBeGreaterThan(0);
+	});
+
+	describe("berryZoneRate", () => {
+		function runWithBerryZone(
+			profiles: MemberProfile[],
+			berryZoneRate: number,
+		): { result: IterationResult[]; sim: TeamContext } {
+			const param = testParam({
+				period: 24,
+				berryZone: { psychic: berryZoneRate },
+			});
+			initializeSkillValue(profiles, param);
+			const sim = createTeamContext(false, profiles, param);
+			resetTeamContext(sim);
+			return { result: runIteration(sim), sim };
+		}
+
+		test("initial berryZoneRate increases berry strength of a psychic member", () => {
+			const base = runWithBerryZone(
+				[createTestProfile({ pokemonName: "Natu" })],
+				0,
+			);
+			const zoned = runWithBerryZone(
+				[createTestProfile({ pokemonName: "Natu" })],
+				24,
+			);
+
+			// Each berry gets +24% (rounded up), and the berry count is unchanged
+			const baseBerry1 = base.sim.members[0].progress.berry1Strength;
+			const zonedBerry1 = zoned.sim.members[0].progress.berry1Strength;
+			expect(zonedBerry1).toBe(Math.ceil(baseBerry1 * 1.24));
+			expect(zoned.result[0].berryStrength / zonedBerry1).toBe(
+				base.result[0].berryStrength / baseBerry1,
+			);
+		});
+
+		test("Berry Zone (Psystrike) raises berryZoneRate and berry strength of the team", () => {
+			const natu = () => createTestProfile({ index: 0, pokemonName: "Natu" });
+			const without = runWithBerryZone([natu()], 12);
+			const withMewtwo = runWithBerryZone(
+				[
+					natu(),
+					createTestProfile({
+						index: 1,
+						pokemonName: "Mewtwo",
+						skillName: "Berry Zone (Psystrike)",
+						skillRate: 1,
+					}),
+				],
+				12,
+			);
+
+			expect(without.sim.teamProgress.berryZoneRate.psychic).toBe(12);
+			expect(withMewtwo.sim.teamProgress.berryZoneRate.psychic).toBeGreaterThan(
+				12,
+			);
+			expect(withMewtwo.result[1].skillBerryZone).toBeGreaterThan(0);
+			expect(withMewtwo.result[0].berryStrength).toBeGreaterThan(
+				without.result[0].berryStrength,
+			);
+		});
 	});
 });

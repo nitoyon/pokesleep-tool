@@ -23,6 +23,7 @@ import {
 import MessageDialog from "../../Dialog/MessageDialog";
 import InfoButton from "../InfoButton";
 import type { IvAction } from "../IvState";
+import BerryZoneForm from "../Panel/BerryZoneForm";
 import OtherTeamMemberForm from "../Panel/OtherTeamMemberForm";
 import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
 import AreaControlGroup from "./AreaControlGroup";
@@ -186,6 +187,7 @@ const StrengthSettingForm = React.memo(
 					</section>
 				</Collapse>
 				<RecipeBonusLevelForm value={value} onChange={onChange} />
+				<BerryZoneForm value={value} onChange={onChange} />
 				<section className="mt">
 					<Button onClick={onInitializeClick} variant="outlined">
 						{t("initialize all parameters")}
