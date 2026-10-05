@@ -16,6 +16,7 @@ import TextLikeButton from "../../common/TextLikeButton";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
 import AreaControlDialog from "./AreaControlDialog";
+import BerryZoneControl from "./BerryZoneControl";
 import EventConfigDialog from "./EventConfigDialog";
 import FixedLevelSelect from "./FixedLevelSelect";
 import PeriodSelect from "./PeriodSelect";
@@ -112,6 +113,23 @@ const StrengthParameterSummary = React.memo(
 						parameter: {
 							...parameter,
 							event: value,
+						},
+					},
+				});
+			},
+			[dispatch, parameter],
+		);
+
+		const onBerryZoneChange = React.useCallback(
+			(value: number) => {
+				dispatch({
+					type: "changeParameter",
+					payload: {
+						parameter: {
+							...parameter,
+							berryZone: {
+								psychic: value,
+							},
 						},
 					},
 				});
@@ -256,6 +274,15 @@ const StrengthParameterSummary = React.memo(
 								<SettingsIcon />
 							</IconButton>
 						)}
+					</span>
+				)}
+				{parameter.berryZone.psychic > 0 && (
+					<span>
+						{t("skills.Berry Zone.name")}:{" "}
+						<BerryZoneControl
+							value={parameter.berryZone.psychic}
+							onChange={onBerryZoneChange}
+						/>
 					</span>
 				)}
 				<AreaControlDialog
