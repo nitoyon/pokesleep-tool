@@ -278,7 +278,8 @@ const StrengthParameterSummary = React.memo(
 				)}
 				{parameter.berryZone.psychic > 0 && (
 					<span>
-						{t("skills.Berry Zone.name")}:{" "}
+						{t("skills.Berry Zone.name")}
+						<>: </>
 						<BerryZoneControl
 							value={parameter.berryZone.psychic}
 							onChange={onBerryZoneChange}
@@ -327,6 +328,12 @@ const StrengthParameterPreview = styled("div")({
 			lineHeight: 1.5,
 			"& > svg": {
 				fontSize: "1rem",
+			},
+		},
+		"& > div.numeric": {
+			display: "inline",
+			"& input": {
+				padding: 0,
 			},
 		},
 		"&.level > button": {
