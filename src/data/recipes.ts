@@ -1,4 +1,3 @@
-import { ingredientStrength } from "../util/PokemonRp";
 import type { IngredientName } from "./pokemons";
 import recipe_ from "./recipe.json";
 
@@ -52,7 +51,7 @@ export class Recipe {
 	readonly bonus: number;
 
 	/**
-	 * Creates a recipe instance from JSON data and calculates `bonus`.
+	 * Creates a recipe instance from JSON data.
 	 * @param data Raw recipe data from JSON file.
 	 */
 	constructor(data: JsonRecipeData) {
@@ -60,14 +59,8 @@ export class Recipe {
 		this.name = data.name;
 		this.ings = data.ings;
 		this.total = data.total;
+		this.bonus = data.bonus;
 		this.baseStrength = data.strength;
-
-		// Calculate bonus
-		let rawStrength = 0;
-		for (const ing of data.ings) {
-			rawStrength += ingredientStrength[ing.ing] * ing.count;
-		}
-		this.bonus = Math.round((this.baseStrength / rawStrength) * 100 - 100);
 	}
 
 	/** Returns the key of this recipe */
@@ -102,6 +95,8 @@ interface JsonRecipeData {
 	ings: IngredientAndCount[];
 	/** Sum of all ingredient quantities */
 	total: number;
+	/** Recipe bonus this recipe provides over raw ingredient strength */
+	bonus: number;
 	/** Base strength value at level 1 */
 	strength: number;
 }
