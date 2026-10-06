@@ -6,6 +6,7 @@ import IvCalcFaq from "./zh-TW/IvCalcFaq.json";
 import IvCalcNews from "./zh-TW/IvCalcNews.json";
 import pokemons from "./zh-TW/pokemons.json";
 import ResearchCalc from "./zh-TW/ResearchCalc.json";
+import recipes from "./zh-TW/recipes.json";
 import skills from "./zh-TW/skills.json";
 
 export default {
@@ -24,5 +25,6 @@ export default {
 		...skills,
 		...data,
 		...pokemons,
+		...recipes,
 	},
 };

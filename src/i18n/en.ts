@@ -6,6 +6,7 @@ import IvCalcFaq from "./en/IvCalcFaq.json";
 import IvCalcNews from "./en/IvCalcNews.json";
 import pokemons from "./en/pokemons.json";
 import ResearchCalc from "./en/ResearchCalc.json";
+import recipes from "./en/recipes.json";
 import skills from "./en/skills.json";
 
 export default {
@@ -24,5 +25,6 @@ export default {
 		...skills,
 		...data,
 		...pokemons,
+		...recipes,
 	},
 };
