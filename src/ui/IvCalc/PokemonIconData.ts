@@ -2116,7 +2116,6 @@ const pokemonRectData: { [id: string]: IconData } = {
 			{ x: 0, y: 0.5, w: 0.3, h: 0.06, color: 3 },
 			{ x: 0, y: 0.8, w: 0.3, h: 0.06, color: 3 },
 			{ x: 0.1, y: 0.5, w: 0.06, h: 0.3, color: 3 },
-			{ x: 0.67, y: 0.25, w: 0.4, h: 0.06, color: 3 },
 			{ x: 0.67, y: 0.5, w: 0.4, h: 0.06, color: 3 },
 			{ x: 0.67, y: 0.8, w: 0.4, h: 0.06, color: 3 },
 			{ x: 0.84, y: 0.5, w: 0.06, h: 0.3, color: 3 },
