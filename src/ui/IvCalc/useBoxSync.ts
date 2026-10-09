@@ -135,5 +135,5 @@ async function createRepository(user: User | null): Promise<BoxRepository> {
 		return new LocalBoxRepository();
 	}
 	const mod = await loadFirebaseBoxRepository();
-	return mod.createFirebaseBoxRepository(user);
+	return mod.createFirebaseBoxRepository();
 }

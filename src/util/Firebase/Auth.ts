@@ -1,4 +1,4 @@
-import { FirebaseError, initializeApp } from "firebase/app";
+import { FirebaseError } from "firebase/app";
 import {
 	type Auth,
 	GoogleAuthProvider,
@@ -8,13 +8,13 @@ import {
 	signOut,
 	type User,
 } from "firebase/auth";
-import firebaseConfig from "./Config";
+import { getFirebaseApp } from "./App";
 
 let auth: Auth | null = null;
 
 function getFirebaseAuth(): Auth {
 	if (auth === null) {
-		auth = getAuth(initializeApp(firebaseConfig));
+		auth = getAuth(getFirebaseApp());
 	}
 	return auth;
 }

@@ -1,10 +1,10 @@
-import type { User } from "firebase/auth";
 import type { BoxOp, BoxRepository } from "../Box/BoxRepository";
 import PokemonBox, {
 	deserializeBoxItem,
 	PokemonBoxItem,
 } from "../Box/PokemonBox";
-import { type BoxApi, FakeBoxApi, type RemoteBoxEntry } from "./BoxApi";
+import type { BoxApi, RemoteBoxEntry } from "./BoxApi";
+import { FunctionsBoxApi } from "./FunctionsBoxApi";
 
 // Load this module with dynamic import() so that the Firebase SDK used by
 // the API is not included in the initial bundle.
@@ -13,7 +13,7 @@ import { type BoxApi, FakeBoxApi, type RemoteBoxEntry } from "./BoxApi";
  * Box repository that saves each item to the cloud.
  *
  * PokemonBoxItem.id is renumbered on every load, so this class keeps
- * the mapping from the item ID to the key in the cloud.
+ * the mapping from the item ID to the ID in the cloud.
  */
 export class FirebaseBoxRepository implements BoxRepository {
 	readonly isRemote = true;
@@ -30,7 +30,7 @@ export class FirebaseBoxRepository implements BoxRepository {
 	}
 
 	async load(): Promise<PokemonBoxItem[]> {
-		const entries = await this.api.getBox();
+		const entries = await this.api.getBoxItems();
 		this.keys.clear();
 		const items: PokemonBoxItem[] = [];
 		for (const entry of entries) {
@@ -39,7 +39,7 @@ export class FirebaseBoxRepository implements BoxRepository {
 				continue;
 			}
 			const item = new PokemonBoxItem(data.iv, data.nickname);
-			this.keys.set(item.id, entry.key);
+			this.keys.set(item.id, entry.id);
 			items.push(item);
 
 			if (items.length >= PokemonBox.maxEntryCount) {
@@ -50,47 +50,58 @@ export class FirebaseBoxRepository implements BoxRepository {
 	}
 
 	apply(ops: BoxOp[], _items: PokemonBoxItem[]): Promise<void> {
-		// Resolve keys synchronously so that following ops see them
-		// even before the request completes.
-		const puts: RemoteBoxEntry[] = [];
+		// Send requests one by one to keep the order of changes.
+		// IDs of added items are known only after the add request completes,
+		// so resolve IDs when the previous requests have completed.
+		const ret = this.queue.then(() => this.send(ops));
+		this.queue = ret.catch(() => {});
+		return ret;
+	}
+
+	private async send(ops: BoxOp[]): Promise<void> {
 		const deletes: string[] = [];
+		const updates: RemoteBoxEntry[] = [];
+		const adds: PokemonBoxItem[] = [];
 		for (const op of ops) {
 			if (op.type === "remove") {
-				const key = this.keys.get(op.id);
-				if (key !== undefined) {
-					deletes.push(key);
+				const id = this.keys.get(op.id);
+				if (id !== undefined) {
+					deletes.push(id);
 					this.keys.delete(op.id);
 				}
 				continue;
 			}
-			let key = this.keys.get(op.item.id);
-			if (key === undefined) {
-				key = crypto.randomUUID();
-				this.keys.set(op.item.id, key);
+			const id = this.keys.get(op.item.id);
+			if (id === undefined) {
+				// Also add an updated item whose add request failed
+				adds.push(op.item);
+			} else {
+				updates.push({ id, data: op.item.serialize() });
 			}
-			puts.push({ key, data: op.item.serialize() });
 		}
 
-		// Send requests one by one to keep the order of changes
-		const ret = this.queue.then(async () => {
-			if (deletes.length > 0) {
-				await this.api.deleteBoxItems(deletes);
-			}
-			if (puts.length > 0) {
-				await this.api.putBoxItems(puts);
-			}
-		});
-		this.queue = ret.catch(() => {});
-		return ret;
+		// Delete first so that adding does not exceed the max item count
+		if (deletes.length > 0) {
+			await this.api.deleteBoxItems(deletes);
+		}
+		if (updates.length > 0) {
+			await this.api.updateBoxItems(updates);
+		}
+		if (adds.length > 0) {
+			const ids = await this.api.addBoxItems(adds.map((x) => x.serialize()));
+			adds.forEach((item, index) => {
+				this.keys.set(item.id, ids[index]);
+			});
+		}
 	}
 }
 
 /**
  * Create a box repository for the signed-in user.
- * @param user Signed-in user.
+ *
+ * The API identifies the user by the ID token of the signed-in user.
  * @returns Created repository.
  */
-export function createFirebaseBoxRepository(user: User): BoxRepository {
-	// TODO: Replace with the Firebase Functions API
-	return new FirebaseBoxRepository(new FakeBoxApi(user.uid));
+export function createFirebaseBoxRepository(): BoxRepository {
+	return new FirebaseBoxRepository(new FunctionsBoxApi());
 }

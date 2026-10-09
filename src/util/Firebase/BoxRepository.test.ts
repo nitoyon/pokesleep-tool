@@ -5,9 +5,8 @@ import PokemonIv from "../PokemonIv";
 import { type BoxApi, FakeBoxApi } from "./BoxApi";
 import { FirebaseBoxRepository } from "./BoxRepository";
 
-let uidCounter = 0;
 function createApi(): BoxApi {
-	return new FakeBoxApi(`test${uidCounter++}`, 0);
+	return new FakeBoxApi();
 }
 
 /** Apply box changes to the repository */
@@ -43,7 +42,7 @@ describe("FirebaseBoxRepository", () => {
 		);
 	});
 
-	test("keeps keys of loaded items", async () => {
+	test("keeps IDs of loaded items", async () => {
 		const api = createApi();
 		const repo1 = new FirebaseBoxRepository(api);
 		const box0 = new PokemonBox();
@@ -80,14 +79,32 @@ describe("FirebaseBoxRepository", () => {
 		expect(await new FirebaseBoxRepository(api).load()).toEqual([]);
 	});
 
+	test("updates an item before add completes", async () => {
+		const api = createApi();
+		const repo = new FirebaseBoxRepository(api);
+		const box0 = new PokemonBox();
+		const box1 = new PokemonBox(box0.items);
+		const id = box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const box2 = new PokemonBox(box1.items);
+		box2.set(id, new PokemonIv({ pokemonName: "Pikachu" }), "nick");
+
+		const p1 = save(repo, box0, box1);
+		const p2 = save(repo, box1, box2);
+		await Promise.all([p1, p2]);
+
+		const loaded = await new FirebaseBoxRepository(api).load();
+		expect(loaded.map((x) => x.nickname)).toEqual(["nick"]);
+	});
+
 	test("continues after a failed request", async () => {
 		const api = createApi();
 		let fail = true;
 		const failingApi: BoxApi = {
-			getBox: () => api.getBox(),
-			deleteBoxItems: (keys) => api.deleteBoxItems(keys),
-			putBoxItems: (entries) =>
-				fail ? Promise.reject(new Error("failed")) : api.putBoxItems(entries),
+			getBoxItems: () => api.getBoxItems(),
+			addBoxItems: (data) =>
+				fail ? Promise.reject(new Error("failed")) : api.addBoxItems(data),
+			updateBoxItems: (entries) => api.updateBoxItems(entries),
+			deleteBoxItems: (ids) => api.deleteBoxItems(ids),
 		};
 		const repo = new FirebaseBoxRepository(failingApi);
 		const box0 = new PokemonBox();
@@ -99,6 +116,31 @@ describe("FirebaseBoxRepository", () => {
 		const box2 = new PokemonBox(box1.items);
 		box2.add(new PokemonIv({ pokemonName: "Raichu" }));
 		await save(repo, box1, box2);
-		expect((await api.getBox()).length).toBe(1);
+		expect((await api.getBoxItems()).length).toBe(1);
+	});
+
+	test("adds an updated item whose add failed", async () => {
+		const api = createApi();
+		let fail = true;
+		const failingApi: BoxApi = {
+			getBoxItems: () => api.getBoxItems(),
+			addBoxItems: (data) =>
+				fail ? Promise.reject(new Error("failed")) : api.addBoxItems(data),
+			updateBoxItems: (entries) => api.updateBoxItems(entries),
+			deleteBoxItems: (ids) => api.deleteBoxItems(ids),
+		};
+		const repo = new FirebaseBoxRepository(failingApi);
+		const box0 = new PokemonBox();
+		const box1 = new PokemonBox();
+		const id = box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		await expect(save(repo, box0, box1)).rejects.toThrow("failed");
+
+		fail = false;
+		const box2 = new PokemonBox(box1.items);
+		box2.set(id, new PokemonIv({ pokemonName: "Pikachu" }), "nick");
+		await save(repo, box1, box2);
+
+		const loaded = await new FirebaseBoxRepository(api).load();
+		expect(loaded.map((x) => x.nickname)).toEqual(["nick"]);
 	});
 });
