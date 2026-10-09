@@ -334,6 +334,7 @@ const StrengthParameterPreview = styled("div")({
 			display: "inline",
 			"& input": {
 				padding: 0,
+				fontSize: "0.8rem",
 			},
 		},
 		"&.level > button": {
