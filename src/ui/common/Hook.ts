@@ -1,4 +1,10 @@
+import type { User } from "firebase/auth";
 import React from "react";
+import {
+	signInWithGoogle,
+	signOutUser,
+	subscribeAuthUser,
+} from "../../util/Firebase/Auth";
 
 /**
  * Custom React hook to get the width of a DOM element.
@@ -93,4 +99,24 @@ export function useElementWidth(): [number, (elm: HTMLElement | null) => void] {
 		[observer],
 	);
 	return [width, ref];
+}
+
+/**
+ * Custom React hook to get the signed-in Firebase user.
+ *
+ * @returns An object containing:
+ * - `user`: The signed-in user, null when signed out, or undefined while
+ *   the sign-in state is not yet known.
+ * - `signIn`: Signs in with Google. Resolves to false if cancelled.
+ * - `signOut`: Signs out the current user.
+ */
+export function useAuthUser(): {
+	user: User | null | undefined;
+	signIn: () => Promise<boolean>;
+	signOut: () => Promise<void>;
+} {
+	const [user, setUser] = React.useState<User | null | undefined>(undefined);
+	React.useEffect(() => subscribeAuthUser(setUser), []);
+
+	return { user, signIn: signInWithGoogle, signOut: signOutUser };
 }

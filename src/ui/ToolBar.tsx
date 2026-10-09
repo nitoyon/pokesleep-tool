@@ -1,11 +1,14 @@
 import CheckIcon from "@mui/icons-material/Check";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import {
+	Avatar,
 	Divider,
 	Icon,
 	IconButton,
@@ -19,9 +22,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type AppConfig from "./AppConfig";
 import type { AppType } from "./AppConfig";
+import { useAuthUser } from "./common/Hook";
 import AboutDialog from "./Dialog/AboutDialog";
 import FaqDialog from "./Dialog/FaqDialog";
 import HowToDialog from "./Dialog/HowToDialog";
+import MessageDialog from "./Dialog/MessageDialog";
 import NewsListDialog from "./Dialog/NewsListDialog";
 import SettingsDialog from "./Dialog/SettingsDialog";
 
@@ -96,6 +101,25 @@ export default function ToolBar({
 	const onFaqDialogClose = () => {
 		setIsFaqDialogOpen(false);
 	};
+	const { user, signIn, signOut } = useAuthUser();
+	const [authErrorMessage, setAuthErrorMessage] = useState<string | null>(null);
+	const loginMenuClick = () => {
+		setMoreMenuAnchor(null);
+		signIn().catch((e: unknown) => {
+			console.error(e);
+			setAuthErrorMessage(t("login failed"));
+		});
+	};
+	const logoutMenuClick = () => {
+		setMoreMenuAnchor(null);
+		signOut().catch((e: unknown) => {
+			console.error(e);
+			setAuthErrorMessage(t("logout failed"));
+		});
+	};
+	const onAuthErrorDialogClose = () => {
+		setAuthErrorMessage(null);
+	};
 
 	return (
 		<StyledAppBar>
@@ -105,7 +129,17 @@ export default function ToolBar({
 				color="inherit"
 				onClick={moreButtonClick}
 			>
-				<MoreIcon />
+				{!user && <MoreIcon />}
+				{user && (
+					<Avatar
+						src={user.photoURL ?? undefined}
+						sx={{
+							width: 24,
+							height: 24,
+							border: "1px solid rgba(200, 200, 200, 0.8)",
+						}}
+					/>
+				)}
 			</IconButton>
 			<Menu
 				anchorEl={moreMenuAnchor}
@@ -160,6 +194,22 @@ export default function ToolBar({
 					</ListItemIcon>
 					{t("settings")}
 				</MenuItem>
+				{app === "IvCalc" && !user && (
+					<MenuItem onClick={loginMenuClick}>
+						<ListItemIcon>
+							<LoginIcon />
+						</ListItemIcon>
+						{t("login")}
+					</MenuItem>
+				)}
+				{app === "IvCalc" && user && (
+					<MenuItem onClick={logoutMenuClick}>
+						<ListItemIcon>
+							<LogoutIcon />
+						</ListItemIcon>
+						{t("logout")}
+					</MenuItem>
+				)}
 			</Menu>
 			<AboutDialog open={isAboutDialogOpen} onClose={onAboutDialogClose} />
 			<HowToDialog
@@ -175,6 +225,11 @@ export default function ToolBar({
 			/>
 			<NewsListDialog open={isNewsDialogOpen} onClose={onNewsDialogClose} />
 			<FaqDialog open={isFaqDialogOpen} onClose={onFaqDialogClose} />
+			<MessageDialog
+				open={authErrorMessage !== null}
+				message={authErrorMessage}
+				onClose={onAuthErrorDialogClose}
+			/>
 		</StyledAppBar>
 	);
 }
