@@ -26,6 +26,7 @@ const BoxDeleteAllDialog = React.memo(
 
 		const onDelete = React.useCallback(() => {
 			box.removeAll();
+			box.save();
 			setDeletedMessageVisible(true);
 			onClose();
 		}, [box, onClose]);

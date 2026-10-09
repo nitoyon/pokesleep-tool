@@ -300,7 +300,8 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return { ...state, boxDeleteAllDialogOpen: true };
 	}
 	if (type === "deleteAllClose") {
-		return { ...state, boxDeleteAllDialogOpen: false };
+		const box = new PokemonBox(state.box.items);
+		return { ...state, box, boxDeleteAllDialogOpen: false };
 	}
 	if (type === "restoreItem") {
 		if (selectedItem !== null) {
