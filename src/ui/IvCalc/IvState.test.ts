@@ -14,6 +14,7 @@ function createBaseState(): IvState {
 		pokemonIv: new PokemonIv({ pokemonName: "Venusaur" }),
 		parameter: loadStrengthParameter(),
 		box: new PokemonBox(),
+		boxStatus: "ready",
 		selectedItemId: -1,
 		energyDialogOpen: false,
 		boxItemDialogOpen: false,
@@ -573,5 +574,91 @@ describe("ivStateReducer", () => {
 
 			expect(newState.teamMembers[3]).toBeUndefined();
 		});
+	});
+});
+
+describe("ivStateReducer box loading", () => {
+	let baseState: IvState;
+
+	beforeEach(() => {
+		baseState = createBaseState();
+		localStorage.removeItem("PstIvState");
+	});
+
+	test("boxLoading clears the box", () => {
+		const box = new PokemonBox();
+		const itemId = box.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const state = { ...baseState, box, selectedItemId: itemId };
+
+		const newState = ivStateReducer(state, { type: "boxLoading" });
+		expect(newState.boxStatus).toBe("loading");
+		expect(newState.box.items).toEqual([]);
+		expect(newState.selectedItemId).toBe(-1);
+	});
+
+	test("boxLoaded sets the items and restores the selection", () => {
+		const iv = new PokemonIv({ pokemonName: "Pikachu" });
+		localStorage.setItem(
+			"PstIvState",
+			JSON.stringify({ selectedIv: iv.serialize() }),
+		);
+		const items = [
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" })),
+			new PokemonBoxItem(iv),
+		];
+		const state = {
+			...baseState,
+			pokemonIv: iv,
+			boxStatus: "loading" as const,
+		};
+
+		const newState = ivStateReducer(state, {
+			type: "boxLoaded",
+			payload: { items },
+		});
+		expect(newState.boxStatus).toBe("ready");
+		expect(newState.box.items).toBe(items);
+		expect(newState.selectedItemId).toBe(items[1].id);
+	});
+
+	test("ignores box changes while loading", () => {
+		const state = { ...baseState, boxStatus: "loading" as const };
+		const newState = ivStateReducer(state, {
+			type: "addThis",
+			payload: { iv: new PokemonIv({ pokemonName: "Pikachu" }) },
+		});
+		expect(newState).toBe(state);
+	});
+
+	test("importItems adds items up to the max count", () => {
+		const box = new PokemonBox();
+		for (let i = 0; i < PokemonBox.maxEntryCount - 1; i++) {
+			box.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		}
+		const state = { ...baseState, box };
+
+		const newState = ivStateReducer(state, {
+			type: "importItems",
+			payload: {
+				entries: [
+					{ iv: new PokemonIv({ pokemonName: "Raichu" }), nickname: "a" },
+					{ iv: new PokemonIv({ pokemonName: "Raichu" }), nickname: "b" },
+				],
+			},
+		});
+		expect(newState.box).not.toBe(state.box);
+		expect(newState.box.items.length).toBe(PokemonBox.maxEntryCount);
+		expect(newState.box.items.at(-1)?.nickname).toBe("a");
+	});
+
+	test("removeAllItems clears the box", () => {
+		const box = new PokemonBox();
+		const itemId = box.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const state = { ...baseState, box, selectedItemId: itemId };
+
+		const newState = ivStateReducer(state, { type: "removeAllItems" });
+		expect(newState.box).not.toBe(state.box);
+		expect(newState.box.items).toEqual([]);
+		expect(newState.selectedItemId).toBe(-1);
 	});
 });

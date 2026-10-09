@@ -4,6 +4,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import type PokemonIv from "../../util/PokemonIv";
+import { useAuthUser } from "../common/useAuthUser";
 import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
 import BoxExportDialog from "./Box/BoxExportDialog";
 import BoxImportDialog from "./Box/BoxImportDialog";
@@ -18,6 +19,7 @@ import RpView from "./Rp/RpView";
 import StrengthSettingForm from "./Strength/StrengthParameterForm";
 import StrengthView from "./Strength/StrengthView";
 import TeamView from "./Team/TeamView";
+import { useBoxSync } from "./useBoxSync";
 
 const StyledTabs = styled(Tabs)({
 	minHeight: "36px",
@@ -34,6 +36,8 @@ const ResearchCalcApp = React.memo(() => {
 	const [state, dispatch] = React.useReducer(ivStateReducer, initialIvState);
 	const { t } = useTranslation();
 	const width = useDomWidth();
+	const { user } = useAuthUser();
+	useBoxSync(state.box, state.boxStatus, user, dispatch);
 
 	const selectedItem = state.box.getById(state.selectedItemId);
 
@@ -132,6 +136,7 @@ const ResearchCalcApp = React.memo(() => {
 				<BoxTabChild
 					items={state.box.items}
 					iv={state.pokemonIv}
+					loading={state.boxStatus === "loading"}
 					selectedId={state.selectedItemId}
 					dispatch={dispatch}
 					parameter={state.parameter}
@@ -163,17 +168,19 @@ const ResearchCalcApp = React.memo(() => {
 			<BoxImportDialog
 				box={state.box}
 				open={state.boxImportDialogOpen}
+				dispatch={dispatch}
 				onClose={onBoxImportDialogClose}
 			/>
 			<BoxDeleteAllDialog
-				box={state.box}
+				dispatch={dispatch}
 				open={state.boxDeleteAllDialogOpen}
 				onClose={onBoxDeleteAllDialogClose}
 			/>
 			<Snackbar
 				open={state.alertMessage !== ""}
 				message={t(state.alertMessage)}
-				autoHideDuration={2000}
+				// Keep showing while saving, restart the timer when the message changes
+				autoHideDuration={state.alertMessage === "box saving" ? null : 2000}
 				onClose={onAlertMessageClose}
 			/>
 			<Snackbar

@@ -9,12 +9,14 @@ const BoxTabChild = React.memo(
 	({
 		items,
 		iv,
+		loading,
 		selectedId,
 		parameter,
 		dispatch,
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
+		loading: boolean;
 		selectedId: number;
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
@@ -36,6 +38,7 @@ const BoxTabChild = React.memo(
 			<BoxView
 				items={items}
 				iv={iv}
+				loading={loading}
 				selectedId={selectedId}
 				parameter={parameter}
 				dispatch={dispatch}

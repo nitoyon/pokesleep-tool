@@ -9,6 +9,7 @@ import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOut
 import {
 	Button,
 	ButtonBase,
+	CircularProgress,
 	Fab,
 	IconButton,
 	ListItemIcon,
@@ -45,6 +46,7 @@ const BoxView = React.memo(
 	({
 		items,
 		iv,
+		loading,
 		selectMode,
 		selectedId,
 		parameter,
@@ -54,6 +56,8 @@ const BoxView = React.memo(
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
+		/** Show a progress indicator while the box is being loaded. */
+		loading?: boolean;
 		selectMode?: boolean;
 		selectedId: number;
 		parameter: StrengthParameter;
@@ -202,7 +206,12 @@ const BoxView = React.memo(
 						width: selectMode ? "100%" : "calc(100% - 1rem)",
 					}}
 				>
-					{elms.length === 0 && (
+					{loading && (
+						<div style={{ margin: "5rem auto 0" }}>
+							<CircularProgress />
+						</div>
+					)}
+					{!loading && elms.length === 0 && (
 						<div
 							style={{
 								margin: "5rem auto 0",
@@ -223,7 +232,7 @@ const BoxView = React.memo(
 						margin: ".5rem 0 0",
 					}}
 				>
-					{!selectMode && (
+					{!selectMode && !loading && (
 						<Fab
 							onClick={onAddClick}
 							color="primary"
@@ -233,12 +242,14 @@ const BoxView = React.memo(
 							<AddIcon />
 						</Fab>
 					)}
-					<BoxExportAlert
-						count={items.length}
-						config={sortConfig}
-						dispatch={dispatch}
-						onChange={onSortConfigChange}
-					/>
+					{!loading && (
+						<BoxExportAlert
+							count={items.length}
+							config={sortConfig}
+							dispatch={dispatch}
+							onChange={onSortConfigChange}
+						/>
+					)}
 					<BoxSortConfigFooter
 						parameter={parameter}
 						sortConfig={sortConfig}
