@@ -20,6 +20,7 @@ export type IvAction =
 				| "deleteAllClose"
 				| "removeAllItems"
 				| "boxLoading"
+				| "reloadBox"
 				| "saveItem"
 				| "restoreItem"
 				| "editDialogClose"
@@ -89,6 +90,8 @@ type IvState = {
 	box: PokemonBox;
 	/** "loading" while the box is being loaded from the storage. */
 	boxStatus: "loading" | "ready";
+	/** Incremented to request reloading the box from the storage. */
+	boxReloadCount: number;
 	selectedItemId: number;
 	energyDialogOpen: boolean;
 	boxItemDialogOpen: boolean;
@@ -132,6 +135,7 @@ export function getInitialIvState(): IvState {
 		parameter: loadStrengthParameter(),
 		box: new PokemonBox(),
 		boxStatus: "loading",
+		boxReloadCount: 0,
 		selectedItemId: -1,
 		energyDialogOpen: false,
 		boxItemDialogOpen: false,
@@ -269,6 +273,10 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 			boxStatus: "loading",
 			selectedItemId: -1,
 		};
+	}
+	if (type === "reloadBox") {
+		// Allowed while loading to retry after a load failure
+		return { ...state, boxReloadCount: state.boxReloadCount + 1 };
 	}
 	if (type === "boxLoaded") {
 		const { items } = action.payload;

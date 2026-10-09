@@ -30,6 +30,8 @@ export class FirebaseBoxRepository implements BoxRepository {
 	}
 
 	async load(): Promise<PokemonBoxItem[]> {
+		// Wait for pending saves so that the loaded items include them
+		await this.queue;
 		const entries = await this.api.getBoxItems();
 		this.keys.clear();
 		const items: PokemonBoxItem[] = [];

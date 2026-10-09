@@ -19,6 +19,7 @@ const loadFirebaseBoxRepository = () =>
  *
  * @param box Current box.
  * @param boxStatus Current box status.
+ * @param reloadCount Reload the box when this value changes.
  * @param user Signed-in user, null when signed out, or undefined while
  *             the sign-in state is not yet known.
  * @param dispatch Dispatch function of IvState.
@@ -26,9 +27,16 @@ const loadFirebaseBoxRepository = () =>
 export function useBoxSync(
 	box: PokemonBox,
 	boxStatus: "loading" | "ready",
+	reloadCount: number,
 	user: User | null | undefined,
 	dispatch: (action: IvAction) => void,
 ): void {
+	// Repository of the current user.
+	// Reused on reload so that it can wait for pending saves.
+	const repoRef = React.useRef<{
+		uid: string | null;
+		repo: BoxRepository;
+	} | null>(null);
 	// Repository and the items last loaded from or saved to it
 	const syncRef = React.useRef<{
 		repo: BoxRepository;
@@ -48,12 +56,13 @@ export function useBoxSync(
 			}),
 	);
 
-	// Load the box when the user changes.
+	// Load the box when the user changes or reload is requested.
 	// The user object may change without changing uid (e.g. token refresh),
 	// so keep it in a ref and depend only on uid.
 	const userRef = React.useRef(user);
 	userRef.current = user;
 	const uid = user === undefined ? undefined : (user?.uid ?? null);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: reload when reloadCount changes
 	React.useEffect(() => {
 		if (uid === undefined) {
 			return;
@@ -62,7 +71,15 @@ export function useBoxSync(
 		syncRef.current = null;
 		dispatch({ type: "boxLoading" });
 
-		createRepository(userRef.current ?? null)
+		const cached = repoRef.current;
+		const repoPromise =
+			cached !== null && cached.uid === uid
+				? Promise.resolve(cached.repo)
+				: createRepository(userRef.current ?? null).then((repo) => {
+						repoRef.current = { uid, repo };
+						return repo;
+					});
+		repoPromise
 			.then(async (repo) => {
 				const items = await repo.load();
 				if (cancelled) {
@@ -83,7 +100,7 @@ export function useBoxSync(
 		return () => {
 			cancelled = true;
 		};
-	}, [uid, dispatch]);
+	}, [uid, reloadCount, dispatch]);
 
 	// Save the changes of the box
 	React.useEffect(() => {

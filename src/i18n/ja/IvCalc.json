@@ -94,6 +94,7 @@
 	"confirm add to box": "このポケモンをボックスに追加してもよろしいですか？",
 	"export": "エクスポート",
 	"import": "インポート",
+	"reload": "再読み込み",
 	"output format": "出力形式",
 	"custom format": "シンプル (独自フォーマット)",
 	"pokemon in the box is edited": "ボックス内のポケモンが編集されています。ボックスに反映するには保存してください。",

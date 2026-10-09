@@ -96,6 +96,20 @@ describe("FirebaseBoxRepository", () => {
 		expect(loaded.map((x) => x.nickname)).toEqual(["nick"]);
 	});
 
+	test("loads after pending saves complete", async () => {
+		const api = createApi();
+		const repo = new FirebaseBoxRepository(api);
+		const box0 = new PokemonBox();
+		const box1 = new PokemonBox();
+		box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+
+		// Load is requested before the save completes
+		const p = save(repo, box0, box1);
+		const loaded = await repo.load();
+		await p;
+		expect(loaded.length).toBe(1);
+	});
+
 	test("continues after a failed request", async () => {
 		const api = createApi();
 		let fail = true;

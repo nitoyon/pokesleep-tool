@@ -4,7 +4,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import type PokemonIv from "../../util/PokemonIv";
-import { useAuthUser } from "../common/useAuthUser";
+import { useAuthUser } from "../common/Hook";
 import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
 import BoxExportDialog from "./Box/BoxExportDialog";
 import BoxImportDialog from "./Box/BoxImportDialog";
@@ -37,7 +37,7 @@ const ResearchCalcApp = React.memo(() => {
 	const { t } = useTranslation();
 	const width = useDomWidth();
 	const { user } = useAuthUser();
-	useBoxSync(state.box, state.boxStatus, user, dispatch);
+	useBoxSync(state.box, state.boxStatus, state.boxReloadCount, user, dispatch);
 
 	const selectedItem = state.box.getById(state.selectedItemId);
 

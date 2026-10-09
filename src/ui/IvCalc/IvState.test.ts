@@ -15,6 +15,7 @@ function createBaseState(): IvState {
 		parameter: loadStrengthParameter(),
 		box: new PokemonBox(),
 		boxStatus: "ready",
+		boxReloadCount: 0,
 		selectedItemId: -1,
 		energyDialogOpen: false,
 		boxItemDialogOpen: false,
@@ -594,6 +595,17 @@ describe("ivStateReducer box loading", () => {
 		expect(newState.boxStatus).toBe("loading");
 		expect(newState.box.items).toEqual([]);
 		expect(newState.selectedItemId).toBe(-1);
+	});
+
+	test("reloadBox increments the reload count", () => {
+		const newState = ivStateReducer(baseState, { type: "reloadBox" });
+		expect(newState.boxReloadCount).toBe(1);
+	});
+
+	test("reloadBox is allowed while loading", () => {
+		const state: IvState = { ...baseState, boxStatus: "loading" };
+		const newState = ivStateReducer(state, { type: "reloadBox" });
+		expect(newState.boxReloadCount).toBe(1);
 	});
 
 	test("boxLoaded sets the items and restores the selection", () => {
