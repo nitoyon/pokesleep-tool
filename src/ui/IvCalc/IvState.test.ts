@@ -642,6 +642,22 @@ describe("ivStateReducer box loading", () => {
 		expect(newState).toBe(state);
 	});
 
+	test("boxLoadFailed sets the error status and shows an alert", () => {
+		const state = { ...baseState, boxStatus: "loading" as const };
+		const newState = ivStateReducer(state, { type: "boxLoadFailed" });
+		expect(newState.boxStatus).toBe("error");
+		expect(newState.alertMessage).toBe("failed to load box");
+	});
+
+	test("ignores box changes after a load failure", () => {
+		const state = { ...baseState, boxStatus: "error" as const };
+		const newState = ivStateReducer(state, {
+			type: "addThis",
+			payload: { iv: new PokemonIv({ pokemonName: "Pikachu" }) },
+		});
+		expect(newState).toBe(state);
+	});
+
 	test("importItems adds items up to the max count", () => {
 		const box = new PokemonBox();
 		for (let i = 0; i < PokemonBox.maxEntryCount - 1; i++) {

@@ -136,7 +136,7 @@ const ResearchCalcApp = React.memo(() => {
 				<BoxTabChild
 					items={state.box.items}
 					iv={state.pokemonIv}
-					loading={state.boxStatus === "loading"}
+					status={state.boxStatus}
 					selectedId={state.selectedItemId}
 					dispatch={dispatch}
 					parameter={state.parameter}

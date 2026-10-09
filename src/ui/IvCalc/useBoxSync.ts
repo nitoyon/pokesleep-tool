@@ -5,7 +5,7 @@ import { LocalBoxRepository } from "../../util/Box/LocalBoxRepository";
 import type PokemonBox from "../../util/Box/PokemonBox";
 import type { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import { SaveTracker } from "../../util/Box/SaveTracker";
-import type { IvAction } from "./IvState";
+import type { BoxStatus, IvAction } from "./IvState";
 
 const loadFirebaseBoxRepository = () =>
 	import("../../util/Firebase/BoxRepository.js");
@@ -26,7 +26,7 @@ const loadFirebaseBoxRepository = () =>
  */
 export function useBoxSync(
 	box: PokemonBox,
-	boxStatus: "loading" | "ready",
+	boxStatus: BoxStatus,
 	reloadCount: number,
 	user: User | null | undefined,
 	dispatch: (action: IvAction) => void,
@@ -91,10 +91,7 @@ export function useBoxSync(
 			.catch((e: unknown) => {
 				console.error(e);
 				if (!cancelled) {
-					dispatch({
-						type: "showAlert",
-						payload: { message: "failed to load box" },
-					});
+					dispatch({ type: "boxLoadFailed" });
 				}
 			});
 		return () => {
@@ -105,7 +102,7 @@ export function useBoxSync(
 	// Save the changes of the box
 	React.useEffect(() => {
 		const sync = syncRef.current;
-		if (sync === null || boxStatus === "loading" || sync.items === box.items) {
+		if (sync === null || boxStatus !== "ready" || sync.items === box.items) {
 			return;
 		}
 		const ops = diffBoxItems(sync.items, box.items);

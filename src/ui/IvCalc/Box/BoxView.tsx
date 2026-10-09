@@ -33,7 +33,7 @@ import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { useLongPress } from "../../common/Hook";
 import CandyIcon from "../../Resources/CandyIcon";
 import CandyDialog from "../Dialog/CandyDialog";
-import type { IvAction } from "../IvState";
+import type { BoxStatus, IvAction } from "../IvState";
 import PokemonFilterFooter, {
 	type PokemonFilterFooterConfig,
 } from "../PokemonFilterFooter";
@@ -46,7 +46,7 @@ const BoxView = React.memo(
 	({
 		items,
 		iv,
-		loading,
+		status = "ready",
 		selectMode,
 		selectedId,
 		parameter,
@@ -56,8 +56,11 @@ const BoxView = React.memo(
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
-		/** Show a progress indicator while the box is being loaded. */
-		loading?: boolean;
+		/**
+		 * Status of the box. Shows a progress indicator while loading,
+		 * and an error message when loading failed.
+		 */
+		status?: BoxStatus;
 		selectMode?: boolean;
 		selectedId: number;
 		parameter: StrengthParameter;
@@ -206,12 +209,12 @@ const BoxView = React.memo(
 						width: selectMode ? "100%" : "calc(100% - 1rem)",
 					}}
 				>
-					{loading && (
+					{status === "loading" && (
 						<div style={{ margin: "5rem auto 0" }}>
 							<CircularProgress />
 						</div>
 					)}
-					{!loading && elms.length === 0 && (
+					{status !== "loading" && elms.length === 0 && (
 						<div
 							style={{
 								margin: "5rem auto 0",
@@ -219,7 +222,11 @@ const BoxView = React.memo(
 								fontSize: "0.9rem",
 							}}
 						>
-							{items.length === 0 ? t("box is empty") : errorMessage}
+							{status === "error"
+								? t("failed to load box")
+								: items.length === 0
+									? t("box is empty")
+									: errorMessage}
 						</div>
 					)}
 					{elms}
@@ -232,7 +239,7 @@ const BoxView = React.memo(
 						margin: ".5rem 0 0",
 					}}
 				>
-					{!selectMode && !loading && (
+					{!selectMode && status === "ready" && (
 						<Fab
 							onClick={onAddClick}
 							color="primary"
@@ -242,7 +249,7 @@ const BoxView = React.memo(
 							<AddIcon />
 						</Fab>
 					)}
-					{!loading && (
+					{status === "ready" && (
 						<BoxExportAlert
 							count={items.length}
 							config={sortConfig}

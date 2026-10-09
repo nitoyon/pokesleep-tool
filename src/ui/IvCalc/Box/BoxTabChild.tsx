@@ -2,21 +2,21 @@ import React from "react";
 import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
-import type { IvAction } from "../IvState";
+import type { BoxStatus, IvAction } from "../IvState";
 import BoxView from "./BoxView";
 
 const BoxTabChild = React.memo(
 	({
 		items,
 		iv,
-		loading,
+		status,
 		selectedId,
 		parameter,
 		dispatch,
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
-		loading: boolean;
+		status: BoxStatus;
 		selectedId: number;
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
@@ -38,7 +38,7 @@ const BoxTabChild = React.memo(
 			<BoxView
 				items={items}
 				iv={iv}
-				loading={loading}
+				status={status}
 				selectedId={selectedId}
 				parameter={parameter}
 				dispatch={dispatch}

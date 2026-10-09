@@ -51,7 +51,7 @@ const LowerTabHeader = React.memo(
 
 		const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
 		const isBoxMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 1;
-		const isBoxLoading = state.boxStatus === "loading";
+		const isBoxNotReady = state.boxStatus !== "ready";
 		const boxTabRef = React.useRef<HTMLDivElement | null>(null);
 
 		const onMenuItemClickHandler = React.useCallback(
@@ -133,7 +133,7 @@ const LowerTabHeader = React.memo(
 						<MenuItem
 							onClick={onMenuItemClickHandler}
 							data-value="addThis"
-							disabled={isBoxLoading}
+							disabled={isBoxNotReady}
 						>
 							<ListItemIcon>
 								<AddCircleOutlineIcon />
@@ -168,7 +168,7 @@ const LowerTabHeader = React.memo(
 						<MenuItem
 							data-value="import"
 							onClick={onMenuItemClickHandler}
-							disabled={isBoxLoading}
+							disabled={isBoxNotReady}
 						>
 							<ListItemIcon>
 								<FileDownloadIcon />

@@ -20,6 +20,7 @@ export type IvAction =
 				| "deleteAllClose"
 				| "removeAllItems"
 				| "boxLoading"
+				| "boxLoadFailed"
 				| "reloadBox"
 				| "saveItem"
 				| "restoreItem"
@@ -82,14 +83,21 @@ export type TeamMemberSlot = {
 	enabled: boolean;
 };
 
+/**
+ * Status of the box.
+ * - `loading`: The box is being loaded from the storage.
+ * - `ready`: The box has been loaded.
+ * - `error`: Failed to load the box.
+ */
+export type BoxStatus = "loading" | "ready" | "error";
+
 type IvState = {
 	tabIndex: number;
 	lowerTabIndex: number;
 	pokemonIv: PokemonIv;
 	parameter: StrengthParameter;
 	box: PokemonBox;
-	/** "loading" while the box is being loaded from the storage. */
-	boxStatus: "loading" | "ready";
+	boxStatus: BoxStatus;
 	/** Incremented to request reloading the box from the storage. */
 	boxReloadCount: number;
 	selectedItemId: number;
@@ -229,7 +237,7 @@ function findCachedSelectedItemId(items: PokemonBoxItem[]): number {
  */
 function saveIvStateCache(state: IvState) {
 	let selectedIv = "";
-	if (state.boxStatus === "loading") {
+	if (state.boxStatus !== "ready") {
 		// Keep the selection until the box is loaded
 		selectedIv = loadInitialIvStateCache().selectedIv;
 	} else {
@@ -262,8 +270,9 @@ const boxChangingActions: ReadonlySet<IvAction["type"]> = new Set([
 export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	const type = action.type;
 	const selectedItem = state.box.getById(state.selectedItemId);
-	if (state.boxStatus === "loading" && boxChangingActions.has(type)) {
-		// Changes made while loading would be overwritten by the loaded box
+	if (state.boxStatus !== "ready" && boxChangingActions.has(type)) {
+		// Changes made while loading would be overwritten by the loaded box,
+		// and changes made after a load failure would not be saved.
 		return state;
 	}
 	if (type === "boxLoading") {
@@ -274,8 +283,14 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 			selectedItemId: -1,
 		};
 	}
+	if (type === "boxLoadFailed") {
+		return {
+			...state,
+			boxStatus: "error",
+			alertMessage: "failed to load box",
+		};
+	}
 	if (type === "reloadBox") {
-		// Allowed while loading to retry after a load failure
 		return { ...state, boxReloadCount: state.boxReloadCount + 1 };
 	}
 	if (type === "boxLoaded") {
