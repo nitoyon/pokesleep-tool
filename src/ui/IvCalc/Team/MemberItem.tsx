@@ -17,7 +17,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
+import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import { useLongPress } from "../../common/Hook";
 import PokemonIcon from "../PokemonIcon";
 import type { MemberAction, MemberEvent } from "./MemberEvent";

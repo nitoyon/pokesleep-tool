@@ -1,6 +1,6 @@
 import type { IngredientName } from "../../data/pokemons";
+import type { PokemonBoxItem } from "../Box/PokemonBox";
 import { AlwaysTap, whistlePeriod } from "../Energy";
-import type { PokemonBoxItem } from "../PokemonBox";
 import { ingredientStrength } from "../PokemonRp";
 import type { IngredientStrength, StrengthParameter } from "../PokemonStrength";
 import { buildMemberProfiles } from "./MemberProfile";

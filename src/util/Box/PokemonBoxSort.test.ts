@@ -1,7 +1,9 @@
 import type { TFunction } from "i18next";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { NoTap } from "./Energy";
-import Nature from "./Nature";
+import { NoTap } from "../Energy";
+import Nature from "../Nature";
+import PokemonIv from "../PokemonIv";
+import { createStrengthParameter } from "../PokemonStrength";
 import { PokemonBoxItem } from "./PokemonBox";
 import {
 	loadBoxSortConfig,
@@ -9,8 +11,6 @@ import {
 	type StrengthCalculator,
 	sortPokemonItems,
 } from "./PokemonBoxSort";
-import PokemonIv from "./PokemonIv";
-import { createStrengthParameter } from "./PokemonStrength";
 
 // Mock translation function
 const mockT = vi.fn((key: string) => {

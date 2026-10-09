@@ -1,5 +1,5 @@
 import i18n from "../../i18n";
-import PokemonBox, { type PokemonBoxItem } from "../../util/PokemonBox";
+import PokemonBox, { type PokemonBoxItem } from "../../util/Box/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
 import {
 	loadStrengthParameter,

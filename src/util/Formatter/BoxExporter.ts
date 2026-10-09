@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import type { PokemonBoxItem } from "../PokemonBox";
+import type { PokemonBoxItem } from "../Box/PokemonBox";
 import { escapeCsvField } from "./CsvFormatter";
 
 type CsvTsvFormat = "csv" | "tsv";

@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonBox from "../../../util/Box/PokemonBox";
 import { copyToClipboard } from "../../../util/Clipboard";
 import { exportToCsvTsv } from "../../../util/Formatter/BoxExporter";
-import type PokemonBox from "../../../util/PokemonBox";
 import SelectEx from "../../common/SelectEx";
 
 type BoxExportFormat = "custom" | "csv" | "tsv";

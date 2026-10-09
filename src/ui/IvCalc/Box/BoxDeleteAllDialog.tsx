@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type PokemonBox from "../../../util/PokemonBox";
+import type PokemonBox from "../../../util/Box/PokemonBox";
 
 const BoxDeleteAllDialog = React.memo(
 	({

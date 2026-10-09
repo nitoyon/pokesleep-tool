@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { PokemonBoxItem } from "../PokemonBox";
+import { PokemonBoxItem } from "../Box/PokemonBox";
 import PokemonIv from "../PokemonIv";
 import { simulateTeam } from "./Simulate";
 import { testParam } from "./testHelpers";

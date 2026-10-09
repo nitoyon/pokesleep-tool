@@ -11,12 +11,12 @@ import {
 import type { TFunction } from "i18next";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonBox from "../../../util/Box/PokemonBox";
 import {
 	detectFormat,
 	type ImportWarning,
 	importFromCsvTsv,
 } from "../../../util/Formatter/BoxImporter";
-import type PokemonBox from "../../../util/PokemonBox";
 import SelectEx from "../../common/SelectEx";
 
 type BoxImportMethod = "clipboard" | "file";

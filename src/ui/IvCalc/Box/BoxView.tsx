@@ -19,14 +19,14 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
-import BoxFilterConfig from "../../../util/PokemonBoxFilter";
+import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
+import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import {
 	type BoxSortConfig,
 	type BoxSortType,
 	loadBoxSortConfig,
 	sortPokemonItems,
-} from "../../../util/PokemonBoxSort";
+} from "../../../util/Box/PokemonBoxSort";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { useLongPress } from "../../common/Hook";

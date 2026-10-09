@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
+import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import TextLikeButton from "../../common/TextLikeButton";
 import MessageDialog from "../../Dialog/MessageDialog";

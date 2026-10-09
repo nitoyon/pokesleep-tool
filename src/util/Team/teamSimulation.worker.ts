@@ -1,4 +1,4 @@
-import { PokemonBoxItem } from "../PokemonBox";
+import { PokemonBoxItem } from "../Box/PokemonBox";
 import PokemonIv from "../PokemonIv";
 import { deserializeStrengthParameter } from "../StrengthParameter";
 import { simulateTeam } from "./Simulate";

@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import React from "react";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
+import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
 import EditMemberDialog from "./EditMemberDialog";

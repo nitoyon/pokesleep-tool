@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import i18n, { loadLanguage } from "../../i18n";
-import PokemonBox, { PokemonBoxItem } from "../../util/PokemonBox";
+import PokemonBox, { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
 import { loadStrengthParameter } from "../../util/PokemonStrength";
 import type IvState from "./IvState";
