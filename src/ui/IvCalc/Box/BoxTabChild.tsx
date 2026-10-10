@@ -37,9 +37,12 @@ const BoxTabChild = React.memo(
 			},
 			[dispatch],
 		);
+		const onReload = React.useCallback(() => {
+			dispatch({ type: "reloadBox" });
+		}, [dispatch]);
 		const footerAccessory = React.useMemo(
-			() => <CloudBoxStatus status={saveStatus} />,
-			[saveStatus],
+			() => <CloudBoxStatus status={saveStatus} onReload={onReload} />,
+			[saveStatus, onReload],
 		);
 
 		return (

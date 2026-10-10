@@ -13,81 +13,89 @@ import MessageDialog from "../../Dialog/MessageDialog";
 /**
  * Shows the status of saving the box to the cloud.
  */
-const CloudBoxStatus = React.memo(({ status }: { status: SaveStatus }) => {
-	const { t } = useTranslation();
-	const { user, signIn } = useAuthUser();
-	const [noticeOpen, setNoticeOpen] = React.useState(false);
-	const [authErrorMessage, setAuthErrorMessage] = React.useState<string | null>(
-		null,
-	);
+const CloudBoxStatus = React.memo(
+	({ status, onReload }: { status: SaveStatus; onReload: () => void }) => {
+		const { t } = useTranslation();
+		const { user, signIn } = useAuthUser();
+		const [noticeOpen, setNoticeOpen] = React.useState(false);
+		const [authErrorMessage, setAuthErrorMessage] = React.useState<
+			string | null
+		>(null);
 
-	const onClick = React.useCallback(() => {
-		setNoticeOpen(true);
-	}, []);
-	const onNoticeClose = React.useCallback(() => {
-		setNoticeOpen(false);
-	}, []);
-	const onLoginClick = React.useCallback(() => {
-		signIn().catch((error) => {
-			setAuthErrorMessage(error.message);
-		});
-	}, [signIn]);
-	const onAuthErrorDialogClose = React.useCallback(() => {
-		setAuthErrorMessage(null);
-	}, []);
+		const onClick = React.useCallback(() => {
+			setNoticeOpen(true);
+		}, []);
+		const onNoticeClose = React.useCallback(() => {
+			setNoticeOpen(false);
+		}, []);
+		const onLoginClick = React.useCallback(() => {
+			signIn().catch((error) => {
+				setAuthErrorMessage(error.message);
+			});
+		}, [signIn]);
+		const onReloadClick = React.useCallback(() => {
+			onReload();
+		}, [onReload]);
+		const onAuthErrorDialogClose = React.useCallback(() => {
+			setAuthErrorMessage(null);
+		}, []);
 
-	// shows nothing while the sign-in state is not yet known
-	if (user === undefined) {
-		return null;
-	}
-	const icon =
-		user === null ? (
-			<CloudOffIcon />
-		) : status === "saving" ? (
-			<BackupIcon titleAccess={t("box saving")} />
-		) : status === "saved" ? (
-			<CloudDoneIcon titleAccess={t("box saved")} />
-		) : (
-			<CloudIcon />
-		);
-	return (
-		<>
-			<IconButton
-				onClick={onClick}
-				size="small"
-				sx={{ color: "white", marginRight: "0.3rem" }}
-			>
-				{icon}
-			</IconButton>
-			{user === null ? (
-				<ConfirmDialog
-					open={noticeOpen}
-					message={
-						<>
-							<p>{t("export message1")}</p>
-							<p>{t("box sync notice")}</p>
-						</>
-					}
-					okLabel={t("login")}
-					okColor="primary"
-					okContained
-					onOk={onLoginClick}
-					onClose={onNoticeClose}
-				/>
+		// shows nothing while the sign-in state is not yet known
+		if (user === undefined) {
+			return null;
+		}
+		const icon =
+			user === null ? (
+				<CloudOffIcon />
+			) : status === "saving" ? (
+				<BackupIcon titleAccess={t("box saving")} />
+			) : status === "saved" ? (
+				<CloudDoneIcon titleAccess={t("box saved")} />
 			) : (
+				<CloudIcon />
+			);
+		return (
+			<>
+				<IconButton
+					onClick={onClick}
+					size="small"
+					sx={{ color: "white", marginRight: "0.3rem" }}
+				>
+					{icon}
+				</IconButton>
+				{user === null ? (
+					<ConfirmDialog
+						open={noticeOpen}
+						message={
+							<>
+								<p>{t("export message1")}</p>
+								<p>{t("box sync notice")}</p>
+							</>
+						}
+						okLabel={t("login")}
+						okColor="primary"
+						okContained
+						onOk={onLoginClick}
+						onClose={onNoticeClose}
+					/>
+				) : (
+					<ConfirmDialog
+						open={noticeOpen}
+						message={<p>{t("box synced notice")}</p>}
+						okLabel={t("reload")}
+						okColor="primary"
+						onOk={onReloadClick}
+						onClose={onNoticeClose}
+					/>
+				)}
 				<MessageDialog
-					open={noticeOpen}
-					message={t("box synced notice")}
-					onClose={onNoticeClose}
+					open={authErrorMessage !== null}
+					message={authErrorMessage}
+					onClose={onAuthErrorDialogClose}
 				/>
-			)}
-			<MessageDialog
-				open={authErrorMessage !== null}
-				message={authErrorMessage}
-				onClose={onAuthErrorDialogClose}
-			/>
-		</>
-	);
-});
+			</>
+		);
+	},
+);
 
 export default CloudBoxStatus;
