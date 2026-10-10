@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"box sync": {
+				"headline": "ボックス内のポケモンをクラウドに保存できるようになりました。",
+				"detail": "$t(box sync notice)"
+			},
 			"add foongus": {
 				"headline": "$t(pokemons.Foongus)と$t(pokemons.Amoonguss)のデータを追加しました。",
 				"detail": "$t(rp collection)"

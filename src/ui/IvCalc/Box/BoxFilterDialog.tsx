@@ -25,9 +25,9 @@ import {
 	PokemonTypes,
 	SpecialtyNames,
 } from "../../../data/pokemons";
+import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
 import type { NatureEffect } from "../../../util/Nature";
-import BoxFilterConfig from "../../../util/PokemonBoxFilter";
 import type SubSkill from "../../../util/SubSkill";
 import type { SubSkillType } from "../../../util/SubSkill";
 import DraggableTabContainer from "../../common/DraggableTabContainer";

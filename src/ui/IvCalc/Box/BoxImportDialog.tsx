@@ -11,24 +11,30 @@ import {
 import type { TFunction } from "i18next";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import PokemonBox, { deserializeBoxItem } from "../../../util/Box/PokemonBox";
 import {
 	detectFormat,
 	type ImportWarning,
 	importFromCsvTsv,
 } from "../../../util/Formatter/BoxImporter";
-import type PokemonBox from "../../../util/PokemonBox";
+import type PokemonIv from "../../../util/PokemonIv";
 import SelectEx from "../../common/SelectEx";
+import type { IvAction } from "../IvState";
 
 type BoxImportMethod = "clipboard" | "file";
+
+type ImportEntry = { iv: PokemonIv; nickname: string };
 
 const BoxImportDialog = React.memo(
 	({
 		box,
 		open,
+		dispatch,
 		onClose,
 	}: {
 		box: PokemonBox;
 		open: boolean;
+		dispatch: (action: IvAction) => void;
 		onClose: () => void;
 	}) => {
 		const [value, setValue] = React.useState("");
@@ -63,24 +69,28 @@ const BoxImportDialog = React.memo(
 
 		const importHandler = React.useCallback(
 			(text: string) => {
-				const result = importToBox(text, box, t);
-				if (result.added === 0 && result.warnings.length === 0) {
+				const result = parseImportText(text, t);
+				const entries = result.entries.slice(
+					0,
+					PokemonBox.maxEntryCount - box.items.length,
+				);
+				if (entries.length === 0 && result.warnings.length === 0) {
 					setImportedMessage(t("failed to import"));
 					return;
 				}
-				if (result.added > 0) {
-					box.save();
+				if (entries.length > 0) {
+					dispatch({ type: "importItems", payload: { entries } });
 				}
 				if (result.warnings.length > 0) {
 					setWarnings(result.warnings);
-					setImportedCount(result.added);
+					setImportedCount(entries.length);
 					setWarningDetailOpen(true);
 				} else {
-					setImportedMessage(t("imported N pokemon", { n: result.added }));
+					setImportedMessage(t("imported N pokemon", { n: entries.length }));
 				}
 				onClose_();
 			},
-			[box, t, onClose_],
+			[box, dispatch, t, onClose_],
 		);
 
 		const onImportClick = React.useCallback(() => {
@@ -233,54 +243,36 @@ function ImportWarningDialog({
 	);
 }
 
-function importToBox(
+/**
+ * Parse the imported text.
+ * @param value Imported text.
+ * @param t Translation function.
+ * @returns Parsed entries and warnings.
+ */
+function parseImportText(
 	value: string,
-	box: PokemonBox,
 	t: TFunction,
-): { added: number; warnings: ImportWarning[] } {
+): { entries: ImportEntry[]; warnings: ImportWarning[] } {
 	const detectedFormat = detectFormat(value);
 	if (detectedFormat === "custom") {
-		return { added: importCustomToBox(value, box), warnings: [] };
+		return { entries: parseCustomText(value), warnings: [] };
 	} else if (detectedFormat === "csv" || detectedFormat === "tsv") {
-		return importCsvTsvToBox(value, detectedFormat, box, t);
+		const { items, warnings } = importFromCsvTsv(value, detectedFormat, t);
+		return { entries: items, warnings };
 	} else {
-		return { added: 0, warnings: [] };
+		return { entries: [], warnings: [] };
 	}
 }
 
-function importCustomToBox(value: string, box: PokemonBox): number {
-	const lines = value.split(/\n/g);
-	let added = 0;
-	for (const line of lines) {
-		if (!box.canAdd) {
-			break;
+function parseCustomText(value: string): ImportEntry[] {
+	const entries: ImportEntry[] = [];
+	for (const line of value.split(/\n/g)) {
+		const data = deserializeBoxItem(line);
+		if (data !== null) {
+			entries.push(data);
 		}
-		const data = box.deserializeItem(line);
-		if (data === null) {
-			continue;
-		}
-		box.add(data.iv, data.nickname);
-		added++;
 	}
-	return added;
-}
-
-function importCsvTsvToBox(
-	value: string,
-	format: "csv" | "tsv",
-	box: PokemonBox,
-	t: TFunction,
-): { added: number; warnings: ImportWarning[] } {
-	const { items, warnings } = importFromCsvTsv(value, format, t);
-	let added = 0;
-	for (const item of items) {
-		if (!box.canAdd) {
-			break;
-		}
-		box.add(item.iv, item.nickname);
-		added++;
-	}
-	return { added, warnings };
+	return entries;
 }
 
 export default BoxImportDialog;

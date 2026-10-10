@@ -12,7 +12,7 @@ import type { TransitionProps } from "@mui/material/transitions";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { PokemonBoxItem } from "../../../util/PokemonBox";
+import { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
 import type { StrengthParameter } from "../../../util/PokemonStrength";

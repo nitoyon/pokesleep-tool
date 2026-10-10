@@ -8,15 +8,15 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type PokemonBox from "../../../util/PokemonBox";
+import type { IvAction } from "../IvState";
 
 const BoxDeleteAllDialog = React.memo(
 	({
-		box,
 		open,
+		dispatch,
 		onClose,
 	}: {
-		box: PokemonBox;
+		dispatch: (action: IvAction) => void;
 		open: boolean;
 		onClose: () => void;
 	}) => {
@@ -25,10 +25,10 @@ const BoxDeleteAllDialog = React.memo(
 		const { t } = useTranslation();
 
 		const onDelete = React.useCallback(() => {
-			box.removeAll();
+			dispatch({ type: "removeAllItems" });
 			setDeletedMessageVisible(true);
 			onClose();
-		}, [box, onClose]);
+		}, [dispatch, onClose]);
 		const onDeletedMessageClose = React.useCallback(() => {
 			setDeletedMessageVisible(false);
 		}, []);

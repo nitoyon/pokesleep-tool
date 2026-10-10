@@ -1,7 +1,7 @@
 import type { TFunction } from "i18next";
 import { describe, expect, test } from "vitest";
+import { PokemonBoxItem } from "../Box/PokemonBox";
 import Nature from "../Nature";
-import { PokemonBoxItem } from "../PokemonBox";
 import PokemonIv, { type PokemonIvProps } from "../PokemonIv";
 import SubSkill from "../SubSkill";
 import SubSkillList from "../SubSkillList";

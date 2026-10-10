@@ -1,14 +1,12 @@
 import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import {
-	Button,
 	ButtonBase,
+	CircularProgress,
 	Fab,
 	IconButton,
 	ListItemIcon,
@@ -19,20 +17,20 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
-import BoxFilterConfig from "../../../util/PokemonBoxFilter";
+import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
+import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import {
 	type BoxSortConfig,
 	type BoxSortType,
 	loadBoxSortConfig,
 	sortPokemonItems,
-} from "../../../util/PokemonBoxSort";
+} from "../../../util/Box/PokemonBoxSort";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { useLongPress } from "../../common/Hook";
 import CandyIcon from "../../Resources/CandyIcon";
 import CandyDialog from "../Dialog/CandyDialog";
-import type { IvAction } from "../IvState";
+import type { BoxStatus, IvAction } from "../IvState";
 import PokemonFilterFooter, {
 	type PokemonFilterFooterConfig,
 } from "../PokemonFilterFooter";
@@ -45,21 +43,29 @@ const BoxView = React.memo(
 	({
 		items,
 		iv,
+		status = "ready",
 		selectMode,
 		selectedId,
 		parameter,
 		dispatch,
 		onSelect,
 		onEdit,
+		footerAccessory,
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
+		/**
+		 * Status of the box. Shows a progress indicator while loading,
+		 * and an error message when loading failed.
+		 */
+		status?: BoxStatus;
 		selectMode?: boolean;
 		selectedId: number;
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
 		onSelect: (id: number) => void;
 		onEdit?: (id: number) => void;
+		footerAccessory?: React.ReactNode;
 	}) => {
 		const { t } = useTranslation();
 		const [sortConfig, setSortConfig] = React.useState(() =>
@@ -202,7 +208,12 @@ const BoxView = React.memo(
 						width: selectMode ? "100%" : "calc(100% - 1rem)",
 					}}
 				>
-					{elms.length === 0 && (
+					{status === "loading" && (
+						<div style={{ margin: "5rem auto 0" }}>
+							<CircularProgress />
+						</div>
+					)}
+					{status !== "loading" && elms.length === 0 && (
 						<div
 							style={{
 								margin: "5rem auto 0",
@@ -210,7 +221,11 @@ const BoxView = React.memo(
 								fontSize: "0.9rem",
 							}}
 						>
-							{items.length === 0 ? t("box is empty") : errorMessage}
+							{status === "error"
+								? t("failed to load box")
+								: items.length === 0
+									? t("box is empty")
+									: errorMessage}
 						</div>
 					)}
 					{elms}
@@ -223,7 +238,7 @@ const BoxView = React.memo(
 						margin: ".5rem 0 0",
 					}}
 				>
-					{!selectMode && (
+					{!selectMode && status === "ready" && (
 						<Fab
 							onClick={onAddClick}
 							color="primary"
@@ -233,12 +248,6 @@ const BoxView = React.memo(
 							<AddIcon />
 						</Fab>
 					)}
-					<BoxExportAlert
-						count={items.length}
-						config={sortConfig}
-						dispatch={dispatch}
-						onChange={onSortConfigChange}
-					/>
 					<BoxSortConfigFooter
 						parameter={parameter}
 						sortConfig={sortConfig}
@@ -248,6 +257,8 @@ const BoxView = React.memo(
 					/>
 					<div
 						style={{
+							display: "flex",
+							alignItems: "center",
 							paddingLeft: selectMode ? 0 : "1rem",
 							paddingBottom: selectMode ? 0 : "1.2rem",
 							background: "#f76",
@@ -260,6 +271,9 @@ const BoxView = React.memo(
 							onFilterButtonClick={onFilterButtonClick}
 							sortTypes={footerSortTypes}
 						/>
+						{footerAccessory !== undefined && (
+							<div style={{ margin: "0 0.8rem 0 auto" }}>{footerAccessory}</div>
+						)}
 					</div>
 				</div>
 				<BoxFilterDialog
@@ -456,98 +470,6 @@ const StyledBoxLargeItem = styled("div")({
 		"& > svg": {
 			width: "0.8rem",
 			height: "0.8rem",
-		},
-	},
-});
-
-/** Number of days after which the alert message will be shown again. */
-const alertDaysThreshold = 30;
-/**
- * The threshold for the difference in the number of items in the box since
- * the last alert was shown.
- * This value determines when an alert message will be triggered.
- */
-const boxCountDiffThreshold = 10;
-
-const BoxExportAlert = React.memo(
-	({
-		count,
-		config,
-		dispatch,
-		onChange,
-	}: {
-		count: number;
-		config: BoxSortConfig;
-		dispatch: (action: IvAction) => void;
-		onChange: (value: BoxSortConfig) => void;
-	}) => {
-		const { t } = useTranslation();
-		const onClose = React.useCallback(() => {
-			onChange({
-				...config,
-				// YYYY-MM-DD
-				warnDate: new Date().toLocaleDateString("sv-SE"),
-				warnItems: count,
-			});
-		}, [config, count, onChange]);
-
-		const onExportClick = React.useCallback(() => {
-			dispatch({ type: "export" });
-			onClose();
-		}, [dispatch, onClose]);
-
-		// get time since we displayed the warning message
-		const lastWarningTime =
-			config.warnDate !== "" ? new Date(config.warnDate).getTime() : Date.now();
-		const elapsedTime = Date.now() - lastWarningTime;
-
-		// Whether alertDaysThreshold days elapsed
-		const elapsed = elapsedTime > alertDaysThreshold * 24 * 60 * 60 * 1000;
-
-		// check whether the box items increases too much
-		const boxIncreased =
-			Math.abs(count - config.warnItems) >= boxCountDiffThreshold;
-
-		// return empty element when no need to show message
-		if (!boxIncreased && !elapsed) {
-			return null;
-		}
-
-		return (
-			<StyledBoxExportAlert>
-				<InfoOutlinedIcon />
-				<div>
-					{t("export notice")}
-					<Button onClick={onExportClick}>[{t("export")}]</Button>
-				</div>
-				<IconButton onClick={onClose}>
-					<CloseIcon />
-				</IconButton>
-			</StyledBoxExportAlert>
-		);
-	},
-);
-
-const StyledBoxExportAlert = styled("div")({
-	background: "#e5f6fd",
-	borderTop: "1px solid #d9e9e9",
-	paddingTop: "0.2rem",
-	color: "#014343",
-	display: "grid",
-	gridTemplateColumns: "26px 1fr 40px",
-	"& > svg": {
-		color: "#0288d1",
-		width: "18px",
-		height: "18px",
-		padding: "4px",
-	},
-	"& > div": {
-		fontSize: "0.8rem",
-		color: "#014480",
-		"& > button": {
-			padding: "0 0 0 0.3rem",
-			minWidth: 0,
-			fontSize: "0.8rem",
 		},
 	},
 });

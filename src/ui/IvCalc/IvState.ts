@@ -1,5 +1,5 @@
 import i18n from "../../i18n";
-import PokemonBox, { type PokemonBoxItem } from "../../util/PokemonBox";
+import PokemonBox, { type PokemonBoxItem } from "../../util/Box/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
 import {
 	loadStrengthParameter,
@@ -18,6 +18,10 @@ export type IvAction =
 				| "importClose"
 				| "deleteAll"
 				| "deleteAllClose"
+				| "removeAllItems"
+				| "boxLoading"
+				| "boxLoadFailed"
+				| "reloadBox"
 				| "saveItem"
 				| "restoreItem"
 				| "editDialogClose"
@@ -50,6 +54,14 @@ export type IvAction =
 			payload: { parameter: StrengthParameter };
 	  }
 	| {
+			type: "boxLoaded";
+			payload: { items: PokemonBoxItem[] };
+	  }
+	| {
+			type: "importItems";
+			payload: { entries: { iv: PokemonIv; nickname: string }[] };
+	  }
+	| {
 			type: "showAlert";
 			payload: { message: string };
 	  }
@@ -71,8 +83,13 @@ export type TeamMemberSlot = {
 	enabled: boolean;
 };
 
-const initialBox = new PokemonBox();
-initialBox.load();
+/**
+ * Status of the box.
+ * - `loading`: The box is being loaded from the storage.
+ * - `ready`: The box has been loaded.
+ * - `error`: Failed to load the box.
+ */
+export type BoxStatus = "loading" | "ready" | "error";
 
 type IvState = {
 	tabIndex: number;
@@ -80,6 +97,9 @@ type IvState = {
 	pokemonIv: PokemonIv;
 	parameter: StrengthParameter;
 	box: PokemonBox;
+	boxStatus: BoxStatus;
+	/** Incremented to request reloading the box from the storage. */
+	boxReloadCount: number;
 	selectedItemId: number;
 	energyDialogOpen: boolean;
 	boxItemDialogOpen: boolean;
@@ -116,28 +136,15 @@ export function getInitialIvState(): IvState {
 			// ignore deserialization error (e.g. corrupted cache)
 		}
 	}
-	let selectedItemId = -1;
-	if (cache.selectedIv !== "") {
-		try {
-			const selectedIv = PokemonIv.deserialize(cache.selectedIv);
-			const selectedIndex = initialBox.items.findIndex((x) =>
-				x.iv.isEqual(selectedIv),
-			);
-			if (selectedIndex >= 0) {
-				selectedItemId = initialBox.items[selectedIndex].id;
-			}
-		} catch {
-			// ignore deserialization error (e.g. corrupted cache)
-		}
-	}
-
 	const ret: IvState = {
 		tabIndex: cache.tabIndex,
 		lowerTabIndex: cache.lowerTabIndex,
 		pokemonIv: iv,
 		parameter: loadStrengthParameter(),
-		box: initialBox,
-		selectedItemId,
+		box: new PokemonBox(),
+		boxStatus: "loading",
+		boxReloadCount: 0,
+		selectedItemId: -1,
 		energyDialogOpen: false,
 		boxItemDialogOpen: false,
 		boxItemDialogKey: "",
@@ -206,23 +213,95 @@ function loadInitialIvStateCache(): IvStateCache {
 }
 
 /**
+ * Find the box item selected last time.
+ * @param items Box items.
+ * @returns ID of the item, or -1 if not found.
+ */
+function findCachedSelectedItemId(items: PokemonBoxItem[]): number {
+	const cache = loadInitialIvStateCache();
+	if (cache.selectedIv === "") {
+		return -1;
+	}
+	try {
+		const selectedIv = PokemonIv.deserialize(cache.selectedIv);
+		return items.find((x) => x.iv.isEqual(selectedIv))?.id ?? -1;
+	} catch {
+		// ignore deserialization error (e.g. corrupted cache)
+		return -1;
+	}
+}
+
+/**
  * Save IvState to localStorage.
  * @param state IvState.
  */
 function saveIvStateCache(state: IvState) {
-	const selectedItem = state.box.getById(state.selectedItemId);
+	let selectedIv = "";
+	if (state.boxStatus !== "ready") {
+		// Keep the selection until the box is loaded
+		selectedIv = loadInitialIvStateCache().selectedIv;
+	} else {
+		selectedIv = state.box.getById(state.selectedItemId)?.iv.serialize() ?? "";
+	}
 	const cache: IvStateCache = {
 		tabIndex: state.tabIndex,
 		lowerTabIndex: state.lowerTabIndex,
 		iv: state.pokemonIv.serialize(),
-		selectedIv: selectedItem === null ? "" : selectedItem.iv.serialize(),
+		selectedIv,
 	};
 	localStorage.setItem("PstIvState", JSON.stringify(cache));
 }
 
+/** Actions that change the box items. */
+const boxChangingActions: ReadonlySet<IvAction["type"]> = new Set([
+	"add",
+	"addThis",
+	"import",
+	"importItems",
+	"deleteAll",
+	"removeAllItems",
+	"saveItem",
+	"addOrEditDone",
+	"edit",
+	"dup",
+	"remove",
+]);
+
 export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	const type = action.type;
 	const selectedItem = state.box.getById(state.selectedItemId);
+	if (state.boxStatus !== "ready" && boxChangingActions.has(type)) {
+		// Changes made while loading would be overwritten by the loaded box,
+		// and changes made after a load failure would not be saved.
+		return state;
+	}
+	if (type === "boxLoading") {
+		return {
+			...state,
+			box: new PokemonBox(),
+			boxStatus: "loading",
+			selectedItemId: -1,
+		};
+	}
+	if (type === "boxLoadFailed") {
+		return {
+			...state,
+			boxStatus: "error",
+			alertMessage: "failed to load box",
+		};
+	}
+	if (type === "reloadBox") {
+		return { ...state, boxReloadCount: state.boxReloadCount + 1 };
+	}
+	if (type === "boxLoaded") {
+		const { items } = action.payload;
+		return normalizeState({
+			...state,
+			box: new PokemonBox(items),
+			boxStatus: "ready",
+			selectedItemId: findCachedSelectedItemId(items),
+		});
+	}
 	if (type === "changeUpperTab") {
 		const value = action.payload.index;
 		let lowerTabIndex = state.lowerTabIndex;
@@ -276,7 +355,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 			action.payload.iv,
 			action.payload.nickname,
 		);
-		box.save();
 		return { ...state, box, selectedItemId };
 	}
 	if (type === "export") {
@@ -293,14 +371,26 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return { ...state, boxImportDialogOpen: true };
 	}
 	if (type === "importClose") {
+		return { ...state, boxImportDialogOpen: false };
+	}
+	if (type === "importItems") {
 		const box = new PokemonBox(state.box.items);
-		return { ...state, box, boxImportDialogOpen: false };
+		for (const entry of action.payload.entries) {
+			if (!box.canAdd) {
+				break;
+			}
+			box.add(entry.iv, entry.nickname);
+		}
+		return { ...state, box };
 	}
 	if (type === "deleteAll") {
 		return { ...state, boxDeleteAllDialogOpen: true };
 	}
 	if (type === "deleteAllClose") {
 		return { ...state, boxDeleteAllDialogOpen: false };
+	}
+	if (type === "removeAllItems") {
+		return { ...state, box: new PokemonBox(), selectedItemId: -1 };
 	}
 	if (type === "restoreItem") {
 		if (selectedItem !== null) {
@@ -325,7 +415,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 
 		const box = new PokemonBox(state.box.items);
 		box.set(state.selectedItemId, state.pokemonIv, nickName);
-		box.save();
 		const newState = { ...state, box };
 		saveIvStateCache(newState);
 		return newState;
@@ -343,7 +432,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		} else {
 			box.set(value.id, value.iv, value.nickname);
 		}
-		box.save();
 		const newState = normalizeState({ ...state, pokemonIv: value.iv, box });
 		newState.selectedItemId = selectedItemId;
 		saveIvStateCache(newState);
@@ -410,12 +498,10 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	} else if (type === "dup") {
 		const box = new PokemonBox(state.box.items);
 		const selectedItemId: number = box.add(item.iv.clone(), item.nickname);
-		box.save();
 		return { ...state, box, selectedItemId };
 	} else if (type === "remove") {
 		const box = new PokemonBox(state.box.items);
 		box.remove(id);
-		box.save();
 		return { ...state, box };
 	}
 	return state;

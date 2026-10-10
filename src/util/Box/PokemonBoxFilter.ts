@@ -5,11 +5,11 @@ import {
 	type PokemonRarityFilter,
 	type PokemonSpecialty,
 	type PokemonType,
-} from "../data/pokemons";
-import { type MainSkillName, matchMainSkillName } from "./MainSkill";
-import type { NatureEffect } from "./Nature";
+} from "../../data/pokemons";
+import { type MainSkillName, matchMainSkillName } from "../MainSkill";
+import type { NatureEffect } from "../Nature";
+import type { SubSkillType } from "../SubSkill";
 import type { PokemonBoxItem } from "./PokemonBox";
-import type { SubSkillType } from "./SubSkill";
 
 /**
  * Pokmeon box filter configuration.

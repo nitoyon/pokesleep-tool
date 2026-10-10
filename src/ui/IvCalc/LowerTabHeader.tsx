@@ -4,6 +4,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import {
 	Button,
 	Dialog,
@@ -24,6 +25,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useAuthUser } from "../common/Hook";
 import type IvState from "./IvState";
 import type { IvAction } from "./IvState";
 import { shareIv } from "./ShareUtil";
@@ -44,10 +46,12 @@ const LowerTabHeader = React.memo(
 		const [moreMenuAnchor, setMoreMenuAnchor] =
 			React.useState<HTMLElement | null>(null);
 		const [showAddConfirm, setShowAddConfirm] = React.useState(false);
+		const { user } = useAuthUser();
 		const { t } = useTranslation();
 
 		const isIvMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 0;
 		const isBoxMenuOpen = Boolean(moreMenuAnchor) && tabIndex === 1;
+		const isBoxNotReady = state.boxStatus !== "ready";
 		const boxTabRef = React.useRef<HTMLDivElement | null>(null);
 
 		const onMenuItemClickHandler = React.useCallback(
@@ -126,7 +130,11 @@ const LowerTabHeader = React.memo(
 					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 				>
 					<MenuList>
-						<MenuItem onClick={onMenuItemClickHandler} data-value="addThis">
+						<MenuItem
+							onClick={onMenuItemClickHandler}
+							data-value="addThis"
+							disabled={isBoxNotReady}
+						>
 							<ListItemIcon>
 								<AddCircleOutlineIcon />
 							</ListItemIcon>
@@ -157,12 +165,24 @@ const LowerTabHeader = React.memo(
 							</ListItemIcon>
 							{t("export")}
 						</MenuItem>
-						<MenuItem data-value="import" onClick={onMenuItemClickHandler}>
+						<MenuItem
+							data-value="import"
+							onClick={onMenuItemClickHandler}
+							disabled={isBoxNotReady}
+						>
 							<ListItemIcon>
 								<FileDownloadIcon />
 							</ListItemIcon>
 							{t("import")}
 						</MenuItem>
+						{user && (
+							<MenuItem data-value="reloadBox" onClick={onMenuItemClickHandler}>
+								<ListItemIcon>
+									<RefreshIcon />
+								</ListItemIcon>
+								{t("reload")}
+							</MenuItem>
+						)}
 						<Divider />
 						<MenuItem
 							data-value="deleteAll"

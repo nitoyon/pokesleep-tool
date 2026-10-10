@@ -12,7 +12,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { PokemonBoxItem } from "../../../util/PokemonBox";
+import { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import BoxView from "../Box/BoxView";

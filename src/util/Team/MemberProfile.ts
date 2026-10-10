@@ -1,8 +1,8 @@
 import { isExpertField } from "../../data/fields";
 import { whistlePeriod } from "../../util/Energy";
+import type { PokemonBoxItem } from "../Box/PokemonBox";
 import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
-import type { PokemonBoxItem } from "../PokemonBox";
 import type { StrengthParameter } from "../PokemonStrength";
 import PokemonStrength, { recipeLevelBonus } from "../PokemonStrength";
 import { createSkill } from "./Skill/SkillFactory";

@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"box sync": {
+				"headline": "盒子中的寶可夢現在可以儲存到雲端了。",
+				"detail": "$t(box sync notice)"
+			},
 			"add foongus": {
 				"headline": "新增了$t(pokemons.Foongus)和$t(pokemons.Amoonguss)的資料。",
 				"detail": "$t(rp collection)"

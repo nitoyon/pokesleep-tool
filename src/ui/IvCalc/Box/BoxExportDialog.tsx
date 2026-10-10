@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import type PokemonBox from "../../../util/Box/PokemonBox";
 import { copyToClipboard } from "../../../util/Clipboard";
 import { exportToCsvTsv } from "../../../util/Formatter/BoxExporter";
-import type PokemonBox from "../../../util/PokemonBox";
+import { useAuthUser } from "../../common/Hook";
 import SelectEx from "../../common/SelectEx";
 
 type BoxExportFormat = "custom" | "csv" | "tsv";
@@ -33,6 +34,7 @@ const BoxExportDialog = React.memo(
 		const [format, setFormat] = React.useState<BoxExportFormat>("custom");
 		const [destination, setDestination] =
 			React.useState<BoxExportDestination>("clipboard");
+		const { user } = useAuthUser();
 		const { t } = useTranslation();
 
 		const value = React.useMemo(() => {
@@ -74,12 +76,21 @@ const BoxExportDialog = React.memo(
 			<Dialog open={open} onClose={onClose}>
 				<DialogTitle>{t("export")}</DialogTitle>
 				<DialogContent>
-					<p style={{ fontSize: "0.9rem", margin: 0 }}>
-						{t("export message1")}
-					</p>
-					<p style={{ fontSize: "0.9rem", margin: "0.5rem 0 1rem 0" }}>
-						{t("export message2")}
-					</p>
+					{user && (
+						<p style={{ fontSize: "0.9rem", margin: "0 0 1rem 0" }}>
+							{t("export message2")}
+						</p>
+					)}
+					{!user && (
+						<>
+							<p style={{ fontSize: "0.9rem", margin: 0 }}>
+								{t("export message1")}
+							</p>
+							<p style={{ fontSize: "0.9rem", margin: "0.5rem 0 1rem 0" }}>
+								{t("export message2 sync")}
+							</p>
+						</>
+					)}
 					<TextField
 						label={t("box data")}
 						multiline

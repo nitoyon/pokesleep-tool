@@ -14,8 +14,8 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import { whistlePeriod } from "../../../util/Energy";
-import type { PokemonBoxItem } from "../../../util/PokemonBox";
 import {
 	createStrengthParameter,
 	type StrengthParameter,

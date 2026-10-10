@@ -1,5 +1,5 @@
 import type i18next from "i18next";
-import PokemonIv from "./PokemonIv";
+import PokemonIv from "../PokemonIv";
 
 /**
  * Represents Indivisual Values (IV) of the Pokemon.
@@ -72,13 +72,10 @@ class PokemonBox {
 	 * @param iv New pokemon IV.
 	 */
 	set(id: number, iv: PokemonIv, nickname?: string) {
-		for (let i = 0; i < this._entries.length; i++) {
-			if (this._entries[i].id === id) {
-				this._entries[i] = new PokemonBoxItem(iv, nickname, id);
-				this._entries = [...this._entries];
-				break;
-			}
-		}
+		// Create a new array not to modify the array shared with other boxes
+		this._entries = this._entries.map((x) =>
+			x.id === id ? new PokemonBoxItem(iv, nickname, id) : x,
+		);
 	}
 
 	/**
@@ -89,67 +86,28 @@ class PokemonBox {
 	getById(id: number): PokemonBoxItem | null {
 		return this._entries.find((x) => x.id === id) ?? null;
 	}
+}
 
-	/**
-	 * Load box data from local storage.
-	 */
-	load() {
-		const data = localStorage.getItem("PstPokeBox");
-		if (data === null) {
-			return [];
-		}
-		const json = JSON.parse(data);
-		if (!Array.isArray(json)) {
-			return [];
-		}
-
-		const newItems: PokemonBoxItem[] = [];
-		for (const item of json) {
-			if (typeof item !== "string") {
-				continue;
-			}
-			const data = this.deserializeItem(item);
-			if (data === null) {
-				continue;
-			}
-			newItems.push(new PokemonBoxItem(data.iv, data.nickname));
-
-			if (newItems.length >= PokemonBox.maxEntryCount) {
-				break;
-			}
-		}
-		this._entries = newItems;
+/**
+ * Deserialize box item data (xxxxxxx@nickname).
+ * @param text   text data.
+ * @returns      parsed data, or null if the text is invalid.
+ */
+export function deserializeBoxItem(
+	text: string,
+): { iv: PokemonIv; nickname: string } | null {
+	const index = text.indexOf("@");
+	let ivPart = text;
+	let nickname = "";
+	if (index !== -1) {
+		ivPart = text.substring(0, index);
+		nickname = text.substring(index + 1);
 	}
-
-	/**
-	 * Deserialize box item data (xxxxxxx@nickname)
-	 * @param text   text data.
-	 * @returns      parsed data.
-	 */
-	deserializeItem(text: string): { iv: PokemonIv; nickname: string } | null {
-		const index = text.indexOf("@");
-		let ivPart = text;
-		let nickname = "";
-		if (index !== -1) {
-			ivPart = text.substring(0, index);
-			nickname = text.substring(index + 1);
-		}
-		try {
-			const iv = PokemonIv.deserialize(ivPart);
-			return { iv, nickname };
-		} catch {
-			return null;
-		}
-	}
-
-	/**
-	 * Save box data to local storage.
-	 */
-	save() {
-		localStorage.setItem(
-			"PstPokeBox",
-			JSON.stringify(this._entries.map((x) => x.serialize())),
-		);
+	try {
+		const iv = PokemonIv.deserialize(ivPart);
+		return { iv, nickname };
+	} catch {
+		return null;
 	}
 }
 
