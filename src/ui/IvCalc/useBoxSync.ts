@@ -4,7 +4,7 @@ import { type BoxRepository, diffBoxItems } from "../../util/Box/BoxRepository";
 import { LocalBoxRepository } from "../../util/Box/LocalBoxRepository";
 import type PokemonBox from "../../util/Box/PokemonBox";
 import type { PokemonBoxItem } from "../../util/Box/PokemonBox";
-import { SaveTracker } from "../../util/Box/SaveTracker";
+import { type SaveStatus, SaveTracker } from "../../util/Box/SaveTracker";
 import type { BoxStatus, IvAction } from "./IvState";
 
 const loadFirebaseBoxRepository = () =>
@@ -17,7 +17,8 @@ const loadFirebaseBoxRepository = () =>
  * when signed in. Changes of `box` are saved to the same storage.
  * When the cloud box has never been initialized, items in localStorage
  * are imported.
- * While saving to the cloud and when it completes, an alert is shown.
+ * Saving to the cloud is reported as the returned status, and leaving the
+ * page while saving is warned.
  *
  * @param box Current box.
  * @param boxStatus Current box status.
@@ -25,6 +26,8 @@ const loadFirebaseBoxRepository = () =>
  * @param user Signed-in user, null when signed out, or undefined while
  *             the sign-in state is not yet known.
  * @param dispatch Dispatch function of IvState.
+ * @returns Status of saving to the cloud.
+ *          `saved` returns to `idle` after a while.
  */
 export function useBoxSync(
 	box: PokemonBox,
@@ -32,7 +35,7 @@ export function useBoxSync(
 	reloadCount: number,
 	user: User | null | undefined,
 	dispatch: (action: IvAction) => void,
-): void {
+): SaveStatus {
 	// Repository of the current user.
 	// Reused on reload so that it can wait for pending saves.
 	const repoRef = React.useRef<{
@@ -44,19 +47,9 @@ export function useBoxSync(
 		repo: BoxRepository;
 		items: PokemonBoxItem[];
 	} | null>(null);
-	const [isSaving, setIsSaving] = React.useState(false);
-	const [tracker] = React.useState(
-		() =>
-			new SaveTracker((status) => {
-				setIsSaving(status === "saving");
-				// "error" is alerted by each failed save
-				if (status === "saving") {
-					dispatch({ type: "showAlert", payload: { message: "box saving" } });
-				} else if (status === "saved") {
-					dispatch({ type: "showAlert", payload: { message: "box saved" } });
-				}
-			}),
-	);
+	const [saveStatus, setSaveStatus] = React.useState<SaveStatus>("idle");
+	const [tracker] = React.useState(() => new SaveTracker(setSaveStatus));
+	const isSaving = saveStatus === "saving";
 
 	// Load the box when the user changes or reload is requested.
 	// The user object may change without changing uid (e.g. token refresh),
@@ -156,7 +149,21 @@ export function useBoxSync(
 		window.addEventListener("beforeunload", handler);
 		return () => window.removeEventListener("beforeunload", handler);
 	}, [isSaving, tracker]);
+
+	// Hide "saved" after a while
+	React.useEffect(() => {
+		if (saveStatus !== "saved") {
+			return;
+		}
+		const timer = setTimeout(() => setSaveStatus("idle"), savedDuration);
+		return () => clearTimeout(timer);
+	}, [saveStatus]);
+
+	return saveStatus;
 }
+
+/** Duration in milliseconds to keep showing "saved". */
+const savedDuration = 2000;
 
 /**
  * Load items saved in localStorage.

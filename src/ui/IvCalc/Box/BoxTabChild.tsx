@@ -1,15 +1,18 @@
 import React from "react";
 import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
+import type { SaveStatus } from "../../../util/Box/SaveTracker";
 import type PokemonIv from "../../../util/PokemonIv";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import type { BoxStatus, IvAction } from "../IvState";
 import BoxView from "./BoxView";
+import CloudBoxStatus from "./CloudBoxStatus";
 
 const BoxTabChild = React.memo(
 	({
 		items,
 		iv,
 		status,
+		saveStatus,
 		selectedId,
 		parameter,
 		dispatch,
@@ -17,6 +20,7 @@ const BoxTabChild = React.memo(
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
 		status: BoxStatus;
+		saveStatus: SaveStatus;
 		selectedId: number;
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
@@ -33,6 +37,10 @@ const BoxTabChild = React.memo(
 			},
 			[dispatch],
 		);
+		const footerAccessory = React.useMemo(
+			() => <CloudBoxStatus status={saveStatus} />,
+			[saveStatus],
+		);
 
 		return (
 			<BoxView
@@ -44,6 +52,7 @@ const BoxTabChild = React.memo(
 				dispatch={dispatch}
 				onSelect={onSelect}
 				onEdit={onEdit}
+				footerAccessory={footerAccessory}
 			/>
 		);
 	},

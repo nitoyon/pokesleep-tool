@@ -37,7 +37,13 @@ const ResearchCalcApp = React.memo(() => {
 	const { t } = useTranslation();
 	const width = useDomWidth();
 	const { user } = useAuthUser();
-	useBoxSync(state.box, state.boxStatus, state.boxReloadCount, user, dispatch);
+	const saveStatus = useBoxSync(
+		state.box,
+		state.boxStatus,
+		state.boxReloadCount,
+		user,
+		dispatch,
+	);
 
 	const selectedItem = state.box.getById(state.selectedItemId);
 
@@ -137,6 +143,7 @@ const ResearchCalcApp = React.memo(() => {
 					items={state.box.items}
 					iv={state.pokemonIv}
 					status={state.boxStatus}
+					saveStatus={saveStatus}
 					selectedId={state.selectedItemId}
 					dispatch={dispatch}
 					parameter={state.parameter}
@@ -179,8 +186,7 @@ const ResearchCalcApp = React.memo(() => {
 			<Snackbar
 				open={state.alertMessage !== ""}
 				message={t(state.alertMessage)}
-				// Keep showing while saving, restart the timer when the message changes
-				autoHideDuration={state.alertMessage === "box saving" ? null : 2000}
+				autoHideDuration={2000}
 				onClose={onAlertMessageClose}
 			/>
 			<Snackbar

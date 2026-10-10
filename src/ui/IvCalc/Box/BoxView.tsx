@@ -50,6 +50,7 @@ const BoxView = React.memo(
 		dispatch,
 		onSelect,
 		onEdit,
+		footerAccessory,
 	}: {
 		items: PokemonBoxItem[];
 		iv: PokemonIv;
@@ -64,6 +65,7 @@ const BoxView = React.memo(
 		dispatch: (action: IvAction) => void;
 		onSelect: (id: number) => void;
 		onEdit?: (id: number) => void;
+		footerAccessory?: React.ReactNode;
 	}) => {
 		const { t } = useTranslation();
 		const [sortConfig, setSortConfig] = React.useState(() =>
@@ -255,6 +257,8 @@ const BoxView = React.memo(
 					/>
 					<div
 						style={{
+							display: "flex",
+							alignItems: "center",
 							paddingLeft: selectMode ? 0 : "1rem",
 							paddingBottom: selectMode ? 0 : "1.2rem",
 							background: "#f76",
@@ -267,6 +271,9 @@ const BoxView = React.memo(
 							onFilterButtonClick={onFilterButtonClick}
 							sortTypes={footerSortTypes}
 						/>
+						{footerAccessory !== undefined && (
+							<div style={{ margin: "0 0.8rem 0 auto" }}>{footerAccessory}</div>
+						)}
 					</div>
 				</div>
 				<BoxFilterDialog
