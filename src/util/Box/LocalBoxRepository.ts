@@ -1,4 +1,4 @@
-import type { BoxOp, BoxRepository } from "./BoxRepository";
+import type { BoxLoadResult, BoxOp, BoxRepository } from "./BoxRepository";
 import PokemonBox, { deserializeBoxItem, PokemonBoxItem } from "./PokemonBox";
 
 const storageKey = "PstPokeBox";
@@ -11,9 +11,9 @@ const storageKey = "PstPokeBox";
 export class LocalBoxRepository implements BoxRepository {
 	readonly isRemote = false;
 
-	load(): Promise<PokemonBoxItem[]> {
+	load(): Promise<BoxLoadResult> {
 		try {
-			return Promise.resolve(loadItems());
+			return Promise.resolve({ items: loadItems(), needsInit: false });
 		} catch (e) {
 			return Promise.reject(e);
 		}

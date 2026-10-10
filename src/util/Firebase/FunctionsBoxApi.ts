@@ -5,7 +5,7 @@ import {
 	httpsCallable,
 } from "firebase/functions";
 import { getFirebaseApp } from "./App";
-import type { BoxApi, RemoteBoxEntry } from "./BoxApi";
+import type { BoxApi, RemoteBoxEntry, RemoteBoxItems } from "./BoxApi";
 
 // This module pulls in the Firebase SDK. Load it with dynamic import()
 // so that the SDK is not included in the initial bundle.
@@ -50,12 +50,8 @@ async function call<Req, Res>(name: string, data: Req): Promise<Res> {
  * attaches to each request.
  */
 export class FunctionsBoxApi implements BoxApi {
-	async getBoxItems(): Promise<RemoteBoxEntry[]> {
-		const res = await call<null, { items: RemoteBoxEntry[] }>(
-			"getBoxItems",
-			null,
-		);
-		return res.items;
+	async getBoxItems(): Promise<RemoteBoxItems> {
+		return await call<null, RemoteBoxItems>("getBoxItems", null);
 	}
 
 	async addBoxItems(data: string[]): Promise<string[]> {

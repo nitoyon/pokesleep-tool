@@ -25,12 +25,15 @@ describe("LocalBoxRepository", () => {
 	});
 
 	test("load returns empty array when nothing is saved", async () => {
-		expect(await new LocalBoxRepository().load()).toEqual([]);
+		expect(await new LocalBoxRepository().load()).toEqual({
+			items: [],
+			needsInit: false,
+		});
 	});
 
 	test("load returns empty array for non-array data", async () => {
 		localStorage.setItem("PstPokeBox", "{}");
-		expect(await new LocalBoxRepository().load()).toEqual([]);
+		expect((await new LocalBoxRepository().load()).items).toEqual([]);
 	});
 
 	test("load skips invalid items", async () => {
@@ -39,7 +42,7 @@ describe("LocalBoxRepository", () => {
 			"PstPokeBox",
 			JSON.stringify([1, "invalid", `${iv.serialize()}@nick`]),
 		);
-		const items = await new LocalBoxRepository().load();
+		const { items } = await new LocalBoxRepository().load();
 		expect(items.length).toBe(1);
 		expect(items[0].iv.pokemonName).toBe("Pikachu");
 		expect(items[0].nickname).toBe("nick");
@@ -51,7 +54,7 @@ describe("LocalBoxRepository", () => {
 			"PstPokeBox",
 			JSON.stringify(Array(PokemonBox.maxEntryCount + 1).fill(data)),
 		);
-		const items = await new LocalBoxRepository().load();
+		const { items } = await new LocalBoxRepository().load();
 		expect(items.length).toBe(PokemonBox.maxEntryCount);
 	});
 
@@ -63,7 +66,7 @@ describe("LocalBoxRepository", () => {
 		];
 		await repo.apply([], items);
 
-		const loaded = await repo.load();
+		const { items: loaded } = await repo.load();
 		expect(loaded.map((x) => x.serialize())).toEqual(
 			items.map((x) => x.serialize()),
 		);

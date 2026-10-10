@@ -9,6 +9,19 @@ export type BoxOp =
 	| { type: "remove"; id: number };
 
 /**
+ * Result of `BoxRepository.load`.
+ */
+export type BoxLoadResult = {
+	/** Loaded items. */
+	items: PokemonBoxItem[];
+	/**
+	 * True if the box has never been initialized, so the items of
+	 * another storage should be imported.
+	 */
+	needsInit: boolean;
+};
+
+/**
  * Storage of the Pokemon box.
  */
 export interface BoxRepository {
@@ -17,9 +30,9 @@ export interface BoxRepository {
 
 	/**
 	 * Load all items.
-	 * @returns Loaded items.
+	 * @returns Loaded items and whether the box needs initialization.
 	 */
-	load(): Promise<PokemonBoxItem[]>;
+	load(): Promise<BoxLoadResult>;
 
 	/**
 	 * Persist changes.

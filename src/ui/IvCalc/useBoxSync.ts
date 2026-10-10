@@ -15,7 +15,8 @@ const loadFirebaseBoxRepository = () =>
  *
  * The box is loaded from localStorage when signed out, and from the cloud
  * when signed in. Changes of `box` are saved to the same storage.
- * When the cloud box is empty, items in localStorage are imported.
+ * When the cloud box has never been initialized, items in localStorage
+ * are imported.
  * While saving to the cloud and when it completes, an alert is shown.
  *
  * @param box Current box.
@@ -82,16 +83,16 @@ export function useBoxSync(
 					});
 		repoPromise
 			.then(async (repo) => {
-				const items = await repo.load();
+				const { items, needsInit } = await repo.load();
 				if (cancelled) {
 					return;
 				}
 				syncRef.current = { repo, items };
 				dispatch({ type: "boxLoaded", payload: { items } });
 
-				// Import the local box into the empty cloud box.
+				// Import the local box into the uninitialized cloud box.
 				// Imported items are saved in the background like other changes.
-				if (repo.isRemote && items.length === 0) {
+				if (needsInit) {
 					const localItems = await loadLocalItems();
 					if (!cancelled && localItems.length > 0) {
 						dispatch({
@@ -163,7 +164,7 @@ export function useBoxSync(
  */
 async function loadLocalItems(): Promise<PokemonBoxItem[]> {
 	try {
-		return await new LocalBoxRepository().load();
+		return (await new LocalBoxRepository().load()).items;
 	} catch (e) {
 		console.error(e);
 		return [];

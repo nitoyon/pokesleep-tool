@@ -9,13 +9,23 @@ export type RemoteBoxEntry = {
 };
 
 /**
+ * Response of `BoxApi.getBoxItems`.
+ */
+export type RemoteBoxItems = {
+	/** All items in the order they were added. */
+	items: RemoteBoxEntry[];
+	/** True if the box is empty and has never been initialized. */
+	needsInit: boolean;
+};
+
+/**
  * Cloud API to read and write the box of the signed-in user.
  */
 export interface BoxApi {
 	/**
 	 * Get all items in the order they were added.
 	 */
-	getBoxItems(): Promise<RemoteBoxEntry[]>;
+	getBoxItems(): Promise<RemoteBoxItems>;
 
 	/**
 	 * Add items to the end of the box.
@@ -42,12 +52,15 @@ export interface BoxApi {
 export class FakeBoxApi implements BoxApi {
 	private readonly store = new Map<string, string>();
 	private nextId = 0;
+	private initialized = false;
 
-	async getBoxItems(): Promise<RemoteBoxEntry[]> {
-		return Array.from(this.store, ([id, data]) => ({ id, data }));
+	async getBoxItems(): Promise<RemoteBoxItems> {
+		const items = Array.from(this.store, ([id, data]) => ({ id, data }));
+		return { items, needsInit: items.length === 0 && !this.initialized };
 	}
 
 	async addBoxItems(data: string[]): Promise<string[]> {
+		this.initialized = true;
 		return data.map((x) => {
 			const id = `id${this.nextId++}`;
 			this.store.set(id, x);

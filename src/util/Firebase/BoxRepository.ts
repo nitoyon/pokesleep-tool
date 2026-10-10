@@ -1,4 +1,4 @@
-import type { BoxOp, BoxRepository } from "../Box/BoxRepository";
+import type { BoxLoadResult, BoxOp, BoxRepository } from "../Box/BoxRepository";
 import PokemonBox, {
 	deserializeBoxItem,
 	PokemonBoxItem,
@@ -29,10 +29,10 @@ export class FirebaseBoxRepository implements BoxRepository {
 		this.api = api;
 	}
 
-	async load(): Promise<PokemonBoxItem[]> {
+	async load(): Promise<BoxLoadResult> {
 		// Wait for pending saves so that the loaded items include them
 		await this.queue;
-		const entries = await this.api.getBoxItems();
+		const { items: entries, needsInit } = await this.api.getBoxItems();
 		this.keys.clear();
 		const items: PokemonBoxItem[] = [];
 		for (const entry of entries) {
@@ -48,7 +48,7 @@ export class FirebaseBoxRepository implements BoxRepository {
 				break;
 			}
 		}
-		return items;
+		return { items, needsInit };
 	}
 
 	apply(ops: BoxOp[], _items: PokemonBoxItem[]): Promise<void> {
