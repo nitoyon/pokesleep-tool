@@ -27,11 +27,13 @@ const MemberItem = React.memo(
 		index,
 		item,
 		enabled = true,
+		sneakySnacking = false,
 		onChange,
 	}: {
 		index: number;
 		item?: PokemonBoxItem;
 		enabled?: boolean;
+		sneakySnacking?: boolean;
 		onChange: (event: MemberEvent) => void;
 	}) => {
 		if (item === undefined) {
@@ -43,6 +45,7 @@ const MemberItem = React.memo(
 				index={index}
 				item={item}
 				enabled={enabled}
+				sneakySnacking={sneakySnacking}
 				onChange={onChange}
 			/>
 		);
@@ -90,11 +93,13 @@ const ValidMemberBox = React.memo(
 		index,
 		item,
 		enabled,
+		sneakySnacking,
 		onChange,
 	}: {
 		index: number;
 		item: PokemonBoxItem;
 		enabled: boolean;
+		sneakySnacking: boolean;
 		onChange: (event: MemberEvent) => void;
 	}) => {
 		const { t } = useTranslation();
@@ -132,8 +137,14 @@ const ValidMemberBox = React.memo(
 		}, []);
 		const isMenuOpen = Boolean(moreMenuAnchor);
 
+		const className = !enabled
+			? "disabled"
+			: sneakySnacking
+				? "snacking"
+				: undefined;
+
 		return (
-			<StyledMember className={enabled ? undefined : "disabled"}>
+			<StyledMember className={className}>
 				<ButtonBase onClick={onPokemonClick} ref={longPressRef}>
 					<header>
 						<span className="lv">Lv.</span>
@@ -171,6 +182,12 @@ const ValidMemberBox = React.memo(
 							{t("delete")}
 						</MenuItem>
 						<Divider />
+						<MenuItem onClick={() => onAction("toggleSneakySnacking")}>
+							<ListItemIcon>
+								{sneakySnacking ? <CheckIcon /> : <Icon />}
+							</ListItemIcon>
+							{t("sneaky snacking")}
+						</MenuItem>
 						<MenuItem onClick={() => onAction("toggleEnabled")}>
 							<ListItemIcon>{enabled ? <Icon /> : <CheckIcon />}</ListItemIcon>
 							{t("disable")}
@@ -186,6 +203,9 @@ const StyledMember = styled("div")({
 	border: "1px solid #aaa",
 	borderRadius: "10px",
 	position: "relative",
+	"&.snacking > button:first-of-type": {
+		background: "#eef9ee",
+	},
 	"&.disabled > button:first-of-type": {
 		filter: "grayscale(0.8)",
 		opacity: 0.4,

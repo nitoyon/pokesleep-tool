@@ -72,6 +72,10 @@ export type IvAction =
 	| {
 			type: "setTeamMemberEnabled";
 			payload: { index: number; enabled: boolean };
+	  }
+	| {
+			type: "setTeamMemberSneakySnacking";
+			payload: { index: number; sneakySnacking: boolean };
 	  };
 
 /**
@@ -471,6 +475,14 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		const { index, enabled } = action.payload;
 		const teamMembers = state.teamMembers.map((x, i) =>
 			i === index && x !== undefined ? { ...x, enabled } : x,
+		);
+		return { ...state, teamMembers };
+	}
+
+	if (type === "setTeamMemberSneakySnacking") {
+		const { index, sneakySnacking } = action.payload;
+		const teamMembers = state.teamMembers.map((x, i) =>
+			i === index && x !== undefined ? { ...x, sneakySnacking } : x,
 		);
 		return { ...state, teamMembers };
 	}

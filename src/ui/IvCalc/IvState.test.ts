@@ -591,6 +591,55 @@ describe("ivStateReducer", () => {
 			expect(newState.teamMembers[3]).toBeUndefined();
 		});
 	});
+
+	describe("setTeamMemberSneakySnacking action", () => {
+		test("should toggle the sneakySnacking flag of the target slot only", () => {
+			const item0 = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Raichu" }),
+			);
+			const item1 = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Pikachu" }),
+			);
+			const state = {
+				...baseState,
+				teamMembers: baseState.teamMembers.map((x, i) => {
+					if (i === 0)
+						return { item: item0, enabled: true, sneakySnacking: false };
+					if (i === 1)
+						return { item: item1, enabled: true, sneakySnacking: false };
+					return x;
+				}),
+			};
+			const action: IvAction = {
+				type: "setTeamMemberSneakySnacking",
+				payload: { index: 0, sneakySnacking: true },
+			};
+
+			const newState = ivStateReducer(state, action);
+
+			expect(newState.teamMembers[0]).toEqual({
+				item: item0,
+				enabled: true,
+				sneakySnacking: true,
+			});
+			expect(newState.teamMembers[1]).toEqual({
+				item: item1,
+				enabled: true,
+				sneakySnacking: false,
+			});
+		});
+
+		test("should not change state when the slot is empty", () => {
+			const action: IvAction = {
+				type: "setTeamMemberSneakySnacking",
+				payload: { index: 3, sneakySnacking: true },
+			};
+
+			const newState = ivStateReducer(baseState, action);
+
+			expect(newState.teamMembers[3]).toBeUndefined();
+		});
+	});
 });
 
 describe("ivStateReducer box loading", () => {

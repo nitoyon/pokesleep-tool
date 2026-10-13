@@ -50,6 +50,20 @@ const MemberList = React.memo(
 					}
 					return;
 				}
+
+				if (event.action === "toggleSneakySnacking") {
+					const cur = state.teamMembers[event.index];
+					if (cur !== undefined) {
+						dispatch({
+							type: "setTeamMemberSneakySnacking",
+							payload: {
+								index: event.index,
+								sneakySnacking: !cur.sneakySnacking,
+							},
+						});
+					}
+					return;
+				}
 			},
 			[dispatch, state.teamMembers],
 		);
@@ -76,6 +90,7 @@ const MemberList = React.memo(
 						index={i}
 						item={state.teamMembers[i]?.item}
 						enabled={state.teamMembers[i]?.enabled ?? true}
+						sneakySnacking={state.teamMembers[i]?.sneakySnacking ?? false}
 						onChange={onChange}
 					/>
 				))}

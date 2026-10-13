@@ -8,6 +8,8 @@ export type MemberAction =
 	| "openbox"
 	/** Toggle whether this member is included in the calculation */
 	| "toggleEnabled"
+	/** Toggle whether this member is sneaky snacking */
+	| "toggleSneakySnacking"
 	/** Clear current pokemon */
 	| "clear";
 
