@@ -1,14 +1,16 @@
 import React from "react";
-import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { serializeStrengthParameter } from "../../../util/StrengthParameter";
 import type { TeamStrengthResult } from "../../../util/Team";
 import { createEmptyTeamStrengthResult } from "../../../util/Team";
+import type { TeamMemberInput } from "../../../util/Team/Types";
 import {
 	deserializeMemberResult,
+	serializeMemberInput,
 	type TeamSimulationRequest,
 	type TeamSimulationResponse,
 } from "../../../util/Team/WorkerProtocol";
+import type { TeamMemberSlot } from "../IvState";
 
 /**
  * Run team strength simulation (Monte Carlo, ~3000 iterations) in a
@@ -20,11 +22,11 @@ import {
  * @returns The latest available result, and whether a newer one is being computed.
  */
 export function useTeamSimulation(
-	members: (PokemonBoxItem | undefined)[],
+	members: (TeamMemberSlot | undefined)[],
 	parameter: StrengthParameter,
 ): { result: TeamStrengthResult; loading: boolean; error: string | null } {
 	const [result, setResult] = React.useState<TeamStrengthResult>(() =>
-		createEmptyTeamStrengthResult(members),
+		createEmptyTeamStrengthResult(members.map(toMemberInput)),
 	);
 	const [loading, setLoading] = React.useState(true);
 	const [error, setError] = React.useState<string | null>(null);
@@ -50,7 +52,10 @@ export function useTeamSimulation(
 
 		const request: TeamSimulationRequest = {
 			requestId,
-			members: members.map((m) => (m ? m.iv.serialize() : null)),
+			members: members.map((m) => {
+				const input = toMemberInput(m);
+				return input ? serializeMemberInput(input) : null;
+			}),
 			param: JSON.parse(serializeStrengthParameter(parameter)),
 		};
 
@@ -105,4 +110,12 @@ export function useTeamSimulation(
 	}, []);
 
 	return { result, loading, error };
+}
+
+function toMemberInput(
+	slot: TeamMemberSlot | undefined,
+): TeamMemberInput | undefined {
+	return slot
+		? { iv: slot.item.iv, sneakySnacking: slot.sneakySnacking }
+		: undefined;
 }

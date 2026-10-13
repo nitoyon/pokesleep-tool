@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { PokemonBoxItem } from "../Box/PokemonBox";
 import PokemonIv from "../PokemonIv";
 import { simulateTeam } from "./Simulate";
+import type { TeamMemberInput } from "./Types";
 import { testParam } from "./testHelpers";
 
 /**
@@ -14,8 +14,11 @@ import { testParam } from "./testHelpers";
  * values within a single `simulateTeam` call, never across calls.
  */
 describe("simulateTeam member exclusion", () => {
-	function makeItem(pokemonName: string): PokemonBoxItem {
-		return new PokemonBoxItem(new PokemonIv({ pokemonName, level: 30 }));
+	function makeIv(pokemonName: string): TeamMemberInput {
+		return {
+			iv: new PokemonIv({ pokemonName, level: 30 }),
+			sneakySnacking: false,
+		};
 	}
 
 	// keep runs cheap
@@ -23,8 +26,8 @@ describe("simulateTeam member exclusion", () => {
 	const iterations = 20;
 
 	test("a disabled (undefined) slot maps to undefined and is left out of the total", () => {
-		const raichu = makeItem("Raichu");
-		const pikachu = makeItem("Pikachu");
+		const raichu = makeIv("Raichu");
+		const pikachu = makeIv("Pikachu");
 
 		const result = simulateTeam(
 			[raichu, undefined, pikachu],
@@ -40,7 +43,7 @@ describe("simulateTeam member exclusion", () => {
 	});
 
 	test("disabling every member but one leaves the whole team total on that member", () => {
-		const raichu = makeItem("Raichu");
+		const raichu = makeIv("Raichu");
 
 		const result = simulateTeam(
 			[undefined, raichu, undefined],

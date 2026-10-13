@@ -120,6 +120,23 @@ describe("applyHelp", () => {
 		expect(member.progress.help.sneakySnacking).toBe(3);
 	});
 
+	test("sneakySnacking member is treated as NoTap", () => {
+		const member = createTeamMember({
+			carryLimit: 21,
+			baseFreq: 2200,
+			sneakySnacking: true,
+		});
+
+		const sim = createSim(member);
+		const rng = createRandomQueue([0]);
+		applyHelp(990 * 3, sim, rng);
+
+		expect(member.progress.berryStrength).toBe(3 * (10 * 2));
+		expect(member.progress.help.all).toBe(3);
+		expect(member.progress.help.normal).toBe(0);
+		expect(member.progress.help.sneakySnacking).toBe(3);
+	});
+
 	describe("big berry", () => {
 		const berry2: BagUsagePerHelpDetailItem[] = [
 			{ name: "berry", count: 2, p: 1, ingSlotIndex: -1, ingKindIndex: -1 },
@@ -311,6 +328,7 @@ function createProfile(overrides: Partial<MemberProfile> = {}): MemberProfile {
 		energyRecoveryFactor: 1,
 		maxSkillCount: 1,
 		isEnergyAlwaysFull: false,
+		sneakySnacking: false,
 		skill: defaultSkill,
 		...overrides,
 	};

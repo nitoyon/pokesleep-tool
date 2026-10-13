@@ -489,7 +489,11 @@ describe("ivStateReducer", () => {
 
 			const newState = ivStateReducer(baseState, action);
 
-			expect(newState.teamMembers[2]).toEqual({ item, enabled: true });
+			expect(newState.teamMembers[2]).toEqual({
+				item,
+				enabled: true,
+				sneakySnacking: false,
+			});
 			expect(newState.teamMembers[0]).toBeUndefined();
 		});
 
@@ -498,7 +502,7 @@ describe("ivStateReducer", () => {
 			const state = {
 				...baseState,
 				teamMembers: baseState.teamMembers.map((x, i) =>
-					i === 1 ? { item, enabled: true } : x,
+					i === 1 ? { item, enabled: true, sneakySnacking: false } : x,
 				),
 			};
 			const action: IvAction = {
@@ -511,7 +515,7 @@ describe("ivStateReducer", () => {
 			expect(newState.teamMembers[1]).toBeUndefined();
 		});
 
-		test("should keep the disabled state when replacing the pokemon", () => {
+		test("should keep the disabled and sneakySnacking state when replacing the pokemon", () => {
 			const oldItem = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Raichu" }),
 			);
@@ -521,7 +525,7 @@ describe("ivStateReducer", () => {
 			const state = {
 				...baseState,
 				teamMembers: baseState.teamMembers.map((x, i) =>
-					i === 0 ? { item: oldItem, enabled: false } : x,
+					i === 0 ? { item: oldItem, enabled: false, sneakySnacking: true } : x,
 				),
 			};
 			const action: IvAction = {
@@ -534,6 +538,7 @@ describe("ivStateReducer", () => {
 			expect(newState.teamMembers[0]).toEqual({
 				item: newItem,
 				enabled: false,
+				sneakySnacking: true,
 			});
 		});
 	});
@@ -549,8 +554,10 @@ describe("ivStateReducer", () => {
 			const state = {
 				...baseState,
 				teamMembers: baseState.teamMembers.map((x, i) => {
-					if (i === 0) return { item: item0, enabled: true };
-					if (i === 1) return { item: item1, enabled: true };
+					if (i === 0)
+						return { item: item0, enabled: true, sneakySnacking: false };
+					if (i === 1)
+						return { item: item1, enabled: true, sneakySnacking: false };
 					return x;
 				}),
 			};
@@ -561,14 +568,71 @@ describe("ivStateReducer", () => {
 
 			const newState = ivStateReducer(state, action);
 
-			expect(newState.teamMembers[0]).toEqual({ item: item0, enabled: false });
-			expect(newState.teamMembers[1]).toEqual({ item: item1, enabled: true });
+			expect(newState.teamMembers[0]).toEqual({
+				item: item0,
+				enabled: false,
+				sneakySnacking: false,
+			});
+			expect(newState.teamMembers[1]).toEqual({
+				item: item1,
+				enabled: true,
+				sneakySnacking: false,
+			});
 		});
 
 		test("should not change state when the slot is empty", () => {
 			const action: IvAction = {
 				type: "setTeamMemberEnabled",
 				payload: { index: 3, enabled: false },
+			};
+
+			const newState = ivStateReducer(baseState, action);
+
+			expect(newState.teamMembers[3]).toBeUndefined();
+		});
+	});
+
+	describe("setTeamMemberSneakySnacking action", () => {
+		test("should toggle the sneakySnacking flag of the target slot only", () => {
+			const item0 = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Raichu" }),
+			);
+			const item1 = new PokemonBoxItem(
+				new PokemonIv({ pokemonName: "Pikachu" }),
+			);
+			const state = {
+				...baseState,
+				teamMembers: baseState.teamMembers.map((x, i) => {
+					if (i === 0)
+						return { item: item0, enabled: true, sneakySnacking: false };
+					if (i === 1)
+						return { item: item1, enabled: true, sneakySnacking: false };
+					return x;
+				}),
+			};
+			const action: IvAction = {
+				type: "setTeamMemberSneakySnacking",
+				payload: { index: 0, sneakySnacking: true },
+			};
+
+			const newState = ivStateReducer(state, action);
+
+			expect(newState.teamMembers[0]).toEqual({
+				item: item0,
+				enabled: true,
+				sneakySnacking: true,
+			});
+			expect(newState.teamMembers[1]).toEqual({
+				item: item1,
+				enabled: true,
+				sneakySnacking: false,
+			});
+		});
+
+		test("should not change state when the slot is empty", () => {
+			const action: IvAction = {
+				type: "setTeamMemberSneakySnacking",
+				payload: { index: 3, sneakySnacking: true },
 			};
 
 			const newState = ivStateReducer(baseState, action);

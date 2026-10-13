@@ -150,6 +150,7 @@ export function createTestProfile(
 		energyRecoveryFactor: 1,
 		maxSkillCount: 1,
 		isEnergyAlwaysFull: false,
+		sneakySnacking: false,
 		skill: { initialize() {}, apply() {} },
 		...rest,
 	};
