@@ -158,7 +158,8 @@ function applySpecificHelpCount(
 ): number {
 	let normalHelpCount = 0;
 	let carryLimitLeft = profile.carryLimit;
-	if (param.tapFrequencyAwake === NoTap) {
+	// A sneaky snacking member is treated as never tapped while awake
+	if (param.tapFrequencyAwake === NoTap || profile.sneakySnacking) {
 		carryLimitLeft = 0;
 	}
 	for (let i = 0; i < helpCount; i++) {

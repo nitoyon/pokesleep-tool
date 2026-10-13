@@ -22,7 +22,6 @@ export function buildMemberProfiles(
 	const profiles: MemberProfile[] = activeMembers.map((m, index) => {
 		const profile = buildMemberProfile(m, param, helpBonusCount);
 		profile.index = index;
-		profile.sneakySnacking = m.sneakySnacking;
 		return profile;
 	});
 	initializeSkillValue(profiles, param);
