@@ -24,7 +24,7 @@ export function useTeamSimulation(
 	parameter: StrengthParameter,
 ): { result: TeamStrengthResult; loading: boolean; error: string | null } {
 	const [result, setResult] = React.useState<TeamStrengthResult>(() =>
-		createEmptyTeamStrengthResult(members),
+		createEmptyTeamStrengthResult(members.map((m) => m?.iv)),
 	);
 	const [loading, setLoading] = React.useState(true);
 	const [error, setError] = React.useState<string | null>(null);

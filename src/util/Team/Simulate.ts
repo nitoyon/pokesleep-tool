@@ -1,6 +1,6 @@
 import type { IngredientName } from "../../data/pokemons";
-import type { PokemonBoxItem } from "../Box/PokemonBox";
 import { AlwaysTap, whistlePeriod } from "../Energy";
+import type PokemonIv from "../PokemonIv";
 import { ingredientStrength } from "../PokemonRp";
 import type { IngredientStrength, StrengthParameter } from "../PokemonStrength";
 import { buildMemberProfiles } from "./MemberProfile";
@@ -28,7 +28,7 @@ import type {
  * @returns Per-member strength results plus an aggregated team total.
  */
 export function simulateTeam(
-	members: (PokemonBoxItem | undefined)[],
+	members: (PokemonIv | undefined)[],
 	param: StrengthParameter,
 	iterations = 3000,
 ): TeamStrengthResult {
@@ -75,7 +75,7 @@ export function simulateTeam(
  * @returns A result with an empty total and no per-member results.
  */
 export function createEmptyTeamStrengthResult(
-	members: (PokemonBoxItem | undefined)[],
+	members: (PokemonIv | undefined)[],
 ): TeamStrengthResult {
 	return { members: members.map(() => undefined) };
 }
@@ -117,7 +117,7 @@ function addResultToIterationResult(
 }
 
 function buildMemberStrengthResult(
-	members: (PokemonBoxItem | undefined)[],
+	members: (PokemonIv | undefined)[],
 	profiles: MemberProfile[],
 	accumulated: IterationResult[],
 	param: StrengthParameter,

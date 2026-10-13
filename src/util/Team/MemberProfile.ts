@@ -1,8 +1,8 @@
 import { isExpertField } from "../../data/fields";
 import { whistlePeriod } from "../../util/Energy";
-import type { PokemonBoxItem } from "../Box/PokemonBox";
 import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
+import type PokemonIv from "../PokemonIv";
 import type { StrengthParameter } from "../PokemonStrength";
 import PokemonStrength, { recipeLevelBonus } from "../PokemonStrength";
 import { createSkill } from "./Skill/SkillFactory";
@@ -10,14 +10,12 @@ import { initializeSkillValue } from "./Skill/SkillInitializer";
 import type { MemberProfile } from "./Types";
 
 export function buildMemberProfiles(
-	members: (PokemonBoxItem | undefined)[],
+	members: (PokemonIv | undefined)[],
 	param: StrengthParameter,
 ): MemberProfile[] {
-	const activeMembers = members.filter(
-		(m): m is PokemonBoxItem => m !== undefined,
-	);
+	const activeMembers = members.filter((m): m is PokemonIv => m !== undefined);
 	const helpBonusCount = activeMembers.filter(
-		(m) => m.iv.hasHelpingBonusInActiveSubSkills,
+		(m) => m.hasHelpingBonusInActiveSubSkills,
 	).length;
 
 	const profiles: MemberProfile[] = activeMembers.map((m) => {
@@ -33,21 +31,21 @@ export function buildMemberProfiles(
  * Build the {@link MemberProfile} for a single team member.
  *
  * Computes all derived values (frequency, energy caps, skill rate, carry
- * limit, berry/ingredient strengths, skill level) from the box item and
+ * limit, berry/ingredient strengths, skill level) from the IV and
  * shared parameters so the simulation loop can read them without
  * re-calculating.
  *
- * @param item - The Pokémon box item whose IV and sub-skills are used.
+ * @param pokemonIv - The Pokémon IV whose sub-skills are used.
  * @param param - Strength calculation parameters (field bonus, recipe bonus, etc.).
  * @param helpBonusCount - Number of active members with Helping Bonus sub-skill.
  * @returns A fully populated MemberProfile (index is set to -1; caller must assign it).
  */
 export function buildMemberProfile(
-	item: PokemonBoxItem,
+	pokemonIv: PokemonIv,
 	param: StrengthParameter,
 	helpBonusCount: number,
 ): MemberProfile {
-	const strength = new PokemonStrength(item.iv, param);
+	const strength = new PokemonStrength(pokemonIv, param);
 	const iv = strength.pokemonIv;
 	const bonus = strength.bonusEffects;
 
