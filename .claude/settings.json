@@ -15,10 +15,19 @@
 			"Bash(npx oxlint *)",
 			"Bash(grep *)",
 			"Bash(ls *)",
+			"Bash(head *)",
+			"Bash(tail *)",
+			"Bash(grep *)",
 			"Read(./**)",
 			"Edit(./**)"
 		],
-		"deny": ["Read(~/.ssh/**)", "Bash(rm -rf *)", "Bash(sudo *)"],
+		"deny": [
+			"Read(~/.ssh/**)",
+			"Bash(rm -rf *)",
+			"Bash(sudo *)",
+			"Bash(sed *)",
+			"Bash(awk *)"
+		],
 		"ask": ["Bash(git push *)", "Bash(git merge *)", "Bash(git rebase *)"]
 	},
 	"includeCoAuthoredBy": false,
