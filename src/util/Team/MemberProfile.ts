@@ -2,6 +2,7 @@ import { isExpertField } from "../../data/fields";
 import { whistlePeriod } from "../../util/Energy";
 import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
+import PokemonIv, { type BagUsagePerHelpDetailItem } from "../PokemonIv";
 import type { StrengthParameter } from "../PokemonStrength";
 import PokemonStrength, { recipeLevelBonus } from "../PokemonStrength";
 import { createSkill } from "./Skill/SkillFactory";
@@ -143,6 +144,109 @@ export function buildMemberProfile(
 		maxSkillCount: isSkillSpecialty ? 2 : 1,
 		isEnergyAlwaysFull: param.isEnergyAlwaysFull,
 		sneakySnacking: member.sneakySnacking,
+		skill: createSkill("unknown"),
+	};
+}
+
+/**
+ * Build the {@link MemberProfile} for Night Cap Pikachu.
+ *
+ * @param param - Strength calculation parameters (field bonus, recipe bonus, etc.).
+ * @param level - Level of Night Cap Pikachu.
+ * @returns A fully populated MemberProfile (index is set to -1; caller must assign it).
+ */
+export function buildNightCapPikachuProfile(
+	param: StrengthParameter,
+	level: number,
+): MemberProfile {
+	const iv = new PokemonIv({
+		pokemonName: "Pikachu",
+		level,
+	});
+	const strength = new PokemonStrength(iv, param);
+	const bonus = strength.bonusEffects;
+
+	// Base frequency
+	const baseFreq =
+		level <= 4
+			? 4920 - level * 120
+			: level <= 17
+				? 4380 - (level - 5) * 60
+				: 3600 - (level - 18) * 30;
+
+	// carryLimit
+	const carryLimit = 7 + Math.ceil(level / 2);
+
+	// bagUsage
+	const normalBagUsage: BagUsagePerHelpDetailItem[] = [
+		{
+			name: "berry",
+			count: level <= 10 ? 1 : 2,
+			p: level <= 2 ? 1 : level <= 18 ? 0.6667 : 0.5834,
+			ingKindIndex: -1,
+			ingSlotIndex: -1,
+		},
+	];
+	if (level >= 3) {
+		normalBagUsage.push({
+			name: "apple",
+			count: level <= 12 ? 1 : 2,
+			p: level <= 8 ? 0.3333 : 0.2222,
+			ingKindIndex: 0,
+			ingSlotIndex: 0,
+		});
+	}
+	if (level >= 9) {
+		normalBagUsage.push({
+			name: "cacao",
+			count: level <= 16 ? 1 : 2,
+			p: 0.1111,
+			ingKindIndex: 1,
+			ingSlotIndex: 1,
+		});
+	}
+	if (level >= 19) {
+		normalBagUsage.push({
+			name: "honey",
+			count: 2,
+			p: 0.0833,
+			ingKindIndex: 2,
+			ingSlotIndex: 2,
+		});
+	}
+	const extraBagUsage = normalBagUsage;
+
+	// ingStrengthRate
+	const ingInRecipeStrengthRate =
+		param.recipeBonus === 0
+			? 1
+			: (1 + param.recipeBonus / 100) *
+				(1 + recipeLevelBonus[param.recipeLevel] / 100);
+	const ingStrengthRate =
+		(ingInRecipeStrengthRate * 0.8 + 0.2) *
+		(1 + param.fieldBonus / 100) *
+		bonus.dish;
+
+	return {
+		index: -1,
+		iv,
+		bonus,
+		baseFreq,
+		wakeMax: 100,
+		sleepRecovery: 100,
+		skillRate: 0,
+		pityProcHelpCount: 0,
+		normalBagUsage,
+		extraBagUsage,
+		carryLimit,
+		ingStrengthRate,
+		berryStrengthBonus: strength.berryStrengthBonus,
+		skillName: "unknown",
+		skillLevel: 1,
+		energyRecoveryFactor: 1,
+		maxSkillCount: 1,
+		isEnergyAlwaysFull: false,
+		sneakySnacking: false,
 		skill: createSkill("unknown"),
 	};
 }
