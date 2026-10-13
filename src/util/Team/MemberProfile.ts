@@ -2,25 +2,27 @@ import { isExpertField } from "../../data/fields";
 import { whistlePeriod } from "../../util/Energy";
 import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
-import type PokemonIv from "../PokemonIv";
 import type { StrengthParameter } from "../PokemonStrength";
 import PokemonStrength, { recipeLevelBonus } from "../PokemonStrength";
 import { createSkill } from "./Skill/SkillFactory";
 import { initializeSkillValue } from "./Skill/SkillInitializer";
-import type { MemberProfile } from "./Types";
+import type { MemberProfile, TeamMemberInput } from "./Types";
 
 export function buildMemberProfiles(
-	members: (PokemonIv | undefined)[],
+	members: (TeamMemberInput | undefined)[],
 	param: StrengthParameter,
 ): MemberProfile[] {
-	const activeMembers = members.filter((m): m is PokemonIv => m !== undefined);
+	const activeMembers = members.filter(
+		(m): m is TeamMemberInput => m !== undefined,
+	);
 	const helpBonusCount = activeMembers.filter(
-		(m) => m.hasHelpingBonusInActiveSubSkills,
+		(m) => m.iv.hasHelpingBonusInActiveSubSkills,
 	).length;
 
-	const profiles: MemberProfile[] = activeMembers.map((m) => {
+	const profiles: MemberProfile[] = activeMembers.map((m, index) => {
 		const profile = buildMemberProfile(m, param, helpBonusCount);
-		profile.index = activeMembers.indexOf(m);
+		profile.index = index;
+		profile.sneakySnacking = m.sneakySnacking;
 		return profile;
 	});
 	initializeSkillValue(profiles, param);
@@ -35,17 +37,17 @@ export function buildMemberProfiles(
  * shared parameters so the simulation loop can read them without
  * re-calculating.
  *
- * @param pokemonIv - The Pokémon IV whose sub-skills are used.
+ * @param member - The team member input containing the IV and other properties.
  * @param param - Strength calculation parameters (field bonus, recipe bonus, etc.).
  * @param helpBonusCount - Number of active members with Helping Bonus sub-skill.
  * @returns A fully populated MemberProfile (index is set to -1; caller must assign it).
  */
 export function buildMemberProfile(
-	pokemonIv: PokemonIv,
+	member: TeamMemberInput,
 	param: StrengthParameter,
 	helpBonusCount: number,
 ): MemberProfile {
-	const strength = new PokemonStrength(pokemonIv, param);
+	const strength = new PokemonStrength(member.iv, param);
 	const iv = strength.pokemonIv;
 	const bonus = strength.bonusEffects;
 
@@ -141,6 +143,7 @@ export function buildMemberProfile(
 		energyRecoveryFactor: recoveryFactor,
 		maxSkillCount: isSkillSpecialty ? 2 : 1,
 		isEnergyAlwaysFull: param.isEnergyAlwaysFull,
+		sneakySnacking: member.sneakySnacking,
 		skill: createSkill("unknown"),
 	};
 }

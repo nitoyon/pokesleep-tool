@@ -22,6 +22,15 @@ export interface SimulationEvent {
 }
 
 /**
+ * Input for a single team member passed to {@link simulateTeam}.
+ */
+export interface TeamMemberInput {
+	iv: PokemonIv;
+	/** Whether this member is set to sneaky snacking. */
+	sneakySnacking: boolean;
+}
+
+/**
  * Bundles a member's immutable profile with its mutable simulation progress.
  */
 export interface TeamMember {
@@ -172,6 +181,8 @@ export interface MemberProfile {
 	maxSkillCount: 1 | 2;
 	/** Whether this member's energy is treated as always full (100), skipping all energy gain/loss. */
 	isEnergyAlwaysFull: boolean;
+	/** Whether this member is set to sneaky snacking. */
+	sneakySnacking: boolean;
 	/** Per-family skill handler instance, holding any pre-computed per-trigger skill state. */
 	skill: Skill;
 }

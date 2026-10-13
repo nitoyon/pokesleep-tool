@@ -1,5 +1,5 @@
 import PokemonIv from "../PokemonIv";
-import type { TeamMemberStrengthResult } from "./Types";
+import type { TeamMemberInput, TeamMemberStrengthResult } from "./Types";
 
 /**
  * Request sent from the main thread to the team simulation worker.
@@ -7,8 +7,8 @@ import type { TeamMemberStrengthResult } from "./Types";
 export interface TeamSimulationRequest {
 	/** Monotonically increasing id; used by the main thread to discard stale responses. */
 	requestId: number;
-	/** Serialized PokemonIv (see PokemonIv.serialize) per team slot; null for an empty slot. */
-	members: (string | null)[];
+	/** Member per team slot; null for an empty slot. */
+	members: (SerializedMemberInput | null)[];
 	/** Parsed JSON produced by serializeStrengthParameter. */
 	param: unknown;
 }
@@ -21,6 +21,28 @@ export interface TeamSimulationResponse {
 	members: (SerializedMemberResult | undefined)[];
 	/** Present when the worker failed to compute the simulation. */
 	error?: string;
+}
+
+/**
+ * {@link TeamMemberInput} with its PokemonIv instance replaced by its
+ * serialized string form (see PokemonIv.serialize).
+ */
+export type SerializedMemberInput = Omit<TeamMemberInput, "iv"> & {
+	iv: string;
+};
+
+/** Convert a simulation input member into its postMessage-safe form. */
+export function serializeMemberInput(
+	input: TeamMemberInput,
+): SerializedMemberInput {
+	return { ...input, iv: input.iv.serialize() };
+}
+
+/** Reconstruct a simulation input member received from the main thread. */
+export function deserializeMemberInput(
+	input: SerializedMemberInput,
+): TeamMemberInput {
+	return { ...input, iv: PokemonIv.deserialize(input.iv) };
 }
 
 /**

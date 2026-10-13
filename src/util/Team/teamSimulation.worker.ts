@@ -1,7 +1,7 @@
-import PokemonIv from "../PokemonIv";
 import { deserializeStrengthParameter } from "../StrengthParameter";
 import { simulateTeam } from "./Simulate";
 import {
+	deserializeMemberInput,
 	serializeMemberResult,
 	type TeamSimulationRequest,
 	type TeamSimulationResponse,
@@ -26,11 +26,11 @@ self.addEventListener(
 		const { requestId, members, param } = event.data;
 
 		try {
-			const ivs = members.map((serializedIv) =>
-				serializedIv === null ? undefined : PokemonIv.deserialize(serializedIv),
+			const inputs = members.map((m) =>
+				m === null ? undefined : deserializeMemberInput(m),
 			);
 			const parameter = deserializeStrengthParameter(param);
-			const result = simulateTeam(ivs, parameter);
+			const result = simulateTeam(inputs, parameter);
 
 			const response: TeamSimulationResponse = {
 				requestId,

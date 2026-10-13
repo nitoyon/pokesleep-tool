@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import PokemonIv from "../PokemonIv";
 import { simulateTeam } from "./Simulate";
+import type { TeamMemberInput } from "./Types";
 import { testParam } from "./testHelpers";
 
 /**
@@ -13,8 +14,11 @@ import { testParam } from "./testHelpers";
  * values within a single `simulateTeam` call, never across calls.
  */
 describe("simulateTeam member exclusion", () => {
-	function makeIv(pokemonName: string): PokemonIv {
-		return new PokemonIv({ pokemonName, level: 30 });
+	function makeIv(pokemonName: string): TeamMemberInput {
+		return {
+			iv: new PokemonIv({ pokemonName, level: 30 }),
+			sneakySnacking: false,
+		};
 	}
 
 	// keep runs cheap

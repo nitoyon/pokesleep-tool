@@ -81,6 +81,8 @@ export type IvAction =
 export type TeamMemberSlot = {
 	item: PokemonBoxItem;
 	enabled: boolean;
+	/** Whether this member is set to sneaky snacking. */
+	sneakySnacking: boolean;
 };
 
 /**
@@ -454,9 +456,13 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 			if (item === undefined) {
 				return undefined;
 			}
-			// Keep the current enabled state when replacing the pokemon
-			// (e.g. editing IV) so a disabled slot stays disabled.
-			return { item, enabled: x?.enabled ?? true };
+			// Keep the current enabled/sneakySnacking state when replacing
+			// the pokemon (e.g. editing IV) so a disabled slot stays disabled.
+			return {
+				item,
+				enabled: x?.enabled ?? true,
+				sneakySnacking: x?.sneakySnacking ?? false,
+			};
 		});
 		return { ...state, teamMembers };
 	}
