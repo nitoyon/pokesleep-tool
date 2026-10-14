@@ -230,6 +230,16 @@
 			"desc": "Snorlax gains Strength, and a Berry Zone is created at that site.",
 			"detail": "While a Berry Zone from Psystrike (Berry Zone) is active, the Strength gained from Mago Berries (Psychic) is increased."
 		},
+		"Cooking Advance S": {
+			"name": "Cooking Advance S",
+			"strength": ""
+		},
+		"Cooking Advance S (Mystical Fire)": {
+			"name": "Mystical Fire (Cooking Advance S)",
+			"strength": "",
+			"desc": "Gives your cooking pot room for more ingredients next time you cook. Also raises your Extra Tasty rate by a small amount.",
+			"detail": "$t(skills.Tasty Chance S.detail)"
+		},
 		"unknown": {
 			"name": "(Unknown)",
 			"strength": "The main skill has not been determined yet."

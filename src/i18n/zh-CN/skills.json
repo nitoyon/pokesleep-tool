@@ -230,6 +230,16 @@
 			"desc": "增加卡比兽能量的同时，还会在营地展开“树果领域”。",
 			"detail": "通过精神冲击 (树果领域) 展开“树果领域”期间，通过芒芒果 (超能力属性) 获得的能量会提升。"
 		},
+		"Cooking Advance S": {
+			"name": "料理跃进S",
+			"strength": ""
+		},
+		"Cooking Advance S (Mystical Fire)": {
+			"name": "魔法火焰 (料理跃进S)",
+			"strength": "",
+			"desc": "增加下一次料理时的锅子容量。不仅如此，料理漂亮成功的概率还会稍微提升。",
+			"detail": "$t(skills.Tasty Chance S.detail)"
+		},
 		"unknown": {
 			"name": "(未知)",
 			"strength": "主技能还未确定。"

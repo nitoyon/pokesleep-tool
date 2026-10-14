@@ -275,7 +275,8 @@ const SkillHelpDialog = React.memo(
 							</>
 						)}
 					</article>
-					{result.skillValue2 !== 0 && (
+					{(result.skillValue2 !== 0 ||
+						iv.pokemon.skill === "Cooking Advance S (Mystical Fire)") && (
 						<>
 							<header className="second-skill" style={{ marginTop: "1.2rem" }}>
 								<article>
@@ -439,7 +440,10 @@ function getSkillValueText(
 		const val = getSkillValue(skill, skillLevel);
 		return getEnergyRecoveryValueText(val, skillLevel, t, t("e4e per pokemon"));
 	}
-	if (skill.startsWith("Cooking Power-Up S")) {
+	if (
+		skill.startsWith("Cooking Power-Up S") ||
+		skill.startsWith("Cooking Advance S")
+	) {
 		return getNormalSkillValueText(t, t("pot size power up"));
 	}
 	if (skill === "Tasty Chance S") {
@@ -509,7 +513,10 @@ function getSkillValueText2(
 			t("berry strength per berry burst"),
 		);
 	}
-	if (skill === "Cooking Assist S (Bulk Up)") {
+	if (
+		skill === "Cooking Assist S (Bulk Up)" ||
+		skill === "Cooking Advance S (Mystical Fire)"
+	) {
 		return getNormalSkillValueText(t, t("tasty chance increase"));
 	}
 	if (skill === "Dream Shard Magnet S (Aura Sphere)") {

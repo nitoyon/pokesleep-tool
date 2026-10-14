@@ -84,7 +84,11 @@ function getSkill2Row(
 	skillStrength2: number,
 	t: typeof i18next.t,
 ): React.ReactNode {
-	if (skillValue2 === 0 && skillStrength2 === 0) {
+	if (
+		skillValue2 === 0 &&
+		skillStrength2 === 0 &&
+		pokemonIv.pokemon.skill !== "Cooking Advance S (Mystical Fire)"
+	) {
 		return null;
 	}
 

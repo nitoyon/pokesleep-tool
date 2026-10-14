@@ -47,6 +47,8 @@ export type MainSkillName =
 	| "Berry Burst (Draco Meteor)"
 	| "Berry Zone"
 	| "Berry Zone (Psystrike)"
+	| "Cooking Advance S"
+	| "Cooking Advance S (Mystical Fire)"
 	| "unknown";
 
 export const MainSkillNames: Readonly<MainSkillName[]> = [
@@ -65,8 +67,9 @@ export const MainSkillNames: Readonly<MainSkillName[]> = [
 	"Berry Burst",
 	"Skill Copy",
 	"Ingredient Draw S",
-	"Cooking Assist S",
 	"Berry Zone",
+	"Cooking Assist S",
+	"Cooking Advance S",
 ];
 
 /** Versatile candidates */
@@ -363,6 +366,9 @@ export function getSkillSubValue(
 	}
 	if (skill === "Berry Zone (Psystrike)") {
 		return [0.6, 0.8, 1, 1.2, 1.6, 2][skillLevel - 1];
+	}
+	if (skill === "Cooking Advance S (Mystical Fire)") {
+		return 0;
 	}
 	throw new Error(`This skill doesn’t have a sub-value: ${skill}`);
 }

@@ -13,6 +13,7 @@ import type { IngredientName } from "../../data/pokemons";
 import type { MainSkillName } from "../../util/MainSkill";
 import BerryZoneIcon from "../Resources/BerryZoneIcon";
 import CandyIcon from "../Resources/CandyIcon";
+import CookingAdvanceIcon from "../Resources/CookingAdvanceIcon";
 import CookingAssistIcon from "../Resources/CookingAssistIcon";
 import DreamShardIcon from "../Resources/DreamShardIcon";
 import HyperCutterIcon from "../Resources/HyperCutterIcon";
@@ -151,6 +152,16 @@ const MainSkillIcon = React.memo(
 				}
 			case "Cooking Power-Up S":
 				return <PotIcon sx={{ color: "#886666" }} fontSize="small" />;
+			case "Cooking Advance S":
+				return <CookingAdvanceIcon fontSize="small" />;
+			case "Cooking Advance S (Mystical Fire)":
+				if (second !== true) {
+					return <PotIcon sx={{ color: "#886666" }} fontSize="small" />;
+				} else {
+					return (
+						<PriorityHighIcon sx={{ color: "#ff0000" }} fontSize="small" />
+					);
+				}
 			case "Cooking Power-Up S (Minus)":
 				if (second !== true) {
 					return <PotIcon sx={{ color: "#886666" }} fontSize="small" />;

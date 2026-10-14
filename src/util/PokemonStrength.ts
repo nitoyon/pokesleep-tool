@@ -988,6 +988,17 @@ class PokemonStrength {
 					skillValuePerTrigger2: rate,
 				};
 			}
+			case "Cooking Advance S (Mystical Fire)": {
+				const skillValuePerTrigger2 = 0;
+				return {
+					skillValue,
+					skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+					skillValuePerTrigger,
+					skillValue2: skillValuePerTrigger2 * skillCount,
+					skillStrength2: 0,
+					skillValuePerTrigger2,
+				};
+			}
 			default:
 				return {
 					skillValue,

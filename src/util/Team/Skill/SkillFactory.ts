@@ -102,5 +102,7 @@ const skillMap: Record<MainSkillName, () => BaseSkill> = {
 	Versatile: () => new VersatileSkill(),
 	"Berry Zone": () => noopSkill,
 	"Berry Zone (Psystrike)": () => new BerryZonePsystrike(),
+	"Cooking Advance S": () => noopSkill,
+	"Cooking Advance S (Mystical Fire)": () => noopSkill,
 	unknown: () => noopSkill,
 };

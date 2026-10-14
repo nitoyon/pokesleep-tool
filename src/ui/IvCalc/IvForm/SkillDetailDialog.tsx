@@ -381,6 +381,9 @@ function getSkillUnit(skill: MainSkillName, t: typeof i18next.t): string {
 	if (skill.startsWith("Cooking Power-Up S")) {
 		return t("pot size power up");
 	}
+	if (skill === "Cooking Advance S (Mystical Fire)") {
+		return t("pot size");
+	}
 	if (skill === "Tasty Chance S") {
 		return t("tasty chance increase");
 	}
@@ -421,7 +424,10 @@ function getSkillUnit2(
 	if (skill === "Cooking Power-Up S (Minus)") {
 		return t("nature effect.Energy recovery");
 	}
-	if (skill === "Cooking Assist S (Bulk Up)") {
+	if (
+		skill === "Cooking Assist S (Bulk Up)" ||
+		skill === "Cooking Advance S (Mystical Fire)"
+	) {
 		return t("tasty chance increase");
 	}
 	if (skill === "Berry Zone (Psystrike)") {
@@ -526,6 +532,10 @@ function getSkillValue2Text(
 
 	if (skill === "Berry Zone (Psystrike)") {
 		return `${getSkillSubValue(skill, level).toFixed(1)}%`;
+	}
+
+	if (skill === "Cooking Advance S (Mystical Fire)") {
+		return `${getSkillSubValue(skill, level)}%`;
 	}
 
 	return null;

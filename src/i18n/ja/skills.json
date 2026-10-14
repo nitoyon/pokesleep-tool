@@ -230,6 +230,16 @@
 			"desc": "カビゴンのエナジーを増やすとともに、フィールドに「きのみゾーン」を展開します。",
 			"detail": "サイコブレイク (きのみゾーン) による「きのみゾーン」の展開中は、マゴのみ (エスパータイプ) から得られるエナジーがUPします。"
 		},
+		"Cooking Advance S": {
+			"name": "料理アドバンスS",
+			"strength": ""
+		},
+		"Cooking Advance S (Mystical Fire)": {
+			"name": "マジカルフレイム (料理アドバンスS)",
+			"strength": "",
+			"desc": "次回の料理でなべの容量を増やします。さらに、料理の大成功確率が少し上がります。",
+			"detail": "$t(skills.Tasty Chance S.detail)"
+		},
 		"unknown": {
 			"name": "(不明)",
 			"strength": "メインスキルはまだ判明していません。"

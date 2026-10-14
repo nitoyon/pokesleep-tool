@@ -230,6 +230,16 @@
 			"desc": "잠만보의 에너지를 증가시키고 필드에 「나무열매 존」을 펼칩니다.",
 			"detail": "사이코브레이크(나무열매존)에 의해 「나무열매 존」이 펼쳐진 동안에는 마고열매(에스퍼타입)에서 획득하는 에너지가 증가합니다."
 		},
+		"Cooking Advance S": {
+			"name": "요리 어드밴스S",
+			"strength": ""
+		},
+		"Cooking Advance S (Mystical Fire)": {
+			"name": "매지컬플레임 (요리 어드밴스S)",
+			"strength": "",
+			"desc": "다음 요리에서 냄비의 용량을 늘립니다. 그리고 요리의 대성공 확률이 조금 상승합니다.",
+			"detail": "$t(skills.Tasty Chance S.detail)"
+		},
 		"unknown": {
 			"name": "(알 수 없음)",
 			"strength": "메인 스킬은 아직 확정되지 않았습니다."
