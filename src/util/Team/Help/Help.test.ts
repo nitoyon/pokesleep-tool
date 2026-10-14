@@ -137,6 +137,99 @@ describe("applyHelp", () => {
 		expect(member.progress.help.sneakySnacking).toBe(3);
 	});
 
+	describe("Night Cap Pikachu", () => {
+		/** Create a sim whose only helper is the given Night Cap Pikachu. */
+		function createNightCapSim(
+			pikachu: TeamMember,
+			paramOverrides: Partial<StrengthParameter> = {},
+		): TeamContext {
+			return {
+				...createSim(pikachu, paramOverrides),
+				members: [],
+				nightCapPikachu: pikachu,
+			};
+		}
+
+		test("helps at the base frequency regardless of energy", () => {
+			const pikachu = createTeamMember(
+				{ baseFreq: 2200, carryLimit: 21 },
+				{ energy: 100 },
+			);
+
+			const sim = createNightCapSim(pikachu);
+			const rng = createRandomQueue([0, 0]);
+			applyHelp(2200 * 2, sim, rng);
+
+			expect(pikachu.progress.nextHelpSec).toBe(2200 * 3);
+			expect(pikachu.progress.berryStrength).toBe(2 * 10);
+			expect(pikachu.progress.help.all).toBe(2);
+		});
+
+		test("stops helping instead of sneaky snacking when full", () => {
+			const pikachu = createTeamMember({ baseFreq: 2200, carryLimit: 2 });
+
+			const sim = createNightCapSim(pikachu);
+			const rng = createRandomQueue([0, 0]);
+			applyHelp(2200 * 4, sim, rng);
+
+			expect(pikachu.progress.nextHelpSec).toBe(2200 * 5);
+			expect(pikachu.progress.berryStrength).toBe(2 * 10);
+			expect(pikachu.progress.help.all).toBe(2);
+			expect(pikachu.progress.help.normal).toBe(2);
+			expect(pikachu.progress.help.sneakySnacking).toBe(0);
+		});
+
+		test("brings nothing when not tapped", () => {
+			const pikachu = createTeamMember({ baseFreq: 2200, carryLimit: 21 });
+
+			const sim = createNightCapSim(pikachu, { tapFrequencyAwake: NoTap });
+			applyHelp(2200 * 3, sim, createRandomQueue([]));
+
+			expect(pikachu.progress.berryStrength).toBe(0);
+			expect(pikachu.progress.help.all).toBe(0);
+		});
+
+		test("brings nothing when set to sneaky snacking", () => {
+			const pikachu = createTeamMember({
+				baseFreq: 2200,
+				carryLimit: 21,
+				sneakySnacking: true,
+			});
+
+			const sim = createNightCapSim(pikachu);
+			applyHelp(2200 * 3, sim, createRandomQueue([]));
+
+			expect(pikachu.progress.berryStrength).toBe(0);
+			expect(pikachu.progress.help.all).toBe(0);
+		});
+
+		test("never triggers a skill", () => {
+			const pikachu = createTeamMember({
+				baseFreq: 2200,
+				carryLimit: 21,
+				skillRate: 1,
+			});
+
+			const sim = createNightCapSim(pikachu);
+			applyHelp(2200, sim, createRandomQueue([0]));
+
+			expect(pikachu.progress.skillCount).toBe(0);
+			expect(pikachu.progress.skillStrength).toBe(0);
+		});
+
+		test("helps alongside the other members", () => {
+			const member = createTeamMember({ baseFreq: 2200, carryLimit: 21 });
+			const pikachu = createTeamMember({ baseFreq: 2200, carryLimit: 21 });
+
+			const sim = { ...createSim(member), nightCapPikachu: pikachu };
+			// member: helps at 990 and 1980 (2 outcomes) + skill / pikachu: outcome
+			applyHelp(2200, sim, createRandomQueue([0, 0, 0, 0]));
+
+			expect(member.progress.help.all).toBe(2);
+			expect(pikachu.progress.help.all).toBe(1);
+		});
+	});
+
 	describe("big berry", () => {
 		const berry2: BagUsagePerHelpDetailItem[] = [
 			{ name: "berry", count: 2, p: 1, ingSlotIndex: -1, ingKindIndex: -1 },
@@ -265,6 +358,7 @@ function createSim(
 ): TeamContext {
 	return {
 		members: [member],
+		nightCapPikachu: undefined,
 		teamProfile: {
 			isWhistle: false,
 			sleepTimeSec: 86400,

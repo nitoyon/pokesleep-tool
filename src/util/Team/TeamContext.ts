@@ -13,6 +13,7 @@ export function createTeamContext(
 	isWhistle: boolean,
 	profiles: MemberProfile[],
 	param: StrengthParameter,
+	nightCapPikachuProfile?: MemberProfile,
 ): TeamContext {
 	const dayLengthSec = 1440 * 60;
 	const sleepMinutes = (param.sleepScore * 510) / 100;
@@ -20,6 +21,10 @@ export function createTeamContext(
 
 	return {
 		members: createTeamMembers(profiles, param),
+		nightCapPikachu:
+			nightCapPikachuProfile === undefined
+				? undefined
+				: createTeamMembers([nightCapPikachuProfile], param)[0],
 		teamProfile: {
 			isWhistle,
 			sleepTimeSec,
@@ -45,6 +50,9 @@ export function resetTeamContext(sim: TeamContext): void {
 	for (const member of sim.members) {
 		resetMemberProgress(member, param);
 	}
+	if (sim.nightCapPikachu !== undefined) {
+		resetMemberProgress(sim.nightCapPikachu, param);
+	}
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
 	sim.teamProgress.berryZoneRate = {
@@ -53,6 +61,13 @@ export function resetTeamContext(sim: TeamContext): void {
 
 	for (const member of sim.members) {
 		updateBerryStrength(member, param, sim.teamProgress.berryZoneRate);
+	}
+	if (sim.nightCapPikachu !== undefined) {
+		updateBerryStrength(
+			sim.nightCapPikachu,
+			param,
+			sim.teamProgress.berryZoneRate,
+		);
 	}
 }
 

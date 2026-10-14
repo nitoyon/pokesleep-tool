@@ -7,7 +7,8 @@ import type { IterationResult, SimulationEvent, TeamContext } from "./Types";
 
 /**
  * Run a single iteration of the team simulation.
- * Returns per-member accumulators.
+ * Returns per-member accumulators, followed by Night Cap Pikachu's one
+ * if the team has it.
  */
 export function runIteration(sim: TeamContext): IterationResult[] {
 	if (sim.teamProfile.param.period < 0) {
@@ -37,7 +38,11 @@ export function runIteration(sim: TeamContext): IterationResult[] {
 		}
 	}
 
-	return sim.members.map(({ progress }) => ({
+	const members =
+		sim.nightCapPikachu === undefined
+			? sim.members
+			: [...sim.members, sim.nightCapPikachu];
+	return members.map(({ progress }) => ({
 		berryStrength: progress.berryStrength,
 		bigBerryStrength: progress.bigBerryStrength,
 		bigBerryHelpCount: progress.bigBerryHelpCount,

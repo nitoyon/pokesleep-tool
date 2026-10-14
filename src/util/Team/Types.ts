@@ -46,6 +46,8 @@ export interface TeamMember {
 export interface TeamContext {
 	/** Per-member profile and progress bundles (same order as the active members array). */
 	readonly members: TeamMember[];
+	/** Night Cap Pikachu profile and progress bundles */
+	readonly nightCapPikachu: TeamMember | undefined;
 	/** Immutable team-level configuration. */
 	readonly teamProfile: TeamProfile;
 	/** Mutable team-level simulation state, updated in place. */
@@ -111,7 +113,10 @@ export interface TeamMemberStrengthResult extends SkillMetrics {
  * aggregated total across all active members.
  */
 export interface TeamStrengthResult {
-	/** Per-slot results; undefined for empty slots. */
+	/**
+	 * Per-slot results; undefined for empty slots.
+	 * Night Cap Pikachu's result is appended after the slots if simulated.
+	 */
 	members: (TeamMemberStrengthResult | undefined)[];
 }
 

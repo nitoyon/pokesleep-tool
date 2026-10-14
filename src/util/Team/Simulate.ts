@@ -13,7 +13,6 @@ import { createTeamContext, resetTeamContext } from "./TeamContext";
 import type {
 	IterationResult,
 	MemberProfile,
-	TeamContext,
 	TeamMemberInput,
 	TeamMemberStrengthResult,
 	TeamStrengthResult,
@@ -44,22 +43,34 @@ export function simulateTeam(
 		};
 	}
 
+	// Night Cap Pikachu alone is not simulated, since events rely on members
 	const profiles = buildMemberProfiles(members, param);
 	if (profiles.length === 0) {
 		return createEmptyTeamStrengthResult(members);
 	}
-	const sim = createTeamContext(isWhistle, profiles, param);
-	const accumulated = initializeIterationResult(profiles);
+	const nightCapPikachuProfile: MemberProfile | undefined = undefined;
+
+	const sim = createTeamContext(
+		isWhistle,
+		profiles,
+		param,
+		nightCapPikachuProfile,
+	);
+	const accumulated = initializeIterationResult(
+		profiles,
+		nightCapPikachuProfile,
+	);
 	for (let iter = 0; iter < iterations; iter++) {
 		resetTeamContext(sim);
 		const results = runIteration(sim);
-		addResultToIterationResult(sim, accumulated, results);
+		addResultToIterationResult(accumulated, results);
 	}
 
 	return {
 		members: buildMemberStrengthResult(
 			members,
 			profiles,
+			nightCapPikachuProfile,
 			accumulated,
 			param,
 			iterations,
@@ -82,7 +93,11 @@ export function createEmptyTeamStrengthResult(
 
 function initializeIterationResult(
 	profiles: MemberProfile[],
+	nightCapPikachuProfile?: MemberProfile,
 ): IterationResult[] {
+	if (nightCapPikachuProfile) {
+		profiles = [...profiles, nightCapPikachuProfile];
+	}
 	const accumulated: IterationResult[] = profiles.map(() => ({
 		berryStrength: 0,
 		bigBerryStrength: 0,
@@ -96,11 +111,10 @@ function initializeIterationResult(
 }
 
 function addResultToIterationResult(
-	sim: TeamContext,
 	accumulated: IterationResult[],
 	results: IterationResult[],
 ) {
-	for (let i = 0; i < sim.members.length; i++) {
+	for (let i = 0; i < results.length; i++) {
 		const acc = accumulated[i];
 		const result = results[i];
 
@@ -119,18 +133,31 @@ function addResultToIterationResult(
 function buildMemberStrengthResult(
 	members: (TeamMemberInput | undefined)[],
 	profiles: MemberProfile[],
+	nightCapPikachuProfile: MemberProfile | undefined,
 	accumulated: IterationResult[],
 	param: StrengthParameter,
 	iterations: number,
 ): (TeamMemberStrengthResult | undefined)[] {
 	let index = 0;
-	return members.map((member) => {
+	const ret = members.map((member) => {
 		if (!member) return undefined;
 		const i = index++;
 		const profile = profiles[i];
 		if (!profile) return undefined;
 		return buildStrengthResult(profile, accumulated[i], param, iterations);
 	});
+
+	if (nightCapPikachuProfile) {
+		ret.push(
+			buildStrengthResult(
+				nightCapPikachuProfile,
+				accumulated[index],
+				param,
+				iterations,
+			),
+		);
+	}
+	return ret;
 }
 
 function buildStrengthResult(

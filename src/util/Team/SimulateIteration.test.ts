@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { NoTap } from "../Energy";
 import PokemonIv from "../PokemonIv";
+import { buildNightCapPikachuProfile } from "./MemberProfile";
 import { runIteration } from "./SimulateIteration";
 import { initializeSkillValue } from "./Skill/SkillInitializer";
 import { createTeamContext, resetTeamContext } from "./TeamContext";
@@ -123,6 +124,25 @@ describe("runIteration", () => {
 		expect(result[0].skillCount).toBeGreaterThan(0);
 		expect(result[0].skillStrength).toBeGreaterThan(0);
 		expect(result[1].skillCount).toBeGreaterThan(0);
+	});
+
+	test("appends Night Cap Pikachu's result after the members", () => {
+		const param = testParam({ period: 24 });
+		const sim = createTeamContext(
+			false,
+			[createTestProfile({ skillRate: 1 })],
+			param,
+			buildNightCapPikachuProfile(param, 20),
+		);
+		resetTeamContext(sim);
+
+		const result = runIteration(sim);
+
+		expect(result).toHaveLength(2);
+		expect(result[0].skillCount).toBeGreaterThan(0);
+		expect(result[1].berryStrength).toBeGreaterThan(0);
+		expect(result[1].skillCount).toBe(0);
+		expect(sim.members).toHaveLength(1);
 	});
 
 	describe("berryZoneRate", () => {

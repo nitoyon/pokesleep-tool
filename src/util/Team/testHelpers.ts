@@ -186,6 +186,7 @@ export function createTestSim(
 	);
 	return {
 		members,
+		nightCapPikachu: undefined,
 		teamProfile: {
 			isWhistle: false,
 			sleepTimeSec: 86400,
