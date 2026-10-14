@@ -1032,6 +1032,20 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#f6c2d5", "#eff0f0", "#fbf4d6", "#fefdfd", "#d75e50"],
 		shinyPallet: ["#feaada", "#eaeaea", "#fef6da", "#fefefe", "#628ee2"],
 	},
+	// Misdreavus
+	"200": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.1, color: 1 },
+			{ x: 0.4, y: 0.6, w: 0.2, h: 0.2, r: 0.2, color: 2 },
+			{ x: 0.2, y: 0.58, w: 0.16, h: 0.16, r: 0.1, color: 2 },
+			{ x: 0.64, y: 0.58, w: 0.16, h: 0.16, r: 0.1, color: 2 },
+			{ x: 0.1, y: 0.45, w: 0.1, h: 0.1, r: 0.1, color: 2 },
+			{ x: 0.8, y: 0.45, w: 0.1, h: 0.1, r: 0.1, color: 2 },
+		],
+		normalPallet: ["#6e93ac", "#ffbbcc", "#ee6574"],
+		shinyPallet: ["#b5bc82", "#ae895b", "#ee6574"],
+	},
 	// Wobbuffet
 	"202": {
 		rects: [
@@ -1812,6 +1826,19 @@ const pokemonRectData: { [id: string]: IconData } = {
 		],
 		normalPallet: ["#e6dced", "#fff768", "#8b7caa", "#ffffff", "#fff56a"],
 		shinyPallet: ["#fefebe", "#82f6fe", "#fee662", "#fefefe", "#82f6fe"],
+	},
+	// Mismagius
+	"429": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 1, h: 0.1, color: 1 },
+			{ x: 0, y: 0.9, w: 1, h: 0.1, color: 1 },
+			{ x: 0.4, y: 0.5, w: 0.2, h: 0.3, r: 0.2, color: 2 },
+			{ x: 0.25, y: 0.5, w: 0.1, h: 0.2, r: 0.2, color: 2 },
+			{ x: 0.65, y: 0.5, w: 0.1, h: 0.2, r: 0.2, color: 2 },
+		],
+		normalPallet: ["#826e9c", "#e199bd", "#ee6574"],
+		shinyPallet: ["#d7d868", "#f9f577", "#ee3333"],
 	},
 	// Honchkrow
 	"430": {
