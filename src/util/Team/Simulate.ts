@@ -126,50 +126,58 @@ function buildMemberStrengthResult(
 	let index = 0;
 	return members.map((member) => {
 		if (!member) return undefined;
-		const profile = profiles[index++];
+		const i = index++;
+		const profile = profiles[i];
 		if (!profile) return undefined;
+		return buildStrengthResult(profile, accumulated[i], param, iterations);
+	});
+}
 
-		const acc = accumulated[profiles.indexOf(profile)];
-		const avgBerryStrength = acc.berryStrength / iterations;
-		const avgBigBerryCount = acc.bigBerryCount / iterations;
-		const bigBerryStrength = acc.bigBerryStrength / iterations;
-		const berryTotalStrength = avgBerryStrength + bigBerryStrength;
-		const avgMetrics = avgSkillMetrics(acc, iterations);
+function buildStrengthResult(
+	profile: MemberProfile,
+	acc: IterationResult,
+	param: StrengthParameter,
+	iterations: number,
+): TeamMemberStrengthResult {
+	const avgBerryStrength = acc.berryStrength / iterations;
+	const avgBigBerryCount = acc.bigBerryCount / iterations;
+	const bigBerryStrength = acc.bigBerryStrength / iterations;
+	const berryTotalStrength = avgBerryStrength + bigBerryStrength;
+	const avgMetrics = avgSkillMetrics(acc, iterations);
 
-		const ingredients: IngredientStrength[] = Array.from(
-			acc.ingCounts.entries(),
-		).map(([name, totalCount]) => {
-			const count = totalCount / iterations;
-			return {
-				name,
-				count,
-				strength: count * ingredientStrength[name] * profile.ingStrengthRate,
-				overflowCount: 0,
-				helpCount: 0,
-				countPerHelp: 0,
-				slots: [],
-			};
-		});
-
-		const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
-
-		const totalStrength =
-			(param.totalFlags[0] ? berryTotalStrength : 0) +
-			(param.totalFlags[1] ? ingStrength : 0) +
-			(param.totalFlags[2] ? avgMetrics.skillStrength : 0);
-
+	const ingredients: IngredientStrength[] = Array.from(
+		acc.ingCounts.entries(),
+	).map(([name, totalCount]) => {
+		const count = totalCount / iterations;
 		return {
-			iv: profile.iv,
-			bonus: profile.bonus,
-			berryStrength: avgBerryStrength,
-			bigBerryStrength,
-			berryTotalStrength,
-			bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
-			bigBerryCount: avgBigBerryCount,
-			ingStrength,
-			ingredients,
-			...avgMetrics,
-			totalStrength: totalStrength,
+			name,
+			count,
+			strength: count * ingredientStrength[name] * profile.ingStrengthRate,
+			overflowCount: 0,
+			helpCount: 0,
+			countPerHelp: 0,
+			slots: [],
 		};
 	});
+
+	const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
+
+	const totalStrength =
+		(param.totalFlags[0] ? berryTotalStrength : 0) +
+		(param.totalFlags[1] ? ingStrength : 0) +
+		(param.totalFlags[2] ? avgMetrics.skillStrength : 0);
+
+	return {
+		iv: profile.iv,
+		bonus: profile.bonus,
+		berryStrength: avgBerryStrength,
+		bigBerryStrength,
+		berryTotalStrength,
+		bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
+		bigBerryCount: avgBigBerryCount,
+		ingStrength,
+		ingredients,
+		...avgMetrics,
+		totalStrength: totalStrength,
+	};
 }
