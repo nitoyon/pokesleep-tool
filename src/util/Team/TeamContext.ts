@@ -4,7 +4,7 @@ import {
 	createTeamMembers,
 	updateBerryStrength,
 } from "./MemberProgress";
-import type { MemberProfile, TeamContext } from "./Types";
+import type { MemberProfile, TeamContext, TeamMember } from "./Types";
 
 /**
  * Build a fresh {@link TeamContext} for a single simulation iteration.
@@ -42,16 +42,8 @@ export function createTeamContext(
  */
 export function resetTeamContext(sim: TeamContext): void {
 	const { param } = sim.teamProfile;
-	const periodSec = Math.abs(param.period) * 3600;
 	for (const member of sim.members) {
-		// The previous iteration's nextHelpSec lands past periodSec
-		const prevNextHelpSec = member.progress.nextHelpSec;
-		member.progress = {
-			...createMemberProgress(member.profile, param),
-			energy: member.progress.energy,
-			helpsSinceSkill: member.progress.helpsSinceSkill,
-			nextHelpSec: prevNextHelpSec === -1 ? -1 : prevNextHelpSec - periodSec,
-		};
+		resetMemberProgress(member, param);
 	}
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
@@ -62,4 +54,19 @@ export function resetTeamContext(sim: TeamContext): void {
 	for (const member of sim.members) {
 		updateBerryStrength(member, param, sim.teamProgress.berryZoneRate);
 	}
+}
+
+function resetMemberProgress(
+	member: TeamMember,
+	param: StrengthParameter,
+): void {
+	const periodSec = Math.abs(param.period) * 3600;
+	// The previous iteration's nextHelpSec lands past periodSec
+	const prevNextHelpSec = member.progress.nextHelpSec;
+	member.progress = {
+		...createMemberProgress(member.profile, param),
+		energy: member.progress.energy,
+		helpsSinceSkill: member.progress.helpsSinceSkill,
+		nextHelpSec: prevNextHelpSec === -1 ? -1 : prevNextHelpSec - periodSec,
+	};
 }
