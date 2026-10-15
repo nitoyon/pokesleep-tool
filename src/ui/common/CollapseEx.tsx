@@ -34,7 +34,14 @@ const CollapseEx = React.memo(
 
 		return (
 			<animated.div style={{ ...styles, overflow: "hidden" }}>
-				<div ref={ref}>{renderedChildren}</div>
+				{/*
+				 * Use flow-root to prevent the children's vertical margins
+				 * from collapsing through this div. Otherwise scrollHeight
+				 * excludes those margins and the content gets clipped.
+				 */}
+				<div ref={ref} style={{ display: "flow-root" }}>
+					{renderedChildren}
+				</div>
 			</animated.div>
 		);
 	},
