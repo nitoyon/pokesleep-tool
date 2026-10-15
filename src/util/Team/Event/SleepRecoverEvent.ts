@@ -68,5 +68,13 @@ export class SleepRecoverEvent implements SimulationEvent {
 			);
 			setEnergy(sim, i, sec, newEnergy);
 		}
+
+		if (sim.nightCapPikachu) {
+			const ncp = sim.nightCapPikachu;
+			const spin = sim.teamProfile.param.ncpSpin;
+			const berryCount =
+				spin === 0 ? 0 : Math.floor(Math.min(spin, 32) / 8) * 2 + 6;
+			ncp.progress.berryStrength += berryCount * ncp.progress.berry1Strength;
+		}
 	}
 }

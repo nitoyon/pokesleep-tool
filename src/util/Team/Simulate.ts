@@ -2,7 +2,10 @@ import type { IngredientName } from "../../data/pokemons";
 import { AlwaysTap, whistlePeriod } from "../Energy";
 import { ingredientStrength } from "../PokemonRp";
 import type { IngredientStrength, StrengthParameter } from "../PokemonStrength";
-import { buildMemberProfiles } from "./MemberProfile";
+import {
+	buildMemberProfiles,
+	buildNightCapPikachuProfile,
+} from "./MemberProfile";
 import { runIteration } from "./SimulateIteration";
 import {
 	addSkillMetrics,
@@ -48,7 +51,9 @@ export function simulateTeam(
 	if (profiles.length === 0) {
 		return createEmptyTeamStrengthResult(members);
 	}
-	const nightCapPikachuProfile: MemberProfile | undefined = undefined;
+	const nightCapPikachuProfile: MemberProfile | undefined = param.ncp
+		? buildNightCapPikachuProfile(param, param.ncpLevel)
+		: undefined;
 
 	const sim = createTeamContext(
 		isWhistle,
