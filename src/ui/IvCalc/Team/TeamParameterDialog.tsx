@@ -4,6 +4,7 @@ import {
 	Dialog,
 	DialogActions,
 	DialogContent,
+	MenuItem,
 	Switch,
 	Tab,
 	Tabs,
@@ -14,9 +15,12 @@ import { useTranslation } from "react-i18next";
 import { whistlePeriod } from "../../../util/Energy";
 import { clamp } from "../../../util/NumberUtil";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
+import { maxNcpLevel } from "../../../util/StrengthParameter";
+import CollapseEx from "../../common/CollapseEx";
 import DraggableTabContainer from "../../common/DraggableTabContainer";
 import { useElementWidth } from "../../common/Hook";
 import NumericSliderInput from "../../common/NumericSliderInput";
+import SelectEx from "../../common/SelectEx";
 import type { IvAction } from "../IvState";
 import BerryZoneForm from "../Panel/BerryZoneForm";
 import RecipeBonusLevelForm from "../Panel/RecipeBonusLevelForm";
@@ -72,6 +76,7 @@ const TeamParameterDialog = React.memo(
 						>
 							<CalculatePanel value={value} dispatch={dispatch} />
 							<AreaPanel value={value} dispatch={dispatch} />
+							<GoPlusPanel value={value} dispatch={dispatch} />
 						</DraggableTabContainer>
 					)}
 				</DialogContent>
@@ -242,6 +247,93 @@ const AreaPanel = React.memo(
 					<EventSelectControl value={value} onChange={onChange} />
 				</section>
 				<BerryZoneForm value={value} onChange={onChange} />
+			</div>
+		);
+	},
+);
+
+const GoPlusPanel = React.memo(
+	({
+		value,
+		dispatch,
+	}: {
+		value: StrengthParameter;
+		dispatch: (action: IvAction) => void;
+	}) => {
+		const { t } = useTranslation();
+
+		const onChange = React.useCallback(
+			(value: StrengthParameter) => {
+				dispatch({ type: "changeParameter", payload: { parameter: value } });
+			},
+			[dispatch],
+		);
+
+		const onGoPlusPlusChange = React.useCallback(
+			(e: React.ChangeEvent<HTMLInputElement>) => {
+				onChange({
+					...value,
+					ncp: e.target.checked,
+				});
+			},
+			[onChange, value],
+		);
+		const onNcpLevelChange = React.useCallback(
+			(ncpLevel: number) => {
+				onChange({
+					...value,
+					ncpLevel,
+				});
+			},
+			[onChange, value],
+		);
+		const onNcpSpinChange = React.useCallback(
+			(ncpSpin: string) => {
+				onChange({
+					...value,
+					ncpSpin: parseInt(ncpSpin, 10),
+				});
+			},
+			[onChange, value],
+		);
+
+		return (
+			<div className="tabChild">
+				<section className="first">
+					<span className="lbl">Pokémon GO Plus +:</span>
+					<Switch
+						size="small"
+						checked={value.ncp}
+						onChange={onGoPlusPlusChange}
+					/>
+				</section>
+				<CollapseEx show={value.ncp}>
+					<section className="ml">
+						<span className="lbl">{t("level")}:</span>
+						<NumericSliderInput
+							sx={{ width: "2rem", fontSize: "0.9rem", padding: 0 }}
+							value={value.ncpLevel}
+							min={1}
+							max={maxNcpLevel}
+							onChange={onNcpLevelChange}
+						/>
+					</section>
+					<section className="ml">
+						<span className="lbl">{t("pokestop spin")}:</span>
+						<SelectEx
+							value={value.ncpSpin}
+							onChange={onNcpSpinChange}
+							sx={{ minWidth: "1.5rem" }}
+						>
+							<MenuItem value={0}>0</MenuItem>
+							<MenuItem value={1}>1{t("range separator")}7</MenuItem>
+							<MenuItem value={8}>8{t("range separator")}15</MenuItem>
+							<MenuItem value={16}>16{t("range separator")}23</MenuItem>
+							<MenuItem value={24}>24{t("range separator")}31</MenuItem>
+							<MenuItem value={32}>32{t("range separator")}</MenuItem>
+						</SelectEx>
+					</section>
+				</CollapseEx>
 			</div>
 		);
 	},

@@ -186,6 +186,7 @@
 	"recipe strength help": "이 값은 재료를 강도 양으로 변환하는 데 사용되며, 80%가 레시피에 사용되고 20%는 잉여로 간주된다고 가정합니다.",
 	"recipe bonus list": "https://pks.raenonx.cc/kr/meal",
 	"sleep score": "수면 스코어",
+	"pokestop spin": "포켓스탑 돌리기 횟수",
 	"help efficiency": "도움 효율성",
 	"full inventory while sleeping (short)": "수면 중 가득 참",
 	"skill trigger after wake up (short)": "각성 후 스킬",
