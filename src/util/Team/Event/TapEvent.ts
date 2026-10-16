@@ -29,7 +29,7 @@ export class PhaseAwareTapEvent implements SimulationEvent {
 			return null;
 		}
 
-		const sleeping = sim.members[0].progress.sleeping;
+		const { sleeping } = sim.teamProgress;
 		const boundarySec = phaseBoundarySec(
 			currentSec,
 			sleeping,

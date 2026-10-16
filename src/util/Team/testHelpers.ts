@@ -82,7 +82,6 @@ export function createTestProgress(
 	return {
 		energy: 100,
 		lastRecoverySec: 0,
-		sleeping: false,
 		nextHelpSec: -1,
 		helpsSinceSkill: 0,
 		help: {
@@ -194,6 +193,11 @@ export function createTestSim(
 			...teamProfileOverrides,
 			param: testParam(paramOverrides),
 		},
-		teamProgress: { potExtended: 0, extraTastyRate: 0, berryZoneRate: {} },
+		teamProgress: {
+			sleeping: false,
+			potExtended: 0,
+			extraTastyRate: 0,
+			berryZoneRate: {},
+		},
 	};
 }

@@ -72,6 +72,8 @@ export interface TeamProfile {
  * Mutable team-level simulation state, updated in place during the simulation loop
  */
 export interface TeamProgress {
+	/** Whether the team is currently sleeping. */
+	sleeping: boolean;
 	/** Extended pot size */
 	potExtended: number;
 	/** Accumulated Extra Tasty rate bonus (percentage points) */
@@ -200,8 +202,6 @@ export interface MemberProgress extends SkillMetrics {
 	energy: number;
 	/** Absolute time (seconds) of the last energy recovery. */
 	lastRecoverySec: number;
-	/** Whether the member is currently sleeping. */
-	sleeping: boolean;
 	/**
 	 * Absolute time (seconds) when the next help will complete.
 	 * -1 is a sentinel meaning "not yet scheduled"; it is computed lazily

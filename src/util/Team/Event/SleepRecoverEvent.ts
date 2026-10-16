@@ -27,7 +27,7 @@ export class SleepRecoverEvent implements SimulationEvent {
 				: Number.POSITIVE_INFINITY;
 		}
 
-		const sleeping = sim.members[0].progress.sleeping;
+		const { sleeping } = sim.teamProgress;
 		return phaseBoundarySec(
 			currentSec,
 			sleeping,
@@ -37,19 +37,31 @@ export class SleepRecoverEvent implements SimulationEvent {
 	}
 
 	apply(sec: number, sim: TeamContext): void {
+		const { teamProgress } = sim;
+		if (!this.isShorterThanSleepSession && !teamProgress.sleeping) {
+			// entering sleep
+			teamProgress.sleeping = true;
+		} else {
+			// waking up
+			teamProgress.sleeping = false;
+			this.wakeUpMembers(sec, sim);
+
+			if (sim.nightCapPikachu) {
+				const ncp = sim.nightCapPikachu;
+				const spin = sim.teamProfile.param.ncpSpin;
+				const berryCount =
+					spin === 0 ? 0 : Math.floor(Math.min(spin, 32) / 8) * 2 + 6;
+				ncp.progress.berryStrength += berryCount * ncp.progress.berry1Strength;
+			}
+		}
+	}
+
+	private wakeUpMembers(sec: number, sim: TeamContext): void {
 		for (let i = 0; i < sim.members.length; i++) {
 			const { profile, progress } = sim.members[i];
 
-			// entering sleep
-			if (!this.isShorterThanSleepSession && !progress.sleeping) {
-				progress.sleeping = true;
-				continue;
-			}
-
-			// waking up
 			progress.pendingHelp += advanceHelpSchedule(progress, profile, sec);
 			const energy = getEnergy(sim, i, sec);
-			progress.sleeping = false;
 
 			// New day: Berry Burst (Disguise) may Great Success again.
 			progress.disguiseGreatSuccess = false;
@@ -67,14 +79,6 @@ export class SleepRecoverEvent implements SimulationEvent {
 				profile.wakeMax,
 			);
 			setEnergy(sim, i, sec, newEnergy);
-		}
-
-		if (sim.nightCapPikachu) {
-			const ncp = sim.nightCapPikachu;
-			const spin = sim.teamProfile.param.ncpSpin;
-			const berryCount =
-				spin === 0 ? 0 : Math.floor(Math.min(spin, 32) / 8) * 2 + 6;
-			ncp.progress.berryStrength += berryCount * ncp.progress.berry1Strength;
 		}
 	}
 }

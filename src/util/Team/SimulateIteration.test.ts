@@ -84,7 +84,7 @@ describe("runIteration", () => {
 		// -6 energy for 1h
 		// +5 energy for sleep recovery
 		expect(member.progress.energy).toBe(100 - 6 + sleepRecovery);
-		expect(member.progress.sleeping).toBe(false);
+		expect(sim.teamProgress.sleeping).toBe(false);
 	});
 
 	test("repeats the sleep/wake tap pattern across a multi-day period", () => {

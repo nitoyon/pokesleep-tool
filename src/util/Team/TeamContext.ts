@@ -32,6 +32,7 @@ export function createTeamContext(
 			param,
 		},
 		teamProgress: {
+			sleeping: false,
 			potExtended: 0,
 			extraTastyRate: 0,
 			berryZoneRate: {},
@@ -53,6 +54,7 @@ export function resetTeamContext(sim: TeamContext): void {
 	if (sim.nightCapPikachu !== undefined) {
 		resetMemberProgress(sim.nightCapPikachu, param);
 	}
+	sim.teamProgress.sleeping = false;
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
 	sim.teamProgress.berryZoneRate = {

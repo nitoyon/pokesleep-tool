@@ -368,6 +368,7 @@ function createSim(
 			param: createStrengthParameter({ pityProc: false, ...paramOverrides }),
 		},
 		teamProgress: {
+			sleeping: false,
 			potExtended: 0,
 			extraTastyRate: 0,
 			berryZoneRate: {},
@@ -435,7 +436,6 @@ function createProgress(
 	return {
 		energy: 100,
 		lastRecoverySec: 0,
-		sleeping: false,
 		nextHelpSec: -1,
 		helpsSinceSkill: 0,
 		help: {
