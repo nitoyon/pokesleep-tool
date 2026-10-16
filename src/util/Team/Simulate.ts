@@ -48,7 +48,7 @@ export function simulateTeam(
 
 	// Night Cap Pikachu alone is not simulated, since events rely on members
 	const profiles = buildMemberProfiles(members, param);
-	if (profiles.length === 0) {
+	if (profiles.length === 0 && !param.ncp) {
 		return createEmptyTeamStrengthResult(members);
 	}
 	const nightCapPikachuProfile: MemberProfile | undefined = param.ncp
