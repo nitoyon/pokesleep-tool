@@ -2,7 +2,10 @@ import type { IngredientName } from "../../data/pokemons";
 import { AlwaysTap, whistlePeriod } from "../Energy";
 import { ingredientStrength } from "../PokemonRp";
 import type { IngredientStrength, StrengthParameter } from "../PokemonStrength";
-import { buildMemberProfiles } from "./MemberProfile";
+import {
+	buildMemberProfiles,
+	buildNightCapPikachuProfile,
+} from "./MemberProfile";
 import { runIteration } from "./SimulateIteration";
 import {
 	addSkillMetrics,
@@ -13,7 +16,6 @@ import { createTeamContext, resetTeamContext } from "./TeamContext";
 import type {
 	IterationResult,
 	MemberProfile,
-	TeamContext,
 	TeamMemberInput,
 	TeamMemberStrengthResult,
 	TeamStrengthResult,
@@ -44,22 +46,36 @@ export function simulateTeam(
 		};
 	}
 
+	// Night Cap Pikachu alone is not simulated, since events rely on members
 	const profiles = buildMemberProfiles(members, param);
-	if (profiles.length === 0) {
+	if (profiles.length === 0 && !param.ncp) {
 		return createEmptyTeamStrengthResult(members);
 	}
-	const sim = createTeamContext(isWhistle, profiles, param);
-	const accumulated = initializeIterationResult(profiles);
+	const nightCapPikachuProfile: MemberProfile | undefined = param.ncp
+		? buildNightCapPikachuProfile(param, param.ncpLevel)
+		: undefined;
+
+	const sim = createTeamContext(
+		isWhistle,
+		profiles,
+		param,
+		nightCapPikachuProfile,
+	);
+	const accumulated = initializeIterationResult(
+		profiles,
+		nightCapPikachuProfile,
+	);
 	for (let iter = 0; iter < iterations; iter++) {
 		resetTeamContext(sim);
 		const results = runIteration(sim);
-		addResultToIterationResult(sim, accumulated, results);
+		addResultToIterationResult(accumulated, results);
 	}
 
 	return {
 		members: buildMemberStrengthResult(
 			members,
 			profiles,
+			nightCapPikachuProfile,
 			accumulated,
 			param,
 			iterations,
@@ -82,7 +98,11 @@ export function createEmptyTeamStrengthResult(
 
 function initializeIterationResult(
 	profiles: MemberProfile[],
+	nightCapPikachuProfile?: MemberProfile,
 ): IterationResult[] {
+	if (nightCapPikachuProfile) {
+		profiles = [...profiles, nightCapPikachuProfile];
+	}
 	const accumulated: IterationResult[] = profiles.map(() => ({
 		berryStrength: 0,
 		bigBerryStrength: 0,
@@ -96,11 +116,10 @@ function initializeIterationResult(
 }
 
 function addResultToIterationResult(
-	sim: TeamContext,
 	accumulated: IterationResult[],
 	results: IterationResult[],
 ) {
-	for (let i = 0; i < sim.members.length; i++) {
+	for (let i = 0; i < results.length; i++) {
 		const acc = accumulated[i];
 		const result = results[i];
 
@@ -119,57 +138,78 @@ function addResultToIterationResult(
 function buildMemberStrengthResult(
 	members: (TeamMemberInput | undefined)[],
 	profiles: MemberProfile[],
+	nightCapPikachuProfile: MemberProfile | undefined,
 	accumulated: IterationResult[],
 	param: StrengthParameter,
 	iterations: number,
 ): (TeamMemberStrengthResult | undefined)[] {
 	let index = 0;
-	return members.map((member) => {
+	const ret = members.map((member) => {
 		if (!member) return undefined;
-		const profile = profiles[index++];
+		const i = index++;
+		const profile = profiles[i];
 		if (!profile) return undefined;
+		return buildStrengthResult(profile, accumulated[i], param, iterations);
+	});
 
-		const acc = accumulated[profiles.indexOf(profile)];
-		const avgBerryStrength = acc.berryStrength / iterations;
-		const avgBigBerryCount = acc.bigBerryCount / iterations;
-		const bigBerryStrength = acc.bigBerryStrength / iterations;
-		const berryTotalStrength = avgBerryStrength + bigBerryStrength;
-		const avgMetrics = avgSkillMetrics(acc, iterations);
+	if (nightCapPikachuProfile) {
+		ret.push(
+			buildStrengthResult(
+				nightCapPikachuProfile,
+				accumulated[index],
+				param,
+				iterations,
+			),
+		);
+	}
+	return ret;
+}
 
-		const ingredients: IngredientStrength[] = Array.from(
-			acc.ingCounts.entries(),
-		).map(([name, totalCount]) => {
-			const count = totalCount / iterations;
-			return {
-				name,
-				count,
-				strength: count * ingredientStrength[name] * profile.ingStrengthRate,
-				overflowCount: 0,
-				helpCount: 0,
-				countPerHelp: 0,
-				slots: [],
-			};
-		});
+function buildStrengthResult(
+	profile: MemberProfile,
+	acc: IterationResult,
+	param: StrengthParameter,
+	iterations: number,
+): TeamMemberStrengthResult {
+	const avgBerryStrength = acc.berryStrength / iterations;
+	const avgBigBerryCount = acc.bigBerryCount / iterations;
+	const bigBerryStrength = acc.bigBerryStrength / iterations;
+	const berryTotalStrength = avgBerryStrength + bigBerryStrength;
+	const avgMetrics = avgSkillMetrics(acc, iterations);
 
-		const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
-
-		const totalStrength =
-			(param.totalFlags[0] ? berryTotalStrength : 0) +
-			(param.totalFlags[1] ? ingStrength : 0) +
-			(param.totalFlags[2] ? avgMetrics.skillStrength : 0);
-
+	const ingredients: IngredientStrength[] = Array.from(
+		acc.ingCounts.entries(),
+	).map(([name, totalCount]) => {
+		const count = totalCount / iterations;
 		return {
-			iv: profile.iv,
-			bonus: profile.bonus,
-			berryStrength: avgBerryStrength,
-			bigBerryStrength,
-			berryTotalStrength,
-			bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
-			bigBerryCount: avgBigBerryCount,
-			ingStrength,
-			ingredients,
-			...avgMetrics,
-			totalStrength: totalStrength,
+			name,
+			count,
+			strength: count * ingredientStrength[name] * profile.ingStrengthRate,
+			overflowCount: 0,
+			helpCount: 0,
+			countPerHelp: 0,
+			slots: [],
 		};
 	});
+
+	const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
+
+	const totalStrength =
+		(param.totalFlags[0] ? berryTotalStrength : 0) +
+		(param.totalFlags[1] ? ingStrength : 0) +
+		(param.totalFlags[2] ? avgMetrics.skillStrength : 0);
+
+	return {
+		iv: profile.iv,
+		bonus: profile.bonus,
+		berryStrength: avgBerryStrength,
+		bigBerryStrength,
+		berryTotalStrength,
+		bigBerryHelpCount: acc.bigBerryHelpCount / iterations,
+		bigBerryCount: avgBigBerryCount,
+		ingStrength,
+		ingredients,
+		...avgMetrics,
+		totalStrength: totalStrength,
+	};
 }

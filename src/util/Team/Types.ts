@@ -46,6 +46,8 @@ export interface TeamMember {
 export interface TeamContext {
 	/** Per-member profile and progress bundles (same order as the active members array). */
 	readonly members: TeamMember[];
+	/** Night Cap Pikachu profile and progress bundles */
+	readonly nightCapPikachu: TeamMember | undefined;
 	/** Immutable team-level configuration. */
 	readonly teamProfile: TeamProfile;
 	/** Mutable team-level simulation state, updated in place. */
@@ -70,6 +72,8 @@ export interface TeamProfile {
  * Mutable team-level simulation state, updated in place during the simulation loop
  */
 export interface TeamProgress {
+	/** Whether the team is currently sleeping. */
+	sleeping: boolean;
 	/** Extended pot size */
 	potExtended: number;
 	/** Accumulated Extra Tasty rate bonus (percentage points) */
@@ -111,7 +115,10 @@ export interface TeamMemberStrengthResult extends SkillMetrics {
  * aggregated total across all active members.
  */
 export interface TeamStrengthResult {
-	/** Per-slot results; undefined for empty slots. */
+	/**
+	 * Per-slot results; undefined for empty slots.
+	 * Night Cap Pikachu's result is appended after the slots if simulated.
+	 */
 	members: (TeamMemberStrengthResult | undefined)[];
 }
 
@@ -195,8 +202,6 @@ export interface MemberProgress extends SkillMetrics {
 	energy: number;
 	/** Absolute time (seconds) of the last energy recovery. */
 	lastRecoverySec: number;
-	/** Whether the member is currently sleeping. */
-	sleeping: boolean;
 	/**
 	 * Absolute time (seconds) when the next help will complete.
 	 * -1 is a sentinel meaning "not yet scheduled"; it is computed lazily

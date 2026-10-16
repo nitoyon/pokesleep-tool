@@ -187,6 +187,7 @@
 	"recipe strength help": "This value is used to convert ingredients into strength amounts, assuming 80% are used in the recipe and 20% are surplus.",
 	"recipe bonus list": "https://pks.raenonx.cc/en/meal",
 	"sleep score": "Sleep score",
+	"pokestop spin": "PokéStop spins",
 	"help efficiency": "Help efficiency",
 	"full inventory while sleeping (short)": "Snack",
 	"skill trigger after wake up (short)": "Wake up skill",

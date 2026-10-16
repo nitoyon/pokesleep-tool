@@ -6,7 +6,7 @@ import { PhaseAwareTapEvent } from "./TapEvent";
 describe("PhaseAwareTapEvent", () => {
 	test("caps a numeric awake tap at the upcoming sleep boundary", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: false })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
@@ -18,7 +18,7 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("returns the periodic candidate when it lands before the boundary", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: false })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
@@ -30,10 +30,11 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("switches to the asleep frequency once the team is sleeping", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: true })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
+		sim.teamProgress.sleeping = true;
 		const event = new PhaseAwareTapEvent(NoTap, 30, 72000, 86400, 200000);
 		event.apply(72000, sim);
 
@@ -42,10 +43,11 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("NoTap during sleep only taps at the wake boundary", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: true })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
+		sim.teamProgress.sleeping = true;
 		const event = new PhaseAwareTapEvent(NoTap, NoTap, 72000, 86400, 200000);
 
 		expect(event.next(75000, sim)).toBe(86400);
@@ -53,10 +55,11 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("AlwaysTap while asleep rounds up to the next whole minute, capped at wake", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: true, nextHelpSec: 86390 })],
+			[createTestMember({}, { nextHelpSec: 86390 })],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
+		sim.teamProgress.sleeping = true;
 		const event = new PhaseAwareTapEvent(
 			NoTap,
 			AlwaysTap,
@@ -70,7 +73,7 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("clamps to the simulation period end once the candidate would pass it", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: false })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
@@ -82,7 +85,7 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("keeps the periodic cadence anchored to the last tap, not to an unrelated event's currentSec", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: false })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
@@ -94,7 +97,7 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("treats a tap as having happened at the period end when the periodic cadence would exceed it", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: false })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);
@@ -105,7 +108,7 @@ describe("PhaseAwareTapEvent", () => {
 
 	test("stops returning candidates once a tap has already landed on the period end", () => {
 		const sim = createTestSim(
-			[createTestMember({}, { sleeping: false })],
+			[createTestMember()],
 			{},
 			{ sleepTimeSec: 72000, dayLengthSec: 86400 },
 		);

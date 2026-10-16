@@ -4,7 +4,7 @@ import {
 	createTeamMembers,
 	updateBerryStrength,
 } from "./MemberProgress";
-import type { MemberProfile, TeamContext } from "./Types";
+import type { MemberProfile, TeamContext, TeamMember } from "./Types";
 
 /**
  * Build a fresh {@link TeamContext} for a single simulation iteration.
@@ -13,6 +13,7 @@ export function createTeamContext(
 	isWhistle: boolean,
 	profiles: MemberProfile[],
 	param: StrengthParameter,
+	nightCapPikachuProfile?: MemberProfile,
 ): TeamContext {
 	const dayLengthSec = 1440 * 60;
 	const sleepMinutes = (param.sleepScore * 510) / 100;
@@ -20,6 +21,10 @@ export function createTeamContext(
 
 	return {
 		members: createTeamMembers(profiles, param),
+		nightCapPikachu:
+			nightCapPikachuProfile === undefined
+				? undefined
+				: createTeamMembers([nightCapPikachuProfile], param)[0],
 		teamProfile: {
 			isWhistle,
 			sleepTimeSec,
@@ -27,6 +32,7 @@ export function createTeamContext(
 			param,
 		},
 		teamProgress: {
+			sleeping: false,
 			potExtended: 0,
 			extraTastyRate: 0,
 			berryZoneRate: {},
@@ -42,17 +48,13 @@ export function createTeamContext(
  */
 export function resetTeamContext(sim: TeamContext): void {
 	const { param } = sim.teamProfile;
-	const periodSec = Math.abs(param.period) * 3600;
 	for (const member of sim.members) {
-		// The previous iteration's nextHelpSec lands past periodSec
-		const prevNextHelpSec = member.progress.nextHelpSec;
-		member.progress = {
-			...createMemberProgress(member.profile, param),
-			energy: member.progress.energy,
-			helpsSinceSkill: member.progress.helpsSinceSkill,
-			nextHelpSec: prevNextHelpSec === -1 ? -1 : prevNextHelpSec - periodSec,
-		};
+		resetMemberProgress(member, param);
 	}
+	if (sim.nightCapPikachu !== undefined) {
+		resetMemberProgress(sim.nightCapPikachu, param);
+	}
+	sim.teamProgress.sleeping = false;
 	sim.teamProgress.potExtended = 0;
 	sim.teamProgress.extraTastyRate = 0;
 	sim.teamProgress.berryZoneRate = {
@@ -62,4 +64,26 @@ export function resetTeamContext(sim: TeamContext): void {
 	for (const member of sim.members) {
 		updateBerryStrength(member, param, sim.teamProgress.berryZoneRate);
 	}
+	if (sim.nightCapPikachu !== undefined) {
+		updateBerryStrength(
+			sim.nightCapPikachu,
+			param,
+			sim.teamProgress.berryZoneRate,
+		);
+	}
+}
+
+function resetMemberProgress(
+	member: TeamMember,
+	param: StrengthParameter,
+): void {
+	const periodSec = Math.abs(param.period) * 3600;
+	// The previous iteration's nextHelpSec lands past periodSec
+	const prevNextHelpSec = member.progress.nextHelpSec;
+	member.progress = {
+		...createMemberProgress(member.profile, param),
+		energy: member.progress.energy,
+		helpsSinceSkill: member.progress.helpsSinceSkill,
+		nextHelpSec: prevNextHelpSec === -1 ? -1 : prevNextHelpSec - periodSec,
+	};
 }

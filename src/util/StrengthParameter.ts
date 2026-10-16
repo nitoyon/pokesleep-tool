@@ -19,6 +19,9 @@ export const allFavoriteFieldIndex = -2;
 /** Pseudo field index where no berries are favorites */
 export const noFavoriteFieldIndex = -1;
 
+/** Max level of Night Cap Pikachu */
+export const maxNcpLevel = 20;
+
 /** Expert mode effects */
 export type ExpertEffects = "berry" | "ing" | "skill";
 
@@ -100,6 +103,15 @@ export interface StrengthParameter extends EnergyParameter {
 
 	/** Latias/Latios twins are on the team */
 	latiTwins: boolean;
+
+	/** Night Cap Pikachu is on the team */
+	ncp: boolean;
+
+	/** Level of Night Cap Pikachu */
+	ncpLevel: number;
+
+	/** Number of PokeStop spins */
+	ncpSpin: number;
 }
 
 /**
@@ -261,6 +273,9 @@ export function createStrengthParameter(
 			},
 		},
 		latiTwins: false,
+		ncp: false,
+		ncpLevel: 20,
+		ncpSpin: 0,
 	};
 	return { ...defaultParameters, ...param };
 }
@@ -542,6 +557,25 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 
 	if (typeof json.latiTwins === "boolean") {
 		ret.latiTwins = json.latiTwins;
+	}
+
+	if (typeof json.ncp === "boolean") {
+		ret.ncp = json.ncp;
+	}
+	if (
+		typeof json.ncpLevel === "number" &&
+		Number.isInteger(json.ncpLevel) &&
+		1 <= json.ncpLevel &&
+		json.ncpLevel <= maxNcpLevel
+	) {
+		ret.ncpLevel = json.ncpLevel;
+	}
+	if (
+		typeof json.ncpSpin === "number" &&
+		Number.isInteger(json.ncpSpin) &&
+		json.ncpSpin >= 0
+	) {
+		ret.ncpSpin = json.ncpSpin;
 	}
 
 	return ret;

@@ -183,6 +183,7 @@
 	"recipe strength help": "该设定值用于将食材转换为能量。当转化为能量时，假定80%的食材用于食谱中，20%作为剩余食材进行计算。",
 	"recipe bonus list": "https://pks.raenonx.cc/zh/meal",
 	"sleep score": "睡眠分数",
+	"pokestop spin": "PokéStop 转动次数",
 	"help efficiency": "帮忙效率",
 	"full inventory while sleeping (short)": "夜间持有溢出",
 	"skill trigger after wake up (short)": "第二天早上的技能",

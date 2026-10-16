@@ -56,12 +56,12 @@ function addHealPulse(
 	sim2.members = [...sim.members];
 	sim2.members.splice(index1, 1);
 
-	// find second target
+	// find second target (index2 is an index into sim2.members)
 	const index2 = addEnergizingCheer(member, tapSec, skillValue, sim2, rng);
 
 	// add help count
 	const helpCount = skillValue2;
 	member.progress.skillExtraHelp += helpCount * 2;
 	sim.members[index1].progress.pendingExtraHelp += helpCount;
-	sim.members[index2].progress.pendingExtraHelp += helpCount;
+	sim2.members[index2].progress.pendingExtraHelp += helpCount;
 }

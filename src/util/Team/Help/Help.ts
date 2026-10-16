@@ -24,6 +24,14 @@ export function applyHelp(
 	for (const member of sim.members) {
 		applyHelpForMember(member, sim.teamProfile.param, tapSec, sim, rng);
 	}
+	if (sim.nightCapPikachu !== undefined) {
+		applyHelpForNightCapPikachu(
+			sim.nightCapPikachu,
+			sim.teamProfile.param,
+			tapSec,
+			rng,
+		);
+	}
 }
 
 function applyHelpForMember(
@@ -291,4 +299,44 @@ function drawSkillCount(
 	}
 
 	return skillCount;
+}
+
+/**
+ * Simulate helps of Night Cap Pikachu up to tapSec.
+ *
+ * Unlike the other members, Night Cap Pikachu has no energy (always helps at
+ * the base frequency), stops helping instead of sneaky snacking once the
+ * carry limit is exhausted, and has no main skill.
+ */
+function applyHelpForNightCapPikachu(
+	member: TeamMember,
+	param: StrengthParameter,
+	tapSec: number,
+	rng: () => number,
+): void {
+	const { profile, progress } = member;
+
+	// Determine total help count during the tapSec interval
+	if (progress.nextHelpSec === -1) {
+		progress.nextHelpSec = profile.baseFreq;
+	}
+	let helpCount = 0;
+	while (progress.nextHelpSec <= tapSec) {
+		progress.nextHelpSec += profile.baseFreq;
+		helpCount++;
+	}
+
+	// Gather berries and ingredients until the carry limit is exhausted
+	let carryLimitLeft = profile.carryLimit;
+	if (param.tapFrequencyAwake === NoTap || profile.sneakySnacking) {
+		carryLimitLeft = 0;
+	}
+	let normalHelpCount = 0;
+	for (let i = 0; i < helpCount && carryLimitLeft > 0; i++) {
+		const result = applySingleHelp(profile, progress, carryLimitLeft, rng);
+		carryLimitLeft = result.carryLimitLeft;
+		normalHelpCount++;
+	}
+	progress.help.all += normalHelpCount;
+	progress.help.normal += normalHelpCount;
 }

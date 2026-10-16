@@ -24,7 +24,6 @@ export function createMemberProgress(
 	const progress: MemberProgress = {
 		energy: 100,
 		lastRecoverySec: 0,
-		sleeping: false,
 		nextHelpSec: -1,
 		helpsSinceSkill: 0,
 		help: {

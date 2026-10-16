@@ -10,7 +10,8 @@ import { EnergizingCheerHealPulseSkill } from "./EnergizingCheerHealPulse";
 import { EnergizingCheerNuzzleSkill } from "./EnergizingCheerNuzzleSkill";
 
 // addEnergizingCheer draws once: rand < 0.65 targets the lowest-energy member
-// (ties broken by rand/0.65), otherwise it targets floor((rand - 0.65) * n).
+// (ties broken by rand/0.65), otherwise it targets
+// floor((rand - 0.65) / 0.35 * n).
 describe("addEnergizingCheer", () => {
 	test("rand < 0.65 with everyone level: ties resolve by rand/0.65", () => {
 		const sim = createTestSim([
@@ -40,18 +41,23 @@ describe("addEnergizingCheer", () => {
 		expect(sim.members[1].progress.pendingEnergy).toBe(20);
 	});
 
-	test("rand >= 0.65 selects from all members by floor((rand - 0.65) * n)", () => {
+	// floor((rand - 0.65) / 0.35 * 4) covers every member
+	test.each([
+		[0.65, 0],
+		[0.74, 1],
+		[0.83, 2],
+		[0.99, 3],
+	])("rand = %d (>= 0.65) selects member %d from all members", (r, target) => {
 		const sim = createTestSim([
 			createTestMember({ index: 0 }),
 			createTestMember({ index: 1 }),
 			createTestMember({ index: 2 }),
 			createTestMember({ index: 3 }),
 		]);
-		// floor((0.99 - 0.65) * 4) = floor(1.36) = 1
 		expect(
-			addEnergizingCheer(sim.members[0], 0, 12, sim, createConstRng(0.99)),
-		).toBe(1);
-		expect(sim.members[1].progress.pendingEnergy).toBe(12);
+			addEnergizingCheer(sim.members[0], 0, 12, sim, createConstRng(r)),
+		).toBe(target);
+		expect(sim.members[target].progress.pendingEnergy).toBe(12);
 	});
 });
 
@@ -120,11 +126,11 @@ describe("EnergizingCheerHealPulseSkill", () => {
 		const b = createTestMember({ index: 1 });
 		const c = createTestMember({ index: 2 });
 		const sim = createTestSim([a, b, c]);
-		// 1st draw 0.99 -> else-branch floor((0.99 - 0.65) * 3) = 1, so the
+		// 1st draw 0.8 -> else-branch floor((0.8 - 0.65) / 0.35 * 3) = 1, so the
 		// first target is member 1 (b). It is spliced out; the 2nd draw 0
 		// targets the first of the remaining pair (a).
 		const skill = new EnergizingCheerHealPulseSkill(
-			createRandomQueue([0.99, 0]),
+			createRandomQueue([0.8, 0]),
 		);
 		skill.initialize(a.profile, [a.profile, b.profile, c.profile], testParam());
 
@@ -138,5 +144,31 @@ describe("EnergizingCheerHealPulseSkill", () => {
 		expect(b.progress.pendingExtraHelp).toBe(1);
 		expect(c.progress.pendingEnergy).toBe(0);
 		expect(c.progress.pendingExtraHelp).toBe(0);
+	});
+
+	test("second target after the first one gets the pending help", () => {
+		const a = createTestMember({
+			index: 0,
+			skillName: "Energizing Cheer S (Heal Pulse)",
+			skillLevel: 1,
+		});
+		const b = createTestMember({ index: 1 });
+		const c = createTestMember({ index: 2 });
+		const sim = createTestSim([a, b, c]);
+		// 1st draw 0 -> a. It is spliced out, leaving [b, c]; the 2nd draw 0.99
+		// -> floor((0.99 - 0.65) / 0.35 * 2) = 1, which is c (not sim index 1).
+		const skill = new EnergizingCheerHealPulseSkill(
+			createRandomQueue([0, 0.99]),
+		);
+		skill.initialize(a.profile, [a.profile, b.profile, c.profile], testParam());
+
+		skill.apply(a, 0, sim);
+
+		expect(a.progress.pendingEnergy).toBe(6);
+		expect(c.progress.pendingEnergy).toBe(6);
+		expect(a.progress.pendingExtraHelp).toBe(1);
+		expect(c.progress.pendingExtraHelp).toBe(1);
+		expect(b.progress.pendingEnergy).toBe(0);
+		expect(b.progress.pendingExtraHelp).toBe(0);
 	});
 });

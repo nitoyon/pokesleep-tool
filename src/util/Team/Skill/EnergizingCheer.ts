@@ -45,7 +45,9 @@ export function addEnergizingCheer(
 		return index;
 	} else {
 		// 35% chance to select target from all members
-		const index = Math.floor((_rand - border) * energies.length);
+		const index =
+			energies[Math.floor(((_rand - border) / (1 - border)) * energies.length)]
+				.index;
 		const energy = diff * sim.members[index].profile.energyRecoveryFactor;
 		member.progress.skillEnergizingCheer += energy;
 		addEnergyTo(index, energy, sim);
