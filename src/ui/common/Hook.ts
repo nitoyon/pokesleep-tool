@@ -72,9 +72,11 @@ export function useLongPress(callback: () => void, ms: number) {
 	return ref;
 }
 
-export function useElementWidth(): [number, (elm: HTMLElement | null) => void] {
+export function useElementWidth(
+	initialWidth = 200,
+): [number, (elm: HTMLElement | null) => void] {
 	const elmRef = React.useRef<{ elm: HTMLElement | null }>({ elm: null });
-	const [width, setWidth] = React.useState(200);
+	const [width, setWidth] = React.useState(initialWidth);
 	const observer = React.useMemo(() => {
 		return new ResizeObserver(() => {
 			const node = elmRef.current.elm;
