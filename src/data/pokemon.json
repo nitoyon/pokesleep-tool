@@ -579,6 +579,41 @@
 	},
 	{
 		"id": 25,
+		"name": "Pikachu (Low Key)",
+		"arrival": "2023-07-17",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "electric",
+		"specialty": "Berries",
+		"skill": "unknown",
+		"fp": 0,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": null,
+		"evolutionCount": -1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "apple",
+			"c1": 2,
+			"c2": 2,
+			"c3": 2
+		},
+		"ing2": {
+			"name": "cacao",
+			"c2": 2,
+			"c3": 2
+		},
+		"ing3": {
+			"name": "honey",
+			"c3": 2
+		},
+		"form": "Low Key"
+	},
+	{
+		"id": 25,
 		"name": "Pikachu (Holiday)",
 		"arrival": "2023-12-18",
 		"sleepType": "snoozing",

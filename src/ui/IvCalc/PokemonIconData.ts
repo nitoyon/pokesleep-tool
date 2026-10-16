@@ -163,6 +163,20 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#3d3532", "#ffe14f"],
 		shinyPallet: ["#646566", "#f1d46d"],
 	},
+	// Pikachu (Night Cap)
+	// (NOTE) Use `Pikachu (Low Key)` for Night Cap
+	"24601": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 0.15, color: 0 },
+			{ x: 0, y: 0.15, w: 1, h: 0.85, color: 1 },
+			{ x: 0.63, y: 0.6, w: 0.34, h: 0.33, r: 0.15, color: 2 },
+			{ x: 0, y: 0.8, w: 1, h: 0.15, color: 1 },
+			{ x: 0.59, y: 0.8, w: 0.42, h: 0.1, r: 0.05, color: 3 },
+			{ x: 0.72, y: 0.48, w: 0.15, h: 0.15, r: 0.1, color: 4 },
+		],
+		normalPallet: ["#3d3532", "#ffe14f", "#7fabed", "#d8f3f5", "#f4feff"],
+		shinyPallet: [],
+	},
 	// Pikachu (Halloween)
 	"4121": {
 		rects: [

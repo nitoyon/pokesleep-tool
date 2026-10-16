@@ -159,8 +159,9 @@ export function buildNightCapPikachuProfile(
 	param: StrengthParameter,
 	level: number,
 ): MemberProfile {
+	// (NOTE) Use `Pikachu (Low Key)` for Night Cap
 	const iv = new PokemonIv({
-		pokemonName: "Pikachu",
+		pokemonName: "Pikachu (Low Key)",
 		level,
 	});
 	const strength = new PokemonStrength(iv, param);
