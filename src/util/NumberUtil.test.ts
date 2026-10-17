@@ -2,6 +2,7 @@ import {
 	clamp,
 	formatWithComma,
 	getFormatWithCommaPos,
+	mod,
 	round1,
 	round2,
 } from "./NumberUtil";
@@ -127,5 +128,23 @@ describe("clamp", () => {
 	});
 	test("zero range", () => {
 		expect(clamp(5, 3, 5)).toBe(5);
+	});
+});
+
+describe("mod", () => {
+	test("positive value", () => {
+		expect(mod(7, 3)).toBe(1);
+	});
+	test("zero", () => {
+		expect(mod(0, 3)).toBe(0);
+	});
+	test("negative value returns non-negative", () => {
+		expect(mod(-1, 3)).toBe(2);
+	});
+	test("negative multiple returns zero", () => {
+		expect(mod(-6, 3)).toBe(0);
+	});
+	test("fractional value", () => {
+		expect(mod(-0.5, 3)).toBe(2.5);
 	});
 });

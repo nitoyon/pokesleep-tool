@@ -95,6 +95,13 @@ export function clamp(min: number, value: number, max: number): number {
 	return Math.min(Math.max(value, min), max);
 }
 
+/**
+ * Modulo that always returns a non-negative value.
+ */
+export function mod(a: number, n: number): number {
+	return ((a % n) + n) % n;
+}
+
 export function trunc(v: number, n: number): number {
 	const N = 10 ** n;
 	const d = parseFloat((v * N).toFixed(6));
