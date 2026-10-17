@@ -2,6 +2,7 @@ import { ButtonBase } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
+import { mod } from "../../../util/NumberUtil";
 import CarouselContainer from "../../common/CarouselContainer";
 import { useElementWidth } from "../../common/Hook";
 import type IvState from "../IvState";
@@ -106,23 +107,47 @@ const MemberList = React.memo(
 			[teamIndex, editingIndex, dispatch],
 		);
 
+		const teamCount = state.teams.length;
+		const onPrevClick = React.useCallback(() => {
+			onTeamIndexChange(mod(teamIndex - 1, teamCount));
+		}, [onTeamIndexChange, teamIndex, teamCount]);
+		const onNextClick = React.useCallback(() => {
+			onTeamIndexChange(mod(teamIndex + 1, teamCount));
+		}, [onTeamIndexChange, teamIndex, teamCount]);
+
 		return (
 			<StyledMemberList ref={widthRef}>
-				<CarouselContainer
-					index={teamIndex}
-					width={width}
-					onChange={onTeamIndexChange}
-					ignoreDragSelector={ignoreDragSelector}
-				>
-					{state.teams.map((team, i) => (
-						<TeamMemberGrid
-							// biome-ignore lint/suspicious/noArrayIndexKey: teams never reordered
-							key={i}
-							team={team}
-							onChange={onChange}
-						/>
-					))}
-				</CarouselContainer>
+				<div className="carousel">
+					<CarouselContainer
+						index={teamIndex}
+						width={width}
+						onChange={onTeamIndexChange}
+						ignoreDragSelector={ignoreDragSelector}
+					>
+						{state.teams.map((team, i) => (
+							<TeamMemberGrid
+								// biome-ignore lint/suspicious/noArrayIndexKey: teams never reordered
+								key={i}
+								team={team}
+								onChange={onChange}
+							/>
+						))}
+					</CarouselContainer>
+					<ButtonBase
+						className="prev"
+						onClick={onPrevClick}
+						aria-label="previous team"
+					>
+						<ArrowIcon direction="left" />
+					</ButtonBase>
+					<ButtonBase
+						className="next"
+						onClick={onNextClick}
+						aria-label="next team"
+					>
+						<ArrowIcon direction="right" />
+					</ButtonBase>
+				</div>
 				<TeamIndicator
 					count={state.teams.length}
 					index={teamIndex}
@@ -147,7 +172,48 @@ const MemberList = React.memo(
 
 const StyledMemberList = styled("div")({
 	margin: "0.6rem 0 0.5rem",
+	"& > .carousel": {
+		position: "relative",
+		"& > button.prev, & > button.next": {
+			position: "absolute",
+			top: "50%",
+			transform: "translateY(-50%)",
+			width: "16px",
+			height: "40px",
+			borderRadius: "12px",
+			"& > svg": {
+				width: "12px",
+				height: "24px",
+				filter: "drop-shadow(0 3px 0 rgba(0, 0, 0, 0.15))",
+			},
+		},
+		"& > button.prev": {
+			left: 0,
+		},
+		"& > button.next": {
+			right: 0,
+		},
+	},
 });
+
+/**
+ * White chevron with a brown outline used for the prev/next buttons.
+ */
+const ArrowIcon = ({ direction }: { direction: "left" | "right" }) => {
+	const points = direction === "left" ? "11,4 4,14 11,24" : "5,4 12,14 5,24";
+	return (
+		<svg
+			viewBox="0 0 16 28"
+			fill="none"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			aria-hidden="true"
+		>
+			<polyline points={points} stroke="#c5a686" strokeWidth={8} />
+			<polyline points={points} stroke="#ffffff" strokeWidth={4} />
+		</svg>
+	);
+};
 
 /**
  * Grid of member slots in a single team.
