@@ -18,7 +18,7 @@ export const defaultIgnoreDragSelector = "svg[width], span.MuiSlider-root";
  *
  * This component handles the drag and the animation of the track
  * position `x`. How the tabs are placed by `x` is up to `children`
- * (see DraggableTabContainer).
+ * (see DraggableTabContainer and CarouselContainer).
  *
  * @param index The index of the tab shown in the viewport.
  * @param min The minimum index (-Infinity if unbounded).
