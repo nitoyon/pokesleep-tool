@@ -53,8 +53,10 @@ const TeamView = React.memo(
 				<div className="chart" ref={chartRef}>
 					<MemberStrengthChart width={chartWidth} results={results.members} />
 				</div>
-				<TeamParameterPanel state={state} dispatch={dispatch} />
-				<MemberList state={state} dispatch={dispatch} />
+				<div className="footer">
+					<TeamParameterPanel state={state} dispatch={dispatch} />
+					<MemberList state={state} dispatch={dispatch} />
+				</div>
 			</StyledDiv>
 		);
 	},
@@ -62,6 +64,10 @@ const TeamView = React.memo(
 
 const StyledDiv = styled("div")({
 	position: "relative",
+	// Fill the viewport below the sticky tab header
+	display: "flex",
+	flexDirection: "column",
+	minHeight: "calc(100dvh)",
 	"& > .loading": {
 		position: "absolute",
 		top: 0,
@@ -73,6 +79,14 @@ const StyledDiv = styled("div")({
 		"& > svg": {
 			userSelect: "none",
 		},
+	},
+	"& > .footer": {
+		position: "sticky",
+		bottom: 15,
+		marginTop: "auto",
+		zIndex: 1,
+		background: "#f9f9f9",
+		paddingBottom: "env(safe-area-inset-bottom)",
 	},
 });
 

@@ -160,6 +160,7 @@ const ValidMemberBox = React.memo(
 					anchorEl={moreMenuAnchor}
 					open={isMenuOpen}
 					onClose={onMoreMenuClose}
+					onPointerDown={stopPropagation}
 					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 				>
 					<MenuList>
@@ -198,6 +199,14 @@ const ValidMemberBox = React.memo(
 		);
 	},
 );
+
+/**
+ * Prevent pointer events in the portaled menu from bubbling
+ * (through the React tree) to the parent carousel.
+ */
+function stopPropagation(e: React.PointerEvent) {
+	e.stopPropagation();
+}
 
 const StyledMember = styled("div")({
 	border: "1px solid #aaa",
