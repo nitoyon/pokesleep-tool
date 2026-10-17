@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { type SpringValue, useSpring } from "@react-spring/web";
+import { type SpringValue, useSpringValue } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
 import React from "react";
 import { clamp } from "../../util/NumberUtil";
@@ -55,13 +55,7 @@ const SwipeContainer = React.memo(
 		const ignoreDragRef = React.useRef(false);
 		const widthGap = width + gap;
 
-		const [{ x }, api] = useSpring(
-			() => ({
-				x: -index * widthGap,
-				immediate: isFirstTime.current,
-			}),
-			[index, widthGap],
-		);
+		const x = useSpringValue(-index * widthGap);
 
 		const bind = useDrag(
 			({ active, movement: [mx], velocity: [vx], first, event }) => {
@@ -76,8 +70,8 @@ const SwipeContainer = React.memo(
 				}
 
 				if (active) {
-					return api.start({
-						x: -index * widthGap + mx,
+					return x.start({
+						to: -index * widthGap + mx,
 						immediate: true,
 					});
 				}
@@ -92,8 +86,8 @@ const SwipeContainer = React.memo(
 					onIndexChange(newIndex);
 				}
 
-				return api.start({
-					x: -newIndex * widthGap,
+				return x.start({
+					to: -newIndex * widthGap,
 					immediate: isFirstTime.current,
 				});
 			},
@@ -109,8 +103,9 @@ const SwipeContainer = React.memo(
 		);
 
 		React.useEffect(() => {
+			const targetX = -index * widthGap;
 			if (isFirstTime.current) {
-				api.set({ x: -index * widthGap });
+				x.set(targetX);
 
 				// Set isFirstTime to false in the next frame
 				// to avoid animation on the initial render
@@ -118,9 +113,9 @@ const SwipeContainer = React.memo(
 					isFirstTime.current = false;
 				});
 			} else {
-				api.start({ x: -index * widthGap });
+				x.start(targetX);
 			}
-		}, [index, widthGap, api]);
+		}, [index, widthGap, x]);
 
 		return (
 			<StyledSwipeContainer style={style} {...bind()}>
