@@ -3,6 +3,7 @@ import React from "react";
 import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type IvState from "../IvState";
 import type { IvAction } from "../IvState";
+import { TEAM_MEMBER_COUNT } from "../IvState";
 import EditMemberDialog from "./EditMemberDialog";
 import type { MemberAction, MemberEvent } from "./MemberEvent";
 import MemberItem from "./MemberItem";
@@ -18,6 +19,8 @@ const MemberList = React.memo(
 		const [boxDialogOpen, setBoxDialogOpen] = React.useState(false);
 		const [editingIndex, setEditingIndex] = React.useState(-1);
 		const [editAction, setEditAction] = React.useState<MemberAction>("add");
+		const teamIndex = state.teamIndex;
+		const members = state.teams[teamIndex]?.members ?? [];
 
 		const onChange = React.useCallback(
 			(event: MemberEvent) => {
@@ -35,28 +38,33 @@ const MemberList = React.memo(
 				if (event.action === "clear") {
 					dispatch({
 						type: "setTeamMember",
-						payload: { index: event.index, item: undefined },
+						payload: { teamIndex, index: event.index, item: undefined },
 					});
 					return;
 				}
 
 				if (event.action === "toggleEnabled") {
-					const cur = state.teamMembers[event.index];
+					const cur = members[event.index];
 					if (cur !== undefined) {
 						dispatch({
 							type: "setTeamMemberEnabled",
-							payload: { index: event.index, enabled: !cur.enabled },
+							payload: {
+								teamIndex,
+								index: event.index,
+								enabled: !cur.enabled,
+							},
 						});
 					}
 					return;
 				}
 
 				if (event.action === "toggleSneakySnacking") {
-					const cur = state.teamMembers[event.index];
+					const cur = members[event.index];
 					if (cur !== undefined) {
 						dispatch({
 							type: "setTeamMemberSneakySnacking",
 							payload: {
+								teamIndex,
 								index: event.index,
 								sneakySnacking: !cur.sneakySnacking,
 							},
@@ -65,7 +73,7 @@ const MemberList = React.memo(
 					return;
 				}
 			},
-			[dispatch, state.teamMembers],
+			[dispatch, teamIndex, members],
 		);
 
 		const onBoxDialogClose = React.useCallback(() => {
@@ -76,21 +84,22 @@ const MemberList = React.memo(
 			(item: PokemonBoxItem) => {
 				dispatch({
 					type: "setTeamMember",
-					payload: { index: editingIndex, item },
+					payload: { teamIndex, index: editingIndex, item },
 				});
 			},
-			[editingIndex, dispatch],
+			[teamIndex, editingIndex, dispatch],
 		);
 
 		return (
 			<StyledTeamView>
-				{[0, 1, 2, 3, 4].map((i) => (
+				{Array.from({ length: TEAM_MEMBER_COUNT }, (_, i) => (
 					<MemberItem
+						// biome-ignore lint/suspicious/noArrayIndexKey: fixed slots
 						key={i}
 						index={i}
-						item={state.teamMembers[i]?.item}
-						enabled={state.teamMembers[i]?.enabled ?? true}
-						sneakySnacking={state.teamMembers[i]?.sneakySnacking ?? false}
+						item={members[i]?.item}
+						enabled={members[i]?.enabled ?? true}
+						sneakySnacking={members[i]?.sneakySnacking ?? false}
 						onChange={onChange}
 					/>
 				))}
@@ -98,7 +107,7 @@ const MemberList = React.memo(
 					action={editAction}
 					open={boxDialogOpen}
 					items={state.box.items}
-					item={state.teamMembers[editingIndex]?.item}
+					item={members[editingIndex]?.item}
 					parameter={state.parameter}
 					dispatch={dispatch}
 					onClose={onBoxDialogClose}

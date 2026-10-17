@@ -19,9 +19,10 @@ const TeamView = React.memo(
 		dispatch: (action: IvAction) => void;
 	}) => {
 		const [chartWidth, chartRef] = useElementWidth();
+		const team = state.teams[state.teamIndex];
 		const activeMembers = React.useMemo(
-			() => state.teamMembers.map((m) => (m?.enabled ? m : undefined)),
-			[state.teamMembers],
+			() => (team?.members ?? []).map((m) => (m?.enabled ? m : undefined)),
+			[team],
 		);
 		const {
 			result: results,
