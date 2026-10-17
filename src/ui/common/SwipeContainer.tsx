@@ -10,6 +10,9 @@ const gap = 20;
 /** Drag bounds beyond the container (in pixels) */
 const bound = 20;
 
+/** Default selector for elements on which drag is not started (charts, sliders) */
+export const defaultIgnoreDragSelector = "svg[width], span.MuiSlider-root";
+
 /**
  * Base container that moves horizontally aligned tabs by drag gesture.
  *
@@ -22,6 +25,7 @@ const bound = 20;
  * @param max The maximum index (Infinity if unbounded).
  * @param width The width of each tab (in pixels).
  * @param onIndexChange Callback fired when the index is changed by drag.
+ * @param ignoreDragSelector CSS selector of elements on which drag is not started.
  * @param style Style of the container.
  * @param children Render function that receives the track position `x` (in pixels)
  *                 and the width of each tab plus the gap.
@@ -34,6 +38,7 @@ const SwipeContainer = React.memo(
 		max,
 		width,
 		onIndexChange,
+		ignoreDragSelector = defaultIgnoreDragSelector,
 		style,
 		children,
 	}: {
@@ -42,6 +47,7 @@ const SwipeContainer = React.memo(
 		max: number;
 		width: number;
 		onIndexChange: (index: number) => void;
+		ignoreDragSelector?: string;
 		style?: React.CSSProperties;
 		children: (x: SpringValue<number>, widthGap: number) => React.ReactNode;
 	}) => {
@@ -60,11 +66,10 @@ const SwipeContainer = React.memo(
 		const bind = useDrag(
 			({ active, movement: [mx], velocity: [vx], first, event }) => {
 				if (first) {
-					ignoreDragRef.current = !!(
+					ignoreDragRef.current =
+						ignoreDragSelector !== "" &&
 						event.target instanceof Element &&
-						(event.target.closest("svg[width]") ||
-							event.target.closest("span.MuiSlider-root"))
-					);
+						event.target.closest(ignoreDragSelector) !== null;
 				}
 				if (ignoreDragRef.current) {
 					return;

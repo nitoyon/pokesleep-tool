@@ -25,6 +25,7 @@ import SwipeContainer from "./SwipeContainer";
  * @param children Tab contents to be rendered side by side.
  * @param onChange Callback fired when the tab index changes.
  * @param fitHeight When true, sets the container height to match the active tab's content height.
+ * @param ignoreDragSelector CSS selector of elements on which drag is not started.
  */
 const DraggableTabContainer = React.memo(
 	({
@@ -33,12 +34,14 @@ const DraggableTabContainer = React.memo(
 		children,
 		onChange,
 		fitHeight = false,
+		ignoreDragSelector,
 	}: {
 		index: number;
 		width: number;
 		children: React.ReactNode;
 		onChange: (value: number) => void;
 		fitHeight?: boolean;
+		ignoreDragSelector?: string;
 	}) => {
 		// Refs and state for fitHeight
 		const childRefs = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -106,6 +109,7 @@ const DraggableTabContainer = React.memo(
 				max={children.length - 1}
 				width={width}
 				onIndexChange={onChange}
+				ignoreDragSelector={ignoreDragSelector}
 				style={containerStyle}
 			>
 				{(x) => (
