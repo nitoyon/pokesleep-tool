@@ -1091,7 +1091,7 @@ class PokemonStrength {
 		const eventIngredient = targetEventBonus.ingredient;
 
 		const isCbex = param.fieldIndex === cbexFieldIndex;
-		const exCarryLimitAdd = isCbex ? cbexCarryLimitAdd : 0;
+		const exCarryLimitAdd = isCbex && isMainBerry ? cbexCarryLimitAdd : 0;
 
 		return {
 			skillTrigger: Math.max(expertSkillTrigger, eventSkillTrigger) as

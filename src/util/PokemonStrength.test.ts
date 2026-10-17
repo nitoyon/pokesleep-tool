@@ -800,27 +800,24 @@ describe("PokemonStrength", () => {
 		describe("cbex carry limit bonus", () => {
 			test("Cyan Beach (Expert) field adds 5 to carryLimit", () => {
 				const iv = new PokemonIv({ pokemonName: "Raichu", level: 50 });
-				const resultCbex = new PokemonStrength(
-					iv,
-					createParam({
-						fieldIndex: 8,
-						favoriteType: ["electric", "fire", "water"],
-						period: 8,
-						tapFrequencyAwake: NoTap,
-						expertEffect: "skill",
-					}),
-				).calculate();
-				const resultNonCbex = new PokemonStrength(
-					iv,
-					createParam({
-						fieldIndex: 7,
-						favoriteType: ["electric", "fire", "water"],
-						period: 8,
-						tapFrequencyAwake: NoTap,
-						expertEffect: "skill",
-					}),
-				).calculate();
-				expect(resultCbex.carryLimit).toBe(resultNonCbex.carryLimit + 5);
+				const param = createParam({
+					fieldIndex: 8,
+					favoriteType: ["electric", "fire", "water"],
+					period: 8,
+					tapFrequencyAwake: NoTap,
+					expertEffect: "skill",
+				});
+				const cbexMain = new PokemonStrength(iv, param).calculate();
+
+				param.fieldIndex = 7;
+				const nonCbex = new PokemonStrength(iv, param).calculate();
+
+				param.fieldIndex = 8;
+				param.favoriteType = ["fire", "electric", "water"];
+				const cbexNonMain = new PokemonStrength(iv, param).calculate();
+
+				expect(cbexMain.carryLimit).toBe(nonCbex.carryLimit + 5);
+				expect(cbexMain.carryLimit).toBe(cbexNonMain.carryLimit + 5);
 			});
 		});
 
