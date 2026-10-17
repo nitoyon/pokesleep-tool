@@ -1,14 +1,6 @@
-import { styled } from "@mui/system";
-import { animated, useSpring } from "@react-spring/web";
-import { useDrag } from "@use-gesture/react";
+import { animated } from "@react-spring/web";
 import React from "react";
-import { clamp } from "../../util/NumberUtil";
-
-/** Gap between each tab (in pixels) */
-const gap = 20;
-
-/** Drag bounds beyond the container (in pixels) */
-const bound = 20;
+import SwipeContainer from "./SwipeContainer";
 
 /**
  * A container component that enables drag gesture for
@@ -48,86 +40,12 @@ const DraggableTabContainer = React.memo(
 		onChange: (value: number) => void;
 		fitHeight?: boolean;
 	}) => {
-		const isFirstTime = React.useRef(true);
-		const ignoreDragRef = React.useRef(false);
-		const length = Array.isArray(children) ? children.length : 0;
-		const widthGap = width + gap;
-
 		// Refs and state for fitHeight
 		const childRefs = React.useRef<(HTMLDivElement | null)[]>([]);
 		const childHeightsRef = React.useRef<number[]>([]);
 		const [activeHeight, setActiveHeight] = React.useState<number>(0);
 		const indexRef = React.useRef(index);
 		indexRef.current = index;
-
-		const [{ x }, api] = useSpring(
-			() => ({
-				x: -index * widthGap,
-				immediate: isFirstTime.current,
-			}),
-			[index, widthGap],
-		);
-
-		const bind = useDrag(
-			({ active, movement: [mx], velocity: [vx], first, event }) => {
-				if (first) {
-					ignoreDragRef.current = !!(
-						event.target instanceof Element &&
-						(event.target.closest("svg[width]") ||
-							event.target.closest("span.MuiSlider-root"))
-					);
-				}
-				if (ignoreDragRef.current) {
-					return;
-				}
-
-				if (active) {
-					return api.start({
-						x: -index * widthGap + mx,
-						immediate: true,
-					});
-				}
-
-				const changed = Math.abs(vx) > 0.2 || Math.abs(mx) > width / 2;
-				let newIndex = index;
-				if (changed) {
-					newIndex += mx > 0 ? -1 : 1;
-					newIndex = clamp(0, newIndex, length - 1);
-				}
-				if (newIndex !== index) {
-					onChange(newIndex);
-				}
-
-				return api.start({
-					x: -newIndex * widthGap,
-					immediate: isFirstTime.current,
-				});
-			},
-			{
-				from: [-index * widthGap, 0],
-				filterTaps: true,
-				bounds: () => ({
-					left:
-						index === length - 1 ? -widthGap * (length - 1) - bound : -Infinity,
-					right: index === 0 ? bound : Infinity,
-				}),
-				rubberband: true,
-			},
-		);
-
-		React.useEffect(() => {
-			if (isFirstTime.current) {
-				api.set({ x: -index * widthGap });
-
-				// Set isFirstTime to false in the next frame
-				// to avoid animation on the initial render
-				requestAnimationFrame(() => {
-					isFirstTime.current = false;
-				});
-			} else {
-				api.start({ x: -index * widthGap });
-			}
-		}, [index, widthGap, api]);
 
 		// Update activeHeight when index changes
 		React.useEffect(() => {
@@ -176,39 +94,33 @@ const DraggableTabContainer = React.memo(
 		}
 
 		const trackStyle = fitHeight
-			? { x, alignItems: "flex-start" as const }
-			: { x };
+			? { alignItems: "flex-start" as const }
+			: undefined;
 		const containerStyle =
 			fitHeight && activeHeight > 0 ? { height: activeHeight } : undefined;
 
 		return (
-			<StyledDraggableTabContainer style={containerStyle} {...bind()}>
-				<animated.div className="tabTrack" style={trackStyle}>
-					{children.map((child, i) => (
-						// biome-ignore lint/suspicious/noArrayIndexKey: tabs never reordered
-						<div style={{ width }} key={i} ref={setChildRef(i)}>
-							{child}
-						</div>
-					))}
-				</animated.div>
-			</StyledDraggableTabContainer>
+			<SwipeContainer
+				index={index}
+				min={0}
+				max={children.length - 1}
+				width={width}
+				onIndexChange={onChange}
+				style={containerStyle}
+			>
+				{(x) => (
+					<animated.div className="tabTrack" style={{ ...trackStyle, x }}>
+						{children.map((child, i) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: tabs never reordered
+							<div style={{ width }} key={i} ref={setChildRef(i)}>
+								{child}
+							</div>
+						))}
+					</animated.div>
+				)}
+			</SwipeContainer>
 		);
 	},
 );
-
-const StyledDraggableTabContainer = styled("div")({
-	overflow: "hidden",
-	touchAction: "pan-y",
-	overscrollBehavior: "contain",
-	"& > div.tabTrack": {
-		display: "flex",
-		flexWrap: "nowrap",
-		gap: gap,
-		width: "max-content",
-		"& > div > *": {
-			flex: "0 0 100%",
-		},
-	},
-});
 
 export default DraggableTabContainer;
