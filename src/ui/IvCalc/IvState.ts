@@ -66,16 +66,24 @@ export type IvAction =
 			payload: { message: string };
 	  }
 	| {
+			type: "setTeamIndex";
+			payload: { teamIndex: number };
+	  }
+	| {
 			type: "setTeamMember";
-			payload: { index: number; item: PokemonBoxItem | undefined };
+			payload: {
+				teamIndex: number;
+				index: number;
+				item: PokemonBoxItem | undefined;
+			};
 	  }
 	| {
 			type: "setTeamMemberEnabled";
-			payload: { index: number; enabled: boolean };
+			payload: { teamIndex: number; index: number; enabled: boolean };
 	  }
 	| {
 			type: "setTeamMemberSneakySnacking";
-			payload: { index: number; sneakySnacking: boolean };
+			payload: { teamIndex: number; index: number; sneakySnacking: boolean };
 	  };
 
 /**
@@ -88,6 +96,57 @@ export type TeamMemberSlot = {
 	/** Whether this member is set to sneaky snacking. */
 	sneakySnacking: boolean;
 };
+
+/**
+ * A team consisting of 5 member slots.
+ */
+export type Team = {
+	members: (TeamMemberSlot | undefined)[];
+};
+
+/** Number of teams the user can switch between. */
+export const TEAM_COUNT = 4;
+
+/** Number of member slots in a team. */
+export const TEAM_MEMBER_COUNT = 5;
+
+/**
+ * Create the initial list of empty teams.
+ * @returns Array of {@link TEAM_COUNT} empty teams.
+ */
+export function createInitialTeams(): Team[] {
+	return Array.from({ length: TEAM_COUNT }, () => ({
+		members: Array.from({ length: TEAM_MEMBER_COUNT }, () => undefined),
+	}));
+}
+
+/**
+ * Return a new state with a single team member slot updated.
+ * @param state Current state.
+ * @param teamIndex Index of the target team.
+ * @param index Index of the target slot in the team.
+ * @param update Function that returns the new slot from the current one.
+ * @returns New state.
+ */
+function updateTeamMember(
+	state: IvState,
+	teamIndex: number,
+	index: number,
+	update: (slot: TeamMemberSlot | undefined) => TeamMemberSlot | undefined,
+): IvState {
+	if (state.teams[teamIndex] === undefined) {
+		return state;
+	}
+	const teams = state.teams.map((team, ti) =>
+		ti !== teamIndex
+			? team
+			: {
+					...team,
+					members: team.members.map((x, i) => (i === index ? update(x) : x)),
+				},
+	);
+	return { ...state, teams };
+}
 
 /**
  * Status of the box.
@@ -115,7 +174,10 @@ type IvState = {
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
 	alertMessage: string;
-	teamMembers: (TeamMemberSlot | undefined)[];
+	/** Teams shown in the Team tab. */
+	teams: Team[];
+	/** Index of the currently selected team in {@link teams}. */
+	teamIndex: number;
 };
 
 /**
@@ -159,7 +221,8 @@ export function getInitialIvState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
-		teamMembers: [undefined, undefined, undefined, undefined, undefined],
+		teams: createInitialTeams(),
+		teamIndex: 0,
 	};
 
 	// Update initial pokemonIv
@@ -451,12 +514,17 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return { ...state, alertMessage: "" };
 	}
 
+	if (type === "setTeamIndex") {
+		const { teamIndex } = action.payload;
+		if (teamIndex < 0 || teamIndex >= state.teams.length) {
+			return state;
+		}
+		return { ...state, teamIndex };
+	}
+
 	if (type === "setTeamMember") {
-		const { index, item } = action.payload;
-		const teamMembers = state.teamMembers.map((x, i) => {
-			if (i !== index) {
-				return x;
-			}
+		const { teamIndex, index, item } = action.payload;
+		return updateTeamMember(state, teamIndex, index, (x) => {
 			if (item === undefined) {
 				return undefined;
 			}
@@ -468,23 +536,20 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 				sneakySnacking: x?.sneakySnacking ?? false,
 			};
 		});
-		return { ...state, teamMembers };
 	}
 
 	if (type === "setTeamMemberEnabled") {
-		const { index, enabled } = action.payload;
-		const teamMembers = state.teamMembers.map((x, i) =>
-			i === index && x !== undefined ? { ...x, enabled } : x,
+		const { teamIndex, index, enabled } = action.payload;
+		return updateTeamMember(state, teamIndex, index, (x) =>
+			x !== undefined ? { ...x, enabled } : x,
 		);
-		return { ...state, teamMembers };
 	}
 
 	if (type === "setTeamMemberSneakySnacking") {
-		const { index, sneakySnacking } = action.payload;
-		const teamMembers = state.teamMembers.map((x, i) =>
-			i === index && x !== undefined ? { ...x, sneakySnacking } : x,
+		const { teamIndex, index, sneakySnacking } = action.payload;
+		return updateTeamMember(state, teamIndex, index, (x) =>
+			x !== undefined ? { ...x, sneakySnacking } : x,
 		);
-		return { ...state, teamMembers };
 	}
 
 	// following action requires item

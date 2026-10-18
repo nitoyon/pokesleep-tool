@@ -4,8 +4,13 @@ import PokemonBox, { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
 import { loadStrengthParameter } from "../../util/PokemonStrength";
 import type IvState from "./IvState";
-import type { IvAction } from "./IvState";
-import { ivStateReducer, normalizeState } from "./IvState";
+import type { IvAction, TeamMemberSlot } from "./IvState";
+import {
+	createInitialTeams,
+	ivStateReducer,
+	normalizeState,
+	TEAM_COUNT,
+} from "./IvState";
 
 function createBaseState(): IvState {
 	return {
@@ -25,7 +30,22 @@ function createBaseState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
-		teamMembers: [undefined, undefined, undefined, undefined, undefined],
+		teams: createInitialTeams(),
+		teamIndex: 0,
+	};
+}
+
+/** Return a new state whose team at `teamIndex` has the given members. */
+function withMembers(
+	state: IvState,
+	teamIndex: number,
+	members: (TeamMemberSlot | undefined)[],
+): IvState {
+	return {
+		...state,
+		teams: state.teams.map((team, i) =>
+			i === teamIndex ? { ...team, members } : team,
+		),
 	};
 }
 
@@ -475,6 +495,26 @@ describe("ivStateReducer", () => {
 		});
 	});
 
+	describe("setTeamIndex action", () => {
+		test("should change the selected team", () => {
+			const newState = ivStateReducer(baseState, {
+				type: "setTeamIndex",
+				payload: { teamIndex: 1 },
+			});
+
+			expect(newState.teamIndex).toBe(1);
+		});
+
+		test("should ignore out-of-range index", () => {
+			const newState = ivStateReducer(baseState, {
+				type: "setTeamIndex",
+				payload: { teamIndex: TEAM_COUNT },
+			});
+
+			expect(newState).toBe(baseState);
+		});
+	});
+
 	describe("setTeamMember action", () => {
 		test("should wrap item into an enabled slot", () => {
 			const item = new PokemonBoxItem(
@@ -484,35 +524,50 @@ describe("ivStateReducer", () => {
 			);
 			const action: IvAction = {
 				type: "setTeamMember",
-				payload: { index: 2, item },
+				payload: { teamIndex: 0, index: 2, item },
 			};
 
 			const newState = ivStateReducer(baseState, action);
 
-			expect(newState.teamMembers[2]).toEqual({
+			expect(newState.teams[0].members[2]).toEqual({
 				item,
 				enabled: true,
 				sneakySnacking: false,
 			});
-			expect(newState.teamMembers[0]).toBeUndefined();
+			expect(newState.teams[0].members[0]).toBeUndefined();
+		});
+
+		test("should update the specified team only", () => {
+			const item = new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }));
+			const action: IvAction = {
+				type: "setTeamMember",
+				payload: { teamIndex: 1, index: 0, item },
+			};
+
+			const newState = ivStateReducer(baseState, action);
+
+			expect(newState.teams[1].members[0]?.item).toBe(item);
+			expect(newState.teams[0]).toBe(baseState.teams[0]);
+			expect(newState.teams[2]).toBe(baseState.teams[2]);
 		});
 
 		test("should clear the slot when item is undefined", () => {
 			const item = new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }));
-			const state = {
-				...baseState,
-				teamMembers: baseState.teamMembers.map((x, i) =>
+			const state = withMembers(
+				baseState,
+				0,
+				baseState.teams[0].members.map((x, i) =>
 					i === 1 ? { item, enabled: true, sneakySnacking: false } : x,
 				),
-			};
+			);
 			const action: IvAction = {
 				type: "setTeamMember",
-				payload: { index: 1, item: undefined },
+				payload: { teamIndex: 0, index: 1, item: undefined },
 			};
 
 			const newState = ivStateReducer(state, action);
 
-			expect(newState.teamMembers[1]).toBeUndefined();
+			expect(newState.teams[0].members[1]).toBeUndefined();
 		});
 
 		test("should keep the disabled and sneakySnacking state when replacing the pokemon", () => {
@@ -522,20 +577,21 @@ describe("ivStateReducer", () => {
 			const newItem = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Pikachu" }),
 			);
-			const state = {
-				...baseState,
-				teamMembers: baseState.teamMembers.map((x, i) =>
+			const state = withMembers(
+				baseState,
+				0,
+				baseState.teams[0].members.map((x, i) =>
 					i === 0 ? { item: oldItem, enabled: false, sneakySnacking: true } : x,
 				),
-			};
+			);
 			const action: IvAction = {
 				type: "setTeamMember",
-				payload: { index: 0, item: newItem },
+				payload: { teamIndex: 0, index: 0, item: newItem },
 			};
 
 			const newState = ivStateReducer(state, action);
 
-			expect(newState.teamMembers[0]).toEqual({
+			expect(newState.teams[0].members[0]).toEqual({
 				item: newItem,
 				enabled: false,
 				sneakySnacking: true,
@@ -551,29 +607,30 @@ describe("ivStateReducer", () => {
 			const item1 = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Pikachu" }),
 			);
-			const state = {
-				...baseState,
-				teamMembers: baseState.teamMembers.map((x, i) => {
+			const state = withMembers(
+				baseState,
+				0,
+				baseState.teams[0].members.map((x, i) => {
 					if (i === 0)
 						return { item: item0, enabled: true, sneakySnacking: false };
 					if (i === 1)
 						return { item: item1, enabled: true, sneakySnacking: false };
 					return x;
 				}),
-			};
+			);
 			const action: IvAction = {
 				type: "setTeamMemberEnabled",
-				payload: { index: 0, enabled: false },
+				payload: { teamIndex: 0, index: 0, enabled: false },
 			};
 
 			const newState = ivStateReducer(state, action);
 
-			expect(newState.teamMembers[0]).toEqual({
+			expect(newState.teams[0].members[0]).toEqual({
 				item: item0,
 				enabled: false,
 				sneakySnacking: false,
 			});
-			expect(newState.teamMembers[1]).toEqual({
+			expect(newState.teams[0].members[1]).toEqual({
 				item: item1,
 				enabled: true,
 				sneakySnacking: false,
@@ -583,12 +640,12 @@ describe("ivStateReducer", () => {
 		test("should not change state when the slot is empty", () => {
 			const action: IvAction = {
 				type: "setTeamMemberEnabled",
-				payload: { index: 3, enabled: false },
+				payload: { teamIndex: 0, index: 3, enabled: false },
 			};
 
 			const newState = ivStateReducer(baseState, action);
 
-			expect(newState.teamMembers[3]).toBeUndefined();
+			expect(newState.teams[0].members[3]).toBeUndefined();
 		});
 	});
 
@@ -600,29 +657,30 @@ describe("ivStateReducer", () => {
 			const item1 = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Pikachu" }),
 			);
-			const state = {
-				...baseState,
-				teamMembers: baseState.teamMembers.map((x, i) => {
+			const state = withMembers(
+				baseState,
+				0,
+				baseState.teams[0].members.map((x, i) => {
 					if (i === 0)
 						return { item: item0, enabled: true, sneakySnacking: false };
 					if (i === 1)
 						return { item: item1, enabled: true, sneakySnacking: false };
 					return x;
 				}),
-			};
+			);
 			const action: IvAction = {
 				type: "setTeamMemberSneakySnacking",
-				payload: { index: 0, sneakySnacking: true },
+				payload: { teamIndex: 0, index: 0, sneakySnacking: true },
 			};
 
 			const newState = ivStateReducer(state, action);
 
-			expect(newState.teamMembers[0]).toEqual({
+			expect(newState.teams[0].members[0]).toEqual({
 				item: item0,
 				enabled: true,
 				sneakySnacking: true,
 			});
-			expect(newState.teamMembers[1]).toEqual({
+			expect(newState.teams[0].members[1]).toEqual({
 				item: item1,
 				enabled: true,
 				sneakySnacking: false,
@@ -632,12 +690,12 @@ describe("ivStateReducer", () => {
 		test("should not change state when the slot is empty", () => {
 			const action: IvAction = {
 				type: "setTeamMemberSneakySnacking",
-				payload: { index: 3, sneakySnacking: true },
+				payload: { teamIndex: 0, index: 3, sneakySnacking: true },
 			};
 
 			const newState = ivStateReducer(baseState, action);
 
-			expect(newState.teamMembers[3]).toBeUndefined();
+			expect(newState.teams[0].members[3]).toBeUndefined();
 		});
 	});
 });
