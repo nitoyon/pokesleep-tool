@@ -100,6 +100,11 @@ describe("pixelate", () => {
 			height: 2,
 			data: new Uint8Array([1, 1, 0, 1, 1, 1, 0, 0]),
 		};
-		expect(pixelate(bin, 2, 1)).toEqual([1, 0.25]);
+		expect(pixelate(bin, 2, 1)).toEqual({
+			width: 2,
+			height: 1,
+			data: new Uint8Array([1, 0]),
+		});
+		expect(pixelate(bin, 2, 1, 0.25).data).toEqual(new Uint8Array([1, 1]));
 	});
 });

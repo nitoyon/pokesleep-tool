@@ -1,13 +1,13 @@
-// npm run subskillimage -- <screenshot.png> [outDir] [--cols=24] [--rows=4]
+// npm run subskillimage -- <screenshot.png> [outDir] [--cols=96] [--rows=12] [--threshold=0.5]
 //
 // Finds the 5 sub-skill buttons in a Pokémon Sleep screenshot and writes
 // the following images to outDir (default: current directory):
 //
 // - subskill-buttons.png: screenshot with detected buttons/text marked
 // - subskill-N-bin.png: binarized text of the N-th sub-skill
-// - subskill-N-pix.png: pixelated text of the N-th sub-skill (enlarged)
+// - subskill-N-pix.png: pixelated text of the N-th sub-skill (cols x rows)
 //
-// Also prints the pixelated density data as JSON.
+// Also prints the pixelated data as JSON (each row is a string of 0/1).
 
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -33,17 +33,18 @@ function main() {
 	}
 	if (positional.length < 1) {
 		console.error(
-			"Usage: npm run subskillimage -- <screenshot.png> [outDir] [--cols=24] [--rows=4]",
+			"Usage: npm run subskillimage -- <screenshot.png> [outDir] [--cols=96] [--rows=12] [--threshold=0.5]",
 		);
 		process.exit(1);
 	}
 	const input = positional[0];
 	const outDir = positional[1] ?? ".";
-	const cols = parseInt(options.get("cols") ?? "24", 10);
-	const rows = parseInt(options.get("rows") ?? "4", 10);
+	const cols = parseInt(options.get("cols") ?? "96", 10);
+	const rows = parseInt(options.get("rows") ?? "12", 10);
+	const threshold = parseFloat(options.get("threshold") ?? "0.5");
 
 	const img = decodePng(fs.readFileSync(input));
-	const results = extractSubSkillTexts(img, cols, rows);
+	const results = extractSubSkillTexts(img, cols, rows, threshold);
 	if (results === null) {
 		console.error("Sub-skill buttons not found");
 		process.exit(1);
@@ -73,7 +74,7 @@ function main() {
 		);
 		fs.writeFileSync(
 			path.join(outDir, `subskill-${n}-pix.png`),
-			encodePng(densityToRgba(r.pixelated.data, cols, rows, 16)),
+			encodePng(binaryToRgba(r.pixelated)),
 		);
 	});
 
@@ -82,8 +83,8 @@ function main() {
 			results.map((r) => ({
 				button: r.button,
 				text: r.text,
-				widthRatio: Math.round(r.pixelated.widthRatio * 1000) / 1000,
-				data: r.pixelated.data.map((v) => Math.round(v * 100) / 100),
+				widthRatio: Math.round(r.widthRatio * 1000) / 1000,
+				data: toRows(r.pixelated),
 			})),
 			null,
 			"\t",
@@ -91,7 +92,9 @@ function main() {
 	);
 	results.forEach((r, i) => {
 		console.error(`#${i + 1}`);
-		console.error(toAscii(r.pixelated.data, cols, rows));
+		for (const row of toRows(r.pixelated)) {
+			console.error(`|${row.replace(/0/g, " ").replace(/1/g, "#")}|`);
+		}
 	});
 }
 
@@ -125,38 +128,12 @@ function binaryToRgba(bin: BinaryImage): RgbaImage {
 	return { width: bin.width, height: bin.height, data };
 }
 
-function densityToRgba(
-	values: number[],
-	cols: number,
-	rows: number,
-	scale: number,
-): RgbaImage {
-	const width = cols * scale;
-	const height = rows * scale;
-	const data = new Uint8ClampedArray(width * height * 4);
-	for (let y = 0; y < height; y++) {
-		for (let x = 0; x < width; x++) {
-			const v = Math.round(
-				255 *
-					(1 - values[Math.floor(y / scale) * cols + Math.floor(x / scale)]),
-			);
-			data.set([v, v, v, 255], (y * width + x) * 4);
-		}
+function toRows(bin: BinaryImage): string[] {
+	const rows: string[] = [];
+	for (let y = 0; y < bin.height; y++) {
+		rows.push(bin.data.subarray(y * bin.width, (y + 1) * bin.width).join(""));
 	}
-	return { width, height, data };
-}
-
-function toAscii(values: number[], cols: number, rows: number): string {
-	const chars = " .:-=+*#%@";
-	const lines: string[] = [];
-	for (let y = 0; y < rows; y++) {
-		let line = "";
-		for (let x = 0; x < cols; x++) {
-			line += chars[Math.min(9, Math.floor(values[y * cols + x] * 10))];
-		}
-		lines.push(`|${line}|`);
-	}
-	return lines.join("\n");
+	return rows;
 }
 
 main();

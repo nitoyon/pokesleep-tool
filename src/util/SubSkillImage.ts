@@ -31,15 +31,6 @@ export interface Rect {
 	height: number;
 }
 
-/** Pixelated text (density of text pixels in each cell, 0..1). */
-export interface PixelatedText {
-	cols: number;
-	rows: number;
-	data: number[];
-	/** Text width relative to the button width. */
-	widthRatio: number;
-}
-
 /**
  * Returns the most frequent color in the image (quantized).
  */
@@ -336,13 +327,15 @@ export function binarizeButton(
 
 /**
  * Pixelates the binary image into cols x rows cells.
- * Each cell has the ratio of text pixels (0..1).
+ * A cell becomes 1 when the ratio of text pixels in it is
+ * greater than or equal to the threshold.
  */
 export function pixelate(
 	bin: BinaryImage,
 	cols: number,
 	rows: number,
-): number[] {
+	threshold = 0.5,
+): BinaryImage {
 	const sums = Array.from({ length: cols * rows }, () => 0);
 	const counts = Array.from({ length: cols * rows }, () => 0);
 	for (let y = 0; y < bin.height; y++) {
@@ -354,7 +347,11 @@ export function pixelate(
 			counts[c]++;
 		}
 	}
-	return sums.map((s, i) => (counts[i] === 0 ? 0 : s / counts[i]));
+	const data = new Uint8Array(cols * rows);
+	for (let i = 0; i < data.length; i++) {
+		data[i] = counts[i] > 0 && sums[i] / counts[i] >= threshold ? 1 : 0;
+	}
+	return { width: cols, height: rows, data };
 }
 
 /**
@@ -366,12 +363,15 @@ export function extractSubSkillTexts(
 	img: RgbaImage,
 	cols: number,
 	rows: number,
+	threshold = 0.5,
 ):
 	| {
 			button: Rect;
 			text: Rect;
 			binary: BinaryImage;
-			pixelated: PixelatedText;
+			pixelated: BinaryImage;
+			/** Text width relative to the button width. */
+			widthRatio: number;
 	  }[]
 	| null {
 	const buttons = findSubSkillButtons(img);
@@ -384,12 +384,8 @@ export function extractSubSkillTexts(
 			button,
 			text: rect,
 			binary: image,
-			pixelated: {
-				cols,
-				rows,
-				data: pixelate(image, cols, rows),
-				widthRatio: rect.width / button.width,
-			},
+			pixelated: pixelate(image, cols, rows, threshold),
+			widthRatio: rect.width / button.width,
 		};
 	});
 }
