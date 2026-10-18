@@ -29,6 +29,39 @@ describe("Nature", () => {
 		expect(n.downEffect).toBe("No effect");
 	});
 
+	test("disables effects when a mint is used", () => {
+		const n = new Nature("Bold", true);
+		expect(n.name).toBe("Bold");
+		expect(n.mint).toBe(true);
+		expect(n.isNeautral).toBe(false);
+		expect(n.canUseMint).toBe(true);
+		expect(n.isEnergyRecoveryUp).toBe(false);
+		expect(n.isSpeedOfHelpDown).toBe(false);
+		expect(n.energyRecoveryFactor).toBe(1);
+		expect(n.speedOfHelpFactor).toBe(1);
+		expect(n.upEffect).toBe("No effect");
+		expect(n.downEffect).toBe("No effect");
+		expect(n.original.mint).toBe(false);
+		expect(n.original.upEffect).toBe("Energy recovery");
+		expect(n.isLowKey).toBe(true);
+	});
+
+	test("ignores mint for neutral natures", () => {
+		const n = new Nature("Bashful", true);
+		expect(n.mint).toBe(false);
+		expect(n.canUseMint).toBe(false);
+		expect(n.withMint(true).mint).toBe(false);
+	});
+
+	test("withMint and isEqual", () => {
+		const n = new Nature("Adamant");
+		const m = n.withMint(true);
+		expect(m.mint).toBe(true);
+		expect(n.withMint(false)).toBe(n);
+		expect(n.isEqual(m)).toBe(false);
+		expect(m.isEqual(new Nature("Adamant", true))).toBe(true);
+	});
+
 	test("throws error when invalid nature is given", () => {
 		expect(() => {
 			new Nature("a");

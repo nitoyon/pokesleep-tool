@@ -447,6 +447,41 @@ describe("BoxFilterConfig", () => {
 			expect(filtered[0].nickname).toBe("SpeedDown");
 		});
 
+		test("filters by mint", () => {
+			const iv1 = new PokemonIv({
+				pokemonName: "Pikachu",
+				nature: new Nature("Bold", true),
+			});
+			const iv2 = new PokemonIv({
+				pokemonName: "Pikachu",
+				nature: new Nature("Bold"),
+			});
+			const iv3 = new PokemonIv({
+				pokemonName: "Pikachu",
+				nature: new Nature("Adamant", true),
+			});
+			const items = [
+				new PokemonBoxItem(iv1, "BoldMint"),
+				new PokemonBoxItem(iv2, "Bold"),
+				new PokemonBoxItem(iv3, "AdamantMint"),
+			];
+
+			const mint = new BoxFilterConfig({ mint: true });
+			expect(mint.filter(items, false, mockT).map((x) => x.nickname)).toEqual([
+				"BoldMint",
+				"AdamantMint",
+			]);
+
+			// up/down effects are matched by the original nature
+			const mintUp = new BoxFilterConfig({
+				mint: true,
+				upNature: "Energy recovery",
+			});
+			expect(mintUp.filter(items, false, mockT).map((x) => x.nickname)).toEqual(
+				["BoldMint"],
+			);
+		});
+
 		test("combines multiple filters (all must pass)", () => {
 			const config = new BoxFilterConfig({
 				filterTypes: ["electric"],

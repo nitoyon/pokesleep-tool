@@ -1,4 +1,5 @@
-import { MenuItem, MenuList } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { Divider, MenuItem, MenuList } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -7,6 +8,7 @@ import Nature, { type NatureEffect } from "../../../util/Nature";
 import type PokemonIv from "../../../util/PokemonIv";
 import PopperMenu from "../../common/PopperMenu";
 import TextLikeButton from "../../common/TextLikeButton";
+import MintIcon from "../../Resources/MintIcon";
 
 const NatureTextField = React.memo(
 	({ iv, onChange }: { iv: PokemonIv; onChange: (value: Nature) => void }) => {
@@ -89,7 +91,8 @@ const NatureEditPopper = React.memo(
 				// select it and close the menu. (Toxtricity only)
 				const candidates = allNatures.filter((x) => x.upEffect === val);
 				if (candidates.length === 1) {
-					onChange(new Nature(candidates[0].name));
+					// Keep the mint flag (ignored for neutral natures)
+					onChange(new Nature(candidates[0].name, iv.nature.mint));
 					onClose();
 					return;
 				}
@@ -97,19 +100,25 @@ const NatureEditPopper = React.memo(
 				setUpEffect(val);
 				setStep(2);
 			},
-			[allNatures, onChange, onClose],
+			[allNatures, iv.nature.mint, onChange, onClose],
 		);
 
 		const onNatureClick = React.useCallback(
 			(event: React.MouseEvent<HTMLElement>) => {
 				const name = event.currentTarget.getAttribute("value");
 				if (name !== null) {
-					onChange(new Nature(name));
+					// Keep the mint flag (ignored for neutral natures)
+					onChange(new Nature(name, iv.nature.mint));
 					onClose();
 				}
 			},
-			[onChange, onClose],
+			[iv.nature.mint, onChange, onClose],
 		);
+
+		const onMintClick = React.useCallback(() => {
+			onChange(iv.nature.withMint(!iv.nature.mint));
+			onClose();
+		}, [iv.nature, onChange, onClose]);
 
 		const sortNatureByLocalName = React.useCallback(
 			(natures: Nature[]) =>
@@ -155,6 +164,18 @@ const NatureEditPopper = React.memo(
 					</StyledUpEffectMenuItem>,
 				);
 			}
+			menuItems.push(<Divider key="divider" />);
+			menuItems.push(
+				<StyledMintMenuItem
+					key="mint"
+					onClick={onMintClick}
+					disabled={!iv.nature.canUseMint}
+				>
+					<MintIcon className="mint" />
+					<span>{t("neutralizing mint")}</span>
+					{iv.nature.mint && <CheckIcon className="check" />}
+				</StyledMintMenuItem>,
+			);
 		}
 		if (step === 2) {
 			const natures = sortNatureByLocalName(
@@ -191,6 +212,15 @@ const StyledNatureElement = styled("div")({
 		textAlign: "center",
 		padding: ".2rem 0",
 		margin: ".5rem 1rem .5rem 0",
+		position: "relative",
+		"& > svg.mint": {
+			position: "absolute",
+			top: "-.7rem",
+			right: "-.6rem",
+			fontSize: "1.4rem",
+			background: "white",
+			borderRadius: "50%",
+		},
 	},
 	"& > div": {
 		margin: "auto 0",
@@ -230,20 +260,40 @@ const StyledUpEffectMenuItem = styled(MenuItem)({
 	},
 });
 
+const StyledMintMenuItem = styled(MenuItem)({
+	gap: ".5rem",
+	"& > svg.mint": {
+		fontSize: "1.2rem",
+	},
+	"& > svg.check": {
+		marginLeft: "auto",
+		fontSize: "1.2rem",
+		color: "#24d76a",
+	},
+});
+
 const NatureElement = React.memo(({ value }: { value: Nature }) => {
 	const { t } = useTranslation();
 
+	const natureName = (
+		<span>
+			{t(`natures.${value.name}`)}
+			{value.mint && (
+				<MintIcon className="mint" aria-label={t("neutralizing mint")} />
+			)}
+		</span>
+	);
 	if (value.upEffect === "No effect") {
 		return (
 			<StyledNatureElement>
-				<span>{t(`natures.${value.name}`)}</span>
+				{natureName}
 				<div>{t("nature effect.No effect")}</div>
 			</StyledNatureElement>
 		);
 	} else {
 		return (
 			<StyledNatureElement>
-				<span>{t(`natures.${value.name}`)}</span>
+				{natureName}
 				<div>
 					<StyledNatureUpEffect>
 						{t(`nature effect.${value.upEffect}`)}

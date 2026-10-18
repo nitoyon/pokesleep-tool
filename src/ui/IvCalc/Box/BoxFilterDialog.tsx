@@ -32,6 +32,7 @@ import type SubSkill from "../../../util/SubSkill";
 import type { SubSkillType } from "../../../util/SubSkill";
 import DraggableTabContainer from "../../common/DraggableTabContainer";
 import { useElementWidth } from "../../common/Hook";
+import MintIcon from "../../Resources/MintIcon";
 import IngredientButton from "../IngredientButton";
 import {
 	StyledNatureDownEffect,
@@ -433,13 +434,24 @@ const NatureTab = React.memo(
 		value: BoxFilterConfig;
 		onChange: (value: BoxFilterConfig) => void;
 	}) => {
+		const { t } = useTranslation();
 		const onNoEffectClick = useCallback(() => {
 			onChange(
 				new BoxFilterConfig({
 					...value,
 					neutralNature: !value.neutralNature,
+					mint: false,
 					upNature: "No effect",
 					downNature: "No effect",
+				}),
+			);
+		}, [value, onChange]);
+		const onMintClick = useCallback(() => {
+			onChange(
+				new BoxFilterConfig({
+					...value,
+					neutralNature: false,
+					mint: !value.mint,
 				}),
 			);
 		}, [value, onChange]);
@@ -480,13 +492,18 @@ const NatureTab = React.memo(
 
 		return (
 			<>
-				<div style={{ marginTop: "0.4rem" }}>
+				<StyledNatureContainer style={{ marginTop: "0.4rem" }}>
 					<NatureButton
 						label="No effect"
 						onClick={onNoEffectClick}
 						checked={value.neutralNature}
 					/>
-				</div>
+					<StyledNatureButton onClick={onMintClick}>
+						<MintIcon className="mint" />
+						{t("neutralizing mint")}
+						{value.mint && <CheckIcon role="switch" />}
+					</StyledNatureButton>
+				</StyledNatureContainer>
 				<StyledNatureContainer>
 					<NatureButton
 						label="Speed of help"
@@ -612,6 +629,10 @@ const StyledNatureButton = styled(Button)({
 	borderRadius: "0.5rem",
 	border: "1px solid #ccc",
 	margin: "2px",
+	"& > svg.mint": {
+		fontSize: "1rem",
+		marginRight: "0.2rem",
+	},
 	'& > svg.MuiSvgIcon-root[role="switch"]': {
 		position: "absolute",
 		background: "#24d76a",
