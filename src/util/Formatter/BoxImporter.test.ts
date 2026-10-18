@@ -237,18 +237,31 @@ describe("importFromCsvTsv", () => {
 		);
 		expect(r2.items[0].iv.nature.mint).toBe(false);
 
-		// Mint is ignored for neutral natures
-		const r3 = importFromCsvTsv(
-			makeMinimalCsv({ nature: "Bashful", mint: "1" }),
-			"csv",
-			t,
-		);
-		expect(r3.items).toHaveLength(1);
-		expect(r3.items[0].iv.nature.mint).toBe(false);
-
 		// Missing column means no mint
-		const r4 = importFromCsvTsv("Pokemon,Nature\nPikachu,Adamant", "csv", t);
-		expect(r4.items[0].iv.nature.mint).toBe(false);
+		const r3 = importFromCsvTsv("Pokemon,Nature\nPikachu,Adamant", "csv", t);
+		expect(r3.items[0].iv.nature.mint).toBe(false);
+	});
+
+	test("import ignores mint flag for neutral natures", () => {
+		const neutralNatures = ["Bashful", "Hardy", "Docile", "Quirky", "Serious"];
+		for (const nature of neutralNatures) {
+			for (const mint of ["1", "true"]) {
+				const csv = makeMinimalCsv({ nature, mint });
+				const tsv = csv.replace(/,/g, "\t");
+				for (const [text, format] of [
+					[csv, "csv"],
+					[tsv, "tsv"],
+				] as const) {
+					const result = importFromCsvTsv(text, format, t);
+					const label = `${nature} mint=${mint} (${format})`;
+					// Imported without warnings, but the mint flag is dropped
+					expect(result.warnings, label).toHaveLength(0);
+					expect(result.items, label).toHaveLength(1);
+					expect(result.items[0].iv.nature.name, label).toBe(nature);
+					expect(result.items[0].iv.nature.mint, label).toBe(false);
+				}
+			}
+		}
 	});
 
 	test("export and import round-trip keeps mint flag", () => {
