@@ -30,6 +30,7 @@
 		"rptest": "npx ts-node --project scripts/tsconfig.json scripts/rptest.ts",
 		"skillvaluefit": "npx ts-node --project scripts/tsconfig.json scripts/skillvaluefit.ts",
 		"ingredientgfit": "npx ts-node --project scripts/tsconfig.json scripts/ingredientgfit.ts",
+		"subskillimage": "npx ts-node --project scripts/tsconfig.json scripts/subskillimage.ts",
 		"test": "vitest"
 	},
 	"devDependencies": {
