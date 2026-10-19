@@ -101,141 +101,29 @@ const BoxItemDialogContent = React.memo(
 		const { t } = useTranslation();
 		const [boxItem, setBoxItem] =
 			React.useState<PokemonBoxItem>(originalBoxItem);
-		const [nickname, setNickname] = React.useState<string>(
-			originalBoxItem.nickname,
-		);
-		const [rp, setRp] = React.useState<number>(
-			new PokemonRp(boxItem.iv).calculate().rp,
-		);
-		const [isEditingNickName, setIsEditingNickName] = React.useState(false);
-		const localName = t(`pokemons.${boxItem.iv.pokemonName}`);
-
-		const onFormChange = React.useCallback(
-			(value: PokemonIv) => {
-				setBoxItem(
-					new PokemonBoxItem(
-						value,
-						boxItem.nickname,
-						boxItem.attributes,
-						boxItem.id,
-					),
-				);
-				setRp(new PokemonRp(value).calculate().rp);
-				if (nickname === localName) {
-					setNickname("");
-				}
-			},
-			[boxItem, localName, nickname],
-		);
-		const onShinyClick = React.useCallback(() => {
-			onFormChange(
-				boxItem.iv.clone({
-					shiny: !boxItem.iv.shiny,
-				}),
-			);
-		}, [boxItem, onFormChange]);
-		const onNickNameChange = React.useCallback(
-			(event: React.ChangeEvent<HTMLInputElement>) => {
-				setNickname(event.target.value);
-			},
-			[],
-		);
-		const onNickNameFocus = React.useCallback(() => {
-			setIsEditingNickName(true);
-			if (nickname === "") {
-				setNickname(localName);
-			}
-		}, [nickname, localName]);
-		const onNickNameBlur = React.useCallback(() => {
-			setIsEditingNickName(false);
-			if (nickname === localName) {
-				setNickname("");
-			}
-		}, [nickname, localName]);
 
 		const onCloseClick = React.useCallback(() => {
 			if (isEdit) {
-				onChange(
-					new PokemonBoxItem(
-						boxItem.iv,
-						nickname,
-						boxItem.attributes,
-						boxItem.id,
-					),
-				);
+				onChange(boxItem);
 			}
 			onClose();
-		}, [isEdit, onChange, onClose, boxItem, nickname]);
+		}, [isEdit, onChange, onClose, boxItem]);
 		const onSaveClick = React.useCallback(() => {
 			if (!isEdit) {
-				onChange(
-					new PokemonBoxItem(
-						boxItem.iv,
-						nickname,
-						boxItem.attributes,
-						boxItem.id,
-					),
-				);
+				onChange(boxItem);
 			}
 			onClose();
-		}, [isEdit, onChange, onClose, boxItem, nickname]);
-
-		let displayNickName = nickname;
-		if (!isEditingNickName && nickname === "") {
-			displayNickName = t(`pokemons.${boxItem.iv.pokemonName}`);
-		}
+		}, [isEdit, onChange, onClose, boxItem]);
 
 		return (
 			<>
-				<article>
-					<RpLabel rp={rp} iv={boxItem.iv} />
-					<header className="control">
-						<TypeSpecialtyPanel
-							type={boxItem.iv.pokemon.type}
-							specialty={boxItem.iv.pokemon.specialty}
-							level={boxItem.iv.level}
-							parameter={parameter}
-							dispatch={dispatch}
-						/>
-						{!boxItem.iv.isMythical && (
-							<span className="shiny">
-								<ToggleButton
-									value="shiny"
-									selected={boxItem.iv.shiny}
-									onClick={onShinyClick}
-								>
-									<AutoAwesomeIcon />
-								</ToggleButton>
-							</span>
-						)}
-					</header>
-					<div className="icon">
-						<ButtonBase onClick={onShinyClick}>
-							<PokemonIcon
-								idForm={boxItem.iv.idForm}
-								shiny={boxItem.iv.shiny}
-								size={80}
-							/>
-						</ButtonBase>
-					</div>
-					<div className="nickname">
-						<TextField
-							variant="standard"
-							size="small"
-							value={displayNickName}
-							onChange={onNickNameChange}
-							onFocus={onNickNameFocus}
-							onBlur={onNickNameBlur}
-						/>
-					</div>
-					<IvForm
-						parameter={parameter}
-						pokemonIv={boxItem.iv}
-						fixMode={isEdit}
-						dispatch={dispatch}
-						onChange={onFormChange}
-					/>
-				</article>
+				<BoxItemEditor
+					boxItem={boxItem}
+					isEdit={isEdit}
+					parameter={parameter}
+					dispatch={dispatch}
+					onChange={setBoxItem}
+				/>
 				<DialogActions>
 					<Button onClick={onCloseClick}>{t("close")}</Button>
 					{!isEdit && <Button onClick={onSaveClick}>{t("add")}</Button>}
@@ -247,50 +135,6 @@ const BoxItemDialogContent = React.memo(
 
 const StyledDialog = styled(Dialog)({
 	"& div.MuiDialog-paper": {
-		"& > article": {
-			padding: ".5rem .5rem 4rem .5rem",
-
-			"& > header.control": {
-				position: "absolute",
-				top: ".8rem",
-				right: "1rem",
-				"& > span.shiny": {
-					"& > button": {
-						border: 0,
-						borderRadius: "1rem",
-						margin: 0,
-						padding: "4px",
-						background: "#cccccc",
-						color: "#ffffff",
-						marginLeft: ".2rem",
-						"& > svg": {
-							width: 14,
-							height: 14,
-						},
-						"&.Mui-selected": {
-							background: "#ffcc00",
-							color: "#ffffff",
-						},
-					},
-				},
-			},
-			"& > div.icon": {
-				margin: ".5rem auto .2rem",
-				width: "82px",
-				"& > button": {
-					borderRadius: ".5rem",
-				},
-			},
-			"& > div.nickname": {
-				margin: "0 auto 1.2rem auto",
-				width: "10rem",
-				"& input": {
-					fontSize: "1.2rem",
-					fontWeight: "bold",
-					textAlign: "center",
-				},
-			},
-		},
 		"& > div.MuiDialogActions-root": {
 			position: "fixed",
 			padding: "0 0.5rem 1rem 0.5rem",
@@ -298,6 +142,186 @@ const StyledDialog = styled(Dialog)({
 			background: "rgba(255, 255, 255, 0.8)",
 			width: "calc(100% - 1rem)",
 			bottom: 0,
+		},
+	},
+});
+
+/**
+ * Form to edit a pokemon in the box (IV, nickname and shiny).
+ *
+ * The item is kept by the parent. `onChange` is called
+ * with the edited item on every change.
+ */
+const BoxItemEditor = React.memo(
+	({
+		boxItem,
+		isEdit,
+		parameter,
+		dispatch,
+		onChange,
+	}: {
+		boxItem: PokemonBoxItem;
+		isEdit: boolean;
+		parameter: StrengthParameter;
+		dispatch: (action: IvAction) => void;
+		onChange: (value: PokemonBoxItem) => void;
+	}) => {
+		const { t } = useTranslation();
+		const nickname = boxItem.nickname;
+		const rp = React.useMemo(
+			() => new PokemonRp(boxItem.iv).calculate().rp,
+			[boxItem.iv],
+		);
+		const [isEditingNickName, setIsEditingNickName] = React.useState(false);
+		const localName = t(`pokemons.${boxItem.iv.pokemonName}`);
+
+		const notify = React.useCallback(
+			(newIv: PokemonIv, newNickname: string) => {
+				onChange(
+					new PokemonBoxItem(
+						newIv,
+						newNickname,
+						boxItem.attributes,
+						boxItem.id,
+					),
+				);
+			},
+			[onChange, boxItem.attributes, boxItem.id],
+		);
+
+		const onFormChange = React.useCallback(
+			(value: PokemonIv) => {
+				notify(value, nickname === localName ? "" : nickname);
+			},
+			[localName, nickname, notify],
+		);
+		const onShinyClick = React.useCallback(() => {
+			onFormChange(
+				boxItem.iv.clone({
+					shiny: !boxItem.iv.shiny,
+				}),
+			);
+		}, [boxItem, onFormChange]);
+		const onNickNameChange = React.useCallback(
+			(event: React.ChangeEvent<HTMLInputElement>) => {
+				notify(boxItem.iv, event.target.value);
+			},
+			[boxItem, notify],
+		);
+		const onNickNameFocus = React.useCallback(() => {
+			setIsEditingNickName(true);
+			if (nickname === "") {
+				notify(boxItem.iv, localName);
+			}
+		}, [boxItem, nickname, localName, notify]);
+		const onNickNameBlur = React.useCallback(() => {
+			setIsEditingNickName(false);
+			if (nickname === localName) {
+				notify(boxItem.iv, "");
+			}
+		}, [boxItem, nickname, localName, notify]);
+
+		let displayNickName = nickname;
+		if (!isEditingNickName && nickname === "") {
+			displayNickName = t(`pokemons.${boxItem.iv.pokemonName}`);
+		}
+
+		return (
+			<StyledBoxItemEditor>
+				<RpLabel rp={rp} iv={boxItem.iv} />
+				<header className="control">
+					<TypeSpecialtyPanel
+						type={boxItem.iv.pokemon.type}
+						specialty={boxItem.iv.pokemon.specialty}
+						level={boxItem.iv.level}
+						parameter={parameter}
+						dispatch={dispatch}
+					/>
+					{!boxItem.iv.isMythical && (
+						<span className="shiny">
+							<ToggleButton
+								value="shiny"
+								selected={boxItem.iv.shiny}
+								onClick={onShinyClick}
+							>
+								<AutoAwesomeIcon />
+							</ToggleButton>
+						</span>
+					)}
+				</header>
+				<div className="icon">
+					<ButtonBase onClick={onShinyClick}>
+						<PokemonIcon
+							idForm={boxItem.iv.idForm}
+							shiny={boxItem.iv.shiny}
+							size={80}
+						/>
+					</ButtonBase>
+				</div>
+				<div className="nickname">
+					<TextField
+						variant="standard"
+						size="small"
+						value={displayNickName}
+						onChange={onNickNameChange}
+						onFocus={onNickNameFocus}
+						onBlur={onNickNameBlur}
+					/>
+				</div>
+				<IvForm
+					parameter={parameter}
+					pokemonIv={boxItem.iv}
+					fixMode={isEdit}
+					dispatch={dispatch}
+					onChange={onFormChange}
+				/>
+			</StyledBoxItemEditor>
+		);
+	},
+);
+
+const StyledBoxItemEditor = styled("article")({
+	position: "relative",
+	padding: ".5rem .5rem 4rem .5rem",
+
+	"& > header.control": {
+		position: "absolute",
+		top: ".8rem",
+		right: "1rem",
+		"& > span.shiny": {
+			"& > button": {
+				border: 0,
+				borderRadius: "1rem",
+				margin: 0,
+				padding: "4px",
+				background: "#cccccc",
+				color: "#ffffff",
+				marginLeft: ".2rem",
+				"& > svg": {
+					width: 14,
+					height: 14,
+				},
+				"&.Mui-selected": {
+					background: "#ffcc00",
+					color: "#ffffff",
+				},
+			},
+		},
+	},
+	"& > div.icon": {
+		margin: ".5rem auto .2rem",
+		width: "82px",
+		"& > button": {
+			borderRadius: ".5rem",
+		},
+	},
+	"& > div.nickname": {
+		margin: "0 auto 1.2rem auto",
+		width: "10rem",
+		"& input": {
+			fontSize: "1.2rem",
+			fontWeight: "bold",
+			textAlign: "center",
 		},
 	},
 });
