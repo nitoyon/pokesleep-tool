@@ -151,10 +151,14 @@ const BoxView = React.memo(
 				t,
 			],
 		);
+		const orderedItems = React.useMemo(
+			() => (sortConfig.descending ? sortedItems : [...sortedItems].reverse()),
+			[sortedItems, sortConfig.descending],
+		);
 
-		let elms = React.useMemo(
+		const elms = React.useMemo(
 			() =>
-				sortedItems.map((item) => (
+				orderedItems.map((item) => (
 					<BoxLargeItem
 						key={item.id}
 						item={item}
@@ -166,11 +170,8 @@ const BoxView = React.memo(
 						selectedRef={item.id === selectedId ? selectedRef : undefined}
 					/>
 				)),
-			[sortedItems, dispatch, onCandyClick, selectedId, onSelect, onEdit],
+			[orderedItems, dispatch, onCandyClick, selectedId, onSelect, onEdit],
 		);
-		if (!sortConfig.descending) {
-			elms = [...elms].reverse();
-		}
 
 		React.useEffect(() => {
 			selectedRef.current?.scrollIntoView({ block: "center" });
