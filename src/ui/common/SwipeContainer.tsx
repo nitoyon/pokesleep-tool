@@ -128,7 +128,7 @@ const SwipeContainer = React.memo(
 const StyledSwipeContainer = styled("div")({
 	overflow: "hidden",
 	touchAction: "pan-y",
-	overscrollBehavior: "contain",
+	overscrollBehaviorX: "contain",
 	"& > div.tabTrack": {
 		display: "flex",
 		flexWrap: "nowrap",
