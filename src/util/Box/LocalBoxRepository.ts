@@ -24,9 +24,11 @@ export class LocalBoxRepository implements BoxRepository {
 
 	apply(_ops: BoxOp[], items: PokemonBoxItem[]): Promise<void> {
 		try {
+			// Keep entries written by a newer version so that they are not lost
+			const unknownEntries = loadUnknownEntries();
 			localStorage.setItem(
 				storageKey,
-				JSON.stringify(items.map((x) => x.serialize())),
+				JSON.stringify([...items.map((x) => x.serialize()), ...unknownEntries]),
 			);
 			return Promise.resolve();
 		} catch (e) {
@@ -35,21 +37,25 @@ export class LocalBoxRepository implements BoxRepository {
 	}
 }
 
-function loadItems(): PokemonBoxItem[] {
+/**
+ * Load saved strings from localStorage.
+ * @returns Saved strings.
+ */
+function loadRawEntries(): string[] {
 	const data = localStorage.getItem(storageKey);
 	if (data === null) {
 		return [];
 	}
-	const json = JSON.parse(data);
+	const json: unknown = JSON.parse(data);
 	if (!Array.isArray(json)) {
 		return [];
 	}
+	return json.filter((x): x is string => typeof x === "string");
+}
 
+function loadItems(): PokemonBoxItem[] {
 	const items: PokemonBoxItem[] = [];
-	for (const item of json) {
-		if (typeof item !== "string") {
-			continue;
-		}
+	for (const item of loadRawEntries()) {
 		const boxItem = deserializeBoxItem(item);
 		if (boxItem === null) {
 			continue;
@@ -61,4 +67,16 @@ function loadItems(): PokemonBoxItem[] {
 		}
 	}
 	return items;
+}
+
+/**
+ * Load saved strings that cannot be parsed (possibly written by a newer version).
+ * @returns Strings that cannot be parsed.
+ */
+function loadUnknownEntries(): string[] {
+	try {
+		return loadRawEntries().filter((x) => deserializeBoxItem(x) === null);
+	} catch {
+		return [];
+	}
 }

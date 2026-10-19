@@ -72,6 +72,49 @@ describe("LocalBoxRepository", () => {
 		);
 	});
 
+	test("load keeps attributes", async () => {
+		const iv = new PokemonIv({ pokemonName: "Pikachu" });
+		localStorage.setItem(
+			"PstPokeBox",
+			JSON.stringify([`${iv.serialize()}.f2a5@nick`]),
+		);
+		const { items } = await new LocalBoxRepository().load();
+		expect(items.length).toBe(1);
+		expect(items[0].attributes).toBe("f2a5");
+		expect(items[0].nickname).toBe("nick");
+	});
+
+	test("apply keeps entries that cannot be parsed", async () => {
+		const iv = new PokemonIv({ pokemonName: "Pikachu" });
+		localStorage.setItem(
+			"PstPokeBox",
+			JSON.stringify([
+				1,
+				"unknown-format@nick",
+				`${iv.serialize()}@old`,
+				"another-unknown",
+			]),
+		);
+		const repo = new LocalBoxRepository();
+		const { items } = await repo.load();
+		expect(items.length).toBe(1);
+
+		const raichu = new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }));
+		await repo.apply([], [raichu]);
+		expect(JSON.parse(localStorageMock.PstPokeBox)).toEqual([
+			raichu.serialize(),
+			"unknown-format@nick",
+			"another-unknown",
+		]);
+	});
+
+	test("apply overwrites broken data", async () => {
+		localStorage.setItem("PstPokeBox", "{broken");
+		const item = new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }));
+		await new LocalBoxRepository().apply([], [item]);
+		expect(JSON.parse(localStorageMock.PstPokeBox)).toEqual([item.serialize()]);
+	});
+
 	test("apply rejects when localStorage throws", async () => {
 		localStorage.setItem = vi.fn(() => {
 			throw new Error("quota exceeded");

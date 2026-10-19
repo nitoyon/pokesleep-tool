@@ -167,8 +167,9 @@ export function detectFormat(text: string): BoxImportFormat {
 			.replace(/\r/g, "")
 			.split("\n")
 			.find((l) => l.trim() !== "") ?? "";
-	// Custom format: Base64-encoded IV (12–16 chars from [A-Za-z0-9+\-]) optionally followed by @nickname
-	if (/^[A-Za-z0-9+-]{12,16}(@|$)/.test(firstLine)) {
+	// Custom format: Base64-encoded IV (12–16 chars from [A-Za-z0-9+\-])
+	// optionally followed by .attributes and @nickname
+	if (/^[A-Za-z0-9+-]{12,16}(\.|@|$)/.test(firstLine)) {
 		return "custom";
 	}
 	if (firstLine.includes("\t")) {

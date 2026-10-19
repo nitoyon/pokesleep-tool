@@ -307,7 +307,7 @@ describe("ivStateReducer", () => {
 				skillLevel: 0, // Will be normalized
 			});
 
-			const item = new PokemonBoxItem(iv, "MyBlastoise", -1);
+			const item = new PokemonBoxItem(iv, "MyBlastoise", undefined, -1);
 
 			const action: IvAction = {
 				type: "addOrEditDone",
@@ -334,7 +334,12 @@ describe("ivStateReducer", () => {
 				skillLevel: 0, // Will be normalized
 			});
 
-			const item = new PokemonBoxItem(editedIv, "EditedPikachu", itemId);
+			const item = new PokemonBoxItem(
+				editedIv,
+				"EditedPikachu",
+				undefined,
+				itemId,
+			);
 
 			const action: IvAction = {
 				type: "addOrEditDone",
@@ -520,6 +525,7 @@ describe("ivStateReducer", () => {
 			const item = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Raichu" }),
 				"MyRaichu",
+				undefined,
 				-1,
 			);
 			const action: IvAction = {
