@@ -57,7 +57,8 @@ export type FieldName =
 	| "lv70"
 	| "lv80"
 	| "ribbon"
-	| "shiny";
+	| "shiny"
+	| "mint";
 
 // Well-known header labels (English and translated) mapped to canonical field names
 export const HEADER_ALIASES: Array<[string[], FieldName]> = [
@@ -77,6 +78,7 @@ export const HEADER_ALIASES: Array<[string[], FieldName]> = [
 	[["lv80"], "lv80"],
 	[["ribbon", "sleeping time shared"], "ribbon"],
 	[["shiny"], "shiny"],
+	[["mint", "neutralizing mint"], "mint"],
 ];
 
 /**
@@ -274,7 +276,10 @@ function parseBoxRow(
 	if (!natureName) {
 		return { kind: "error", fields: ["nature"] };
 	}
-	props.nature = new Nature(natureName);
+	// Neutralizing Mint (ignored for neutral natures)
+	const mintStr = getField(row, "mint").trim();
+	const mint = mintStr === "1" || mintStr.toLowerCase() === "true";
+	props.nature = new Nature(natureName, mint);
 
 	// SubSkill
 	const subSkillWarnings: FieldName[] = [];
@@ -357,6 +362,7 @@ function buildFieldColumnMap(
 	labelToField.set(normalizeKey(t("nature")), "nature");
 	labelToField.set(normalizeKey(t("sleeping time shared")), "ribbon");
 	labelToField.set(normalizeKey(t("shiny")), "shiny");
+	labelToField.set(normalizeKey(t("neutralizing mint")), "mint");
 
 	// Map FieldName -> raw column name string
 	const fieldToColumn = new Map<FieldName, string>();
@@ -426,6 +432,7 @@ function fieldDisplayName(field: FieldName, t: TFunction): string {
 		lv80: "lv80",
 		ribbon: t("sleeping time shared"),
 		shiny: t("shiny"),
+		mint: t("neutralizing mint"),
 	};
 	return map[field] ?? field;
 }

@@ -462,6 +462,21 @@ describe("PokemonIV", () => {
 			compareIv(iv, ret);
 		});
 
+		test("mint flag", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Bulbasaur",
+				nature: new Nature("Adamant", true),
+			});
+			const ret = PokemonIv.deserialize(iv.serialize());
+			expect(ret.nature.name).toBe("Adamant");
+			expect(ret.nature.mint).toBe(true);
+			expect(ret.isEqual(iv)).toBe(true);
+
+			const noMint = iv.clone({ nature: new Nature("Adamant") });
+			expect(noMint.isEqual(iv)).toBe(false);
+			expect(PokemonIv.deserialize(noMint.serialize()).nature.mint).toBe(false);
+		});
+
 		test("set Bewear parameter", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Bewear",
