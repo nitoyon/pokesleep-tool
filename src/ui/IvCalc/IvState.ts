@@ -1,5 +1,5 @@
 import i18n from "../../i18n";
-import PokemonBox, { type PokemonBoxItem } from "../../util/Box/PokemonBox";
+import PokemonBox, { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
 import {
 	loadStrengthParameter,
@@ -59,7 +59,7 @@ export type IvAction =
 	  }
 	| {
 			type: "importItems";
-			payload: { entries: { iv: PokemonIv; nickname: string }[] };
+			payload: { entries: PokemonBoxItem[] };
 	  }
 	| {
 			type: "showAlert";
@@ -421,8 +421,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 
 		const box = new PokemonBox(state.box.items);
 		const selectedItemId: number = box.add(
-			action.payload.iv,
-			action.payload.nickname,
+			new PokemonBoxItem(action.payload.iv, action.payload.nickname),
 		);
 		return { ...state, box, selectedItemId };
 	}
@@ -448,7 +447,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 			if (!box.canAdd) {
 				break;
 			}
-			box.add(entry.iv, entry.nickname);
+			box.add(entry);
 		}
 		return { ...state, box };
 	}
@@ -497,7 +496,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		const box = new PokemonBox(state.box.items);
 		let selectedItemId = state.selectedItemId;
 		if (value.id === -1) {
-			selectedItemId = box.add(value.iv, value.nickname);
+			selectedItemId = box.add(new PokemonBoxItem(value.iv, value.nickname));
 		} else {
 			box.set(value.id, value.iv, value.nickname);
 		}
@@ -580,7 +579,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		};
 	} else if (type === "dup") {
 		const box = new PokemonBox(state.box.items);
-		const selectedItemId: number = box.add(item.iv.clone(), item.nickname);
+		const selectedItemId: number = box.add(item.clone());
 		return { ...state, box, selectedItemId };
 	} else if (type === "remove") {
 		const box = new PokemonBox(state.box.items);

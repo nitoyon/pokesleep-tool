@@ -270,7 +270,7 @@ describe("ivStateReducer", () => {
 				pokemonName: "Venusaur",
 				skillLevel: 1,
 			});
-			const itemId = box.add(iv);
+			const itemId = box.add(new PokemonBoxItem(iv));
 
 			const pokemonIv = new PokemonIv({
 				pokemonName: "Venusaur",
@@ -325,7 +325,7 @@ describe("ivStateReducer", () => {
 		test("should normalize state when editing existing item", () => {
 			const box = new PokemonBox();
 			const originalIv = new PokemonIv({ pokemonName: "Raichu" });
-			const itemId = box.add(originalIv);
+			const itemId = box.add(new PokemonBoxItem(originalIv));
 
 			const state = { ...baseState, box, selectedItemId: itemId };
 
@@ -356,7 +356,7 @@ describe("ivStateReducer", () => {
 				pokemonName: "Raichu",
 				skillLevel: 0, // Will be normalized
 			});
-			const itemId = box.add(iv);
+			const itemId = box.add(new PokemonBoxItem(iv));
 
 			const state = { ...baseState, box };
 
@@ -392,7 +392,7 @@ describe("ivStateReducer", () => {
 				pokemonName: "Pikachu",
 				level: 25,
 			});
-			const itemId = box.add(originalIv, "MyPikachu");
+			const itemId = box.add(new PokemonBoxItem(originalIv, "MyPikachu"));
 
 			const updatedIv = new PokemonIv({
 				pokemonName: "Pikachu",
@@ -421,7 +421,7 @@ describe("ivStateReducer", () => {
 		test("should handle item without nickname", () => {
 			const box = new PokemonBox();
 			const originalIv = new PokemonIv({ pokemonName: "Venusaur" });
-			const itemId = box.add(originalIv); // No nickname
+			const itemId = box.add(new PokemonBoxItem(originalIv)); // No nickname
 
 			const updatedIv = new PokemonIv({
 				pokemonName: "Venusaur",
@@ -447,7 +447,7 @@ describe("ivStateReducer", () => {
 			await i18n.changeLanguage("en");
 			const box = new PokemonBox();
 			const originalIv = new PokemonIv({ pokemonName: "Pikachu" });
-			const itemId = box.add(originalIv, "Pikachu");
+			const itemId = box.add(new PokemonBoxItem(originalIv, "Pikachu"));
 
 			const updatedIv = new PokemonIv({
 				pokemonName: "Pikachu",
@@ -473,7 +473,7 @@ describe("ivStateReducer", () => {
 			await i18n.changeLanguage("ja");
 			const box = new PokemonBox();
 			const originalIv = new PokemonIv({ pokemonName: "Pikachu" });
-			const itemId = box.add(originalIv, "ピカチュウ");
+			const itemId = box.add(new PokemonBoxItem(originalIv, "ピカチュウ"));
 
 			const updatedIv = new PokemonIv({
 				pokemonName: "Pikachu",
@@ -710,13 +710,34 @@ describe("ivStateReducer box loading", () => {
 
 	test("boxLoading clears the box", () => {
 		const box = new PokemonBox();
-		const itemId = box.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const itemId = box.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+		);
 		const state = { ...baseState, box, selectedItemId: itemId };
 
 		const newState = ivStateReducer(state, { type: "boxLoading" });
 		expect(newState.boxStatus).toBe("loading");
 		expect(newState.box.items).toEqual([]);
 		expect(newState.selectedItemId).toBe(-1);
+	});
+
+	test("dup adds a copy with a new ID", () => {
+		const box = new PokemonBox();
+		const itemId = box.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" }), "nick"),
+		);
+		const state = { ...baseState, box };
+
+		const newState = ivStateReducer(state, {
+			type: "dup",
+			payload: { id: itemId },
+		});
+		expect(newState.box.items.length).toBe(2);
+		const [original, copy] = newState.box.items;
+		expect(copy.id).not.toBe(original.id);
+		expect(newState.selectedItemId).toBe(copy.id);
+		expect(copy.iv).not.toBe(original.iv);
+		expect(copy.serialize()).toBe(original.serialize());
 	});
 
 	test("reloadBox increments the reload count", () => {
@@ -783,7 +804,7 @@ describe("ivStateReducer box loading", () => {
 	test("importItems adds items up to the max count", () => {
 		const box = new PokemonBox();
 		for (let i = 0; i < PokemonBox.maxEntryCount - 1; i++) {
-			box.add(new PokemonIv({ pokemonName: "Pikachu" }));
+			box.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })));
 		}
 		const state = { ...baseState, box };
 
@@ -791,8 +812,8 @@ describe("ivStateReducer box loading", () => {
 			type: "importItems",
 			payload: {
 				entries: [
-					{ iv: new PokemonIv({ pokemonName: "Raichu" }), nickname: "a" },
-					{ iv: new PokemonIv({ pokemonName: "Raichu" }), nickname: "b" },
+					new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }), "a"),
+					new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }), "b"),
 				],
 			},
 		});
@@ -803,7 +824,9 @@ describe("ivStateReducer box loading", () => {
 
 	test("removeAllItems clears the box", () => {
 		const box = new PokemonBox();
-		const itemId = box.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const itemId = box.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+		);
 		const state = { ...baseState, box, selectedItemId: itemId };
 
 		const newState = ivStateReducer(state, { type: "removeAllItems" });

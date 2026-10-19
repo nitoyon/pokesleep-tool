@@ -90,12 +90,7 @@ export function useBoxSync(
 					if (!cancelled && localItems.length > 0) {
 						dispatch({
 							type: "importItems",
-							payload: {
-								entries: localItems.map((x) => ({
-									iv: x.iv,
-									nickname: x.nickname,
-								})),
-							},
+							payload: { entries: localItems },
 						});
 					}
 				}

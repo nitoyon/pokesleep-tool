@@ -1,7 +1,7 @@
 import type { BoxLoadResult, BoxOp, BoxRepository } from "../Box/BoxRepository";
 import PokemonBox, {
 	deserializeBoxItem,
-	PokemonBoxItem,
+	type PokemonBoxItem,
 } from "../Box/PokemonBox";
 import type { BoxApi, RemoteBoxEntry } from "./BoxApi";
 import { FunctionsBoxApi } from "./FunctionsBoxApi";
@@ -36,11 +36,10 @@ export class FirebaseBoxRepository implements BoxRepository {
 		this.keys.clear();
 		const items: PokemonBoxItem[] = [];
 		for (const entry of entries) {
-			const data = deserializeBoxItem(entry.data);
-			if (data === null) {
+			const item = deserializeBoxItem(entry.data);
+			if (item === null) {
 				continue;
 			}
-			const item = new PokemonBoxItem(data.iv, data.nickname);
 			this.keys.set(item.id, entry.id);
 			items.push(item);
 

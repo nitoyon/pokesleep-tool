@@ -1,12 +1,12 @@
 import { describe, expect, test } from "vitest";
 import PokemonIv from "../PokemonIv";
 import { diffBoxItems } from "./BoxRepository";
-import PokemonBox from "./PokemonBox";
+import PokemonBox, { PokemonBoxItem } from "./PokemonBox";
 
 function createBox(): PokemonBox {
 	const box = new PokemonBox();
-	box.add(new PokemonIv({ pokemonName: "Pikachu" }));
-	box.add(new PokemonIv({ pokemonName: "Raichu" }));
+	box.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })));
+	box.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" })));
 	return box;
 }
 
@@ -24,7 +24,9 @@ describe("diffBoxItems", () => {
 	test("detects added items", () => {
 		const box = createBox();
 		const prev = box.items;
-		const id = box.add(new PokemonIv({ pokemonName: "Bulbasaur" }));
+		const id = box.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Bulbasaur" })),
+		);
 		expect(diffBoxItems(prev, box.items)).toEqual([
 			{ type: "add", item: box.getById(id) },
 		]);

@@ -3,6 +3,7 @@ import pokemons, {
 	type IngredientName,
 	IngredientNames,
 } from "../../data/pokemons";
+import { PokemonBoxItem } from "../Box/PokemonBox";
 import { type MainSkillName, VersatileCandidates } from "../MainSkill";
 import Nature from "../Nature";
 import PokemonIv, { type PokemonIvProps } from "../PokemonIv";
@@ -22,7 +23,7 @@ export type ImportWarning = {
 };
 
 export type CsvTsvImportResult = {
-	items: Array<{ iv: PokemonIv; nickname: string }>;
+	items: PokemonBoxItem[];
 	warnings: ImportWarning[];
 };
 
@@ -123,7 +124,7 @@ export function importFromCsvTsv(
 
 	const rows = parser.parse(dataLines);
 	const maps = initializeReverseMap(t);
-	const items: Array<{ iv: PokemonIv; nickname: string }> = [];
+	const items: PokemonBoxItem[] = [];
 	const warnings: ImportWarning[] = [];
 
 	for (let i = 0; i < rows.length; i++) {
@@ -137,7 +138,7 @@ export function importFromCsvTsv(
 		try {
 			const result = parseBoxRow(row, getField, maps);
 			if (result.kind === "ok") {
-				items.push({ iv: result.iv, nickname: result.nickname });
+				items.push(new PokemonBoxItem(result.iv, result.nickname));
 			} else {
 				warnings.push({
 					row: rowNumber,

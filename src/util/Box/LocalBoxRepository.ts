@@ -1,5 +1,8 @@
 import type { BoxLoadResult, BoxOp, BoxRepository } from "./BoxRepository";
-import PokemonBox, { deserializeBoxItem, PokemonBoxItem } from "./PokemonBox";
+import PokemonBox, {
+	deserializeBoxItem,
+	type PokemonBoxItem,
+} from "./PokemonBox";
 
 const storageKey = "PstPokeBox";
 
@@ -47,11 +50,11 @@ function loadItems(): PokemonBoxItem[] {
 		if (typeof item !== "string") {
 			continue;
 		}
-		const data = deserializeBoxItem(item);
-		if (data === null) {
+		const boxItem = deserializeBoxItem(item);
+		if (boxItem === null) {
 			continue;
 		}
-		items.push(new PokemonBoxItem(data.iv, data.nickname));
+		items.push(boxItem);
 
 		if (items.length >= PokemonBox.maxEntryCount) {
 			break;

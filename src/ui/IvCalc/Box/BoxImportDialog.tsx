@@ -11,19 +11,19 @@ import {
 import type { TFunction } from "i18next";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import PokemonBox, { deserializeBoxItem } from "../../../util/Box/PokemonBox";
+import PokemonBox, {
+	deserializeBoxItem,
+	type PokemonBoxItem,
+} from "../../../util/Box/PokemonBox";
 import {
 	detectFormat,
 	type ImportWarning,
 	importFromCsvTsv,
 } from "../../../util/Formatter/BoxImporter";
-import type PokemonIv from "../../../util/PokemonIv";
 import SelectEx from "../../common/SelectEx";
 import type { IvAction } from "../IvState";
 
 type BoxImportMethod = "clipboard" | "file";
-
-type ImportEntry = { iv: PokemonIv; nickname: string };
 
 const BoxImportDialog = React.memo(
 	({
@@ -252,7 +252,7 @@ function ImportWarningDialog({
 function parseImportText(
 	value: string,
 	t: TFunction,
-): { entries: ImportEntry[]; warnings: ImportWarning[] } {
+): { entries: PokemonBoxItem[]; warnings: ImportWarning[] } {
 	const detectedFormat = detectFormat(value);
 	if (detectedFormat === "custom") {
 		return { entries: parseCustomText(value), warnings: [] };
@@ -264,12 +264,12 @@ function parseImportText(
 	}
 }
 
-function parseCustomText(value: string): ImportEntry[] {
-	const entries: ImportEntry[] = [];
+function parseCustomText(value: string): PokemonBoxItem[] {
+	const entries: PokemonBoxItem[] = [];
 	for (const line of value.split(/\n/g)) {
-		const data = deserializeBoxItem(line);
-		if (data !== null) {
-			entries.push(data);
+		const item = deserializeBoxItem(line);
+		if (item !== null) {
+			entries.push(item);
 		}
 	}
 	return entries;
