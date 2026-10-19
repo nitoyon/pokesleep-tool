@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { diffBoxItems } from "../Box/BoxRepository";
-import PokemonBox, { type PokemonBoxItem } from "../Box/PokemonBox";
+import PokemonBox, { PokemonBoxItem } from "../Box/PokemonBox";
 import PokemonIv from "../PokemonIv";
 import { type BoxApi, FakeBoxApi } from "./BoxApi";
 import { FirebaseBoxRepository } from "./BoxRepository";
@@ -31,14 +31,18 @@ describe("FirebaseBoxRepository", () => {
 		expect(box0.items).toEqual([]);
 
 		const box1 = new PokemonBox(box0.items);
-		const id1 = box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
-		const id2 = box1.add(new PokemonIv({ pokemonName: "Raichu" }));
+		const id1 = box1.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+		);
+		const id2 = box1.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" })),
+		);
 		await save(repo, box0, box1);
 
 		const box2 = new PokemonBox(box1.items);
 		box2.set(id1, new PokemonIv({ pokemonName: "Pikachu" }), "nick");
 		box2.remove(id2);
-		box2.add(new PokemonIv({ pokemonName: "Bulbasaur" }));
+		box2.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Bulbasaur" })));
 		await save(repo, box1, box2);
 
 		const loaded = await load(new FirebaseBoxRepository(api));
@@ -54,7 +58,7 @@ describe("FirebaseBoxRepository", () => {
 
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox();
-		box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		box1.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })));
 		await save(repo, box0, box1);
 		const loaded = await repo.load();
 		expect(loaded.needsInit).toBe(false);
@@ -72,7 +76,7 @@ describe("FirebaseBoxRepository", () => {
 		const repo1 = new FirebaseBoxRepository(api);
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox();
-		box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		box1.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })));
 		await save(repo1, box0, box1);
 
 		// Load with another repository, which renumbers the item IDs
@@ -92,7 +96,9 @@ describe("FirebaseBoxRepository", () => {
 		const repo = new FirebaseBoxRepository(api);
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox(box0.items);
-		const id = box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const id = box1.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+		);
 		const box2 = new PokemonBox(box1.items);
 		box2.remove(id);
 
@@ -109,7 +115,9 @@ describe("FirebaseBoxRepository", () => {
 		const repo = new FirebaseBoxRepository(api);
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox(box0.items);
-		const id = box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const id = box1.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+		);
 		const box2 = new PokemonBox(box1.items);
 		box2.set(id, new PokemonIv({ pokemonName: "Pikachu" }), "nick");
 
@@ -126,7 +134,7 @@ describe("FirebaseBoxRepository", () => {
 		const repo = new FirebaseBoxRepository(api);
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox();
-		box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		box1.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })));
 
 		// Load is requested before the save completes
 		const p = save(repo, box0, box1);
@@ -148,12 +156,12 @@ describe("FirebaseBoxRepository", () => {
 		const repo = new FirebaseBoxRepository(failingApi);
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox();
-		box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		box1.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })));
 		await expect(save(repo, box0, box1)).rejects.toThrow("failed");
 
 		fail = false;
 		const box2 = new PokemonBox(box1.items);
-		box2.add(new PokemonIv({ pokemonName: "Raichu" }));
+		box2.add(new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" })));
 		await save(repo, box1, box2);
 		expect((await api.getBoxItems()).items.length).toBe(1);
 	});
@@ -171,7 +179,9 @@ describe("FirebaseBoxRepository", () => {
 		const repo = new FirebaseBoxRepository(failingApi);
 		const box0 = new PokemonBox();
 		const box1 = new PokemonBox();
-		const id = box1.add(new PokemonIv({ pokemonName: "Pikachu" }));
+		const id = box1.add(
+			new PokemonBoxItem(new PokemonIv({ pokemonName: "Pikachu" })),
+		);
 		await expect(save(repo, box0, box1)).rejects.toThrow("failed");
 
 		fail = false;

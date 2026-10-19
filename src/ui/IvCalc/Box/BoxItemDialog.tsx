@@ -55,6 +55,7 @@ const BoxItemDialog = React.memo(
 			boxItem = new PokemonBoxItem(
 				new PokemonIv({ pokemonName: "Venusaur" }),
 				undefined,
+				undefined,
 				-1,
 			);
 		}
@@ -111,7 +112,14 @@ const BoxItemDialogContent = React.memo(
 
 		const onFormChange = React.useCallback(
 			(value: PokemonIv) => {
-				setBoxItem(new PokemonBoxItem(value, boxItem.nickname, boxItem.id));
+				setBoxItem(
+					new PokemonBoxItem(
+						value,
+						boxItem.nickname,
+						boxItem.attributes,
+						boxItem.id,
+					),
+				);
 				setRp(new PokemonRp(value).calculate().rp);
 				if (nickname === localName) {
 					setNickname("");
@@ -147,13 +155,27 @@ const BoxItemDialogContent = React.memo(
 
 		const onCloseClick = React.useCallback(() => {
 			if (isEdit) {
-				onChange(new PokemonBoxItem(boxItem.iv, nickname, boxItem.id));
+				onChange(
+					new PokemonBoxItem(
+						boxItem.iv,
+						nickname,
+						boxItem.attributes,
+						boxItem.id,
+					),
+				);
 			}
 			onClose();
 		}, [isEdit, onChange, onClose, boxItem, nickname]);
 		const onSaveClick = React.useCallback(() => {
 			if (!isEdit) {
-				onChange(new PokemonBoxItem(boxItem.iv, nickname, boxItem.id));
+				onChange(
+					new PokemonBoxItem(
+						boxItem.iv,
+						nickname,
+						boxItem.attributes,
+						boxItem.id,
+					),
+				);
 			}
 			onClose();
 		}, [isEdit, onChange, onClose, boxItem, nickname]);

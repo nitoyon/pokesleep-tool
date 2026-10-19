@@ -37,15 +37,14 @@ class PokemonBox {
 	}
 
 	/**
-	 * Add a new Pokmeon IV.
-	 * @param iv Pokemon IV to be added.
+	 * Add a new item.
+	 * @param item Item to be added.
 	 * @returns Added item ID.
 	 */
-	add(iv: PokemonIv, nickname?: string): number {
+	add(item: PokemonBoxItem): number {
 		if (!this.canAdd) {
 			throw new Error("max entry count exceeds");
 		}
-		const item = new PokemonBoxItem(iv, nickname);
 		this._entries = [...this._entries, item];
 		return item.id;
 	}
@@ -67,14 +66,16 @@ class PokemonBox {
 
 	/**
 	 * Change the item by ID.
+	 *
+	 * Attributes of the existing item are kept.
 	 * @param id ID.
-	 * @param nickname Nickname of the pockemon.
 	 * @param iv New pokemon IV.
+	 * @param nickname Nickname of the pockemon.
 	 */
 	set(id: number, iv: PokemonIv, nickname?: string) {
 		// Create a new array not to modify the array shared with other boxes
 		this._entries = this._entries.map((x) =>
-			x.id === id ? new PokemonBoxItem(iv, nickname, id) : x,
+			x.id === id ? new PokemonBoxItem(iv, nickname, x.attributes, id) : x,
 		);
 	}
 
@@ -89,23 +90,33 @@ class PokemonBox {
 }
 
 /**
- * Deserialize box item data (xxxxxxx@nickname).
+ * Deserialize box item data (`iv[.attributes][@nickname]`).
  * @param text   text data.
- * @returns      parsed data, or null if the text is invalid.
+ * @returns      parsed item, or null if the text is invalid.
  */
-export function deserializeBoxItem(
-	text: string,
-): { iv: PokemonIv; nickname: string } | null {
+export function deserializeBoxItem(text: string): PokemonBoxItem | null {
+	// Split at the first "@"
 	const index = text.indexOf("@");
-	let ivPart = text;
+	let head = text;
 	let nickname = "";
 	if (index !== -1) {
-		ivPart = text.substring(0, index);
+		head = text.substring(0, index);
 		nickname = text.substring(index + 1);
 	}
+
+	// Split at the first "."
+	const dotIndex = head.indexOf(".");
+	let ivPart = head;
+	let attributes = "";
+	if (dotIndex !== -1) {
+		ivPart = head.substring(0, dotIndex);
+		attributes = head.substring(dotIndex + 1);
+	}
+
+	// Parse the IV
 	try {
 		const iv = PokemonIv.deserialize(ivPart);
-		return { iv, nickname };
+		return new PokemonBoxItem(iv, nickname, attributes);
 	} catch {
 		return null;
 	}
@@ -117,30 +128,54 @@ export function deserializeBoxItem(
 export class PokemonBoxItem {
 	private _iv: PokemonIv;
 	private _nickname: string;
+	private _attributes: string;
 	private _id: number;
 	private static nextId: number = 1;
 
 	/**
 	 * Initialize PokemonBoxItem.
 	 * @param iv IV data of the pokemon.
+	 * @param nickname Nickname of the pokemon.
+	 * @param attributes Attributes of the item.
 	 * @param id ID in the box.
 	 */
-	constructor(iv: PokemonIv, nickname?: string, id?: number) {
+	constructor(
+		iv: PokemonIv,
+		nickname?: string,
+		attributes?: string,
+		id?: number,
+	) {
 		this._iv = iv;
 		this._nickname = nickname ?? "";
+		this._attributes = attributes ?? "";
 		this._id = id !== undefined ? id : PokemonBoxItem.nextId++;
 	}
 
 	/**
-	 * Serialize the data to string.
+	 * Serialize the data to string (`iv[.attributes][@nickname]`).
 	 * @returns Serilized string.
 	 */
 	serialize(): string {
-		const serializedIv = this._iv.serialize();
-		if (this._nickname === "") {
-			return serializedIv;
+		let ret = this._iv.serialize();
+		if (this._attributes !== "") {
+			ret += `.${this._attributes}`;
 		}
-		return `${serializedIv}@${this._nickname}`;
+		if (this._nickname !== "") {
+			ret += `@${this._nickname}`;
+		}
+		return ret;
+	}
+
+	/**
+	 * Create a copy of the item with a new ID.
+	 * @returns Copied item.
+	 */
+	clone(): PokemonBoxItem {
+		return new PokemonBoxItem(
+			this._iv.clone(),
+			this._nickname,
+			this._attributes,
+		);
 	}
 
 	/** Get the Pokemon IV. */
@@ -151,6 +186,11 @@ export class PokemonBoxItem {
 	/** Get the nickname of the Pokemon. */
 	get nickname(): string {
 		return this._nickname;
+	}
+
+	/** Get the attributes of the item. */
+	get attributes(): string {
+		return this._attributes;
 	}
 
 	/** Get the ID. */

@@ -627,6 +627,11 @@ describe("detectFormat", () => {
 		expect(detectFormat("ABCDEFGHIJKL@MyPika")).toBe("custom");
 	});
 
+	test("detects custom format with .attributes", () => {
+		expect(detectFormat("ABCDEFGHIJKL.f3ff")).toBe("custom");
+		expect(detectFormat("ABCDEFGHIJKL.f3ff@MyPika")).toBe("custom");
+	});
+
 	test("detects TSV when first line contains tab", () => {
 		const tsv =
 			"Nickname\tPokémon\tLevel\tSkill Level\tIng 1\tIng 2\tIng 3\tMain Skill\tNature\tLv10)\tLv25)\tLv50\tLv70\tLv80\tRibbon\tShiny";
