@@ -1,8 +1,21 @@
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { ButtonBase, TextField, ToggleButton } from "@mui/material";
+import {
+	Button,
+	ButtonBase,
+	IconButton,
+	Popover,
+	TextField,
+	ToggleButton,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import {
+	type FavoriteColor,
+	favoriteColors,
+	favoriteMaskToColors,
+	toggleFavoriteColor,
+} from "../../../util/Box/FavoriteColor";
 import { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
@@ -12,6 +25,7 @@ import type { IvAction } from "../IvState";
 import TypeSpecialtyPanel from "../Panel/TypeSpecialtyPanel";
 import PokemonIcon from "../PokemonIcon";
 import RpLabel from "../Rp/RpLabel";
+import FavoriteStar, { FavoriteStars } from "./FavoriteStar";
 
 /**
  * Form to edit a pokemon in the box (IV, nickname and shiny).
@@ -70,6 +84,27 @@ const BoxItemEditor = React.memo(
 			[displayNickName, iv, notify],
 		);
 
+		const [favoriteAnchor, setFavoriteAnchor] =
+			React.useState<HTMLElement | null>(null);
+		const onFavoriteButtonClick = React.useCallback(
+			(event: React.MouseEvent<HTMLElement>) => {
+				setFavoriteAnchor(event.currentTarget);
+			},
+			[],
+		);
+		const onFavoritePopoverClose = React.useCallback(() => {
+			setFavoriteAnchor(null);
+		}, []);
+		const onFavoriteColorClick = React.useCallback(
+			(color: FavoriteColor) => {
+				onChange(
+					boxItem.withFavorites(toggleFavoriteColor(boxItem.favorites, color)),
+				);
+			},
+			[boxItem, onChange],
+		);
+		const favorites = favoriteMaskToColors(boxItem.favorites);
+
 		return (
 			<StyledBoxItemEditor>
 				<BoxItemSummary boxItem={boxItem} rp={rp} visible={showSummary} />
@@ -93,6 +128,15 @@ const BoxItemEditor = React.memo(
 							</ToggleButton>
 						</span>
 					)}
+					<span className="favorite">
+						<Button
+							value="favorite"
+							onClick={onFavoriteButtonClick}
+							aria-label={t("favorite")}
+						>
+							<FavoriteStars colors={favorites} />
+						</Button>
+					</span>
 				</header>
 				<div className="icon">
 					<ButtonBase onClick={onShinyClick}>
@@ -116,6 +160,18 @@ const BoxItemEditor = React.memo(
 					dispatch={dispatch}
 					onChange={onFormChange}
 				/>
+				<Popover
+					open={favoriteAnchor !== null}
+					anchorEl={favoriteAnchor}
+					onClose={onFavoritePopoverClose}
+					anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+					transformOrigin={{ vertical: "top", horizontal: "right" }}
+				>
+					<FavoriteColorSelector
+						value={boxItem.favorites}
+						onClick={onFavoriteColorClick}
+					/>
+				</Popover>
 			</StyledBoxItemEditor>
 		);
 	},
@@ -146,6 +202,13 @@ const StyledBoxItemEditor = styled("article")({
 					background: "#ffcc00",
 					color: "#ffffff",
 				},
+			},
+		},
+		"& > span.favorite": {
+			"& > button": {
+				padding: "0 0 0 4px",
+				margin: 0,
+				minWidth: 24,
 			},
 		},
 	},
@@ -286,6 +349,48 @@ const StyledBoxItemSummary = styled("div")({
 			fontSize: ".8rem",
 			fontWeight: "bold",
 		},
+	},
+});
+
+/**
+ * Toggle buttons to select favorite colors.
+ */
+const FavoriteColorSelector = React.memo(
+	({
+		value,
+		onClick,
+	}: {
+		value: number;
+		onClick: (color: FavoriteColor) => void;
+	}) => {
+		const selected = favoriteMaskToColors(value);
+		return (
+			<StyledFavoriteColorSelector>
+				{favoriteColors.map((color) => {
+					const isSelected = selected.includes(color);
+					return (
+						<IconButton
+							key={color}
+							className={isSelected ? "selected" : ""}
+							disableRipple
+							aria-pressed={isSelected}
+							onClick={() => onClick(color)}
+						>
+							<FavoriteStar color={color} filled={isSelected} size={24} />
+						</IconButton>
+					);
+				})}
+			</StyledFavoriteColorSelector>
+		);
+	},
+);
+
+const StyledFavoriteColorSelector = styled("div")({
+	display: "grid",
+	gridTemplateColumns: "repeat(5, auto)",
+	padding: ".3rem",
+	"& > button": {
+		padding: "6px",
 	},
 });
 

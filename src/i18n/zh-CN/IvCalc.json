@@ -222,6 +222,7 @@
 	"skills desc": "主技能特别或发动概率高等，擅长发动技能的宝可梦。可以多储存一次主技能，且有时会在一次帮忙中连续发动两次主技能。",
 	"unknown desc": "尚未明确。",
 	"shiny": "异色",
+	"favorite": "收藏",
 	"frequency": "帮忙间隔",
 	"carry limit": "持有上限",
 	"Main Skill & Sub Skills": "主技能・副技能",
