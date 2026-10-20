@@ -169,55 +169,37 @@ const BoxItemEditor = React.memo(
 		const { t } = useTranslation();
 		const { iv, nickname } = boxItem;
 		const rp = React.useMemo(() => new PokemonRp(iv).calculate().rp, [iv]);
-		const [isEditingNickName, setIsEditingNickName] = React.useState(false);
 		const localName = t(`pokemons.${iv.pokemonName}`);
 
 		const notify = React.useCallback(
 			(newIv: PokemonIv, newNickname: string) => {
+				const name =
+					newNickname === t(`pokemons.${newIv.pokemonName}`) ? "" : newNickname;
 				onChange(
-					new PokemonBoxItem(
-						newIv,
-						newNickname,
-						boxItem.attributes,
-						boxItem.id,
-					),
+					new PokemonBoxItem(newIv, name, boxItem.attributes, boxItem.id),
 				);
 			},
-			[onChange, boxItem.attributes, boxItem.id],
+			[onChange, boxItem.attributes, boxItem.id, t],
 		);
 
 		const onFormChange = React.useCallback(
 			(value: PokemonIv) => {
-				notify(value, nickname === localName ? "" : nickname);
+				notify(value, nickname);
 			},
-			[localName, nickname, notify],
+			[nickname, notify],
 		);
 		const onShinyClick = React.useCallback(() => {
 			onFormChange(iv.clone({ shiny: !iv.shiny }));
 		}, [iv, onFormChange]);
-		const onNickNameChange = React.useCallback(
-			(event: React.ChangeEvent<HTMLInputElement>) => {
-				notify(iv, event.target.value);
+		const displayNickName = nickname === "" ? localName : nickname;
+		const onNickNameBlur = React.useCallback(
+			(event: React.FocusEvent<HTMLInputElement>) => {
+				if (event.target.value !== displayNickName) {
+					notify(iv, event.target.value);
+				}
 			},
-			[iv, notify],
+			[displayNickName, iv, notify],
 		);
-		const onNickNameFocus = React.useCallback(() => {
-			setIsEditingNickName(true);
-			if (nickname === "") {
-				notify(iv, localName);
-			}
-		}, [iv, nickname, localName, notify]);
-		const onNickNameBlur = React.useCallback(() => {
-			setIsEditingNickName(false);
-			if (nickname === localName) {
-				notify(iv, "");
-			}
-		}, [iv, nickname, localName, notify]);
-
-		let displayNickName = nickname;
-		if (!isEditingNickName && nickname === "") {
-			displayNickName = localName;
-		}
 
 		return (
 			<StyledBoxItemEditor>
@@ -249,11 +231,11 @@ const BoxItemEditor = React.memo(
 				</div>
 				<div className="nickname">
 					<TextField
+						// Recreate the field to reflect the nickname changed outside
+						key={`${boxItem.id}-${displayNickName}`}
 						variant="standard"
 						size="small"
-						value={displayNickName}
-						onChange={onNickNameChange}
-						onFocus={onNickNameFocus}
+						defaultValue={displayNickName}
 						onBlur={onNickNameBlur}
 					/>
 				</div>
