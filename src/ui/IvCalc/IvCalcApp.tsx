@@ -72,6 +72,7 @@ const ResearchCalcApp = React.memo(() => {
 		dispatch({ type: "editDialogClose" });
 	}, []);
 
+	// Hide while the pokemon being added is previewed
 	const isSelectedItemEdited =
 		selectedItem !== null && !selectedItem.iv.isEqual(state.pokemonIv);
 
@@ -156,6 +157,8 @@ const ResearchCalcApp = React.memo(() => {
 			<BoxItemDialog
 				key={state.boxItemDialogKey}
 				mode="add"
+				pokemonIv={state.pokemonIv}
+				selectedItemId={state.selectedItemId}
 				open={state.boxItemDialogOpen}
 				position={state.boxDrawerPosition}
 				parameter={state.parameter}

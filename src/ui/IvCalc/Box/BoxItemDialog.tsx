@@ -60,6 +60,12 @@ const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
 		null,
 	);
 
+	// Add mode: store the original IV and selectedItemId to origin when opened
+	const origin = React.useRef<{
+		iv: PokemonIv;
+		selectedItemId: number;
+	} | null>(null);
+
 	// In the add mode, the new item is the only item
 	const editItems = isEdit ? props.items : undefined;
 	const items = React.useMemo(
@@ -83,12 +89,23 @@ const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
 	const prevId = navIds[index - 1] as number | undefined;
 	const nextId = navIds[index + 1] as number | undefined;
 
-	// Discard the unsaved change when opened
+	// Discard the unsaved change and store the origin when opened
+	// biome-ignore lint/correctness/useExhaustiveDependencies: store the origin only when opened
 	React.useLayoutEffect(() => {
 		if (open) {
 			setCurrentItem(null);
+			if (props.mode === "add") {
+				origin.current = { iv: props.pokemonIv, selectedItemId: props.selectedItemId };
+			}
 		}
 	}, [open]);
+
+	// Preview the new item from the beginning in the add mode
+	React.useEffect(() => {
+		if (open && !isEdit) {
+			dispatch({ type: "updateIv", payload: { iv: newItem.iv } });
+		}
+	}, [open, isEdit, newItem, dispatch]);
 
 	/** Save the edited item to the box if it's changed (edit mode only). */
 	const commit = React.useCallback(() => {
@@ -108,9 +125,16 @@ const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
 	}, [isEdit, items, currentItem, dispatch]);
 
 	const close = React.useCallback(() => {
+		// Add mode: Restore the selection
+		if (origin.current !== null) {
+			const { selectedItemId, iv } = origin.current;
+			dispatch({ type: "select", payload: { id: selectedItemId } });
+			dispatch({ type: "updateIv", payload: { iv } });
+		}
+
 		commit();
 		onClose();
-	}, [commit, onClose]);
+	}, [commit, dispatch, onClose]);
 
 	const setPosition = React.useCallback(
 		(value: BoxDrawerPosition) => {
@@ -122,12 +146,15 @@ const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
 		[dispatch],
 	);
 
+	// Edit mode: Save immediately
+	// Add mode: Preview the result without adding
 	const onEditorChange = React.useCallback(
 		(value: PokemonBoxItem) => {
 			if (isEdit) {
 				dispatch({ type: "addOrEditDone", payload: { item: value } });
 			} else {
 				setCurrentItem(value);
+				dispatch({ type: "updateIv", payload: { iv: value.iv } });
 			}
 		},
 		[isEdit, dispatch],
@@ -139,8 +166,8 @@ const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
 			type: "addOrEditDone",
 			payload: { item: currentItem ?? newItem },
 		});
-		close();
-	}, [currentItem, newItem, dispatch, close]);
+		onClose();
+	}, [currentItem, newItem, dispatch, onClose]);
 
 	const moveTo = React.useCallback(
 		(targetId: number | undefined) => {
@@ -555,6 +582,10 @@ type BoxItemDialogProps = {
 	| {
 			/** Add a new pokemon to the box. */
 			mode: "add";
+			/** Current pokemon, which is restored when canceled. */
+			pokemonIv: PokemonIv;
+			/** Current selected item ID, which is restored when canceled. */
+			selectedItemId: number;
 	  }
 	| {
 			/** Edit a pokemon in the box. */
