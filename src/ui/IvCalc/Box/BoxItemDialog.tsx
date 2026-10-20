@@ -167,13 +167,10 @@ const BoxItemEditor = React.memo(
 		onChange: (value: PokemonBoxItem) => void;
 	}) => {
 		const { t } = useTranslation();
-		const nickname = boxItem.nickname;
-		const rp = React.useMemo(
-			() => new PokemonRp(boxItem.iv).calculate().rp,
-			[boxItem.iv],
-		);
+		const { iv, nickname } = boxItem;
+		const rp = React.useMemo(() => new PokemonRp(iv).calculate().rp, [iv]);
 		const [isEditingNickName, setIsEditingNickName] = React.useState(false);
-		const localName = t(`pokemons.${boxItem.iv.pokemonName}`);
+		const localName = t(`pokemons.${iv.pokemonName}`);
 
 		const notify = React.useCallback(
 			(newIv: PokemonIv, newNickname: string) => {
@@ -196,52 +193,48 @@ const BoxItemEditor = React.memo(
 			[localName, nickname, notify],
 		);
 		const onShinyClick = React.useCallback(() => {
-			onFormChange(
-				boxItem.iv.clone({
-					shiny: !boxItem.iv.shiny,
-				}),
-			);
-		}, [boxItem, onFormChange]);
+			onFormChange(iv.clone({ shiny: !iv.shiny }));
+		}, [iv, onFormChange]);
 		const onNickNameChange = React.useCallback(
 			(event: React.ChangeEvent<HTMLInputElement>) => {
-				notify(boxItem.iv, event.target.value);
+				notify(iv, event.target.value);
 			},
-			[boxItem, notify],
+			[iv, notify],
 		);
 		const onNickNameFocus = React.useCallback(() => {
 			setIsEditingNickName(true);
 			if (nickname === "") {
-				notify(boxItem.iv, localName);
+				notify(iv, localName);
 			}
-		}, [boxItem, nickname, localName, notify]);
+		}, [iv, nickname, localName, notify]);
 		const onNickNameBlur = React.useCallback(() => {
 			setIsEditingNickName(false);
 			if (nickname === localName) {
-				notify(boxItem.iv, "");
+				notify(iv, "");
 			}
-		}, [boxItem, nickname, localName, notify]);
+		}, [iv, nickname, localName, notify]);
 
 		let displayNickName = nickname;
 		if (!isEditingNickName && nickname === "") {
-			displayNickName = t(`pokemons.${boxItem.iv.pokemonName}`);
+			displayNickName = localName;
 		}
 
 		return (
 			<StyledBoxItemEditor>
-				<RpLabel rp={rp} iv={boxItem.iv} />
+				<RpLabel rp={rp} iv={iv} />
 				<header className="control">
 					<TypeSpecialtyPanel
-						type={boxItem.iv.pokemon.type}
-						specialty={boxItem.iv.pokemon.specialty}
-						level={boxItem.iv.level}
+						type={iv.pokemon.type}
+						specialty={iv.pokemon.specialty}
+						level={iv.level}
 						parameter={parameter}
 						dispatch={dispatch}
 					/>
-					{!boxItem.iv.isMythical && (
+					{!iv.isMythical && (
 						<span className="shiny">
 							<ToggleButton
 								value="shiny"
-								selected={boxItem.iv.shiny}
+								selected={iv.shiny}
 								onClick={onShinyClick}
 							>
 								<AutoAwesomeIcon />
@@ -251,11 +244,7 @@ const BoxItemEditor = React.memo(
 				</header>
 				<div className="icon">
 					<ButtonBase onClick={onShinyClick}>
-						<PokemonIcon
-							idForm={boxItem.iv.idForm}
-							shiny={boxItem.iv.shiny}
-							size={80}
-						/>
+						<PokemonIcon idForm={iv.idForm} shiny={iv.shiny} size={80} />
 					</ButtonBase>
 				</div>
 				<div className="nickname">
@@ -270,7 +259,7 @@ const BoxItemEditor = React.memo(
 				</div>
 				<IvForm
 					parameter={parameter}
-					pokemonIv={boxItem.iv}
+					pokemonIv={iv}
 					fixMode={isEdit}
 					dispatch={dispatch}
 					onChange={onFormChange}
