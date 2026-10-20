@@ -24,12 +24,14 @@ const BoxItemEditor = React.memo(
 		boxItem,
 		isEdit,
 		parameter,
+		showSummary,
 		dispatch,
 		onChange,
 	}: {
 		boxItem: PokemonBoxItem;
 		isEdit: boolean;
 		parameter: StrengthParameter;
+		showSummary: boolean;
 		dispatch: (action: IvAction) => void;
 		onChange: (value: PokemonBoxItem) => void;
 	}) => {
@@ -70,6 +72,7 @@ const BoxItemEditor = React.memo(
 
 		return (
 			<StyledBoxItemEditor>
+				<BoxItemSummary boxItem={boxItem} rp={rp} visible={showSummary} />
 				<RpLabel rp={rp} iv={iv} />
 				<header className="control">
 					<TypeSpecialtyPanel
@@ -160,6 +163,128 @@ const StyledBoxItemEditor = styled("article")({
 			fontSize: "1.2rem",
 			fontWeight: "bold",
 			textAlign: "center",
+		},
+	},
+});
+
+/**
+ * Summary of the item (SP, level and nickname) that sticks to the top
+ * left of the drawer content while the content is scrolled down.
+ *
+ * It is placed in each item so that it moves with the item on swipe.
+ * The height is 0 so that it doesn't affect the layout of the item.
+ */
+const BoxItemSummary = React.memo(
+	({
+		boxItem,
+		rp,
+		visible,
+	}: {
+		boxItem: PokemonBoxItem;
+		rp: number;
+		visible: boolean;
+	}) => {
+		const { t } = useTranslation();
+		const { iv } = boxItem;
+
+		return (
+			<StyledBoxItemSummary
+				className={visible ? "visible" : ""}
+				aria-hidden={!visible}
+			>
+				<div className="card">
+					<PokemonIcon idForm={iv.idForm} shiny={iv.shiny} size={32} />
+					<div className="info">
+						<span
+							style={{
+								color: "#fd775d",
+								fontWeight: "bold",
+								paddingRight: ".4rem",
+								fontSize: ".7rem",
+								display: "inline-block",
+								transform: "scale(1, 0.9)",
+							}}
+						>
+							{t("rp")}
+						</span>
+						<span
+							style={{
+								fontSize: "1rem",
+								fontWeight: "bold",
+								display: "inline-block",
+								transform: "scale(1, 0.9)",
+							}}
+						>
+							{t("num", { n: rp })}
+						</span>
+
+						<div className="lvName">
+							<span className="lv">Lv.</span>
+							<span className="lvValue">{iv.level}</span>
+							<span className="name">{boxItem.filledNickname(t)}</span>
+						</div>
+					</div>
+				</div>
+			</StyledBoxItemSummary>
+		);
+	},
+);
+
+const StyledBoxItemSummary = styled("div")({
+	position: "sticky",
+	top: 0,
+	zIndex: 2,
+	height: 0,
+	margin: "-.5rem 0 .5rem -.5rem",
+	pointerEvents: "none",
+	opacity: 0,
+	transition: "opacity 150ms ease-out",
+	"&.visible": {
+		opacity: 1,
+	},
+	"& > div.card": {
+		maxWidth: "calc(100% - 3rem)",
+		width: "fit-content",
+		display: "flex",
+		alignItems: "center",
+		gap: ".4rem",
+		padding: ".4rem .8rem .4rem .5rem",
+		background: "#ffffff",
+		border: "1px solid #fd775d",
+		borderLeft: "6px solid #fd775d",
+		borderRadius: "0 .6rem .6rem 0",
+		boxShadow: "0 1px 4px rgba(0, 0, 0, 0.25)",
+	},
+	"& div.info": {
+		minWidth: 0,
+		marginLeft: ".5rem",
+		"& > div.lvName": {
+			whiteSpace: "nowrap",
+			overflow: "hidden",
+			textOverflow: "ellipsis",
+			lineHeight: 1,
+		},
+		// Stretch horizontally in the same way as RpLabel
+		"& > div.lvName > span": {
+			display: "inline-block",
+		},
+		"& span.lv": {
+			color: "#4caf50",
+			fontSize: ".6rem",
+			fontWeight: "bold",
+			transform: "scale(1, 0.9)",
+			paddingRight: ".1rem",
+		},
+		"& span.lvValue": {
+			color: "#4caf50",
+			fontSize: ".7rem",
+			transform: "scale(1, 0.9)",
+			fontWeight: "bold",
+			paddingRight: ".8rem",
+		},
+		"& span.name": {
+			fontSize: ".8rem",
+			fontWeight: "bold",
 		},
 	},
 });

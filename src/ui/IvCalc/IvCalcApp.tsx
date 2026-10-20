@@ -2,7 +2,6 @@ import { Button, Snackbar, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import type PokemonIv from "../../util/PokemonIv";
 import { useAuthUser } from "../common/Hook";
 import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
@@ -73,10 +72,6 @@ const ResearchCalcApp = React.memo(() => {
 		dispatch({ type: "editDialogClose" });
 	}, []);
 
-	const onBoxItemDialogChange = React.useCallback((value: PokemonBoxItem) => {
-		dispatch({ type: "addOrEditDone", payload: { item: value } });
-	}, []);
-
 	const isSelectedItemEdited =
 		selectedItem !== null && !selectedItem.iv.isEqual(state.pokemonIv);
 
@@ -145,6 +140,7 @@ const ResearchCalcApp = React.memo(() => {
 					status={state.boxStatus}
 					saveStatus={saveStatus}
 					selectedId={state.selectedItemId}
+					drawerPosition={state.boxDrawerPosition}
 					dispatch={dispatch}
 					parameter={state.parameter}
 				/>
@@ -159,13 +155,12 @@ const ResearchCalcApp = React.memo(() => {
 			)}
 			<BoxItemDialog
 				key={state.boxItemDialogKey}
+				mode="add"
 				open={state.boxItemDialogOpen}
-				boxItem={selectedItem}
-				isEdit={state.boxItemDialogIsEdit}
+				position={state.boxDrawerPosition}
 				parameter={state.parameter}
 				dispatch={dispatch}
 				onClose={onBoxItemEditDialogClose}
-				onChange={onBoxItemDialogChange}
 			/>
 			<BoxExportDialog
 				box={state.box}
