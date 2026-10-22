@@ -40,7 +40,7 @@ const ignoreChange = () => {};
 /**
  * Drawer to add or edit a pokemon in the box.
  */
-const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
+const BoxItemDrawer = React.memo((props: BoxItemDrawerProps) => {
 	const { open, position, parameter, dispatch, onClose } = props;
 	const isEdit = props.mode === "edit";
 	const onItemChange = isEdit ? props.onItemChange : undefined;
@@ -95,7 +95,10 @@ const BoxItemDialog = React.memo((props: BoxItemDialogProps) => {
 		if (open) {
 			setCurrentItem(null);
 			if (props.mode === "add") {
-				origin.current = { iv: props.pokemonIv, selectedItemId: props.selectedItemId };
+				origin.current = {
+					iv: props.pokemonIv,
+					selectedItemId: props.selectedItemId,
+				};
 			}
 		}
 	}, [open]);
@@ -569,7 +572,7 @@ const StyledDrawer = styled(Drawer)({
 	},
 });
 
-type BoxItemDialogProps = {
+type BoxItemDrawerProps = {
 	/** Whether the drawer is open. */
 	open: boolean;
 	/** Position where the drawer stopped last time. */
@@ -601,4 +604,4 @@ type BoxItemDialogProps = {
 	  }
 );
 
-export default BoxItemDialog;
+export default BoxItemDrawer;

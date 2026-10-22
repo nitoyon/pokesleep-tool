@@ -42,7 +42,7 @@ import PokemonFilterFooter, {
 import PokemonIcon from "../PokemonIcon";
 import { shareIv } from "../ShareUtil";
 import BoxFilterDialog from "./BoxFilterDialog";
-import BoxItemDialog from "./BoxItemDialog";
+import BoxItemDrawer from "./BoxItemDrawer";
 import BoxSortConfigFooter from "./BoxSortConfigFooter";
 
 const BoxView = React.memo(
@@ -326,7 +326,7 @@ const BoxView = React.memo(
 					onChange={onFilterChange}
 				/>
 				{!selectMode && (
-					<BoxItemDialog
+					<BoxItemDrawer
 						mode="add"
 						pokemonIv={iv}
 						selectedItemId={selectedId}
@@ -338,7 +338,7 @@ const BoxView = React.memo(
 					/>
 				)}
 				{editable && (
-					<BoxItemDialog
+					<BoxItemDrawer
 						mode="edit"
 						open={drawer.open}
 						position={drawerPosition}
