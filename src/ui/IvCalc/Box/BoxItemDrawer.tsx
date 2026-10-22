@@ -20,7 +20,7 @@ import { lowerTabHeaderId } from "../LowerTabHeader";
 import BoxItemEditor from "./BoxItemEditor";
 
 /** Height of the drag handle (in pixels) */
-const handleHeight = 24;
+const handleHeight = 32;
 
 /** Minimum height of the drawer in the half mode (in pixels) */
 const minHalfHeight = 240;
@@ -539,6 +539,7 @@ const StyledDrawer = styled(Drawer)({
 			},
 			// Leave space so that the content can scroll above the buttons
 			"& article": {
+				paddingTop: 0,
 				paddingBottom: "5rem",
 			},
 		},
