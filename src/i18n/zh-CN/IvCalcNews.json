@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.9.0": {
+				"headline": "已因应 v3.9.0 的平衡性调整。",
+				"detail": "$t(pokemons.Gengar)的$t(ingredient rate): 16.1%→16.6%\n\n$t(own research note)"
+			},
 			"box sync": {
 				"headline": "盒子中的宝可梦现在可以保存到云端了。",
 				"detail": "$t(box sync notice)"

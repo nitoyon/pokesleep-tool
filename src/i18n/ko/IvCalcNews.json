@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"v3.9.0": {
+				"headline": "v3.9.0의 밸런스 조정에 대응하였습니다.",
+				"detail": "$t(pokemons.Gengar)의 $t(ingredient rate): 16.1%→16.6%\n\n$t(own research note)"
+			},
 			"box sync": {
 				"headline": "박스 안의 포켓몬을 클라우드에 저장할 수 있게 되었습니다.",
 				"detail": "$t(box sync notice)"
