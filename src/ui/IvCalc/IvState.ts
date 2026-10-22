@@ -11,7 +11,6 @@ import {
 export type IvAction =
 	| {
 			type:
-				| "add"
 				| "export"
 				| "exportClose"
 				| "import"
@@ -24,13 +23,12 @@ export type IvAction =
 				| "reloadBox"
 				| "saveItem"
 				| "restoreItem"
-				| "editDialogClose"
 				| "closeAlert"
 				| "openEnergyDialog"
 				| "closeEnergyDialog";
 	  }
 	| {
-			type: "select" | "edit" | "dup" | "remove";
+			type: "select" | "dup" | "remove";
 			payload: { id: number };
 	  }
 	| {
@@ -48,6 +46,10 @@ export type IvAction =
 	| {
 			type: "changeUpperTab" | "changeLowerTab";
 			payload: { index: number };
+	  }
+	| {
+			type: "changeBoxDrawerPosition";
+			payload: { position: BoxDrawerPosition };
 	  }
 	| {
 			type: "changeParameter";
@@ -156,9 +158,28 @@ function updateTeamMember(
  */
 export type BoxStatus = "loading" | "ready" | "error";
 
+/**
+ * Position where the box item drawer stopped.
+ */
+export type BoxDrawerPosition = {
+	/** Whether the drawer is expanded to full screen. */
+	full: boolean;
+	/**
+	 * Height of the drawer when not expanded (in pixels).
+	 * null means the default half height.
+	 */
+	height: number | null;
+};
+
+export const defaultBoxDrawerPosition: BoxDrawerPosition = {
+	full: false,
+	height: null,
+};
+
 type IvState = {
 	tabIndex: number;
 	lowerTabIndex: number;
+	boxDrawerPosition: BoxDrawerPosition;
 	pokemonIv: PokemonIv;
 	parameter: StrengthParameter;
 	box: PokemonBox;
@@ -167,9 +188,6 @@ type IvState = {
 	boxReloadCount: number;
 	selectedItemId: number;
 	energyDialogOpen: boolean;
-	boxItemDialogOpen: boolean;
-	boxItemDialogKey: string;
-	boxItemDialogIsEdit: boolean;
 	boxExportDialogOpen: boolean;
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
@@ -186,6 +204,8 @@ type IvState = {
 type IvStateCache = {
 	tabIndex: number;
 	lowerTabIndex: number;
+	boxDrawerFull: boolean;
+	boxDrawerHeight: number | null;
 	iv: string;
 	selectedIv: string;
 };
@@ -207,6 +227,10 @@ export function getInitialIvState(): IvState {
 	const ret: IvState = {
 		tabIndex: cache.tabIndex,
 		lowerTabIndex: cache.lowerTabIndex,
+		boxDrawerPosition: {
+			full: cache.boxDrawerFull,
+			height: cache.boxDrawerHeight,
+		},
 		pokemonIv: iv,
 		parameter: loadStrengthParameter(),
 		box: new PokemonBox(),
@@ -214,9 +238,6 @@ export function getInitialIvState(): IvState {
 		boxReloadCount: 0,
 		selectedItemId: -1,
 		energyDialogOpen: false,
-		boxItemDialogOpen: false,
-		boxItemDialogKey: "",
-		boxItemDialogIsEdit: false,
 		boxExportDialogOpen: false,
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
@@ -246,6 +267,8 @@ function loadInitialIvStateCache(): IvStateCache {
 	const ret: IvStateCache = {
 		tabIndex: 0,
 		lowerTabIndex: 0,
+		boxDrawerFull: defaultBoxDrawerPosition.full,
+		boxDrawerHeight: defaultBoxDrawerPosition.height,
 		iv: "",
 		selectedIv: "",
 	};
@@ -271,6 +294,16 @@ function loadInitialIvStateCache(): IvStateCache {
 		json.lowerTabIndex <= 2
 	) {
 		ret.lowerTabIndex = json.lowerTabIndex;
+	}
+	if (typeof json.boxDrawerFull === "boolean") {
+		ret.boxDrawerFull = json.boxDrawerFull;
+	}
+	if (
+		typeof json.boxDrawerHeight === "number" &&
+		Number.isFinite(json.boxDrawerHeight) &&
+		json.boxDrawerHeight > 0
+	) {
+		ret.boxDrawerHeight = json.boxDrawerHeight;
 	}
 	if (typeof json.iv === "string") {
 		ret.iv = json.iv;
@@ -315,6 +348,8 @@ function saveIvStateCache(state: IvState) {
 	const cache: IvStateCache = {
 		tabIndex: state.tabIndex,
 		lowerTabIndex: state.lowerTabIndex,
+		boxDrawerFull: state.boxDrawerPosition.full,
+		boxDrawerHeight: state.boxDrawerPosition.height,
 		iv: state.pokemonIv.serialize(),
 		selectedIv,
 	};
@@ -323,7 +358,6 @@ function saveIvStateCache(state: IvState) {
 
 /** Actions that change the box items. */
 const boxChangingActions: ReadonlySet<IvAction["type"]> = new Set([
-	"add",
 	"addThis",
 	"import",
 	"importItems",
@@ -331,7 +365,6 @@ const boxChangingActions: ReadonlySet<IvAction["type"]> = new Set([
 	"removeAllItems",
 	"saveItem",
 	"addOrEditDone",
-	"edit",
 	"dup",
 	"remove",
 ]);
@@ -386,6 +419,14 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		saveIvStateCache(newState);
 		return newState;
 	}
+	if (type === "changeBoxDrawerPosition") {
+		const newState = {
+			...state,
+			boxDrawerPosition: action.payload.position,
+		};
+		saveIvStateCache(newState);
+		return newState;
+	}
 	if (type === "changeParameter") {
 		const value = action.payload.parameter;
 		const newState = normalizeState({ ...state, parameter: value });
@@ -397,17 +438,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	}
 	if (type === "closeEnergyDialog") {
 		return { ...state, energyDialogOpen: false };
-	}
-	if (type === "add") {
-		if (!state.box.canAdd) {
-			return { ...state, alertMessage: "box is full" };
-		}
-		return {
-			...state,
-			boxItemDialogOpen: true,
-			boxItemDialogKey: `dlg${Date.now().toString()}`,
-			boxItemDialogIsEdit: false,
-		};
 	}
 	if (type === "updateIv") {
 		const newState = normalizeState({ ...state, pokemonIv: action.payload.iv });
@@ -488,9 +518,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return newState;
 	}
 
-	if (type === "editDialogClose") {
-		return { ...state, boxItemDialogOpen: false };
-	}
 	if (type === "addOrEditDone") {
 		const value = action.payload.item;
 		const box = new PokemonBox(state.box.items);
@@ -552,12 +579,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	}
 
 	// following action requires item
-	if (
-		type !== "select" &&
-		type !== "edit" &&
-		type !== "dup" &&
-		type !== "remove"
-	) {
+	if (type !== "select" && type !== "dup" && type !== "remove") {
 		return state;
 	}
 	const id = action.payload.id;
@@ -570,13 +592,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		newState.selectedItemId = id;
 		saveIvStateCache(newState);
 		return newState;
-	} else if (type === "edit") {
-		return {
-			...state,
-			boxItemDialogOpen: true,
-			boxItemDialogKey: `dlg${Date.now().toString()}`,
-			boxItemDialogIsEdit: true,
-		};
 	} else if (type === "dup") {
 		const box = new PokemonBox(state.box.items);
 		const selectedItemId: number = box.add(item.clone());

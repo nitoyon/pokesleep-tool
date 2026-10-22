@@ -17,7 +17,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
+import PokemonBox, { type PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import {
 	type BoxSortConfig,
@@ -30,13 +30,19 @@ import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { useLongPress } from "../../common/Hook";
 import CandyIcon from "../../Resources/CandyIcon";
 import CandyDialog from "../Dialog/CandyDialog";
-import type { BoxStatus, IvAction } from "../IvState";
+import {
+	type BoxDrawerPosition,
+	type BoxStatus,
+	defaultBoxDrawerPosition,
+	type IvAction,
+} from "../IvState";
 import PokemonFilterFooter, {
 	type PokemonFilterFooterConfig,
 } from "../PokemonFilterFooter";
 import PokemonIcon from "../PokemonIcon";
 import { shareIv } from "../ShareUtil";
 import BoxFilterDialog from "./BoxFilterDialog";
+import BoxItemDrawer from "./BoxItemDrawer";
 import BoxSortConfigFooter from "./BoxSortConfigFooter";
 
 const BoxView = React.memo(
@@ -49,7 +55,8 @@ const BoxView = React.memo(
 		parameter,
 		dispatch,
 		onSelect,
-		onEdit,
+		editable = false,
+		drawerPosition = defaultBoxDrawerPosition,
 		footerAccessory,
 	}: {
 		items: PokemonBoxItem[];
@@ -64,7 +71,10 @@ const BoxView = React.memo(
 		parameter: StrengthParameter;
 		dispatch: (action: IvAction) => void;
 		onSelect: (id: number) => void;
-		onEdit?: (id: number) => void;
+		/** Whether box items can be edited in the drawer. */
+		editable?: boolean;
+		/** Position where the drawer stopped last time. */
+		drawerPosition?: BoxDrawerPosition;
 		footerAccessory?: React.ReactNode;
 	}) => {
 		const { t } = useTranslation();
@@ -77,9 +87,17 @@ const BoxView = React.memo(
 		const [candyOpen, setCandyOpen] = React.useState(false);
 		const selectedRef = React.useRef<HTMLDivElement | null>(null);
 
+		const [addDrawerOpen, setAddDrawerOpen] = React.useState(false);
 		const onAddClick = React.useCallback(() => {
-			dispatch({ type: "add" });
-		}, [dispatch]);
+			if (items.length >= PokemonBox.maxEntryCount) {
+				dispatch({ type: "showAlert", payload: { message: "box is full" } });
+				return;
+			}
+			setAddDrawerOpen(true);
+		}, [items.length, dispatch]);
+		const onAddDrawerClose = React.useCallback(() => {
+			setAddDrawerOpen(false);
+		}, []);
 
 		const onFilterConfigChange = React.useCallback(
 			(value: PokemonFilterFooterConfig) => {
@@ -151,10 +169,38 @@ const BoxView = React.memo(
 				t,
 			],
 		);
+		const orderedItems = React.useMemo(
+			() => (sortConfig.descending ? sortedItems : [...sortedItems].reverse()),
+			[sortedItems, sortConfig.descending],
+		);
 
-		let elms = React.useMemo(
+		// Drawer to edit an item
+		const [drawer, setDrawer] = React.useState<{
+			open: boolean;
+			id: number;
+			ids: number[];
+		}>({ open: false, id: -1, ids: [] });
+		const onEditHandler = React.useCallback(
+			(id: number) => {
+				setDrawer({ open: true, id, ids: orderedItems.map((x) => x.id) });
+			},
+			[orderedItems],
+		);
+		const onEdit = editable ? onEditHandler : undefined;
+		const onDrawerItemChange = React.useCallback(
+			(id: number) => {
+				setDrawer((x) => ({ ...x, id }));
+				onSelect(id);
+			},
+			[onSelect],
+		);
+		const onDrawerClose = React.useCallback(() => {
+			setDrawer((x) => ({ ...x, open: false }));
+		}, []);
+
+		const elms = React.useMemo(
 			() =>
-				sortedItems.map((item) => (
+				orderedItems.map((item) => (
 					<BoxLargeItem
 						key={item.id}
 						item={item}
@@ -166,11 +212,8 @@ const BoxView = React.memo(
 						selectedRef={item.id === selectedId ? selectedRef : undefined}
 					/>
 				)),
-			[sortedItems, dispatch, onCandyClick, selectedId, onSelect, onEdit],
+			[orderedItems, dispatch, onCandyClick, selectedId, onSelect, onEdit],
 		);
-		if (!sortConfig.descending) {
-			elms = [...elms].reverse();
-		}
 
 		React.useEffect(() => {
 			selectedRef.current?.scrollIntoView({ block: "center" });
@@ -282,6 +325,32 @@ const BoxView = React.memo(
 					value={filterConfig}
 					onChange={onFilterChange}
 				/>
+				{!selectMode && (
+					<BoxItemDrawer
+						mode="add"
+						pokemonIv={iv}
+						selectedItemId={selectedId}
+						open={addDrawerOpen}
+						position={drawerPosition}
+						parameter={parameter}
+						dispatch={dispatch}
+						onClose={onAddDrawerClose}
+					/>
+				)}
+				{editable && (
+					<BoxItemDrawer
+						mode="edit"
+						open={drawer.open}
+						position={drawerPosition}
+						items={items}
+						orderedIds={drawer.ids}
+						itemId={drawer.id}
+						parameter={parameter}
+						dispatch={dispatch}
+						onItemChange={onDrawerItemChange}
+						onClose={onDrawerClose}
+					/>
+				)}
 				<CandyDialog
 					iv={iv}
 					open={candyOpen}

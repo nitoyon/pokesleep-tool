@@ -30,6 +30,9 @@ import type IvState from "./IvState";
 import type { IvAction } from "./IvState";
 import { shareIv } from "./ShareUtil";
 
+/** DOM id of the lower tab header (used to place the box item drawer). */
+export const lowerTabHeaderId = "lowerTabHeader";
+
 const LowerTabHeader = React.memo(
 	({
 		state,
@@ -107,7 +110,7 @@ const LowerTabHeader = React.memo(
 		);
 
 		return (
-			<StyledContainer>
+			<StyledContainer id={lowerTabHeaderId}>
 				{tabIndex !== 2 && (
 					<IconButton
 						aria-label="actions"

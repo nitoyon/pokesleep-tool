@@ -7,6 +7,8 @@ import type IvState from "./IvState";
 import type { IvAction, TeamMemberSlot } from "./IvState";
 import {
 	createInitialTeams,
+	defaultBoxDrawerPosition,
+	getInitialIvState,
 	ivStateReducer,
 	normalizeState,
 	TEAM_COUNT,
@@ -16,6 +18,7 @@ function createBaseState(): IvState {
 	return {
 		tabIndex: 0,
 		lowerTabIndex: 0,
+		boxDrawerPosition: defaultBoxDrawerPosition,
 		pokemonIv: new PokemonIv({ pokemonName: "Venusaur" }),
 		parameter: loadStrengthParameter(),
 		box: new PokemonBox(),
@@ -23,9 +26,6 @@ function createBaseState(): IvState {
 		boxReloadCount: 0,
 		selectedItemId: -1,
 		energyDialogOpen: false,
-		boxItemDialogOpen: false,
-		boxItemDialogKey: "",
-		boxItemDialogIsEdit: false,
 		boxExportDialogOpen: false,
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
@@ -839,5 +839,39 @@ describe("ivStateReducer box loading", () => {
 		expect(newState.box).not.toBe(state.box);
 		expect(newState.box.items).toEqual([]);
 		expect(newState.selectedItemId).toBe(-1);
+	});
+});
+
+describe("ivStateReducer changeBoxDrawerPosition", () => {
+	beforeEach(() => {
+		localStorage.removeItem("PstIvState");
+	});
+
+	test("defaults to the half height", () => {
+		expect(getInitialIvState().boxDrawerPosition).toEqual({
+			full: false,
+			height: null,
+		});
+	});
+
+	test("saves the position and restores it", () => {
+		const position = { full: true, height: 400 };
+		const newState = ivStateReducer(createBaseState(), {
+			type: "changeBoxDrawerPosition",
+			payload: { position },
+		});
+		expect(newState.boxDrawerPosition).toEqual(position);
+		expect(getInitialIvState().boxDrawerPosition).toEqual(position);
+	});
+
+	test("ignores invalid values in the cache", () => {
+		localStorage.setItem(
+			"PstIvState",
+			JSON.stringify({ boxDrawerFull: "yes", boxDrawerHeight: -1 }),
+		);
+		expect(getInitialIvState().boxDrawerPosition).toEqual({
+			full: false,
+			height: null,
+		});
 	});
 });

@@ -2,13 +2,11 @@ import { Button, Snackbar, Tab, Tabs } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import type PokemonIv from "../../util/PokemonIv";
 import { useAuthUser } from "../common/Hook";
 import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
 import BoxExportDialog from "./Box/BoxExportDialog";
 import BoxImportDialog from "./Box/BoxImportDialog";
-import BoxItemDialog from "./Box/BoxItemDialog";
 import BoxTabChild from "./Box/BoxTabChild";
 import IvForm from "./IvForm/IvForm";
 import { getInitialIvState, ivStateReducer } from "./IvState";
@@ -69,14 +67,7 @@ const ResearchCalcApp = React.memo(() => {
 		dispatch({ type: "closeAlert" });
 	}, []);
 
-	const onBoxItemEditDialogClose = React.useCallback(() => {
-		dispatch({ type: "editDialogClose" });
-	}, []);
-
-	const onBoxItemDialogChange = React.useCallback((value: PokemonBoxItem) => {
-		dispatch({ type: "addOrEditDone", payload: { item: value } });
-	}, []);
-
+	// Hide while the pokemon being added is previewed
 	const isSelectedItemEdited =
 		selectedItem !== null && !selectedItem.iv.isEqual(state.pokemonIv);
 
@@ -145,6 +136,7 @@ const ResearchCalcApp = React.memo(() => {
 					status={state.boxStatus}
 					saveStatus={saveStatus}
 					selectedId={state.selectedItemId}
+					drawerPosition={state.boxDrawerPosition}
 					dispatch={dispatch}
 					parameter={state.parameter}
 				/>
@@ -157,16 +149,6 @@ const ResearchCalcApp = React.memo(() => {
 					dispatch={dispatch}
 				/>
 			)}
-			<BoxItemDialog
-				key={state.boxItemDialogKey}
-				open={state.boxItemDialogOpen}
-				boxItem={selectedItem}
-				isEdit={state.boxItemDialogIsEdit}
-				parameter={state.parameter}
-				dispatch={dispatch}
-				onClose={onBoxItemEditDialogClose}
-				onChange={onBoxItemDialogChange}
-			/>
 			<BoxExportDialog
 				box={state.box}
 				open={state.boxExportDialogOpen}
