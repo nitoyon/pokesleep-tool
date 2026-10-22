@@ -17,7 +17,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
+import PokemonBox, { type PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import {
 	type BoxSortConfig,
@@ -87,9 +87,17 @@ const BoxView = React.memo(
 		const [candyOpen, setCandyOpen] = React.useState(false);
 		const selectedRef = React.useRef<HTMLDivElement | null>(null);
 
+		const [addDrawerOpen, setAddDrawerOpen] = React.useState(false);
 		const onAddClick = React.useCallback(() => {
-			dispatch({ type: "add" });
-		}, [dispatch]);
+			if (items.length >= PokemonBox.maxEntryCount) {
+				dispatch({ type: "showAlert", payload: { message: "box is full" } });
+				return;
+			}
+			setAddDrawerOpen(true);
+		}, [items.length, dispatch]);
+		const onAddDrawerClose = React.useCallback(() => {
+			setAddDrawerOpen(false);
+		}, []);
 
 		const onFilterConfigChange = React.useCallback(
 			(value: PokemonFilterFooterConfig) => {
@@ -317,6 +325,18 @@ const BoxView = React.memo(
 					value={filterConfig}
 					onChange={onFilterChange}
 				/>
+				{!selectMode && (
+					<BoxItemDialog
+						mode="add"
+						pokemonIv={iv}
+						selectedItemId={selectedId}
+						open={addDrawerOpen}
+						position={drawerPosition}
+						parameter={parameter}
+						dispatch={dispatch}
+						onClose={onAddDrawerClose}
+					/>
+				)}
 				{editable && (
 					<BoxItemDialog
 						mode="edit"

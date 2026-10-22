@@ -11,7 +11,6 @@ import {
 export type IvAction =
 	| {
 			type:
-				| "add"
 				| "export"
 				| "exportClose"
 				| "import"
@@ -24,7 +23,6 @@ export type IvAction =
 				| "reloadBox"
 				| "saveItem"
 				| "restoreItem"
-				| "editDialogClose"
 				| "closeAlert"
 				| "openEnergyDialog"
 				| "closeEnergyDialog";
@@ -190,8 +188,6 @@ type IvState = {
 	boxReloadCount: number;
 	selectedItemId: number;
 	energyDialogOpen: boolean;
-	boxItemDialogOpen: boolean;
-	boxItemDialogKey: string;
 	boxExportDialogOpen: boolean;
 	boxImportDialogOpen: boolean;
 	boxDeleteAllDialogOpen: boolean;
@@ -242,8 +238,6 @@ export function getInitialIvState(): IvState {
 		boxReloadCount: 0,
 		selectedItemId: -1,
 		energyDialogOpen: false,
-		boxItemDialogOpen: false,
-		boxItemDialogKey: "",
 		boxExportDialogOpen: false,
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
@@ -364,7 +358,6 @@ function saveIvStateCache(state: IvState) {
 
 /** Actions that change the box items. */
 const boxChangingActions: ReadonlySet<IvAction["type"]> = new Set([
-	"add",
 	"addThis",
 	"import",
 	"importItems",
@@ -446,16 +439,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 	if (type === "closeEnergyDialog") {
 		return { ...state, energyDialogOpen: false };
 	}
-	if (type === "add") {
-		if (!state.box.canAdd) {
-			return { ...state, alertMessage: "box is full" };
-		}
-		return {
-			...state,
-			boxItemDialogOpen: true,
-			boxItemDialogKey: `dlg${Date.now().toString()}`,
-		};
-	}
 	if (type === "updateIv") {
 		const newState = normalizeState({ ...state, pokemonIv: action.payload.iv });
 		saveIvStateCache(newState);
@@ -535,9 +518,6 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return newState;
 	}
 
-	if (type === "editDialogClose") {
-		return { ...state, boxItemDialogOpen: false };
-	}
 	if (type === "addOrEditDone") {
 		const value = action.payload.item;
 		const box = new PokemonBox(state.box.items);

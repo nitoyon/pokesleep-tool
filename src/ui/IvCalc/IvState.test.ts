@@ -26,8 +26,6 @@ function createBaseState(): IvState {
 		boxReloadCount: 0,
 		selectedItemId: -1,
 		energyDialogOpen: false,
-		boxItemDialogOpen: false,
-		boxItemDialogKey: "",
 		boxExportDialogOpen: false,
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,

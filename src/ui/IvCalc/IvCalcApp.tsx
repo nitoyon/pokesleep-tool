@@ -7,7 +7,6 @@ import { useAuthUser } from "../common/Hook";
 import BoxDeleteAllDialog from "./Box/BoxDeleteAllDialog";
 import BoxExportDialog from "./Box/BoxExportDialog";
 import BoxImportDialog from "./Box/BoxImportDialog";
-import BoxItemDialog from "./Box/BoxItemDialog";
 import BoxTabChild from "./Box/BoxTabChild";
 import IvForm from "./IvForm/IvForm";
 import { getInitialIvState, ivStateReducer } from "./IvState";
@@ -66,10 +65,6 @@ const ResearchCalcApp = React.memo(() => {
 
 	const onAlertMessageClose = React.useCallback(() => {
 		dispatch({ type: "closeAlert" });
-	}, []);
-
-	const onBoxItemEditDialogClose = React.useCallback(() => {
-		dispatch({ type: "editDialogClose" });
 	}, []);
 
 	// Hide while the pokemon being added is previewed
@@ -154,17 +149,6 @@ const ResearchCalcApp = React.memo(() => {
 					dispatch={dispatch}
 				/>
 			)}
-			<BoxItemDialog
-				key={state.boxItemDialogKey}
-				mode="add"
-				pokemonIv={state.pokemonIv}
-				selectedItemId={state.selectedItemId}
-				open={state.boxItemDialogOpen}
-				position={state.boxDrawerPosition}
-				parameter={state.parameter}
-				dispatch={dispatch}
-				onClose={onBoxItemEditDialogClose}
-			/>
 			<BoxExportDialog
 				box={state.box}
 				open={state.boxExportDialogOpen}
