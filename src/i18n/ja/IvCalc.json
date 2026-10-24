@@ -129,6 +129,7 @@
 	"failed to read detail": "次のデータが正しい形式ではなかったため読み取れませんでした。",
 	"row N": "{{row}} 行目",
 	"delete all": "すべて削除",
+	"clear all members": "メンバー全員をクリア",
 	"delete all message": "ボックス内のポケモンをすべて削除してよいですか？",
 	"deleted all pokemon": "ボックス内のポケモンをすべて削除しました。",
 	"period": "期間",

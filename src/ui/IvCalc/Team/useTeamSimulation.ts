@@ -3,6 +3,7 @@ import type { StrengthParameter } from "../../../util/PokemonStrength";
 import { serializeStrengthParameter } from "../../../util/StrengthParameter";
 import type { TeamStrengthResult } from "../../../util/Team";
 import { createEmptyTeamStrengthResult } from "../../../util/Team";
+import type { TeamMemberSlot } from "../../../util/Team/Team";
 import type { TeamMemberInput } from "../../../util/Team/Types";
 import {
 	deserializeMemberResult,
@@ -10,7 +11,6 @@ import {
 	type TeamSimulationRequest,
 	type TeamSimulationResponse,
 } from "../../../util/Team/WorkerProtocol";
-import type { TeamMemberSlot } from "../IvState";
 
 /**
  * Run team strength simulation (Monte Carlo, ~3000 iterations) in a

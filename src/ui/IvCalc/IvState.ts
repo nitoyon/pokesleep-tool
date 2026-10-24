@@ -7,6 +7,8 @@ import {
 	type StrengthParameter,
 	saveStrengthParameter,
 } from "../../util/PokemonStrength";
+import type { Team, TeamMemberSlot } from "../../util/Team/Team";
+import { loadTeams, saveTeams } from "../../util/Team/TeamStorage";
 
 export type IvAction =
 	| {
@@ -86,44 +88,27 @@ export type IvAction =
 	| {
 			type: "setTeamMemberSneakySnacking";
 			payload: { teamIndex: number; index: number; sneakySnacking: boolean };
+	  }
+	| {
+			type: "clearTeamMembers";
+			payload: { teamIndex: number };
 	  };
 
 /**
- * A single team slot: the box item assigned to it plus whether it is
- * currently included in the team strength calculation.
+ * Save all the teams if they were changed.
+ * @param newState New state.
+ * @param oldState State before the change.
+ * @returns `newState`.
  */
-export type TeamMemberSlot = {
-	item: PokemonBoxItem;
-	enabled: boolean;
-	/** Whether this member is set to sneaky snacking. */
-	sneakySnacking: boolean;
-};
-
-/**
- * A team consisting of 5 member slots.
- */
-export type Team = {
-	members: (TeamMemberSlot | undefined)[];
-};
-
-/** Number of teams the user can switch between. */
-export const TEAM_COUNT = 4;
-
-/** Number of member slots in a team. */
-export const TEAM_MEMBER_COUNT = 5;
-
-/**
- * Create the initial list of empty teams.
- * @returns Array of {@link TEAM_COUNT} empty teams.
- */
-export function createInitialTeams(): Team[] {
-	return Array.from({ length: TEAM_COUNT }, () => ({
-		members: Array.from({ length: TEAM_MEMBER_COUNT }, () => undefined),
-	}));
+function saveTeamState(newState: IvState, oldState: IvState): IvState {
+	if (newState !== oldState) {
+		saveTeams({ teams: newState.teams, teamIndex: newState.teamIndex });
+	}
+	return newState;
 }
 
 /**
- * Return a new state with a single team member slot updated.
+ * Return a new state with a single team member slot updated and saved.
  * @param state Current state.
  * @param teamIndex Index of the target team.
  * @param index Index of the target slot in the team.
@@ -147,7 +132,7 @@ function updateTeamMember(
 					members: team.members.map((x, i) => (i === index ? update(x) : x)),
 				},
 	);
-	return { ...state, teams };
+	return saveTeamState({ ...state, teams }, state);
 }
 
 /**
@@ -224,6 +209,7 @@ export function getInitialIvState(): IvState {
 			// ignore deserialization error (e.g. corrupted cache)
 		}
 	}
+	const { teams, teamIndex } = loadTeams();
 	const ret: IvState = {
 		tabIndex: cache.tabIndex,
 		lowerTabIndex: cache.lowerTabIndex,
@@ -242,8 +228,8 @@ export function getInitialIvState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
-		teams: createInitialTeams(),
-		teamIndex: 0,
+		teams,
+		teamIndex,
 	};
 
 	// Update initial pokemonIv
@@ -545,7 +531,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		if (teamIndex < 0 || teamIndex >= state.teams.length) {
 			return state;
 		}
-		return { ...state, teamIndex };
+		return saveTeamState({ ...state, teamIndex }, state);
 	}
 
 	if (type === "setTeamMember") {
@@ -576,6 +562,22 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return updateTeamMember(state, teamIndex, index, (x) =>
 			x !== undefined ? { ...x, sneakySnacking } : x,
 		);
+	}
+
+	if (type === "clearTeamMembers") {
+		const { teamIndex } = action.payload;
+		if (state.teams[teamIndex] === undefined) {
+			return state;
+		}
+		const teams = state.teams.map((team, ti) =>
+			ti !== teamIndex
+				? team
+				: {
+						...team,
+						members: team.members.map(() => undefined),
+					},
+		);
+		return saveTeamState({ ...state, teams }, state);
 	}
 
 	// following action requires item
