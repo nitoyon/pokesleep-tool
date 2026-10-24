@@ -1,6 +1,16 @@
-import { ButtonBase } from "@mui/material";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
+import {
+	ButtonBase,
+	IconButton,
+	ListItemIcon,
+	Menu,
+	MenuItem,
+	MenuList,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import type { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import { mod } from "../../../util/NumberUtil";
 import CarouselContainer from "../../common/CarouselContainer";
@@ -115,8 +125,13 @@ const MemberList = React.memo(
 			onTeamIndexChange(mod(teamIndex + 1, teamCount));
 		}, [onTeamIndexChange, teamIndex, teamCount]);
 
+		const onClearAll = React.useCallback(() => {
+			dispatch({ type: "clearTeamMembers", payload: { teamIndex } });
+		}, [dispatch, teamIndex]);
+
 		return (
 			<StyledMemberList ref={widthRef}>
+				<MemberListHeader onClearAll={onClearAll} />
 				<div className="carousel">
 					<CarouselContainer
 						index={teamIndex}
@@ -171,7 +186,7 @@ const MemberList = React.memo(
 );
 
 const StyledMemberList = styled("div")({
-	margin: "0.6rem 0 0.5rem",
+	margin: "0 0 0.5rem",
 	"& > .carousel": {
 		position: "relative",
 		"& > button.prev, & > button.next": {
@@ -194,6 +209,56 @@ const StyledMemberList = styled("div")({
 			right: 0,
 		},
 	},
+});
+
+/**
+ * Header of the member list with the more menu on the right.
+ */
+const MemberListHeader = React.memo(
+	({ onClearAll }: { onClearAll: () => void }) => {
+		const { t } = useTranslation();
+		const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+
+		const onMenuClick = React.useCallback(
+			(event: React.MouseEvent<HTMLElement>) => {
+				setAnchor(event.currentTarget);
+			},
+			[],
+		);
+		const onMenuClose = React.useCallback(() => {
+			setAnchor(null);
+		}, []);
+		const onClearAllClick = React.useCallback(() => {
+			setAnchor(null);
+			onClearAll();
+		}, [onClearAll]);
+
+		return (
+			<StyledMemberListHeader>
+				<IconButton size="small" onClick={onMenuClick} aria-label="menu">
+					<MoreIcon fontSize="small" />
+				</IconButton>
+				<Menu anchorEl={anchor} open={anchor !== null} onClose={onMenuClose}>
+					<MenuList>
+						<MenuItem onClick={onClearAllClick}>
+							<ListItemIcon>
+								<RemoveCircleOutlineOutlinedIcon />
+							</ListItemIcon>
+							{t("clear all members")}
+						</MenuItem>
+					</MenuList>
+				</Menu>
+			</StyledMemberListHeader>
+		);
+	},
+);
+
+const StyledMemberListHeader = styled("div")({
+	display: "flex",
+	justifyContent: "flex-end",
+	padding: "0 0.2rem",
+	height: "24px",
+	alignItems: "center",
 });
 
 /**

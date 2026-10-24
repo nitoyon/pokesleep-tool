@@ -875,3 +875,26 @@ describe("ivStateReducer changeBoxDrawerPosition", () => {
 		});
 	});
 });
+describe("clearTeamMembers action", () => {
+	test("clears all the members of the specified team only", () => {
+		const item = new PokemonBoxItem(new PokemonIv({ pokemonName: "Raichu" }));
+		const slot = { item, enabled: true, sneakySnacking: false };
+		let state = createBaseState();
+		state = withMembers(state, 0, [slot, slot, undefined, slot, slot]);
+		state = withMembers(state, 1, [
+			slot,
+			undefined,
+			undefined,
+			undefined,
+			slot,
+		]);
+
+		const newState = ivStateReducer(state, {
+			type: "clearTeamMembers",
+			payload: { teamIndex: 0 },
+		});
+
+		expect(newState.teams[0].members).toEqual(createInitialTeams()[0].members);
+		expect(newState.teams[1]).toBe(state.teams[1]);
+	});
+});

@@ -128,6 +128,7 @@
 	"failed to read detail": "以下資料因格式不正確而無法讀取。",
 	"row N": "第 {{row}} 行",
 	"delete all": "全部刪除",
+	"clear all members": "清除所有成員",
 	"delete all message": "確定刪除盒子裏的所有寶可夢嗎？",
 	"deleted all pokemon": "已刪除盒子裏的所有寶可夢。",
 	"period": "時期",

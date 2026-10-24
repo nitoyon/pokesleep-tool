@@ -86,6 +86,10 @@ export type IvAction =
 	| {
 			type: "setTeamMemberSneakySnacking";
 			payload: { teamIndex: number; index: number; sneakySnacking: boolean };
+	  }
+	| {
+			type: "clearTeamMembers";
+			payload: { teamIndex: number };
 	  };
 
 /**
@@ -576,6 +580,22 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		return updateTeamMember(state, teamIndex, index, (x) =>
 			x !== undefined ? { ...x, sneakySnacking } : x,
 		);
+	}
+
+	if (type === "clearTeamMembers") {
+		const { teamIndex } = action.payload;
+		if (state.teams[teamIndex] === undefined) {
+			return state;
+		}
+		const teams = state.teams.map((team, ti) =>
+			ti !== teamIndex
+				? team
+				: {
+						...team,
+						members: team.members.map(() => undefined),
+					},
+		);
+		return { ...state, teams };
 	}
 
 	// following action requires item
