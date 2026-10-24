@@ -7,11 +7,8 @@ import {
 	type StrengthParameter,
 	saveStrengthParameter,
 } from "../../util/PokemonStrength";
-import {
-	createInitialTeams,
-	type Team,
-	type TeamMemberSlot,
-} from "../../util/Team/Team";
+import type { Team, TeamMemberSlot } from "../../util/Team/Team";
+import { loadTeams, saveTeams } from "../../util/Team/TeamStorage";
 
 export type IvAction =
 	| {
@@ -122,7 +119,19 @@ function updateTeamMember(
 					members: team.members.map((x, i) => (i === index ? update(x) : x)),
 				},
 	);
-	return { ...state, teams };
+
+	// Save the team state
+	return saveTeamState({ ...state, teams });
+}
+
+/**
+ * Save all the teams if they were changed.
+ * @param state State.
+ * @returns State.
+ */
+function saveTeamState(state: IvState): IvState {
+	saveTeams({ teams: state.teams, teamIndex: state.teamIndex });
+	return state;
 }
 
 /**
@@ -199,6 +208,7 @@ export function getInitialIvState(): IvState {
 			// ignore deserialization error (e.g. corrupted cache)
 		}
 	}
+	const { teams, teamIndex } = loadTeams();
 	const ret: IvState = {
 		tabIndex: cache.tabIndex,
 		lowerTabIndex: cache.lowerTabIndex,
@@ -217,8 +227,8 @@ export function getInitialIvState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
-		teams: createInitialTeams(),
-		teamIndex: 0,
+		teams,
+		teamIndex,
 	};
 
 	// Update initial pokemonIv
@@ -520,7 +530,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		if (teamIndex < 0 || teamIndex >= state.teams.length) {
 			return state;
 		}
-		return { ...state, teamIndex };
+		return saveTeamState({ ...state, teamIndex });
 	}
 
 	if (type === "setTeamMember") {
@@ -566,7 +576,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 						members: team.members.map(() => undefined),
 					},
 		);
-		return { ...state, teams };
+		return saveTeamState({ ...state, teams });
 	}
 
 	// following action requires item
