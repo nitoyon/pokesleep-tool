@@ -523,9 +523,11 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		const box = new PokemonBox(state.box.items);
 		let selectedItemId = state.selectedItemId;
 		if (value.id === -1) {
-			selectedItemId = box.add(new PokemonBoxItem(value.iv, value.nickname));
+			selectedItemId = box.add(
+				new PokemonBoxItem(value.iv, value.nickname, value.attributes),
+			);
 		} else {
-			box.set(value.id, value.iv, value.nickname);
+			box.set(value.id, value.iv, value.nickname, value.attributes);
 		}
 		const newState = normalizeState({ ...state, pokemonIv: value.iv, box });
 		newState.selectedItemId = selectedItemId;

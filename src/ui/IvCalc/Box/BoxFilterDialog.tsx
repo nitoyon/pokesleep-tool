@@ -7,6 +7,9 @@ import {
 	DialogActions,
 	FormControlLabel,
 	InputAdornment,
+	Link,
+	MenuItem,
+	Popover,
 	Switch,
 	Tab,
 	Tabs,
@@ -25,6 +28,10 @@ import {
 	PokemonTypes,
 	SpecialtyNames,
 } from "../../../data/pokemons";
+import {
+	type FavoriteColor,
+	favoriteColors,
+} from "../../../util/Box/FavoriteColor";
 import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import { type MainSkillName, MainSkillNames } from "../../../util/MainSkill";
 import type { NatureEffect } from "../../../util/Nature";
@@ -41,6 +48,8 @@ import { EditSubSkillControl } from "../IvForm/SubSkillControl";
 import MainSkillButton from "../MainSkillButton";
 import SpecialtyButton from "../SpecialtyButton";
 import TypeButton from "../TypeButton";
+import FavoriteColorSelector from "./FavoriteColorSelector";
+import { FavoriteStars } from "./FavoriteStar";
 
 const BoxFilterDialog = React.memo(
 	({
@@ -209,6 +218,7 @@ const BoxFilterDialog = React.memo(
 						<h4 style={{ margin: "1rem 0 0.5rem" }}>{t("specialty")}</h4>
 						{specialtyButtons}
 						<h4 style={{ margin: "1rem 0 0" }}>{t("other qualities")}</h4>
+						<FavoriteFilterControl value={value} onChange={onChange} />
 						<div>
 							<FormControlLabel
 								label={t("shiny")}
@@ -306,6 +316,141 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
 	},
 	"& > button:last-of-type": {
 		borderRadius: "0 1rem 1rem 0",
+	},
+});
+
+/**
+ * Checkbox to filter favorite pokemon, with a link to choose the condition:
+ * any favorite or one color. The popover closes when one is chosen.
+ */
+const FavoriteFilterControl = React.memo(
+	({
+		value,
+		onChange,
+	}: {
+		value: BoxFilterConfig;
+		onChange: (value: BoxFilterConfig) => void;
+	}) => {
+		const { t } = useTranslation();
+		const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+
+		const onCheckChange = useCallback(() => {
+			onChange(new BoxFilterConfig({ ...value, favorite: !value.favorite }));
+		}, [value, onChange]);
+		const onDetailsClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+			setAnchor(e.currentTarget);
+		}, []);
+		const onPopoverClose = useCallback(() => {
+			setAnchor(null);
+		}, []);
+		const onAnyClick = useCallback(() => {
+			onChange(
+				new BoxFilterConfig({ ...value, favorite: true, favoriteColor: null }),
+			);
+			setAnchor(null);
+		}, [value, onChange]);
+		const onColorClick = useCallback(
+			(color: FavoriteColor) => {
+				onChange(
+					new BoxFilterConfig({
+						...value,
+						favorite: true,
+						favoriteColor: color,
+					}),
+				);
+				setAnchor(null);
+			},
+			[value, onChange],
+		);
+
+		const color = value.favoriteColor;
+		const isAny = value.favorite && color === null;
+		return (
+			<StyledFavoriteFilterControl>
+				<FormControlLabel
+					label={
+						<>
+							{t("favorite")}
+							{color !== null && (
+								<span className="stars">
+									<FavoriteStars colors={[color]} />
+								</span>
+							)}
+						</>
+					}
+					control={
+						<Checkbox checked={value.favorite} onChange={onCheckChange} />
+					}
+				/>
+				<Link component="button" onClick={onDetailsClick}>
+					{t("details")}
+				</Link>
+				<Popover
+					open={anchor !== null}
+					anchorEl={anchor}
+					onClose={onPopoverClose}
+					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+				>
+					<StyledFavoriteFilterPopover>
+						<MenuItem selected={isAny} onClick={onAnyClick}>
+							{isAny ? <CheckIcon /> : <span className="space" />}
+							{t("favorited")}
+						</MenuItem>
+						<h5>{t("specify colors")}</h5>
+						<FavoriteColorSelector
+							value={
+								value.favorite && color !== null
+									? 1 << favoriteColors.indexOf(color)
+									: 0
+							}
+							onClick={onColorClick}
+						/>
+					</StyledFavoriteFilterPopover>
+				</Popover>
+			</StyledFavoriteFilterControl>
+		);
+	},
+);
+
+const StyledFavoriteFilterControl = styled("div")({
+	display: "flex",
+	alignItems: "center",
+	marginTop: "8px",
+	"& > label": {
+		marginRight: "0.5rem",
+		"& > .MuiFormControlLabel-label": {
+			display: "flex",
+			alignItems: "center",
+			whiteSpace: "nowrap",
+		},
+	},
+	"& span.stars": {
+		display: "inline-flex",
+		marginLeft: "0.5rem",
+	},
+	"& > button": {
+		fontSize: "0.9rem",
+	},
+});
+
+const StyledFavoriteFilterPopover = styled("div")({
+	padding: "0.3rem 0",
+	"& > li": {
+		borderRadius: "0.3rem",
+		margin: "0 0.3rem",
+		"& > svg, & > span.space": {
+			width: "20px",
+			height: "20px",
+			marginRight: "0.5rem",
+		},
+	},
+	"& > h5": {
+		margin: "0.6rem 1rem 0",
+		fontWeight: "normal",
+		color: "#666666",
+	},
+	"& > div": {
+		margin: "0 0.5rem",
 	},
 });
 
