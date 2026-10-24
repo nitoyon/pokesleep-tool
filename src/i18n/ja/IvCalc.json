@@ -226,6 +226,8 @@
 	"unknown desc": "まだ判明していません。",
 	"shiny": "色違い",
 	"favorite": "お気に入り",
+	"favorited": "お気に入り登録済み",
+	"specify colors": "色指定",
 	"frequency": "おてつだい時間",
 	"carry limit": "最大所持数",
 	"Main Skill & Sub Skills": "メインスキル・サブスキル",

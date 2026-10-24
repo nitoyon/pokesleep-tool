@@ -2,7 +2,6 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import {
 	Button,
 	ButtonBase,
-	IconButton,
 	Popover,
 	TextField,
 	ToggleButton,
@@ -12,7 +11,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import {
 	type FavoriteColor,
-	favoriteColors,
 	favoriteMaskToColors,
 	toggleFavoriteColor,
 } from "../../../util/Box/FavoriteColor";
@@ -25,7 +23,8 @@ import type { IvAction } from "../IvState";
 import TypeSpecialtyPanel from "../Panel/TypeSpecialtyPanel";
 import PokemonIcon from "../PokemonIcon";
 import RpLabel from "../Rp/RpLabel";
-import FavoriteStar, { FavoriteStars } from "./FavoriteStar";
+import FavoriteColorSelector from "./FavoriteColorSelector";
+import { FavoriteStars } from "./FavoriteStar";
 
 /**
  * Form to edit a pokemon in the box (IV, nickname and shiny).
@@ -349,48 +348,6 @@ const StyledBoxItemSummary = styled("div")({
 			fontSize: ".8rem",
 			fontWeight: "bold",
 		},
-	},
-});
-
-/**
- * Toggle buttons to select favorite colors.
- */
-const FavoriteColorSelector = React.memo(
-	({
-		value,
-		onClick,
-	}: {
-		value: number;
-		onClick: (color: FavoriteColor) => void;
-	}) => {
-		const selected = favoriteMaskToColors(value);
-		return (
-			<StyledFavoriteColorSelector>
-				{favoriteColors.map((color) => {
-					const isSelected = selected.includes(color);
-					return (
-						<IconButton
-							key={color}
-							className={isSelected ? "selected" : ""}
-							disableRipple
-							aria-pressed={isSelected}
-							onClick={() => onClick(color)}
-						>
-							<FavoriteStar color={color} filled={isSelected} size={24} />
-						</IconButton>
-					);
-				})}
-			</StyledFavoriteColorSelector>
-		);
-	},
-);
-
-const StyledFavoriteColorSelector = styled("div")({
-	display: "grid",
-	gridTemplateColumns: "repeat(5, auto)",
-	padding: ".3rem",
-	"& > button": {
-		padding: "6px",
 	},
 });
 

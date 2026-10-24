@@ -225,6 +225,8 @@
 	"unknown desc": "尚未明確。",
 	"shiny": "異色",
 	"favorite": "收藏",
+	"favorited": "已收藏",
+	"specify colors": "指定顏色",
 	"frequency": "幫忙間隔",
 	"carry limit": "持有上限",
 	"Main Skill & Sub Skills": "主技能・副技能",

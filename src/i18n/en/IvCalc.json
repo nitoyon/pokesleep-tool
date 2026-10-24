@@ -224,6 +224,8 @@
 	"unknown desc": "Not yet known.",
 	"shiny": "Shiny",
 	"favorite": "Favorite",
+	"favorited": "Favorited",
+	"specify colors": "Specify colors",
 	"name": "Name",
 	"type": "Type",
 	"specialty": "Specialty",
