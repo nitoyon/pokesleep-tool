@@ -1053,48 +1053,50 @@ const DetailPanel = React.memo(
 							</SelectEx>
 						</section>
 						<section>
-							<span className="lbl">
-								<SelectEx
-									onChange={onBoostPolicyChange}
-									value={config.boostPolicy}
-								>
-									<MenuItem value="all">{t("all")} </MenuItem>
-									<MenuItem value="candy">{t("number of uses")} </MenuItem>
-									<MenuItem value="level">
-										{t("up to specified level")}
-									</MenuItem>
-								</SelectEx>
-								:
-							</span>
-							{config.boostPolicy === "all" && (
-								<div>
-									<CandyIcon />
-									{config.pokemonCandy}
-								</div>
-							)}
-							{config.boostPolicy === "candy" && (
-								<div>
-									<CandyIcon />
-									<NumericSliderInput
-										sx={{ width: "3rem", fontSize: "0.9rem" }}
-										min={0}
-										max={config.pokemonCandy}
-										value={config.boostCandyCount}
-										onChange={onBoostCandyCountChange}
-									/>
-								</div>
-							)}
-							{config.boostPolicy === "level" && (
-								<>
-									<span style={{ padding: "0.1rem 0.2rem 0 0" }}>Lv.</span>
-									<LevelInput
-										showSlider
-										sx={{ width: "2rem", fontSize: "0.9rem" }}
-										value={config.boostLevel}
-										onChange={onBoostLevelChange}
-									/>
-								</>
-							)}
+							<span className="lbl">{t("number of uses")}:</span>
+							<SelectEx
+								onChange={onBoostPolicyChange}
+								value={config.boostPolicy}
+							>
+								<MenuItem value="all">{t("all")}</MenuItem>
+								<MenuItem value="candy">{t("partial")}</MenuItem>
+								<MenuItem value="level">{t("up to specified level")}</MenuItem>
+							</SelectEx>
+						</section>
+					</CollapseEx>
+					<CollapseEx
+						show={
+							config.candyBoost !== "none" && config.boostPolicy === "candy"
+						}
+					>
+						<section>
+							<span className="lbl">{t("number of uses")}:</span>
+							<div>
+								<CandyIcon />
+								<NumericSliderInput
+									sx={{ width: "3rem", fontSize: "0.9rem" }}
+									min={0}
+									max={config.pokemonCandy}
+									value={config.boostCandyCount}
+									onChange={onBoostCandyCountChange}
+								/>
+							</div>
+						</section>
+					</CollapseEx>
+					<CollapseEx
+						show={
+							config.candyBoost !== "none" && config.boostPolicy === "level"
+						}
+					>
+						<section>
+							<span className="lbl">{t("level")}:</span>
+							<span style={{ padding: "0.1rem 0.2rem 0 0" }}>Lv.</span>
+							<LevelInput
+								showSlider
+								sx={{ width: "2rem", fontSize: "0.9rem" }}
+								value={config.boostLevel}
+								onChange={onBoostLevelChange}
+							/>
 						</section>
 					</CollapseEx>
 				</div>
