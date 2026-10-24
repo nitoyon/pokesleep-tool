@@ -126,6 +126,7 @@
 	"failed to read detail": "以下数据因格式不正确而无法读取。",
 	"row N": "第 {{row}} 行",
 	"delete all": "删除所有",
+	"clear all members": "清除所有成员",
 	"delete all message": "确定删除盒子内所有的宝可梦吗？",
 	"deleted all pokemon": "已删除盒子内所有的宝可梦。",
 	"period": "时期",
