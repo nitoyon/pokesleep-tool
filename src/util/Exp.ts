@@ -404,14 +404,16 @@ export function getMoonAge(date: Date): number {
  * @param exp Target EXP to earn.
  * @param accumulatedExp Accumulated EXP (Already earned).
  * @param expGainRate The Pokémon's exp gain rate by its nature.
- * @param today Today.
+ * @param tickets Number of Relaxing Nap Tickets to use.
+ *                Each ticket quadruples the EXP for 7 days.
+ *                Pass `Infinity` to use tickets for the whole period.
  * @returns The number of days.
  */
 export function calcDayToNapExp(
 	exp: number,
 	accumulatedExp: number,
 	expGainRate: number,
-	ticket: boolean,
+	tickets: number,
 ): CalcDayToGetNapExpResult {
 	const requiredExp = Math.max(0, exp - accumulatedExp);
 	const ret: CalcDayToGetNapExpResult = {
@@ -425,17 +427,27 @@ export function calcDayToNapExp(
 		date: new Date(8640000000000000),
 	};
 
-	const baseExp = 150 * Math.max(expGainRate, 1) * (ticket ? 4 : 1);
+	const baseExp = 150 * Math.max(expGainRate, 1);
+	const firstWeekExp = baseExp * 7 * (tickets > 0 ? 4 : 1);
+
+	const calcDaysForExp = (exp: number): number => {
+		const ticketDays = 7 * Math.max(0, tickets);
+		const ticketExp = baseExp * 4 * ticketDays;
+		if (exp <= ticketExp) {
+			return exp / (baseExp * 4);
+		}
+		return ticketDays + (exp - ticketExp) / baseExp;
+	};
 
 	// before 7 days are over: only gain half EXP
-	if (exp < baseExp * 3.5) {
-		ret.days = requiredExp / (baseExp / 2);
-	} else if (exp < baseExp * 7) {
+	if (exp < firstWeekExp / 2) {
+		ret.days = calcDaysForExp(requiredExp * 2);
+	} else if (exp < firstWeekExp) {
 		ret.days = 7;
-		ret.exp = baseExp * 7;
-		ret.expExceeded = baseExp * 7 - requiredExp;
+		ret.exp = firstWeekExp;
+		ret.expExceeded = firstWeekExp - requiredExp;
 	} else {
-		ret.days = requiredExp / baseExp;
+		ret.days = calcDaysForExp(requiredExp);
 	}
 	ret.minutes = Math.ceil(ret.days * 24 * 60);
 	ret.d = Math.floor(ret.minutes / 24 / 60);

@@ -61,6 +61,9 @@ type LevelInfo = {
 /** Candy boost policy */
 type BoostPolicy = "all" | "candy" | "level";
 
+/** Relaxing nap ticket usage policy */
+type NapTicketPolicy = "all" | "count";
+
 /** Configuration for candy dialog */
 type CandyConfig = {
 	/** Tab index */
@@ -89,6 +92,10 @@ type CandyConfig = {
 	growthIncense: GrowthIncensePolicy;
 	/** Use relaxing nap ticket or not */
 	relaxingNapTicket: boolean;
+	/** Relaxing nap ticket usage policy */
+	napTicketPolicy: NapTicketPolicy;
+	/** Number of relaxing nap tickets to use (when policy is "count") */
+	napTicketCount: number;
 	/** Accumulated EXP at Nap Iasland */
 	accumulatedExp: number;
 };
@@ -138,6 +145,8 @@ const CandyDialog = React.memo(
 			score: 100,
 			growthIncense: "none",
 			relaxingNapTicket: false,
+			napTicketPolicy: "all",
+			napTicketCount: 1,
 			accumulatedExp: 0,
 		});
 		const [shouldRender, setShouldRender] = React.useState(false);
@@ -675,7 +684,7 @@ const NapIslandPanel = React.memo(
 			exp,
 			config.accumulatedExp,
 			iv.nature.expGainsRate,
-			config.relaxingNapTicket,
+			getNapTicketCount(config),
 		);
 		const d = result.d;
 		const h = result.h;
@@ -725,6 +734,16 @@ const NapIslandPanel = React.memo(
 		);
 	},
 );
+
+/** Returns the number of relaxing nap tickets to use (Infinity for all) */
+function getNapTicketCount(config: CandyConfig): number {
+	if (!config.relaxingNapTicket) {
+		return 0;
+	}
+	return config.napTicketPolicy === "all"
+		? Number.POSITIVE_INFINITY
+		: config.napTicketCount;
+}
 
 function createConfigIv(levelInfo: LevelInfo, config: CandyConfig) {
 	return levelInfo.iv.clone({
@@ -872,7 +891,7 @@ const calculateDetailCandy = (
 				normalCandyResult.expLeft,
 				0,
 				iv.nature.expGainsRate,
-				config.relaxingNapTicket,
+				getNapTicketCount(config),
 			);
 		}
 	}
@@ -1187,15 +1206,57 @@ const NapIslandForm = React.memo(
 			[config, onChange],
 		);
 
+		const onNapTicketPolicyChange = React.useCallback(
+			(value: string) => {
+				onChange({ ...config, napTicketPolicy: value as NapTicketPolicy });
+			},
+			[config, onChange],
+		);
+
+		const onNapTicketCountChange = React.useCallback(
+			(napTicketCount: number) => {
+				onChange({ ...config, napTicketCount });
+			},
+			[config, onChange],
+		);
+
 		return (
-			<section>
-				<span className="lbl">{t("relaxing nap ticket")}:</span>
-				<Switch
-					checked={config.relaxingNapTicket}
-					size="small"
-					onChange={onRelaxingNapTicketChange}
-				/>
-			</section>
+			<>
+				<section>
+					<span className="lbl">{t("relaxing nap ticket")}:</span>
+					<Switch
+						checked={config.relaxingNapTicket}
+						size="small"
+						onChange={onRelaxingNapTicketChange}
+					/>
+				</section>
+				<CollapseEx show={config.relaxingNapTicket}>
+					<section className="ml">
+						<span className="lbl">{t("number of uses")}:</span>
+						<SelectEx
+							onChange={onNapTicketPolicyChange}
+							value={config.napTicketPolicy}
+						>
+							<MenuItem value="all">{t("all")}</MenuItem>
+							<MenuItem value="count">{t("partial")}</MenuItem>
+						</SelectEx>
+					</section>
+				</CollapseEx>
+				<CollapseEx
+					show={config.relaxingNapTicket && config.napTicketPolicy === "count"}
+				>
+					<section className="ml">
+						<span className="lbl">{t("number of uses")}:</span>
+						<NumericSliderInput
+							sx={{ width: "3rem", fontSize: "0.9rem" }}
+							min={0}
+							max={52}
+							value={config.napTicketCount}
+							onChange={onNapTicketCountChange}
+						/>
+					</section>
+				</CollapseEx>
+			</>
 		);
 	},
 );
@@ -1314,6 +1375,9 @@ const StyledDialog = styled(Dialog)({
 				paddingTop: "0.5rem",
 				"&.first": {
 					paddingTop: 0,
+				},
+				"&.ml": {
+					marginLeft: "1rem",
 				},
 				"& > span.lbl": {
 					marginRight: "auto",
