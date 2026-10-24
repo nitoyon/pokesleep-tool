@@ -110,7 +110,8 @@ describe("favorites", () => {
 	});
 
 	test("read favorites", () => {
-		expect(deserializeBoxItem(`${ivText}.f2a5@nick`)?.favorites).toBe(0x2a5);
+		expect(deserializeBoxItem(`${ivText}.fsf@nick`)?.favorites).toBe(1023);
+		expect(deserializeBoxItem(`${ivText}.fa@nick`)?.favorites).toBe(10);
 		expect(deserializeBoxItem(`${ivText}.x1.f3@nick`)?.favorites).toBe(3);
 	});
 
@@ -120,22 +121,22 @@ describe("favorites", () => {
 	});
 
 	test("invalid favorites attribute is kept as unknown attribute", () => {
-		const item = deserializeBoxItem(`${ivText}.fxyz`);
+		const item = deserializeBoxItem(`${ivText}.f_x`);
 		expect(item?.favorites).toBe(0);
-		expect(item?.withFavorites(1).serialize()).toBe(`${ivText}.f1.fxyz`);
+		expect(item?.withFavorites(1).serialize()).toBe(`${ivText}.f1.f_x`);
 	});
 
 	test("withFavorites", () => {
 		const item = new PokemonBoxItem(iv, "a.b@c", "", 5);
-		const fav = item.withFavorites(0x2a5);
+		const fav = item.withFavorites(1023);
 		expect(fav.id).toBe(5);
-		expect(fav.serialize()).toBe(`${ivText}.f2a5@a.b@c`);
+		expect(fav.serialize()).toBe(`${ivText}.fsf@a.b@c`);
 		expect(fav.withFavorites(0).serialize()).toBe(`${ivText}@a.b@c`);
 	});
 
 	test("withFavorites keeps unknown attributes", () => {
 		const item = new PokemonBoxItem(iv, "nick", "x1.f3.y2");
-		expect(item.withFavorites(0x10).attributes).toBe("f10.x1.y2");
+		expect(item.withFavorites(16).attributes).toBe("fg.x1.y2");
 		expect(item.withFavorites(0).attributes).toBe("x1.y2");
 	});
 

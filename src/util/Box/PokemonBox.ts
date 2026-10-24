@@ -125,10 +125,10 @@ export function deserializeBoxItem(text: string): PokemonBoxItem | null {
 }
 
 /**
- * Attribute for favorites: "f" followed by the hex bit mask of
- * `favoriteColors` (e.g. "f2a5").
+ * Attribute for favorites: "f" followed by the bit mask of
+ * `favoriteColors` in base 36 (e.g. "fsf" for 1023).
  */
-const favoriteAttribute = /^f([0-9a-f]{1,8})$/;
+const favoriteAttribute = /^f([0-9a-z]{1,6})$/;
 
 /**
  * Represents pokemon in the Pokemon box.
@@ -211,7 +211,7 @@ export class PokemonBoxItem {
 		for (const attr of this._attributes.split(".")) {
 			const m = attr.match(favoriteAttribute);
 			if (m !== null) {
-				return Number.parseInt(m[1], 16);
+				return Number.parseInt(m[1], 36);
 			}
 		}
 		return 0;
@@ -227,7 +227,7 @@ export class PokemonBoxItem {
 			.split(".")
 			.filter((x) => x !== "" && !favoriteAttribute.test(x));
 		if (mask !== 0) {
-			attrs.unshift(`f${(mask >>> 0).toString(16)}`);
+			attrs.unshift(`f${(mask >>> 0).toString(36)}`);
 		}
 		return new PokemonBoxItem(
 			this._iv,
