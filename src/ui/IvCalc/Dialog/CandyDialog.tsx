@@ -1089,7 +1089,7 @@ const DetailPanel = React.memo(
 						}
 					>
 						<section>
-							<span className="lbl">{t("number of uses")}:</span>
+							<span className="lbl" />
 							<div>
 								<CandyIcon />
 								<NumericSliderInput
@@ -1245,8 +1245,8 @@ const NapIslandForm = React.memo(
 				<CollapseEx
 					show={config.relaxingNapTicket && config.napTicketPolicy === "count"}
 				>
-					<section className="ml">
-						<span className="lbl">{t("number of uses")}:</span>
+					<section>
+						<span className="lbl" />
 						<NumericSliderInput
 							sx={{ width: "3rem", fontSize: "0.9rem" }}
 							min={0}
