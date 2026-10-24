@@ -489,7 +489,7 @@ describe("calcDayToNapExp", () => {
 	test("should calculate days (expGainRate=1, no ticket)", () => {
 		// 150 EXP / day
 		const rate = 1;
-		const ticket = false;
+		const ticket = 0;
 
 		expect(calcDayToNapExp(75, 0, rate, ticket).days).toBeCloseTo(1);
 		expect(calcDayToNapExp(75 * 2, 0, rate, ticket).days).toBeCloseTo(2);
@@ -505,17 +505,31 @@ describe("calcDayToNapExp", () => {
 	test("should calculate days with ticket", () => {
 		// 600 EXP / day
 		const rate = 1;
-		const ticket = true;
+		const ticket = Number.POSITIVE_INFINITY;
 
 		expect(calcDayToNapExp(300 * 6.9, 0, rate, ticket).days).toBeCloseTo(6.9);
 		expect(calcDayToNapExp(600 * 7, 0, rate, ticket).days).toBeCloseTo(7);
 		expect(calcDayToNapExp(600 * 10, 0, rate, ticket).days).toBeCloseTo(10);
 	});
 
+	test("should calculate days with limited tickets", () => {
+		const rate = 1;
+
+		// 1 ticket: 600 EXP / day for 7 days, then 150 EXP / day
+		expect(calcDayToNapExp(600 * 7, 0, rate, 1).days).toBeCloseTo(7);
+		expect(calcDayToNapExp(600 * 7 + 150 * 3, 0, rate, 1).days).toBeCloseTo(10);
+		// receive before 7 days: half EXP (within ticket period)
+		expect(calcDayToNapExp(300 * 6.9, 0, rate, 1).days).toBeCloseTo(6.9);
+
+		// 2 tickets: 600 EXP / day for 14 days
+		expect(calcDayToNapExp(600 * 10, 0, rate, 2).days).toBeCloseTo(10);
+		expect(calcDayToNapExp(600 * 14 + 150, 0, rate, 2).days).toBeCloseTo(15);
+	});
+
 	test("should calculate days with expGainRate=1.18 (EXP up nature)", () => {
 		// 177 EXP / day
 		const rate = 1.18;
-		const ticket = false;
+		const ticket = 0;
 
 		expect(calcDayToNapExp(88.5 * 6.9, 0, rate, ticket).days).toBeCloseTo(6.9);
 		expect(calcDayToNapExp(177 * 7, 0, rate, ticket).days).toBeCloseTo(7);
@@ -524,7 +538,7 @@ describe("calcDayToNapExp", () => {
 	test("should calculate days with expGainRate=0.82 (EXP down nature, clamped to 1)", () => {
 		// 150 EXP / day
 		const rate = 0.82;
-		const ticket = false;
+		const ticket = 0;
 
 		expect(calcDayToNapExp(75, 0, rate, ticket).days).toBeCloseTo(1);
 		expect(calcDayToNapExp(75 * 6.9, 0, rate, ticket).days).toBeCloseTo(6.9);
@@ -533,6 +547,6 @@ describe("calcDayToNapExp", () => {
 	});
 
 	test("should echo the input exp", () => {
-		expect(calcDayToNapExp(1234, 0, 1, false).exp).toBe(1234);
+		expect(calcDayToNapExp(1234, 0, 1, 0).exp).toBe(1234);
 	});
 });
