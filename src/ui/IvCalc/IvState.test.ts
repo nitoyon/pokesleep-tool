@@ -3,15 +3,18 @@ import i18n, { loadLanguage } from "../../i18n";
 import PokemonBox, { PokemonBoxItem } from "../../util/Box/PokemonBox";
 import PokemonIv from "../../util/PokemonIv";
 import { loadStrengthParameter } from "../../util/PokemonStrength";
-import type IvState from "./IvState";
-import type { IvAction, TeamMemberSlot } from "./IvState";
 import {
 	createInitialTeams,
+	TEAM_COUNT,
+	type TeamMemberSlot,
+} from "../../util/Team/Team";
+import type IvState from "./IvState";
+import type { IvAction } from "./IvState";
+import {
 	defaultBoxDrawerPosition,
 	getInitialIvState,
 	ivStateReducer,
 	normalizeState,
-	TEAM_COUNT,
 } from "./IvState";
 
 function createBaseState(): IvState {
