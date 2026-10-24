@@ -7,11 +7,8 @@ import {
 	type StrengthParameter,
 	saveStrengthParameter,
 } from "../../util/PokemonStrength";
-import {
-	createInitialTeams,
-	type Team,
-	type TeamMemberSlot,
-} from "../../util/Team/Team";
+import type { Team, TeamMemberSlot } from "../../util/Team/Team";
+import { loadTeams, saveTeams } from "../../util/Team/TeamStorage";
 
 export type IvAction =
 	| {
@@ -98,7 +95,20 @@ export type IvAction =
 	  };
 
 /**
- * Return a new state with a single team member slot updated.
+ * Save all the teams if they were changed.
+ * @param newState New state.
+ * @param oldState State before the change.
+ * @returns `newState`.
+ */
+function saveTeamState(newState: IvState, oldState: IvState): IvState {
+	if (newState !== oldState) {
+		saveTeams({ teams: newState.teams, teamIndex: newState.teamIndex });
+	}
+	return newState;
+}
+
+/**
+ * Return a new state with a single team member slot updated and saved.
  * @param state Current state.
  * @param teamIndex Index of the target team.
  * @param index Index of the target slot in the team.
@@ -122,7 +132,7 @@ function updateTeamMember(
 					members: team.members.map((x, i) => (i === index ? update(x) : x)),
 				},
 	);
-	return { ...state, teams };
+	return saveTeamState({ ...state, teams }, state);
 }
 
 /**
@@ -199,6 +209,7 @@ export function getInitialIvState(): IvState {
 			// ignore deserialization error (e.g. corrupted cache)
 		}
 	}
+	const { teams, teamIndex } = loadTeams();
 	const ret: IvState = {
 		tabIndex: cache.tabIndex,
 		lowerTabIndex: cache.lowerTabIndex,
@@ -217,8 +228,8 @@ export function getInitialIvState(): IvState {
 		boxImportDialogOpen: false,
 		boxDeleteAllDialogOpen: false,
 		alertMessage: "",
-		teams: createInitialTeams(),
-		teamIndex: 0,
+		teams,
+		teamIndex,
 	};
 
 	// Update initial pokemonIv
@@ -520,7 +531,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 		if (teamIndex < 0 || teamIndex >= state.teams.length) {
 			return state;
 		}
-		return { ...state, teamIndex };
+		return saveTeamState({ ...state, teamIndex }, state);
 	}
 
 	if (type === "setTeamMember") {
@@ -566,7 +577,7 @@ export function ivStateReducer(state: IvState, action: IvAction): IvState {
 						members: team.members.map(() => undefined),
 					},
 		);
-		return { ...state, teams };
+		return saveTeamState({ ...state, teams }, state);
 	}
 
 	// following action requires item

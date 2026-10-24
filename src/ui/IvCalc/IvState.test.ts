@@ -9,10 +9,10 @@ import {
 	type TeamMemberSlot,
 } from "../../util/Team/Team";
 import type IvState from "./IvState";
-import type { IvAction } from "./IvState";
 import {
 	defaultBoxDrawerPosition,
 	getInitialIvState,
+	type IvAction,
 	ivStateReducer,
 	normalizeState,
 } from "./IvState";
@@ -899,5 +899,48 @@ describe("clearTeamMembers action", () => {
 
 		expect(newState.teams[0].members).toEqual(createInitialTeams()[0].members);
 		expect(newState.teams[1]).toBe(state.teams[1]);
+	});
+});
+
+describe("team persistence", () => {
+	beforeEach(() => {
+		localStorage.removeItem("PstIvTeams");
+	});
+
+	test("saves the team changes and restores them in the initial state", () => {
+		let state = createBaseState();
+		state = ivStateReducer(state, {
+			type: "setTeamMember",
+			payload: {
+				teamIndex: 1,
+				index: 2,
+				item: new PokemonBoxItem(
+					new PokemonIv({ pokemonName: "Raichu" }),
+					"nick",
+				),
+			},
+		});
+		state = ivStateReducer(state, {
+			type: "setTeamMemberSneakySnacking",
+			payload: { teamIndex: 1, index: 2, sneakySnacking: true },
+		});
+		state = ivStateReducer(state, {
+			type: "setTeamMemberEnabled",
+			payload: { teamIndex: 1, index: 2, enabled: false },
+		});
+		state = ivStateReducer(state, {
+			type: "setTeamIndex",
+			payload: { teamIndex: 1 },
+		});
+
+		const restored = getInitialIvState();
+		expect(restored.teamIndex).toBe(1);
+		const slot = restored.teams[1].members[2];
+		expect(slot?.item.serialize()).toBe(
+			state.teams[1].members[2]?.item.serialize(),
+		);
+		expect(slot?.item.nickname).toBe("nick");
+		expect(slot?.enabled).toBe(false);
+		expect(slot?.sneakySnacking).toBe(true);
 	});
 });
