@@ -180,7 +180,7 @@ const ValidMemberBox = React.memo(
 							<ListItemIcon sx={{ minWidth: "24px" }}>
 								<RemoveCircleOutlineOutlinedIcon />
 							</ListItemIcon>
-							{t("delete")}
+							{t("clear")}
 						</MenuItem>
 						<Divider />
 						<MenuItem onClick={() => onAction("toggleSneakySnacking")}>
