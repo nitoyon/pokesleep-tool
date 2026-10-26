@@ -11,6 +11,7 @@ import { ChargeStrengthMBadDreamSkill } from "./ChargeStrengthMBadDream";
 import { ChargeStrengthSSkill } from "./ChargeStrengthS";
 import { ChargeStrengthSRandomSkill } from "./ChargeStrengthSRandom";
 import { ChargeStrengthSStockpileSkill } from "./ChargeStrengthSStockpile";
+import { CookingAdvanceMysticalFire } from "./CookingAdvanceMysticalFire";
 import { CookingAssistBulkUpSkill } from "./CookingAssistBulkUp";
 import { CookingPowerUpSkill } from "./CookingPowerUp";
 import { CookingPowerUpMinusSkill } from "./CookingPowerUpMinus";
@@ -103,6 +104,6 @@ const skillMap: Record<MainSkillName, () => BaseSkill> = {
 	"Berry Zone": () => noopSkill,
 	"Berry Zone (Psystrike)": () => new BerryZonePsystrike(),
 	"Cooking Advance S": () => noopSkill,
-	"Cooking Advance S (Mystical Fire)": () => noopSkill,
+	"Cooking Advance S (Mystical Fire)": () => new CookingAdvanceMysticalFire(),
 	unknown: () => noopSkill,
 };

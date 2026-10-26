@@ -163,7 +163,9 @@ export function getMaxSkillLevel(skill: MainSkillName): 6 | 7 | 8 {
 		skill === "Ingredient Draw S (Super Luck)" ||
 		skill === "Ingredient Draw S (Hyper Cutter)" ||
 		skill === "Cooking Assist S" ||
-		skill === "Cooking Assist S (Bulk Up)"
+		skill === "Cooking Assist S (Bulk Up)" ||
+		skill === "Cooking Advance S" ||
+		skill === "Cooking Advance S (Mystical Fire)"
 	) {
 		return 7;
 	}
