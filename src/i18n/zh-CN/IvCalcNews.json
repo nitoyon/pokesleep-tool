@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add misdreavus": {
+				"headline": "新增了$t(pokemons.Misdreavus)和$t(pokemons.Mismagius)的数据。",
+				"detail": "$t(rp collection)"
+			},
 			"v3.9.0": {
 				"headline": "已因应 v3.9.0 的平衡性调整。",
 				"detail": "$t(pokemons.Gengar)的$t(ingredient rate): 16.1%→16.6%\n\n$t(own research note)"

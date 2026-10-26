@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add misdreavus": {
+				"headline": "Added data for $t(pokemons.Misdreavus) and $t(pokemons.Mismagius).",
+				"detail": "$t(rp collection)"
+			},
 			"v3.9.0": {
 				"headline": "Updated the data with balance adjustments in version 3.9.0",
 				"detail": "$t(ingredient rate) of $t(pokemons.Gengar): 16.1%→16.6%\n\n$t(own research note)"

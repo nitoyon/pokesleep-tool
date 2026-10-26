@@ -3513,31 +3513,31 @@
 		"sleepType": "dozing",
 		"exp": 600,
 		"type": "ghost",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Skills",
+		"skill": "Cooking Power-Up S",
 		"fp": 16,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2800,
+		"ingRate": 15,
+		"skillRate": 4.7,
 		"ancestor": 200,
 		"evolutionCount": 0,
 		"evolutionLeft": 1,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 13,
 		"ing1": {
-			"name": "unknown1",
+			"name": "potato",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "coffee",
+			"c2": 2,
+			"c3": 3
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "tomato",
+			"c3": 4
 		}
 	},
 	{
@@ -5962,31 +5962,31 @@
 		"sleepType": "dozing",
 		"exp": 600,
 		"type": "ghost",
-		"specialty": "unknown",
+		"specialty": "Skills",
 		"skill": "Cooking Advance S (Mystical Fire)",
 		"fp": 20,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2400,
+		"ingRate": 14.2,
+		"skillRate": 3.6,
 		"ancestor": 200,
 		"evolutionCount": 1,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 17,
 		"ing1": {
-			"name": "unknown1",
+			"name": "potato",
 			"c1": 1,
 			"c2": 2,
 			"c3": 4
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "coffee",
+			"c2": 2,
+			"c3": 3
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "tomato",
+			"c3": 4
 		}
 	},
 	{

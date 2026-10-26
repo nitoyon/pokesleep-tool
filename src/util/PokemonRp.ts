@@ -344,7 +344,10 @@ class PokemonRp {
 			if (skill === "Energy for Everyone S") {
 				return [1120, 1593, 2197, 3033, 4187, 5785][level - 1];
 			}
-			if (skill === "Cooking Assist S (Bulk Up)") {
+			if (
+				skill === "Cooking Assist S (Bulk Up)" ||
+				skill === "Cooking Advance S (Mystical Fire)"
+			) {
 				return [1144, 1627, 2244, 3098, 4277, 5910, 7596][level - 1];
 			}
 			if (skill === "Energy for Everyone S (Berry Juice)") {
