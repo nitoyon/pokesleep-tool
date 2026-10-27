@@ -228,6 +228,42 @@ describe("BoxFilterConfig", () => {
 			expect(filtered2.length).toBe(2);
 		});
 
+		test("filters by favorite", () => {
+			const iv = new PokemonIv({ pokemonName: "Pikachu" });
+			// bit 0: yellow, bit 1: green, bit 4: pink
+			const items = [
+				new PokemonBoxItem(iv, "None"),
+				new PokemonBoxItem(iv, "Yellow", "f1"),
+				new PokemonBoxItem(iv, "Green", "f2"),
+				new PokemonBoxItem(iv, "YellowPink", "fh"), // 17
+			];
+			const names = (config: BoxFilterConfig) =>
+				config.filter(items, false, mockT).map((x) => x.nickname);
+
+			// any favorite
+			expect(names(new BoxFilterConfig({ favorite: true }))).toEqual([
+				"Yellow",
+				"Green",
+				"YellowPink",
+			]);
+			// the color
+			expect(
+				names(new BoxFilterConfig({ favorite: true, favoriteColor: "yellow" })),
+			).toEqual(["Yellow", "YellowPink"]);
+			expect(
+				names(new BoxFilterConfig({ favorite: true, favoriteColor: "pink" })),
+			).toEqual(["YellowPink"]);
+			expect(
+				names(new BoxFilterConfig({ favorite: true, favoriteColor: "red" })),
+			).toEqual([]);
+			// the color is ignored when favorite is false
+			expect(
+				names(
+					new BoxFilterConfig({ favorite: false, favoriteColor: "yellow" }),
+				),
+			).toHaveLength(4);
+		});
+
 		test("filters by main skill (Toxel with evolved=true, Amped nature)", () => {
 			const config = new BoxFilterConfig({
 				mainSkillNames: ["Ingredient Magnet S"],
@@ -598,6 +634,11 @@ describe("BoxFilterConfig", () => {
 
 		test("returns false when shiny is true", () => {
 			const config = new BoxFilterConfig({ shiny: true });
+			expect(config.isEmpty).toBe(false);
+		});
+
+		test("returns false when favorite is true", () => {
+			const config = new BoxFilterConfig({ favorite: true });
 			expect(config.isEmpty).toBe(false);
 		});
 

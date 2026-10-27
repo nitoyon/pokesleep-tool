@@ -121,6 +121,23 @@ export const FavoriteStars = React.memo(
 	},
 );
 
+export const AllFavoriteStars = React.memo(() => (
+	<FavoriteStars
+		colors={[
+			"yellow",
+			"green",
+			"orange",
+			"blue",
+			"pink",
+			"brown",
+			"red",
+			"purple",
+			"lightblue",
+			"gray",
+		]}
+	/>
+));
+
 const StyledFavoriteStars = styled("div")({
 	"&.line1": {
 		height: "22px",

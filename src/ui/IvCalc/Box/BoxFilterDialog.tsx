@@ -41,6 +41,7 @@ import { EditSubSkillControl } from "../IvForm/SubSkillControl";
 import MainSkillButton from "../MainSkillButton";
 import SpecialtyButton from "../SpecialtyButton";
 import TypeButton from "../TypeButton";
+import FavoriteFilterControl from "./FavoriteFilterControl";
 
 const BoxFilterDialog = React.memo(
 	({
@@ -209,7 +210,8 @@ const BoxFilterDialog = React.memo(
 						<h4 style={{ margin: "1rem 0 0.5rem" }}>{t("specialty")}</h4>
 						{specialtyButtons}
 						<h4 style={{ margin: "1rem 0 0" }}>{t("other qualities")}</h4>
-						<div>
+						<div style={{ display: "flex", gap: 20, marginBottom: 10 }}>
+							<FavoriteFilterControl value={value} onChange={onChange} />
 							<FormControlLabel
 								label={t("shiny")}
 								sx={{ mt: 1 }}
