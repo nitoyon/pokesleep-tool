@@ -1,5 +1,5 @@
 import React from "react";
-import { animated, useSpring } from "react-spring";
+import { animated, useSpringValue } from "react-spring";
 
 const springConfig = { tension: 400, friction: 40 };
 
@@ -9,15 +9,20 @@ const springConfig = { tension: 400, friction: 40 };
  */
 const CollapseEx = React.memo(
 	({ show, children }: { show: boolean; children: React.ReactNode }) => {
+		const outerRef = React.useRef<HTMLDivElement>(null);
 		const ref = React.useRef<HTMLDivElement>(null);
 		const [renderedChildren, setRenderedChildren] = React.useState(children);
 		// true when fully expanded and the height is `auto`
 		const [auto, setAuto] = React.useState(show);
+		const autoRef = React.useRef(show);
 		const showRef = React.useRef(show);
-		const [styles, api] = useSpring(() => ({
-			height: 0,
-			config: springConfig,
-		}));
+		const lastHeightRef = React.useRef(-1);
+		const height = useSpringValue(0, { config: springConfig });
+
+		const changeAuto = React.useCallback((value: boolean) => {
+			autoRef.current = value;
+			setAuto(value);
+		}, []);
 
 		React.useEffect(() => {
 			if (show) {
@@ -30,16 +35,20 @@ const CollapseEx = React.memo(
 			[],
 		);
 
-		const expand = React.useCallback(() => {
-			api.start({
-				height: getContentHeight(),
-				onRest: (result) => {
-					if (result.finished && showRef.current) {
-						setAuto(true);
-					}
-				},
-			});
-		}, [api, getContentHeight]);
+		const animateTo = React.useCallback(
+			(to: number, from?: number) => {
+				height.start({
+					from,
+					to,
+					onRest: (result) => {
+						if (result.finished && showRef.current) {
+							changeAuto(true);
+						}
+					},
+				});
+			},
+			[height, changeAuto],
+		);
 
 		React.useLayoutEffect(() => {
 			// Animate only when `show` actually changes
@@ -48,30 +57,48 @@ const CollapseEx = React.memo(
 			}
 			showRef.current = show;
 			if (show) {
-				expand();
+				animateTo(getContentHeight());
 			} else {
 				// Start from the current actual height
-				const height = getContentHeight();
-				setAuto(false);
-				api.start({ from: { height }, to: { height: 0 } });
+				changeAuto(false);
+				height.start({ from: getContentHeight(), to: 0 });
 			}
-		}, [show, api, expand, getContentHeight]);
+		}, [show, height, animateTo, changeAuto, getContentHeight]);
 
-		// Follow content size changes while the expanding animation runs
+		// Follow content size changes while shown
 		React.useEffect(() => {
 			const elm = ref.current;
-			if (!elm || auto || !show) {
+			if (!elm || !show) {
 				return;
 			}
-			const observer = new ResizeObserver(() => expand());
+			lastHeightRef.current = getContentHeight();
+			const observer = new ResizeObserver(() => {
+				const prev = lastHeightRef.current;
+				const next = getContentHeight();
+				lastHeightRef.current = next;
+				if (!autoRef.current) {
+					// Expanding: update the target height
+					animateTo(next);
+					return;
+				}
+				if (prev === next || prev < 0) {
+					return;
+				}
+				if (outerRef.current) {
+					outerRef.current.style.height = `${prev}px`;
+				}
+				changeAuto(false);
+				animateTo(next, prev);
+			});
 			observer.observe(elm);
 			return () => observer.disconnect();
-		}, [auto, show, expand]);
+		}, [show, animateTo, changeAuto, getContentHeight]);
 
 		return (
 			<animated.div
+				ref={outerRef}
 				style={{
-					height: auto ? "auto" : styles.height,
+					height: auto ? "auto" : height,
 					overflow: "hidden",
 				}}
 			>
