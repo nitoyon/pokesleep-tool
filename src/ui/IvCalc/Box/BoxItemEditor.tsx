@@ -1,8 +1,19 @@
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { ButtonBase, TextField, ToggleButton } from "@mui/material";
+import {
+	Button,
+	ButtonBase,
+	Popover,
+	TextField,
+	ToggleButton,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import {
+	type FavoriteColor,
+	favoriteMaskToColors,
+	toggleFavoriteColor,
+} from "../../../util/Box/FavoriteColor";
 import { PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import type PokemonIv from "../../../util/PokemonIv";
 import PokemonRp from "../../../util/PokemonRp";
@@ -12,6 +23,8 @@ import type { IvAction } from "../IvState";
 import TypeSpecialtyPanel from "../Panel/TypeSpecialtyPanel";
 import PokemonIcon from "../PokemonIcon";
 import RpLabel from "../Rp/RpLabel";
+import FavoriteColorSelector from "./FavoriteColorSelector";
+import { FavoriteStars } from "./FavoriteStar";
 
 /**
  * Form to edit a pokemon in the box (IV, nickname and shiny).
@@ -70,6 +83,27 @@ const BoxItemEditor = React.memo(
 			[displayNickName, iv, notify],
 		);
 
+		const [favoriteAnchor, setFavoriteAnchor] =
+			React.useState<HTMLElement | null>(null);
+		const onFavoriteButtonClick = React.useCallback(
+			(event: React.MouseEvent<HTMLElement>) => {
+				setFavoriteAnchor(event.currentTarget);
+			},
+			[],
+		);
+		const onFavoritePopoverClose = React.useCallback(() => {
+			setFavoriteAnchor(null);
+		}, []);
+		const onFavoriteColorClick = React.useCallback(
+			(color: FavoriteColor) => {
+				onChange(
+					boxItem.withFavorites(toggleFavoriteColor(boxItem.favorites, color)),
+				);
+			},
+			[boxItem, onChange],
+		);
+		const favorites = favoriteMaskToColors(boxItem.favorites);
+
 		return (
 			<StyledBoxItemEditor>
 				<BoxItemSummary boxItem={boxItem} rp={rp} visible={showSummary} />
@@ -93,6 +127,15 @@ const BoxItemEditor = React.memo(
 							</ToggleButton>
 						</span>
 					)}
+					<span className="favorite">
+						<Button
+							value="favorite"
+							onClick={onFavoriteButtonClick}
+							aria-label={t("favorite")}
+						>
+							<FavoriteStars colors={favorites} />
+						</Button>
+					</span>
 				</header>
 				<div className="icon">
 					<ButtonBase onClick={onShinyClick}>
@@ -116,6 +159,18 @@ const BoxItemEditor = React.memo(
 					dispatch={dispatch}
 					onChange={onFormChange}
 				/>
+				<Popover
+					open={favoriteAnchor !== null}
+					anchorEl={favoriteAnchor}
+					onClose={onFavoritePopoverClose}
+					anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+					transformOrigin={{ vertical: "top", horizontal: "right" }}
+				>
+					<FavoriteColorSelector
+						value={boxItem.favorites}
+						onClick={onFavoriteColorClick}
+					/>
+				</Popover>
 			</StyledBoxItemEditor>
 		);
 	},
@@ -146,6 +201,13 @@ const StyledBoxItemEditor = styled("article")({
 					background: "#ffcc00",
 					color: "#ffffff",
 				},
+			},
+		},
+		"& > span.favorite": {
+			"& > button": {
+				padding: "0 0 0 4px",
+				margin: 0,
+				minWidth: 24,
 			},
 		},
 	},

@@ -223,6 +223,7 @@
 	"skills desc": "A Pokémon that excels at triggering skills, such as having a special main skill or a high trigger rate. It can stock one extra main skill and may trigger its main skill twice in a single helping.",
 	"unknown desc": "Not yet known.",
 	"shiny": "Shiny",
+	"favorite": "Favorite",
 	"name": "Name",
 	"type": "Type",
 	"specialty": "Specialty",

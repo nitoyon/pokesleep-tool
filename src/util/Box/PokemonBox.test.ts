@@ -99,3 +99,51 @@ describe("PokemonBox", () => {
 		expect(item?.attributes).toBe("f2a5");
 	});
 });
+
+describe("favorites", () => {
+	const iv = new PokemonIv({ pokemonName: "Pikachu" });
+	const ivText = iv.serialize();
+
+	test("no favorites", () => {
+		expect(new PokemonBoxItem(iv).favorites).toBe(0);
+		expect(new PokemonBoxItem(iv, "", "x1").favorites).toBe(0);
+	});
+
+	test("read favorites", () => {
+		expect(deserializeBoxItem(`${ivText}.fsf@nick`)?.favorites).toBe(1023);
+		expect(deserializeBoxItem(`${ivText}.fa@nick`)?.favorites).toBe(10);
+		expect(deserializeBoxItem(`${ivText}.x1.f3@nick`)?.favorites).toBe(3);
+	});
+
+	test("nickname is not read as favorites", () => {
+		expect(deserializeBoxItem(`${ivText}@.f3ff`)?.favorites).toBe(0);
+		expect(deserializeBoxItem(`${ivText}@f3ff`)?.favorites).toBe(0);
+	});
+
+	test("invalid favorites attribute is kept as unknown attribute", () => {
+		const item = deserializeBoxItem(`${ivText}.f_x`);
+		expect(item?.favorites).toBe(0);
+		expect(item?.withFavorites(1).serialize()).toBe(`${ivText}.f1.f_x`);
+	});
+
+	test("withFavorites", () => {
+		const item = new PokemonBoxItem(iv, "a.b@c", "", 5);
+		const fav = item.withFavorites(1023);
+		expect(fav.id).toBe(5);
+		expect(fav.serialize()).toBe(`${ivText}.fsf@a.b@c`);
+		expect(fav.withFavorites(0).serialize()).toBe(`${ivText}@a.b@c`);
+	});
+
+	test("withFavorites keeps unknown attributes", () => {
+		const item = new PokemonBoxItem(iv, "nick", "x1.f3.y2");
+		expect(item.withFavorites(16).attributes).toBe("fg.x1.y2");
+		expect(item.withFavorites(0).attributes).toBe("x1.y2");
+	});
+
+	test("set replaces attributes", () => {
+		const box = new PokemonBox();
+		const id = box.add(new PokemonBoxItem(iv, "", "f1"));
+		box.set(id, iv, "", "f2");
+		expect(box.getById(id)?.favorites).toBe(2);
+	});
+});

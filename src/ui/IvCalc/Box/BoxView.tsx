@@ -17,6 +17,7 @@ import {
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { favoriteMaskToColors } from "../../../util/Box/FavoriteColor";
 import PokemonBox, { type PokemonBoxItem } from "../../../util/Box/PokemonBox";
 import BoxFilterConfig from "../../../util/Box/PokemonBoxFilter";
 import {
@@ -44,6 +45,7 @@ import { shareIv } from "../ShareUtil";
 import BoxFilterDialog from "./BoxFilterDialog";
 import BoxItemDrawer from "./BoxItemDrawer";
 import BoxSortConfigFooter from "./BoxSortConfigFooter";
+import FavoriteStar from "./FavoriteStar";
 
 const BoxView = React.memo(
 	({
@@ -371,6 +373,9 @@ const BoxView = React.memo(
  */
 let boxFilterConfig = new BoxFilterConfig({});
 
+/** Max number of favorite stars shown in the box list. */
+const maxListFavoriteCount = 4;
+
 interface BoxLargeItemProps {
 	item: PokemonBoxItem;
 	selected: boolean;
@@ -433,6 +438,8 @@ const BoxLargeItem = React.memo(
 			onEdit?.(item.id);
 		}, [item.id, onEdit]);
 
+		const favorites = favoriteMaskToColors(item.favorites);
+
 		return (
 			<StyledBoxLargeItem ref={selected ? selectedRef : null}>
 				<ButtonBase
@@ -451,6 +458,13 @@ const BoxLargeItem = React.memo(
 					/>
 					<footer>{item.filledNickname(t)}</footer>
 				</ButtonBase>
+				{favorites.length > 0 && (
+					<span className="favorite">
+						{favorites.slice(0, maxListFavoriteCount).map((c) => (
+							<FavoriteStar key={c} color={c} filled size={10} />
+						))}
+					</span>
+				)}
 				{selected && (
 					<IconButton onClick={onMoreIconClick}>
 						<MoreIcon />
@@ -531,6 +545,14 @@ const StyledBoxLargeItem = styled("div")({
 			borderRadius: "0.5rem",
 			border: "1px solid #5e7da0",
 		},
+	},
+	"& > span.favorite": {
+		position: "absolute",
+		right: "4px",
+		top: "18px",
+		display: "flex",
+		flexDirection: "column",
+		pointerEvents: "none",
 	},
 	"& > button.MuiIconButton-root": {
 		position: "absolute",
