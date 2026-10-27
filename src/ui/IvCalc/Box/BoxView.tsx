@@ -541,7 +541,7 @@ const StyledBoxLargeItem = styled("div")({
 			overflowWrap: "anywhere",
 		},
 		"&.selected": {
-			background: "#d3e9f7",
+			background: "rgb(211, 233, 247, 0.8)",
 			borderRadius: "0.5rem",
 			border: "1px solid #5e7da0",
 		},
