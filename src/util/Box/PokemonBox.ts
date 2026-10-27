@@ -66,16 +66,18 @@ class PokemonBox {
 
 	/**
 	 * Change the item by ID.
-	 *
-	 * Attributes of the existing item are kept.
 	 * @param id ID.
 	 * @param iv New pokemon IV.
 	 * @param nickname Nickname of the pockemon.
+	 * @param attributes New attributes. Attributes of the existing item are
+	 *     kept if omitted.
 	 */
-	set(id: number, iv: PokemonIv, nickname?: string) {
+	set(id: number, iv: PokemonIv, nickname?: string, attributes?: string) {
 		// Create a new array not to modify the array shared with other boxes
 		this._entries = this._entries.map((x) =>
-			x.id === id ? new PokemonBoxItem(iv, nickname, x.attributes, id) : x,
+			x.id === id
+				? new PokemonBoxItem(iv, nickname, attributes ?? x.attributes, id)
+				: x,
 		);
 	}
 
@@ -123,7 +125,16 @@ export function deserializeBoxItem(text: string): PokemonBoxItem | null {
 }
 
 /**
+ * Attribute for favorites: "f" followed by the bit mask of
+ * `favoriteColors` in base 36 (e.g. "fsf" for 1023).
+ */
+const favoriteAttribute = /^f([0-9a-z]{1,6})$/;
+
+/**
  * Represents pokemon in the Pokemon box.
+ *
+ * Attributes are "."-separated values written between the IV and the
+ * nickname. Attributes not known by this version are kept as is.
  */
 export class PokemonBoxItem {
 	private _iv: PokemonIv;
@@ -191,6 +202,39 @@ export class PokemonBoxItem {
 	/** Get the attributes of the item. */
 	get attributes(): string {
 		return this._attributes;
+	}
+
+	/**
+	 * Get the bit mask of the favorite colors (bit n: `favoriteColors[n]`).
+	 */
+	get favorites(): number {
+		for (const attr of this._attributes.split(".")) {
+			const m = attr.match(favoriteAttribute);
+			if (m !== null) {
+				return Number.parseInt(m[1], 36);
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * Create a copy of the item with the new favorites. ID is kept.
+	 * @param mask Bit mask of the favorite colors.
+	 * @returns Updated item.
+	 */
+	withFavorites(mask: number): PokemonBoxItem {
+		const attrs = this._attributes
+			.split(".")
+			.filter((x) => x !== "" && !favoriteAttribute.test(x));
+		if (mask !== 0) {
+			attrs.unshift(`f${(mask >>> 0).toString(36)}`);
+		}
+		return new PokemonBoxItem(
+			this._iv,
+			this._nickname,
+			attrs.join("."),
+			this._id,
+		);
 	}
 
 	/** Get the ID. */

@@ -9,6 +9,7 @@ import {
 import { type MainSkillName, matchMainSkillName } from "../MainSkill";
 import type { NatureEffect } from "../Nature";
 import type { SubSkillType } from "../SubSkill";
+import { type FavoriteColor, favoriteColors } from "./FavoriteColor";
 import type { PokemonBoxItem } from "./PokemonBox";
 
 /**
@@ -23,6 +24,10 @@ interface IBoxFilterConfig {
 	filterSpecialty: PokemonSpecialty[];
 	/** Filter rarity ('all' means no filter) */
 	filterRarity: PokemonRarityFilter;
+	/** Include only favorite Pokemon */
+	favorite: boolean;
+	/** Favorite color (null means any favorite color) */
+	favoriteColor: FavoriteColor | null;
 	/** Shiny or not */
 	shiny: boolean;
 	/** Filter ingredient */
@@ -57,6 +62,10 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 	filterSpecialty: PokemonSpecialty[];
 	/** Filter rarity ('all' means no filter) */
 	filterRarity: PokemonRarityFilter;
+	/** Include only favorite Pokemon */
+	favorite: boolean;
+	/** Favorite color (null means any favorite color) */
+	favoriteColor: FavoriteColor | null;
 	/** Shiny or not */
 	shiny: boolean;
 	/** Filter ingredient */
@@ -84,6 +93,8 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 		this.filterTypes = values.filterTypes ?? [];
 		this.filterSpecialty = values.filterSpecialty ?? [];
 		this.filterRarity = values.filterRarity ?? "all";
+		this.favorite = values.favorite ?? false;
+		this.favoriteColor = values.favoriteColor ?? null;
 		this.shiny = values.shiny ?? false;
 		this.ingredientName = values.ingredientName;
 		this.ingredientUnlockedOnly = values.ingredientUnlockedOnly ?? false;
@@ -154,6 +165,15 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 		}
 		if (this.filterRarity !== "all") {
 			if (getPokemonRarity(item.iv.pokemon) !== this.filterRarity) {
+				return false;
+			}
+		}
+		if (this.favorite) {
+			const mask =
+				this.favoriteColor === null
+					? -1
+					: 1 << favoriteColors.indexOf(this.favoriteColor);
+			if ((item.favorites & mask) === 0) {
 				return false;
 			}
 		}
@@ -241,6 +261,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 			this.filterTypes.length === 0 &&
 			this.filterSpecialty.length === 0 &&
 			this.filterRarity === "all" &&
+			this.favorite === false &&
 			this.shiny === false &&
 			this.ingredientName === undefined &&
 			this.mainSkillNames.length === 0 &&

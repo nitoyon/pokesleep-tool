@@ -225,6 +225,7 @@
 	"skills desc": "主技能特別或發動概率高等，擅長發動技能的寶可夢。可以多儲存一次主技能，且有時會在一次幫忙中連續發動兩次主技能。",
 	"unknown desc": "尚未明確。",
 	"shiny": "異色",
+	"favorite": "收藏",
 	"frequency": "幫忙間隔",
 	"carry limit": "持有上限",
 	"Main Skill & Sub Skills": "主技能・副技能",
