@@ -22,6 +22,7 @@ const t = ((key: string, opts?: Record<string, unknown>): string => {
 		ingredient: "Ingredient",
 		nature: "Nature",
 		shiny: "Shiny",
+		favorite: "Favorite",
 		"sleeping time shared": "Sleeping Time Shared",
 		"subskill.Berry Finding S": "Berry Finding S",
 		"subskill.Helping Bonus": "Helping Bonus",
@@ -93,10 +94,11 @@ describe("importFromCsvTsv", () => {
 			lv80: "",
 			ribbon: "0",
 			shiny: "0",
+			favorite: "",
 		};
 		const d = { ...defaults, ...overrides };
 		const header =
-			"Nickname,Pokémon,Level,Skill Level,Ing 1,Ing 2,Ing 3,Main Skill,Nature,Lv10,Lv25,Lv50,Lv70,Lv80,Ribbon,Shiny";
+			"Nickname,Pokémon,Level,Skill Level,Ing 1,Ing 2,Ing 3,Main Skill,Nature,Lv10,Lv25,Lv50,Lv70,Lv80,Ribbon,Shiny,Favorite";
 		const row = [
 			d.nickname,
 			d.pokemon,
@@ -114,6 +116,7 @@ describe("importFromCsvTsv", () => {
 			d.lv80,
 			d.ribbon,
 			d.shiny,
+			d.favorite,
 		].join(",");
 		return `${header}\n${row}`;
 	}
@@ -224,6 +227,27 @@ describe("importFromCsvTsv", () => {
 
 		const result2 = importFromCsvTsv(makeMinimalCsv({ shiny: "0" }), "csv", t);
 		expect(result2.items[0].iv.shiny).toBe(false);
+	});
+
+	test("import favorites from emojis", () => {
+		const favorites = (favorite: string) =>
+			importFromCsvTsv(makeMinimalCsv({ favorite }), "csv", t).items[0]
+				.favorites;
+		expect(favorites("")).toBe(0);
+		// bit 0: yellow, bit 6: red
+		expect(favorites("💛❤️")).toBe((1 << 0) | (1 << 6));
+		// without variation selector, with spaces
+		expect(favorites(" ❤ 💛 ")).toBe((1 << 0) | (1 << 6));
+	});
+
+	test("import warns for unknown favorite emoji", () => {
+		const result = importFromCsvTsv(
+			makeMinimalCsv({ favorite: "⭐" }),
+			"csv",
+			t,
+		);
+		expect(result.items).toHaveLength(0);
+		expect(result.warnings[0].fields).toEqual(["favorite"]);
 	});
 
 	test("import preserves nickname", () => {

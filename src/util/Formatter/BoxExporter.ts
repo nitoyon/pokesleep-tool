@@ -1,4 +1,5 @@
 import type { TFunction } from "i18next";
+import { favoriteMaskToEmojis } from "../Box/FavoriteColor";
 import type { PokemonBoxItem } from "../Box/PokemonBox";
 import { escapeCsvField } from "./CsvFormatter";
 
@@ -44,6 +45,7 @@ export function exportToCsvTsv(
 			iv.subSkills.lv80 ? t(`subskill.${iv.subSkills.lv80.name}`) : "",
 			String(RIBBON_HOURS[iv.ribbon]),
 			iv.shiny ? "1" : "0",
+			favoriteMaskToEmojis(item.favorites),
 		];
 		return isCsv ? cols.map(escapeCsvField).join(sep) : cols.join(sep);
 	});
@@ -52,7 +54,7 @@ export function exportToCsvTsv(
 }
 
 /**
- * Export default column layout (16 columns):
+ * Export default column layout (17 columns):
  *
  * - 0: nickname
  * - 1: pokemon
@@ -66,6 +68,7 @@ export function exportToCsvTsv(
  * - 9-13: subskills (Lv10/25/50/75/100)
  * - 14: ribbon
  * - 15: shiny
+ * - 16: favorite (emojis of the colors)
  */
 function exportHeaders(t: TFunction, isCsv: boolean): string {
 	const fields = [
@@ -85,6 +88,7 @@ function exportHeaders(t: TFunction, isCsv: boolean): string {
 		"Lv80",
 		t("sleeping time shared"),
 		t("shiny"),
+		t("favorite"),
 	];
 	const sep = isCsv ? "," : "\t";
 	return isCsv ? fields.map(escapeCsvField).join(sep) : fields.join(sep);
