@@ -216,11 +216,12 @@ export const StyledNatureDownEffect = styled("span")({
 const StyledUpEffectMenuItem = styled(MenuItem)({
 	"& > div": {
 		"& > div.up": {
-			height: "1rem",
 			fontSize: "1rem",
+			lineHeight: 1.3,
 		},
 		"& > div.natures": {
-			height: ".6rem",
+			fontSize: ".6rem",
+			lineHeight: 1.5,
 			"& >span": {
 				paddingRight: ".8rem",
 				color: "#888",
