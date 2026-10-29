@@ -1,4 +1,4 @@
-import { MenuItem, MenuList } from "@mui/material";
+import { MenuItem, MenuList, ToggleButton } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import Nature, { type NatureEffect } from "../../../util/Nature";
 import type PokemonIv from "../../../util/PokemonIv";
 import PopperMenu from "../../common/PopperMenu";
 import TextLikeButton from "../../common/TextLikeButton";
+import MintIcon from "../../Resources/MintIcon";
 
 const NatureTextField = React.memo(
 	({ iv, onChange }: { iv: PokemonIv; onChange: (value: Nature) => void }) => {
@@ -69,6 +70,16 @@ const NatureEditPopper = React.memo(
 		const { t } = useTranslation();
 		const [step, setStep] = React.useState<1 | 2>(1);
 		const [upEffect, setUpEffect] = React.useState<NatureEffect | null>(null);
+		// Toggle state of the mint button.
+		// Kept separately from iv.nature so that it can be turned on
+		// even for neutral natures (applied when a non-neutral nature is chosen).
+		const [mintSelected, setMintSelected] = React.useState(iv.nature.mint);
+		// biome-ignore lint/correctness/useExhaustiveDependencies: sync only when the menu opens
+		React.useEffect(() => {
+			if (open) {
+				setMintSelected(iv.nature.mint);
+			}
+		}, [open]);
 
 		const allNatures = React.useMemo(
 			() =>
@@ -89,7 +100,8 @@ const NatureEditPopper = React.memo(
 				// select it and close the menu. (Toxtricity only)
 				const candidates = allNatures.filter((x) => x.upEffect === val);
 				if (candidates.length === 1) {
-					onChange(new Nature(candidates[0].name));
+					// Apply the mint toggle (ignored for neutral natures)
+					onChange(new Nature(candidates[0].name, mintSelected));
 					onClose();
 					return;
 				}
@@ -97,19 +109,26 @@ const NatureEditPopper = React.memo(
 				setUpEffect(val);
 				setStep(2);
 			},
-			[allNatures, onChange, onClose],
+			[allNatures, mintSelected, onChange, onClose],
 		);
 
 		const onNatureClick = React.useCallback(
 			(event: React.MouseEvent<HTMLElement>) => {
 				const name = event.currentTarget.getAttribute("value");
 				if (name !== null) {
-					onChange(new Nature(name));
+					// Apply the mint toggle (ignored for neutral natures)
+					onChange(new Nature(name, mintSelected));
 					onClose();
 				}
 			},
-			[onChange, onClose],
+			[mintSelected, onChange, onClose],
 		);
+
+		const onMintChange = React.useCallback(() => {
+			const newValue = !mintSelected;
+			setMintSelected(newValue);
+			onChange(iv.nature.withMint(newValue));
+		}, [iv.nature, mintSelected, onChange]);
 
 		const sortNatureByLocalName = React.useCallback(
 			(natures: Nature[]) =>
@@ -175,7 +194,23 @@ const NatureEditPopper = React.memo(
 
 		return (
 			<PopperMenu open={open} onClose={onClose} anchorEl={anchorRef.current}>
-				<MenuList>{menuItems}</MenuList>
+				<div>
+					{step === 1 && (
+						<StyledMenuHeader>
+							<StyledMintToggleButton
+								value="mint"
+								size="small"
+								selected={mintSelected}
+								onChange={onMintChange}
+								title={t("neutralizing mint")}
+								aria-label={t("neutralizing mint")}
+							>
+								<MintIcon />
+							</StyledMintToggleButton>
+						</StyledMenuHeader>
+					)}
+					<MenuList>{menuItems}</MenuList>
+				</div>
 			</PopperMenu>
 		);
 	},
@@ -191,6 +226,13 @@ const StyledNatureElement = styled("div")({
 		textAlign: "center",
 		padding: ".2rem 0",
 		margin: ".5rem 1rem .5rem 0",
+		position: "relative",
+		"& > svg.mint": {
+			position: "absolute",
+			top: "-7px",
+			right: "4px",
+			fontSize: "0.9rem",
+		},
 	},
 	"& > div": {
 		margin: "auto 0",
@@ -231,20 +273,45 @@ const StyledUpEffectMenuItem = styled(MenuItem)({
 	},
 });
 
+const StyledMenuHeader = styled("div")({
+	display: "flex",
+	justifyContent: "flex-end",
+	padding: "6px 6px 0 6px",
+});
+
+const StyledMintToggleButton = styled(ToggleButton)({
+	padding: "3px",
+	"& > svg": {
+		fontSize: "1.1rem",
+	},
+	"&:not(.Mui-selected) > svg": {
+		filter: "grayscale(1)",
+		opacity: 0.6,
+	},
+});
+
 const NatureElement = React.memo(({ value }: { value: Nature }) => {
 	const { t } = useTranslation();
 
+	const natureName = (
+		<span>
+			{t(`natures.${value.name}`)}
+			{value.mint && (
+				<MintIcon className="mint" aria-label={t("neutralizing mint")} />
+			)}
+		</span>
+	);
 	if (value.upEffect === "No effect") {
 		return (
 			<StyledNatureElement>
-				<span>{t(`natures.${value.name}`)}</span>
+				{natureName}
 				<div>{t("nature effect.No effect")}</div>
 			</StyledNatureElement>
 		);
 	} else {
 		return (
 			<StyledNatureElement>
-				<span>{t(`natures.${value.name}`)}</span>
+				{natureName}
 				<div>
 					<StyledNatureUpEffect>
 						{t(`nature effect.${value.upEffect}`)}
