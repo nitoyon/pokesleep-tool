@@ -279,7 +279,7 @@ const EnergyPanel = React.memo(
 						<section>
 							<span className="lbl">{t("skill trigger after wake up")}:</span>
 							<div>
-								{iv.pokemon.specialty !== "Skills" ? (
+								{!iv.isSkillSpecialty ? (
 									<>
 										{(result.skillProbabilityAfterWakeup.once * 100).toFixed(1)}
 										%
