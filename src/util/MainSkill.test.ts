@@ -73,6 +73,18 @@ describe("MainSkill", () => {
 			expect(matchMainSkillName(heracross, "Charge Strength S")).toBe(false);
 		});
 
+		test("special case: Cooking Advance S (Mystical Fire) matches Tasty Chance S", () => {
+			const mismagius = pokemons.find((x) => x.name === "Mismagius");
+			if (mismagius === undefined) {
+				throw new Error("Mismagius not found in pokemons data");
+			}
+
+			expect(matchMainSkillName(mismagius, "Cooking Advance S")).toBe(true);
+			expect(matchMainSkillName(mismagius, "Tasty Chance S")).toBe(true);
+			expect(matchMainSkillName(mismagius, "Cooking Power-Up S")).toBe(true);
+			expect(matchMainSkillName(mismagius, "Ingredient Magnet S")).toBe(false);
+		});
+
 		test("special case: Ingredient Draw S (Super Luck) matches Dream Shard Magnet S", () => {
 			const murkrow = pokemons.find((x) => x.name === "Murkrow");
 			if (murkrow === undefined) {

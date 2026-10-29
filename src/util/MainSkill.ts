@@ -820,6 +820,13 @@ export function matchMainSkillName(
 		}
 	}
 
+	// Treat "Cooking Advance S" as matching "Cooking Power-Up S" and "Tasty Chance S"
+	if (name === "Cooking Advance S (Mystical Fire)") {
+		if (match === "Cooking Power-Up S" || match === "Tasty Chance S") {
+			return true;
+		}
+	}
+
 	// Treat "Energizing Cheer S (Heal Pulse)" as matching "Extra Helpful S"
 	if (
 		name === "Energizing Cheer S (Heal Pulse)" &&
