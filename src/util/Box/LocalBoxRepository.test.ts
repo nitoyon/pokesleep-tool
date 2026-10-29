@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import PokemonIv from "../PokemonIv";
 import { LocalBoxRepository } from "./LocalBoxRepository";
 import PokemonBox, { PokemonBoxItem } from "./PokemonBox";
@@ -8,7 +8,7 @@ describe("LocalBoxRepository", () => {
 
 	beforeEach(() => {
 		localStorageMock = {};
-		global.localStorage = {
+		vi.stubGlobal("localStorage", {
 			getItem: vi.fn((key: string) => localStorageMock[key] ?? null),
 			setItem: vi.fn((key: string, value: string) => {
 				localStorageMock[key] = value;
@@ -21,7 +21,11 @@ describe("LocalBoxRepository", () => {
 			}),
 			length: 0,
 			key: vi.fn(() => null),
-		};
+		});
+	});
+
+	afterEach(() => {
+		vi.unstubAllGlobals();
 	});
 
 	test("load returns empty array when nothing is saved", async () => {

@@ -980,7 +980,7 @@ describe("loadBoxSortConfig", () => {
 	beforeEach(() => {
 		localStorageMock = {};
 
-		global.localStorage = {
+		vi.stubGlobal("localStorage", {
 			getItem: vi.fn((key: string) => localStorageMock[key] || null),
 			setItem: vi.fn((key: string, value: string) => {
 				localStorageMock[key] = value;
@@ -993,11 +993,12 @@ describe("loadBoxSortConfig", () => {
 			}),
 			length: 0,
 			key: vi.fn(),
-		} as Storage;
+		});
 	});
 
 	afterEach(() => {
 		vi.clearAllMocks();
+		vi.unstubAllGlobals();
 	});
 
 	test("returns default config when localStorage is empty", () => {

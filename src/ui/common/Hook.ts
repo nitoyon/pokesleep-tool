@@ -23,7 +23,7 @@ import {
  * - `ref`: A callback ref to attach to the target HTML element.
  */
 export function useLongPress(callback: () => void, ms: number) {
-	const timeout = React.useRef<NodeJS.Timeout | null>(null);
+	const timeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 	const ref = React.useRef<HTMLButtonElement | null>(null);
 
 	const touchStart = React.useCallback(() => {

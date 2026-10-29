@@ -47,7 +47,7 @@
 		"oxlint": "^1.62.0",
 		"typescript": "~5.9.3",
 		"vite": ">=7.1.11",
-		"vitest": "^3.2.4"
+		"vitest": "^5.0.5"
 	},
 	"overrides": {
 		"js-yaml": ">=4.1.1",
