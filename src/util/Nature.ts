@@ -44,6 +44,9 @@ export type PlusMinusOneOrZero = -1 | 0 | 1;
 class Nature {
 	private readonly value: NatureType;
 
+	/** Wheather mint is used or not */
+	public readonly mint: boolean;
+
 	private static allNatureNames: NatureType[] = [
 		"Bashful",
 		"Hardy",
@@ -170,15 +173,54 @@ class Nature {
 		"Modest",
 	];
 
-	constructor(nature: string) {
+	constructor(nature: string, mint: boolean = false) {
 		if (!Nature.allNatureNames.includes(nature as NatureType)) {
 			throw new Error(`Invalid nature specified: ${nature}`);
 		}
 		this.value = nature as NatureType;
+		// Neutralizing Mint cannot be used for neutral natures
+		this.mint = mint && !this.isNeautral;
 	}
 
 	get name() {
 		return this.value;
+	}
+
+	/**
+	 * Returns a nature with the given mint flag.
+	 * @param mint Whether a Neutralizing Mint has been used.
+	 * @returns Nature instance (this if not changed).
+	 */
+	withMint(mint: boolean): Nature {
+		const newMint = mint && !this.isNeautral;
+		return newMint === this.mint ? this : new Nature(this.value, newMint);
+	}
+
+	/** Returns the nature without mint (original effects). */
+	get original(): Nature {
+		return this.withMint(false);
+	}
+
+	/** Returns whether a Neutralizing Mint can be used for this nature. */
+	get canUseMint(): boolean {
+		return !this.isNeautral;
+	}
+
+	/**
+	 * Check whether given nature is equal to this nature.
+	 * @param nature Nature to be compared.
+	 * @returns true if name and mint flag are the same.
+	 */
+	isEqual(nature: Nature): boolean {
+		return this.value === nature.value && this.mint === nature.mint;
+	}
+
+	/**
+	 * Returns whether the effect in the given list is active.
+	 * Always false when a mint has been used.
+	 */
+	private hasEffect(list: readonly string[]): boolean {
+		return !this.mint && list.includes(this.value);
 	}
 
 	get energyRecoveryFactor(): number {
@@ -247,50 +289,39 @@ class Nature {
 		return "No effect";
 	}
 
+	/** Whether the nature is a neutral nature (regardless of mint). */
 	get isNeautral() {
 		return (Nature.neautralNatures as NatureType[]).includes(this.value);
 	}
 	get isEnergyRecoveryUp() {
-		return (Nature.energyRecoveryUpNatures as NatureType[]).includes(
-			this.value,
-		);
+		return this.hasEffect(Nature.energyRecoveryUpNatures);
 	}
 	get isEnergyRecoveryDown() {
-		return (Nature.energyRecoveryDownNatures as NatureType[]).includes(
-			this.value,
-		);
+		return this.hasEffect(Nature.energyRecoveryDownNatures);
 	}
 	get isSpeedOfHelpUp() {
-		return (Nature.speedOfHelpUpNatures as NatureType[]).includes(this.value);
+		return this.hasEffect(Nature.speedOfHelpUpNatures);
 	}
 	get isSpeedOfHelpDown() {
-		return (Nature.speedOfHelpDownNatures as NatureType[]).includes(this.value);
+		return this.hasEffect(Nature.speedOfHelpDownNatures);
 	}
 	get isMainSkillChanceUp() {
-		return (Nature.mainSkillChanceUpNatures as NatureType[]).includes(
-			this.value,
-		);
+		return this.hasEffect(Nature.mainSkillChanceUpNatures);
 	}
 	get isMainSkillChanceDown() {
-		return (Nature.mainSkillChanceDownNatures as NatureType[]).includes(
-			this.value,
-		);
+		return this.hasEffect(Nature.mainSkillChanceDownNatures);
 	}
 	get isIngredientFindingUp() {
-		return (Nature.ingredientFindingUpNatures as NatureType[]).includes(
-			this.value,
-		);
+		return this.hasEffect(Nature.ingredientFindingUpNatures);
 	}
 	get isIngredientFindingDown() {
-		return (Nature.ingredientFindingDownNatures as NatureType[]).includes(
-			this.value,
-		);
+		return this.hasEffect(Nature.ingredientFindingDownNatures);
 	}
 	get isExpGainsUp() {
-		return (Nature.expGainsUpNatures as NatureType[]).includes(this.value);
+		return this.hasEffect(Nature.expGainsUpNatures);
 	}
 	get isExpGainsDown() {
-		return (Nature.expGainsDownNatures as NatureType[]).includes(this.value);
+		return this.hasEffect(Nature.expGainsDownNatures);
 	}
 	get isAmped() {
 		return (Nature.ampedNatures as NatureType[]).includes(this.value);

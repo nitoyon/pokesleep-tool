@@ -739,18 +739,20 @@ class PokemonIv {
 
 		// Apply Toxtricity nature rules based on form
 		if (pokemon.id === toxtricityId) {
+			const mint = ret.nature.mint;
+			const upEffect = ret.nature.original.upEffect;
 			if (pokemon.form === "Amped" && ret.nature.isLowKey) {
-				ret.nature =
+				ret.nature = (
 					Nature.allNatures
 						.filter((x) => x.isAmped)
-						.filter((x) => x.upEffect === ret.nature.upEffect)[0] ??
-					new Nature("Hardy");
+						.filter((x) => x.upEffect === upEffect)[0] ?? new Nature("Hardy")
+				).withMint(mint);
 			} else if (pokemon.form === "Low Key" && ret.nature.isAmped) {
-				ret.nature =
+				ret.nature = (
 					Nature.allNatures
 						.filter((x) => x.isLowKey)
-						.filter((x) => x.upEffect === ret.nature.upEffect)[0] ??
-					new Nature("Serious");
+						.filter((x) => x.upEffect === upEffect)[0] ?? new Nature("Serious")
+				).withMint(mint);
 			}
 		}
 
@@ -768,7 +770,7 @@ class PokemonIv {
 			this.level === iv.level &&
 			this.skillLevel === iv.skillLevel &&
 			this.subSkills.isEqual(iv.subSkills) &&
-			this.nature.name === iv.nature.name &&
+			this.nature.isEqual(iv.nature) &&
 			this.ribbon === iv.ribbon &&
 			this.versatileSkill === iv.versatileSkill;
 
@@ -1008,7 +1010,7 @@ class PokemonIv {
 	 * * 5bit  : Sub-skill Lv25
 	 * * 5bit  : Sub-skill Lv50
 	 * * 5bit  : Sub-skill Lv70
-	 * * 1bit  : reserved
+	 * * 1bit  : Neutralizing Mint (0: not used, 1: used)
 	 *
 	 * * 5bit  : Sub-skill Lv80
 	 * * 3bit  : Ribbon (0: none, 1: 200hrs~, 2: 500hrs~, 3: 1000hrs~, 4: 2000hrs~)
@@ -1050,7 +1052,8 @@ class PokemonIv {
 		array16[3] =
 			(this.subSkills.lv25 === null ? 31 : this.subSkills.lv25.index) +
 			((this.subSkills.lv50 === null ? 31 : this.subSkills.lv50.index) << 5) +
-			((this.subSkills.lv70 === null ? 31 : this.subSkills.lv70.index) << 10);
+			((this.subSkills.lv70 === null ? 31 : this.subSkills.lv70.index) << 10) +
+			((this.nature.mint ? 1 : 0) << 15);
 		const versatileIndex =
 			this.pokemon.skill === "Versatile"
 				? VersatileCandidates.indexOf(this.versatileSkill) + 1
@@ -1168,7 +1171,8 @@ class PokemonIv {
 		if (natureIndex >= Nature.allNatures.length) {
 			throw new Error(`Too large nature ${natureIndex}`);
 		}
-		ret.nature = Nature.allNatures[natureIndex];
+		const mint = ((array16[3] >> 15) & 1) !== 0;
+		ret.nature = Nature.allNatures[natureIndex].withMint(mint);
 
 		// sub skill
 		const allSubSkills = SubSkill.allSubSkills;

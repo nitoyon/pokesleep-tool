@@ -24,6 +24,7 @@ const t = ((key: string, opts?: Record<string, unknown>): string => {
 		nature: "Nature",
 		shiny: "Shiny",
 		favorite: "Favorite",
+		"neutralizing mint": "Neutralizing Mint",
 		"sleeping time shared": "Sleeping Time Shared",
 		"subskill.Berry Finding S": "Berry Finding S",
 		"subskill.Helping Bonus": "Helping Bonus",
@@ -98,14 +99,14 @@ describe("exportToCsvTsv", () => {
 	test("CSV header is correct", () => {
 		const csv = exportToCsvTsv([], t, "csv");
 		expect(csv).toBe(
-			"Nickname,Pokémon,Level,Skill Level,Ing 1,Ing 2,Ing 3,Main Skill,Nature,Lv10,Lv25,Lv50,Lv70,Lv80,Sleeping Time Shared,Shiny,Favorite",
+			"Nickname,Pokémon,Level,Skill Level,Ing 1,Ing 2,Ing 3,Main Skill,Nature,Neutralizing Mint,Lv10,Lv25,Lv50,Lv70,Lv80,Sleeping Time Shared,Shiny,Favorite",
 		);
 	});
 
 	test("TSV header is correct", () => {
 		const tsv = exportToCsvTsv([], t, "tsv");
 		expect(tsv).toBe(
-			"Nickname\tPokémon\tLevel\tSkill Level\tIng 1\tIng 2\tIng 3\tMain Skill\tNature\tLv10\tLv25\tLv50\tLv70\tLv80\tSleeping Time Shared\tShiny\tFavorite",
+			"Nickname\tPokémon\tLevel\tSkill Level\tIng 1\tIng 2\tIng 3\tMain Skill\tNature\tNeutralizing Mint\tLv10\tLv25\tLv50\tLv70\tLv80\tSleeping Time Shared\tShiny\tFavorite",
 		);
 	});
 
@@ -139,6 +140,7 @@ describe("exportToCsvTsv", () => {
 		expect(row.get("Nature")).toBe("Adamant");
 		expect(row.get("Sleeping Time Shared"), "ribbon").toBe("0");
 		expect(row.get("Shiny"), "not shiny").toBe("0");
+		expect(row.get("Neutralizing Mint"), "no mint").toBe("0");
 	});
 
 	test("CSV row with nickname containing comma is quoted", () => {
@@ -171,6 +173,17 @@ describe("exportToCsvTsv", () => {
 		expect(rows[0].get("Favorite")).toBe("");
 	});
 
+	test("mint flag exported as 1", () => {
+		const item = makeItem({
+			pokemonName: "Pikachu",
+			nature: new Nature("Adamant", true),
+		});
+		const csv = exportToCsvTsv([item], t, "csv");
+		const { rows } = parseCsvOutput(csv);
+		expect(rows[0].get("Nature")).toBe("Adamant");
+		expect(rows[0].get("Neutralizing Mint")).toBe("1");
+	});
+
 	test("ribbon exported as hours threshold", () => {
 		const cases: [number, string][] = [
 			[0, "0"],
@@ -196,7 +209,7 @@ describe("exportToCsvTsv", () => {
 		const item = makeItem({ pokemonName: "Pikachu" });
 		const tsv = exportToCsvTsv([item], t, "tsv");
 		const { headers, rows } = parseTsvOutput(tsv);
-		expect(headers).toHaveLength(17);
+		expect(headers).toHaveLength(18);
 		expect(rows[0].get("Pokémon")).toBe("Pikachu");
 	});
 

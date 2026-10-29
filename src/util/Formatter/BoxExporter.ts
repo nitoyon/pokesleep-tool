@@ -38,6 +38,7 @@ export function exportToCsvTsv(
 			ingName(iv.ingredient3.name),
 			t(`skills.${iv.versatileSkill}.name`),
 			t(`natures.${iv.nature.name}`),
+			iv.nature.mint ? "1" : "0",
 			iv.subSkills.lv10 ? t(`subskill.${iv.subSkills.lv10.name}`) : "",
 			iv.subSkills.lv25 ? t(`subskill.${iv.subSkills.lv25.name}`) : "",
 			iv.subSkills.lv50 ? t(`subskill.${iv.subSkills.lv50.name}`) : "",
@@ -65,10 +66,11 @@ export function exportToCsvTsv(
  * - 6: ing 3
  * - 7: main skill
  * - 8: nature
- * - 9-13: subskills (Lv10/25/50/75/100)
- * - 14: ribbon
- * - 15: shiny
- * - 16: favorite (emojis of the colors)
+ * - 9: neutralizing mint
+ * - 10-14: subskills (Lv10/25/50/75/100)
+ * - 15: ribbon
+ * - 16: shiny
+ * - 17: favorite (emojis of the colors)
  */
 function exportHeaders(t: TFunction, isCsv: boolean): string {
 	const fields = [
@@ -81,6 +83,7 @@ function exportHeaders(t: TFunction, isCsv: boolean): string {
 		t("ing n", { n: 3 }),
 		t("main skill"),
 		t("nature"),
+		t("neutralizing mint"),
 		"Lv10",
 		"Lv25",
 		"Lv50",

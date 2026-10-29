@@ -44,6 +44,8 @@ interface IBoxFilterConfig {
 	subSkillAnd: boolean;
 	/** Include only Pokemon with a neutral nature */
 	neutralNature: boolean;
+	/** Include only Pokemon with a Neutralizing Mint used */
+	mint: boolean;
 	/** Nature effect that is increased (set to 'No effect' if unspecified) */
 	upNature: NatureEffect;
 	/** Nature effect that is decreased (set to 'No effect' if unspecified) */
@@ -82,6 +84,8 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 	subSkillAnd: boolean;
 	/** Include only Pokemon with a neutral nature */
 	neutralNature: boolean;
+	/** Include only Pokemon with a Neutralizing Mint used */
+	mint: boolean;
 	/** Nature effect that is increased (set to 'No effect' if unspecified) */
 	upNature: NatureEffect;
 	/** Nature effect that is decreased (set to 'No effect' if unspecified) */
@@ -103,6 +107,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 		this.subSkillUnlockedOnly = values.subSkillUnlockedOnly ?? true;
 		this.subSkillAnd = values.subSkillAnd ?? true;
 		this.neutralNature = values.neutralNature ?? false;
+		this.mint = values.mint ?? false;
 		this.upNature = values.upNature ?? "No effect";
 		this.downNature = values.downNature ?? "No effect";
 	}
@@ -208,13 +213,17 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 				return false;
 			}
 		}
+		if (this.mint && !item.iv.nature.mint) {
+			return false;
+		}
+		// Up/down effects are matched by the original nature (ignore mint)
 		if (this.upNature !== "No effect") {
-			if (item.iv.nature.upEffect !== this.upNature) {
+			if (item.iv.nature.original.upEffect !== this.upNature) {
 				return false;
 			}
 		}
 		if (this.downNature !== "No effect") {
-			if (item.iv.nature.downEffect !== this.downNature) {
+			if (item.iv.nature.original.downEffect !== this.downNature) {
 				return false;
 			}
 		}
@@ -245,6 +254,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 
 		if (
 			this.neutralNature ||
+			this.mint ||
 			this.upNature !== "No effect" ||
 			this.downNature !== "No effect"
 		) {
@@ -267,6 +277,7 @@ export default class BoxFilterConfig implements IBoxFilterConfig {
 			this.mainSkillNames.length === 0 &&
 			this.subSkillNames.length === 0 &&
 			this.neutralNature === false &&
+			this.mint === false &&
 			this.upNature === "No effect" &&
 			this.downNature === "No effect"
 		);
