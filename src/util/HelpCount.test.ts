@@ -2,10 +2,13 @@ import { describe, expect, test } from "vitest";
 import { emptyBonusEffects } from "../data/events";
 import Energy, { AlwaysTap, type EnergyParameter, NoTap } from "./Energy";
 import {
+	calculateBaseFreqAndBonus,
 	calculateHelpCount,
 	calculateHelpCountInInterval,
 	calculateHelpCountPerTap,
 	calculateNextHelpElapsed,
+	calculateSkillCountFromPlan,
+	createHelpCountPlan,
 	createHelpCountSimulation,
 	HelpCountSimulation,
 } from "./HelpCount";
@@ -338,6 +341,55 @@ describe("calculateHelpCount", () => {
 				sim,
 			);
 			expect(result).toEqual(expected);
+		});
+	});
+
+	describe("reuse plan", () => {
+		const base = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+
+		test.each([
+			["tap", { tapFrequencyAwake: 60, tapFrequencyAsleep: NoTap }],
+			["sleep tap", { tapFrequencyAwake: 60, tapFrequencyAsleep: 120 }],
+			["always tap", { tapFrequencyAsleep: AlwaysTap }],
+			["no tap", { tapFrequencyAwake: NoTap }],
+			["week", { period: 168 }],
+			["help count", { period: -10 }],
+		])("returns the same result (%s)", (_, obj) => {
+			const param = createParam(obj);
+			// Quiet: ingredient up (plan is not changed)
+			const iv = base.clone({ nature: new Nature("Quiet") });
+			const energy = new Energy(base).calculate(param);
+			const expected = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+			);
+
+			const { baseFreq } = calculateBaseFreqAndBonus(
+				base,
+				param,
+				emptyBonusBase,
+				false,
+			);
+			const plan = createHelpCountPlan(param, baseFreq, energy, false);
+			const result = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+				undefined,
+				plan,
+			);
+			expect(result).toEqual(expected);
+
+			// Skill count from plan
+			const sim = createHelpCountSimulation(iv, param, emptyBonusBase);
+			expect(
+				calculateSkillCountFromPlan(plan, sim, expected.overallSkillRate),
+			).toBe(expected.skillCount);
 		});
 	});
 });
@@ -1170,5 +1222,16 @@ describe("HelpCountSimulation", () => {
 				prev = res.sneakySnackingCount;
 			}
 		});
+	});
+});
+
+describe("HelpCountSimulation.computeSkillCount", () => {
+	test.each([0, 1, 5, 7.3, 12.75, 30.5])("matches compute() (n=%f)", (n) => {
+		const iv = new PokemonIv({ pokemonName: "Raichu", level: 60 });
+		const sim = new HelpCountSimulation(iv);
+		const result = sim.compute(n, 0.1);
+		expect(sim.computeSkillCount(n, 0.1)).toBe(
+			result.skillOnce + result.skillTwice * 2,
+		);
 	});
 });
