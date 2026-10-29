@@ -11,6 +11,10 @@ import PokemonStrength, {
 	createStrengthParameter,
 	type StrengthParameter,
 } from "./PokemonStrength";
+import {
+	deserializeStrengthParameter,
+	serializeStrengthParameter,
+} from "./StrengthParameter";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
 
@@ -186,5 +190,32 @@ describe("PokemonRating", () => {
 			createStrengthParameter({}),
 		).calculate();
 		expect(result.berry.value).toBe(0);
+	});
+});
+
+describe("worker serialization", () => {
+	test("rating is the same after serialization", () => {
+		const param = createStrengthParameter({ tapFrequencyAsleep: 120 });
+		const iv = new PokemonIv({
+			pokemonName: "Raichu",
+			level: 55,
+			nature: new Nature("Quiet"),
+			subSkills: new SubSkillList({
+				lv10: new SubSkill("Inventory Up M"),
+				lv25: new SubSkill("Helping Speed S"),
+				lv50: new SubSkill("Ingredient Finder S"),
+			}),
+		});
+		const expected = new PokemonRating(iv, param).calculate();
+
+		const deserializedIv = PokemonIv.deserialize(iv.serialize());
+		const deserializedParam = deserializeStrengthParameter(
+			JSON.parse(serializeStrengthParameter(param)),
+		);
+		const actual = new PokemonRating(
+			deserializedIv,
+			deserializedParam,
+		).calculate();
+		expect(actual).toEqual(expected);
 	});
 });
