@@ -278,8 +278,7 @@ const StrengthBerryIngSkillStrengthView = React.memo(
 								<span>
 									{t("skill trigger after wake up (short)")}
 									<>: </>
-									{pokemonIv.pokemon.specialty !== "Skills" &&
-									pokemonIv.pokemon.specialty !== "All" ? (
+									{!pokemonIv.isSkillSpecialty ? (
 										`${round1(result.skillProbabilityAfterWakeup.once * 100)}%`
 									) : (
 										<>

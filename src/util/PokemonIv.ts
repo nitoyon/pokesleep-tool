@@ -195,13 +195,16 @@ class PokemonIv {
 		});
 	}
 
+	get isSkillSpecialty(): boolean {
+		return (
+			this.pokemon.specialty === "Skills" || this.pokemon.specialty === "All"
+		);
+	}
+
 	/** Calculate help count for pity proc */
 	get pityProcHelpCount(): number {
 		return this.getOrCache("pityProc", () => {
-			if (
-				this.pokemon.specialty !== "Skills" &&
-				this.pokemon.specialty !== "All"
-			) {
+			if (!this.isSkillSpecialty) {
 				return 78;
 			}
 
