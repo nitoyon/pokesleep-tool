@@ -629,7 +629,11 @@ class PokemonStrength {
 	} {
 		const days = Math.ceil(param.period / 24);
 
-		let mainSkillBase = getSkillValue(mainSkill, skillLevel);
+		let mainSkillBase = getSkillValue(
+			mainSkill,
+			skillLevel,
+			mainSkill === "Helper Boost" ? param.helperBoostSpecies : undefined,
+		);
 		if (mainSkill.startsWith("Ingredient Magnet S")) {
 			// This event bonus is floored.
 			// (ref) https://x.com/nitoyon/status/1995228758182383941

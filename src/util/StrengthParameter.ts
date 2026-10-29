@@ -489,7 +489,7 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 	if (
 		typeof json.helperBoostSpecies === "number" &&
 		json.helperBoostSpecies > 0 &&
-		json.helperBoostSpecies <= 6
+		json.helperBoostSpecies <= 5
 	) {
 		ret.helperBoostSpecies = json.helperBoostSpecies;
 	}

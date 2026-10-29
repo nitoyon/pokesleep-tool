@@ -518,6 +518,20 @@ describe("PokemonStrength", () => {
 			expect(result.skillStrength).toBeCloseTo(expected);
 		});
 
+		test("Helper Boost: skillValuePerTrigger depends on helperBoostSpecies", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Raikou",
+				level: 30,
+				skillLevel: 6,
+			});
+			const expected = [5, 6, 8, 9, 11];
+			for (let species = 1; species <= 5; species++) {
+				const param = createParam({ helperBoostSpecies: species });
+				const result = new PokemonStrength(iv, param).calculateImpl();
+				expect(result.skillValuePerTrigger).toBe(expected[species - 1]);
+			}
+		});
+
 		test("Energizing Cheer S (Heal Pulse): skillStrength2 uses own and team member's per-help strength", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Latias",

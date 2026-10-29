@@ -146,7 +146,7 @@
 		},
 		"Helper Boost": {
 			"name": "幫手加速",
-			"strength": "假定為同類型的3隻寶可夢。$t(other member calculation)",
+			"strength": "$t(other member calculation)",
 			"desc": "隊伍中的所有寶可夢會立刻完成幫忙。滿足特定條件時，效果會進一步提升。",
 			"detail": "幫忙寶可夢可超過$t(carry limit)，最多持有999個樹果·食材。"
 		},

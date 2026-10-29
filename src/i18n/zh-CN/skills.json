@@ -146,7 +146,7 @@
 		},
 		"Helper Boost": {
 			"name": "帮手加速",
-			"strength": "显示为1只宝可梦的帮手次数 (有 3 只同类型宝可梦的情况) 。$t(other member calculation)",
+			"strength": "$t(other member calculation)",
 			"desc": "队伍中的所有宝可梦会立刻完成帮忙。满足特定条件时，效果会进一步提升。",
 			"detail": "帮忙宝可梦可超过$t(carry limit)，最多持有999个树果·食材。"
 		},
