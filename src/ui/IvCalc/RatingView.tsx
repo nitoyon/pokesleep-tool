@@ -8,13 +8,22 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type PokemonIv from "../../util/PokemonIv";
-import PokemonRating from "../../util/PokemonRating";
+import PokemonRating, { type RatingValue } from "../../util/PokemonRating";
+import type { StrengthParameter } from "../../util/PokemonStrength";
 import RaderChart from "./Chart/RaderChart";
 import InfoButton from "./InfoButton";
 import BerryIngSkillView from "./Rp/BerryIngSkillView";
 
 const RatingView = React.memo(
-	({ pokemonIv, width }: { pokemonIv: PokemonIv; width: number }) => {
+	({
+		pokemonIv,
+		parameter,
+		width,
+	}: {
+		pokemonIv: PokemonIv;
+		parameter: StrengthParameter;
+		width: number;
+	}) => {
 		const { t } = useTranslation();
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
@@ -24,15 +33,29 @@ const RatingView = React.memo(
 			setHelpOpen(false);
 		}, []);
 
-		const rating = new PokemonRating(pokemonIv);
-		const result = rating.calculate();
+		const result = React.useMemo(
+			() => new PokemonRating(pokemonIv, parameter).calculate(),
+			[pokemonIv, parameter],
+		);
 
 		const raderHeight = 400;
 
 		const trunc1 = (n: number) => {
 			n = Math.round(n * 10) / 10;
-			return `${t("num", { n: Math.floor(n) })}.${(n * 10) % 10}`;
+			return `${t("num", { n: Math.floor(n) })}.${Math.round(n * 10) % 10}`;
 		};
+
+		const formatTop = (value: RatingValue) => (
+			<>
+				<span style={{ paddingLeft: 0, paddingRight: ".1rem" }}>
+					{t("rating top")}
+				</span>
+				{formatPercent(value.topPercent)}
+				<span>%</span>
+			</>
+		);
+		const formatAmount = (value: RatingValue) =>
+			`${t("rating expected")}: ${trunc1(value.value)}`;
 
 		return (
 			<div style={{ minHeight: "190px" }}>
@@ -41,44 +64,42 @@ const RatingView = React.memo(
 					<InfoButton onClick={onHelpClick} />
 				</p>
 				<BerryIngSkillView
-					berryValue={
-						<>
-							{trunc1(result.berryScore)}
-							<span>pt</span>
-						</>
-					}
+					berryValue={formatTop(result.berry)}
 					berryProb={trunc1(result.berryRate * 100)}
-					berrySubValue=""
-					ingredientValue={
-						<>
-							{trunc1(result.ingScore)}
-							<span>pt</span>
-						</>
-					}
+					berrySubValue={formatAmount(result.berry)}
+					ingredientValue={formatTop(result.ingredient)}
 					ingredientProb={trunc1(result.ingRate * 100)}
-					ingredientSubValue=""
-					skillValue={
-						<>
-							{trunc1(result.skillScore)}
-							<span>pt</span>
-						</>
-					}
+					ingredientSubValue={formatAmount(result.ingredient)}
+					skillValue={formatTop(result.skill)}
 					skillProb={trunc1(result.skillRate * 100)}
-					skillSubValue=""
+					skillSubValue={formatAmount(result.skill)}
 				/>
 				<RaderChart
 					width={width}
 					height={raderHeight}
 					specialty={pokemonIv.pokemon.specialty}
-					berry={result.berryScore / 100}
-					ingredient={result.ingScore / 100}
-					skill={result.skillScore / 100}
+					berry={1 - result.berry.topPercent / 100}
+					ingredient={1 - result.ingredient.topPercent / 100}
+					skill={1 - result.skill.topPercent / 100}
 				/>
 				<HelpDialog open={helpOpen} onClose={onHelpDialogClose} />
 			</div>
 		);
 	},
 );
+
+/**
+ * Format the top percent (ex: 12.3, 1.2, 0.12, <0.01).
+ */
+function formatPercent(n: number): string {
+	if (n >= 1) {
+		return (Math.ceil(n * 10) / 10).toFixed(1);
+	}
+	if (n >= 0.01) {
+		return (Math.ceil(n * 100) / 100).toFixed(2);
+	}
+	return "<0.01";
+}
 
 const HelpDialog = React.memo(
 	({ open, onClose }: { open: boolean; onClose: () => void }) => {
