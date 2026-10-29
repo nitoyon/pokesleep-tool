@@ -1,11 +1,9 @@
 import {
+	getDecendants,
 	type IngredientName,
 	type PokemonData,
-	toxelId,
 } from "../data/pokemons";
 import type PokemonIv from "./PokemonIv";
-
-const rioluId = 447;
 
 export type MainSkillName =
 	| "Ingredient Magnet S"
@@ -755,6 +753,8 @@ export function getSkillRandomRange(
  *
  * @param pokemon The Pokémon data to compare.
  * @param match The string to match against the skill name.
+ * @param evolved If `true`, match against the skills of the final evolutions.
+ * @param iv The Pokémon IV (used for Mew's versatile skill and Toxel's form).
  * @returns `true` if the skill name starts with the match string.
  */
 export function matchMainSkillName(
@@ -763,29 +763,51 @@ export function matchMainSkillName(
 	evolved?: boolean,
 	iv?: PokemonIv,
 ): boolean {
-	let name: MainSkillName = pokemon.skill;
+	return getTargetMainSkillNames(pokemon, evolved, iv).some((name) =>
+		matchSkillName(name, match),
+	);
+}
 
-	// Special case: Mew matches the versatileSkill
+/**
+ * Returns the main skill names to be matched for the given Pokémon.
+ *
+ * If `evolved` is `true`, this follows `PokemonStrength.changePokemonIv`:
+ * if the Pokémon is already fully evolved or cannot evolve, its own skill
+ * is used. Otherwise the skills of all final evolutions are used.
+ *
+ * Mew's "Versatile" is replaced with `iv.versatileSkill`, or with all
+ * `VersatileCandidates` when `iv` is not given.
+ */
+function getTargetMainSkillNames(
+	pokemon: PokemonData,
+	evolved?: boolean,
+	iv?: PokemonIv,
+): Readonly<MainSkillName[]> {
 	if (pokemon.skill === "Versatile") {
-		// Matches all VersatileCandidates
-		if (iv === undefined) {
-			return VersatileCandidates.some((x) => x.startsWith(match));
+		return iv === undefined ? VersatileCandidates : [iv.versatileSkill];
+	}
+
+	let targets: PokemonData[] = [pokemon];
+	if (evolved) {
+		const decendants =
+			iv !== undefined && iv.pokemon.id === pokemon.id
+				? iv.decendants
+				: getDecendants(pokemon);
+		if (decendants.length > 0 && !decendants.some((x) => x.id === pokemon.id)) {
+			targets = decendants;
 		}
-		name = iv.versatileSkill;
 	}
 
-	// Special case: Toxel's main skill changes upon evolution
-	if (evolved && pokemon.id === toxelId && iv !== undefined) {
-		name = iv.nature.isAmped
-			? "Ingredient Magnet S (Plus)"
-			: "Cooking Power-Up S (Minus)";
-	}
+	return targets.map((target) => {
+		return target.skill;
+	});
+}
 
-	// Special case: Riolu matches upon evolution
-	if (evolved && pokemon.id === rioluId) {
-		name = "Dream Shard Magnet S (Aura Sphere)";
-	}
-
+/**
+ * Checks if a given `match` string matches the skill `name` or
+ * satisfies a special-case equivalence.
+ */
+function matchSkillName(name: MainSkillName, match: string): boolean {
 	// `name` should start with `match`
 	// (ex) `Charge Strength S (Stockpile)` matches `Charge Strength S`
 	if (name.startsWith(match)) {

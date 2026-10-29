@@ -227,5 +227,45 @@ describe("MainSkill", () => {
 				);
 			});
 		});
+
+		describe("Misdreavus evolution special cases", () => {
+			test("Misdreavus evolves to Cooking Advance S (Mystical Fire), matching Tasty Chance S", () => {
+				const misdreavus = pokemons.find((x) => x.name === "Misdreavus");
+				if (misdreavus === undefined) {
+					throw new Error("Misdreavus not found in pokemons data");
+				}
+				const iv = new PokemonIv({ pokemonName: "Misdreavus" });
+
+				expect(
+					matchMainSkillName(misdreavus, "Cooking Advance S", true, iv),
+				).toBe(true);
+				expect(matchMainSkillName(misdreavus, "Tasty Chance S", true, iv)).toBe(
+					true,
+				);
+				expect(matchMainSkillName(misdreavus, "Tasty Chance S", true)).toBe(
+					true,
+				);
+				expect(
+					matchMainSkillName(misdreavus, "Tasty Chance S", false, iv),
+				).toBe(false);
+			});
+		});
+
+		test("Pokémon with multiple evolutions matches any of their skills", () => {
+			const eevee = pokemons.find((x) => x.name === "Eevee");
+			if (eevee === undefined) {
+				throw new Error("Eevee not found in pokemons data");
+			}
+			const iv = new PokemonIv({ pokemonName: "Eevee" });
+
+			const skills = new Set(
+				pokemons
+					.filter((x) => x.ancestor === eevee.id && x.evolutionLeft === 0)
+					.map((x) => x.skill),
+			);
+			for (const skill of skills) {
+				expect(matchMainSkillName(eevee, skill, true, iv)).toBe(true);
+			}
+		});
 	});
 });
