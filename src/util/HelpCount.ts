@@ -983,8 +983,7 @@ export class HelpCountSimulation {
 
 		// Initialize skill fields
 		this.skillRate = skillRate ?? iv.skillRate;
-		this.isSkillSpecialty =
-			iv.pokemon.specialty === "Skills" || iv.pokemon.specialty === "All";
+		this.isSkillSpecialty = iv.isSkillSpecialty;
 
 		// Initialize state: nothing in the inventory
 		this.state = Array.from<number>({ length: this.carryLimit }).fill(0);

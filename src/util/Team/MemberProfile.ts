@@ -121,8 +121,6 @@ export function buildMemberProfile(
 	// Keep "Versatile" here; VersatileSkill resolves iv.versatileSkill and
 	// forwards to the chosen skill's handler.
 	const skillName = iv.pokemon.skill;
-	const isSkillSpecialty =
-		iv.pokemon.specialty === "Skills" || iv.pokemon.specialty === "All";
 
 	return {
 		index: -1, // will be set by caller
@@ -141,7 +139,7 @@ export function buildMemberProfile(
 		skillName,
 		skillLevel,
 		energyRecoveryFactor: recoveryFactor,
-		maxSkillCount: isSkillSpecialty ? 2 : 1,
+		maxSkillCount: iv.isSkillSpecialty ? 2 : 1,
 		isEnergyAlwaysFull: param.isEnergyAlwaysFull,
 		sneakySnacking: member.sneakySnacking,
 		skill: createSkill("unknown"),
