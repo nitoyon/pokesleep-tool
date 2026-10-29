@@ -6,6 +6,7 @@ import {
 	calculateHelpCountInInterval,
 	calculateHelpCountPerTap,
 	calculateNextHelpElapsed,
+	createHelpCountSimulation,
 	HelpCountSimulation,
 } from "./HelpCount";
 import Nature from "./Nature";
@@ -281,6 +282,62 @@ describe("calculateHelpCount", () => {
 		test("carryLimitMul=1.5 + good camp ticket", () => {
 			const bonus = { ...emptyBonusBase, carryLimitMul: 1.5 as const };
 			expect(getCarryLimit(bonus, true)).toBe(11); // Math.ceil(6*1.5*1.2)
+		});
+	});
+
+	describe("reuse simulation", () => {
+		const param = createParam({ tapFrequencyAwake: 60 });
+		const base = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+
+		test("returns the same result as a new simulation", () => {
+			const energy = new Energy(base).calculate(param);
+			const expected = calculateHelpCount(
+				base,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+			);
+
+			const sim = createHelpCountSimulation(base, param, emptyBonusBase);
+			// Run twice to make sure the cached state is reused correctly
+			for (let i = 0; i < 2; i++) {
+				const result = calculateHelpCount(
+					base,
+					param,
+					energy,
+					emptyBonusBase,
+					false,
+					sim,
+				);
+				expect(result).toEqual(expected);
+			}
+		});
+
+		test("can be shared by different speed and skill rate", () => {
+			// Naughty: speed up, skill down (DP inputs are not changed)
+			const iv = base.clone({ nature: new Nature("Naughty") });
+			expect(iv.ingredientRate).toBe(base.ingredientRate);
+			expect(iv.skillRate).not.toBe(base.skillRate);
+
+			const energy = new Energy(iv).calculate(param);
+			const expected = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+			);
+			const sim = createHelpCountSimulation(base, param, emptyBonusBase);
+			const result = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+				sim,
+			);
+			expect(result).toEqual(expected);
 		});
 	});
 });
