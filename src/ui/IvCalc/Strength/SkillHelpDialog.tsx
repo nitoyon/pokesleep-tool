@@ -958,6 +958,10 @@ function getConfigHtml(
 		return getLatiTwinsConfigHtml(strength, dispatch, t);
 	}
 
+	if (iv.pokemon.skill === "Helper Boost") {
+		return getHelperBoostConfigHtml(strength, dispatch, t);
+	}
+
 	if (
 		iv.versatileSkill.startsWith("Berry Burst") ||
 		iv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
@@ -1001,6 +1005,42 @@ function getLatiTwinsConfigHtml(
 				size="small"
 				onChange={onLatiTwinsChange}
 			/>
+		</section>
+	);
+}
+
+function getHelperBoostConfigHtml(
+	strength: PokemonStrength,
+	dispatch: React.Dispatch<IvAction>,
+	t: typeof i18next.t,
+): React.ReactElement {
+	const settings = strength.parameter;
+	const onSpeciesChange = (value: string) => {
+		dispatch({
+			type: "changeParameter",
+			payload: {
+				parameter: {
+					...settings,
+					helperBoostSpecies: parseInt(value, 10),
+				},
+			},
+		});
+	};
+
+	return (
+		<section style={{ marginTop: "0.5rem" }}>
+			<span className="lbl">{t("different species")}:</span>
+			<SelectEx
+				value={settings.helperBoostSpecies.toString()}
+				sx={{ padding: "0 0.5rem" }}
+				onChange={onSpeciesChange}
+			>
+				{[1, 2, 3, 4, 5].map((n) => (
+					<MenuItem key={n} dense value={n.toString()}>
+						{n}
+					</MenuItem>
+				))}
+			</SelectEx>
 		</section>
 	);
 }

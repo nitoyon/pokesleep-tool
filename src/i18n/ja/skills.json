@@ -146,7 +146,7 @@
 		},
 		"Helper Boost": {
 			"name": "おてつだいブースト",
-			"strength": "同タイプのポケモン 3 体と仮定しています。$t(other member calculation)",
+			"strength": "$t(other member calculation)",
 			"desc": "チーム内のポケモン全員のおてつだいがすぐに完了します。チームに同一タイプの異なる種類のポケモンが多いほど効果量がアップします。",
 			"detail": "おてつだいポケモンは$t(carry limit)を超えて999個まで、きのみ・食材を保持できます。"
 		},
