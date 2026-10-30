@@ -6,7 +6,7 @@ import NumericInput, {
 } from "../../common/NumericInput";
 import SliderAndArrow from "../../common/SliderAndArrow";
 
-const maxBonus = 85;
+const maxBonus = 100;
 
 const AreaBonusControl = React.memo(
 	({
