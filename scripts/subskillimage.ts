@@ -20,10 +20,9 @@ import SubSkill, { type SubSkillType } from "../src/util/SubSkill";
 import {
 	extractSubSkillTexts,
 	type GrayImage,
-	grayDistance,
-	type RgbaImage,
 } from "../src/util/SubSkillImage";
-import { decodePng, encodePng } from "./png";
+import { describeMatch, loadTable, writeTable } from "./grayimage";
+import { decodePng } from "./png";
 
 interface Source {
 	/** Path of the screenshot */
@@ -65,28 +64,16 @@ function main() {
  * Builds the sub-skill image table for each JSON file.
  */
 function build(jsonPaths: string[], size: { width: number; height: number }) {
-	const { width, height } = size;
 	const names = SubSkill.allSubSkillNames;
 	for (const jsonPath of jsonPaths) {
 		const lang = path.basename(jsonPath, path.extname(jsonPath));
 		const sources = loadSources(jsonPath);
 		const images = collectImages(lang, sources, size);
-		const out: GrayImage = {
-			width: width * names.length,
-			height,
-			data: new Uint8Array(width * names.length * height),
-		};
-		names.forEach((name, col) => {
-			const image = images.get(name);
-			if (image === undefined) {
-				console.warn(`[${lang}] Missing sub-skill: ${name}`);
-				return;
-			}
-			blit(out, image, col * width, 0);
-		});
-
 		const output = path.join(path.dirname(jsonPath), `${lang}.png`);
-		fs.writeFileSync(output, encodePng(grayToRgba(out)));
+		const missing = writeTable(output, names, images, size);
+		for (const name of missing) {
+			console.warn(`[${lang}] Missing sub-skill: ${name}`);
+		}
 		console.log(`Wrote ${output}`);
 	}
 }
@@ -95,7 +82,7 @@ function build(jsonPaths: string[], size: { width: number; height: number }) {
  * Recognizes the sub-skills in the screenshots using the image table.
  */
 function test(tablePath: string, screenshots: string[]) {
-	const table = loadTable(tablePath);
+	const table = loadTable(tablePath, SubSkill.allSubSkillNames);
 	if (table.size === 0) {
 		throw new Error(`${tablePath}: no sub-skill images`);
 	}
@@ -111,59 +98,9 @@ function test(tablePath: string, screenshots: string[]) {
 			continue;
 		}
 		results.forEach((result, i) => {
-			const ranking = [...table]
-				.map(([name, image]) => ({
-					name,
-					distance: grayDistance(result.pixelated, image),
-				}))
-				.sort((a, b) => a.distance - b.distance);
-			const [best, second] = ranking;
-			const secondText =
-				second === undefined
-					? ""
-					: ` (2nd: ${second.name} ${second.distance.toFixed(3)})`;
-			console.log(
-				`  ${i + 1}. ${best.name} ${best.distance.toFixed(3)}${secondText}`,
-			);
+			console.log(`  ${i + 1}. ${describeMatch(table, result.pixelated)}`);
 		});
 	}
-}
-
-/**
- * Loads the image table created by build mode.
- * Blank cells (missing sub-skills) are excluded.
- */
-function loadTable(pngPath: string): Map<SubSkillType, GrayImage> {
-	const names = SubSkill.allSubSkillNames;
-	const gray = rgbaToGray(decodePng(fs.readFileSync(pngPath)));
-	if (gray.width % names.length !== 0) {
-		throw new Error(
-			`${pngPath}: width ${gray.width} is not a multiple of ${names.length}`,
-		);
-	}
-	const width = gray.width / names.length;
-	const height = gray.height;
-	const ret = new Map<SubSkillType, GrayImage>();
-	names.forEach((name, col) => {
-		const cell: GrayImage = {
-			width,
-			height,
-			data: new Uint8Array(width * height),
-		};
-		for (let y = 0; y < height; y++) {
-			cell.data.set(
-				gray.data.subarray(
-					y * gray.width + col * width,
-					y * gray.width + (col + 1) * width,
-				),
-				y * width,
-			);
-		}
-		if (cell.data.some((v) => v !== 0)) {
-			ret.set(name, cell);
-		}
-	});
-	return ret;
 }
 
 /**
@@ -226,35 +163,6 @@ function collectImages(
 		}
 	}
 	return ret;
-}
-
-/** Copies src into dst at (x, y). */
-function blit(dst: GrayImage, src: GrayImage, x: number, y: number) {
-	for (let sy = 0; sy < src.height; sy++) {
-		dst.data.set(
-			src.data.subarray(sy * src.width, (sy + 1) * src.width),
-			(y + sy) * dst.width + x,
-		);
-	}
-}
-
-/** Converts to RGBA (text is drawn in black on white). */
-function grayToRgba(gray: GrayImage): RgbaImage {
-	const data = new Uint8ClampedArray(gray.width * gray.height * 4);
-	for (let i = 0; i < gray.data.length; i++) {
-		const v = 255 - gray.data[i];
-		data.set([v, v, v, 255], i * 4);
-	}
-	return { width: gray.width, height: gray.height, data };
-}
-
-/** Inverse of grayToRgba. */
-function rgbaToGray(img: RgbaImage): GrayImage {
-	const data = new Uint8Array(img.width * img.height);
-	for (let i = 0; i < data.length; i++) {
-		data[i] = 255 - img.data[i * 4];
-	}
-	return { width: img.width, height: img.height, data };
 }
 
 main();

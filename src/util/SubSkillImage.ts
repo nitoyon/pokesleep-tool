@@ -89,17 +89,19 @@ export function otsuThreshold(hist: number[]): number {
  * buttons), so luminance + Otsu threshold is used. The result is cropped
  * to the bounding box of the text.
  *
+ * @param margin Ratio of the button size to skip on each side.
  * @returns binarized text and its bounding box in the image.
  */
 export function binarizeButton(
 	img: RgbaImage,
 	button: Rect,
+	margin: { x: number; y: number } = { x: 0.04, y: 0.18 },
 ): { image: BinaryImage; rect: Rect } {
 	// Inner area without border, shadow and the "Lv.xx" badge
-	const x0 = Math.round(button.x + button.width * 0.04);
-	const x1 = Math.round(button.x + button.width * 0.96);
-	const y0 = Math.round(button.y + button.height * 0.18);
-	const y1 = Math.round(button.y + button.height * 0.82);
+	const x0 = Math.round(button.x + button.width * margin.x);
+	const x1 = Math.round(button.x + button.width * (1 - margin.x));
+	const y0 = Math.round(button.y + button.height * margin.y);
+	const y1 = Math.round(button.y + button.height * (1 - margin.y));
 	const w = x1 - x0;
 	const h = y1 - y0;
 
@@ -241,6 +243,67 @@ export function extractSubSkillTexts(
  * @returns 5 rectangles in the game order, or null if not found.
  */
 export function findSubSkillButtons(img: RgbaImage): Rect[] | null {
+	return findGrid(findButtonCandidates(img), img.width);
+}
+
+/**
+ * Finds the nature button in the screenshot.
+ *
+ * The nature button is placed in the left column below the sub-skill
+ * buttons, and has the same width as them.
+ *
+ * @returns rectangle of the button, or null if not found.
+ */
+export function findNatureButton(img: RgbaImage): Rect | null {
+	const candidates = findButtonCandidates(img);
+	const grid = findGrid(candidates, img.width);
+	if (grid === null) {
+		return null;
+	}
+	const last = grid[4];
+	const bottom = last.y + last.height;
+	const found = candidates
+		.filter(
+			(r) =>
+				r.y >= bottom &&
+				Math.abs(r.x - last.x) <= last.width * 0.05 &&
+				Math.abs(r.width - last.width) <= last.width * 0.05,
+		)
+		.sort((a, b) => a.y - b.y);
+	return found[0] ?? null;
+}
+
+/**
+ * Finds the nature button and returns the pixelated text.
+ *
+ * @param img Screenshot.
+ * @param size Size of the pixelated text image.
+ * @returns result, or null if the button is not found.
+ */
+export function extractNatureText(
+	img: RgbaImage,
+	size: { width: number; height: number },
+): { button: Rect; text: Rect; pixelated: GrayImage } | null {
+	const button = findNatureButton(img);
+	if (button === null) {
+		return null;
+	}
+	// Skip the rounded green border
+	const { image, rect } = binarizeButton(img, button, {
+		x: 0.15,
+		y: 0.22,
+	});
+	return {
+		button,
+		text: rect,
+		pixelated: pixelate(image, size.width, size.height),
+	};
+}
+
+/**
+ * Finds button-shaped connected components of non-background pixels.
+ */
+function findButtonCandidates(img: RgbaImage): Rect[] {
 	const { width, height, data } = img;
 	const bg = findBackgroundColor(img);
 
@@ -342,7 +405,7 @@ export function findSubSkillButtons(img: RgbaImage): Rect[] | null {
 			height: c.bottom - top + 1,
 		});
 	}
-	return findGrid(candidates, width);
+	return candidates;
 }
 
 /**

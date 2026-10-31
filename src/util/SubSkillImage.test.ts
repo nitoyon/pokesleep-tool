@@ -1,5 +1,6 @@
 import {
 	binarizeButton,
+	findNatureButton,
 	findSubSkillButtons,
 	grayDistance,
 	otsuThreshold,
@@ -69,6 +70,34 @@ describe("findSubSkillButtons", () => {
 		const img = createImage(1080, 1200);
 		drawButton(img, { x: 80, y: 300, width: 434, height: 100 }, false);
 		expect(findSubSkillButtons(img)).toBeNull();
+	});
+});
+
+describe("findNatureButton", () => {
+	const buttons: Rect[] = [
+		{ x: 80, y: 300, width: 434, height: 100 },
+		{ x: 568, y: 300, width: 434, height: 100 },
+		{ x: 80, y: 470, width: 434, height: 100 },
+		{ x: 568, y: 470, width: 434, height: 100 },
+		{ x: 80, y: 640, width: 434, height: 100 },
+	];
+
+	test("finds the button below the sub-skill buttons", () => {
+		const img = createImage(1080, 1200);
+		for (const r of buttons) {
+			drawButton(img, r, false);
+		}
+		const nature = { x: 80, y: 900, width: 434, height: 110 };
+		drawButton(img, nature, true);
+		expect(findNatureButton(img)).toEqual(nature);
+	});
+
+	test("returns null when the button is not found", () => {
+		const img = createImage(1080, 1200);
+		for (const r of buttons) {
+			drawButton(img, r, false);
+		}
+		expect(findNatureButton(img)).toBeNull();
 	});
 });
 
