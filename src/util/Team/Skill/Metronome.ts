@@ -20,6 +20,7 @@ export const MetronomeCandidates: Readonly<MainSkillName[]> = [
 	"Charge Strength S (Random)",
 	"Charge Strength S (Stockpile)",
 	"Cooking Assist S (Bulk Up)",
+	"Cooking Advance S (Mystical Fire)",
 	"Cooking Power-Up S",
 	"Cooking Power-Up S (Minus)",
 	"Dream Shard Magnet S",
