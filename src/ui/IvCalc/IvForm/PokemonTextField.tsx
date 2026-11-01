@@ -47,16 +47,19 @@ const PokemonTextField = React.memo(
 		const [open, setOpen] = React.useState(false);
 		const pokemonOptions: PokemonOption[] = React.useMemo(
 			() =>
-				pokemons.map((pokemon) => ({
-					...pokemon,
-					idForm: new PokemonIv({ pokemonName: pokemon.name }).idForm,
-					localName: t(`pokemons.${pokemon.name}`),
-					isNonEvolving: pokemon.evolutionCount === -1,
-					isFullyEvolved: pokemon.isFullyEvolved,
-					ing1Name: pokemon.ing1.name,
-					ing2Name: pokemon.ing2.name,
-					ing3Name: pokemon.ing3?.name,
-				})),
+				pokemons
+					// Exclude Pikachu (Night Cap)
+					.filter((x) => !(x.id === 25 && x.form === "Low Key"))
+					.map((pokemon) => ({
+						...pokemon,
+						idForm: new PokemonIv({ pokemonName: pokemon.name }).idForm,
+						localName: t(`pokemons.${pokemon.name}`),
+						isNonEvolving: pokemon.evolutionCount === -1,
+						isFullyEvolved: pokemon.isFullyEvolved,
+						ing1Name: pokemon.ing1.name,
+						ing2Name: pokemon.ing2.name,
+						ing3Name: pokemon.ing3?.name,
+					})),
 			[t],
 		);
 		const _selectedOption = pokemonOptions.find((x) => x.name === value);
