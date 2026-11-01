@@ -573,32 +573,33 @@ const PokemonSelectDialog = React.memo(
 		);
 
 		// sort
-		let options: PokemonOption[] = [];
+		// copy to avoid mutating the props
+		const options: PokemonOption[] = [...pokemonOptions];
 		switch (sortType) {
 			case "sleeptype":
-				options = pokemonOptions.sort((a, b) => {
+				options.sort((a, b) => {
 					const as = sleepType2num[a.sleepType];
 					const bs = sleepType2num[b.sleepType];
 					return as === bs ? a.id - b.id : as - bs;
 				});
 				break;
 			case "name":
-				options = pokemonOptions.sort((a, b) =>
+				options.sort((a, b) =>
 					a.localName > b.localName ? 1 : a.localName < b.localName ? -1 : 0,
 				);
 				break;
 			case "pokedexno":
-				options = pokemonOptions.sort((a, b) => a.id - b.id);
+				options.sort((a, b) => a.id - b.id);
 				break;
 			case "type":
-				options = pokemonOptions.sort((a, b) => {
+				options.sort((a, b) => {
 					const at = type2num[a.type];
 					const bt = type2num[b.type];
 					return at === bt ? a.id - b.id : at - bt;
 				});
 				break;
 			case "arrival":
-				options = pokemonOptions.sort((a, b) => {
+				options.sort((a, b) => {
 					if (a.arrival !== b.arrival) {
 						return a.arrival > b.arrival ? 1 : -1;
 					}
@@ -609,7 +610,7 @@ const PokemonSelectDialog = React.memo(
 				throw new Error("invalid sort type");
 		}
 		if (descending) {
-			options = options.reverse();
+			options.reverse();
 		}
 
 		return (
@@ -628,6 +629,13 @@ const PokemonSelectDialog = React.memo(
 							return option;
 						}
 						return option.localName;
+					}}
+					getOptionKey={(option: string | PokemonOption) => {
+						// localName is not unique (e.g. Halloween and Halloween2)
+						if (typeof option === "string") {
+							return option;
+						}
+						return option.name;
 					}}
 					groupBy={groupByCallback}
 					renderGroup={renderGroup}
