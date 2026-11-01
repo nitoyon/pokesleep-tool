@@ -908,6 +908,7 @@ class PokemonIv {
 			Large: 9,
 			Jumbo: 10,
 			Captain: 11,
+			Halloween2: 12,
 		};
 
 		return formMap[this.pokemon.form] ?? 0;
@@ -932,6 +933,7 @@ class PokemonIv {
 			"Large",
 			"Jumbo",
 			"Captain",
+			"Halloween2",
 		];
 		return formNames[form] ?? "";
 	}
@@ -997,7 +999,7 @@ class PokemonIv {
 	 *
 	 * * 6bit  : Form (0: normal, 1: Halloween, 2: Holiday, 3: Alola,
 	 *           4: Paldea, 5: Amped, 6: Low-Key, 7: Small, 8: Medium,
-	 *           9: Large, 10: Jumbo, 11: Captain)
+	 *           9: Large, 10: Jumbo, 11: Captain, 12: Halloween2)
 	 * * 7bit  : level
 	 * * 3bit  : Ingredient (0: AAA, 1: AAB, 2: ABA, 3: ABB, 4: ABC)
 	 *

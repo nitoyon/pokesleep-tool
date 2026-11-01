@@ -684,6 +684,41 @@
 	},
 	{
 		"id": 25,
+		"name": "Pikachu (Halloween2)",
+		"arrival": "2024-10-28",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "electric",
+		"specialty": "Berries",
+		"skill": "Charge Strength S (Random)",
+		"fp": 7,
+		"frequency": 2500,
+		"ingRate": 21.8,
+		"skillRate": 2.8,
+		"ancestor": null,
+		"evolutionCount": -1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 18,
+		"ing1": {
+			"name": "apple",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "ginger",
+			"c2": 2,
+			"c3": 3
+		},
+		"ing3": {
+			"name": "egg",
+			"c3": 3
+		},
+		"form": "Halloween2"
+	},
+	{
+		"id": 25,
 		"name": "Pikachu (Captain)",
 		"arrival": "2026-08-17",
 		"sleepType": "snoozing",
@@ -2293,6 +2328,41 @@
 			"c3": 9
 		},
 		"form": "Halloween"
+	},
+	{
+		"id": 133,
+		"name": "Eevee (Halloween2)",
+		"arrival": "2026-10-26",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "normal",
+		"specialty": "Skills",
+		"skill": "Ingredient Magnet S",
+		"fp": 5,
+		"frequency": 3200,
+		"ingRate": 12,
+		"skillRate": 4.6,
+		"ancestor": null,
+		"evolutionCount": -1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 18,
+		"ing1": {
+			"name": "pumpkin",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "cacao",
+			"c2": 4,
+			"c3": 6
+		},
+		"ing3": {
+			"name": "milk",
+			"c3": 9
+		},
+		"form": "Halloween2"
 	},
 	{
 		"id": 133,
