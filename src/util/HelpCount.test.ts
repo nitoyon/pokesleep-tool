@@ -2,10 +2,14 @@ import { describe, expect, test } from "vitest";
 import { emptyBonusEffects } from "../data/events";
 import Energy, { AlwaysTap, type EnergyParameter, NoTap } from "./Energy";
 import {
+	calculateBaseFreqAndBonus,
 	calculateHelpCount,
 	calculateHelpCountInInterval,
 	calculateHelpCountPerTap,
 	calculateNextHelpElapsed,
+	calculateSkillCountFromPlan,
+	createHelpCountPlan,
+	createHelpCountSimulation,
 	HelpCountSimulation,
 } from "./HelpCount";
 import Nature from "./Nature";
@@ -281,6 +285,111 @@ describe("calculateHelpCount", () => {
 		test("carryLimitMul=1.5 + good camp ticket", () => {
 			const bonus = { ...emptyBonusBase, carryLimitMul: 1.5 as const };
 			expect(getCarryLimit(bonus, true)).toBe(11); // Math.ceil(6*1.5*1.2)
+		});
+	});
+
+	describe("reuse simulation", () => {
+		const param = createParam({ tapFrequencyAwake: 60 });
+		const base = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+
+		test("returns the same result as a new simulation", () => {
+			const energy = new Energy(base).calculate(param);
+			const expected = calculateHelpCount(
+				base,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+			);
+
+			const sim = createHelpCountSimulation(base, param, emptyBonusBase);
+			// Run twice to make sure the cached state is reused correctly
+			for (let i = 0; i < 2; i++) {
+				const result = calculateHelpCount(
+					base,
+					param,
+					energy,
+					emptyBonusBase,
+					false,
+					sim,
+				);
+				expect(result).toEqual(expected);
+			}
+		});
+
+		test("can be shared by different speed and skill rate", () => {
+			// Naughty: speed up, skill down (DP inputs are not changed)
+			const iv = base.clone({ nature: new Nature("Naughty") });
+			expect(iv.ingredientRate).toBe(base.ingredientRate);
+			expect(iv.skillRate).not.toBe(base.skillRate);
+
+			const energy = new Energy(iv).calculate(param);
+			const expected = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+			);
+			const sim = createHelpCountSimulation(base, param, emptyBonusBase);
+			const result = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+				sim,
+			);
+			expect(result).toEqual(expected);
+		});
+	});
+
+	describe("reuse plan", () => {
+		const base = new PokemonIv({ pokemonName: "Raichu", level: 50 });
+
+		test.each([
+			["tap", { tapFrequencyAwake: 60, tapFrequencyAsleep: NoTap }],
+			["sleep tap", { tapFrequencyAwake: 60, tapFrequencyAsleep: 120 }],
+			["always tap", { tapFrequencyAsleep: AlwaysTap }],
+			["no tap", { tapFrequencyAwake: NoTap }],
+			["week", { period: 168 }],
+			["help count", { period: -10 }],
+		])("returns the same result (%s)", (_, obj) => {
+			const param = createParam(obj);
+			// Quiet: ingredient up (plan is not changed)
+			const iv = base.clone({ nature: new Nature("Quiet") });
+			const energy = new Energy(base).calculate(param);
+			const expected = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+			);
+
+			const { baseFreq } = calculateBaseFreqAndBonus(
+				base,
+				param,
+				emptyBonusBase,
+				false,
+			);
+			const plan = createHelpCountPlan(param, baseFreq, energy, false);
+			const result = calculateHelpCount(
+				iv,
+				param,
+				energy,
+				emptyBonusBase,
+				false,
+				undefined,
+				plan,
+			);
+			expect(result).toEqual(expected);
+
+			// Skill count from plan
+			const sim = createHelpCountSimulation(iv, param, emptyBonusBase);
+			expect(
+				calculateSkillCountFromPlan(plan, sim, expected.overallSkillRate),
+			).toBe(expected.skillCount);
 		});
 	});
 });
@@ -1113,5 +1222,16 @@ describe("HelpCountSimulation", () => {
 				prev = res.sneakySnackingCount;
 			}
 		});
+	});
+});
+
+describe("HelpCountSimulation.computeSkillCount", () => {
+	test.each([0, 1, 5, 7.3, 12.75, 30.5])("matches compute() (n=%f)", (n) => {
+		const iv = new PokemonIv({ pokemonName: "Raichu", level: 60 });
+		const sim = new HelpCountSimulation(iv);
+		const result = sim.compute(n, 0.1);
+		expect(sim.computeSkillCount(n, 0.1)).toBe(
+			result.skillOnce + result.skillTwice * 2,
+		);
 	});
 });
