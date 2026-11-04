@@ -1139,7 +1139,7 @@ export class HelpCountSimulation {
 					this.eventItemType === "extraIng" &&
 					usage.name !== "berry"
 				) {
-					eventItemProb = transitionProb * this.eventItemRate;
+					eventItemProb = transitionProb;
 				}
 				const noEventItemProb = transitionProb - eventItemProb;
 

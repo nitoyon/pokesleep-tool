@@ -1065,7 +1065,7 @@ class PokemonStrength {
 		}
 		if (targetEventBonus.extraIng !== "") {
 			eventItem.count = 1;
-			eventItem.rate = 1;
+			eventItem.rate = this.iv.ingredientRate;
 			eventItemType = "extraIng";
 		}
 
