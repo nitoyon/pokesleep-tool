@@ -1,4 +1,8 @@
-import events, { getEventBonus, loadHelpEventBonus } from "../data/events";
+import events, {
+	emptyBonusEffects,
+	getEventBonus,
+	loadHelpEventBonus,
+} from "../data/events";
 import fields, { isExpertField } from "../data/fields";
 import { type PokemonType, PokemonTypes } from "../data/pokemons";
 import { clamp } from "../util/NumberUtil";
@@ -252,23 +256,7 @@ export function createStrengthParameter(
 		customEventBonus: {
 			target: {},
 			effects: {
-				berry: 0,
-				skillTrigger: 1,
-				skillLevel: 0,
-				ingredient: 0,
-				extraIng: "",
-				dreamShard: 1,
-				ingredientMagnet: 1,
-				ingredientDraw: 1,
-				skillIngredient: 1,
-				berryBurst: 1,
-				dish: 1,
-				energyFromDish: 0,
-				carryLimitAdd: 0,
-				carryLimitMul: 1,
-				globalCarryLimitAdd: 0,
-				bigBerry: "",
-				potSize: 1,
+				...emptyBonusEffects,
 				fixedAreas: [],
 				fixedBerries: [],
 			},
