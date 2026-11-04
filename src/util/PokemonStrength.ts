@@ -482,7 +482,7 @@ class PokemonStrength {
 
 		// TODO: assume only psychic big berry
 		const bigBerry1Strength =
-			helpCount.bigBerryCount === 0
+			helpCount.eventItemCount === 0
 				? 0
 				: getBerryStrength(
 						"psychic",
@@ -493,9 +493,9 @@ class PokemonStrength {
 						param.berryZone.psychic,
 					);
 		const bigBerryStrength =
-			helpCount.bigBerryCount === 0
+			helpCount.eventItemCount === 0
 				? 0
-				: bigBerry1Strength * helpCount.bigBerryCount;
+				: bigBerry1Strength * helpCount.eventItemCount;
 		const berryTotalStrength = berryStrength + bigBerryStrength;
 
 		// calc skill
