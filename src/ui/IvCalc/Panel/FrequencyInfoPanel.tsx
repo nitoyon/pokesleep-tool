@@ -148,6 +148,7 @@ const FullPreview = React.memo(
 					state.expertMode &&
 					state.expertBerry !== 2 &&
 					state.expertIngBonus === 1,
+				eventItemType: "none",
 				eventItemRate: 0,
 				eventItemCount: 0,
 			};

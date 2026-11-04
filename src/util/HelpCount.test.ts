@@ -32,6 +32,7 @@ function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
 
 const emptyBonusBase: BonusEffectsWithReason = {
 	...emptyBonusEffects,
+	eventItemType: "none",
 	eventItemRate: 0,
 	eventItemCount: 0,
 	skillTriggerReason: "none",
@@ -777,6 +778,7 @@ describe("HelpCountSimulation", () => {
 			});
 
 			const sim = new HelpCountSimulation(iv, false, undefined, {
+				eventItemType: "bigBerry",
 				eventItemRate: 0.5,
 				eventItemCount: 2,
 			});
@@ -809,6 +811,7 @@ describe("HelpCountSimulation", () => {
 			// - Apple x2 (0.1):  2 + 3 = 5
 			// - Apple x4 (0.1):  4 + 2 = 6 (1 big berry does not fit)
 			const sim = new HelpCountSimulation(iv, false, undefined, {
+				eventItemType: "bigBerry",
 				eventItemRate: 1,
 				eventItemCount: 3,
 			});
@@ -844,6 +847,7 @@ describe("HelpCountSimulation", () => {
 			// - Apple x4 (0.1):  4 + 0 = 4 (the bag is already full)
 			const sim = new HelpCountSimulation(iv, false, undefined, {
 				carryLimitAdd: -2,
+				eventItemType: "bigBerry",
 				eventItemRate: 1,
 				eventItemCount: 3,
 			});

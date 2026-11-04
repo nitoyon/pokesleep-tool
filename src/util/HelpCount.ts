@@ -919,6 +919,8 @@ export class HelpCountSimulation {
 	private carryLimit: number;
 	/** Possible outcomes per help action. */
 	private bagUsage: BagUsagePerHelpDetailItem[];
+	/** Event item type */
+	private eventItemType: "bigBerry" | "extraIng" | "none";
 	/** Probability that the event item is picked up along with a help. */
 	private eventItemRate: number;
 	/** Number of event items picked up at once. */
@@ -972,7 +974,8 @@ export class HelpCountSimulation {
 			...this.bagUsage.map((usage) => usage.ingSlotIndex + 1),
 		);
 
-		// Initialize big berry
+		// Initialize event item
+		this.eventItemType = bonus?.eventItemType ?? "none";
 		this.eventItemRate = bonus?.eventItemRate ?? 0;
 		this.eventItemCount = bonus?.eventItemCount ?? 0;
 
@@ -1126,33 +1129,41 @@ export class HelpCountSimulation {
 					newUsed += addCount;
 				}
 
-				// Big berry: picked up along with the berry or ingredient of this
+				// Event item: picked up along with the berry or ingredient of this
 				// help. They occupy the inventory, and the ones over the carry limit
 				// are not brought.
-				const bigBerryProb = transitionProb * this.eventItemRate;
-				const noBigBerryProb = transitionProb - bigBerryProb;
+				let eventItemProb = 0;
+				if (this.eventItemType === "bigBerry") {
+					eventItemProb = transitionProb * this.eventItemRate;
+				} else if (
+					this.eventItemType === "extraIng" &&
+					usage.name !== "berry"
+				) {
+					eventItemProb = transitionProb * this.eventItemRate;
+				}
+				const noEventItemProb = transitionProb - eventItemProb;
 
 				// Without big berry
 				if (newUsed < this.carryLimit) {
-					nextState[newUsed] += noBigBerryProb;
+					nextState[newUsed] += noEventItemProb;
 				} else {
 					// Inventory becomes full
-					newFullProb += noBigBerryProb;
+					newFullProb += noEventItemProb;
 				}
 
 				// With big berry
 				const bigBerrySpace = Math.max(0, this.carryLimit - newUsed);
 				const bigBerryCount = Math.min(this.eventItemCount, bigBerrySpace);
 				if (bigBerryCount > 0) {
-					newEventItemHelpProb += bigBerryProb;
-					newEventItemCount += bigBerryCount * bigBerryProb;
+					newEventItemHelpProb += eventItemProb;
+					newEventItemCount += bigBerryCount * eventItemProb;
 				}
 				const usedWithBigBerry = newUsed + bigBerryCount;
 				if (usedWithBigBerry < this.carryLimit) {
-					nextState[usedWithBigBerry] += bigBerryProb;
+					nextState[usedWithBigBerry] += eventItemProb;
 				} else {
 					// Inventory becomes full
-					newFullProb += bigBerryProb;
+					newFullProb += eventItemProb;
 				}
 			}
 		}
