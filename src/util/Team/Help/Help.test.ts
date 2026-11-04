@@ -243,7 +243,12 @@ describe("applyHelp", () => {
 			const { bonus } = createProfile();
 			return createTeamMember(
 				{
-					bonus: { ...bonus, eventItemRate, eventItemCount },
+					bonus: {
+						...bonus,
+						eventItemType: "bigBerry",
+						eventItemRate,
+						eventItemCount,
+					},
 					normalBagUsage: berry2,
 					carryLimit,
 				},

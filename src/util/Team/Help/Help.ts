@@ -229,8 +229,15 @@ function applySingleHelp(
 
 	// Event item: picked up along with the berry or ingredient of this help.
 	// It occupies the inventory, and the ones over the carry limit are not brought.
-	const { eventItemRate, eventItemCount } = profile.bonus;
+	const { eventItemType, eventItemRate, eventItemCount } = profile.bonus;
+	if (profile.bonus.extraIng !== "" && outcome.name !== "berry") {
+		const ing = profile.bonus.extraIng;
+		const count = Math.min(1, carryLimitLeft);
+		carryLimitLeft -= count;
+		progress.ingCounts.set(ing, (progress.ingCounts.get(ing) ?? 0) + count);
+	}
 	if (
+		eventItemType === "bigBerry" &&
 		eventItemRate > 0 &&
 		eventItemCount > 0 &&
 		carryLimitLeft > 0 &&
