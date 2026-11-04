@@ -256,6 +256,7 @@ export function createStrengthParameter(
 				skillTrigger: 1,
 				skillLevel: 0,
 				ingredient: 0,
+				extraIng: "",
 				dreamShard: 1,
 				ingredientMagnet: 1,
 				ingredientDraw: 1,

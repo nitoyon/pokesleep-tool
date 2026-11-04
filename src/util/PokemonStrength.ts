@@ -1114,6 +1114,7 @@ class PokemonStrength {
 			berry: targetEventBonus.berry,
 			ingredient:
 				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
+			extraIng: targetEventBonus.extraIng,
 			carryLimitAdd:
 				targetEventBonus.carryLimitAdd +
 				eventBonus.globalCarryLimitAdd +
