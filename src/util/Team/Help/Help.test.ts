@@ -236,14 +236,14 @@ describe("applyHelp", () => {
 		];
 
 		function createBigBerryMember(
-			bigBerryRate: number,
-			bigBerryCount: number,
+			eventItemRate: number,
+			eventItemCount: number,
 			carryLimit = 21,
 		): TeamMember {
 			const { bonus } = createProfile();
 			return createTeamMember(
 				{
-					bonus: { ...bonus, bigBerryRate, bigBerryCount },
+					bonus: { ...bonus, eventItemRate, eventItemCount },
 					normalBagUsage: berry2,
 					carryLimit,
 				},

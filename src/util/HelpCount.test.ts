@@ -32,8 +32,8 @@ function createParam(obj: Partial<EnergyParameter>): EnergyParameter {
 
 const emptyBonusBase: BonusEffectsWithReason = {
 	...emptyBonusEffects,
-	bigBerryRate: 0,
-	bigBerryCount: 0,
+	eventItemRate: 0,
+	eventItemCount: 0,
 	skillTriggerReason: "none",
 	skillLevelReason: "none",
 	ingredientReason: "none",
@@ -109,7 +109,7 @@ describe("calculateHelpCount", () => {
 		expect(result2.asleep.normal).toBeLessThan(result.asleep.normal);
 	});
 
-	test("big berry shortens timeToFullInventory", () => {
+	test("event item shortens timeToFullInventory", () => {
 		const iv = new PokemonIv({
 			pokemonName: "Eevee",
 			nature: new Nature("Hasty"), // Energy recovery down
@@ -126,15 +126,15 @@ describe("calculateHelpCount", () => {
 		const param = createParam({ e4eCount: 0, sleepScore: 90 });
 		const energy = new Energy(iv).calculate(param);
 
-		// Without big berry: 1 slot per help => full after 10 helps (300 min)
+		// Without event item: 1 slot per help => full after 10 helps (300 min)
 		const base = calculateHelpCount(iv, param, energy, emptyBonusBase, false);
 		expect(base.timeToFullInventory).toBe(300);
 
-		// Every help picks up 1 big berry: 2 slots per help => 5 helps (150 min)
+		// Every help picks up 1 event item: 2 slots per help => 5 helps (150 min)
 		const bonus: BonusEffectsWithReason = {
 			...emptyBonusBase,
-			bigBerryRate: 1,
-			bigBerryCount: 1,
+			eventItemRate: 1,
+			eventItemCount: 1,
 		};
 		const result = calculateHelpCount(iv, param, energy, bonus, false);
 		expect(result.timeToFullInventory).toBeCloseTo(150);
@@ -766,8 +766,8 @@ describe("HelpCountSimulation", () => {
 		});
 	});
 
-	describe("Big berry", () => {
-		test("Toxel 1 help with big berry bonus", () => {
+	describe("Event item", () => {
+		test("Toxel 1 help with event item bonus", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Toxel",
 				level: 60,
@@ -777,8 +777,8 @@ describe("HelpCountSimulation", () => {
 			});
 
 			const sim = new HelpCountSimulation(iv, false, undefined, {
-				bigBerryRate: 0.5,
-				bigBerryCount: 2,
+				eventItemRate: 0.5,
+				eventItemCount: 2,
 			});
 			const result = sim.compute(1);
 
@@ -809,8 +809,8 @@ describe("HelpCountSimulation", () => {
 			// - Apple x2 (0.1):  2 + 3 = 5
 			// - Apple x4 (0.1):  4 + 2 = 6 (1 big berry does not fit)
 			const sim = new HelpCountSimulation(iv, false, undefined, {
-				bigBerryRate: 1,
-				bigBerryCount: 3,
+				eventItemRate: 1,
+				eventItemCount: 3,
 			});
 			const result = sim.compute(1);
 			expect(result.eventItemHelpCount).toBeCloseTo(1);
@@ -844,8 +844,8 @@ describe("HelpCountSimulation", () => {
 			// - Apple x4 (0.1):  4 + 0 = 4 (the bag is already full)
 			const sim = new HelpCountSimulation(iv, false, undefined, {
 				carryLimitAdd: -2,
-				bigBerryRate: 1,
-				bigBerryCount: 3,
+				eventItemRate: 1,
+				eventItemCount: 3,
 			});
 			const result = sim.compute(1);
 			expect(result.eventItemHelpCount).toBeCloseTo(0.9);
@@ -867,7 +867,7 @@ describe("HelpCountSimulation", () => {
 			expect(result.eventItemHelpCount).toBe(0);
 			expect(result.eventItemCount).toBe(0);
 		});
-		test("big berry: always tap", () => {
+		test("event item: always tap", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Eevee",
 				nature: new Nature("Serious"), // Neutral
@@ -889,8 +889,8 @@ describe("HelpCountSimulation", () => {
 			});
 			const bonus: BonusEffectsWithReason = {
 				...emptyBonusBase,
-				bigBerryRate: 0.5,
-				bigBerryCount: 2,
+				eventItemRate: 0.5,
+				eventItemCount: 2,
 			};
 			const energy = new Energy(iv).calculate(param);
 			const result = calculateHelpCount(iv, param, energy, bonus, false);
@@ -899,7 +899,7 @@ describe("HelpCountSimulation", () => {
 			expect(result.eventItemCount).toBeCloseTo(result.eventItemHelpCount * 2);
 		});
 
-		test("big berry: no tap", () => {
+		test("event item: no tap", () => {
 			const iv = new PokemonIv({
 				pokemonName: "Raichu",
 				level: 30,
@@ -908,8 +908,8 @@ describe("HelpCountSimulation", () => {
 			const param = createParam({ tapFrequencyAwake: NoTap });
 			const bonus: BonusEffectsWithReason = {
 				...emptyBonusBase,
-				bigBerryRate: 0.5,
-				bigBerryCount: 2,
+				eventItemRate: 0.5,
+				eventItemCount: 2,
 			};
 			const energy = new Energy(iv).calculate(param);
 			const result = calculateHelpCount(iv, param, energy, bonus, false);

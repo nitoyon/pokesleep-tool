@@ -106,7 +106,7 @@ function calcBerry1Strength(
 			berryZoneRate[type] ?? 0,
 		),
 		bigBerry1Strength:
-			bonus.bigBerryCount === 0
+			bonus.eventItemCount === 0
 				? 0
 				: getBerryStrength(
 						bigType,

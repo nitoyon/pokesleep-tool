@@ -252,10 +252,10 @@ export const recipeLevelBonus: { [key: number]: number } = {
  * Represents BonusEffects and the source of each bonus.
  */
 export interface BonusEffectsWithReason extends BonusEffects {
-	/** Probability of getting the big berry (0.12 means 12%) */
-	bigBerryRate: number;
-	/** Number of big berries obtained */
-	bigBerryCount: number;
+	/** Probability of getting the event item (0.12 means 12%) */
+	eventItemRate: number;
+	/** Number of event items obtained */
+	eventItemCount: number;
 	/** The source of the skill trigger bonus (event or expert mode). */
 	skillTriggerReason: "event" | "ex" | "none";
 	/** The source of the skill level bonus (event or expert mode). */
@@ -1054,8 +1054,8 @@ class PokemonStrength {
 			return {
 				...emptyBonusEffects,
 				dish: eventBonus.dish,
-				bigBerryRate: 0,
-				bigBerryCount: 0,
+				eventItemRate: 0,
+				eventItemCount: 0,
 				skillTriggerReason: "none",
 				skillLevelReason: "none",
 				ingredientReason: "none",
@@ -1130,8 +1130,8 @@ class PokemonStrength {
 			skillIngredient: eventBonus.skillIngredient,
 			berryBurst: eventBonus.berryBurst,
 			dish: eventBonus.dish,
-			bigBerryRate: bigBerryRate.rate,
-			bigBerryCount: bigBerryRate.count,
+			eventItemRate: bigBerryRate.rate,
+			eventItemCount: bigBerryRate.count,
 			energyFromDish: eventBonus.energyFromDish,
 			fixedBerries: targetEventBonus.fixedBerries,
 			fixedAreas: targetEventBonus.fixedAreas,

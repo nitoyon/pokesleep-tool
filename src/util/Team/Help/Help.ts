@@ -227,16 +227,16 @@ function applySingleHelp(
 		);
 	}
 
-	// Big berry: picked up along with the berry or ingredient of this help.
+	// Event item: picked up along with the berry or ingredient of this help.
 	// It occupies the inventory, and the ones over the carry limit are not brought.
-	const { bigBerryRate, bigBerryCount } = profile.bonus;
+	const { eventItemRate, eventItemCount } = profile.bonus;
 	if (
-		bigBerryRate > 0 &&
-		bigBerryCount > 0 &&
+		eventItemRate > 0 &&
+		eventItemCount > 0 &&
 		carryLimitLeft > 0 &&
-		rng() < bigBerryRate
+		rng() < eventItemRate
 	) {
-		const count = Math.min(bigBerryCount, carryLimitLeft);
+		const count = Math.min(eventItemCount, carryLimitLeft);
 		progress.bigBerryHelpCount++;
 		progress.bigBerryCount += count;
 		progress.bigBerryStrength += progress.bigBerry1Strength * count;

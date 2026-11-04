@@ -406,7 +406,7 @@ function calculateTimeToFullInventory(
 	// Big berries also occupy the inventory (on average bigBerryRate * bigBerryCount)
 	const bagUsagePerHelp =
 		iv.getBagUsagePerHelp(inventoryBonus) +
-		inventoryBonus.bigBerryRate * inventoryBonus.bigBerryCount;
+		inventoryBonus.eventItemRate * inventoryBonus.eventItemCount;
 
 	if (baseFreq === 0) {
 		return 0;
@@ -652,12 +652,12 @@ function addAlwaysTapHelps(
 	ret.berryNormalHelpCount += berryHelpCount;
 
 	// big berry (normal help only)
-	const bigBerryRate = ret.inventoryBonus.bigBerryRate ?? 0;
-	const bigBerryCount = ret.inventoryBonus.bigBerryCount ?? 0;
-	if (bigBerryRate > 0 && bigBerryCount > 0) {
-		const eventItemHelpCount = helpCount * bigBerryRate;
+	const eventItemRate = ret.inventoryBonus.eventItemRate ?? 0;
+	const eventItemCount = ret.inventoryBonus.eventItemCount ?? 0;
+	if (eventItemRate > 0 && eventItemCount > 0) {
+		const eventItemHelpCount = helpCount * eventItemRate;
 		ret.eventItemHelpCount += eventItemHelpCount;
-		ret.eventItemCount += eventItemHelpCount * bigBerryCount;
+		ret.eventItemCount += eventItemHelpCount * eventItemCount;
 	}
 
 	// ingredient
@@ -919,10 +919,10 @@ export class HelpCountSimulation {
 	private carryLimit: number;
 	/** Possible outcomes per help action. */
 	private bagUsage: BagUsagePerHelpDetailItem[];
-	/** Probability that the big berry is picked up along with a help. */
-	private bigBerryRate: number;
-	/** Number of big berries picked up at once. */
-	private bigBerryCount: number;
+	/** Probability that the event item is picked up along with a help. */
+	private eventItemRate: number;
+	/** Number of event items picked up at once. */
+	private eventItemCount: number;
 	/** The number of berries obtained from sneaky snacking. */
 	private sneakySnackingBerryCount: number;
 	/**
@@ -973,8 +973,8 @@ export class HelpCountSimulation {
 		);
 
 		// Initialize big berry
-		this.bigBerryRate = bonus?.bigBerryRate ?? 0;
-		this.bigBerryCount = bonus?.bigBerryCount ?? 0;
+		this.eventItemRate = bonus?.eventItemRate ?? 0;
+		this.eventItemCount = bonus?.eventItemCount ?? 0;
 
 		// Initialize sneaky snacking berry count
 		// If the berry bonus is active, we consider that the berry count
@@ -1129,7 +1129,7 @@ export class HelpCountSimulation {
 				// Big berry: picked up along with the berry or ingredient of this
 				// help. They occupy the inventory, and the ones over the carry limit
 				// are not brought.
-				const bigBerryProb = transitionProb * this.bigBerryRate;
+				const bigBerryProb = transitionProb * this.eventItemRate;
 				const noBigBerryProb = transitionProb - bigBerryProb;
 
 				// Without big berry
@@ -1142,7 +1142,7 @@ export class HelpCountSimulation {
 
 				// With big berry
 				const bigBerrySpace = Math.max(0, this.carryLimit - newUsed);
-				const bigBerryCount = Math.min(this.bigBerryCount, bigBerrySpace);
+				const bigBerryCount = Math.min(this.eventItemCount, bigBerrySpace);
 				if (bigBerryCount > 0) {
 					newEventItemHelpProb += bigBerryProb;
 					newEventItemCount += bigBerryCount * bigBerryProb;
