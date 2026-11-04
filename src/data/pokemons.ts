@@ -183,6 +183,7 @@ export const IngredientNames: IngredientName[] = [
 	"coffee",
 	"pumpkin",
 	"avocado",
+	"nuts",
 ];
 
 export type IngredientName =
@@ -205,6 +206,7 @@ export type IngredientName =
 	| "coffee"
 	| "pumpkin"
 	| "avocado"
+	| "nuts"
 	| "unknown"
 	| "unknown1"
 	| "unknown2"

@@ -66,6 +66,12 @@ const StyledIngArticle = styled("div")({
 		fontSize: "0.8em",
 		lineHeight: "50%",
 	},
+	"&.ing4": {
+		"& > span.ing > svg": { width: "0.4rem", height: "0.4rem" },
+		"& > span.strength > svg": { width: "0.3rem", height: "0.3rem" },
+		fontSize: "0.6rem",
+		lineHeight: 0,
+	},
 });
 
 export default IngArticle;

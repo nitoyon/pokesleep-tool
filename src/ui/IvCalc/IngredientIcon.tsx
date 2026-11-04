@@ -12,6 +12,7 @@ import HoneyIcon from "../Resources/HoneyIcon";
 import LeekIcon from "../Resources/LeekIcon";
 import MilkIcon from "../Resources/MilkIcon";
 import MushroomIcon from "../Resources/MushroomIcon";
+import NutsIcon from "../Resources/NutsIcon";
 import OilIcon from "../Resources/OilIcon";
 import PotatoIcon from "../Resources/PotatoIcon";
 import PumpkinIcon from "../Resources/PumpkinIcon";
@@ -46,6 +47,8 @@ const IngredientIcon = React.memo(({ name }: { name: IngredientName }) => {
 			return <MushroomIcon />;
 		case "milk":
 			return <MilkIcon />;
+		case "nuts":
+			return <NutsIcon />;
 		case "oil":
 			return <OilIcon />;
 		case "potato":

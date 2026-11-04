@@ -67,6 +67,18 @@
 	],
 	"bonus": [
 		{
+			"name": "bountiful banquet week vol1",
+			"start": "2026-11-16T04:00:00",
+			"end": "2026-11-23T04:00:00",
+			"target": {
+				"specialty": "Ingredients"
+			},
+			"effects": {
+				"extraIng": "nuts",
+				"carryLimitAdd": 10
+			}
+		},
+		{
 			"name": "meal prep week vol1",
 			"start": "2026-11-09T04:00:00",
 			"end": "2026-11-16T04:00:00",

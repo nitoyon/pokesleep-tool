@@ -18,10 +18,12 @@ export interface InventoryBonus {
 	 * - Favorite berry
 	 */
 	expertIng: boolean;
-	/** The big berry rate on a normal help (0.12 means 12%) */
-	bigBerryRate: number;
-	/** The number of big berries obtained */
-	bigBerryCount: number;
+	/** Event item type */
+	eventItemType: "bigBerry" | "extraIng" | "none";
+	/** The event item rate on a normal help (0.12 means 12%) */
+	eventItemRate: number;
+	/** The number of event items obtained */
+	eventItemCount: number;
 }
 
 /**
@@ -39,7 +41,8 @@ export function bonusEffectToInventoryBonus(
 		carryLimitAdd: bonus.carryLimitAdd,
 		carryLimitMul: bonus.carryLimitMul,
 		expertIng: bonus.ingredientReason === "ex",
-		bigBerryRate: bonus.bigBerryRate,
-		bigBerryCount: bonus.bigBerryCount,
+		eventItemType: bonus.eventItemType,
+		eventItemRate: bonus.eventItemRate,
+		eventItemCount: bonus.eventItemCount,
 	};
 }

@@ -97,7 +97,7 @@ describe("BerryZonePsystrike", () => {
 		});
 		const caster = createTestMember({
 			...base,
-			bonus: { ...base.bonus, bigBerryCount: 1 },
+			bonus: { ...base.bonus, eventItemCount: 1 },
 		});
 		const sim = createTestSim([caster]);
 		const skill = new BerryZonePsystrike();

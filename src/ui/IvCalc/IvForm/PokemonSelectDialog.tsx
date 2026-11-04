@@ -573,7 +573,6 @@ const PokemonSelectDialog = React.memo(
 		);
 
 		// sort
-		// copy to avoid mutating the props
 		const options: PokemonOption[] = [...pokemonOptions];
 		switch (sortType) {
 			case "sleeptype":
@@ -631,7 +630,6 @@ const PokemonSelectDialog = React.memo(
 						return option.localName;
 					}}
 					getOptionKey={(option: string | PokemonOption) => {
-						// localName is not unique (e.g. Halloween and Halloween2)
 						if (typeof option === "string") {
 							return option;
 						}

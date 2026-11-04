@@ -74,7 +74,7 @@ const IngHelpDialog = React.memo(
 			);
 		}
 
-		const ings = result.ingredients;
+		const ings = result.ingredients.filter((x) => x.slots.length > 0);
 		const ingInRecipeStrengthRate =
 			param.recipeBonus === 0
 				? 1

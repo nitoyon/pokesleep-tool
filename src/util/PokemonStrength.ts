@@ -10,7 +10,7 @@ import {
 	getFavoriteBerries,
 	isExpertField,
 } from "../data/fields";
-import type { PokemonType } from "../data/pokemons";
+import type { IngredientName, PokemonType } from "../data/pokemons";
 import { getBerryStrength } from "./Berry";
 import Energy, { AlwaysTap, type EnergyResult, whistlePeriod } from "./Energy";
 import {
@@ -252,10 +252,12 @@ export const recipeLevelBonus: { [key: number]: number } = {
  * Represents BonusEffects and the source of each bonus.
  */
 export interface BonusEffectsWithReason extends BonusEffects {
-	/** Probability of getting the big berry (0.12 means 12%) */
-	bigBerryRate: number;
-	/** Number of big berries obtained */
-	bigBerryCount: number;
+	/** Event item type */
+	eventItemType: "bigBerry" | "extraIng" | "none";
+	/** Probability of getting the event item (0.12 means 12%) */
+	eventItemRate: number;
+	/** Number of event items obtained */
+	eventItemCount: number;
 	/** The source of the skill trigger bonus (event or expert mode). */
 	skillTriggerReason: "event" | "ex" | "none";
 	/** The source of the skill level bonus (event or expert mode). */
@@ -455,6 +457,14 @@ class PokemonStrength {
 			...x,
 			strength: x.count * ingredientStrength[x.name] * ingStrengthRate,
 		}));
+		if (bonus.extraIng !== "") {
+			addExtraIngredient(
+				ingredients,
+				bonus.extraIng,
+				helpCount.eventItemCount,
+				ingStrengthRate,
+			);
+		}
 		const ingStrength = ingredients.reduce((p, c) => p + c.strength, 0);
 
 		// calc berry
@@ -482,7 +492,7 @@ class PokemonStrength {
 
 		// TODO: assume only psychic big berry
 		const bigBerry1Strength =
-			helpCount.bigBerryCount === 0
+			bonus.bigBerry === "" || helpCount.eventItemCount === 0
 				? 0
 				: getBerryStrength(
 						"psychic",
@@ -493,9 +503,9 @@ class PokemonStrength {
 						param.berryZone.psychic,
 					);
 		const bigBerryStrength =
-			helpCount.bigBerryCount === 0
+			bonus.bigBerry === "" || helpCount.eventItemCount === 0
 				? 0
-				: bigBerry1Strength * helpCount.bigBerryCount;
+				: bigBerry1Strength * helpCount.eventItemCount;
 		const berryTotalStrength = berryStrength + bigBerryStrength;
 
 		// calc skill
@@ -1046,7 +1056,18 @@ class PokemonStrength {
 			param.customEventBonus,
 			this.iv.pokemon,
 		);
-		const bigBerryRate = getBigBerryRate(eventBonus.bigBerry, this.iv.pokemon);
+
+		// event item (big berry or extraIng)
+		const eventItem = getBigBerryRate(eventBonus.bigBerry, this.iv.pokemon);
+		let eventItemType: "bigBerry" | "extraIng" | "none" = "none";
+		if (eventItem.count > 0) {
+			eventItemType = "bigBerry";
+		}
+		if (targetEventBonus.extraIng !== "") {
+			eventItem.count = 1;
+			eventItem.rate = 1;
+			eventItemType = "extraIng";
+		}
 
 		// whistle and help count (usual help) is not affected
 		// by the event and expert bonus except for dish bonus
@@ -1054,8 +1075,9 @@ class PokemonStrength {
 			return {
 				...emptyBonusEffects,
 				dish: eventBonus.dish,
-				bigBerryRate: 0,
-				bigBerryCount: 0,
+				eventItemType: "none",
+				eventItemRate: 0,
+				eventItemCount: 0,
 				skillTriggerReason: "none",
 				skillLevelReason: "none",
 				ingredientReason: "none",
@@ -1114,6 +1136,7 @@ class PokemonStrength {
 			berry: targetEventBonus.berry,
 			ingredient:
 				expertIngredient > eventIngredient ? expertIngredient : eventIngredient,
+			extraIng: targetEventBonus.extraIng,
 			carryLimitAdd:
 				targetEventBonus.carryLimitAdd +
 				eventBonus.globalCarryLimitAdd +
@@ -1129,8 +1152,9 @@ class PokemonStrength {
 			skillIngredient: eventBonus.skillIngredient,
 			berryBurst: eventBonus.berryBurst,
 			dish: eventBonus.dish,
-			bigBerryRate: bigBerryRate.rate,
-			bigBerryCount: bigBerryRate.count,
+			eventItemType: eventItemType,
+			eventItemRate: eventItem.rate,
+			eventItemCount: eventItem.count,
 			energyFromDish: eventBonus.energyFromDish,
 			fixedBerries: targetEventBonus.fixedBerries,
 			fixedAreas: targetEventBonus.fixedAreas,
@@ -1194,6 +1218,41 @@ class PokemonStrength {
 		const { types } = getCurrentFavoriteBerries(this.param);
 		return types.includes(this.iv.pokemon.type);
 	}
+}
+
+/**
+ * Add extra ingredients from an event to the ingredient list and update
+ * its strength with the extra bonus.
+ *
+ * @param ingredients Ingredient list to be updated.
+ * @param extraIng Extra ingredient name.
+ * @param eventItemCount The number of extra ingredients brought.
+ * @param ingStrengthRate Strength rate for ingredients.
+ */
+function addExtraIngredient(
+	ingredients: IngredientStrength[],
+	extraIng: IngredientName,
+	eventItemCount: number,
+	ingStrengthRate: number,
+): void {
+	let ing = ingredients.find((x) => x.name === extraIng);
+	if (ing === undefined) {
+		ing = {
+			name: extraIng,
+			count: 0,
+			overflowCount: 0,
+			helpCount: 0,
+			strength: 0,
+			countPerHelp: 1,
+			slots: [],
+		};
+		ingredients.push(ing);
+	}
+	ing.count += eventItemCount;
+	ing.helpCount += eventItemCount;
+	const extraBonus = 1.5;
+	ing.strength =
+		ing.count * ingredientStrength[ing.name] * ingStrengthRate * extraBonus;
 }
 
 /**

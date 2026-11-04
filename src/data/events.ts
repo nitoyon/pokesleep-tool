@@ -1,5 +1,7 @@
 import events_ from "./event.json";
 import {
+	type IngredientName,
+	IngredientNames,
 	type PokemonData,
 	type PokemonSpecialty,
 	type PokemonType,
@@ -124,6 +126,7 @@ export function fillBonusEffects(data: Partial<BonusEffects>): BonusEffects {
 	return {
 		skillTrigger: data.skillTrigger ?? 1,
 		skillLevel: data.skillLevel ?? 0,
+		extraIng: data.extraIng ?? "",
 		berry: data.berry ?? 0,
 		ingredient: data.ingredient ?? 0,
 		dreamShard: data.dreamShard ?? 1,
@@ -266,6 +269,8 @@ export interface BonusEffects {
 	skillLevel: 0 | 1 | 2 | 3 | 5;
 	/** Boosted ingredient count */
 	ingredient: 0 | 1 | 1.5;
+	/** Event extra ingredient */
+	extraIng: IngredientName | "";
 	/** Dream Shard bonus obtained through main skills */
 	dreamShard: 1 | 1.5 | 2;
 	/** Ingredient Magnet S bonus */
@@ -318,6 +323,7 @@ export const emptyBonusEffects: Readonly<BonusEffects> = {
 	skillTrigger: 1,
 	skillLevel: 0,
 	ingredient: 0,
+	extraIng: "",
 	dreamShard: 1,
 	ingredientMagnet: 1,
 	ingredientDraw: 1,
@@ -428,6 +434,12 @@ export function loadHelpEventBonus(data: unknown): HelpEventBonus {
 			[0, 1, 2, 3, 5].includes(effects.skillLevel)
 		) {
 			ret.effects.skillLevel = effects.skillLevel;
+		}
+		if (
+			typeof effects.extraIng === "string" &&
+			IngredientNames.includes(effects.extraIng as IngredientName)
+		) {
+			ret.effects.extraIng = effects.extraIng;
 		}
 		if (
 			typeof effects.skillTrigger === "number" &&
