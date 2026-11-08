@@ -17,10 +17,12 @@ const StyledCount = styled("div")({
 	},
 	"& > span.multiply": {
 		color: "#666",
+		padding: "0 0.1rem",
 	},
 	"& > span.value": {
 		color: "#e6a83a",
 		fontSize: "1.16em",
+		fontWeight: 600,
 	},
 });
 

@@ -19,10 +19,11 @@ const StyledPie = styled("div")({
 	alignItems: "center",
 	width: "2.4rem",
 	height: "2.4rem",
-	fontSize: ".7rem",
+	fontSize: ".8rem",
 	fontWeight: 700,
 	borderRadius: "50%",
 	color: "#489eff",
+	fontFamily: "Montserrat, sans-serif",
 	backgroundImage:
 		"radial-gradient(#ffffff 50%, transparent 51%), conic-gradient(#489eff 0% 0%, #dddddd 1% 100%)",
 });
