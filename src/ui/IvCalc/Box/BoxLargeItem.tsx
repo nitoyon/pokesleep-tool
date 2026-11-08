@@ -175,7 +175,8 @@ const StyledBoxLargeItem = styled("div")({
 		border: "1px solid transparent",
 		"& > header": {
 			fontSize: "0.7rem",
-			fontWeight: "bold",
+			fontFamily: "Montserrat, sans-serif",
+			fontWeight: 600,
 			"& > span.lv": {
 				color: "#62d540",
 				fontSize: "0.6rem",

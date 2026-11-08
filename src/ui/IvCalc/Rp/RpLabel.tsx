@@ -39,21 +39,21 @@ const RpLabel = React.memo(
 				<span
 					style={{
 						color: "#fd775d",
-						fontWeight: "bold",
 						paddingRight: ".4rem",
 						fontSize: ".8rem",
+						fontFamily: "Montserrat, sans-serif",
+						fontWeight: 600,
 						display: "inline-block",
-						transform: "scale(1, 0.9)",
 					}}
 				>
 					{t("rp")}
 				</span>
 				<span
 					style={{
-						fontSize: "1.5rem",
-						fontWeight: "bold",
+						fontSize: "1.4rem",
+						fontFamily: "Montserrat, sans-serif",
+						fontWeight: 600,
 						display: "inline-block",
-						transform: "scale(1, 0.9)",
 					}}
 				>
 					{t("num", { n: rp })}

@@ -301,6 +301,8 @@ const StyledContent = styled("div")({
 				"& > div.MuiInput-root": {
 					"& > input": {
 						padding: "2px 0",
+						fontFamily: "Montserrat, sans-serif",
+						fontWeight: 600,
 					},
 				},
 				"& svg": {
@@ -327,12 +329,14 @@ const StyledContent = styled("div")({
 			"& .MuiInputAdornment-root > p": {
 				color: "#ff6633",
 				fontSize: "0.8rem",
-				fontWeight: "bold",
+				fontFamily: "Montserrat, sans-serif",
+				fontWeight: 600,
 				textAlign: "center",
-				transform: "scale(1, 0.9)",
 			},
 			"& input": {
 				fontSize: "0.9rem",
+				fontFamily: "Montserrat, sans-serif",
+				fontWeight: 600,
 			},
 		},
 		"&.type": {
@@ -343,12 +347,12 @@ const StyledContent = styled("div")({
 		},
 		"& > footer": {
 			fontSize: "0.7rem",
-			transform: "scale(1, 0.9)",
+			fontFamily: "Montserrat, sans-serif",
+			fontWeight: 600,
 			textAlign: "right",
 			opacity: 0.8,
 			paddingRight: "0.5rem",
 			color: "#ff6633",
-			fontWeight: "bold",
 		},
 		"&.type > footer": {
 			color: "#3ba6f9",

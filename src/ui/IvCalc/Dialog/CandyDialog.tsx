@@ -472,7 +472,8 @@ const StyledLevel = styled("div")({
 		"& > div.levelInput": {
 			color: "#79d073",
 			fontSize: "1.2rem",
-			fontWeight: "bold",
+			fontFamily: "Montserrat, sans-serif",
+			fontWeight: 600,
 			display: "flex",
 			justifyContent: "center",
 			gap: "0.2rem",
@@ -484,9 +485,9 @@ const StyledLevel = styled("div")({
 				width: "3rem",
 				"& > div.MuiInput-root": {
 					color: "#79d073",
-					fontWeight: "bold",
+					fontFamily: "Montserrat, sans-serif",
+					fontWeight: 600,
 					fontSize: "1.3rem !important",
-					transform: "scale(1, 0.9)",
 					"& > input": {
 						padding: "2px 0",
 					},
@@ -499,14 +500,14 @@ const StyledLevel = styled("div")({
 				"& > div.MuiInputAdornment-root > p": {
 					color: "#79d073",
 					fontSize: "0.7rem",
-					fontWeight: "bold",
-					transform: "scale(1, 0.9)",
+					fontFamily: "Montserrat, sans-serif",
+					fontWeight: 600,
 				},
 				"& > input": {
 					padding: 0,
 					fontSize: "0.9rem",
-					fontWeight: "bold",
-					transform: "scale(1, 0.9)",
+					fontFamily: "Montserrat, sans-serif",
+					fontWeight: 600,
 				},
 			},
 		},

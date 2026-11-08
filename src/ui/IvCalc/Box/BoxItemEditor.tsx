@@ -260,11 +260,11 @@ const BoxItemSummary = React.memo(
 						<span
 							style={{
 								color: "#fd775d",
-								fontWeight: "bold",
+								fontFamily: "Montserrat, sans-serif",
+								fontWeight: 600,
 								paddingRight: ".4rem",
 								fontSize: ".7rem",
 								display: "inline-block",
-								transform: "scale(1, 0.9)",
 							}}
 						>
 							{t("rp")}
@@ -272,9 +272,9 @@ const BoxItemSummary = React.memo(
 						<span
 							style={{
 								fontSize: "1rem",
-								fontWeight: "bold",
+								fontFamily: "Montserrat, sans-serif",
+								fontWeight: 600,
 								display: "inline-block",
-								transform: "scale(1, 0.9)",
 							}}
 						>
 							{t("num", { n: rp })}
@@ -333,15 +333,15 @@ const StyledBoxItemSummary = styled("div")({
 		"& span.lv": {
 			color: "#4caf50",
 			fontSize: ".6rem",
-			fontWeight: "bold",
-			transform: "scale(1, 0.9)",
+			fontFamily: "Montserrat, sans-serif",
+			fontWeight: 600,
 			paddingRight: ".1rem",
 		},
 		"& span.lvValue": {
 			color: "#4caf50",
 			fontSize: ".7rem",
-			transform: "scale(1, 0.9)",
-			fontWeight: "bold",
+			fontFamily: "Montserrat, sans-serif",
+			fontWeight: 600,
 			paddingRight: ".8rem",
 		},
 		"& span.name": {
