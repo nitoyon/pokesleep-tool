@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 import React, { useCallback } from "react";
 import type { IngredientName, PokemonData } from "../../../data/pokemons";
 import type PokemonIv from "../../../util/PokemonIv";
-import type { IngredientType } from "../../../util/PokemonRp";
+import type { IngredientType } from "../../../util/PokemonIv";
 import SelectEx from "../../common/SelectEx";
 import IngredientCountIcon from "../IngredientCountIcon";
 

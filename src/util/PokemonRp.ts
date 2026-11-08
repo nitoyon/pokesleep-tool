@@ -44,17 +44,6 @@ export const averageIngredientStrength: number = (() => {
 	return total / ingredients.length;
 })();
 
-export type IngredientType = "AAA" | "AAB" | "AAC" | "ABA" | "ABB" | "ABC";
-
-export const IngredientTypes: IngredientType[] = [
-	"AAA",
-	"AAB",
-	"AAC",
-	"ABA",
-	"ABB",
-	"ABC",
-];
-
 export interface RpStrengthResult {
 	rp: number;
 	berryRp: number;
