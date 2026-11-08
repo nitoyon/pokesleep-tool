@@ -136,14 +136,14 @@ const StyledDailyView = styled("div")({
 });
 
 const StyledTotalArticle = styled("div")({
-	fontSize: "0.8rem",
+	fontSize: ".9rem",
 	fontWeight: "bold",
 	"& > svg, & > span": {
 		verticalAlign: "middle",
 	},
 	"& > svg": {
-		width: "1.1rem",
-		height: "1.1rem",
+		width: "1.2rem",
+		height: "1.2rem",
 	},
 	"& > span.ing2": {
 		whiteSpace: "nowrap",
@@ -154,8 +154,8 @@ const StyledTotalArticle = styled("div")({
 		},
 		"& > svg": {
 			paddingRight: "0.1rem",
-			width: "0.8rem",
-			height: "0.8rem",
+			width: "0.9rem",
+			height: "0.9rem",
 			verticalAlign: "middle",
 		},
 		"& > span": {
@@ -165,8 +165,8 @@ const StyledTotalArticle = styled("div")({
 	"& > div.skilltotal > span.skill": {
 		whiteSpace: "nowrap",
 		"& > svg": {
-			width: 16,
-			height: 16,
+			width: "1.1rem",
+			height: "1.1rem",
 			marginRight: "0.1rem",
 			verticalAlign: "middle",
 		},
@@ -177,7 +177,7 @@ const StyledTotalArticle = styled("div")({
 	},
 	"& > div.skillmember > span.skill": {
 		whiteSpace: "nowrap",
-		fontSize: "0.7rem",
+		fontSize: "0.8rem",
 		fontWeight: "normal",
 		color: "#666",
 		"& > div": {

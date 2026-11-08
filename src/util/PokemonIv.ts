@@ -15,7 +15,6 @@ import {
 } from "./MainSkill";
 import Nature from "./Nature";
 import { clamp, trunc } from "./NumberUtil";
-import { type IngredientType, IngredientTypes } from "./PokemonRp";
 import {
 	cbexMainBerrySpeedBonus,
 	cbexNonFavoriteBerrySpeedPenalty,
@@ -26,6 +25,17 @@ import {
 } from "./PokemonStrength";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
+
+export type IngredientType = "AAA" | "AAB" | "AAC" | "ABA" | "ABB" | "ABC";
+
+export const IngredientTypes: IngredientType[] = [
+	"AAA",
+	"AAB",
+	"AAC",
+	"ABA",
+	"ABB",
+	"ABC",
+];
 
 /**
  * Represents the slot of ingredient.

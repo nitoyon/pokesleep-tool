@@ -1,7 +1,7 @@
 import type { IngredientName } from "../data/pokemons";
 import Nature from "./Nature";
+import type { IngredientType } from "./PokemonIv";
 import PokemonIv from "./PokemonIv";
-import type { IngredientType } from "./PokemonRp";
 import SubSkill from "./SubSkill";
 import SubSkillList from "./SubSkillList";
 

@@ -7,8 +7,11 @@ import { emojisToFavoriteMask } from "../Box/FavoriteColor";
 import { PokemonBoxItem } from "../Box/PokemonBox";
 import { type MainSkillName, VersatileCandidates } from "../MainSkill";
 import Nature from "../Nature";
-import PokemonIv, { type PokemonIvProps } from "../PokemonIv";
-import { type IngredientType, IngredientTypes } from "../PokemonRp";
+import PokemonIv, {
+	type IngredientType,
+	IngredientTypes,
+	type PokemonIvProps,
+} from "../PokemonIv";
 import SubSkill, { type SubSkillType } from "../SubSkill";
 import SubSkillList from "../SubSkillList";
 import { CsvParser } from "./CsvFormatter";
