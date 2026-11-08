@@ -2132,6 +2132,40 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#f5dcdc", "#9483cb", "#e696ab", "#e698ad"],
 		shinyPallet: ["#fedeea", "#85aecf", "#7e6cc6", "#8666ca"],
 	},
+	// Cottonee
+	"546": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0.3, w: 1, h: 0.4, color: 1 },
+			{ x: -0.1, y: 0.3, w: 0.2, h: 0.4, r: 0.15, color: 2 },
+			{ x: -0.1, y: 0.3, w: 0.2, h: 0.2, color: 2 },
+			{ x: 0.9, y: 0.3, w: 0.2, h: 0.4, r: 0.15, color: 2 },
+			{ x: 0.9, y: 0.3, w: 0.2, h: 0.2, color: 2 },
+			{ x: 0.3, y: 0.2, w: 0.4, h: 0.2, r: 0.3, color: 0 },
+			{ x: 0.3, y: 0.65, w: 0.4, h: 0.2, r: 0.3, color: 0 },
+		],
+		normalPallet: ["#e8f3da", "#f7f8f9", "#739949"],
+		shinyPallet: ["#fefed3", "#f7f8f9", "#e5a150"],
+	},
+	// Whimsicott
+	"547": {
+		rects: [
+			{ x: 0.15, y: 0.12, w: 0.4, h: 0.4, r: 0.4, color: 0 },
+			{ x: 0.45, y: 0.12, w: 0.4, h: 0.4, r: 0.4, color: 0 },
+			{ x: 0.02, y: 0.3, w: 0.4, h: 0.4, r: 0.4, color: 0 },
+			{ x: 0.58, y: 0.3, w: 0.4, h: 0.4, r: 0.4, color: 0 },
+			{ x: 0.15, y: 0.53, w: 0.4, h: 0.4, r: 0.4, color: 0 },
+			{ x: 0.45, y: 0.53, w: 0.4, h: 0.4, r: 0.4, color: 0 },
+			{ x: 0.35, y: 0.5, w: 0.3, h: 0.45, color: 1 },
+			{ x: 0.35, y: 0.9, w: 0.1, h: 0.1, r: 0.1, color: 1 },
+			{ x: 0.55, y: 0.9, w: 0.1, h: 0.1, r: 0.1, color: 1 },
+			{ x: 0.2, y: 0.45, w: 0.2, h: 0.25, r: 0.2, color: 2 },
+			{ x: 0.6, y: 0.45, w: 0.2, h: 0.25, r: 0.2, color: 2 },
+			{ x: 0.25, y: 0.25, w: 0.5, h: 0.3, r: 0.4, color: 0 },
+		],
+		normalPallet: ["#fdfad5", "#ba9371", "#739949"],
+		shinyPallet: ["#f6f8f9", "#625a54", "#a7e9fb"],
+	},
 	// Dwebble
 	"557": {
 		rects: [
