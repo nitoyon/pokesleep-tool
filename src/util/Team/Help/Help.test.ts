@@ -302,6 +302,72 @@ describe("applyHelp", () => {
 		});
 	});
 
+	describe("extraIng", () => {
+		const bagUsage: BagUsagePerHelpDetailItem[] = [
+			{ name: "berry", count: 2, p: 0.5, ingSlotIndex: -1, ingKindIndex: -1 },
+			{ name: "apple", count: 2, p: 0.5, ingSlotIndex: 0, ingKindIndex: 0 },
+		];
+
+		function createExtraIngMember(carryLimit = 21): TeamMember {
+			const { bonus } = createProfile();
+			return createTeamMember({
+				bonus: {
+					...bonus,
+					extraIng: "nuts",
+					eventItemType: "extraIng",
+					eventItemRate: 0.5,
+					eventItemCount: 1,
+				},
+				normalBagUsage: bagUsage,
+				carryLimit,
+			});
+		}
+
+		test("ingredient help brings 1 extraIng without consuming rng", () => {
+			const member = createExtraIngMember();
+
+			// outcome (0.7 -> apple x2), skill
+			applyHelp(990, createSim(member), createRandomQueue([0.7, 0]));
+
+			expect(member.progress.ingCounts.get("apple")).toBe(2);
+			expect(member.progress.ingCounts.get("nuts")).toBe(1);
+			expect(member.progress.bigBerryCount).toBe(0);
+		});
+
+		test("berry help brings no extraIng", () => {
+			const member = createExtraIngMember();
+
+			// outcome (0.2 -> berry x2), skill
+			applyHelp(990, createSim(member), createRandomQueue([0.2, 0]));
+
+			expect(member.progress.berryStrength).toBe(10 * 2);
+			expect(member.progress.ingCounts.has("nuts")).toBe(false);
+		});
+
+		test("extraIng occupies the inventory", () => {
+			// carryLimit 3: apple x2 + nuts x1 fills the inventory,
+			// so the 2nd help is sneaky snacking.
+			const member = createExtraIngMember(3);
+
+			applyHelp(990 * 2, createSim(member), createRandomQueue([0.7, 0, 0]));
+
+			expect(member.progress.ingCounts.get("apple")).toBe(2);
+			expect(member.progress.ingCounts.get("nuts")).toBe(1);
+			expect(member.progress.help.normal).toBe(1);
+			expect(member.progress.help.sneakySnacking).toBe(1);
+		});
+
+		test("a full inventory leaves no room for extraIng", () => {
+			// carryLimit 2: apple x2 fills the inventory
+			const member = createExtraIngMember(2);
+
+			applyHelp(990, createSim(member), createRandomQueue([0.7, 0]));
+
+			expect(member.progress.ingCounts.get("apple")).toBe(2);
+			expect(member.progress.ingCounts.get("nuts") ?? 0).toBe(0);
+		});
+	});
+
 	test("drawSkillCount: rng below noneProb keeps skillCount at 0", () => {
 		const member = createTeamMember({
 			skillRate: 0.1,

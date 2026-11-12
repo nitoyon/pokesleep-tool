@@ -1176,6 +1176,218 @@ describe("PokemonStrength", () => {
 			).calculate();
 			expect(event.ingStrength).toBeCloseTo(normal.ingStrength * 1.5);
 		});
+
+		describe("extraIng", () => {
+			const event = "bountiful banquet week vol1";
+
+			test("bonusEffects for target Pokémon", () => {
+				const iv = new PokemonIv({ pokemonName: "Bulbasaur", level: 30 });
+				const bonus = new PokemonStrength(iv, createParam({ event }))
+					.bonusEffects;
+				expect(bonus.extraIng).toBe("nuts");
+				expect(bonus.eventItemType).toBe("extraIng");
+				expect(bonus.eventItemRate).toBe(iv.ingredientRate);
+				expect(bonus.eventItemCount).toBe(1);
+			});
+
+			test("bonusEffects for non-target Pokémon", () => {
+				const iv = new PokemonIv({ pokemonName: "Raichu", level: 30 });
+				const bonus = new PokemonStrength(iv, createParam({ event }))
+					.bonusEffects;
+				expect(bonus.extraIng).toBe("");
+				expect(bonus.eventItemType).toBe("none");
+			});
+
+			test("AlwaysTap: 1 nuts per ingredient help", () => {
+				const iv = new PokemonIv({ pokemonName: "Bulbasaur", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({
+						event,
+						tapFrequencyAwake: AlwaysTap,
+						tapFrequencyAsleep: AlwaysTap,
+					}),
+				).calculate();
+
+				const nuts = result.ingredients.find((x) => x.name === "nuts");
+				expect(nuts).toBeDefined();
+				expect(nuts?.count).toBeCloseTo(result.ingHelpCount);
+				expect(nuts?.helpCount).toBeCloseTo(result.ingHelpCount);
+			});
+
+			test("simulation: nuts are brought only by ingredient helps", () => {
+				const iv = new PokemonIv({ pokemonName: "Bulbasaur", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event, tapFrequencyAwake: 60 }),
+				).calculate();
+
+				const nuts = result.ingredients.find((x) => x.name === "nuts");
+				expect(nuts).toBeDefined();
+				// Some nuts may not fit in the bag, but most of them are brought
+				expect(nuts?.count).toBeLessThanOrEqual(result.ingHelpCount + 1e-9);
+				expect(nuts?.count).toBeGreaterThan(result.ingHelpCount * 0.9);
+			});
+
+			test("non-target Pokémon brings no nuts", () => {
+				const iv = new PokemonIv({ pokemonName: "Raichu", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event }),
+				).calculate();
+				expect(result.ingredients.some((x) => x.name === "nuts")).toBe(false);
+			});
+
+			test("whistle brings no nuts", () => {
+				const iv = new PokemonIv({ pokemonName: "Bulbasaur", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event, period: whistlePeriod }),
+				).calculate();
+				expect(result.ingredients.some((x) => x.name === "nuts")).toBe(false);
+			});
+		});
+
+		describe("bigBerry", () => {
+			const event1 = "pursue mewtwo 1st week";
+			const event2 = "pursue mewtwo 2nd week";
+
+			test("bonusEffects depends on the Pokémon", () => {
+				const cases: [string, string, number, number][] = [
+					[event1, "Mewtwo", 0.12, 2],
+					[event1, "Natu", 0.06, 1],
+					[event1, "Raichu", 0.03, 1],
+					[event2, "Mewtwo", 0.24, 2],
+					[event2, "Natu", 0.1, 1],
+					[event2, "Raichu", 0.05, 1],
+				];
+				for (const [event, pokemonName, rate, count] of cases) {
+					const iv = new PokemonIv({ pokemonName, level: 30 });
+					const bonus = new PokemonStrength(iv, createParam({ event }))
+						.bonusEffects;
+					expect(bonus.bigBerry).not.toBe("");
+					expect(bonus.eventItemType).toBe("bigBerry");
+					expect(bonus.eventItemRate).toBe(rate);
+					expect(bonus.eventItemCount).toBe(count);
+				}
+			});
+
+			test("no event has no big berry", () => {
+				const iv = new PokemonIv({ pokemonName: "Natu", level: 25 });
+				const strength = new PokemonStrength(iv, createParam({}));
+				expect(strength.bonusEffects.eventItemType).toBe("none");
+
+				const result = strength.calculate();
+				expect(result.eventItemCount).toBe(0);
+				expect(result.bigBerry1Strength).toBe(0);
+				expect(result.bigBerryStrength).toBe(0);
+			});
+
+			test("big berry strength is 10x of psychic berry", () => {
+				// Lv 25 psychic berry strength is 50
+				const iv = new PokemonIv({ pokemonName: "Natu", level: 25 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event: event1, fieldBonus: 0, fieldIndex: -1 }),
+				).calculate();
+				expect(result.berry1Strength).toBe(50);
+				expect(result.bigBerry1Strength).toBe(500);
+			});
+
+			test("non-psychic Pokémon also brings psychic big berry", () => {
+				// Lv 25 psychic berry strength is 50
+				const iv = new PokemonIv({ pokemonName: "Raichu", level: 25 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event: event1, fieldBonus: 0, fieldIndex: -1 }),
+				).calculate();
+				expect(result.bigBerry1Strength).toBe(500);
+				expect(result.eventItemCount).toBeGreaterThan(0);
+			});
+
+			test("AlwaysTap: big berry is picked up along with every normal help", () => {
+				const iv = new PokemonIv({ pokemonName: "Mewtwo", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({
+						event: event1,
+						tapFrequencyAwake: AlwaysTap,
+						tapFrequencyAsleep: AlwaysTap,
+					}),
+				).calculate();
+
+				expect(result.eventItemHelpCount).toBeCloseTo(
+					result.total.normal * 0.12,
+				);
+				expect(result.eventItemCount).toBeCloseTo(
+					result.eventItemHelpCount * 2,
+				);
+				expect(result.bigBerryStrength).toBeCloseTo(
+					result.bigBerry1Strength * result.eventItemCount,
+				);
+				expect(result.berryTotalStrength).toBeCloseTo(
+					result.berryStrength + result.bigBerryStrength,
+				);
+			});
+
+			test("simulation: big berry is brought only when the bag has room", () => {
+				const iv = new PokemonIv({ pokemonName: "Mewtwo", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event: event1, tapFrequencyAwake: 60 }),
+				).calculate();
+
+				expect(result.eventItemHelpCount).toBeGreaterThan(0);
+				expect(result.eventItemHelpCount).toBeLessThanOrEqual(
+					result.total.normal * 0.12 + 1e-9,
+				);
+				expect(result.eventItemCount).toBeLessThanOrEqual(
+					result.eventItemHelpCount * 2 + 1e-9,
+				);
+				expect(result.bigBerryStrength).toBeCloseTo(
+					result.bigBerry1Strength * result.eventItemCount,
+				);
+			});
+
+			test("big berry increases berryTotalStrength", () => {
+				const iv = new PokemonIv({ pokemonName: "Natu", level: 25 });
+				const param = {
+					fieldBonus: 0,
+					fieldIndex: -1,
+					tapFrequencyAwake: AlwaysTap,
+					tapFrequencyAsleep: AlwaysTap,
+				};
+				const normal = new PokemonStrength(iv, createParam(param)).calculate();
+				const event = new PokemonStrength(
+					iv,
+					createParam({ ...param, event: event1 }),
+				).calculate();
+				expect(event.bigBerryStrength).toBeGreaterThan(0);
+				expect(event.berryTotalStrength).toBeGreaterThan(
+					normal.berryTotalStrength,
+				);
+			});
+
+			test("whistle brings no big berry", () => {
+				const iv = new PokemonIv({ pokemonName: "Mewtwo", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event: event1, period: whistlePeriod }),
+				).calculate();
+				expect(result.eventItemCount).toBe(0);
+				expect(result.bigBerryStrength).toBe(0);
+			});
+
+			test("fixed helps (period -10) bring no big berry", () => {
+				const iv = new PokemonIv({ pokemonName: "Mewtwo", level: 30 });
+				const result = new PokemonStrength(
+					iv,
+					createParam({ event: event1, period: -10 }),
+				).calculate();
+				expect(result.eventItemCount).toBe(0);
+				expect(result.bigBerryStrength).toBe(0);
+			});
+		});
 	});
 
 	describe("berry zone", () => {

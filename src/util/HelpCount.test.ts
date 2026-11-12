@@ -922,6 +922,137 @@ describe("HelpCountSimulation", () => {
 			expect(result.eventItemHelpCount).toBe(0);
 			expect(result.eventItemCount).toBe(0);
 		});
+
+		test("extraIng is picked up only along with ingredient helps", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Toxel",
+				level: 60,
+				ingredient: "ABB",
+				baseIngRate: 30,
+				baseSkillRate: 5,
+			});
+
+			// eventItemRate is the ingredient rate (0.3), but the simulation
+			// already knows which help brings ingredients, so it must not be
+			// multiplied again.
+			const sim = new HelpCountSimulation(iv, false, undefined, {
+				eventItemType: "extraIng",
+				eventItemRate: iv.ingredientRate,
+				eventItemCount: 1,
+			});
+			const result = sim.compute(1);
+
+			expect(result.eventItemHelpCount).toBeCloseTo(0.3);
+			expect(result.eventItemCount).toBeCloseTo(0.3);
+			// berry and ingredient counts are not changed by the extraIng
+			expect(result.berryCount).toBeCloseTo(0.7);
+			expect(result.ingredientCount[0]).toBeCloseTo(0.1);
+			expect(result.ingredientCount[1]).toBeCloseTo(2 * 0.1 + 4 * 0.1);
+		});
+
+		test("extraIng occupies the inventory and is capped by the carry limit", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Toxel",
+				level: 60,
+				ingredient: "ABB",
+				baseIngRate: 30,
+				baseSkillRate: 5,
+			});
+
+			// Carry limit: 6 - 2 = 4
+			// - Berry (0.7):     1 + 0 = 1
+			// - Milk x1 (0.1):   1 + 1 = 2
+			// - Apple x2 (0.1):  2 + 1 = 3
+			// - Apple x4 (0.1):  4 + 0 = 4 (the bag is already full)
+			const sim = new HelpCountSimulation(iv, false, undefined, {
+				carryLimitAdd: -2,
+				eventItemType: "extraIng",
+				eventItemRate: iv.ingredientRate,
+				eventItemCount: 1,
+			});
+			const result = sim.compute(1);
+			expect(result.eventItemHelpCount).toBeCloseTo(0.2);
+			expect(result.eventItemCount).toBeCloseTo(0.2);
+
+			// some helps cannot bring the extraIng because the bag is full
+			const result5 = sim.compute(5);
+			expect(result5.sneakySnackingCount).toBeGreaterThan(0);
+			expect(result5.eventItemCount).toBeLessThan(
+				result5.normalHelpCount * 0.3,
+			);
+		});
+
+		test("extraIng: always tap", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Eevee",
+				nature: new Nature("Serious"), // Neutral
+				level: 1,
+			});
+
+			(iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+				...iv.pokemon,
+				frequency: 1800,
+				skillRate: 10,
+				ingRate: 10,
+			};
+
+			const param = createParam({
+				sleepScore: 0,
+				period: 1,
+				tapFrequencyAwake: AlwaysTap,
+				tapFrequencyAsleep: AlwaysTap,
+			});
+			const bonus: BonusEffectsWithReason = {
+				...emptyBonusBase,
+				extraIng: "nuts",
+				eventItemType: "extraIng",
+				eventItemRate: iv.ingredientRate,
+				eventItemCount: 1,
+			};
+			const energy = new Energy(iv).calculate(param);
+			const result = calculateHelpCount(iv, param, energy, bonus, false);
+
+			expect(result.eventItemHelpCount).toBeGreaterThan(0);
+			expect(result.eventItemHelpCount).toBeCloseTo(result.ingHelpCount);
+			expect(result.eventItemCount).toBeCloseTo(result.eventItemHelpCount);
+		});
+
+		test("extraIng: simulation matches ingredient help count when the bag is not full", () => {
+			const iv = new PokemonIv({
+				pokemonName: "Eevee",
+				nature: new Nature("Serious"), // Neutral
+				level: 1,
+			});
+
+			(iv as { -readonly [K in keyof PokemonIv]: PokemonIv[K] }).pokemon = {
+				...iv.pokemon,
+				carryLimit: 100,
+				frequency: 1800,
+				skillRate: 10,
+				ingRate: 10,
+			};
+
+			// Tap every 60 minutes (not always tap), so the simulation is used
+			const param = createParam({
+				sleepScore: 0,
+				period: 24,
+				tapFrequencyAwake: 60,
+				tapFrequencyAsleep: 60,
+			});
+			const bonus: BonusEffectsWithReason = {
+				...emptyBonusBase,
+				extraIng: "nuts",
+				eventItemType: "extraIng",
+				eventItemRate: iv.ingredientRate,
+				eventItemCount: 1,
+			};
+			const energy = new Energy(iv).calculate(param);
+			const result = calculateHelpCount(iv, param, energy, bonus, false);
+
+			expect(result.eventItemHelpCount).toBeGreaterThan(0);
+			expect(result.eventItemHelpCount).toBeCloseTo(result.ingHelpCount);
+			expect(result.eventItemCount).toBeCloseTo(result.eventItemHelpCount);
+		});
 	});
 
 	describe("Level-dependent ingredient counts", () => {
