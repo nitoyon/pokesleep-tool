@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { beforeEach, describe, expect, test } from "vitest";
 import i18n, { loadLanguage } from "../../i18n";
 import PokemonBox, { PokemonBoxItem } from "../../util/Box/PokemonBox";

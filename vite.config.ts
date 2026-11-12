@@ -88,7 +88,8 @@ export default defineConfig({
 	},
 	test: {
 		globals: true,
-		environment: "jsdom",
+		environment: "node",
+		isolate: true, // Keep per-file isolation
 		exclude: [...configDefaults.exclude],
 	},
 });

@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { beforeEach, describe, expect, test } from "vitest";
 import { PokemonBoxItem } from "../Box/PokemonBox";
 import PokemonIv from "../PokemonIv";
