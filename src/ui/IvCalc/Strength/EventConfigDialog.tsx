@@ -178,7 +178,7 @@ const EventConfigDialog = React.memo(
 						...value.customEventBonus,
 						effects: {
 							...value.customEventBonus.effects,
-							carryLimitAdd: val === 1.5 ? 0 : (val as 0 | 8 | 15),
+							carryLimitAdd: val === 1.5 ? 0 : val,
 							carryLimitMul: val === 1.5 ? val : 1,
 						},
 					},
@@ -198,7 +198,7 @@ const EventConfigDialog = React.memo(
 						...value.customEventBonus,
 						effects: {
 							...value.customEventBonus.effects,
-							globalCarryLimitAdd: val as 0 | 8 | 15,
+							globalCarryLimitAdd: val,
 						},
 					},
 				});
@@ -578,6 +578,7 @@ const EventConfigDialog = React.memo(
 							>
 								<ToggleButton value={0}>{t("none")}</ToggleButton>
 								<ToggleButton value={8}>+8</ToggleButton>
+								<ToggleButton value={10}>+10</ToggleButton>
 								<ToggleButton value={15}>+15</ToggleButton>
 								<ToggleButton value={1.5}>x1.5</ToggleButton>
 							</ToggleButtonGroup>

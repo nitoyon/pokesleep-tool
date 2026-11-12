@@ -75,6 +75,7 @@
 			},
 			"effects": {
 				"extraIng": "nuts",
+				"ingredient": 1,
 				"carryLimitAdd": 10
 			}
 		},
