@@ -5,6 +5,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
 import type {
 	TeamMemberStrengthResult,
 	TeamTotalStrengthResult,
@@ -13,7 +14,9 @@ import MarkdownBlockElement from "../../common/MarkdownBlockElement";
 import MagoBerry from "../../Resources/MagoBerry";
 import InfoButton from "../InfoButton";
 import IngredientIcon from "../IngredientIcon";
+import type { IvAction } from "../IvState";
 import MainSkillIcon from "../MainSkillIcon";
+import TotalFlagsPanel from "../Panel/TotalFlagsPanel";
 import PokemonIcon from "../PokemonIcon";
 import SpecialtyButton from "../SpecialtyButton";
 
@@ -21,9 +24,13 @@ const DailyView = React.memo(
 	({
 		total,
 		results,
+		param,
+		dispatch,
 	}: {
 		total: TeamTotalStrengthResult;
 		results: (TeamMemberStrengthResult | undefined)[];
+		param: StrengthParameter;
+		dispatch: React.Dispatch<IvAction>;
 	}) => {
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
@@ -82,7 +89,13 @@ const DailyView = React.memo(
 				<StyledTotalArticle>
 					<SkillView results={results} />
 				</StyledTotalArticle>
-				<InfoDialog open={helpOpen} onClose={onHelpClose} />
+				<InfoDialog
+					param={param}
+					dispatch={dispatch}
+					total={total}
+					open={helpOpen}
+					onClose={onHelpClose}
+				/>
 			</StyledDailyView>
 		);
 	},
@@ -327,13 +340,32 @@ const SkillView = React.memo(
 );
 
 const InfoDialog = React.memo(
-	({ open, onClose }: { open: boolean; onClose: () => void }) => {
+	({
+		total,
+		open,
+		onClose,
+		param,
+		dispatch,
+	}: {
+		total: TeamTotalStrengthResult;
+		open: boolean;
+		onClose: () => void;
+		param: StrengthParameter;
+		dispatch: React.Dispatch<IvAction>;
+	}) => {
 		const { t } = useTranslation();
+		const result = {
+			...total,
+			skillStrength2: 0,
+		};
 
 		return (
 			<Dialog open={open} onClose={onClose}>
 				<DialogContent>
-					<MarkdownBlockElement text={t("team info")} />
+					<TotalFlagsPanel param={param} result={result} dispatch={dispatch} />
+					<div style={{ fontSize: "0.8rem", color: "#666" }}>
+						<MarkdownBlockElement text={t("team info")} />
+					</div>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={onClose}>{t("close")}</Button>

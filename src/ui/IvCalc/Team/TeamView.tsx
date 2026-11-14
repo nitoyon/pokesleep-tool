@@ -48,7 +48,12 @@ const TeamView = React.memo(
 						{error}
 					</div>
 				)}
-				<DailyView total={result.total} results={result.members} />
+				<DailyView
+					total={result.total}
+					results={result.members}
+					param={state.parameter}
+					dispatch={dispatch}
+				/>
 				<div className="chart" ref={chartRef}>
 					<MemberStrengthChart width={chartWidth} results={result.members} />
 				</div>
