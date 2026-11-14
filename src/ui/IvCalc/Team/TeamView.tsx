@@ -24,11 +24,10 @@ const TeamView = React.memo(
 			() => (team?.members ?? []).map((m) => (m?.enabled ? m : undefined)),
 			[team],
 		);
-		const {
-			result: results,
-			loading,
-			error,
-		} = useTeamSimulation(activeMembers, state.parameter);
+		const { result, loading, error } = useTeamSimulation(
+			activeMembers,
+			state.parameter,
+		);
 
 		return (
 			<StyledDiv>
@@ -49,9 +48,14 @@ const TeamView = React.memo(
 						{error}
 					</div>
 				)}
-				<DailyView results={results.members} />
+				<DailyView
+					total={result.total}
+					results={result.members}
+					param={state.parameter}
+					dispatch={dispatch}
+				/>
 				<div className="chart" ref={chartRef}>
-					<MemberStrengthChart width={chartWidth} results={results.members} />
+					<MemberStrengthChart width={chartWidth} results={result.members} />
 				</div>
 				<div className="footer">
 					<TeamParameterPanel state={state} dispatch={dispatch} />

@@ -1,42 +1,37 @@
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
-import type PokemonIv from "../../../util/PokemonIv";
+import type { StrengthParameter } from "../../../util/PokemonStrength";
+import type {
+	TeamMemberStrengthResult,
+	TeamTotalStrengthResult,
+} from "../../../util/Team/Types";
 import MarkdownBlockElement from "../../common/MarkdownBlockElement";
-import MessageDialog from "../../Dialog/MessageDialog";
 import MagoBerry from "../../Resources/MagoBerry";
 import InfoButton from "../InfoButton";
 import IngredientIcon from "../IngredientIcon";
+import type { IvAction } from "../IvState";
 import MainSkillIcon from "../MainSkillIcon";
+import TotalFlagsPanel from "../Panel/TotalFlagsPanel";
 import PokemonIcon from "../PokemonIcon";
 import SpecialtyButton from "../SpecialtyButton";
 
-/** Minimal result interface required by DailyView. */
-interface DailyViewResult {
-	iv: PokemonIv;
-	totalStrength: number;
-	berryStrength: number;
-	bigBerryStrength: number;
-	skillCount: number;
-	skillStrength: number;
-	skillExtraHelp: number;
-	skillHelperBoost: number;
-	skillEnergizingCheer: number;
-	skillEnergyForEveryone: number;
-	skillDreamShards: number;
-	skillPotExtended: number;
-	skillExtraTastyRate: number;
-	skillCandy: number;
-	skillBerryZone: number;
-	ingredients: { name: IngredientName; count: number }[];
-}
-
 const DailyView = React.memo(
-	({ results }: { results: (DailyViewResult | undefined)[] }) => {
-		const { t } = useTranslation();
+	({
+		total,
+		results,
+		param,
+		dispatch,
+	}: {
+		total: TeamTotalStrengthResult;
+		results: (TeamMemberStrengthResult | undefined)[];
+		param: StrengthParameter;
+		dispatch: React.Dispatch<IvAction>;
+	}) => {
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
@@ -44,16 +39,6 @@ const DailyView = React.memo(
 		const onHelpClose = React.useCallback(() => {
 			setHelpOpen(false);
 		}, []);
-
-		const total = results.reduce((sum, r) => sum + (r?.totalStrength ?? 0), 0);
-		const totalBerry = results.reduce(
-			(sum, r) => sum + (r?.berryStrength ?? 0),
-			0,
-		);
-		const totalBigBerry = results.reduce(
-			(sum, r) => sum + (r?.bigBerryStrength ?? 0),
-			0,
-		);
 
 		const ingMap = new Map<IngredientName, number>();
 		for (const r of results) {
@@ -70,7 +55,7 @@ const DailyView = React.memo(
 			<StyledDailyView>
 				<h2>
 					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-					<span>{formatWithComma(total)}</span>
+					<span>{formatWithComma(total.totalStrength)}</span>
 					<InfoButton onClick={onHelpClick} />
 				</h2>
 				<div className="category">
@@ -78,11 +63,11 @@ const DailyView = React.memo(
 				</div>
 				<StyledTotalArticle style={{ marginLeft: "-0.1rem" }}>
 					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-					<span>{formatWithComma(totalBerry)}</span>
-					{totalBigBerry > 0 && (
+					<span>{formatWithComma(total.berryStrength)}</span>
+					{total.bigBerryStrength > 0 && (
 						<>
 							<MagoBerry sx={{ marginLeft: "0.5rem" }} />
-							<span>{formatWithComma(totalBigBerry)}</span>
+							<span>{formatWithComma(total.bigBerryStrength)}</span>
 						</>
 					)}
 				</StyledTotalArticle>
@@ -104,10 +89,12 @@ const DailyView = React.memo(
 				<StyledTotalArticle>
 					<SkillView results={results} />
 				</StyledTotalArticle>
-				<MessageDialog
+				<InfoDialog
+					param={param}
+					dispatch={dispatch}
+					total={total}
 					open={helpOpen}
 					onClose={onHelpClose}
-					message={<MarkdownBlockElement text={t("team info")} />}
 				/>
 			</StyledDailyView>
 		);
@@ -193,7 +180,7 @@ const StyledTotalArticle = styled("div")({
 });
 
 const SkillView = React.memo(
-	({ results }: { results: (DailyViewResult | undefined)[] }) => {
+	({ results }: { results: (TeamMemberStrengthResult | undefined)[] }) => {
 		const { t } = useTranslation();
 		const skillsByMember = results
 			.filter((x) => x !== undefined)
@@ -348,6 +335,42 @@ const SkillView = React.memo(
 					<div className="skillmember">{skillsByMember}</div>
 				)}
 			</>
+		);
+	},
+);
+
+const InfoDialog = React.memo(
+	({
+		total,
+		open,
+		onClose,
+		param,
+		dispatch,
+	}: {
+		total: TeamTotalStrengthResult;
+		open: boolean;
+		onClose: () => void;
+		param: StrengthParameter;
+		dispatch: React.Dispatch<IvAction>;
+	}) => {
+		const { t } = useTranslation();
+		const result = {
+			...total,
+			skillStrength2: 0,
+		};
+
+		return (
+			<Dialog open={open} onClose={onClose}>
+				<DialogContent>
+					<TotalFlagsPanel param={param} result={result} dispatch={dispatch} />
+					<div style={{ fontSize: "0.8rem", color: "#666" }}>
+						<MarkdownBlockElement text={t("team info")} />
+					</div>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={onClose}>{t("close")}</Button>
+				</DialogActions>
+			</Dialog>
 		);
 	},
 );

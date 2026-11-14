@@ -71,16 +71,33 @@ export function simulateTeam(
 		addResultToIterationResult(accumulated, results);
 	}
 
-	return {
-		members: buildMemberStrengthResult(
-			members,
-			profiles,
-			nightCapPikachuProfile,
-			accumulated,
-			param,
-			iterations,
-		),
+	// Build the final result
+	const memberResults = buildMemberStrengthResult(
+		members,
+		profiles,
+		nightCapPikachuProfile,
+		accumulated,
+		param,
+		iterations,
+	);
+	const total = {
+		totalStrength: 0,
+		berryTotalStrength: 0,
+		bigBerryStrength: 0,
+		berryStrength: 0,
+		ingStrength: 0,
+		skillStrength: 0,
 	};
+	for (const member of memberResults) {
+		if (!member) continue;
+		total.totalStrength += member.totalStrength;
+		total.berryTotalStrength += member.berryTotalStrength;
+		total.bigBerryStrength += member.bigBerryStrength;
+		total.berryStrength += member.berryStrength;
+		total.ingStrength += member.ingStrength;
+		total.skillStrength += member.skillStrength;
+	}
+	return { total, members: memberResults };
 }
 
 /**
@@ -93,7 +110,17 @@ export function simulateTeam(
 export function createEmptyTeamStrengthResult(
 	members: (TeamMemberInput | undefined)[],
 ): TeamStrengthResult {
-	return { members: members.map(() => undefined) };
+	return {
+		total: {
+			totalStrength: 0,
+			berryTotalStrength: 0,
+			berryStrength: 0,
+			bigBerryStrength: 0,
+			ingStrength: 0,
+			skillStrength: 0,
+		},
+		members: members.map(() => undefined),
+	};
 }
 
 function initializeIterationResult(

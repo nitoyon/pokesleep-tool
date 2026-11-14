@@ -34,6 +34,7 @@ self.addEventListener(
 
 			const response: TeamSimulationResponse = {
 				requestId,
+				total: result.total,
 				members: result.members.map((m) =>
 					m ? serializeMemberResult(m) : undefined,
 				),
@@ -42,6 +43,14 @@ self.addEventListener(
 		} catch (e) {
 			const response: TeamSimulationResponse = {
 				requestId,
+				total: {
+					totalStrength: 0,
+					berryTotalStrength: 0,
+					berryStrength: 0,
+					bigBerryStrength: 0,
+					ingStrength: 0,
+					skillStrength: 0,
+				},
 				members: [],
 				error: e instanceof Error ? e.message : String(e),
 			};

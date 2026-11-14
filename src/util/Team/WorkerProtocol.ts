@@ -1,5 +1,9 @@
 import PokemonIv from "../PokemonIv";
-import type { TeamMemberInput, TeamMemberStrengthResult } from "./Types";
+import type {
+	TeamMemberInput,
+	TeamMemberStrengthResult,
+	TeamTotalStrengthResult,
+} from "./Types";
 
 /**
  * Request sent from the main thread to the team simulation worker.
@@ -18,6 +22,7 @@ export interface TeamSimulationRequest {
  */
 export interface TeamSimulationResponse {
 	requestId: number;
+	total: TeamTotalStrengthResult;
 	members: (SerializedMemberResult | undefined)[];
 	/** Present when the worker failed to compute the simulation. */
 	error?: string;

@@ -115,11 +115,25 @@ export interface TeamMemberStrengthResult extends SkillMetrics {
  * aggregated total across all active members.
  */
 export interface TeamStrengthResult {
+	/** Total strength result. */
+	total: TeamTotalStrengthResult;
 	/**
 	 * Per-slot results; undefined for empty slots.
 	 * Night Cap Pikachu's result is appended after the slots if simulated.
 	 */
 	members: (TeamMemberStrengthResult | undefined)[];
+}
+
+/**
+ * Total strength result.
+ */
+export interface TeamTotalStrengthResult {
+	totalStrength: number;
+	berryTotalStrength: number;
+	berryStrength: number;
+	bigBerryStrength: number;
+	ingStrength: number;
+	skillStrength: number;
 }
 
 /**

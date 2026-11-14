@@ -69,6 +69,7 @@ export function useTeamSimulation(
 				return;
 			}
 			setResult({
+				total: event.data.total,
 				members: event.data.members.map((m) =>
 					m ? deserializeMemberResult(m) : undefined,
 				),
