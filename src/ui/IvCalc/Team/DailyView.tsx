@@ -5,7 +5,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
-import type { TeamMemberStrengthResult } from "../../../util/Team/Types";
+import type {
+	TeamMemberStrengthResult,
+	TeamTotalStrengthResult,
+} from "../../../util/Team/Types";
 import MarkdownBlockElement from "../../common/MarkdownBlockElement";
 import MagoBerry from "../../Resources/MagoBerry";
 import InfoButton from "../InfoButton";
@@ -15,7 +18,13 @@ import PokemonIcon from "../PokemonIcon";
 import SpecialtyButton from "../SpecialtyButton";
 
 const DailyView = React.memo(
-	({ results }: { results: (TeamMemberStrengthResult | undefined)[] }) => {
+	({
+		total,
+		results,
+	}: {
+		total: TeamTotalStrengthResult;
+		results: (TeamMemberStrengthResult | undefined)[];
+	}) => {
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
@@ -23,16 +32,6 @@ const DailyView = React.memo(
 		const onHelpClose = React.useCallback(() => {
 			setHelpOpen(false);
 		}, []);
-
-		const total = results.reduce((sum, r) => sum + (r?.totalStrength ?? 0), 0);
-		const totalBerry = results.reduce(
-			(sum, r) => sum + (r?.berryStrength ?? 0),
-			0,
-		);
-		const totalBigBerry = results.reduce(
-			(sum, r) => sum + (r?.bigBerryStrength ?? 0),
-			0,
-		);
 
 		const ingMap = new Map<IngredientName, number>();
 		for (const r of results) {
@@ -49,7 +48,7 @@ const DailyView = React.memo(
 			<StyledDailyView>
 				<h2>
 					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-					<span>{formatWithComma(total)}</span>
+					<span>{formatWithComma(total.totalStrength)}</span>
 					<InfoButton onClick={onHelpClick} />
 				</h2>
 				<div className="category">
@@ -57,11 +56,11 @@ const DailyView = React.memo(
 				</div>
 				<StyledTotalArticle style={{ marginLeft: "-0.1rem" }}>
 					<LocalFireDepartmentIcon sx={{ color: "#ff944b" }} />
-					<span>{formatWithComma(totalBerry)}</span>
-					{totalBigBerry > 0 && (
+					<span>{formatWithComma(total.berryStrength)}</span>
+					{total.bigBerryStrength > 0 && (
 						<>
 							<MagoBerry sx={{ marginLeft: "0.5rem" }} />
-							<span>{formatWithComma(totalBigBerry)}</span>
+							<span>{formatWithComma(total.bigBerryStrength)}</span>
 						</>
 					)}
 				</StyledTotalArticle>
