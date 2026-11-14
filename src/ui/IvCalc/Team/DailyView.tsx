@@ -5,7 +5,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
-import type PokemonIv from "../../../util/PokemonIv";
+import type { TeamMemberStrengthResult } from "../../../util/Team/Types";
 import MarkdownBlockElement from "../../common/MarkdownBlockElement";
 import MagoBerry from "../../Resources/MagoBerry";
 import InfoButton from "../InfoButton";
@@ -14,28 +14,8 @@ import MainSkillIcon from "../MainSkillIcon";
 import PokemonIcon from "../PokemonIcon";
 import SpecialtyButton from "../SpecialtyButton";
 
-/** Minimal result interface required by DailyView. */
-interface DailyViewResult {
-	iv: PokemonIv;
-	totalStrength: number;
-	berryStrength: number;
-	bigBerryStrength: number;
-	skillCount: number;
-	skillStrength: number;
-	skillExtraHelp: number;
-	skillHelperBoost: number;
-	skillEnergizingCheer: number;
-	skillEnergyForEveryone: number;
-	skillDreamShards: number;
-	skillPotExtended: number;
-	skillExtraTastyRate: number;
-	skillCandy: number;
-	skillBerryZone: number;
-	ingredients: { name: IngredientName; count: number }[];
-}
-
 const DailyView = React.memo(
-	({ results }: { results: (DailyViewResult | undefined)[] }) => {
+	({ results }: { results: (TeamMemberStrengthResult | undefined)[] }) => {
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
@@ -188,7 +168,7 @@ const StyledTotalArticle = styled("div")({
 });
 
 const SkillView = React.memo(
-	({ results }: { results: (DailyViewResult | undefined)[] }) => {
+	({ results }: { results: (TeamMemberStrengthResult | undefined)[] }) => {
 		const { t } = useTranslation();
 		const skillsByMember = results
 			.filter((x) => x !== undefined)
