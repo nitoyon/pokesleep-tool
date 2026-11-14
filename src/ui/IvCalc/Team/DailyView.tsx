@@ -1,4 +1,5 @@
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -6,7 +7,6 @@ import type { IngredientName } from "../../../data/pokemons";
 import { formatWithComma, round1 } from "../../../util/NumberUtil";
 import type PokemonIv from "../../../util/PokemonIv";
 import MarkdownBlockElement from "../../common/MarkdownBlockElement";
-import MessageDialog from "../../Dialog/MessageDialog";
 import MagoBerry from "../../Resources/MagoBerry";
 import InfoButton from "../InfoButton";
 import IngredientIcon from "../IngredientIcon";
@@ -36,7 +36,6 @@ interface DailyViewResult {
 
 const DailyView = React.memo(
 	({ results }: { results: (DailyViewResult | undefined)[] }) => {
-		const { t } = useTranslation();
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
 			setHelpOpen(true);
@@ -104,11 +103,7 @@ const DailyView = React.memo(
 				<StyledTotalArticle>
 					<SkillView results={results} />
 				</StyledTotalArticle>
-				<MessageDialog
-					open={helpOpen}
-					onClose={onHelpClose}
-					message={<MarkdownBlockElement text={t("team info")} />}
-				/>
+				<InfoDialog open={helpOpen} onClose={onHelpClose} />
 			</StyledDailyView>
 		);
 	},
@@ -348,6 +343,23 @@ const SkillView = React.memo(
 					<div className="skillmember">{skillsByMember}</div>
 				)}
 			</>
+		);
+	},
+);
+
+const InfoDialog = React.memo(
+	({ open, onClose }: { open: boolean; onClose: () => void }) => {
+		const { t } = useTranslation();
+
+		return (
+			<Dialog open={open} onClose={onClose}>
+				<DialogContent>
+					<MarkdownBlockElement text={t("team info")} />
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={onClose}>{t("close")}</Button>
+				</DialogActions>
+			</Dialog>
 		);
 	},
 );
