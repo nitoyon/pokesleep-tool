@@ -146,6 +146,16 @@ function getPeriodText(t: TFunction, period: number): string {
 	if (period > 24) {
 		return t("day unit", { count: period / 24 });
 	}
+	switch (period) {
+		case 0:
+			return t("whistle");
+		case -10:
+			return t("help x10");
+		case -30:
+			return t("help x30");
+		case -100:
+			return t("help x100");
+	}
 	return t("hour2", { count: period });
 }
 
