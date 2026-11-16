@@ -6778,31 +6778,31 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "fairy",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Ingredients",
+		"skill": "Charge Energy S",
 		"fp": 5,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 4600,
+		"ingRate": 20,
+		"skillRate": 3.5,
 		"ancestor": 546,
 		"evolutionCount": 0,
 		"evolutionLeft": 1,
 		"isFullyEvolved": false,
-		"carryLimit": 0,
+		"carryLimit": 10,
 		"ing1": {
-			"name": "unknown1",
-			"c1": 1,
-			"c2": 2,
-			"c3": 4
+			"name": "nuts",
+			"c1": 2,
+			"c2": 5,
+			"c3": 7
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "avocado",
+			"c2": 3,
+			"c3": 5
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "tomato",
+			"c3": 7
 		}
 	},
 	{
@@ -6812,31 +6812,31 @@
 		"sleepType": "snoozing",
 		"exp": 600,
 		"type": "fairy",
-		"specialty": "unknown",
-		"skill": "unknown",
+		"specialty": "Ingredients",
+		"skill": "Charge Energy S",
 		"fp": 20,
-		"frequency": 0,
-		"ingRate": 0,
-		"skillRate": 0,
+		"frequency": 2400,
+		"ingRate": 19.9,
+		"skillRate": 3.8,
 		"ancestor": 546,
 		"evolutionCount": 1,
 		"evolutionLeft": 0,
 		"isFullyEvolved": true,
-		"carryLimit": 0,
+		"carryLimit": 17,
 		"ing1": {
-			"name": "unknown1",
-			"c1": 1,
-			"c2": 2,
-			"c3": 4
+			"name": "nuts",
+			"c1": 2,
+			"c2": 5,
+			"c3": 7
 		},
 		"ing2": {
-			"name": "unknown2",
-			"c2": 0,
-			"c3": 0
+			"name": "avocado",
+			"c2": 3,
+			"c3": 5
 		},
 		"ing3": {
-			"name": "unknown3",
-			"c3": 0
+			"name": "tomato",
+			"c3": 7
 		}
 	},
 	{

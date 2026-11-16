@@ -25,7 +25,7 @@ export const ingredientStrength: { [ing in IngredientName]: number } = {
 	coffee: 153,
 	pumpkin: 250,
 	avocado: 162,
-	nuts: 0,
+	nuts: 112,
 	unknown: 0,
 	unknown1: 0,
 	unknown2: 0,

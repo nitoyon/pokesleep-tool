@@ -291,6 +291,10 @@ function convertIngName(val: string): IngredientName {
 		case "嫩亮酪梨":
 		case "つやつやアボカド":
 			return "avocado";
+		case "Snackable Nuts":
+		case "一口堅果":
+		case "ひとくちナッツ":
+			return "nuts";
 		case "":
 			return "unknown";
 		default:
