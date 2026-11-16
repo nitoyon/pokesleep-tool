@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add cottonee": {
+				"headline": "Added data for $t(pokemons.Cottonee) and $t(pokemons.Whimsicott).",
+				"detail": "$t(rp collection)"
+			},
 			"add misdreavus": {
 				"headline": "Added data for $t(pokemons.Misdreavus) and $t(pokemons.Mismagius).",
 				"detail": "$t(rp collection)"

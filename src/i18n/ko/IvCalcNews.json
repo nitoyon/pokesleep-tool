@@ -1,6 +1,10 @@
 {
 	"IvCalc": {
 		"news": {
+			"add cottonee": {
+				"headline": "$t(pokemons.Cottonee)과 $t(pokemons.Whimsicott)의 데이터를 추가했습니다.",
+				"detail": "$t(rp collection)"
+			},
 			"add misdreavus": {
 				"headline": "$t(pokemons.Misdreavus)와 $t(pokemons.Mismagius)의 데이터를 추가했습니다.",
 				"detail": "$t(rp collection)"
