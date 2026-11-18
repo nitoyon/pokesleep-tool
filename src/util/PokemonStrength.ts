@@ -249,6 +249,18 @@ export const recipeLevelBonus: { [key: number]: number } = {
 };
 
 /**
+ * Get the strength multiplier for ingredients used in a recipe.
+ * @param param Strength parameter.
+ * @returns (1 + recipe bonus) × (1 + recipe level bonus), or 1 for mixed recipe.
+ */
+export function getIngInRecipeStrengthRate(param: StrengthParameter): number {
+	return param.recipeBonus === 0
+		? 1
+		: (1 + param.recipeBonus / 100) *
+				(1 + recipeLevelBonus[param.recipeLevel] / 100);
+}
+
+/**
  * Represents BonusEffects and the source of each bonus.
  */
 export interface BonusEffectsWithReason extends BonusEffects {
@@ -443,11 +455,7 @@ class PokemonStrength {
 		);
 
 		// calc ingredient
-		const ingInRecipeStrengthRate =
-			param.recipeBonus === 0
-				? 1
-				: (1 + param.recipeBonus / 100) *
-					(1 + recipeLevelBonus[param.recipeLevel] / 100);
+		const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 		const ingStrengthRate =
 			(ingInRecipeStrengthRate * 0.8 + 0.2) *
 			(1 + param.fieldBonus / 100) *
@@ -674,11 +682,7 @@ class PokemonStrength {
 			return (ownStrengthPerHelp + 4 * this.teamMemberPerHelp) / 5;
 		};
 
-		const ingInRecipeStrengthRate =
-			param.recipeBonus === 0
-				? 1
-				: (1 + param.recipeBonus / 100) *
-					(1 + recipeLevelBonus[param.recipeLevel] / 100);
+		const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 		const rawIngFactor = (1 + param.fieldBonus / 100) * bonus.dish;
 		const ingFactor = (ingInRecipeStrengthRate * 0.8 + 0.2) * rawIngFactor;
 

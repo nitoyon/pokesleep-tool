@@ -21,6 +21,7 @@ import { ingredientStrength } from "../../../util/PokemonRp";
 import type PokemonStrength from "../../../util/PokemonStrength";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import {
+	getIngInRecipeStrengthRate,
 	type IngredientStrength,
 	recipeLevelBonus,
 	type StrengthResult,
@@ -75,11 +76,7 @@ const IngHelpDialog = React.memo(
 		}
 
 		const ings = result.ingredients.filter((x) => x.slots.length > 0);
-		const ingInRecipeStrengthRate =
-			param.recipeBonus === 0
-				? 1
-				: (1 + param.recipeBonus / 100) *
-					(1 + recipeLevelBonus[param.recipeLevel] / 100);
+		const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 		const recipeRate = ingInRecipeStrengthRate * 0.8 + 0.2;
 		const dishBonus = getEventBonus(param.event, param.customEventBonus).dish;
 
