@@ -4,9 +4,7 @@ import { bonusEffectToInventoryBonus } from "../InventoryBonus";
 import { getMaxSkillLevel } from "../MainSkill";
 import PokemonIv, { type BagUsagePerHelpDetailItem } from "../PokemonIv";
 import type { StrengthParameter } from "../PokemonStrength";
-import PokemonStrength, {
-	getIngInRecipeStrengthRate,
-} from "../PokemonStrength";
+import PokemonStrength, { getRecipeUsageRate } from "../PokemonStrength";
 import { createSkill } from "./Skill/SkillFactory";
 import { initializeSkillValue } from "./Skill/SkillInitializer";
 import type { MemberProfile, TeamMemberInput } from "./Types";
@@ -103,11 +101,8 @@ export function buildMemberProfile(
 	const extraBagUsage = iv.getBagUsagePerHelpDetail({});
 
 	// ingStrengthRate
-	const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 	const ingStrengthRate =
-		(ingInRecipeStrengthRate * 0.8 + 0.2) *
-		(1 + param.fieldBonus / 100) *
-		bonus.dish;
+		getRecipeUsageRate(param, 80) * (1 + param.fieldBonus / 100) * bonus.dish;
 
 	// Skill level
 	const maxSkillLevel = getMaxSkillLevel(iv.pokemon.skill);
@@ -214,11 +209,8 @@ export function buildNightCapPikachuProfile(
 	const extraBagUsage = normalBagUsage;
 
 	// ingStrengthRate
-	const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 	const ingStrengthRate =
-		(ingInRecipeStrengthRate * 0.8 + 0.2) *
-		(1 + param.fieldBonus / 100) *
-		bonus.dish;
+		getRecipeUsageRate(param, 80) * (1 + param.fieldBonus / 100) * bonus.dish;
 
 	return {
 		index: -1,

@@ -261,6 +261,21 @@ export function getIngInRecipeStrengthRate(param: StrengthParameter): number {
 }
 
 /**
+ * Get the average strength multiplier for ingredients, assuming `usage`%
+ * of them are used in recipes and the rest are surplus.
+ * @param param Strength parameter.
+ * @param usage Percentage (0-100) of ingredients used in recipes.
+ * @returns The average strength multiplier.
+ */
+export function getRecipeUsageRate(
+	param: StrengthParameter,
+	usage: number,
+): number {
+	const r = usage / 100;
+	return getIngInRecipeStrengthRate(param) * r + (1 - r);
+}
+
+/**
  * Represents BonusEffects and the source of each bonus.
  */
 export interface BonusEffectsWithReason extends BonusEffects {
@@ -455,11 +470,8 @@ class PokemonStrength {
 		);
 
 		// calc ingredient
-		const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 		const ingStrengthRate =
-			(ingInRecipeStrengthRate * 0.8 + 0.2) *
-			(1 + param.fieldBonus / 100) *
-			bonus.dish;
+			getRecipeUsageRate(param, 80) * (1 + param.fieldBonus / 100) * bonus.dish;
 
 		const ingredients = helpCount.ingredients.map((x) => ({
 			...x,
@@ -682,9 +694,8 @@ class PokemonStrength {
 			return (ownStrengthPerHelp + 4 * this.teamMemberPerHelp) / 5;
 		};
 
-		const ingInRecipeStrengthRate = getIngInRecipeStrengthRate(param);
 		const rawIngFactor = (1 + param.fieldBonus / 100) * bonus.dish;
-		const ingFactor = (ingInRecipeStrengthRate * 0.8 + 0.2) * rawIngFactor;
+		const ingFactor = getRecipeUsageRate(param, 80) * rawIngFactor;
 
 		switch (mainSkill) {
 			case "Charge Energy S":
