@@ -109,6 +109,12 @@ const RecipeBonusLevelForm = React.memo(
 									(103{t("range separator")}115 {t("ingredients unit")})
 								</small>
 							</MenuItem>
+							<MenuItem value="82" dense>
+								82%{" "}
+								<small style={{ paddingLeft: "0.3rem" }}>
+									(121{t("range separator")} {t("ingredients unit")})
+								</small>
+							</MenuItem>
 						</SelectEx>
 					</FormControl>
 				</section>

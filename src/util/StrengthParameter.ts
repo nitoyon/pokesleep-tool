@@ -470,7 +470,7 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 	}
 	if (
 		typeof json.recipeBonus === "number" &&
-		[0, 6, 11, 17, 19, 20, 25, 35, 48, 61, 78].includes(json.recipeBonus)
+		[0, 6, 11, 17, 19, 20, 25, 35, 48, 61, 78, 82].includes(json.recipeBonus)
 	) {
 		if (json.recipeBonus === 6 || json.recipeBonus === 11) {
 			json.recipeBonus = 19;
