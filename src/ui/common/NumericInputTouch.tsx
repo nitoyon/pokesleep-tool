@@ -651,6 +651,9 @@ const StyledInputContainer = styled("div")({
 });
 
 const StyledInput = styled(Input)({
+	"& input": {
+		caretColor: "transparent",
+	},
 	"&.focused:after": {
 		transform: "scaleX(1)",
 	},
