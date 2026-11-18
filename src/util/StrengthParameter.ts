@@ -102,6 +102,13 @@ export interface StrengthParameter extends EnergyParameter {
 	 */
 	recipeLevel: RecipeLevel;
 
+	/**
+	 * Percentage (0-100) of ingredients used in recipes for each source.
+	 *
+	 * The rest are treated as surplus ingredients.
+	 */
+	recipeUsage: RecipeUsage;
+
 	/** Skill level of the 'Helper Boost' skill */
 	helperBoostLevel: number;
 
@@ -160,6 +167,18 @@ export interface BerryBurstTeamMember {
 
 /** Valid recipe level values (1-65) */
 export type RecipeLevel = number;
+
+/** Percentage (0-100) of ingredients used in recipes for each source */
+export interface RecipeUsage {
+	/** Ingredients gathered by help */
+	help: number;
+	/** Ingredients gathered by Ingredient Draw S */
+	draw: number;
+	/** Ingredients gathered by Ingredient Magnet S (Plus) */
+	plus: number;
+	/** Ingredients gathered by Ingredient Magnet S */
+	magnet: number;
+}
 
 /**
  * Normalize a StrengthParameter by applying event fixedBerries favoriteType overrides.
@@ -253,6 +272,7 @@ export function createStrengthParameter(
 		tapFrequencyAsleep: NoTap,
 		recipeBonus: 25,
 		recipeLevel: 30,
+		recipeUsage: { help: 80, draw: 80, plus: 80, magnet: 0 },
 		helperBoostLevel: 6,
 		helperBoostSpecies: 4,
 		teamMember: new PokemonIv({ pokemonName: "Raichu", level: 60 }),
@@ -506,6 +526,19 @@ export function deserializeStrengthParameter(json: any): StrengthParameter {
 		[1, 10, 20, 30, 40, 50, 55, 60, 65].includes(json.recipeLevel)
 	) {
 		ret.recipeLevel = json.recipeLevel;
+	}
+	if (typeof json.recipeUsage === "object" && json.recipeUsage !== null) {
+		for (const key of ["help", "draw", "plus", "magnet"] as const) {
+			const val = json.recipeUsage[key];
+			if (
+				typeof val === "number" &&
+				Number.isInteger(val) &&
+				val >= 0 &&
+				val <= 100
+			) {
+				ret.recipeUsage[key] = val;
+			}
+		}
 	}
 
 	if (typeof json.teamMember === "string") {
