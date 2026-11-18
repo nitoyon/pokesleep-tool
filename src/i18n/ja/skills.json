@@ -2,7 +2,7 @@
 	"skills": {
 		"Ingredient Magnet S": {
 			"name": "食材ゲットS",
-			"strength": "スキルによる食材は、余剰食材として利用されるものと仮定して計算しています。",
+			"strength": "スキルによる食材の$t(strength2)は、$t(recipe usage)の設定値を使って計算しています。",
 			"desc": "ランダムで食材をゲットします。",
 			"detail": "入手したことのある食材の中から3種類を均等に取得します。"
 		},
@@ -182,7 +182,7 @@
 		},
 		"Ingredient Draw S": {
 			"name": "食材セレクトS",
-			"strength": "スキルによる食材は$t(recipe bonus)を適用して$t(strength2)を計算しています。",
+			"strength": "スキルによる食材の$t(strength2)は、$t(recipe usage)の設定値を使って計算しています。",
 			"desc": "<ingredients/>から1つが選ばれて、スキルレベルに応じた食材数をゲットします。",
 			"detail": "未発見の食材も抽選されます。"
 		},

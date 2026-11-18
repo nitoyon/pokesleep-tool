@@ -43,6 +43,9 @@ const StyledSettingForm = styled("div")({
 		"&.mt": {
 			marginTop: "1rem",
 		},
+		"&.ml": {
+			marginLeft: "1rem",
+		},
 		"& > span.lbl": {
 			marginRight: "auto",
 			marginTop: 0,

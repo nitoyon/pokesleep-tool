@@ -216,7 +216,7 @@ const CalculatePanel = React.memo(
 						onChange={onAlwaysFullChange}
 					/>
 				</section>
-				<RecipeBonusLevelForm value={value} onChange={onChange} />
+				<RecipeBonusLevelForm value={value} simple onChange={onChange} />
 			</div>
 		);
 	},

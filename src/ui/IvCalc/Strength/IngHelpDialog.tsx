@@ -152,6 +152,7 @@ const IngHelpDialog = React.memo(
 					</article>
 					<RecipeBonusLevelForm
 						value={strength.parameter}
+						simple
 						onChange={onChange}
 					/>
 				</DialogContent>

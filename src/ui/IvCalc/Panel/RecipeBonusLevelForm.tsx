@@ -10,26 +10,37 @@ import {
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
+import PercentSliderInput from "../../common/PercentSliderInput";
 import SelectEx from "../../common/SelectEx";
+import MessageDialog from "../../Dialog/MessageDialog";
 import InfoButton from "../InfoButton";
 import { LevelInput } from "../IvForm/LevelControl";
 
 const RecipeBonusLevelForm = React.memo(
 	({
 		value,
+		simple,
 		onChange,
 	}: {
 		value: StrengthParameter;
+		simple?: boolean;
 		onChange: (value: StrengthParameter) => void;
 	}) => {
 		const { t } = useTranslation();
 		const [recipeBonusHelpOpen, setRecipeBonusHelpOpen] = React.useState(false);
+		const [recipeUsageHelpOpen, setRecipeUsageHelpOpen] = React.useState(false);
 
 		const onRecipeBonusInfoClick = React.useCallback(() => {
 			setRecipeBonusHelpOpen(true);
 		}, []);
 		const onRecipeBonusHelpClose = React.useCallback(() => {
 			setRecipeBonusHelpOpen(false);
+		}, []);
+		const onRecipeUsageInfoClick = React.useCallback(() => {
+			setRecipeUsageHelpOpen(true);
+		}, []);
+		const onRecipeUsageHelpClose = React.useCallback(() => {
+			setRecipeUsageHelpOpen(false);
 		}, []);
 		const onRecipeBonusChange = React.useCallback(
 			(recipeBonus: number) => {
@@ -40,6 +51,30 @@ const RecipeBonusLevelForm = React.memo(
 		const onRecipeLevelChange = React.useCallback(
 			(recipeLevel: number) => {
 				onChange({ ...value, recipeLevel });
+			},
+			[onChange, value],
+		);
+		const onHelpUsageChange = React.useCallback(
+			(help: number) => {
+				onChange({ ...value, recipeUsage: { ...value.recipeUsage, help } });
+			},
+			[onChange, value],
+		);
+		const onDrawUsageChange = React.useCallback(
+			(draw: number) => {
+				onChange({ ...value, recipeUsage: { ...value.recipeUsage, draw } });
+			},
+			[onChange, value],
+		);
+		const onPlusUsageChange = React.useCallback(
+			(plus: number) => {
+				onChange({ ...value, recipeUsage: { ...value.recipeUsage, plus } });
+			},
+			[onChange, value],
+		);
+		const onMagnetUsageChange = React.useCallback(
+			(magnet: number) => {
+				onChange({ ...value, recipeUsage: { ...value.recipeUsage, magnet } });
 			},
 			[onChange, value],
 		);
@@ -64,11 +99,79 @@ const RecipeBonusLevelForm = React.memo(
 						sx={{ width: "2rem" }}
 					/>
 				</section>
+				<section>
+					<span className="lbl">
+						{t("recipe usage")}:<InfoButton onClick={onRecipeUsageInfoClick} />
+					</span>
+				</section>
+				<section className="ml">
+					<span className="lbl">{t("help")}:</span>
+					<RecipeUsageInput
+						value={value.recipeUsage.help}
+						onChange={onHelpUsageChange}
+					/>
+				</section>
+				{!simple && (
+					<>
+						<section className="ml">
+							<span className="lbl">{t("skills.Ingredient Draw S.name")}:</span>
+							<RecipeUsageInput
+								value={value.recipeUsage.draw}
+								onChange={onDrawUsageChange}
+							/>
+						</section>
+						<section className="ml">
+							<span className="lbl">
+								{t("additional ingredients from plus")}:
+							</span>
+							<RecipeUsageInput
+								value={value.recipeUsage.plus}
+								onChange={onPlusUsageChange}
+							/>
+						</section>
+						<section className="ml">
+							<span className="lbl">
+								{t("skills.Ingredient Magnet S.name")}:
+							</span>
+							<RecipeUsageInput
+								value={value.recipeUsage.magnet}
+								onChange={onMagnetUsageChange}
+							/>
+						</section>
+					</>
+				)}
 				<RecipeBonusHelpDialog
 					open={recipeBonusHelpOpen}
 					onClose={onRecipeBonusHelpClose}
 				/>
+				<MessageDialog
+					open={recipeUsageHelpOpen}
+					onClose={onRecipeUsageHelpClose}
+					message={t("recipe strength help")}
+				/>
 			</>
+		);
+	},
+);
+
+const RecipeUsageInput = React.memo(
+	({
+		value,
+		onChange,
+	}: {
+		value: number;
+		onChange: (value: number) => void;
+	}) => {
+		return (
+			<PercentSliderInput
+				min={0}
+				max={100}
+				step={1}
+				candidateStep={20}
+				value={value}
+				onChange={onChange}
+				sx={{ width: "2.9rem", fontSize: "0.9rem" }}
+			/>
 		);
 	},
 );

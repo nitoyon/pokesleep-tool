@@ -2,7 +2,7 @@
 	"skills": {
 		"Ingredient Magnet S": {
 			"name": "食材获取S",
-			"strength": "技能获取的食材假定作为剩余食材进行计算。",
+			"strength": "技能获取的食材的$t(strength2)是使用$t(recipe usage)的设定值来计算的。",
 			"desc": "随机获得食材。",
 			"detail": "从曾经获得过的食材中均等获取3种。"
 		},
@@ -182,7 +182,7 @@
 		},
 		"Ingredient Draw S": {
 			"name": "食材精选S",
-			"strength": "技能获取的食材是通过将$t(recipe bonus)应用于$t(strength2)来计算的。",
+			"strength": "技能获取的食材的$t(strength2)是使用$t(recipe usage)的设定值来计算的。",
 			"desc": "从<ingredients/>中选取1种，依技能等级获得对应数量的食材。",
 			"detail": "尚未发现的食材也会参与抽签。"
 		},
