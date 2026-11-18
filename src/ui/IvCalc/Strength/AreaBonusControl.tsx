@@ -1,10 +1,5 @@
-import { IconButton, InputAdornment } from "@mui/material";
-import { styled } from "@mui/system";
 import React from "react";
-import NumericInput, {
-	type NumericInputHandle,
-} from "../../common/NumericInput";
-import SliderAndArrow from "../../common/SliderAndArrow";
+import PercentSliderInput from "../../common/PercentSliderInput";
 
 const maxBonus = 100;
 
@@ -16,73 +11,18 @@ const AreaBonusControl = React.memo(
 		value: number;
 		onChange: (value: number) => void;
 	}) => {
-		const inputRef = React.useRef<NumericInputHandle | null>(null);
-
-		const onPercentClick = React.useCallback(
-			(percent: number) => {
-				inputRef.current?.close();
-
-				// WARNING: It is important to call close() before onChange()
-				// to avoid focus-related issues on NumericInputKeyboard.
-				onChange(percent);
-			},
-			[onChange],
-		);
-
-		// Generate percentage options (0%, 5%, 10%, ..., 85%)
-		const percentages: number[] = [];
-		for (let i = 0; i <= maxBonus; i += 5) {
-			percentages.push(i);
-		}
-
 		return (
-			<NumericInput
-				ref={inputRef}
+			<PercentSliderInput
 				min={0}
 				max={maxBonus}
+				step={1}
+				candidateStep={5}
 				value={value}
 				onChange={onChange}
 				sx={{ width: "2.5rem", fontSize: "0.9rem" }}
-				endAdornment={
-					<InputAdornment
-						position="end"
-						onClick={() => inputRef.current?.focus()}
-					>
-						<span style={{ fontSize: "0.8rem", color: "#888" }}>%</span>
-					</InputAdornment>
-				}
-			>
-				<div>
-					<SliderAndArrow
-						min={0}
-						max={maxBonus}
-						value={value}
-						onChange={onChange}
-						sx={{ padding: "0.5rem 1rem 0 1rem" }}
-					/>
-					<StyledPercentGrid>
-						{percentages.map((p) => (
-							<IconButton key={p} onClick={() => onPercentClick(p)}>
-								{p}%
-							</IconButton>
-						))}
-					</StyledPercentGrid>
-				</div>
-			</NumericInput>
+			/>
 		);
 	},
 );
-
-const StyledPercentGrid = styled("div")({
-	display: "grid",
-	gridTemplateColumns: "repeat(6, 3.2rem)",
-	gap: 0,
-	"& > button": {
-		width: "3.2rem",
-		height: "2rem",
-		borderRadius: 0,
-		fontSize: "0.85rem",
-	},
-});
 
 export default AreaBonusControl;
