@@ -471,7 +471,9 @@ class PokemonStrength {
 
 		// calc ingredient
 		const ingStrengthRate =
-			getRecipeUsageRate(param, 80) * (1 + param.fieldBonus / 100) * bonus.dish;
+			getRecipeUsageRate(param, param.recipeUsage.help) *
+			(1 + param.fieldBonus / 100) *
+			bonus.dish;
 
 		const ingredients = helpCount.ingredients.map((x) => ({
 			...x,
@@ -695,7 +697,12 @@ class PokemonStrength {
 		};
 
 		const rawIngFactor = (1 + param.fieldBonus / 100) * bonus.dish;
-		const ingFactor = getRecipeUsageRate(param, 80) * rawIngFactor;
+		const drawFactor =
+			getRecipeUsageRate(param, param.recipeUsage.draw) * rawIngFactor;
+		const plusFactor =
+			getRecipeUsageRate(param, param.recipeUsage.plus) * rawIngFactor;
+		const magnetFactor =
+			getRecipeUsageRate(param, param.recipeUsage.magnet) * rawIngFactor;
 
 		switch (mainSkill) {
 			case "Charge Energy S":
@@ -872,13 +879,13 @@ class PokemonStrength {
 				);
 				return {
 					skillValue,
-					skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+					skillStrength: skillValue * averageIngredientStrength * magnetFactor,
 					skillValuePerTrigger,
 					skillValue2: ingCount * skillCount,
 					skillStrength2:
 						ingCount *
 						ingredientStrength[this.iv.pokemon.ing1.name] *
-						rawIngFactor *
+						plusFactor *
 						skillCount,
 					skillValuePerTrigger2: ingCount,
 				};
@@ -890,7 +897,7 @@ class PokemonStrength {
 					Math.floor(candyCount * bonus.ingredientMagnet) * presentCandyRate;
 				return {
 					skillValue,
-					skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+					skillStrength: skillValue * averageIngredientStrength * magnetFactor,
 					skillValuePerTrigger,
 					skillValue2: candyCount * skillCount,
 					skillStrength2: 0,
@@ -913,7 +920,7 @@ class PokemonStrength {
 			case "Ingredient Magnet S":
 				return {
 					skillValue,
-					skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+					skillStrength: skillValue * averageIngredientStrength * magnetFactor,
 					skillValuePerTrigger,
 					skillValue2: 0,
 					skillStrength2: 0,
@@ -923,7 +930,7 @@ class PokemonStrength {
 				const averageStrength = getAverageIngredientDrawStrength(this.iv);
 				return {
 					skillValue: skillValue,
-					skillStrength: skillValue * averageStrength * ingFactor,
+					skillStrength: skillValue * averageStrength * drawFactor,
 					skillValuePerTrigger,
 					skillValue2: 0,
 					skillStrength2: 0,
@@ -941,7 +948,7 @@ class PokemonStrength {
 				return {
 					skillValue: skillValue * superLuckIngRate,
 					skillStrength:
-						skillValue * superLuckIngRate * averageStrength * ingFactor,
+						skillValue * superLuckIngRate * averageStrength * drawFactor,
 					skillValuePerTrigger, // Dream shard is not included
 					skillValue2: shardsPerSkill * skillCount,
 					skillStrength2: 0,
@@ -953,7 +960,10 @@ class PokemonStrength {
 				return {
 					skillValue: skillValue * (1 + hyperCutterSuccess),
 					skillStrength:
-						skillValue * averageStrength * ingFactor * (1 + hyperCutterSuccess),
+						skillValue *
+						averageStrength *
+						drawFactor *
+						(1 + hyperCutterSuccess),
 					skillValuePerTrigger, // Additional ingredients are not included
 					skillValue2: 0,
 					skillStrength2: 0,

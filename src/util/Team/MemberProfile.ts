@@ -102,7 +102,9 @@ export function buildMemberProfile(
 
 	// ingStrengthRate
 	const ingStrengthRate =
-		getRecipeUsageRate(param, 80) * (1 + param.fieldBonus / 100) * bonus.dish;
+		getRecipeUsageRate(param, param.recipeUsage.help) *
+		(1 + param.fieldBonus / 100) *
+		bonus.dish;
 
 	// Skill level
 	const maxSkillLevel = getMaxSkillLevel(iv.pokemon.skill);
@@ -210,7 +212,9 @@ export function buildNightCapPikachuProfile(
 
 	// ingStrengthRate
 	const ingStrengthRate =
-		getRecipeUsageRate(param, 80) * (1 + param.fieldBonus / 100) * bonus.dish;
+		getRecipeUsageRate(param, param.recipeUsage.help) *
+		(1 + param.fieldBonus / 100) *
+		bonus.dish;
 
 	return {
 		index: -1,

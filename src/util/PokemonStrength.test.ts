@@ -1421,6 +1421,79 @@ describe("PokemonStrength", () => {
 		});
 	});
 
+	describe("recipe usage", () => {
+		// recipeBonus 25%, recipeLevel 30 (+61%)
+		const inRecipeRate = 1.25 * 1.61;
+		const usage = (help: number, draw: number, plus: number, magnet: number) =>
+			createParam({
+				fieldBonus: 0,
+				recipeBonus: 25,
+				recipeLevel: 30,
+				recipeUsage: { help, draw, plus, magnet },
+			});
+
+		test("default values", () => {
+			expect(createParam({}).recipeUsage).toEqual({
+				help: 80,
+				draw: 80,
+				plus: 80,
+				magnet: 0,
+			});
+		});
+
+		test("help usage changes ingredient strength", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 30 });
+			const base = new PokemonStrength(iv, usage(0, 0, 0, 0)).calculate();
+			const full = new PokemonStrength(iv, usage(100, 0, 0, 0)).calculate();
+			const def = new PokemonStrength(iv, usage(80, 0, 0, 0)).calculate();
+			expect(base.ingStrength).toBeGreaterThan(0);
+			expect(full.ingStrength).toBeCloseTo(base.ingStrength * inRecipeRate);
+			expect(def.ingStrength).toBeCloseTo(
+				base.ingStrength * (inRecipeRate * 0.8 + 0.2),
+			);
+		});
+
+		test("mixed recipe ignores help usage", () => {
+			const iv = new PokemonIv({ pokemonName: "Raichu", level: 30 });
+			const p0 = createParam({
+				recipeBonus: 0,
+				recipeUsage: { help: 0, draw: 0, plus: 0, magnet: 0 },
+			});
+			const p100 = createParam({
+				recipeBonus: 0,
+				recipeUsage: { help: 100, draw: 0, plus: 0, magnet: 0 },
+			});
+			expect(new PokemonStrength(iv, p100).calculate().ingStrength).toBe(
+				new PokemonStrength(iv, p0).calculate().ingStrength,
+			);
+		});
+
+		test("draw usage changes Ingredient Draw S skill strength", () => {
+			const iv = new PokemonIv({ pokemonName: "Sandshrew", level: 30 });
+			expect(iv.pokemon.skill).toBe("Ingredient Draw S");
+			const base = new PokemonStrength(iv, usage(80, 0, 0, 0)).calculate();
+			const full = new PokemonStrength(iv, usage(80, 100, 100, 0)).calculate();
+			const other = new PokemonStrength(iv, usage(80, 0, 0, 100)).calculate();
+			expect(base.skillStrength).toBeGreaterThan(0);
+			expect(full.skillStrength).toBeCloseTo(base.skillStrength * inRecipeRate);
+			expect(other.skillStrength).toBe(base.skillStrength);
+		});
+
+		test("magnet usage changes Ingredient Magnet S skill strength", () => {
+			const iv = new PokemonIv({ pokemonName: "Slaking", level: 30 });
+			expect(iv.pokemon.skill).toBe("Ingredient Magnet S");
+			const base = new PokemonStrength(iv, usage(80, 100, 100, 0)).calculate();
+			const full = new PokemonStrength(
+				iv,
+				usage(80, 100, 100, 100),
+			).calculate();
+			const other = new PokemonStrength(iv, usage(80, 0, 0, 0)).calculate();
+			expect(base.skillStrength).toBeGreaterThan(0);
+			expect(full.skillStrength).toBeCloseTo(base.skillStrength * inRecipeRate);
+			expect(other.skillStrength).toBe(base.skillStrength);
+		});
+	});
+
 	describe("Mew base rate overrides", () => {
 		test("Mew uses param.mew", () => {
 			const param = createParam({});
