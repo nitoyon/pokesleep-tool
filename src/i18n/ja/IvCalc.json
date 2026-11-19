@@ -185,7 +185,7 @@
 	"pot size": "鍋容量",
 	"recipe bonus help": "よく作る料理のレシピボーナスを指定してください。基本的には、料理のレシピボーナスは食材数によって変わりますが、一部のレシピは食材数よりも多いボーナス値となっています。詳しいボーナス値は <raenonx>レシピ一覧 (RaenonX)</raenonx> をご覧ください。",
 	"recipe strength help": "この設定値は、食材をエナジー量に換算するために利用します。$t(recipe usage)は、食材のうちレシピに利用される割合です。残りは余剰食材として利用されるものと仮定して計算します。",
-	"recipe usage": "料理使用率",
+	"recipe usage": "レシピ使用率",
 	"help": "おてつだい",
 	"additional ingredients from plus": "$t(skills.Ingredient Magnet S (Plus).name) の追加食材",
 	"recipe bonus list": "https://pks.raenonx.cc/ja/meal",
