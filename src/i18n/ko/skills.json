@@ -2,7 +2,7 @@
 	"skills": {
 		"Ingredient Magnet S": {
 			"name": "식재료 획득S",
-			"strength": "스킬로 획득한 식재료는 잉여 식재료로 간주됩니다.",
+			"strength": "스킬로 획득한 식재료의 $t(strength2)는 $t(recipe usage) 설정값을 사용하여 계산하고 있습니다.",
 			"desc": "무작위로 식재료를 획득합니다.",
 			"detail": "이미 발견한 식재료 중에서 3종류를 균등하게 획득합니다."
 		},
@@ -182,7 +182,7 @@
 		},
 		"Ingredient Draw S": {
 			"name": "식재료 셀렉트S",
-			"strength": "스킬로 획득한 식재료는 $t(recipe bonus)를 적용하여 $t(strength2)를 계산하고 있습니다.",
+			"strength": "스킬로 획득한 식재료의 $t(strength2)는 $t(recipe usage) 설정값을 사용하여 계산하고 있습니다.",
 			"desc": "<ingredients/>에서 1개가 선택되어 스킬 레벨에 따른 식재료 수를 획득합니다.",
 			"detail": "아직 발견하지 않은 식재료도 추첨됩니다."
 		},

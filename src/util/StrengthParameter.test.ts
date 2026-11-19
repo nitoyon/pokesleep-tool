@@ -40,6 +40,40 @@ describe("StrengthParameter", () => {
 			expect(restored.berryZone.psychic).toBe(10);
 		});
 
+		test("deserialize recipeUsage", () => {
+			const restored = deserializeStrengthParameter({
+				recipeUsage: { help: 50, draw: 0, plus: 5, magnet: 100 },
+			});
+			expect(restored.recipeUsage).toEqual({
+				help: 50,
+				draw: 0,
+				plus: 5,
+				magnet: 100,
+			});
+		});
+
+		test("recipeUsage falls back to defaults for missing or invalid values", () => {
+			expect(deserializeStrengthParameter({}).recipeUsage).toEqual({
+				help: 80,
+				draw: 80,
+				plus: 80,
+				magnet: 0,
+			});
+			const restored = deserializeStrengthParameter({
+				recipeUsage: { help: -1, draw: 101, magnet: "50" },
+			});
+			expect(restored.recipeUsage).toEqual({
+				help: 80,
+				draw: 80,
+				plus: 80,
+				magnet: 0,
+			});
+			const fraction = deserializeStrengthParameter({
+				recipeUsage: { help: 50.5 },
+			});
+			expect(fraction.recipeUsage.help).toBe(80);
+		});
+
 		test("falls back to default teamMember when json.teamMember is an invalid string", () => {
 			const restored = deserializeStrengthParameter({
 				teamMember: "not a valid serialized IV",

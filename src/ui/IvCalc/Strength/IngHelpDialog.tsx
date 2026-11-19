@@ -21,6 +21,7 @@ import { ingredientStrength } from "../../../util/PokemonRp";
 import type PokemonStrength from "../../../util/PokemonStrength";
 import type { StrengthParameter } from "../../../util/PokemonStrength";
 import {
+	getRecipeUsageRate,
 	type IngredientStrength,
 	recipeLevelBonus,
 	type StrengthResult,
@@ -75,12 +76,8 @@ const IngHelpDialog = React.memo(
 		}
 
 		const ings = result.ingredients.filter((x) => x.slots.length > 0);
-		const ingInRecipeStrengthRate =
-			param.recipeBonus === 0
-				? 1
-				: (1 + param.recipeBonus / 100) *
-					(1 + recipeLevelBonus[param.recipeLevel] / 100);
-		const recipeRate = ingInRecipeStrengthRate * 0.8 + 0.2;
+		const recipeRate = getRecipeUsageRate(param, param.recipeUsage.help);
+		const usageRate = param.recipeUsage.help / 100;
 		const dishBonus = getEventBonus(param.event, param.customEventBonus).dish;
 
 		return (
@@ -138,7 +135,7 @@ const IngHelpDialog = React.memo(
 							<> × </>
 							{round2(1 + recipeLevelBonus[param.recipeLevel] / 100)}
 							<small>({t("average recipe level")})</small>
-							<>) × 0.8 + 0.2</>
+							{`) × ${round2(usageRate)} + ${round2(1 - usageRate)}`}
 						</footer>
 						<div>
 							<span className="box box4">{param.fieldBonus}%</span>
@@ -155,6 +152,7 @@ const IngHelpDialog = React.memo(
 					</article>
 					<RecipeBonusLevelForm
 						value={strength.parameter}
+						simple
 						onChange={onChange}
 					/>
 				</DialogContent>

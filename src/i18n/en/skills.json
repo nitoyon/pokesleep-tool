@@ -2,7 +2,7 @@
 	"skills": {
 		"Ingredient Magnet S": {
 			"name": "Ingredient Magnet S",
-			"strength": "Ingredients from the skill are assumed to be surplus.",
+			"strength": "The strength of ingredients from the skill is calculated using the $t(recipe usage) setting.",
 			"desc": "Gets you ingredients chosen at random.",
 			"detail": "Obtains 3 types equally from ingredients that have been previously found."
 		},
@@ -182,7 +182,7 @@
 		},
 		"Ingredient Draw S": {
 			"name": "Ingredient Draw S",
-			"strength": "The strength of ingredients is calculated by applying the recipe bonus.",
+			"strength": "The strength of ingredients from the skill is calculated using the $t(recipe usage) setting.",
 			"desc": "Gets one type of ingredients chosen randomly from <ingredients/>.",
 			"detail": "Undiscovered ingredients can also be drawn."
 		},
