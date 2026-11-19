@@ -616,7 +616,9 @@ export function normalizeState(state: IvState): IvState {
 	// fix species count
 	if (
 		!state.parameter.berryBurstTeam.auto &&
-		state.pokemonIv.pokemon.skill === "Energy for Everyone S (Lunar Blessing)"
+		(state.pokemonIv.pokemon.skill ===
+			"Energy for Everyone S (Lunar Blessing)" ||
+			state.pokemonIv.pokemon.skill === "Berry Burst (Draco Meteor)")
 	) {
 		const species =
 			state.parameter.berryBurstTeam.members.filter(

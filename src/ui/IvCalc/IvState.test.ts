@@ -167,11 +167,27 @@ describe("normalizeState", () => {
 	describe("BerryBurstTeam species count handling", () => {
 		test("should count up species from 1 to 2 for Lunar Blessing Pokemon", () => {
 			const state = { ...baseState };
-			// Cresselia has "Energy for Everyone S (Lunar Blessing)" skill
 			state.pokemonIv = new PokemonIv({ pokemonName: "Cresselia" });
 			state.parameter.berryBurstTeam.auto = false;
 			state.parameter.berryBurstTeam.members = [
 				{ type: "psychic", level: 50 },
+				{ type: "ghost", level: 50 },
+				{ type: "ghost", level: 50 },
+				{ type: "ghost", level: 50 },
+			];
+			state.parameter.berryBurstTeam.species = 1;
+
+			const newState = normalizeState(state);
+
+			expect(newState.parameter.berryBurstTeam.species).toBe(2);
+		});
+
+		test("should count up species from 1 to 2 for Draco Meteor Pokemon", () => {
+			const state = { ...baseState };
+			state.pokemonIv = new PokemonIv({ pokemonName: "Latios" });
+			state.parameter.berryBurstTeam.auto = false;
+			state.parameter.berryBurstTeam.members = [
+				{ type: "dragon", level: 50 },
 				{ type: "ghost", level: 50 },
 				{ type: "ghost", level: 50 },
 				{ type: "ghost", level: 50 },
