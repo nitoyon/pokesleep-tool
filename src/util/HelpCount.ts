@@ -133,6 +133,8 @@ export interface HelpCountResult {
  * @param isWhistle Whether the whistle is used.
  * @param simCache Optional inventory simulation to reuse.
  *   It must be created by {@link createHelpCountSimulation}.
+ * @param planCache Optional help count plan to reuse.
+ *   It must be created by {@link createHelpCountPlan}.
  * @returns Help count calculated.
  */
 export function calculateHelpCount(
@@ -142,6 +144,7 @@ export function calculateHelpCount(
 	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
 	simCache?: HelpCountSimulation,
+	planCache?: HelpCountPlan,
 ): HelpCountResult {
 	// Initialize return value
 	const ret: HelpCountResult = initializeHelpCountResult(
@@ -155,7 +158,8 @@ export function calculateHelpCount(
 		return ret;
 	}
 
-	const helpPlan = createHelpCountPlan(param, ret.baseFreq, energy, isWhistle);
+	const helpPlan =
+		planCache ?? createHelpCountPlan(param, ret.baseFreq, energy, isWhistle);
 	const simulation =
 		simCache ??
 		createHelpCountSimulation(iv, param, bonus, ret.overallSkillRate);
@@ -172,6 +176,13 @@ export function calculateHelpCount(
 		sneakySnacking: ret.total.sneakySnacking - ret.awake.sneakySnacking,
 	};
 
+	// Skill count (count rate is already multiplied)
+	ret.skillCount = calculateSkillCountFromPlan(
+		helpPlan,
+		simulation,
+		ret.overallSkillRate,
+	);
+
 	// multiply count rate
 	const countRate = helpPlan.countRate;
 	if (countRate > 1) {
@@ -184,7 +195,6 @@ export function calculateHelpCount(
 		ret.ingredients.forEach((x) => {
 			x.count *= countRate;
 		});
-		ret.skillCount *= countRate;
 
 		function multiply(help: NormalAndSnackingHelpCount) {
 			help.all *= countRate;
@@ -268,9 +278,7 @@ function initializeHelpCountResult(
 	}
 
 	const skillRate = iv.skillRate * bonus.skillTrigger;
-	const overallSkillRate = !param.pityProc
-		? skillRate
-		: iv.calculateSkillRateWithPityProc(skillRate);
+	const overallSkillRate = calculateOverallSkillRate(iv, param, bonus);
 
 	const timeToFullInventory = calculateTimeToFullInventory(
 		iv,
@@ -359,6 +367,24 @@ function initializeHelpCountResult(
 }
 
 /**
+ * Calculate the overall skill rate per help.
+ * @param iv PokemonIv instance.
+ * @param param Strength parameters.
+ * @param bonus The help bonus.
+ * @returns Skill rate including the bonus (and pity proc if enabled).
+ */
+export function calculateOverallSkillRate(
+	iv: PokemonIv,
+	param: EnergyParameter,
+	bonus: BonusEffectsWithReason,
+): number {
+	const skillRate = iv.skillRate * bonus.skillTrigger;
+	return !param.pityProc
+		? skillRate
+		: iv.calculateSkillRateWithPityProc(skillRate);
+}
+
+/**
  * Calculate base help frequency and inventory bonus.
  * @param iv PokemonIv instance.
  * @param param Strength parameters.
@@ -366,7 +392,7 @@ function initializeHelpCountResult(
  * @param isWhistle Whether the whistle is used.
  * @returns Base help frequency and inventory bonus.
  */
-function calculateBaseFreqAndBonus(
+export function calculateBaseFreqAndBonus(
 	iv: PokemonIv,
 	param: EnergyParameter,
 	bonus: BonusEffectsWithReason,
@@ -453,7 +479,7 @@ function calculateTimeToFullInventory(
 /**
  * Helps in a period (awake or asleep), split by tap.
  */
-type TapPlan =
+export type TapPlan =
 	| {
 			/** No help in this period */
 			type: "none";
@@ -483,8 +509,11 @@ type TapPlan =
 
 /**
  * Represents how many helps occur in each tap.
+ *
+ * It depends only on the parameter, base frequency, energy and whistle,
+ * so it can be shared between Pokémon that have the same values.
  */
-interface HelpCountPlan {
+export interface HelpCountPlan {
 	awake: TapPlan;
 	asleep: TapPlan;
 	/** Number of days (multiplied to the result of one day) */
@@ -499,7 +528,7 @@ interface HelpCountPlan {
  * @param isWhistle Whether the whistle is used.
  * @returns Help count plan.
  */
-function createHelpCountPlan(
+export function createHelpCountPlan(
 	param: EnergyParameter,
 	baseFreq: number,
 	energy: EnergyResult,
@@ -655,7 +684,7 @@ function createAsleepTapPlan(
 }
 
 /**
- * Add helps in the tap plan to the HelpCountResult.
+ * Add helps in the tap plan to the HelpCountResult (except skill count).
  * @param ret HelpCountResult object.
  * @param tapPlan Tap plan.
  * @param simulation HelpCountSimulation object.
@@ -676,7 +705,7 @@ function applyTapPlan(
 			ret.berrySneakySnackingCount = ret.berryHelpCount;
 			return;
 		case "alwaysTap":
-			addAlwaysTapHelps(ret, tapPlan.helpCount, tapPlan.countSkill);
+			addAlwaysTapHelps(ret, tapPlan.helpCount);
 			return;
 		case "periodicTap":
 			break;
@@ -704,29 +733,46 @@ function applyTapPlan(
 			});
 		});
 
-		if (!tapPlan.countSkill) {
-			continue;
-		}
 		if (tapPlan.storeSkillProbability) {
 			ret.skillProbabilityAfterWakeup.once = result.skillOnce;
 			ret.skillProbabilityAfterWakeup.twice = result.skillTwice;
 		}
-		ret.skillCount += result.skillOnce + result.skillTwice * 2;
 	}
 	ret.berryHelpCount = ret.berryNormalHelpCount + ret.berrySneakySnackingCount;
 }
 
 /**
- * Add always tap help to HelpCountResult.
+ * Calculate the skill count for the plan.
+ *
+ * @param plan Help count plan.
+ * @param simulation HelpCountSimulation object.
+ * @param skillRate Overall skill rate (with pity proc if enabled).
+ * @returns Skill count (count rate is multiplied).
+ */
+export function calculateSkillCountFromPlan(
+	plan: HelpCountPlan,
+	simulation: HelpCountSimulation,
+	skillRate: number,
+): number {
+	let skillCount = 0;
+	for (const tapPlan of [plan.awake, plan.asleep]) {
+		if (tapPlan.type === "alwaysTap" && tapPlan.countSkill) {
+			skillCount += tapPlan.helpCount * skillRate;
+		} else if (tapPlan.type === "periodicTap" && tapPlan.countSkill) {
+			for (const helpCount of tapPlan.helpCounts) {
+				skillCount += simulation.computeSkillCount(helpCount, skillRate);
+			}
+		}
+	}
+	return plan.countRate > 1 ? skillCount * plan.countRate : skillCount;
+}
+
+/**
+ * Add always tap help to HelpCountResult (except skill count).
  * @param ret HelpCountResult to be added.
  * @param helpCount The number of helps.
- * @param addSkillCount Wheather skill count is added or not.
  */
-function addAlwaysTapHelps(
-	ret: HelpCountResult,
-	helpCount: number,
-	addSkillCount: boolean,
-) {
+function addAlwaysTapHelps(ret: HelpCountResult, helpCount: number) {
 	// total
 	ret.total.all += helpCount;
 	ret.total.normal += helpCount;
@@ -753,11 +799,6 @@ function addAlwaysTapHelps(
 		const helpCount = (ingHelpCount / ret.ingSlotCount) * ing.slots.length;
 		ing.helpCount += helpCount;
 		ing.count += helpCount * ing.countPerHelp;
-	}
-
-	// skill
-	if (addSkillCount) {
-		ret.skillCount += helpCount * ret.overallSkillRate;
 	}
 }
 
