@@ -1307,3 +1307,14 @@ describe("HelpCountSimulation", () => {
 		});
 	});
 });
+
+describe("HelpCountSimulation.computeSkillCount", () => {
+	test.each([0, 1, 5, 7.3, 12.75, 30.5])("matches compute() (n=%f)", (n) => {
+		const iv = new PokemonIv({ pokemonName: "Raichu", level: 60 });
+		const sim = new HelpCountSimulation(iv);
+		const result = sim.compute(n, 0.1);
+		expect(sim.computeSkillCount(n, 0.1)).toBe(
+			result.skillOnce + result.skillTwice * 2,
+		);
+	});
+});

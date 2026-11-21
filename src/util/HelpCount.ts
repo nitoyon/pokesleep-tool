@@ -1028,6 +1028,11 @@ export class HelpCountSimulation {
 	private skillRate: number;
 	/** Whether the Pokémon is Skills or All specialty (enables exact-once/twice split). */
 	private isSkillSpecialty: boolean;
+	/** Cached results of compute() by skill rate and help count. */
+	private readonly resultCache = new Map<
+		number,
+		Map<number, HelpCountSimulationResult>
+	>();
 
 	/**
 	 * Initializes the simulation with carry limit, ingredient index mapping,
@@ -1094,6 +1099,8 @@ export class HelpCountSimulation {
 	/**
 	 * Compute simulation results after `n` help actions.
 	 *
+	 * The result is cached, so the returned object must not be modified.
+	 *
 	 * @param n - Number of help actions to simulate.
 	 * @param skillRate - Skill trigger rate per help
 	 *   (defaults to the rate given to the constructor).
@@ -1102,6 +1109,50 @@ export class HelpCountSimulation {
 	compute(
 		n: number,
 		skillRate: number = this.skillRate,
+	): HelpCountSimulationResult {
+		let cache = this.resultCache.get(skillRate);
+		if (cache === undefined) {
+			cache = new Map();
+			this.resultCache.set(skillRate, cache);
+		}
+		let result = cache.get(n);
+		if (result === undefined) {
+			result = this.computeUncached(n, skillRate);
+			cache.set(n, result);
+		}
+		return result;
+	}
+
+	/**
+	 * Compute the expected skill count after `n` help actions.
+	 *
+	 * This returns the same value as
+	 * `compute(n).skillOnce + compute(n).skillTwice * 2`
+	 * without creating the whole result for non-integer `n`.
+	 *
+	 * @param n - Number of help actions to simulate.
+	 * @param skillRate - Skill trigger rate per help.
+	 * @returns Expected skill count.
+	 */
+	computeSkillCount(n: number, skillRate: number): number {
+		if (Number.isInteger(n)) {
+			const result = this.compute(n, skillRate);
+			return result.skillOnce + result.skillTwice * 2;
+		}
+
+		const nFloor = Math.floor(n);
+		const frac = n - nFloor;
+		const lo = this.compute(nFloor, skillRate);
+		const hi = this.compute(Math.ceil(n), skillRate);
+		const lerp = (a: number, b: number) => a + (b - a) * frac;
+		return (
+			lerp(lo.skillOnce, hi.skillOnce) + lerp(lo.skillTwice, hi.skillTwice) * 2
+		);
+	}
+
+	private computeUncached(
+		n: number,
+		skillRate: number,
 	): HelpCountSimulationResult {
 		// Handle integer n
 		if (Number.isInteger(n)) {
@@ -1112,8 +1163,8 @@ export class HelpCountSimulation {
 		const nFloor = Math.floor(n);
 		const nCeil = Math.ceil(n);
 		const frac = n - nFloor;
-		const lo = this.computeN(nFloor, skillRate);
-		const hi = this.computeN(nCeil, skillRate);
+		const lo = this.compute(nFloor, skillRate);
+		const hi = this.compute(nCeil, skillRate);
 		const lerp = (a: number, b: number) => a + (b - a) * frac;
 		return {
 			normalHelpCount: lerp(lo.normalHelpCount, hi.normalHelpCount),
