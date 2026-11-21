@@ -64,9 +64,14 @@ import { loadConfig, saveConfig } from "./ui/AppConfig";
 		//document.body.appendChild(ins);
 	}
 
-	window.addEventListener("load", () => {
+	const registerServiceWorker = () => {
 		if ("serviceWorker" in navigator) {
 			navigator.serviceWorker.register("/pokesleep-tool/sw.js");
 		}
-	});
+	};
+	if (document.readyState === "complete") {
+		registerServiceWorker();
+	} else {
+		window.addEventListener("load", registerServiceWorker);
+	}
 })();

@@ -6,7 +6,7 @@ const HTML_CACHE = "html-cache-v1";
 const ASSET_CACHE = "asset-cache-v1";
 
 // Matches hashed assets like index-C9OPrGSh.js or ui-DCMMyUYy.css
-const HASHED_ASSET = /\/([^/]+)-[A-Za-z0-9]{8}\.(js|css)$/;
+const HASHED_ASSET = /\/([^/]+)-[A-Za-z0-9_-]{8}\.(js|css)$/;
 
 self.addEventListener("install", (_event) => {
 	self.skipWaiting();
@@ -53,7 +53,8 @@ async function cacheFirst(
 	}
 
 	// Delete old existing cache
-	const oldPattern = new RegExp(`/${base}-[A-Za-z0-9_-]{8,}\\.${ext}$`);
+	const escapedBase = base.replace(/[-_.]/g, "\\$&");
+	const oldPattern = new RegExp(`/${escapedBase}-[A-Za-z0-9_-]{8}\\.${ext}$`);
 	for (const key of await cache.keys()) {
 		if (key.url !== request.url && oldPattern.test(new URL(key.url).pathname)) {
 			cache.delete(key);
