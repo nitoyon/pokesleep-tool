@@ -243,12 +243,9 @@ function initializeHelpCountResult(
 	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
 ): HelpCountResult {
-	const { baseFreq, inventoryBonus } = calculateBaseFreqAndBonus(
-		iv,
-		param,
-		bonus,
-		isWhistle,
-	);
+	const baseFreq = calculateBaseFreq(iv, param, isWhistle);
+	const inventoryBonus = bonusEffectToInventoryBonus(bonus);
+
 	const carryLimit = Math.ceil(
 		(iv.carryLimit + bonus.carryLimitAdd) *
 			(bonus.carryLimitMul ?? 1) *
@@ -388,19 +385,14 @@ export function calculateOverallSkillRate(
  * Calculate base help frequency and inventory bonus.
  * @param iv PokemonIv instance.
  * @param param Strength parameters.
- * @param bonus The help bonus.
  * @param isWhistle Whether the whistle is used.
  * @returns Base help frequency and inventory bonus.
  */
-export function calculateBaseFreqAndBonus(
+export function calculateBaseFreq(
 	iv: PokemonIv,
 	param: EnergyParameter,
-	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
-): {
-	baseFreq: number;
-	inventoryBonus: InventoryBonus;
-} {
+): number {
 	const helpBonusCount =
 		param.helpBonusCount + (iv.hasHelpingBonusInActiveSubSkills ? 1 : 0);
 	const isExpertMode = isExpertField(param.fieldIndex) && !isWhistle;
@@ -409,15 +401,13 @@ export function calculateBaseFreqAndBonus(
 	const isMainBerry = isExpertMode && param.favoriteType[0] === iv.pokemon.type;
 	const isNonFavoriteBerry = isExpertMode && !isFavoriteBerry;
 
-	const baseFreq = iv.getBaseFrequency(
+	return iv.getBaseFrequency(
 		helpBonusCount,
 		param.isGoodCampTicketSet,
 		isMainBerry,
 		isNonFavoriteBerry,
 		param.fieldIndex,
 	);
-	const inventoryBonus = bonusEffectToInventoryBonus(bonus);
-	return { baseFreq, inventoryBonus };
 }
 
 function calculateTimeToFullInventory(

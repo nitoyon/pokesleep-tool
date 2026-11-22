@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { emptyBonusEffects } from "../data/events";
 import Energy, { AlwaysTap, type EnergyParameter, NoTap } from "./Energy";
 import {
-	calculateBaseFreqAndBonus,
+	calculateBaseFreq,
 	calculateHelpCount,
 	calculateHelpCountInInterval,
 	calculateHelpCountPerTap,
@@ -368,12 +368,7 @@ describe("calculateHelpCount", () => {
 				false,
 			);
 
-			const { baseFreq } = calculateBaseFreqAndBonus(
-				base,
-				param,
-				emptyBonusBase,
-				false,
-			);
+			const baseFreq = calculateBaseFreq(base, param, false);
 			const plan = createHelpCountPlan(param, baseFreq, energy, false);
 			const result = calculateHelpCount(
 				iv,

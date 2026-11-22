@@ -1,6 +1,6 @@
 import Energy, { type EnergyResult, whistlePeriod } from "./Energy";
 import {
-	calculateBaseFreqAndBonus,
+	calculateBaseFreq,
 	calculateHelpCount,
 	calculateOverallSkillRate,
 	calculateSkillCountFromPlan,
@@ -452,12 +452,7 @@ class AmountCalculator {
 		}
 
 		const resolved = resolve(iv);
-		const { baseFreq } = calculateBaseFreqAndBonus(
-			resolved,
-			this.param,
-			this.bonus,
-			this.isWhistle,
-		);
+		const baseFreq = calculateBaseFreq(resolved, this.param, this.isWhistle);
 		const plan =
 			baseFreq <= 0
 				? null
