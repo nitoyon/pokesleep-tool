@@ -1005,7 +1005,7 @@ class PokemonStrength {
 				const skillValuePerTrigger2 = getSkillSubValue(mainSkill, skillLevel);
 				return {
 					skillValue,
-					skillStrength: skillValue * averageIngredientStrength * rawIngFactor,
+					skillStrength: skillValue * averageIngredientStrength * magnetFactor,
 					skillValuePerTrigger,
 					skillValue2: skillValuePerTrigger2 * skillCount,
 					skillStrength2: 0,
