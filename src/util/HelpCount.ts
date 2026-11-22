@@ -131,6 +131,8 @@ export interface HelpCountResult {
  * @param energy The energy calculation result.
  * @param bonus The help bonus.
  * @param isWhistle Whether the whistle is used.
+ * @param simCache Optional inventory simulation to reuse.
+ *   It must be created by {@link createHelpCountSimulation}.
  * @returns Help count calculated.
  */
 export function calculateHelpCount(
@@ -139,6 +141,7 @@ export function calculateHelpCount(
 	energy: EnergyResult,
 	bonus: BonusEffectsWithReason,
 	isWhistle: boolean,
+	simCache?: HelpCountSimulation,
 ): HelpCountResult {
 	const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
 
@@ -166,12 +169,9 @@ export function calculateHelpCount(
 	}
 
 	// Awake helps
-	const simulation = new HelpCountSimulation(
-		iv,
-		param.isGoodCampTicketSet,
-		ret.overallSkillRate,
-		ret.inventoryBonus,
-	);
+	const simulation =
+		simCache ??
+		createHelpCountSimulation(iv, param, bonus, ret.overallSkillRate);
 	calculateAwakeHelpCount(
 		ret,
 		param,
@@ -223,6 +223,33 @@ export function calculateHelpCount(
 	}
 
 	return ret;
+}
+
+/**
+ * Create the inventory simulation used by {@link calculateHelpCount}.
+ *
+ * The simulation depends only on the carry limit, the bag usage per help
+ * and the berry count of `iv` (not on the help frequency, energy or skill
+ * rate), so it can be shared between Pokémon that have the same values.
+ *
+ * @param iv The Pokémon.
+ * @param param The strength parameters.
+ * @param bonus The help bonus.
+ * @param skillRate Default skill rate used by the simulation.
+ * @returns A new simulation.
+ */
+export function createHelpCountSimulation(
+	iv: PokemonIv,
+	param: EnergyParameter,
+	bonus: BonusEffectsWithReason,
+	skillRate?: number,
+): HelpCountSimulation {
+	return new HelpCountSimulation(
+		iv,
+		param.isGoodCampTicketSet,
+		skillRate,
+		bonusEffectToInventoryBonus(bonus),
+	);
 }
 
 function initializeHelpCountResult(
@@ -504,7 +531,7 @@ function calculateAwakeHelpCount(
 
 	// Tap frequency simulation
 	for (const helpCount of helpCounts) {
-		const result = simulation.compute(helpCount);
+		const result = simulation.compute(helpCount, ret.overallSkillRate);
 		ret.total.all += helpCount;
 		ret.total.normal += result.normalHelpCount;
 		ret.total.sneakySnacking += result.sneakySnackingCount;
@@ -590,7 +617,7 @@ function calculateAsleepHelpCount(
 
 	// Tap frequency simulation (Including NoTap)
 	for (const helpCount of asleepHelpCounts) {
-		const result = simulation.compute(helpCount);
+		const result = simulation.compute(helpCount, ret.overallSkillRate);
 		ret.total.all += helpCount;
 		ret.total.normal += result.normalHelpCount;
 		ret.total.sneakySnacking += result.sneakySnackingCount;
@@ -1009,20 +1036,25 @@ export class HelpCountSimulation {
 	 * Compute simulation results after `n` help actions.
 	 *
 	 * @param n - Number of help actions to simulate.
+	 * @param skillRate - Skill trigger rate per help
+	 *   (defaults to the rate given to the constructor).
 	 * @returns Expected sneaky snacking count and expected ingredient counts.
 	 */
-	compute(n: number): HelpCountSimulationResult {
+	compute(
+		n: number,
+		skillRate: number = this.skillRate,
+	): HelpCountSimulationResult {
 		// Handle integer n
 		if (Number.isInteger(n)) {
-			return this.computeN(n);
+			return this.computeN(n, skillRate);
 		}
 
 		// Handle non-integer n via linear interpolation
 		const nFloor = Math.floor(n);
 		const nCeil = Math.ceil(n);
 		const frac = n - nFloor;
-		const lo = this.compute(nFloor);
-		const hi = this.compute(nCeil);
+		const lo = this.computeN(nFloor, skillRate);
+		const hi = this.computeN(nCeil, skillRate);
 		const lerp = (a: number, b: number) => a + (b - a) * frac;
 		return {
 			normalHelpCount: lerp(lo.normalHelpCount, hi.normalHelpCount),
@@ -1045,9 +1077,10 @@ export class HelpCountSimulation {
 	 * Compute simulation results after `n` help actions. (integer version)
 	 *
 	 * @param n - Number of help actions to simulate (integer).
+	 * @param skillRate - Skill trigger rate per help.
 	 * @returns Expected sneaky snacking count and expected ingredient counts.
 	 */
-	private computeN(n: number): HelpCountSimulationResult {
+	private computeN(n: number, skillRate: number): HelpCountSimulationResult {
 		// Extend computation if needed
 		while (this.cumulativeFullProb.length <= n) {
 			this.computeStep();
@@ -1065,7 +1098,10 @@ export class HelpCountSimulation {
 			this.cumulativeBerryExpected[n] +
 			sneakySnackingCount * this.sneakySnackingBerryCount;
 
-		const { skillOnce, skillTwice } = this.calculateSkillProbability(n);
+		const { skillOnce, skillTwice } = this.calculateSkillProbability(
+			n,
+			skillRate,
+		);
 
 		return {
 			normalHelpCount: n - sneakySnackingCount,
@@ -1199,12 +1235,15 @@ export class HelpCountSimulation {
 	 * derived from `cumulativeFullProb`.
 	 *
 	 * @param n - Number of help actions (must already be computed).
+	 * @param p - Skill trigger rate per help.
 	 */
-	private calculateSkillProbability(n: number): {
+	private calculateSkillProbability(
+		n: number,
+		p: number,
+	): {
 		skillOnce: number;
 		skillTwice: number;
 	} {
-		const p = this.skillRate;
 		let skillOnce = 0;
 		let skillTwice = 0;
 
