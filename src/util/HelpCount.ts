@@ -477,6 +477,37 @@ function calculateTimeToFullInventory(
 }
 
 /**
+ * Helps in a period (awake or asleep), split by tap.
+ */
+type TapPlan =
+	| {
+			/** No help in this period */
+			type: "none";
+	  }
+	| {
+			/** All helps are sneaky snacking */
+			type: "snacking";
+			helpCount: number;
+	  }
+	| {
+			/** All helps are collected immediately */
+			type: "alwaysTap";
+			helpCount: number;
+			/** Whether skill is counted */
+			countSkill: boolean;
+	  }
+	| {
+			/** Tap periodically and simulate inventory for each tap */
+			type: "periodicTap";
+			/** Help count for each tap */
+			helpCounts: number[];
+			/** Whether skill is counted */
+			countSkill: boolean;
+			/** Whether to store skill probability after wakeup */
+			storeSkillProbability: boolean;
+	  };
+
+/**
  * Calculate awake help count.
  * @param ret HelpCountResult object.
  * @param param The strength parameters, including team settings.
@@ -497,7 +528,11 @@ function calculateAwakeHelpCount(
 ) {
 	// Specified help count
 	if (param.period < 0) {
-		addAlwaysTapHelps(ret, -param.period, false);
+		applyTapPlan(
+			ret,
+			{ type: "alwaysTap", helpCount: -param.period, countSkill: false },
+			simulation,
+		);
 		return;
 	}
 
@@ -516,45 +551,39 @@ function calculateAwakeHelpCount(
 
 	// NoTap: Sneaky snacking
 	if (param.tapFrequencyAwake === NoTap) {
-		ret.total.all = ret.total.sneakySnacking = helpCounts[0];
-		ret.berryHelpCount = helpCounts[0];
-		ret.berryCount = ret.berryHelpCount * ret.berryCountPerSneakySnacking;
-		ret.berrySneakySnackingCount = helpCounts[0];
+		applyTapPlan(
+			ret,
+			{ type: "snacking", helpCount: helpCounts[0] },
+			simulation,
+		);
 		return;
 	}
 
 	// AlwaysTap or Whistle: Always tap simulation
 	if (param.tapFrequencyAwake === AlwaysTap || isWhistle) {
-		addAlwaysTapHelps(ret, helpCounts[0], !isWhistle);
+		applyTapPlan(
+			ret,
+			{
+				type: "alwaysTap",
+				helpCount: helpCounts[0],
+				countSkill: !isWhistle,
+			},
+			simulation,
+		);
 		return;
 	}
 
 	// Tap frequency simulation
-	for (const helpCount of helpCounts) {
-		const result = simulation.compute(helpCount, ret.overallSkillRate);
-		ret.total.all += helpCount;
-		ret.total.normal += result.normalHelpCount;
-		ret.total.sneakySnacking += result.sneakySnackingCount;
-		ret.berryCount += result.berryCount;
-		ret.berryNormalHelpCount += result.normalHelpCount * ret.berryRate;
-		ret.berrySneakySnackingCount += result.sneakySnackingCount;
-		ret.eventItemHelpCount += result.eventItemHelpCount;
-		ret.eventItemCount += result.eventItemCount;
-
-		const ingHelpCount = result.normalHelpCount * ret.ingRate;
-		ret.ingHelpCount += ingHelpCount;
-		ret.ingredients.forEach((ingredient, index) => {
-			ingredient.count += result.ingredientCount[index];
-			ingredient.helpCount +=
-				(ingHelpCount / ret.ingSlotCount) * ingredient.slots.length;
-			ingredient.slots.forEach((slot) => {
-				ingredient.overflowCount += result.overflowIngsPerSlot[slot.index];
-			});
-		});
-
-		ret.skillCount += result.skillOnce + result.skillTwice * 2;
-	}
-	ret.berryHelpCount = ret.berryNormalHelpCount + ret.berrySneakySnackingCount;
+	applyTapPlan(
+		ret,
+		{
+			type: "periodicTap",
+			helpCounts,
+			countSkill: true,
+			storeSkillProbability: false,
+		},
+		simulation,
+	);
 }
 
 /**
@@ -601,22 +630,76 @@ function calculateAsleepHelpCount(
 
 	// Always sneaky snacking simulation
 	if (param.tapFrequencyAwake === NoTap) {
-		ret.total.all += asleepHelpCounts[0];
-		ret.total.sneakySnacking += asleepHelpCounts[0];
-		ret.berryHelpCount += asleepHelpCounts[0];
-		ret.berryCount = ret.berryHelpCount * ret.berryCountPerSneakySnacking;
-		ret.berrySneakySnackingCount = ret.berryHelpCount;
+		applyTapPlan(
+			ret,
+			{ type: "snacking", helpCount: asleepHelpCounts[0] },
+			simulation,
+		);
 		return;
 	}
 
 	// Always tap simulation
 	if (param.tapFrequencyAsleep === AlwaysTap) {
-		addAlwaysTapHelps(ret, asleepHelpCounts[0], true);
+		applyTapPlan(
+			ret,
+			{
+				type: "alwaysTap",
+				helpCount: asleepHelpCounts[0],
+				countSkill: true,
+			},
+			simulation,
+		);
 		return;
 	}
 
 	// Tap frequency simulation (Including NoTap)
-	for (const helpCount of asleepHelpCounts) {
+	// If no tap during the day, don't count skills at night
+	const countSkill = !(
+		param.tapFrequencyAwake === NoTap && param.tapFrequencyAsleep === NoTap
+	);
+	applyTapPlan(
+		ret,
+		{
+			type: "periodicTap",
+			helpCounts: asleepHelpCounts,
+			countSkill,
+			// If tap during awake and no tap during sleep,
+			// add skill probability after wake up
+			storeSkillProbability: countSkill && param.tapFrequencyAsleep === NoTap,
+		},
+		simulation,
+	);
+}
+
+/**
+ * Add helps in the tap plan to the HelpCountResult.
+ * @param ret HelpCountResult object.
+ * @param tapPlan Tap plan.
+ * @param simulation HelpCountSimulation object.
+ */
+function applyTapPlan(
+	ret: HelpCountResult,
+	tapPlan: TapPlan,
+	simulation: HelpCountSimulation,
+) {
+	switch (tapPlan.type) {
+		case "none":
+			return;
+		case "snacking":
+			ret.total.all += tapPlan.helpCount;
+			ret.total.sneakySnacking += tapPlan.helpCount;
+			ret.berryHelpCount += tapPlan.helpCount;
+			ret.berryCount = ret.berryHelpCount * ret.berryCountPerSneakySnacking;
+			ret.berrySneakySnackingCount = ret.berryHelpCount;
+			return;
+		case "alwaysTap":
+			addAlwaysTapHelps(ret, tapPlan.helpCount, tapPlan.countSkill);
+			return;
+		case "periodicTap":
+			break;
+	}
+
+	for (const helpCount of tapPlan.helpCounts) {
 		const result = simulation.compute(helpCount, ret.overallSkillRate);
 		ret.total.all += helpCount;
 		ret.total.normal += result.normalHelpCount;
@@ -638,17 +721,10 @@ function calculateAsleepHelpCount(
 			});
 		});
 
-		// If no tap during the day, don't count skills at night
-		if (
-			param.tapFrequencyAwake === NoTap &&
-			param.tapFrequencyAsleep === NoTap
-		) {
+		if (!tapPlan.countSkill) {
 			continue;
 		}
-
-		// If tap during awake and no tap during sleep,
-		// add skill probability after wake up
-		if (param.tapFrequencyAsleep === NoTap) {
+		if (tapPlan.storeSkillProbability) {
 			ret.skillProbabilityAfterWakeup.once = result.skillOnce;
 			ret.skillProbabilityAfterWakeup.twice = result.skillTwice;
 		}
