@@ -57,6 +57,7 @@ const Unit = styled("div")({
 		"& > div": {
 			width: "4.5rem",
 			textAlign: "right",
+			whiteSpace: "nowrap",
 			fontWeight: 800,
 			display: "inline-block",
 			color: "#555",

@@ -105,7 +105,11 @@ const ResearchCalcApp = React.memo(() => {
 					<StrengthView state={state} dispatch={dispatch} />
 				)}
 				{state.tabIndex === 2 && (
-					<RatingView pokemonIv={state.pokemonIv} width={width} />
+					<RatingView
+						pokemonIv={state.pokemonIv}
+						parameter={state.parameter}
+						width={width}
+					/>
 				)}
 				{state.tabIndex !== 3 && (
 					<>

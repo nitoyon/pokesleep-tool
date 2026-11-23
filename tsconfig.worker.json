@@ -14,5 +14,8 @@
 		"isolatedModules": true,
 		"noEmit": true
 	},
-	"include": ["src/util/Team/teamSimulation.worker.ts"]
+	"include": [
+		"src/util/Team/teamSimulation.worker.ts",
+		"src/util/rating.worker.ts"
+	]
 }

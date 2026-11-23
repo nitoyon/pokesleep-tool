@@ -8,13 +8,34 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type PokemonIv from "../../util/PokemonIv";
-import PokemonRating from "../../util/PokemonRating";
+import type { RatingResult, RatingValue } from "../../util/PokemonRating";
+import type { StrengthParameter } from "../../util/PokemonStrength";
 import RaderChart from "./Chart/RaderChart";
 import InfoButton from "./InfoButton";
 import BerryIngSkillView from "./Rp/BerryIngSkillView";
+import { useRating } from "./useRating";
+
+/** Shown until the first result arrives from the worker */
+const emptyValue: RatingValue = { value: 0, topPercent: 100 };
+const emptyResult: RatingResult = {
+	berry: emptyValue,
+	ingredient: emptyValue,
+	skill: emptyValue,
+	berryRate: 0,
+	ingRate: 0,
+	skillRate: 0,
+};
 
 const RatingView = React.memo(
-	({ pokemonIv, width }: { pokemonIv: PokemonIv; width: number }) => {
+	({
+		pokemonIv,
+		parameter,
+		width,
+	}: {
+		pokemonIv: PokemonIv;
+		parameter: StrengthParameter;
+		width: number;
+	}) => {
 		const { t } = useTranslation();
 		const [helpOpen, setHelpOpen] = React.useState(false);
 		const onHelpClick = React.useCallback(() => {
@@ -24,15 +45,32 @@ const RatingView = React.memo(
 			setHelpOpen(false);
 		}, []);
 
-		const rating = new PokemonRating(pokemonIv);
-		const result = rating.calculate();
+		const rating = useRating(pokemonIv, parameter);
+		const result = rating.result ?? emptyResult;
+		const isReady = rating.result !== undefined;
 
 		const raderHeight = 400;
 
 		const trunc1 = (n: number) => {
 			n = Math.round(n * 10) / 10;
-			return `${t("num", { n: Math.floor(n) })}.${(n * 10) % 10}`;
+			return `${t("num", { n: Math.floor(n) })}.${Math.round(n * 10) % 10}`;
 		};
+
+		const formatTop = (value: RatingValue) =>
+			!isReady ? (
+				"-"
+			) : (
+				<>
+					<span style={{ paddingLeft: 0, paddingRight: ".1rem" }}>
+						{t("rating top")}
+					</span>
+					{formatPercent(value.topPercent)}
+					<span>%</span>
+				</>
+			);
+		const formatAmount = (value: RatingValue) =>
+			`${t("rating expected")}: ${isReady ? trunc1(value.value) : "-"}`;
+		const formatProb = (rate: number) => (isReady ? trunc1(rate * 100) : "-");
 
 		return (
 			<div style={{ minHeight: "190px" }}>
@@ -40,45 +78,54 @@ const RatingView = React.memo(
 					{t("rate subskill and nature")}
 					<InfoButton onClick={onHelpClick} />
 				</p>
-				<BerryIngSkillView
-					berryValue={
-						<>
-							{trunc1(result.berryScore)}
-							<span>pt</span>
-						</>
-					}
-					berryProb={trunc1(result.berryRate * 100)}
-					berrySubValue=""
-					ingredientValue={
-						<>
-							{trunc1(result.ingScore)}
-							<span>pt</span>
-						</>
-					}
-					ingredientProb={trunc1(result.ingRate * 100)}
-					ingredientSubValue=""
-					skillValue={
-						<>
-							{trunc1(result.skillScore)}
-							<span>pt</span>
-						</>
-					}
-					skillProb={trunc1(result.skillRate * 100)}
-					skillSubValue=""
-				/>
-				<RaderChart
-					width={width}
-					height={raderHeight}
-					specialty={pokemonIv.pokemon.specialty}
-					berry={result.berryScore / 100}
-					ingredient={result.ingScore / 100}
-					skill={result.skillScore / 100}
-				/>
+				{rating.error !== null && (
+					<p style={{ color: "#c00", fontSize: "0.8rem" }}>{rating.error}</p>
+				)}
+				<div
+					style={{
+						opacity: rating.loading ? 0.5 : 1,
+						// Delay dimming to avoid flicker when the result is cached
+						transition: rating.loading ? "opacity 0.2s 0.15s" : "opacity 0.1s",
+					}}
+				>
+					<BerryIngSkillView
+						berryValue={formatTop(result.berry)}
+						berryProb={formatProb(result.berryRate)}
+						berrySubValue={formatAmount(result.berry)}
+						ingredientValue={formatTop(result.ingredient)}
+						ingredientProb={formatProb(result.ingRate)}
+						ingredientSubValue={formatAmount(result.ingredient)}
+						skillValue={formatTop(result.skill)}
+						skillProb={formatProb(result.skillRate)}
+						skillSubValue={formatAmount(result.skill)}
+					/>
+					<RaderChart
+						width={width}
+						height={raderHeight}
+						specialty={pokemonIv.pokemon.specialty}
+						berry={1 - result.berry.topPercent / 100}
+						ingredient={1 - result.ingredient.topPercent / 100}
+						skill={1 - result.skill.topPercent / 100}
+					/>
+				</div>
 				<HelpDialog open={helpOpen} onClose={onHelpDialogClose} />
 			</div>
 		);
 	},
 );
+
+/**
+ * Format the top percent (ex: 12.3, 1.2, 0.12, <0.01).
+ */
+function formatPercent(n: number): string {
+	if (n >= 1) {
+		return (Math.ceil(n * 10) / 10).toFixed(1);
+	}
+	if (n >= 0.01) {
+		return (Math.ceil(n * 100) / 100).toFixed(2);
+	}
+	return "<0.01";
+}
 
 const HelpDialog = React.memo(
 	({ open, onClose }: { open: boolean; onClose: () => void }) => {
