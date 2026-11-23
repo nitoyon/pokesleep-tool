@@ -168,31 +168,30 @@ export function calculateHelpCount(
 		return ret;
 	}
 
-	// Awake helps
-	const simulation =
-		simCache ??
-		createHelpCountSimulation(iv, param, bonus, ret.overallSkillRate);
-	calculateAwakeHelpCount(
-		ret,
+	const awakeTapPlan = createAwakeTapPlan(
 		param,
 		awakeSeconds,
 		ret.baseFreq,
 		energy,
-		simulation,
 		isWhistle,
 	);
-	ret.awake = { ...ret.total };
-
-	// Asleep helps
-	calculateAsleepHelpCount(
-		ret,
+	const asleepTapPlan = createAsleepTapPlan(
 		param,
 		sleepSeconds,
 		ret.baseFreq,
 		energy,
-		simulation,
 		isWhistle,
 	);
+	const simulation =
+		simCache ??
+		createHelpCountSimulation(iv, param, bonus, ret.overallSkillRate);
+
+	// Awake helps
+	applyTapPlan(ret, awakeTapPlan, simulation);
+	ret.awake = { ...ret.total };
+
+	// Asleep helps
+	applyTapPlan(ret, asleepTapPlan, simulation);
 	ret.asleep = {
 		all: ret.total.all - ret.awake.all,
 		normal: ret.total.normal - ret.awake.normal,
@@ -508,32 +507,23 @@ type TapPlan =
 	  };
 
 /**
- * Calculate awake help count.
- * @param ret HelpCountResult object.
+ * Create awake tap plan.
  * @param param The strength parameters, including team settings.
  * @param awakeSeconds Awake seconds
  * @param baseFreq Base frequency.
  * @param energy The energy calculation result.
- * @param simulation HelpCountSimulation object.
  * @param isWhistle Whether the whistle is used.
  */
-function calculateAwakeHelpCount(
-	ret: HelpCountResult,
+function createAwakeTapPlan(
 	param: EnergyParameter,
 	awakeSeconds: number,
 	baseFreq: number,
 	energy: EnergyResult,
-	simulation: HelpCountSimulation,
 	isWhistle: boolean,
-) {
+): TapPlan {
 	// Specified help count
 	if (param.period < 0) {
-		applyTapPlan(
-			ret,
-			{ type: "alwaysTap", helpCount: -param.period, countSkill: false },
-			simulation,
-		);
-		return;
+		return { type: "alwaysTap", helpCount: -param.period, countSkill: false };
 	}
 
 	// Calculate help count
@@ -551,68 +541,50 @@ function calculateAwakeHelpCount(
 
 	// NoTap: Sneaky snacking
 	if (param.tapFrequencyAwake === NoTap) {
-		applyTapPlan(
-			ret,
-			{ type: "snacking", helpCount: helpCounts[0] },
-			simulation,
-		);
-		return;
+		return { type: "snacking", helpCount: helpCounts[0] };
 	}
 
 	// AlwaysTap or Whistle: Always tap simulation
 	if (param.tapFrequencyAwake === AlwaysTap || isWhistle) {
-		applyTapPlan(
-			ret,
-			{
-				type: "alwaysTap",
-				helpCount: helpCounts[0],
-				countSkill: !isWhistle,
-			},
-			simulation,
-		);
-		return;
+		return {
+			type: "alwaysTap",
+			helpCount: helpCounts[0],
+			countSkill: !isWhistle,
+		};
 	}
 
 	// Tap frequency simulation
-	applyTapPlan(
-		ret,
-		{
-			type: "periodicTap",
-			helpCounts,
-			countSkill: true,
-			storeSkillProbability: false,
-		},
-		simulation,
-	);
+	return {
+		type: "periodicTap",
+		helpCounts,
+		countSkill: true,
+		storeSkillProbability: false,
+	};
 }
 
 /**
- * Calculate sleep help count.
- * @param ret HelpCountResult object.
+ * Create asleep tap plan.
  * @param param The strength parameters, including team settings.
  * @param sleepSeconds Sleep seconds
  * @param baseFreq Base frequency.
  * @param energy The energy calculation result.
- * @param simulation HelpCountSimulation object.
  * @param isWhistle Whether the whistle is used.
  */
-function calculateAsleepHelpCount(
-	ret: HelpCountResult,
+function createAsleepTapPlan(
 	param: EnergyParameter,
 	sleepSeconds: number,
 	baseFreq: number,
 	energy: EnergyResult,
-	simulation: HelpCountSimulation,
 	isWhistle: boolean,
-) {
+): TapPlan {
 	// Skip for help count and whistle
 	if (param.period < 0 || isWhistle) {
-		return;
+		return { type: "none" };
 	}
 
 	// Skip if sleep seconds is 0
 	if (sleepSeconds <= 0) {
-		return;
+		return { type: "none" };
 	}
 
 	// Calculate help count
@@ -630,26 +602,16 @@ function calculateAsleepHelpCount(
 
 	// Always sneaky snacking simulation
 	if (param.tapFrequencyAwake === NoTap) {
-		applyTapPlan(
-			ret,
-			{ type: "snacking", helpCount: asleepHelpCounts[0] },
-			simulation,
-		);
-		return;
+		return { type: "snacking", helpCount: asleepHelpCounts[0] };
 	}
 
 	// Always tap simulation
 	if (param.tapFrequencyAsleep === AlwaysTap) {
-		applyTapPlan(
-			ret,
-			{
-				type: "alwaysTap",
-				helpCount: asleepHelpCounts[0],
-				countSkill: true,
-			},
-			simulation,
-		);
-		return;
+		return {
+			type: "alwaysTap",
+			helpCount: asleepHelpCounts[0],
+			countSkill: true,
+		};
 	}
 
 	// Tap frequency simulation (Including NoTap)
@@ -657,18 +619,14 @@ function calculateAsleepHelpCount(
 	const countSkill = !(
 		param.tapFrequencyAwake === NoTap && param.tapFrequencyAsleep === NoTap
 	);
-	applyTapPlan(
-		ret,
-		{
-			type: "periodicTap",
-			helpCounts: asleepHelpCounts,
-			countSkill,
-			// If tap during awake and no tap during sleep,
-			// add skill probability after wake up
-			storeSkillProbability: countSkill && param.tapFrequencyAsleep === NoTap,
-		},
-		simulation,
-	);
+	return {
+		type: "periodicTap",
+		helpCounts: asleepHelpCounts,
+		countSkill,
+		// If tap during awake and no tap during sleep,
+		// add skill probability after wake up
+		storeSkillProbability: countSkill && param.tapFrequencyAsleep === NoTap,
+	};
 }
 
 /**
