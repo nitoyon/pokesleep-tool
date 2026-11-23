@@ -143,19 +143,6 @@ export function calculateHelpCount(
 	isWhistle: boolean,
 	simCache?: HelpCountSimulation,
 ): HelpCountResult {
-	const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
-
-	// Calculate help count
-	const sleepScoreSeconds = (param.sleepScore * 510 * 60) / 100;
-	const awakeSeconds = Math.min(
-		1440 * 60 - sleepScoreSeconds,
-		param.period * 60 * 60,
-	);
-	const sleepSeconds = Math.min(
-		sleepScoreSeconds,
-		param.period * 60 * 60 - awakeSeconds,
-	);
-
 	// Initialize return value
 	const ret: HelpCountResult = initializeHelpCountResult(
 		iv,
@@ -168,30 +155,17 @@ export function calculateHelpCount(
 		return ret;
 	}
 
-	const awakeTapPlan = createAwakeTapPlan(
-		param,
-		awakeSeconds,
-		ret.baseFreq,
-		energy,
-		isWhistle,
-	);
-	const asleepTapPlan = createAsleepTapPlan(
-		param,
-		sleepSeconds,
-		ret.baseFreq,
-		energy,
-		isWhistle,
-	);
+	const helpPlan = createHelpCountPlan(param, ret.baseFreq, energy, isWhistle);
 	const simulation =
 		simCache ??
 		createHelpCountSimulation(iv, param, bonus, ret.overallSkillRate);
 
 	// Awake helps
-	applyTapPlan(ret, awakeTapPlan, simulation);
+	applyTapPlan(ret, helpPlan.awake, simulation);
 	ret.awake = { ...ret.total };
 
 	// Asleep helps
-	applyTapPlan(ret, asleepTapPlan, simulation);
+	applyTapPlan(ret, helpPlan.asleep, simulation);
 	ret.asleep = {
 		all: ret.total.all - ret.awake.all,
 		normal: ret.total.normal - ret.awake.normal,
@@ -199,6 +173,7 @@ export function calculateHelpCount(
 	};
 
 	// multiply count rate
+	const countRate = helpPlan.countRate;
 	if (countRate > 1) {
 		ret.berryHelpCount *= countRate;
 		ret.berryNormalHelpCount *= countRate;
@@ -505,6 +480,56 @@ type TapPlan =
 			/** Whether to store skill probability after wakeup */
 			storeSkillProbability: boolean;
 	  };
+
+/**
+ * Represents how many helps occur in each tap.
+ */
+interface HelpCountPlan {
+	awake: TapPlan;
+	asleep: TapPlan;
+	/** Number of days (multiplied to the result of one day) */
+	countRate: number;
+}
+
+/**
+ * Create a help count plan used by {@link calculateHelpCount}.
+ * @param param The strength parameters, including team settings.
+ * @param baseFreq Base frequency.
+ * @param energy The energy calculation result.
+ * @param isWhistle Whether the whistle is used.
+ * @returns Help count plan.
+ */
+function createHelpCountPlan(
+	param: EnergyParameter,
+	baseFreq: number,
+	energy: EnergyResult,
+	isWhistle: boolean,
+): HelpCountPlan {
+	const countRate = param.period < 0 ? 1 : Math.ceil(param.period / 24);
+
+	// Calculate help count
+	const sleepScoreSeconds = (param.sleepScore * 510 * 60) / 100;
+	const awakeSeconds = Math.min(
+		1440 * 60 - sleepScoreSeconds,
+		param.period * 60 * 60,
+	);
+	const sleepSeconds = Math.min(
+		sleepScoreSeconds,
+		param.period * 60 * 60 - awakeSeconds,
+	);
+
+	return {
+		awake: createAwakeTapPlan(param, awakeSeconds, baseFreq, energy, isWhistle),
+		asleep: createAsleepTapPlan(
+			param,
+			sleepSeconds,
+			baseFreq,
+			energy,
+			isWhistle,
+		),
+		countRate,
+	};
+}
 
 /**
  * Create awake tap plan.
