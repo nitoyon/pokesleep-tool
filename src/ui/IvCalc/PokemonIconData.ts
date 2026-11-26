@@ -413,6 +413,16 @@ const pokemonRectData: { [id: string]: IconData } = {
 		normalPallet: ["#f8a94a", "#f9e3bc", "#72685d"],
 		shinyPallet: ["#fede56", "#fee69e", "#fede56"],
 	},
+	// Growlithe (Hisui)
+	"53306": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0, y: 0, w: 0.4, h: 1, color: 1 },
+			{ x: 0.4, y: 0, w: 0.6, h: 0.4, color: 2 },
+		],
+		normalPallet: ["#cf7557", "#eeecea", "#626258"],
+		shinyPallet: ["#d8cf7d", "#eeecea", "#626258"],
+	},
 	// Arcanine
 	"59": {
 		rects: [
@@ -422,6 +432,16 @@ const pokemonRectData: { [id: string]: IconData } = {
 		],
 		normalPallet: ["#f8a94a", "#f9e3bc", "#72685d"],
 		shinyPallet: ["#fee64e", "#fefed2", "#fee64e"],
+	},
+	// Arcanine (Hisui)
+	"53307": {
+		rects: [
+			{ x: 0, y: 0, w: 1, h: 1, color: 0 },
+			{ x: 0.5, y: 0.4, w: 0.5, h: 0.7, color: 1 },
+			{ x: 0.5, y: 0, w: 0.5, h: 0.4, color: 2 },
+		],
+		normalPallet: ["#888982", "#cf7557", "#555559"],
+		shinyPallet: ["#9c9d96", "#ede576", "#555559"],
 	},
 	// Bellsprout
 	"69": {

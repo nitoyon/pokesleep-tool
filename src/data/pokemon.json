@@ -1427,6 +1427,41 @@
 		}
 	},
 	{
+		"id": 58,
+		"name": "Growlithe (Hisui)",
+		"arrival": "2026-12-07",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "rock",
+		"specialty": "Skills",
+		"skill": "unknown",
+		"fp": 5,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 58,
+		"evolutionCount": 0,
+		"evolutionLeft": 1,
+		"isFullyEvolved": false,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "herb",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "sausage",
+			"c2": 3,
+			"c3": 5
+		},
+		"ing3": {
+			"name": "milk",
+			"c3": 5
+		},
+		"form": "Hisui"
+	},
+	{
 		"id": 59,
 		"name": "Arcanine",
 		"arrival": "2023-07-17",
@@ -1459,6 +1494,41 @@
 			"name": "milk",
 			"c3": 5
 		}
+	},
+	{
+		"id": 59,
+		"name": "Arcanine (Hisui)",
+		"arrival": "2026-12-07",
+		"sleepType": "snoozing",
+		"exp": 600,
+		"type": "rock",
+		"specialty": "Skills",
+		"skill": "unknown",
+		"fp": 20,
+		"frequency": 0,
+		"ingRate": 0,
+		"skillRate": 0,
+		"ancestor": 58,
+		"evolutionCount": 1,
+		"evolutionLeft": 0,
+		"isFullyEvolved": true,
+		"carryLimit": 0,
+		"ing1": {
+			"name": "herb",
+			"c1": 1,
+			"c2": 2,
+			"c3": 4
+		},
+		"ing2": {
+			"name": "sausage",
+			"c2": 3,
+			"c3": 5
+		},
+		"ing3": {
+			"name": "milk",
+			"c3": 5
+		},
+		"form": "Hisui"
 	},
 	{
 		"id": 69,
